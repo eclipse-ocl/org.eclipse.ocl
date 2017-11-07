@@ -19,3 +19,4 @@ Export-Package: org.eclipse.ocl.xtext.markup.ui,
  org.eclipse.ocl.xtext.markup.ui.quickfix
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ocl.xtext.markup.ui.internal.MarkupActivator
+Automatic-Module-Name: org.eclipse.ocl.xtext.markup.ui

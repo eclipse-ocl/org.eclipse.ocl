@@ -20,3 +20,4 @@ Export-Package: org.eclipse.ocl.examples.modelregistry,
  org.eclipse.ocl.examples.modelregistry.util
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Automatic-Module-Name: org.eclipse.ocl.examples.modelregistry

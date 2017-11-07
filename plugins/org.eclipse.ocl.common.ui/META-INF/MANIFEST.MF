@@ -16,3 +16,4 @@ Export-Package: org.eclipse.ocl.common.ui,
  org.eclipse.ocl.common.ui.internal,
  org.eclipse.ocl.common.ui.internal.messages,
  org.eclipse.ocl.common.ui.internal.preferences
+Automatic-Module-Name: org.eclipse.ocl.common.ui

@@ -15,3 +15,4 @@ Export-Package: org.eclipse.ocl.examples.autogen,
  org.eclipse.ocl.examples.autogen.lookup,
  org.eclipse.ocl.examples.autogen.utilities
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
+Automatic-Module-Name: org.eclipse.ocl.examples.autogen

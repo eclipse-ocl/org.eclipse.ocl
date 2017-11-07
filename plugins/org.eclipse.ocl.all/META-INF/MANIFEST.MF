@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.eclipse.ocl.all
 Bundle-Version: 5.2.300.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
+Automatic-Module-Name: org.eclipse.ocl.all

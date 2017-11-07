@@ -26,3 +26,4 @@ Export-Package: org.eclipse.ocl.xtext.oclstdlib,
  org.eclipse.ocl.xtext.oclstdlibcs.util
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-Activator: org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibPlugin$Implementation
+Automatic-Module-Name: org.eclipse.ocl.xtext.oclstdlib

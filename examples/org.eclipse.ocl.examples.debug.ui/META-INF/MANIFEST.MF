@@ -17,3 +17,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ocl.examples.debug.ui.OCLDebugUIPlugin
 Export-Package: org.eclipse.ocl.examples.debug.ui.delegate,
  org.eclipse.ocl.examples.debug.ui.launching
+Automatic-Module-Name: org.eclipse.ocl.examples.debug.ui

@@ -23,3 +23,4 @@ Export-Package: org.eclipse.ocl.examples.debug,
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-Activator: org.eclipse.ocl.examples.debug.OCLDebugPlugin
+Automatic-Module-Name: org.eclipse.ocl.examples.debug

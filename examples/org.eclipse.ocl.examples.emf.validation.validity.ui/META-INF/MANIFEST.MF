@@ -26,3 +26,4 @@ Export-Package: org.eclipse.ocl.examples.emf.validation.validity.ui.actions,
  org.eclipse.ocl.examples.emf.validation.validity.ui.plugin,
  org.eclipse.ocl.examples.emf.validation.validity.ui.ripoffs,
  org.eclipse.ocl.examples.emf.validation.validity.ui.view
+Automatic-Module-Name: org.eclipse.ocl.examples.emf.validation.validity.ui

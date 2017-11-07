@@ -25,4 +25,5 @@ Export-Package: org.eclipse.ocl.examples.impactanalyzer,
  org.eclipse.ocl.examples.impactanalyzer.instanceScope.traceback;x-friends:="org.eclipse.ocl.examples.impactanalyzer.debug,org.eclipse.ocl.examples.impactanalyzer.tests",
  org.eclipse.ocl.examples.impactanalyzer.instanceScope.unusedEvaluation;x-friends:="org.eclipse.ocl.examples.impactanalyzer.debug,org.eclipse.ocl.examples.impactanalyzer.tests",
  org.eclipse.ocl.examples.impactanalyzer.util;x-friends:="org.eclipse.ocl.examples.impactanalyzer.debug"
+Automatic-Module-Name: org.eclipse.ocl.examples.impactanalyzer
 

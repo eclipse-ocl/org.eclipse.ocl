@@ -16,3 +16,4 @@ Eclipse-LazyStart: true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Activator: org.eclipse.ocl.examples.modelregistry.ui.ModelRegistryUIPlugin
+Automatic-Module-Name: org.eclipse.ocl.examples.modelregistry.ui

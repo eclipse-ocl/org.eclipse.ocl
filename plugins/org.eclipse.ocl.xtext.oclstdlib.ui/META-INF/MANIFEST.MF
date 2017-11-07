@@ -21,3 +21,4 @@ Export-Package: org.eclipse.ocl.xtext.oclstdlib.ui,
  org.eclipse.ocl.xtext.oclstdlib.ui.quickfix,
  org.eclipse.ocl.xtext.oclstdlib.ui.wizards
 Bundle-Activator: org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator
+Automatic-Module-Name: org.eclipse.ocl.xtext.oclstdlib.ui

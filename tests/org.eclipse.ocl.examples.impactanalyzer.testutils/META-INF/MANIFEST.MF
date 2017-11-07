@@ -16,3 +16,4 @@ Export-Package: org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.mo
  org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.notifications,
  org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.ocl,
  org.eclipse.ocl.examples.impactanalyzer.testutils
+Automatic-Module-Name: org.eclipse.ocl.examples.impactanalyzer.testutils

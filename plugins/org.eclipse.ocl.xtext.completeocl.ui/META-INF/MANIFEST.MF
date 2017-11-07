@@ -24,3 +24,4 @@ Export-Package: org.eclipse.ocl.xtext.completeocl.ui,
  org.eclipse.ocl.xtext.completeocl.ui.wizards
 Bundle-Activator: org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.ocl.xtext.completeocl.ui

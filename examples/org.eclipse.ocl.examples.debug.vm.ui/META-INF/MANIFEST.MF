@@ -22,3 +22,4 @@ Require-Bundle: org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ocl.examples.debug.vm.ui.DebugVMUIPlugin
+Automatic-Module-Name: org.eclipse.ocl.examples.debug.vm.ui

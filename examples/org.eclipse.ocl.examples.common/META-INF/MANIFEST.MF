@@ -14,3 +14,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ocl.examples.common.plugin.OCLExamplesCommonPlugin$Implementation
 Export-Package: org.eclipse.ocl.examples.common.plugin,
  org.eclipse.ocl.examples.common.utils
+Automatic-Module-Name: org.eclipse.ocl.examples.common

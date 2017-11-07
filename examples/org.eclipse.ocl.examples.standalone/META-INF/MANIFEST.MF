@@ -14,3 +14,4 @@ Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Export-Package: org.eclipse.ocl.examples.standalone,
  org.eclipse.ocl.examples.standalone.messages;x-friends:="org.eclipse.ocl.examples.xtext.tests",
  org.eclipse.ocl.examples.standalone.validity;x-friends:="org.eclipse.ocl.examples.xtext.tests"
+Automatic-Module-Name: org.eclipse.ocl.examples.standalone

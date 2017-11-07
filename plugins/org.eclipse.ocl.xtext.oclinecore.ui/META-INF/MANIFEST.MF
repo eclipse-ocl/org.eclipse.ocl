@@ -30,3 +30,4 @@ Export-Package: org.eclipse.ocl.xtext.oclinecore.ui,
  org.eclipse.ocl.xtext.oclinecore.ui.quickfix,
  org.eclipse.ocl.xtext.oclinecore.ui.wizards
 Bundle-Activator: org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator
+Automatic-Module-Name: org.eclipse.ocl.xtext.oclinecore.ui

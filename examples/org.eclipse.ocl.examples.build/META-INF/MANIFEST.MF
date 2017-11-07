@@ -42,3 +42,4 @@ Export-Package: org.eclipse.ocl.examples.build.fragments,
  org.eclipse.ocl.examples.build.templates.model,
  org.eclipse.ocl.examples.build.utilities,
  org.eclipse.ocl.examples.build.xtend
+Automatic-Module-Name: org.eclipse.ocl.examples.build
