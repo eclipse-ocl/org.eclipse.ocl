@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.dynamic;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,11 +26,14 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -38,6 +42,25 @@ import org.osgi.framework.Bundle;
 public abstract class JavaFileUtil
 {
 	private static @Nullable JavaCompiler compiler = getJavaCompiler();
+
+	public static @Nullable String compileClass(@NonNull String sourcePath, @NonNull String javaCodeSource, @NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws IOException {
+		List<@NonNull JavaFileObject> compilationUnits = Collections.singletonList(new OCL2JavaFileObject(sourcePath, javaCodeSource));
+		return JavaFileUtil.compileClasses(compilationUnits, sourcePath, objectPath, classpathProjects);
+	}
+
+	/**
+	 * Compile all *.java files on sourcePath to objectPath.
+	 * e.g. from ../xyzzy/src/a/b/c to ../xyzzy/bin
+	 */
+	public static @Nullable String compileClasses(@NonNull String sourcePath, @NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws IOException {
+		try {
+			List<@NonNull JavaFileObject> compilationUnits = gatherCompilationUnits(new File(sourcePath), null);
+			return JavaFileUtil.compileClasses(compilationUnits, sourcePath, objectPath, classpathProjects);
+		}
+		catch (Throwable e) {
+			throw e;
+		}
+	}
 
 	/**
 	 * Returns a non-null string describing any problems, null if all ok.
@@ -87,7 +110,7 @@ public abstract class JavaFileUtil
 			else {
 				message = "Compilation of " + sourcePath + " returned false but no diagnostics";
 			}
-			System.out.println(message);
+			// System.out.println(message);
 			return message;
 		}
 		finally {
@@ -175,6 +198,18 @@ public abstract class JavaFileUtil
 		}
 	}
 
+	public static @NonNull List<@NonNull String> createClassPathProjectList(@NonNull URIConverter uriConverter, @NonNull List<@NonNull String> projectNames) {
+		List<@NonNull String> classpathProjectList = new ArrayList<@NonNull String>();
+		for (@NonNull String projectName : projectNames) {
+			File path = getProjectBinFolder(uriConverter, projectName);
+			if (path != null) {
+				classpathProjectList.add(String.valueOf(path));
+			}
+		}
+		//		}
+		return classpathProjectList;
+	}
+
 	/**
 	 * Compile all *.java files on sourcePath
 	 */
@@ -202,6 +237,89 @@ public abstract class JavaFileUtil
 		return;
 	}
 
+	/**
+	 * Return a list comprising a JavaFileObject for each *.java file in or below folder.
+	 * A non-null compilationUnits may be provided for use as the returned list.
+	 */
+	private static @NonNull List<@NonNull JavaFileObject> gatherCompilationUnits(@NonNull File folder, @Nullable List<@NonNull JavaFileObject> compilationUnits) throws IOException {
+		if (compilationUnits == null) {
+			compilationUnits = new ArrayList<@NonNull JavaFileObject>();
+		}
+		File[] listFiles = folder.listFiles();
+		if (listFiles != null) {
+			for (File file : listFiles) {
+				if (file.isDirectory()) {
+					gatherCompilationUnits(file, compilationUnits);
+				}
+				else if (file.isFile() && file.getName().endsWith(".java")) {
+					java.net.URI uri = file.getCanonicalFile().toURI();
+					compilationUnits.add(new JavaSourceFileObject(uri));
+				}
+			}
+		}
+		return compilationUnits;
+	}
+
+	public static @NonNull List<@NonNull String> gatherPackageNames(@NonNull File binFolder, @Nullable String packagePath) {
+		List<@NonNull String> packagePaths = new ArrayList<>();
+		gatherPackageNames(packagePaths, binFolder, packagePath);
+		return packagePaths;
+	}
+	private static void gatherPackageNames(@NonNull List<@NonNull String> packagePaths, @NonNull File binFolder, @Nullable String packagePath) {
+		boolean hasFile = false;
+		for (File binFile : binFolder.listFiles()) {
+			if (binFile.isFile()) {
+				if (!hasFile) {
+					if (packagePath != null) {
+						packagePaths.add(packagePath);
+					}
+					hasFile = true;
+				}
+			}
+			else if (binFile.isDirectory()) {
+				String name = binFile.getName();
+				if (!".".equals(name) && !"..".equals(name)) {
+					gatherPackageNames(packagePaths, binFile, packagePath != null ? packagePath + "." + name : name);
+				}
+			}
+		}
+	}
+
+	public static @NonNull List<@NonNull JavaFileObject> getCompilationUnits(@NonNull File srcFile)
+			throws Exception {
+		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
+		getCompilationUnits(compilationUnits, srcFile);
+		return compilationUnits;
+	}
+	private static void getCompilationUnits(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull File directory) throws Exception {
+		File[] files = directory.listFiles();
+		if (files != null) {
+			for (File file : files) {
+				if (file.isDirectory()) {
+					getCompilationUnits(compilationUnits, file);
+				} else if (file.isFile()) {
+					//					System.out.println("Compiling " + file);
+					compilationUnits.add(new JavaSourceFileObject(file.toURI()));
+				}
+			}
+		}
+	}
+
+	/*	protected void getCompilationUnits(@NonNull List<JavaFileObject> compilationUnits,
+			@NonNull IContainer container) throws CoreException {
+		for (IResource member : container.members()) {
+			if (member instanceof IContainer) {
+				getCompilationUnits(compilationUnits, (IContainer) member);
+			} else if ((member instanceof IFile)
+					&& member.getFileExtension().equals("java")) {
+				java.net.URI locationURI = member.getLocationURI();
+				assert locationURI != null;
+				//				System.out.println("Compiling " + locationURI);
+				compilationUnits.add(new JavaSourceFileObject(locationURI));
+			}
+		}
+	} */
+
 	private static @Nullable JavaCompiler getJavaCompiler() {
 		//
 		//	First try to find the EclipseCompiler
@@ -216,5 +334,81 @@ public abstract class JavaFileUtil
 		//	Otherwise the JDK compiler
 		//
 		return ToolProvider.getSystemJavaCompiler();
+	}
+
+	/**
+	 * Return the file system folder suitable for use as a javac classpath entry.
+	 *
+	 * For workspace projects this is the "bin" folder. For plugins it is the jar file.
+	 */
+	public static @Nullable File getProjectBinFolder(@NonNull URIConverter uriConverter, @NonNull String projectName) {
+		String path = null;
+		URI platformURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
+		URI pathURI = uriConverter.normalize(platformURI);
+		if (EMFPlugin.IS_ECLIPSE_RUNNING && pathURI.isPlatform()) {
+			if (pathURI.isPlatformPlugin()) {
+				Bundle bundle = Platform.getBundle(projectName);
+				if (bundle != null) {
+					String location = bundle.getLocation();
+					// System.out.println(pathURI + " => " + location);
+					if (location != null) {
+						if ("System Bundle".equals(location)) {					// FIXME BUG 527111
+							URI uri = URI.createURI(Platform.getBundle("org.eclipse.core.runtime").getLocation(), true);
+							if (uri.hasOpaquePart()) {
+								uri = URI.createURI(uri.opaquePart());			// trim reference:
+							}
+							uri = uri.trimSegments(1).appendSegment(bundle.getSymbolicName() + "_" + bundle.getVersion() + ".jar");
+							path = uri.toFileString();
+						}
+						else {
+							URI uri = URI.createURI(location, true);
+							if (uri.hasOpaquePart()) {
+								String opaquePart = uri.opaquePart();
+								assert opaquePart != null;
+								if (opaquePart.startsWith("file:../../../../")) {		// Workaround Bug 527242 for Tycho
+									String file = new File(opaquePart.substring(11)).getAbsolutePath();
+									uri = URI.createFileURI(file);		// trim initial@reference:file:../../
+								}
+								else if (opaquePart.startsWith("file:") && !opaquePart.startsWith("file:/")) {
+									String file = new File(opaquePart.substring(5)).getAbsolutePath();
+									uri = URI.createFileURI(file);		// trim initial@reference:file:
+								}
+								else {
+									uri = URI.createURI(opaquePart);					// trim reference:
+								}
+							}
+							if (uri.isPrefix()) {
+								path = uri.toFileString() + "bin";						// FIXME determine "bin" from JDT
+							}
+							else {
+								path = uri.toFileString();
+							}
+						}
+					}
+				}
+			}
+			if (path == null) {					// platform:/resource
+				IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+				IResource project = workspaceRoot.findMember(projectName);
+				if (project != null) {
+					IPath location = project.getLocation();
+					// System.out.println(pathURI + " => " + location);
+					path = location.toString() + "/bin";
+				}
+			}
+		}
+		else if (pathURI.isArchive()) {
+			path = pathURI.toString();
+			if (path.startsWith("archive:file:") && path.endsWith("!/")) {
+				path = path.substring(13, path.length()-2);
+			}
+		}
+		else {
+			path = pathURI.toFileString();
+			if (path != null) {
+				path = path + "bin";				// FIXME determine "bin" from JDT
+			}
+		}
+		return path != null ? new File(path) : null;
 	}
 }

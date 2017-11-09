@@ -1,0 +1,217 @@
+/*******************************************************************************
+ * Copyright (c) 2017 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.examples.xtext.tests;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
+
+public class JUnitStandaloneFileSystem extends TestFileSystem
+{
+	protected static class JUnitStandaloneTestFile implements TestFile
+	{
+		protected final @NonNull URI platformURI;
+		protected final @NonNull File file;
+
+		public JUnitStandaloneTestFile(@NonNull URI platformURI, @NonNull File file) {
+			this.platformURI = platformURI;
+			this.file = file;
+		}
+
+		@Override
+		public @NonNull File getFile() {
+			return file;
+		}
+
+		@Override
+		public @NonNull String getFileString() {
+			return String.valueOf(file);
+		}
+
+		@SuppressWarnings("null")
+		@Override
+		public @NonNull String getName() {
+			return file.getName();
+		}
+
+		@Override
+		public @NonNull URI getURI() {
+			return platformURI;
+		}
+
+		public void mkdir() {
+			if (!file.exists()) {
+				file.mkdir();
+			}
+		}
+
+		@Override
+		public String toString() {
+			return platformURI.toString() + " => " + file.toString();
+		}
+	}
+
+	protected static class JUnitStandaloneTestFolder extends JUnitStandaloneTestFile implements TestFile
+	{
+		public JUnitStandaloneTestFolder(@NonNull URI platformURI, @NonNull File file) {
+			super(platformURI, file);
+			mkdir();
+		}
+
+		public @NonNull JUnitStandaloneTestFile createFile(@NonNull String name) {
+			URI newURI = platformURI.appendSegment(name);
+			File newFile = new File(file, name);
+			return new JUnitStandaloneTestFile(newURI, newFile);
+		}
+
+		public @NonNull JUnitStandaloneTestFolder createFolder(@NonNull String name) {
+			URI newURI = platformURI.appendSegment(name);
+			File newFolder = new File(file, name);
+			return new JUnitStandaloneTestFolder(newURI, newFolder);
+		}
+	}
+
+	protected static class JUnitStandaloneTestProject extends JUnitStandaloneTestFolder implements TestProject
+	{
+		public JUnitStandaloneTestProject(@NonNull URI platformURI, @NonNull File file) {
+			super(platformURI, file);
+		}
+
+		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath) {
+			JUnitStandaloneTestFolder node = this;
+			@NonNull String[] testFileSegments = testFilePath.split("/");
+			if (testFilePath.endsWith("/")) {
+				for (int i = 0; i < testFileSegments.length; i++) {
+					node = node.createFolder(testFileSegments[i]);
+				}
+				return node;
+			}
+			else {
+				if (testFileSegments.length > 1) {
+					for (int i = 0; i < testFileSegments.length-1; i++) {
+						node = node.createFolder(testFileSegments[i]);
+					}
+				}
+				return node.createFile(testFileSegments[testFileSegments.length-1]);
+			}
+		}
+
+		protected @NonNull JUnitStandaloneTestFolder createFolderPath(@NonNull String testFilePath) {
+			JUnitStandaloneTestFolder node = this;
+			@NonNull String[] testFileSegments = testFilePath.split("/");
+			for (int i = 0; i < testFileSegments.length; i++) {
+				node = node.createFolder(testFileSegments[i]);
+			}
+			return node;
+		}
+
+		/*		@Override
+		public @NonNull JUnitStandaloneTestFile createInputFile(@NonNull String testFilePath, @NonNull URI sourceURI) throws IOException {
+			JUnitStandaloneTestFile testFile = createFilePath(testFilePath);
+			InputStream inputStream = URIConverter.INSTANCE.createInputStream(sourceURI);
+			FileOutputStream outputStream = new FileOutputStream(testFile.getFile());
+			byte bytes[] = new byte[16384];
+			for (int count; (count = inputStream.read(bytes)) > 0; ) {
+				outputStream.write(bytes, 0, count);
+			}
+			inputStream.close();
+			outputStream.close();
+			return testFile;
+		} */
+
+		@Override
+		public @NonNull ProjectManager createTestProjectManager() {
+			return new StandaloneExtraProjectsManager(String.valueOf(file));
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return platformURI.segment(1);
+		}
+
+		@Override
+		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath) {
+			return createFilePath(testFilePath);
+		}
+
+		@Override
+		public @NonNull JUnitStandaloneTestFile getOutputFolder(@NonNull String testFilePath) {
+			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath);
+			testFolder.mkdir();
+			return testFolder;
+		}
+	}
+
+	public static @NonNull JUnitStandaloneFileSystem create() {
+		return new JUnitStandaloneFileSystem();
+	}
+
+	protected final @NonNull Map<@NonNull String, @NonNull JUnitStandaloneTestProject> projectName2testProject = new HashMap<>();
+
+	public JUnitStandaloneFileSystem() {}
+
+	private @NonNull File createDotProjectFile(@NonNull File bundleFolder, @NonNull String projectName) {
+		File file = new File(bundleFolder, ".project");
+		Writer s;
+		try {
+			s = new FileWriter(file);
+			s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			s.append("<projectDescription>\n");
+			s.append("	<name>" + projectName + "</name>\n");
+			s.append("</projectDescription>\n");
+			s.close();
+		} catch (IOException e) {
+			throw new WrappedException(e);
+		}
+		return file;
+	}
+
+	@Override
+	public @NonNull TestProject getTestProject(@NonNull String projectName) {
+		JUnitStandaloneTestProject testProject = projectName2testProject.get(projectName);
+		if (testProject == null) {
+			URI newUri = URI.createPlatformResourceURI(projectName, true);
+			File newFile = new File("_" + projectName).getAbsoluteFile();
+			if (newFile.exists()) {
+				TestUtil.deleteDirectory(newFile);
+			}
+			newFile.mkdirs();
+			File dotProjectFile = new File(newFile, ".project");
+			if (!dotProjectFile.exists()) {
+				createDotProjectFile(newFile, projectName);
+			}
+			/*			URI location = projectMap.getLocation(projectName);
+			if (location == null) {
+				if (!projectMap.addProject(newFile)) {
+					throw new IllegalStateException("Failed to create " + projectName);
+				}
+				location = projectMap.getLocation(projectName);
+				EcorePlugin.getPlatformResourceMap().put(projectName, location);
+			} */
+			testProject = new JUnitStandaloneTestProject(newUri, newFile);
+			projectName2testProject.put(projectName, testProject);
+		}
+		return testProject;
+	}
+
+	@Override
+	public String toString() {
+		return "platform:/resource/* => .test*";
+	}
+}

@@ -70,7 +70,8 @@ public class OCL2JavaFileObject extends SimpleJavaFileObject
 	public static @Nullable String saveClass(@NonNull String explicitClassPath, @NonNull String qualifiedName, @NonNull String javaCodeSource, @NonNull String... extraClasspathProjects) {
 		List<@NonNull JavaFileObject> compilationUnits = Collections.singletonList(
 			new OCL2JavaFileObject(qualifiedName, javaCodeSource));
-		return JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, Lists.newArrayList(extraClasspathProjects));
+		List<@NonNull String> classpathProjects = extraClasspathProjects != null ? Lists.newArrayList(extraClasspathProjects) : null;
+		return JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, classpathProjects);
 	}
 
 	private @NonNull String javaCode;

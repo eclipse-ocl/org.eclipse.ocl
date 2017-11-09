@@ -676,7 +676,7 @@ public class PivotTestCase extends TestCase
 		return new File(projectURL.getFile());
 	}
 
-	protected @NonNull URI getProjectFileURI(String referenceName) {
+	protected @NonNull URI getProjectFileURI(@NonNull String referenceName) {
 		File projectFile = getProjectFile();
 		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
@@ -688,7 +688,7 @@ public class PivotTestCase extends TestCase
 	@Rule public TestName testName = new TestName();
 
 	@Override
-	public String getName() {
+	public @NonNull String getName() {
 		return TestUtil.getName(getTestName());
 	}
 
