@@ -271,13 +271,17 @@ extends PivotTestSuite// XtextTestCase
 		String interfacePackageSuffix = genOptions != null ? genOptions.get("interfacePackageSuffix") : null;
 		String metaDataPackageSuffix = genOptions != null ? genOptions.get("metaDataPackageSuffix") : null;
 		String usedGenPackages = genOptions != null ? genOptions.get("usedGenPackages") : null;
+		String modelDirectory = genOptions != null ? genOptions.get("modelDirectory") : null;
+		if (modelDirectory == null) {
+			modelDirectory = testProjectPath + "/src-gen";
+		}
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		s.append("<genmodel:GenModel xmi:version=\"2.0\"\n");
 		s.append("    xmlns:xmi=\"http://www.omg.org/XMI\"\n");
 		s.append("    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n");
 		s.append("    xmlns:genmodel=\"http://www.eclipse.org/emf/2002/GenModel\"\n");
-		s.append("    modelDirectory=\"/" + testProjectPath + "/src-gen\"\n");
+		s.append("    modelDirectory=\"/" + modelDirectory + "\"\n");
 		s.append("    modelPluginID=\"" + fileName + "." + fileName + "\"\n");
 		s.append("    modelName=\"" + fileName + "\"\n");
 		s.append("    importerID=\"org.eclipse.emf.importer.ecore\"\n");
