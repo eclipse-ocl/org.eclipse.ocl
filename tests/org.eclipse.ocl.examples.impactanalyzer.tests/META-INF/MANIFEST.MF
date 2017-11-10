@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ort.eclipse.ocl.examples.impactanalyzer.tests
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.examples.impactanalyzer.tests
 Bundle-Version: 3.9.0.qualifier
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.ocl.examples.eventmanager,
