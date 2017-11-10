@@ -14,18 +14,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IResourceStatus;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -41,19 +38,19 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
  * an CompleteOCLEObjectValidator instance has been registered as a validator in the EValidator.Registry.
- * 
+ *
  * Loading of the Complete OCL occurs during @link{initialize()} which may be called explicitly
  * or lazily during validation.
  */
 public class CompleteOCLEObjectValidator extends PivotEObjectValidator
-{	
+{
 	private static final Logger logger = Logger.getLogger(CompleteOCLEObjectValidator.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EPackage ePackage;
 	protected final @NonNull URI oclURI;
 	private Ecore2AS ecore2as = null;
-	
+
 	/**
 	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
 	 * for the meta-models managed by metamodelManager.
@@ -62,7 +59,13 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 		super(null);
 		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
 		this.ePackage = ePackage;
-		this.oclURI = oclURI;
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			URIConverter uriConverter = environmentFactory.getResourceSet().getURIConverter();
+			this.oclURI = uriConverter.normalize(oclURI);	// Convert platform:/resource to platform:/plugin if no project
+		}
+		else {
+			this.oclURI = oclURI;
+		}
 		ResourceSet resourceSet = ePackage.eResource().getResourceSet();
 		if (resourceSet != null) {
 			install(resourceSet, this.environmentFactory);
@@ -71,16 +74,16 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			this.environmentFactory.loadEPackage(ePackage);
 		}
 	}
-	
-//	@Override
+
+	//	@Override
 	protected EPackage getEPackage() {
 		return ePackage;
 	}
-	
+
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
 	}
-	
+
 	/**
 	 * Perform the loading and installation of the Complete OCL, returning true if successful.
 	 */
@@ -107,28 +110,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			logger.error("Failed to load Pivot from '" + ecoreResource.getURI() + message);
 			return false;
 		}
-		CSResource xtextResource = null;
-		try {
-			xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
-		}
-		catch (WrappedException e) {
-			URI retryURI = null;
-			Throwable cause = e.getCause();
-			if (cause instanceof CoreException) {
-				IStatus status = ((CoreException)cause).getStatus();
-				if ((status.getCode() == IResourceStatus.RESOURCE_NOT_FOUND) && status.getPlugin().equals(ResourcesPlugin.PI_RESOURCES)) {
-					if (oclURI.isPlatformResource()) {
-						retryURI = URI.createPlatformPluginURI(oclURI.toPlatformString(false), false);
-					}
-				}
-			}
-			if (retryURI != null) {
-				xtextResource = (CSResource) resourceSet.getResource(retryURI, true);			
-			}
-			else {
-				throw e;
-			}
-		}
+		CSResource xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
 		errors = xtextResource.getErrors();
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
@@ -151,7 +133,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (ecore2as == null) {
-			initialize();	
+			initialize();
 		}
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
