@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -76,25 +76,27 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 		URI nonASuri = uri.trimFileExtension();
 		String oclasExtension = nonASuri.fileExtension();
 		ASResourceFactory asResourceFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(oclasExtension);
-//		String fileExtension = uri.fileExtension();
-//		if (fileExtension == null) {			// Must be an Ecore Package registration
-//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
-//		}
+		//		String fileExtension = uri.fileExtension();
+		//		if (fileExtension == null) {			// Must be an Ecore Package registration
+		//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
+		//		}
 		if ((asResourceFactory == null) || !nonASuri.isFile()) {					// If it's not a known double extension
+			HashMap<Object, Object> options = new HashMap<>();
 			//
 			//	If *.oclas exists use it.
 			//
-			if (uri.isFile() && URIConverter.INSTANCE.exists(uri, null)) {
-				return super.createResource(uri);
-			}
-			else if (uri.isPlatform()) {
-				if (URIConverter.INSTANCE.exists(uri, null)) {
+			if (uri.isFile()) {
+				if (URIConverter.INSTANCE.getURIHandler(uri).exists(uri, options)) {
 					return super.createResource(uri);
 				}
-				if (uri.isPlatformResource() && EMFPlugin.IS_ECLIPSE_RUNNING) {
-					URI deresolvedURI = uri.deresolve(URI.createPlatformResourceURI("/", true));
-					URI pluginURI = deresolvedURI.resolve(URI.createPlatformPluginURI("/", true));
-					if (URIConverter.INSTANCE.exists(pluginURI, null)) {
+			}
+			else if (uri.isPlatform()) {
+				if (URIConverter.INSTANCE.getURIHandler(uri).exists(uri, options)) {
+					return super.createResource(uri);
+				}
+				if (uri.isPlatformResource()) {
+					URI pluginURI = URI.createPlatformPluginURI(uri.toPlatformString(false), false);
+					if (URIConverter.INSTANCE.getURIHandler(pluginURI).exists(pluginURI, options)) {
 						return super.createResource(pluginURI);
 					}
 				}
@@ -112,7 +114,7 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 			asResourceFactory = EcoreASResourceFactory.getInstance();
 		}
 		assert !(asResourceFactory instanceof OCLASResourceFactory);
-	    return asResourceFactory.createResource(uri);
+		return asResourceFactory.createResource(uri);
 	}
 
 	@Override
