@@ -223,7 +223,7 @@ public class TestUtil
 		}
 	}
 
-	public static void deleteDirectory(@NonNull File dir) throws Exception {
+	public static void deleteDirectory(@NonNull File dir) {
 		File[] listFiles = dir.listFiles();
 		for (File file : listFiles) {
 			if (file.isFile()) {

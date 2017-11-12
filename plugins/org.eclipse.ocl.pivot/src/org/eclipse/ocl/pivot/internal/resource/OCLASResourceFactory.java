@@ -10,14 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -27,7 +28,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
 /**
- * The <b>Resource Factory</b> for the pivot abstract syntax.
+ * The <b>Resource Factory</b> for the pivot and extended pivot abstract syntax.
  */
 public class OCLASResourceFactory extends AbstractASResourceFactory
 {
@@ -59,10 +60,24 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	/**
+	 * The private URIConverter avoids installing the (Standalone)PlatformURIHandlerImpl in a global URIConverter.
+	 *
+	 * This functionality might be resolveable via the URIMap if the ResourceFactory had access to the caller's
+	 * ResourceSet and so the caller's URIMap.
+	 */
+	private @NonNull URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+	/**
 	 * Creates an instance of the resource factory.
 	 */
 	public OCLASResourceFactory() {
 		super(ASResource.CONTENT_TYPE);
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			StandalonePlatformURIHandlerImpl.install(uriConverter, null);
+		}
+		else {
+			PlatformURIHandlerImpl.install(uriConverter);
+		}
 	}
 
 	@Override
@@ -81,29 +96,15 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 		//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
 		//		}
 		if ((asResourceFactory == null) || !nonASuri.isFile()) {					// If it's not a known double extension
-			HashMap<Object, Object> options = new HashMap<>();
 			//
-			//	If *.oclas exists use it.
+			//	If *.xxxas exists use it.
 			//
-			if (uri.isFile()) {
-				if (URIConverter.INSTANCE.getURIHandler(uri).exists(uri, options)) {
-					return super.createResource(uri);
-				}
-			}
-			else if (uri.isPlatform()) {
-				if (URIConverter.INSTANCE.getURIHandler(uri).exists(uri, options)) {
-					return super.createResource(uri);
-				}
-				if (uri.isPlatformResource()) {
-					URI pluginURI = URI.createPlatformPluginURI(uri.toPlatformString(false), false);
-					if (URIConverter.INSTANCE.getURIHandler(pluginURI).exists(pluginURI, options)) {
-						return super.createResource(pluginURI);
-					}
-				}
+			if (uriConverter.exists(uri, null)) {	// NB this expects a (Standalone)PlatformURIHandlerImpl to be installed
+				return super.createResource(uri);
 			}
 		}
 		//
-		//	Otherwise trim *.oclas and create a *.oclas by converting the trimmed resource to OCL AS.
+		//	Otherwise trim *.xxxas and create a *.xxxas by converting the trimmed resource to XXX AS.
 		//
 		@SuppressWarnings("null")@NonNull String nonASuriString = nonASuri.toString();
 		StandardLibraryContribution standardLibraryContribution = StandardLibraryContribution.REGISTRY.get(nonASuriString);

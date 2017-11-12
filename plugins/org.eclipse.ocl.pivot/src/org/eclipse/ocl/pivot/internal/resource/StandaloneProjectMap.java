@@ -37,6 +37,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -2627,6 +2628,13 @@ public class StandaloneProjectMap implements ProjectManager
 		initializeGenModelLocationMap(false);
 		initializePackageRegistry(resourceSet);
 		if (resourceSet != null) {
+			URIConverter uriConverter = resourceSet.getURIConverter();
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				StandalonePlatformURIHandlerImpl.install(uriConverter, this);
+			}
+			else {
+				//				PlatformPluginURIHandlerImpl.install(uriConverter);
+			}
 			List<Adapter> eAdapters = resourceSet.eAdapters();
 			if (!eAdapters.contains(this)) {
 				eAdapters.add(this);

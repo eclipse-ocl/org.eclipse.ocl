@@ -45,7 +45,7 @@ import org.eclipse.uml2.uml.UMLPackage;
  * Tests that OCL for model validation works.
  */
 public abstract class AbstractValidateTests extends PivotTestCase
-{	
+{
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
 
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, String... messages) {
@@ -80,20 +80,20 @@ public abstract class AbstractValidateTests extends PivotTestCase
 		if (s != null) {
 			fail("Inconsistent validation: (expected/actual) message" + s);
 		}
-	}	
+	}
 
 	protected @NonNull OCL createOCL() {
 		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
-//		ResourceSet resourceSet = ocl.getResourceSet();
-//		ProjectMap.initializeURIResourceMap(resourceSet);
-//		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-//    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-//    		uriMap.putAll(EcorePlugin.computePlatformURIMap());
-//    	}
+		//		ResourceSet resourceSet = ocl.getResourceSet();
+		//		ProjectMap.initializeURIResourceMap(resourceSet);
+		//		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+		//    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+		//    		uriMap.putAll(EcorePlugin.computePlatformURIMap());
+		//    	}
 		return ocl;
 	}
 
-	public Resource doLoadOCLinEcore(OCL ocl, String stem) throws IOException {
+	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull String stem) throws IOException {
 		String inputName = stem + ".oclinecore";
 		String ecoreName = stem + ".ecore";
 		URI inputURI = getProjectFileURI(inputName);
@@ -139,16 +139,16 @@ public abstract class AbstractValidateTests extends PivotTestCase
 		eObject.eSet(eFeature, value);
 	}
 
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-    	TestCaseAppender.INSTANCE.install();
-    	TestUtil.doCompleteOCLSetup();
-    	TestUtil.doOCLinEcoreSetup();
-    	TestUtil.doOCLstdlibSetup();
-//		OCLstdlib.install();
-//        OCLDelegateDomain.initialize(null);
+		TestCaseAppender.INSTANCE.install();
+		TestUtil.doCompleteOCLSetup();
+		TestUtil.doOCLinEcoreSetup();
+		TestUtil.doOCLstdlibSetup();
+		//		OCLstdlib.install();
+		//        OCLDelegateDomain.initialize(null);
 	}
 
 	@Override

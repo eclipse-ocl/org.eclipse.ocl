@@ -199,19 +199,19 @@ public class ValidateTests extends AbstractValidateTests
 
 	public void testValidate_OCL_2_5_oclas() throws IOException, InterruptedException {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			getProjectMap().initializeResourceSet(resourceSet);
-		}
+		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+		getProjectMap().initializeResourceSet(resourceSet);
+		//		}
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true), true);
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 	}
 
 	public void testValidate_Pivot_oclas() throws IOException, InterruptedException {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			getProjectMap().initializeResourceSet(resourceSet);
-			OCLASResourceFactory.getInstance().configure(resourceSet);
-		}
+		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+		getProjectMap().initializeResourceSet(resourceSet);
+		OCLASResourceFactory.getInstance().configure(resourceSet);
+		//		}
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true), true);
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 	}
