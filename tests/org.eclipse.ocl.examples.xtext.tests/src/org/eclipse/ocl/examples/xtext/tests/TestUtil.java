@@ -306,10 +306,7 @@ public class TestUtil
 		return uri;
 	}
 
-	public static String getName(String name) {
-		if (name == null) {
-			return name;
-		}
+	public static @NonNull String getName(@NonNull String name) {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
 		return name + " <" + testNameSuffix + ">";
 	}

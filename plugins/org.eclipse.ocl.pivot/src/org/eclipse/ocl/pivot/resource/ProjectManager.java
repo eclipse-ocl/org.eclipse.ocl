@@ -39,14 +39,14 @@ public interface ProjectManager extends Adapter
 	/**
 	 * The NO_PROJECTS instance of ProjectManager contributes no external projects to a user application.
 	 */
-	public static final @NonNull ProjectManager NO_PROJECTS = new BasicProjectManager();
+	public static final @NonNull ProjectManager NO_PROJECTS = new BasicProjectManager();		// FIXME Use static method to make this lazy
 
 	/**
 	 * The CLASS_PATH ProjectManager provides a shared ProjectManager that allows many OCL instances to share
 	 * a single immutable ProjectManager and consequently share the costly classpath analysis to identify
 	 * available projects.
 	 */
-	public static final @NonNull ProjectManager CLASS_PATH = BasicProjectManager.createGlobalProjectManager();
+	public static final @NonNull ProjectManager CLASS_PATH = BasicProjectManager.createGlobalProjectManager();		// FIXME Use static method to make this lazy
 
 	/**
 	 * An IConflictHandler configures the handling of conflicting access between generated packages and

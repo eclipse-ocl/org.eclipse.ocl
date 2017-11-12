@@ -1989,7 +1989,7 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The overall ProjectMap
 		 */
-		protected final @NonNull StandaloneProjectMap projectMap;
+		protected final @NonNull ProjectManager projectMap;
 
 		/**
 		 * The project/bundle/plugin name; e.g. "org.eclipse.emf.ecore"
@@ -2007,7 +2007,7 @@ public class StandaloneProjectMap implements ProjectManager
 		private @Nullable Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor = null;
 		private @Nullable Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2packageDescriptor = null;
 
-		public ProjectDescriptor(@NonNull StandaloneProjectMap projectMap, @NonNull String name, @NonNull URI locationURI) {
+		public ProjectDescriptor(@NonNull ProjectManager projectMap, @NonNull String name, @NonNull URI locationURI) {
 			this.projectMap =  projectMap;
 			this.name = name;
 			this.locationURI = locationURI;
@@ -2124,7 +2124,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public @NonNull StandaloneProjectMap getProjectManager() {
+		public @NonNull ProjectManager getProjectManager() {
 			return projectMap;
 		}
 
@@ -2412,6 +2412,19 @@ public class StandaloneProjectMap implements ProjectManager
 				System.out.println(s);
 			}
 		}
+	}
+
+	/**
+	 * Return the classpath entries that are scanned for potential projects.
+	 *
+	 * The default implementation uses the system path.separator to split up the system java.class.path.
+	 */
+	protected @NonNull String @NonNull[] getClassPathEntries() {
+		String property = System.getProperty("java.class.path", "");
+		String separator = System.getProperty("path.separator", ";");
+		assert property != null;
+		assert separator != null;
+		return property.split(separator);
 	}
 
 	/**
@@ -2794,7 +2807,7 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	/**
-	 * Remove a resourceDescriptor so that an explicit create procedes without interference.
+	 * Remove a resourceDescriptor so that an explicit create precedes without interference.
 	 * @since 1.3
 	 */
 	@Override
@@ -2807,37 +2820,33 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
-		String property = System.getProperty("java.class.path");
-		String separator = System.getProperty("path.separator");
-		if (property != null) {
-			String[] entries = property.split(separator);
-			for (String entry : entries) {
-				File fileEntry = new File(entry);
-				try {
-					File f = fileEntry.getCanonicalFile();
-					if (f.getPath().endsWith(".jar")) {
-						registerBundle(f, saxParser);
-					} else if (!scanFolder(f, saxParser, new HashSet<>(), 0)) {
-						// eclipse bin folder?
-						while((f = f.getParentFile()) != null) {
-							File dotProject = new File(f, ".project");
-							if (dotProject.exists()) {
-								IProjectDescriptor projectDescriptor = registerProject(dotProject);
-								if (projectDescriptor != null) {
-									File plugIn = new File(f, "plugin.xml");
-									if (plugIn.exists()) {
-										PluginReader pluginReader = new PluginReader(projectDescriptor);
-										saxParser.parse(plugIn, pluginReader);
-										pluginReader.scanContents(saxParser);
-									}
+		@NonNull String[] entries = getClassPathEntries();
+		for (@NonNull String entry : entries) {
+			File fileEntry = new File(entry);
+			try {
+				File f = fileEntry.getCanonicalFile();
+				if (f.getPath().endsWith(".jar")) {
+					registerBundle(f, saxParser);
+				} else if (!scanFolder(f, saxParser, new HashSet<>(), 0)) {
+					// eclipse bin folder?
+					while((f = f.getParentFile()) != null) {
+						File dotProject = new File(f, ".project");
+						if (dotProject.exists()) {
+							IProjectDescriptor projectDescriptor = registerProject(dotProject);
+							if (projectDescriptor != null) {
+								File plugIn = new File(f, "plugin.xml");
+								if (plugIn.exists()) {
+									PluginReader pluginReader = new PluginReader(projectDescriptor);
+									saxParser.parse(plugIn, pluginReader);
+									pluginReader.scanContents(saxParser);
 								}
-								break;
 							}
+							break;
 						}
 					}
-				} catch (Exception e) {
-					logException("Failed to read '" + fileEntry + "'", e);
 				}
+			} catch (Exception e) {
+				logException("Failed to read '" + fileEntry + "'", e);
 			}
 		}
 	}

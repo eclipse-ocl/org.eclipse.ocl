@@ -220,7 +220,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet);
 		EPackage.Registry packageRegistry = asResourceSet.getPackageRegistry();
 		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
-		asResourceSet.eAdapters().add(projectManager);
+		asResourceSet.eAdapters().add(projectManager); // FIXME redundant - part of initializeResourceSet
 		projectManager.initializeResourceSet(asResourceSet);
 		return asResourceSet;
 	}

@@ -29,7 +29,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -63,7 +63,7 @@ public abstract class JavaFileUtil
 			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
 			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
 			//			}
-			if (EcorePlugin.IS_ECLIPSE_RUNNING && (classpathProjects != null)) {
+			if (classpathProjects != null) {
 				compilationOptions.add("-cp");
 				compilationOptions.add(createClassPath(classpathProjects));
 			}
@@ -102,38 +102,67 @@ public abstract class JavaFileUtil
 		}
 	}
 
-	public static @NonNull String createClassPath(@NonNull List<String> projectNames) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		String pathSeparator = null;
-		StringBuilder s = new StringBuilder();
-		for (String projectName : projectNames) {
-			String projectPath = null;
-			IProject project = root.getProject(projectName);
-			if (project != null) {
-				IPath location = project.getLocation();
-				if (location != null) {
-					projectPath = location.toString() + "/";
+	/**
+	 * Return a javac -cp argument using the system path.separator for each of the projectPaths.
+	 *
+	 * The projectPaths should be OS-specific filesystems paths, but may for backward compatibility
+	 * purposes by simple dit-separated project names.
+	 */
+	public static @NonNull String createClassPath(@NonNull List<@NonNull String> projectPaths) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			String pathSeparator = null;
+			StringBuilder s = new StringBuilder();
+			for (String projectName : projectPaths) {
+				String projectPath = null;
+				if (projectName.contains("/") || projectName.contains("\\")) {
+					projectPath = projectName;
 				}
-			}
-			if (projectPath == null) {
-				Bundle bundle = Platform.getBundle(projectName);
-				if (bundle != null) {
-					projectPath = bundle.getLocation();
-				}
-			}
+				else {
+					IProject project = root.getProject(projectName);
+					if (project != null) {
+						IPath location = project.getLocation();
+						if (location != null) {
+							projectPath = location.toString() + "/";
+						}
+					}
+					if (projectPath == null) {
+						Bundle bundle = Platform.getBundle(projectName);
+						if (bundle != null) {
+							projectPath = bundle.getLocation();
+						}
+					}
 
-			if (projectPath != null) {
-				if (projectPath.startsWith("reference:")) {
-					projectPath = projectPath.substring(10);
+					if (projectPath != null) {
+						if (projectPath.startsWith("reference:")) {
+							projectPath = projectPath.substring(10);
+						}
+						org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(projectPath);
+						if (uri.isFile()) {
+							projectPath =  ClassUtil.nonNullState(uri.toFileString()).replace("\\", "/");
+						}
+						assert projectPath != null;
+						if (projectPath.endsWith("/")) {
+							projectPath = projectPath + "bin";
+						}
+					}
 				}
-				org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(projectPath);
-				if (uri.isFile()) {
-					projectPath =  ClassUtil.nonNullState(uri.toFileString()).replace("\\", "/");
+				if (projectPath != null) {
+					if (pathSeparator != null) {
+						s.append(pathSeparator);
+					}
+					else {
+						pathSeparator = System.getProperty("path.separator");
+					}
+					s.append(projectPath);
 				}
-				assert projectPath != null;
-				if (projectPath.endsWith("/")) {
-					projectPath = projectPath + "bin";
-				}
+			}
+			return s.toString();
+		}
+		else {
+			String pathSeparator = null;
+			StringBuilder s = new StringBuilder();
+			for (String projectPath : projectPaths) {
 				if (pathSeparator != null) {
 					s.append(pathSeparator);
 				}
@@ -142,8 +171,8 @@ public abstract class JavaFileUtil
 				}
 				s.append(projectPath);
 			}
+			return s.toString();
 		}
-		return s.toString();
 	}
 
 	/**
