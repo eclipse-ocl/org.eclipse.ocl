@@ -16,13 +16,22 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/AllExamplesTests.java</include>
-          </includes>
-          <argLine>-DtestNameSuffix="maven" -ea</argLine>
-          <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
-        </configuration>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/AllExamplesTests.java</include>
+              </includes>
+              <argLine>-DtestNameSuffix="maven" -ea</argLine>
+              <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
        <groupId>org.eclipse.tycho</groupId>
@@ -32,6 +41,7 @@
          <useUIHarness>true</useUIHarness>
          <useUIThread>true</useUIThread>
          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+         <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
        </configuration>
       </plugin>
     </plugins>

@@ -13,7 +13,7 @@
   </parent>
   <build>
     <plugins>
-      <!--plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <executions>
@@ -27,12 +27,13 @@
               <includes>
                 <include>**/AllXtextTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -Xms40m -Xmx1024m -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -ea</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
+              <workingDirectory>${project.build.directory}</workingDirectory>
             </configuration>
           </execution>
         </executions>
-      </plugin-->
+      </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-surefire-plugin</artifactId>
@@ -41,7 +42,7 @@
           <testClass>org.eclipse.ocl.examples.test.xtext.AllXtextTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -Xms40m -Xmx1024m -ea</argLine>
+          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
           <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
           <systemProperties>
             <TYCHO_UI_TEST>true</TYCHO_UI_TEST><!-- See Bug 526252 -->
