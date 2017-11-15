@@ -12,56 +12,59 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <build>
-  <plugins>
-    <plugin>
-     <groupId>org.eclipse.tycho</groupId>
-     <artifactId>tycho-surefire-plugin</artifactId>
-     <version>${tycho-version}</version>
-     <configuration>
-       <failIfNoTests>false</failIfNoTests>
-     </configuration>
-     <executions>
-       <execution>
-         <id>default-test</id>
-         <goals>
-           <goal>test</goal>
-         </goals>
-         <configuration>
-           <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
-           <useUIHarness>false</useUIHarness>
-           <useUIThread>true</useUIThread>
-           <argLine>-DtestNameSuffix="tycho" -ea</argLine>
-           <reportsDirectory>${project.build.directory}/surefire-reports/with TracebackSteps</reportsDirectory>
-         </configuration>
-       </execution>
-       <execution>
-         <id>with Traceback+UnusedChecks</id>
-         <goals>
-           <goal>test</goal>
-         </goals>
-         <configuration>
-           <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
-           <useUIHarness>false</useUIHarness>
-           <useUIThread>true</useUIThread>
-           <argLine>-DtestNameSuffix="tycho-withUnusedChecks" -DunusedCheckIA=true -ea</argLine>
-           <reportsDirectory>${project.build.directory}/surefire-reports/with Traceback+UnusedChecks</reportsDirectory>
-         </configuration>
-       </execution>
-       <execution>
-         <id>with NavigationSteps</id>
-         <goals>
-           <goal>test</goal>
-         </goals>
-         <configuration>
-           <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
-           <useUIHarness>false</useUIHarness>
-           <useUIThread>true</useUIThread>
-           <argLine>-DtestNameSuffix="tycho-withNavigationSteps" -DnavigationStepIA=true -ea</argLine>
-           <reportsDirectory>${project.build.directory}/surefire-reports/with NavigationSteps</reportsDirectory>
-         </configuration>
-       </execution>
-     </executions>
-    </plugin>
-  </plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <failIfNoTests>false</failIfNoTests>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
+              <useUIHarness>false</useUIHarness>
+              <useUIThread>true</useUIThread>
+              <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+              <systemProperties>
+                <TYCHO_TEST>true</TYCHO_TEST>
+              </systemProperties>
+              <reportsDirectory>${project.build.directory}/surefire-reports/with TracebackSteps</reportsDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>with Traceback+UnusedChecks</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
+              <useUIHarness>false</useUIHarness>
+              <useUIThread>true</useUIThread>
+              <argLine>-DtestNameSuffix="tycho-withUnusedChecks" -DunusedCheckIA=true -ea</argLine>
+              <reportsDirectory>${project.build.directory}/surefire-reports/with Traceback+UnusedChecks</reportsDirectory>
+            </configuration>
+         </execution>
+         <execution>
+           <id>with NavigationSteps</id>
+           <goals>
+             <goal>test</goal>
+           </goals>
+           <configuration>
+             <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
+             <useUIHarness>false</useUIHarness>
+             <useUIThread>true</useUIThread>
+             <argLine>-DtestNameSuffix="tycho-withNavigationSteps" -DnavigationStepIA=true -ea</argLine>
+             <reportsDirectory>${project.build.directory}/surefire-reports/with NavigationSteps</reportsDirectory>
+           </configuration>
+         </execution>
+       </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

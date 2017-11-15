@@ -28,8 +28,11 @@
                 <include>**/AllXtextTests.java</include>
               </includes>
               <argLine>-DtestNameSuffix="maven" -ea</argLine>
+              <systemProperties>
+                <MAVEN_TEST>true</MAVEN_TEST>
+              </systemProperties>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
-              <workingDirectory>${project.build.directory}</workingDirectory>
+              <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
           </execution>
         </executions>
@@ -43,10 +46,10 @@
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
           <argLine>-DtestNameSuffix="tycho" -ea</argLine>
-          <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
           <systemProperties>
-            <TYCHO_UI_TEST>true</TYCHO_UI_TEST><!-- See Bug 526252 -->
+            <TYCHO_TEST>true</TYCHO_TEST>
           </systemProperties>
+          <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
         </configuration>
       </plugin>
     </plugins>

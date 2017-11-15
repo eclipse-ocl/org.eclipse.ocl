@@ -1990,7 +1990,7 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The overall ProjectMap
 		 */
-		protected final @NonNull ProjectManager projectMap;
+		protected final @NonNull StandaloneProjectMap projectMap;
 
 		/**
 		 * The project/bundle/plugin name; e.g. "org.eclipse.emf.ecore"
@@ -2008,7 +2008,10 @@ public class StandaloneProjectMap implements ProjectManager
 		private @Nullable Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor = null;
 		private @Nullable Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2packageDescriptor = null;
 
-		public ProjectDescriptor(@NonNull ProjectManager projectMap, @NonNull String name, @NonNull URI locationURI) {
+		/**
+		 * @since 1.4
+		 */
+		public ProjectDescriptor(@NonNull StandaloneProjectMap projectMap, @NonNull String name, @NonNull URI locationURI) {
 			this.projectMap =  projectMap;
 			this.name = name;
 			this.locationURI = locationURI;
@@ -2125,7 +2128,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public @NonNull ProjectManager getProjectManager() {
+		public @NonNull StandaloneProjectMap getProjectManager() {
 			return projectMap;
 		}
 
@@ -2419,6 +2422,8 @@ public class StandaloneProjectMap implements ProjectManager
 	 * Return the classpath entries that are scanned for potential projects.
 	 *
 	 * The default implementation uses the system path.separator to split up the system java.class.path.
+	 *
+	 * @since 1.4
 	 */
 	protected @NonNull String @NonNull[] getClassPathEntries() {
 		String property = System.getProperty("java.class.path", "");

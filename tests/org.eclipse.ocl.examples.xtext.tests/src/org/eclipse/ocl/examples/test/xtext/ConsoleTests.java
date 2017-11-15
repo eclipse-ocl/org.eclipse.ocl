@@ -47,7 +47,7 @@ public class ConsoleTests extends AbstractConsoleTests
 	}
 
 	public void testConsole_debugger() throws Exception {
-		if (Boolean.getBoolean("TYCHO_UI_TEST")) {				// FIXME BUG 526252
+		if (Boolean.getBoolean("TYCHO_TEST")) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}

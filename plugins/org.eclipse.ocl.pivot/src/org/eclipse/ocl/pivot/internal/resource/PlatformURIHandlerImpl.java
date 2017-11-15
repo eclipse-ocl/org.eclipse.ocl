@@ -37,6 +37,8 @@ import org.osgi.framework.Bundle;
  * delegates to a standard PlatformResourceHandle
  * alternatively if the first segment corresponds to a Platform bundle whose location is a file, the handler
  * delegates to the equivalent file alternatively it delegates to the standard URI handling for a JAR.
+ *
+ * @since 1.4
  */
 public class PlatformURIHandlerImpl extends URIHandlerImpl
 {

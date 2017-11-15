@@ -221,7 +221,7 @@ public class CompletionProposalTests extends XtextTestCase
 	}
 
 	public void testEditor_OCLinEcore_Completions() throws Exception {
-		if (Boolean.getBoolean("TYCHO_UI_TEST")) {				// FIXME BUG 526252
+		if (Boolean.getBoolean("TYCHO_TEST")) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}
@@ -241,7 +241,7 @@ public class CompletionProposalTests extends XtextTestCase
 	}
 
 	public void testEditor_OCLstdlib_Completions() throws Exception {
-		if (Boolean.getBoolean("TYCHO_UI_TEST")) {				// FIXME BUG 526252
+		if (Boolean.getBoolean("TYCHO_TEST")) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}

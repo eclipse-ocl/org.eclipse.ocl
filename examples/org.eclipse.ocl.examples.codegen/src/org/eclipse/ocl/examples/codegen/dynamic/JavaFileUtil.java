@@ -36,11 +36,24 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.osgi.framework.Bundle;
 
 public abstract class JavaFileUtil
 {
+	public static final @NonNull TracingOption CLASS_PATH = new TracingOption(CodeGenConstants.PLUGIN_ID, "classPath");
+
+	/**
+	 * When running maven/tycho tests locally a bin folder may heave helpful content hiding what will fail
+	 * in a clean workspace. Using test-bin reduces the likelihood of delayed bug discovery.
+	 */
+	public static final @NonNull String TEST_BIN_FOLDER_NAME = "test-bin";
+	private static final @NonNull String MAVEN_TYCHO_BIN_FOLDER_NAME = "target/classes";
+	private static final @NonNull String REGULAR_BIN_FOLDER_NAME = "bin";
+	public static final @NonNull String TEST_SRC_FOLDER_NAME = "test-src";
+
 	private static @Nullable JavaCompiler compiler = getJavaCompiler();
 
 	public static @Nullable String compileClass(@NonNull String sourcePath, @NonNull String javaCodeSource, @NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws IOException {
@@ -86,7 +99,7 @@ public abstract class JavaFileUtil
 			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
 			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
 			//			}
-			if (classpathProjects != null) {
+			if ((classpathProjects != null) && (classpathProjects.size() > 0)) {
 				compilationOptions.add("-cp");
 				compilationOptions.add(createClassPath(classpathProjects));
 			}
@@ -166,7 +179,7 @@ public abstract class JavaFileUtil
 						}
 						assert projectPath != null;
 						if (projectPath.endsWith("/")) {
-							projectPath = projectPath + "bin";
+							projectPath = projectPath + REGULAR_BIN_FOLDER_NAME;
 						}
 					}
 				}
@@ -343,19 +356,28 @@ public abstract class JavaFileUtil
 	 */
 	public static @Nullable File getProjectBinFolder(@NonNull URIConverter uriConverter, @NonNull String projectName) {
 		String path = null;
+		String binDir = (System.getProperty("MAVEN_TEST") != null) || (System.getProperty("TYCHO_TEST") != null) ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
 		URI platformURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
 		URI pathURI = uriConverter.normalize(platformURI);
+		String location = null;
 		if (EMFPlugin.IS_ECLIPSE_RUNNING && pathURI.isPlatform()) {
 			if (pathURI.isPlatformPlugin()) {
 				Bundle bundle = Platform.getBundle(projectName);
 				if (bundle != null) {
-					String location = bundle.getLocation();
-					// System.out.println(pathURI + " => " + location);
+					location = bundle.getLocation();
 					if (location != null) {
 						if ("System Bundle".equals(location)) {					// FIXME BUG 527111
 							URI uri = URI.createURI(Platform.getBundle("org.eclipse.core.runtime").getLocation(), true);
 							if (uri.hasOpaquePart()) {
-								uri = URI.createURI(uri.opaquePart());			// trim reference:
+								String opaquePart = uri.opaquePart();
+								assert opaquePart != null;
+								if (opaquePart.startsWith("file:") && !opaquePart.startsWith("file:/")) {
+									String file = new File(opaquePart.substring(5)).getAbsolutePath();
+									uri = URI.createFileURI(file);		// trim initial@reference:file:
+								}
+								else {
+									uri = URI.createURI(uri.opaquePart());			// trim reference:
+								}
 							}
 							uri = uri.trimSegments(1).appendSegment(bundle.getSymbolicName() + "_" + bundle.getVersion() + ".jar");
 							path = uri.toFileString();
@@ -369,6 +391,10 @@ public abstract class JavaFileUtil
 									String file = new File(opaquePart.substring(11)).getAbsolutePath();
 									uri = URI.createFileURI(file);		// trim initial@reference:file:../../
 								}
+								else if (opaquePart.equals("file:../../")) {		// Workaround Bug 527242 for Tycho
+									String file = new File(binDir).getAbsolutePath();
+									uri = URI.createFileURI(file);		// trim initial@reference:file:../../
+								}
 								else if (opaquePart.startsWith("file:") && !opaquePart.startsWith("file:/")) {
 									String file = new File(opaquePart.substring(5)).getAbsolutePath();
 									uri = URI.createFileURI(file);		// trim initial@reference:file:
@@ -378,7 +404,7 @@ public abstract class JavaFileUtil
 								}
 							}
 							if (uri.isPrefix()) {
-								path = uri.toFileString() + "bin";						// FIXME determine "bin" from JDT
+								path = uri.toFileString() + binDir;
 							}
 							else {
 								path = uri.toFileString();
@@ -391,9 +417,8 @@ public abstract class JavaFileUtil
 				IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 				IResource project = workspaceRoot.findMember(projectName);
 				if (project != null) {
-					IPath location = project.getLocation();
-					// System.out.println(pathURI + " => " + location);
-					path = location.toString() + "/bin";
+					location = String.valueOf(project.getLocation());
+					path = location + "/" + TEST_BIN_FOLDER_NAME;
 				}
 			}
 		}
@@ -406,8 +431,26 @@ public abstract class JavaFileUtil
 		else {
 			path = pathURI.toFileString();
 			if (path != null) {
-				path = path + "bin";				// FIXME determine "bin" from JDT
+				if (!new File(path + "/META-INF").exists()) {
+					path = path + TEST_BIN_FOLDER_NAME;
+				}
+				else {
+					path = path + binDir;
+				}
 			}
+		}
+		if (CLASS_PATH.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append(projectName);
+			s.append(" => ");
+			s.append(pathURI);
+			s.append(" => ");
+			if (location != null) {
+				s.append(location);
+				s.append(" => ");
+			}
+			s.append(path);
+			System.out.println(s.toString());
 		}
 		return path != null ? new File(path) : null;
 	}

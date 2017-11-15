@@ -95,8 +95,7 @@ import junit.framework.TestCase;
  * Tests that load a model and verify that there are no unresolved proxies as a
  * result.
  */
-public class UsageTests
-extends PivotTestSuite// XtextTestCase
+public class UsageTests extends PivotTestSuite// XtextTestCase
 {
 	public Logger log;
 
@@ -111,7 +110,7 @@ extends PivotTestSuite// XtextTestCase
 	 * @throws ConfigurationException
 	 *             if any error present
 	 */
-	public void checkResourceSet(ResourceSet resourceSet)
+	public void checkResourceSet(@NonNull ResourceSet resourceSet)
 			throws ConfigurationException {
 		int errorCount = 0;
 		for (Resource aResource : resourceSet.getResources()) {
@@ -194,7 +193,7 @@ extends PivotTestSuite// XtextTestCase
 	protected @NonNull TestFileSystem getTestFileSystem() {
 		TestFileSystem testFileSystem2 = testFileSystem;
 		if (testFileSystem2 == null) {
-			if (System.getProperty("TYCHO_UI_TEST") == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 				File testBundleFile = new File(".project");
 				assert !testBundleFile.exists() : "Default working directory should be the workspace rather than a project: " + testBundleFile.getAbsolutePath();
 			}
@@ -280,7 +279,7 @@ extends PivotTestSuite// XtextTestCase
 				}
 				assert projectPath != null;
 				if (projectPath.endsWith("/")) {
-					projectPath = projectPath + "bin";
+					projectPath = projectPath + JavaFileUtil.TEST_BIN_FOLDER_NAME;
 				}
 				if (pathSeparator != null) {
 					s.append(pathSeparator);
@@ -300,7 +299,7 @@ extends PivotTestSuite// XtextTestCase
 		String usedGenPackages = genOptions != null ? genOptions.get("usedGenPackages") : null;
 		String modelDirectory = genOptions != null ? genOptions.get("modelDirectory") : null;
 		if (modelDirectory == null) {
-			modelDirectory = getTestProject().getName() + "/src";//getTestFileURI("src").toString();
+			modelDirectory = getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME;
 		}
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -364,9 +363,9 @@ extends PivotTestSuite// XtextTestCase
 	}
 
 	protected boolean doCompile(@NonNull OCL ocl, @NonNull String testProjectName) throws Exception {
-		TestFile srcTestFile = getTestProject().getOutputFile("src/" + testProjectName);
+		TestFile srcTestFile = getTestProject().getOutputFile(JavaFileUtil.TEST_SRC_FOLDER_NAME + "/" + testProjectName);
 		List<@NonNull JavaFileObject> compilationUnits = JavaFileUtil.getCompilationUnits(srcTestFile.getFile());
-		String objectPath = getTestProject().getOutputFile("bin/").getFileString();
+		String objectPath = getTestProject().getOutputFile(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFileString();
 		List<@NonNull String> projectNames = new ArrayList<>();
 		projectNames.add(getTestProject().getName());
 		projectNames.add("org.eclipse.emf.common");
@@ -374,10 +373,10 @@ extends PivotTestSuite// XtextTestCase
 		projectNames.add("org.eclipse.jdt.annotation");
 		projectNames.add("org.eclipse.ocl.pivot");
 		projectNames.add("org.eclipse.osgi");
-		// System.out.println("projectNames = " + projectNames);
+		System.out.println("projectNames = " + projectNames);
 		List<@NonNull String> classpathProjects = JavaFileUtil.createClassPathProjectList(ocl.getResourceSet().getURIConverter(), projectNames);
 		// System.out.println("objectPath = " + objectPath);
-		// System.out.println("classpathProjects = " + classpathProjects);
+		System.out.println("classpathProjects = " + classpathProjects);
 		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, srcTestFile.getFileString(), objectPath, classpathProjects);
 		if (problemMessage != null) {
 			fail(problemMessage);
@@ -501,7 +500,7 @@ extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -572,7 +571,7 @@ extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -620,7 +619,7 @@ extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -686,7 +685,7 @@ extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + ".coreM." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -735,7 +734,7 @@ extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -762,13 +761,13 @@ extends PivotTestSuite// XtextTestCase
 			URI targetGenModelURI = getTestURI("SysML_ValueTypes_QUDV.genmodel");
 			Resource genModelResource = ocl.getResourceSet().getResource(sourceGenModelURI, true);
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
-			genModel.setModelDirectory(getTestProject().getName() + "/src");
+			genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 			genModelResource.setURI(targetGenModelURI);
 			genModelResource.save(null);
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
-			File classFilePath = getTestProject().getOutputFolder("bin").getFile();
+			File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 			List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 			ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 			String qualifiedPackageName1 = testProjectName + ".QUDV.QUDVPackage";
@@ -809,7 +808,7 @@ extends PivotTestSuite// XtextTestCase
 			URI targetGenModelURI = getTestURI("CodeGenCompany.genmodel");
 			Resource genModelResource = ocl.getResourceSet().getResource(sourceGenModelURI, true);
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
-			genModel.setModelDirectory(getTestProject().getName() + "/src");
+			genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 			genModelResource.setURI(targetGenModelURI);
 			genModelResource.save(null);
 			//
@@ -991,6 +990,8 @@ extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testBug416421() throws Exception {
+		System.out.println(System.getProperties());
+		JavaFileUtil.CLASS_PATH.setState(true);
 		TestOCL ocl = createOCL();
 		String testFileStemA = "Bug416421A";
 		String testProjectNameA = "bug416421A";
@@ -1033,6 +1034,7 @@ extends PivotTestSuite// XtextTestCase
 		doCompile(ocl, testProjectNameA);
 		doCompile(ocl, testProjectNameB);
 		ocl.dispose();
+		JavaFileUtil.CLASS_PATH.setState(false);
 	}
 
 	public void testBug458722() throws Exception {

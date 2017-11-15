@@ -28,21 +28,28 @@
                 <include>**/AllExamplesTests.java</include>
               </includes>
               <argLine>-DtestNameSuffix="maven" -ea</argLine>
+              <systemProperties>
+                <MAVEN_TEST>true</MAVEN_TEST>
+              </systemProperties>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
+              <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
-       <groupId>org.eclipse.tycho</groupId>
-       <artifactId>tycho-surefire-plugin</artifactId>
-       <configuration>
-         <testClass>org.eclipse.ocl.examples.test.AllExamplesTests</testClass>
-         <useUIHarness>true</useUIHarness>
-         <useUIThread>true</useUIThread>
-         <argLine>-DtestNameSuffix="tycho" -ea</argLine>
-         <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
-       </configuration>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <configuration>
+          <testClass>org.eclipse.ocl.examples.test.AllExamplesTests</testClass>
+          <useUIHarness>true</useUIHarness>
+          <useUIThread>true</useUIThread>
+          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+          <systemProperties>
+            <TYCHO_TEST>true</TYCHO_TEST>
+          </systemProperties>
+          <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>
