@@ -30,6 +30,8 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
  * StandalonePlatformURIHandlerImpl resolves platform:/plugin and platform:/resource URIs identically.
  * If the first segment corresponds to a project folder discovered by a class path scan, the handler
  * delegates to the equivalent file alternatively it delegates to the standard URI handling for a JAR.
+ *
+ * @since 1.4
  */
 public class StandalonePlatformURIHandlerImpl extends URIHandlerImpl
 {
