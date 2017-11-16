@@ -639,7 +639,7 @@ public class DelegatesTest extends AbstractTestSuite
 		assertTrue(directReportsAnn.getDetails().containsKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY));
 		String derivationExpression =  directReportsAnn.getDetails().get(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
 		try {
-			directReportsAnn.getDetails().remove(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
+			directReportsAnn.getDetails().removeKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
 			// ensure that the plugin cache doesn't have an expression cached:
 			SettingBehavior.INSTANCE.cacheOCLExpression(directReportsRef, nullLiteralExp);
 			assertNull(ocl.evaluate(manager, expr));
@@ -738,7 +738,7 @@ public class DelegatesTest extends AbstractTestSuite
 		helper.setContext(employeeClass);
 		OCLExpression query = helper.createQuery("false"); // a constraint always returning false
 		try {
-			annotation.getDetails().remove(constraintName);
+			annotation.getDetails().removeKey(constraintName);
 			ValidationBehavior.INSTANCE.cacheOCLExpression(employeeClass,
 				constraintName, query);
 			assertFalse(
@@ -905,7 +905,7 @@ public class DelegatesTest extends AbstractTestSuite
 		assertTrue(reportsToAnn.getDetails().containsKey(InvocationBehavior.BODY_CONSTRAINT_KEY));
 		String body = reportsToAnn.getDetails().get(InvocationBehavior.BODY_CONSTRAINT_KEY);
 		try {
-			reportsToAnn.getDetails().remove(InvocationBehavior.BODY_CONSTRAINT_KEY);
+			reportsToAnn.getDetails().removeKey(InvocationBehavior.BODY_CONSTRAINT_KEY);
 			// ensure that the plugin cache doesn't have an expression cached:
 			InvocationBehavior.INSTANCE.cacheOCLExpression(reportsToOp, falseLiteralExp);
 			assertFalse((Boolean) ocl.evaluate(employee, expr));

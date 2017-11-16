@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  * 	 E.D.Willink - Bug 306079
  *******************************************************************************/
@@ -31,11 +31,11 @@ import org.eclipse.ocl.ecore.impl.NullLiteralExpImpl;
 
 /**
  * A basic implementation of a delegated behavior.
- * 
+ *
  * @since 3.0
  */
 public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
-		implements DelegatedBehavior<E, R, F> {
+implements DelegatedBehavior<E, R, F> {
 
 	private static List<DelegatedBehavior<?, ?, ?>> delegatedBehaviors = null;
 
@@ -54,15 +54,15 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 	/**
 	 * An "identifying" instance that helps distinguish between the case where an OCL expression
 	 * isn't found in the expression cache and hasn't been looked up elsewhere yet from the case where
-	 * we looked around for a definition but couldn't find one 
+	 * we looked around for a definition but couldn't find one
 	 * @since 3.1
 	 */
 	public static final OCLExpression NO_OCL_DEFINITION = new NullLiteralExpImpl() {};
-	
+
 	/**
 	 * Return true if <code>e</code> is a reserved expression used to cache a miss and so
 	 * avoid repeating the miss processing on subsequent accesses.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public static boolean isNoOCLDefinition(OCLExpression e) {
@@ -72,19 +72,19 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 	/**
 	 * Caches a single OCL expression in an adapter that can be attached, e.g., to an Ecore object
 	 * without {@link Notification#isTouch() "modifying"} the object to which the adapter gets attached.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected static class ExpressionCacheAdapter extends AdapterImpl
-	{	
+	{
 		/**
 		 * Creates an {@link org.eclipse.ocl.ecore.delegate.AbstractDelegatedBehavior.ExpressionCacheAdapter ExpressionCacheAdapter} for expression <code>e</code> and adds
 		 * it to <code>modelElement</code>'s adapter list so that {@link #getCachedOCLExpression(EModelElement)}
 		 * will return <code>e</code> when called for <code>modelElement</code>. To achieve this, any other
 		 * {@link org.eclipse.ocl.ecore.delegate.AbstractDelegatedBehavior.ExpressionCacheAdapter ExpressionCacheAdapter} in <code>modelElement</code>'s adapter list is removed.
-		 * 
+		 *
 		 * @param e if <code>null</code>, any existing cache entry is removed and no new entry
-		 * is created. {@link #getCachedOCLExpression(EModelElement)} will then return <code>null</code>. 
+		 * is created. {@link #getCachedOCLExpression(EModelElement)} will then return <code>null</code>.
 		 */
 		public static void cacheOCLExpression(EModelElement modelElement, OCLExpression e) {
 			for (Iterator<Adapter> i = modelElement.eAdapters().iterator(); i.hasNext(); ) {
@@ -96,7 +96,7 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 				ExpressionCacheAdapter newAdapter = new ExpressionCacheAdapter(e);
 				modelElement.eAdapters().add(newAdapter);
 			}
-		}	
+		}
 
 		/**
 		 * Looks for an {@link org.eclipse.ocl.ecore.delegate.AbstractDelegatedBehavior.ExpressionCacheAdapter ExpressionCacheAdapter} attached to <code>modelElement</code>.
@@ -114,23 +114,23 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 				return null;
 			}
 		}
-		
+
 		private final OCLExpression expression;
-		
+
 		public ExpressionCacheAdapter(OCLExpression expression) {
 			this.expression = expression;
 		}
-		
+
 		public OCLExpression getExpression() {
 			return expression;
 		}
-		
+
 		@Override
 		public boolean isAdapterForType(Object type) {
 			return type == ExpressionCacheAdapter.class;
 		}
 	}
-	
+
 	public List<DelegateDomain> getDelegateDomains(E eObject) {
 		EPackage ePackage = getEPackage(eObject);
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
@@ -201,7 +201,7 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 		EAnnotation eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
 		if (delegateURIs == null || delegateURIs.isEmpty()) {
 			if (eAnnotation != null) {
-				eAnnotation.getDetails().remove(name);
+				eAnnotation.getDetails().removeKey(name);
 			}
 		} else {
 			if (eAnnotation == null) {
@@ -220,6 +220,7 @@ public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 		}
 	}
 
+	@Override
 	public String toString() {
 		return getName() + " => " + getFactoryClass().getName(); //$NON-NLS-1$
 	}
