@@ -223,23 +223,26 @@ public class JUnitPluginFileSystem extends TestFileSystem
 	public JUnitPluginFileSystem() {}
 
 	@Override
-	public @NonNull TestProject getTestProject(@NonNull String projectName) {
+	public @NonNull TestProject getTestProject(@NonNull String projectName, boolean cleanProject) {
 		JUnitPluginTestProject testProject = projectName2testProject.get(projectName);
 		if (testProject == null) {
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IWorkspaceRoot root = workspace.getRoot();
 			IProject project = root.getProject(projectName);
-			try {
-				if (!project.exists()) {
-					project.create(null);
+			assert project != null;
+			if (cleanProject) {
+				try {
+					if (!project.exists()) {
+						project.create(null);
+					}
+					if (!project.isOpen()) {
+						project.open(null);
+					}
+					project.refreshLocal(IResource.DEPTH_INFINITE, null);
+					TestUIUtil.flushEvents();
+				} catch (CoreException e) {
+					throw new WrappedException(e);
 				}
-				if (!project.isOpen()) {
-					project.open(null);
-				}
-				project.refreshLocal(IResource.DEPTH_INFINITE, null);
-				TestUIUtil.flushEvents();
-			} catch (CoreException e) {
-				throw new WrappedException(e);
 			}
 			testProject = new JUnitPluginTestProject(this, URI.createPlatformResourceURI(projectName, true), project);
 			projectName2testProject.put(projectName, testProject);

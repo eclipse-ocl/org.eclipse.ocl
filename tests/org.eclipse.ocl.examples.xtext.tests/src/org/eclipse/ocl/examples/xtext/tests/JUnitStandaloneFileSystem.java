@@ -183,27 +183,29 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 	}
 
 	@Override
-	public @NonNull TestProject getTestProject(@NonNull String projectName) {
+	public @NonNull TestProject getTestProject(@NonNull String projectName, boolean cleanProject) {
 		JUnitStandaloneTestProject testProject = projectName2testProject.get(projectName);
 		if (testProject == null) {
 			URI newUri = URI.createPlatformResourceURI(projectName, true);
 			File newFile = new File("_" + projectName).getAbsoluteFile();
-			if (newFile.exists()) {
-				TestUtil.deleteDirectory(newFile);
-			}
-			newFile.mkdirs();
-			File dotProjectFile = new File(newFile, ".project");
-			if (!dotProjectFile.exists()) {
-				createDotProjectFile(newFile, projectName);
-			}
-			/*			URI location = projectMap.getLocation(projectName);
-			if (location == null) {
-				if (!projectMap.addProject(newFile)) {
-					throw new IllegalStateException("Failed to create " + projectName);
+			if (cleanProject) {
+				if (newFile.exists()) {
+					TestUtil.deleteDirectory(newFile);
 				}
-				location = projectMap.getLocation(projectName);
-				EcorePlugin.getPlatformResourceMap().put(projectName, location);
-			} */
+				newFile.mkdirs();
+				File dotProjectFile = new File(newFile, ".project");
+				if (!dotProjectFile.exists()) {
+					createDotProjectFile(newFile, projectName);
+				}
+				/*			URI location = projectMap.getLocation(projectName);
+				if (location == null) {
+					if (!projectMap.addProject(newFile)) {
+						throw new IllegalStateException("Failed to create " + projectName);
+					}
+					location = projectMap.getLocation(projectName);
+					EcorePlugin.getPlatformResourceMap().put(projectName, location);
+				} */
+			}
 			testProject = new JUnitStandaloneTestProject(newUri, newFile);
 			projectName2testProject.put(projectName, testProject);
 		}

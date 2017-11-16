@@ -29,5 +29,5 @@ public abstract class TestFileSystem
 		}
 	}
 
-	public abstract @NonNull TestProject getTestProject(@NonNull String projectName);
+	public abstract @NonNull TestProject getTestProject(@NonNull String projectName, boolean cleanProject);
 }

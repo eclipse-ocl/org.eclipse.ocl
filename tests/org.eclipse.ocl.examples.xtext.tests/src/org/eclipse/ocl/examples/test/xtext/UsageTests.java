@@ -206,7 +206,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		TestProject testProject2 = testProject;
 		if (testProject2 == null) {
 			String testProjectName = getClass().getSimpleName() + "__" + getTestName();
-			testProject = testProject2 = getTestFileSystem().getTestProject(testProjectName);
+			testProject = testProject2 = getTestFileSystem().getTestProject(testProjectName, true);
 		}
 		return testProject2;
 	}
@@ -373,10 +373,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		projectNames.add("org.eclipse.jdt.annotation");
 		projectNames.add("org.eclipse.ocl.pivot");
 		projectNames.add("org.eclipse.osgi");
-		System.out.println("projectNames = " + projectNames);
+		// System.out.println("projectNames = " + projectNames);
 		List<@NonNull String> classpathProjects = JavaFileUtil.createClassPathProjectList(ocl.getResourceSet().getURIConverter(), projectNames);
 		// System.out.println("objectPath = " + objectPath);
-		System.out.println("classpathProjects = " + classpathProjects);
+		// System.out.println("classpathProjects = " + classpathProjects);
 		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, srcTestFile.getFileString(), objectPath, classpathProjects);
 		if (problemMessage != null) {
 			fail(problemMessage);
@@ -990,8 +990,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testBug416421() throws Exception {
-		System.out.println(System.getProperties());
-		JavaFileUtil.CLASS_PATH.setState(true);
 		TestOCL ocl = createOCL();
 		String testFileStemA = "Bug416421A";
 		String testProjectNameA = "bug416421A";
@@ -1034,7 +1032,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doCompile(ocl, testProjectNameA);
 		doCompile(ocl, testProjectNameB);
 		ocl.dispose();
-		JavaFileUtil.CLASS_PATH.setState(false);
 	}
 
 	public void testBug458722() throws Exception {

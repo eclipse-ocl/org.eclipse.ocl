@@ -1,4 +1,7 @@
 class java/io/File
+getAbsoluteFile
+ ()Ljava/io/File;
+ ()L1java/io/File;
 toURI
  ()Ljava/net/URI;
  ()L1java/net/URI;
