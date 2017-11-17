@@ -492,7 +492,7 @@ public boolean isAvailable() {
 }
 p. 
 
-The OCL expression for the invocation delegate may be found in *TutorialPackageImpl.createOCLAnnotations()*.
+The OCL expression for the invocation delegate may be found in *TutorialPackageImpl.createPivotAnnotations()*.
 
 bc.. 
 addAnnotation
