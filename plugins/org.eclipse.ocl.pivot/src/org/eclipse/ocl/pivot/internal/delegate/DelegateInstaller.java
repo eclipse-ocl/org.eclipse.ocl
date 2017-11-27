@@ -70,7 +70,7 @@ public class DelegateInstaller
 	 */
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
-	public static @Nullable String getAnnotationKey(@NonNull Constraint pivotConstraint) {
+	public static @NonNull String getAnnotationKey(@NonNull Constraint pivotConstraint) {
 		String name = pivotConstraint.getName();
 		EStructuralFeature eContainingFeature = pivotConstraint.eContainingFeature();
 		if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
@@ -78,7 +78,7 @@ public class DelegateInstaller
 				return "body";
 			}
 			else {
-				return name;
+				return name != null ? name : "null";
 			}
 		}
 		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
@@ -90,7 +90,7 @@ public class DelegateInstaller
 		else {
 			//			error("Unsupported " + pivotConstraint);
 		}
-		return null;
+		return "null";
 	}
 
 	public static @Nullable String getDelegateURI(@NonNull List<EObject> contents) {
@@ -421,8 +421,9 @@ public class DelegateInstaller
 		StringBuilder s = null;
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {
-			String constraintName = pivotConstraint.getName();
-			if (!pivotConstraint.isIsCallable() && (constraintName != null)) {
+			assert pivotConstraint != null;
+			String constraintName = getAnnotationKey(pivotConstraint);
+			if (!pivotConstraint.isIsCallable()) {
 				if (s == null) {
 					s = new StringBuilder();
 				}
