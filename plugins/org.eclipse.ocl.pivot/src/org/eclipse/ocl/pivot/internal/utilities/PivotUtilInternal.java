@@ -464,6 +464,13 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull List<@NonNull Constraint> getOwnedInvariantsList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedInvariants());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedIteratorsList(@NonNull LoopExp loopExp) {

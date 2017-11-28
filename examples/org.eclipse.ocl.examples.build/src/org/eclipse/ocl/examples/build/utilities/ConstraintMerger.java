@@ -62,6 +62,8 @@ import com.google.common.collect.Sets;
 
 /**
  * Merges a specified <tt>uri</tt> into a designated <tt>modelSlot</tt>.
+ *
+ * FIXME Re-use MergeHandler.AbstractMergeVisitor which copies this code.
  */
 public class ConstraintMerger extends AbstractProjectComponent
 {

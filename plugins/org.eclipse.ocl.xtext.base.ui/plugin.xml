@@ -3,6 +3,8 @@
 
 <plugin>
 	<extension point="org.eclipse.ui.commands">
+	  <command id="org.eclipse.ocl.xtext.base.ui.MergeCommand"
+	    name="%MF_Merge_Command" description="%MF_Merge_Description"/>
 	  <command id="org.eclipse.ocl.xtext.base.ui.SaveASCommand"
 	    name="%MF_Save_AS_Command" description="%MF_Save_AS_Description"/>
 	  <command id="org.eclipse.ocl.xtext.base.ui.SaveCSCommand"
@@ -11,6 +13,8 @@
 	    name="%MF_Validate_Command" description="%MF_Validate_Description"/>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
+	  <handler commandId="org.eclipse.ocl.xtext.base.ui.MergeCommand"
+	    class="org.eclipse.ocl.xtext.base.ui.commands.MergeHandler"/>
 	  <handler commandId="org.eclipse.ocl.xtext.base.ui.SaveASCommand"
 	    class="org.eclipse.ocl.xtext.base.ui.commands.SaveASHandler"/>
 	  <handler commandId="org.eclipse.ocl.xtext.base.ui.SaveCSCommand"
@@ -30,6 +34,16 @@
             <separator name="show" visible="true"/>
          </menu>
       </menuContribution-->
+	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=additions">
+	    <command commandId="org.eclipse.ocl.xtext.base.ui.MergeCommand"
+	      label="%MF_Merge">
+            <!--visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="org.eclipse.ocl.xtext.oclinecore.OCLinEcore.Editor.opened">
+                </reference>
+            </visibleWhen-->
+	    </command>
+	  </menuContribution>
 	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=additions">
 	    <command commandId="org.eclipse.ocl.xtext.base.ui.ValidateCommand"
 	      label="%MF_Validate">
