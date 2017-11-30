@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
+import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
@@ -727,6 +728,7 @@ public class RoundTripTests extends XtextTestCase
 
 	public void testUML25RoundTrip() throws IOException, InterruptedException, ParserException {
 		UMLStandaloneSetup.init();
+		OCLDelegateDomain.lazyInitializeGlobals(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), true);
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UML.ecore", true);
 		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
