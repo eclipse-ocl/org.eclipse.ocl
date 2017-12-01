@@ -32,7 +32,9 @@ Workflow {
     bean = StandaloneSetup {
 		scanClassPath = true
 		platformUri = ".."
+		registerGeneratedEPackage = "org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage"
 		registerGeneratedEPackage = "org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.genmodel"
 		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.genmodel"
 	}
 	
