@@ -163,7 +163,7 @@ EnumerationCS returns base::EnumerationCS:
 ;
 
 EnumerationLiteralCS returns base::EnumerationLiteralCS:
-	(('literal' name=UnrestrictedName) | name=EnumerationLiteralName) ('=' value=SIGNED)?
+	(('literal' name=UnrestrictedName) | name=EnumerationLiteralName) (':' literal=SINGLE_QUOTED_STRING)? ('=' value=SIGNED)?
 	(('{' ownedAnnotations+=AnnotationElementCS* '}')
 	|';'
 	)

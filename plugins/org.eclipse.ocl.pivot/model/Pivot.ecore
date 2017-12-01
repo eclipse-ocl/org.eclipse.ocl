@@ -665,6 +665,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An EnumerationLiteral is a user-defined data value for an Enumeration."/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-EnumerationLiteral-literal"
+        name="literal" eType="#T-pivot-String" defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-EnumerationLiteral-owningEnumeration"
         name="owningEnumeration" lowerBound="1" eType="#T-pivot-Enumeration" eOpposite="#F-pivot-Enumeration-ownedLiterals">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

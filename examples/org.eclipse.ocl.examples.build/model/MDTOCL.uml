@@ -101,9 +101,13 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-EnumerationLiteral" name="EnumerationLiteral">
-        <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-EnumerationLiteral-value" name="value" type="MDTOCL-MDT_OCL_Ecore-Integer">
+        <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-EnumerationLiteral-value" name="literal" type="MDTOCL-MDT_OCL_Ecore-String">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9X7VEeOu79LxSz8Ylw"/>
           <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9n7VEeOu79LxSz8Ylw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_3ajhwNaAEeemU_Rth_iVmg" name="value" type="MDTOCL-MDT_OCL_Ecore-Integer">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3ajhwdaAEeemU_Rth_iVmg"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_3ajhwtaAEeemU_Rth_iVmg"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Ecore-Integer" name="Integer"/>

@@ -271,6 +271,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Enumeration-ownedLiterals"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-EnumerationLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-EnumerationLiteral-literal"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-EnumerationLiteral-owningEnumeration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-EnumerationLiteral-value"/>
     </genClasses>
