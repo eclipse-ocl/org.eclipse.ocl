@@ -47,6 +47,7 @@ public interface EnumerationLiteral extends InstanceSpecification {
 	 * If the meaning of the '<em>Literal</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Literal</em>' attribute.
 	 * @see #setLiteral(String)
@@ -58,6 +59,7 @@ public interface EnumerationLiteral extends InstanceSpecification {
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral <em>Literal</em>}' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Literal</em>' attribute.
 	 * @see #getLiteral()

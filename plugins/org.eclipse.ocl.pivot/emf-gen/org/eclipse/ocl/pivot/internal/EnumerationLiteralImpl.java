@@ -59,6 +59,7 @@ implements EnumerationLiteral {
 	/**
 	 * The default value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @see #getLiteral()
 	 * @generated
@@ -68,6 +69,7 @@ implements EnumerationLiteral {
 	/**
 	 * The cached value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @see #getLiteral()
 	 * @generated

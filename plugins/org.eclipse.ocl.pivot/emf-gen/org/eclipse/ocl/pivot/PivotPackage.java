@@ -9045,6 +9045,7 @@ extends EPackage
 	/**
 	 * The feature id for the '<em><b>Literal</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
@@ -9054,6 +9055,7 @@ extends EPackage
 	/**
 	 * The feature id for the '<em><b>Owning Enumeration</b></em>' container reference.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
@@ -26036,6 +26038,7 @@ extends EPackage
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral <em>Literal</em>}'.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Literal</em>'.
 	 * @see org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral()
@@ -31521,6 +31524,7 @@ extends EPackage
 		/**
 		 * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
+		 * @since 1.4
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */

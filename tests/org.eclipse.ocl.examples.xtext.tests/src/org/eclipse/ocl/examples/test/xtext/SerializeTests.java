@@ -275,6 +275,28 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testSerialize_Bug382956() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"Bug382956\" nsURI=\"http://Bug382956\" nsPrefix=\"Bug382956\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EEnum\" name=\"ComparisonKind\">\n" +
+						"    <eLiterals name=\"EQ\" literal=\"=\"/>\n" +
+						"    <eLiterals name=\"GT\" value=\"1\" literal=\">\"/>\n" +
+						"    <eLiterals name=\"LT\" value=\"2\" literal=\"&lt;\"/>\n" +
+						"  </eClassifiers>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"MyClass\">\n" +
+						"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"comparison\" eType=\"#//ComparisonKind\"\n" +
+						"        defaultValueLiteral=\"=\"/>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>\n" +
+						"";
+		createOCLinEcoreFile("Bug382956.ecore", testFile);		// FIXME rename as createTextFile
+		doSerialize(ocl, "Bug382956");
+		ocl.dispose();
+	}
+
 	public void testSerialize_Bug388282() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String testFile =

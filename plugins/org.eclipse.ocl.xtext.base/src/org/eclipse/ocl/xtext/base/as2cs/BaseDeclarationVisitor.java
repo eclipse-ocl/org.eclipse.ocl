@@ -175,6 +175,12 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	public ElementCS visitEnumerationLiteral(@NonNull EnumerationLiteral object) {
 		EnumerationLiteralCS csElement = context.refreshNamedElement(EnumerationLiteralCS.class,
 			BaseCSPackage.Literals.ENUMERATION_LITERAL_CS, object);
+		if (object.eIsSet(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL)) {
+			csElement.setLiteral(object.getLiteral());
+		}
+		else {
+			csElement.eUnset(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
+		}
 		if (object.eIsSet(PivotPackage.Literals.ENUMERATION_LITERAL__VALUE)) {
 			csElement.setValue(object.getValue().intValue());
 		}

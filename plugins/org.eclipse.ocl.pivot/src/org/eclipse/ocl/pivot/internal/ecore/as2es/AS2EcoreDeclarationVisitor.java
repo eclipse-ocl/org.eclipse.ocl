@@ -582,6 +582,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EEnumLiteral eEnumLiteral = EcoreFactory.eINSTANCE.createEEnumLiteral();
 		copyNamedElement(eEnumLiteral, pivotEnumLiteral);
+		if (pivotEnumLiteral.eIsSet(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL)) {
+			eEnumLiteral.setLiteral(pivotEnumLiteral.getLiteral());
+		}
+		else {
+			eEnumLiteral.eUnset(EcorePackage.Literals.EENUM_LITERAL__LITERAL);
+		}
 		if (pivotEnumLiteral.eIsSet(PivotPackage.Literals.ENUMERATION_LITERAL__VALUE)) {
 			eEnumLiteral.setValue(pivotEnumLiteral.getValue().intValue());
 		}
