@@ -332,6 +332,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			PivotPackage.Literals.ENUMERATION_LITERAL, eEnumLiteral2);
 		copyNamedElement(pivotElement, eEnumLiteral2);
 		copyAnnotatedElement(pivotElement, eEnumLiteral2, null);
+		if (eEnumLiteral2.eIsSet(EcorePackage.Literals.EENUM_LITERAL__LITERAL)) {
+			pivotElement.setLiteral(eEnumLiteral2.getLiteral());
+		}
+		else {
+			pivotElement.eUnset(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL);
+		}
 		if (eEnumLiteral2.eIsSet(EcorePackage.Literals.EENUM_LITERAL__VALUE)) {
 			pivotElement.setValue(BigInteger.valueOf(eEnumLiteral2.getValue()));
 		}

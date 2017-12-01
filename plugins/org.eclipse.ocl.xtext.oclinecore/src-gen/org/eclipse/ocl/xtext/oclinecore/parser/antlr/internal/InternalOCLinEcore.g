@@ -2255,58 +2255,80 @@ ruleEnumerationLiteralCS returns [EObject current=null]
 	    }
 
 )
-))(	otherlv_3='='
+))(	otherlv_3=':'
     {
-    	newLeafNode(otherlv_3, grammarAccess.getEnumerationLiteralCSAccess().getEqualsSignKeyword_1_0());
+    	newLeafNode(otherlv_3, grammarAccess.getEnumerationLiteralCSAccess().getColonKeyword_1_0());
+    }
+(
+(
+		lv_literal_4_0=RULE_SINGLE_QUOTED_STRING
+		{
+			newLeafNode(lv_literal_4_0, grammarAccess.getEnumerationLiteralCSAccess().getLiteralSINGLE_QUOTED_STRINGTerminalRuleCall_1_1_0());
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEnumerationLiteralCSRule());
+	        }
+       		setWithLastConsumed(
+       			$current,
+       			"literal",
+        		lv_literal_4_0,
+        		"org.eclipse.ocl.xtext.base.Base.SINGLE_QUOTED_STRING");
+	    }
+
+)
+))?(	otherlv_5='='
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getEnumerationLiteralCSAccess().getEqualsSignKeyword_2_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getEnumerationLiteralCSAccess().getValueSIGNEDParserRuleCall_1_1_0());
+	        newCompositeNode(grammarAccess.getEnumerationLiteralCSAccess().getValueSIGNEDParserRuleCall_2_1_0());
 	    }
-		lv_value_4_0=ruleSIGNED		{
+		lv_value_6_0=ruleSIGNED		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEnumerationLiteralCSRule());
 	        }
        		set(
        			$current,
        			"value",
-        		lv_value_4_0,
+        		lv_value_6_0,
         		"org.eclipse.ocl.xtext.oclinecore.OCLinEcore.SIGNED");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?((	otherlv_5='{'
+))?((	otherlv_7='{'
     {
-    	newLeafNode(otherlv_5, grammarAccess.getEnumerationLiteralCSAccess().getLeftCurlyBracketKeyword_2_0_0());
+    	newLeafNode(otherlv_7, grammarAccess.getEnumerationLiteralCSAccess().getLeftCurlyBracketKeyword_3_0_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getEnumerationLiteralCSAccess().getOwnedAnnotationsAnnotationElementCSParserRuleCall_2_0_1_0());
+	        newCompositeNode(grammarAccess.getEnumerationLiteralCSAccess().getOwnedAnnotationsAnnotationElementCSParserRuleCall_3_0_1_0());
 	    }
-		lv_ownedAnnotations_6_0=ruleAnnotationElementCS		{
+		lv_ownedAnnotations_8_0=ruleAnnotationElementCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEnumerationLiteralCSRule());
 	        }
        		add(
        			$current,
        			"ownedAnnotations",
-        		lv_ownedAnnotations_6_0,
+        		lv_ownedAnnotations_8_0,
         		"org.eclipse.ocl.xtext.oclinecore.OCLinEcore.AnnotationElementCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*	otherlv_7='}'
+)*	otherlv_9='}'
     {
-    	newLeafNode(otherlv_7, grammarAccess.getEnumerationLiteralCSAccess().getRightCurlyBracketKeyword_2_0_2());
+    	newLeafNode(otherlv_9, grammarAccess.getEnumerationLiteralCSAccess().getRightCurlyBracketKeyword_3_0_2());
     }
 )
-    |	otherlv_8=';'
+    |	otherlv_10=';'
     {
-    	newLeafNode(otherlv_8, grammarAccess.getEnumerationLiteralCSAccess().getSemicolonKeyword_2_1());
+    	newLeafNode(otherlv_10, grammarAccess.getEnumerationLiteralCSAccess().getSemicolonKeyword_3_1());
     }
 ))
 ;

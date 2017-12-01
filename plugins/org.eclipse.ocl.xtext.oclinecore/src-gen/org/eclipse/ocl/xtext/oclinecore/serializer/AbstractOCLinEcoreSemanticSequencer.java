@@ -636,7 +636,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *     ModelElementCS returns EnumerationLiteralCS
 	 *
 	 * Constraint:
-	 *     ((name=UnrestrictedName | name=EnumerationLiteralName) value=SIGNED? ownedAnnotations+=AnnotationElementCS*)
+	 *     ((name=UnrestrictedName | name=EnumerationLiteralName) literal=SINGLE_QUOTED_STRING? value=SIGNED? ownedAnnotations+=AnnotationElementCS*)
 	 */
 	protected void sequence_EnumerationLiteralCS(ISerializationContext context, EnumerationLiteralCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -715,18 +715,18 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='derived'?
+	 *         qualifiers+='ordered'?
 	 *         (
 	 *             (
+	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
-	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='derived'?
+	 *             qualifiers+='ordered'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -825,7 +825,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='resolve'?
+	 *         qualifiers+='volatile'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
@@ -836,6 +836,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='readonly' |
 	 *                 qualifiers+='!readonly' |
+	 *                 qualifiers+='resolve' |
 	 *                 qualifiers+='!resolve' |
 	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
@@ -843,10 +844,9 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!unique' |
 	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
-	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='resolve'?
+	 *             qualifiers+='volatile'?
 	 *         )*
 	 *         (
 	 *             (ownedAnnotations+=AnnotationElementCS | ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)?

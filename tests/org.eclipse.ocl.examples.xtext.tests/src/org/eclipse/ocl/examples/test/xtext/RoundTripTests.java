@@ -64,6 +64,7 @@ import org.eclipse.xtext.util.EmfFormatter;
 
 /**
  * Test that an Ecore file can be loaded as OCLinEcore then saved back as Ecore.
+ * Or loaded as Ecore and saved back as ECore; NB this does not serialize.
  */
 public class RoundTripTests extends XtextTestCase
 {
