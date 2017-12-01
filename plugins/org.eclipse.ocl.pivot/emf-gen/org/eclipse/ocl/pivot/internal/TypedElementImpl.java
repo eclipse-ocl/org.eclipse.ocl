@@ -180,15 +180,15 @@ implements TypedElement {
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object symbol_0 = type == null;
+		final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
-		if (symbol_0 == Boolean.TRUE) {
+		if (conformsTo == Boolean.TRUE) {
 			safe_conformsTo_source = null;
 		}
 		else {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
-			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-			safe_conformsTo_source = conformsTo;
+			final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+			safe_conformsTo_source = conformsTo_0;
 		}
 		if (safe_conformsTo_source == null) {
 			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");

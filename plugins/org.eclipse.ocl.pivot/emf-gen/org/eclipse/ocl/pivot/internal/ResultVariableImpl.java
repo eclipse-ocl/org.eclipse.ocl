@@ -91,9 +91,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ResultVariable_c_c_CompatibleNullityForInitializer);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-			symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -101,15 +101,15 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedInit == null;
+					final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
 					/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-					if (symbol_0 == Boolean.TRUE) {
+					if (isRequired == Boolean.TRUE) {
 						safe_isRequired_source = null;
 					}
 					else {
 						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired;
+						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired_0;
 					}
 					CAUGHT_safe_isRequired_source = safe_isRequired_source;
 				}
@@ -117,8 +117,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
-				final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean not_0 = BooleanNotOperation.INSTANCE.evaluate(isRequired_0);
+				final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not_0 = BooleanNotOperation.INSTANCE.evaluate(isRequired_1);
 				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, not_0);
 				CAUGHT_result = result;
 			}
@@ -126,9 +126,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ResultVariable_c_c_CompatibleNullityForInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_1 = logDiagnostic;
+			symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**
@@ -157,9 +157,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ResultVariable_c_c_CompatibleTypeForInitializer);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-			symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -179,15 +179,15 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					catch (Exception e) {
 						CAUGHT_type = ValueUtil.createInvalidValue(e);
 					}
-					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
+					final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
 					/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
-					if (symbol_0 == Boolean.TRUE) {
+					if (conformsTo == Boolean.TRUE) {
 						safe_conformsTo_source = null;
 					}
 					else {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
-						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-						safe_conformsTo_source = conformsTo;
+						final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+						safe_conformsTo_source = conformsTo_0;
 					}
 					result = safe_conformsTo_source;
 				}
@@ -200,9 +200,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ResultVariable_c_c_CompatibleTypeForInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_1 = logDiagnostic;
+			symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**

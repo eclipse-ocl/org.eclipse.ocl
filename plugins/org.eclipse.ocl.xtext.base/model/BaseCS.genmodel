@@ -67,6 +67,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//EnumerationCS/ownedLiterals"/>
     </genClasses>
     <genClasses ecoreClass="BaseCS.ecore#//EnumerationLiteralCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationLiteralCS/literal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationLiteralCS/value"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//FeatureCS"/>

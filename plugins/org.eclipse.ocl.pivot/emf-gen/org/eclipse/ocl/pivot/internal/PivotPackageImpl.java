@@ -1839,9 +1839,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getEnumerationLiteral_Literal()
+	{
+		return (EAttribute)enumerationLiteralEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getEnumerationLiteral_OwningEnumeration()
 	{
-		return (EReference)enumerationLiteralEClass.getEStructuralFeatures().get(0);
+		return (EReference)enumerationLiteralEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1852,7 +1863,7 @@ implements PivotPackage  {
 	@Override
 	public EAttribute getEnumerationLiteral_Value()
 	{
-		return (EAttribute)enumerationLiteralEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)enumerationLiteralEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -7046,6 +7057,7 @@ implements PivotPackage  {
 		createEReference(enumerationEClass, ENUMERATION__OWNED_LITERALS);
 
 		enumerationLiteralEClass = createEClass(ENUMERATION_LITERAL);
+		createEAttribute(enumerationLiteralEClass, ENUMERATION_LITERAL__LITERAL);
 		createEReference(enumerationLiteralEClass, ENUMERATION_LITERAL__OWNING_ENUMERATION);
 		createEAttribute(enumerationLiteralEClass, ENUMERATION_LITERAL__VALUE);
 
@@ -7983,6 +7995,7 @@ implements PivotPackage  {
 		initEReference(getEnumeration_OwnedLiterals(), this.getEnumerationLiteral(), this.getEnumerationLiteral_OwningEnumeration(), "ownedLiterals", null, 0, -1, Enumeration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(enumerationLiteralEClass, EnumerationLiteral.class, "EnumerationLiteral", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getEnumerationLiteral_Literal(), this.getString(), "literal", "0", 0, 1, EnumerationLiteral.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getEnumerationLiteral_OwningEnumeration(), this.getEnumeration(), this.getEnumeration_OwnedLiterals(), "owningEnumeration", null, 1, 1, EnumerationLiteral.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getEnumerationLiteral_Value(), this.getInteger(), "value", "0", 0, 1, EnumerationLiteral.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 

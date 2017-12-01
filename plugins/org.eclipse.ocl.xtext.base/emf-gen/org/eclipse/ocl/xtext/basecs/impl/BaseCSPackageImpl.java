@@ -870,9 +870,20 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getEnumerationLiteralCS_Value()
+	public EAttribute getEnumerationLiteralCS_Literal()
 	{
 		return (EAttribute)enumerationLiteralCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getEnumerationLiteralCS_Value()
+	{
+		return (EAttribute)enumerationLiteralCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2184,6 +2195,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(enumerationCSEClass, ENUMERATION_CS__OWNED_LITERALS);
 
 		enumerationLiteralCSEClass = createEClass(ENUMERATION_LITERAL_CS);
+		createEAttribute(enumerationLiteralCSEClass, ENUMERATION_LITERAL_CS__LITERAL);
 		createEAttribute(enumerationLiteralCSEClass, ENUMERATION_LITERAL_CS__VALUE);
 
 		featureCSEClass = createEClass(FEATURE_CS);
@@ -2490,6 +2502,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEReference(getEnumerationCS_OwnedLiterals(), this.getEnumerationLiteralCS(), null, "ownedLiterals", null, 0, -1, EnumerationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(enumerationLiteralCSEClass, EnumerationLiteralCS.class, "EnumerationLiteralCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getEnumerationLiteralCS_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, EnumerationLiteralCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getEnumerationLiteralCS_Value(), ecorePackage.getEInt(), "value", null, 0, 1, EnumerationLiteralCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(featureCSEClass, FeatureCS.class, "FeatureCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

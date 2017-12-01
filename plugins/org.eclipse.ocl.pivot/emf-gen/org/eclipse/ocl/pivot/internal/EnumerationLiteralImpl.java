@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl#getLiteral <em>Literal</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl#getOwningEnumeration <em>Owning Enumeration</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl#getValue <em>Value</em>}</li>
  * </ul>
@@ -52,9 +53,27 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * @generated
  */
 public class EnumerationLiteralImpl
-		extends InstanceSpecificationImpl
-		implements EnumerationLiteral {
+extends InstanceSpecificationImpl
+implements EnumerationLiteral {
 
+	/**
+	 * The default value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LITERAL_EDEFAULT = "0"; //$NON-NLS-1$
+	/**
+	 * The cached value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected String literal = LITERAL_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -91,6 +110,31 @@ public class EnumerationLiteralImpl
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.ENUMERATION_LITERAL;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getLiteral()
+	{
+		return literal;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setLiteral(String newLiteral)
+	{
+		String oldLiteral = literal;
+		literal = newLiteral;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ENUMERATION_LITERAL__LITERAL, oldLiteral, literal));
 	}
 
 	/**
@@ -271,6 +315,8 @@ public class EnumerationLiteralImpl
 				return getOwnedSpecification();
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
 				return getOwningPackage();
+			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+				return getLiteral();
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
 				return getOwningEnumeration();
 			case PivotPackage.ENUMERATION_LITERAL__VALUE:
@@ -322,6 +368,9 @@ public class EnumerationLiteralImpl
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
+			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+				setLiteral((String)newValue);
+				return;
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
 				setOwningEnumeration((Enumeration)newValue);
 				return;
@@ -368,6 +417,9 @@ public class EnumerationLiteralImpl
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
+			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+				setLiteral(LITERAL_EDEFAULT);
+				return;
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
 				setOwningEnumeration((Enumeration)null);
 				return;
@@ -405,6 +457,8 @@ public class EnumerationLiteralImpl
 				return ownedSpecification != null;
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
 				return getOwningPackage() != null;
+			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+				return LITERAL_EDEFAULT == null ? literal != null : !LITERAL_EDEFAULT.equals(literal);
 			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
 				return getOwningEnumeration() != null;
 			case PivotPackage.ENUMERATION_LITERAL__VALUE:

@@ -34,6 +34,23 @@ public class AbstractExecutorEnumerationLiteral extends AbstractExecutorNamedEle
 	}
 
 	@Override
+	@NonNull
+	public EnumerationLiteralId getEnumerationLiteralId() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@NonNull
+	public Enumerator getEnumerator() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getLiteral() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<Slot> getOwnedSlots() {
 		throw new UnsupportedOperationException();
 	}
@@ -44,17 +61,7 @@ public class AbstractExecutorEnumerationLiteral extends AbstractExecutorNamedEle
 	}
 
 	@Override
-	public void setOwningPackage(Package value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public LanguageExpression getOwnedSpecification() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setOwnedSpecification(LanguageExpression value) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -64,29 +71,32 @@ public class AbstractExecutorEnumerationLiteral extends AbstractExecutorNamedEle
 	}
 
 	@Override
-	public void setOwningEnumeration(Enumeration value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public Number getValue() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
+	public void setLiteral(String value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setOwnedSpecification(LanguageExpression value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setOwningEnumeration(Enumeration value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setOwningPackage(Package value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setValue(Number value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@NonNull
-	public EnumerationLiteralId getEnumerationLiteralId() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@NonNull
-	public Enumerator getEnumerator() {
 		throw new UnsupportedOperationException();
 	}
 }

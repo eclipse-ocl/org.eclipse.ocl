@@ -9043,13 +9043,22 @@ extends EPackage
 	int ENUMERATION_LITERAL__OWNING_PACKAGE = INSTANCE_SPECIFICATION__OWNING_PACKAGE;
 
 	/**
+	 * The feature id for the '<em><b>Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_LITERAL__LITERAL = INSTANCE_SPECIFICATION_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Owning Enumeration</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERATION_LITERAL__OWNING_ENUMERATION = INSTANCE_SPECIFICATION_FEATURE_COUNT + 0;
+	int ENUMERATION_LITERAL__OWNING_ENUMERATION = INSTANCE_SPECIFICATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -9058,7 +9067,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERATION_LITERAL__VALUE = INSTANCE_SPECIFICATION_FEATURE_COUNT + 1;
+	int ENUMERATION_LITERAL__VALUE = INSTANCE_SPECIFICATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Enumeration Literal</em>' class.
@@ -9067,7 +9076,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERATION_LITERAL_FEATURE_COUNT = INSTANCE_SPECIFICATION_FEATURE_COUNT + 2;
+	int ENUMERATION_LITERAL_FEATURE_COUNT = INSTANCE_SPECIFICATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -26025,6 +26034,17 @@ extends EPackage
 	EClass getEnumerationLiteral();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral <em>Literal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Literal</em>'.
+	 * @see org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral()
+	 * @see #getEnumerationLiteral()
+	 * @generated
+	 */
+	EAttribute getEnumerationLiteral_Literal();
+
+	/**
 	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getOwningEnumeration <em>Owning Enumeration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -31497,6 +31517,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass ENUMERATION_LITERAL = eINSTANCE.getEnumerationLiteral();
+
+		/**
+		 * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENUMERATION_LITERAL__LITERAL = eINSTANCE.getEnumerationLiteral_Literal();
 
 		/**
 		 * The meta object literal for the '<em><b>Owning Enumeration</b></em>' container reference feature.

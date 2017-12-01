@@ -26,12 +26,33 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.EnumerationLiteralCSImpl#getLiteral <em>Literal</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.EnumerationLiteralCSImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements EnumerationLiteralCS {
+	/**
+	 * The default value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LITERAL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected String literal = LITERAL_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -77,6 +98,31 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	 * @generated
 	 */
 	@Override
+	public String getLiteral()
+	{
+		return literal;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setLiteral(String newLiteral)
+	{
+		String oldLiteral = literal;
+		literal = newLiteral;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.ENUMERATION_LITERAL_CS__LITERAL, oldLiteral, literal));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public int getValue() {
 		return value;
 	}
@@ -114,6 +160,8 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
+			case BaseCSPackage.ENUMERATION_LITERAL_CS__LITERAL:
+				return getLiteral();
 			case BaseCSPackage.ENUMERATION_LITERAL_CS__VALUE:
 				return getValue();
 		}
@@ -129,6 +177,9 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
+			case BaseCSPackage.ENUMERATION_LITERAL_CS__LITERAL:
+				setLiteral((String)newValue);
+				return;
 			case BaseCSPackage.ENUMERATION_LITERAL_CS__VALUE:
 				setValue((Integer)newValue);
 				return;
@@ -145,6 +196,9 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
+			case BaseCSPackage.ENUMERATION_LITERAL_CS__LITERAL:
+				setLiteral(LITERAL_EDEFAULT);
+				return;
 			case BaseCSPackage.ENUMERATION_LITERAL_CS__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
@@ -161,6 +215,8 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
+			case BaseCSPackage.ENUMERATION_LITERAL_CS__LITERAL:
+				return LITERAL_EDEFAULT == null ? literal != null : !LITERAL_EDEFAULT.equals(literal);
 			case BaseCSPackage.ENUMERATION_LITERAL_CS__VALUE:
 				return value != VALUE_EDEFAULT;
 		}

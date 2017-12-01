@@ -513,9 +513,9 @@ implements PropertyCallExp {
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_2;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-			symbol_2 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -523,15 +523,15 @@ implements PropertyCallExp {
 				/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
-					final /*@NonInvalid*/ @NonNull Object symbol_0 = referredProperty == null;
+					final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
 					/*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
-					if (symbol_0 == Boolean.TRUE) {
+					if (isStatic == Boolean.TRUE) {
 						safe_isStatic_source = null;
 					}
 					else {
 						assert referredProperty != null;
-						final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-						safe_isStatic_source = isStatic;
+						final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
+						safe_isStatic_source = isStatic_0;
 					}
 					CAUGHT_safe_isStatic_source = safe_isStatic_source;
 				}
@@ -542,15 +542,15 @@ implements PropertyCallExp {
 				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-					final /*@NonInvalid*/ @NonNull Object symbol_1 = ownedSource == null;
+					final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-					if (symbol_1 == Boolean.TRUE) {
+					if (type == Boolean.TRUE) {
 						safe_type_source = null;
 					}
 					else {
 						assert ownedSource != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
-						safe_type_source = type;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
+						safe_type_source = type_0;
 					}
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
@@ -567,9 +567,9 @@ implements PropertyCallExp {
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_2 = logDiagnostic;
+			symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_2;
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**

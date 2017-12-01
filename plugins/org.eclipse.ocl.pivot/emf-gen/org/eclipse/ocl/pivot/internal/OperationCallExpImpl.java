@@ -590,34 +590,34 @@ implements OperationCallExp {
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OperationCallExp_c_c_ArgumentTypeIsConformant);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_2;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-			symbol_2 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_forAll;
 			try {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Operation operation = this.getReferredOperation();
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = operation == null;
+				final /*@NonInvalid*/ @NonNull Object ownedParameters = operation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable OrderedSetValue safe_ownedParameters_source;
-				if (symbol_0 == Boolean.TRUE) {
+				if (ownedParameters == Boolean.TRUE) {
 					safe_ownedParameters_source = null;
 				}
 				else {
 					assert operation != null;
-					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters = operation.getOwnedParameters();
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
-					safe_ownedParameters_source = BOXED_ownedParameters;
+					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters_0 = operation.getOwnedParameters();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
+					safe_ownedParameters_source = BOXED_ownedParameters_0;
 				}
-				final /*@NonInvalid*/ @NonNull Object symbol_1 = operation == null;
+				final /*@NonInvalid*/ @NonNull Object owningClass = operation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
-				if (symbol_1 == Boolean.TRUE) {
+				if (owningClass == Boolean.TRUE) {
 					safe_owningClass_source = null;
 				}
 				else {
 					assert operation != null;
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass = operation.getOwningClass();
-					safe_owningClass_source = owningClass;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass_0 = operation.getOwningClass();
+					safe_owningClass_source = owningClass_0;
 				}
 				final /*@NonInvalid*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
@@ -707,9 +707,9 @@ implements OperationCallExp {
 				CAUGHT_forAll = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentTypeIsConformant, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_forAll, PivotTables.INT_0).booleanValue();
-			symbol_2 = logDiagnostic;
+			symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_2;
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**
@@ -805,9 +805,9 @@ implements OperationCallExp {
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OperationCallExp_c_c_ArgumentCount);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-			symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
@@ -816,16 +816,16 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Operation referredOperation = this.getReferredOperation();
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = referredOperation == null;
+				final /*@NonInvalid*/ @NonNull Object ownedParameters = referredOperation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable OrderedSetValue safe_ownedParameters_source;
-				if (symbol_0 == Boolean.TRUE) {
+				if (ownedParameters == Boolean.TRUE) {
 					safe_ownedParameters_source = null;
 				}
 				else {
 					assert referredOperation != null;
-					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
-					safe_ownedParameters_source = BOXED_ownedParameters;
+					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters_0 = referredOperation.getOwnedParameters();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
+					safe_ownedParameters_source = BOXED_ownedParameters_0;
 				}
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(safe_ownedParameters_source);
 				final /*@Thrown*/ boolean result = size.equals(size_0);
@@ -835,8 +835,8 @@ implements OperationCallExp {
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentCount, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_1 = logDiagnostic;
+			symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_0;
 	}
 } //OperationCallExpImpl

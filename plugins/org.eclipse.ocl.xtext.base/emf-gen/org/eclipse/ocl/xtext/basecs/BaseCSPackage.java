@@ -1924,13 +1924,22 @@ public interface BaseCSPackage extends EPackage {
 	int ENUMERATION_LITERAL_CS__NAME = NAMED_ELEMENT_CS__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_LITERAL_CS__LITERAL = NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERATION_LITERAL_CS__VALUE = NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+	int ENUMERATION_LITERAL_CS__VALUE = NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Enumeration Literal CS</em>' class.
@@ -1939,7 +1948,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERATION_LITERAL_CS_FEATURE_COUNT = NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
+	int ENUMERATION_LITERAL_CS_FEATURE_COUNT = NAMED_ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -4806,6 +4815,17 @@ public interface BaseCSPackage extends EPackage {
 	EClass getEnumerationLiteralCS();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS#getLiteral <em>Literal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Literal</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS#getLiteral()
+	 * @see #getEnumerationLiteralCS()
+	 * @generated
+	 */
+	EAttribute getEnumerationLiteralCS_Literal();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6329,6 +6349,14 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ENUMERATION_LITERAL_CS = eINSTANCE.getEnumerationLiteralCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENUMERATION_LITERAL_CS__LITERAL = eINSTANCE.getEnumerationLiteralCS_Literal();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.

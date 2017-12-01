@@ -1971,6 +1971,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_ElementExtension_stereotype = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE, _Stereotype);
 		private final @NonNull Property pr_EnumLiteralExp_referredLiteral = createProperty(PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, _EnumerationLiteral);
 		private final @NonNull Property pr_Enumeration_ownedLiterals = createProperty(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, _OrderedSet_EnumerationLiteral_NullFree);
+		private final @NonNull Property pr_EnumerationLiteral_literal = createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, _String);
 		private final @NonNull Property pr_EnumerationLiteral_owningEnumeration = createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__OWNING_ENUMERATION, _Enumeration);
 		private final @NonNull Property pr_EnumerationLiteral_value = createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__VALUE, _Integer);
 		private final @NonNull Property pr_EnumerationLiteral_EnumLiteralExp_referredLiteral = createProperty("EnumLiteralExp", _Bag_EnumLiteralExp);
@@ -2690,6 +2691,9 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_EnumerationLiteral_owningEnumeration);
 
 			ownedProperties = _EnumerationLiteral.getOwnedProperties();
+			ownedProperties.add(property = pr_EnumerationLiteral_literal);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_EnumerationLiteral_owningEnumeration);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Enumeration_ownedLiterals);

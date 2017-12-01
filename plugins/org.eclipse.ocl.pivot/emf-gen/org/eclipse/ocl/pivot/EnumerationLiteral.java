@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral <em>Literal</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.EnumerationLiteral#getOwningEnumeration <em>Owning Enumeration</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.EnumerationLiteral#getValue <em>Value</em>}</li>
  * </ul>
@@ -37,6 +38,32 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
  * @generated
  */
 public interface EnumerationLiteral extends InstanceSpecification {
+
+	/**
+	 * Returns the value of the '<em><b>Literal</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Literal</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Literal</em>' attribute.
+	 * @see #setLiteral(String)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getEnumerationLiteral_Literal()
+	 * @generated
+	 */
+	String getLiteral();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getLiteral <em>Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Literal</em>' attribute.
+	 * @see #getLiteral()
+	 * @generated
+	 */
+	void setLiteral(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Owning Enumeration</b></em>' container reference.

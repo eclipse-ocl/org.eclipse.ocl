@@ -469,6 +469,10 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TEnumerationLiteral" name="EnumerationLiteral">
     <generalization xmi:id="Ppivot.TEnumerationLiteral.g0" general="Ppivot.TInstanceSpecification"/>
+    <ownedAttribute xmi:id="Ppivot.TEnumerationLiteral.Pliteral" name="literal" visibility="public" type="Ppivot.TString" isOrdered="true">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TEnumerationLiteral.Pliteral.lV"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TEnumerationLiteral.Pliteral.dlV" value="0"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TEnumerationLiteral.Pvalue" name="value" visibility="public" type="Ppivot.TInteger" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TEnumerationLiteral.Pvalue.lV"/>
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TEnumerationLiteral.Pvalue.dlV" value="0"/>
