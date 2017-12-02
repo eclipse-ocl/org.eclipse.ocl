@@ -9,10 +9,6 @@
 %options export_terminals=("Ecore2XtextParsersym.java", "TK_")
 %options include_directory="../lpg"
 
-%Import
-	LexerBasicMapF.gi
-%End	
-	
 %Define
 
 	--
@@ -28,36 +24,36 @@
 	STRING
 	WS
 
-	Slash_GreaterThan
-	Colon
-	LessThan
-	LessThan_Slash
-	LessThan_Slash_100_101_116_97_105_108_115_GreaterThan
-	LessThan_Slash_101_65_110_110_111_116_97_116_105_111_110_115_GreaterThan
-	LessThan_Slash_101_67_108_97_115_115_105_102_105_101_114_115_GreaterThan
-	LessThan_Slash_101_71_101_110_101_114_105_99_84_121_112_101_GreaterThan
-	LessThan_Slash_101_79_112_101_114_97_116_105_111_110_115_GreaterThan
-	LessThan_Slash_101_80_97_99_107_97_103_101_115_GreaterThan
-	LessThan_Slash_101_80_97_114_97_109_101_116_101_114_115_GreaterThan
-	LessThan_Slash_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_GreaterThan
-	LessThan_Slash_101_84_121_112_101_65_114_103_117_109_101_110_116_115_GreaterThan
-	LessThan_Slash_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101_GreaterThan
-	LessThan_Slash_120_109_105_Colon_88_77_73_GreaterThan
-	LessThan_QuestionMark_120_109_108
-	LessThan_100_101_116_97_105_108_115
-	LessThan_101_65_110_110_111_116_97_116_105_111_110_115
-	LessThan_101_67_108_97_115_115_105_102_105_101_114_115
-	LessThan_101_71_101_110_101_114_105_99_84_121_112_101
-	LessThan_101_79_112_101_114_97_116_105_111_110_115
-	LessThan_101_80_97_99_107_97_103_101_115
-	LessThan_101_80_97_114_97_109_101_116_101_114_115
-	LessThan_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115
-	LessThan_101_84_121_112_101_65_114_103_117_109_101_110_116_115
-	LessThan_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101
-	LessThan_120_109_105_Colon_88_77_73
-	Equal
-	GreaterThan
-	QuestionMark_GreaterThan
+	SLASH_RANGLE
+	COLON
+	LANGLE
+	LANGLE_SLASH
+	LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE
+	LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE
+	LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE
+	LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE
+	LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE
+	LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE
+	LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE
+	LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE
+	LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE
+	LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE
+	LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE
+	LANGLE_QUERY_120_109_108
+	LANGLE_100_101_116_97_105_108_115
+	LANGLE_101_65_110_110_111_116_97_116_105_111_110_115
+	LANGLE_101_67_108_97_115_115_105_102_105_101_114_115
+	LANGLE_101_71_101_110_101_114_105_99_84_121_112_101
+	LANGLE_101_79_112_101_114_97_116_105_111_110_115
+	LANGLE_101_80_97_99_107_97_103_101_115
+	LANGLE_101_80_97_114_97_109_101_116_101_114_115
+	LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115
+	LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115
+	LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101
+	LANGLE_120_109_105_COLON_88_77_73
+	EQUALS
+	RANGLE
+	QUERY_RANGLE
 %End
 
 %Terminals
@@ -69,45 +65,38 @@
 
 	a b c d e f g h i j k l m n o p q r s t u v w x y z
 
-	HT ::= HorizontalTab
+	HTAB ::= HorizontalTab
 	LF ::= NewLine
 	CR ::= Return
-	Space ::= ' '
-	Exclamation ::= '!'
-	DoubleQuote ::= '"'
-	Sharp ::= '#'
-	DollarSign ::= '$'
-	Percent ::= '%'
-	Ampersand ::= '&'
-	SingleQuote ::= "'"
-	LeftParen ::= '('
-	RightParen ::= ')'
-	Star ::= '*'
-	Plus ::= '+'
-	Comma ::= ','
-	Minus ::= '-'
-	Dot ::= '.'
-	Slash ::= '/'
-	Colon ::= ':'
-	SemiColon ::= ';'
-	LessThan ::= '<'
-	Equal ::= '='
-	GreaterThan ::= '>'
-	QuestionMark ::= '?'
-	AtSign ::= '@'
-	LeftBracket ::= '['
-	BackSlash ::= '\'
-	RightBracket ::= ']'
-	Caret ::= '^'
-	BackQuote ::= '`'
-	LeftBrace ::= '{'
-	VerticalBar ::= '|'
-	RightBrace ::= '}'
-	Tilde ::= '~'
-	
-	FF
-	AfterASCII
-	CtlCharNotWS
+	SPACE ::= ' '
+	PLING ::= '!'
+	DQUOTE ::= '"'
+	HASH ::= '#'
+	T_36 ::= '$'
+	T_37 ::= '%'
+	AND ::= '&'
+	SQUOTE ::= "'"
+	LPAREN ::= '('
+	RPAREN ::= ')'
+	STAR ::= '*'
+	PLUS ::= '+'
+	COMMA ::= ','
+	MINUS ::= '-'
+	DOT ::= '.'
+	SLASH ::= '/'
+	COLON ::= ':'
+	SEMICOLON ::= ';'
+	RANGLE ::= '>'
+	AT ::= '@'
+	LSQUARE ::= '['
+	BSLASH ::= '\'
+	RSQUARE ::= ']'
+	CARET ::= '^'
+	T_96 ::= '`'
+	LBRACE ::= '{'
+	BAR ::= '|'
+	RBRACE ::= '}'
+	T_126 ::= '~'
 %End
 
 %Start
@@ -117,181 +106,181 @@
 %Rules
 	Token ::= '/' '>'
 		/.$BeginAction
-				makeToken($_Slash_GreaterThan);
+					makeToken($_SLASH_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= ':'
 		/.$BeginAction
-				makeToken($_Colon);
+					makeToken($_COLON);
 		  $EndAction
 		./
 
 	Token ::= '<'
 		/.$BeginAction
-				makeToken($_LessThan);
+					makeToken($_LANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/'
 		/.$BeginAction
-				makeToken($_LessThan_Slash);
+					makeToken($_LANGLE_SLASH);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'd' 'e' 't' 'a' 'i' 'l' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_100_101_116_97_105_108_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'A' 'n' 'n' 'o' 't' 'a' 't' 'i' 'o' 'n' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_65_110_110_111_116_97_116_105_111_110_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'C' 'l' 'a' 's' 's' 'i' 'f' 'i' 'e' 'r' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_67_108_97_115_115_105_102_105_101_114_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'G' 'e' 'n' 'e' 'r' 'i' 'c' 'T' 'y' 'p' 'e' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_71_101_110_101_114_105_99_84_121_112_101_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'O' 'p' 'e' 'r' 'a' 't' 'i' 'o' 'n' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_79_112_101_114_97_116_105_111_110_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'P' 'a' 'c' 'k' 'a' 'g' 'e' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_80_97_99_107_97_103_101_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'P' 'a' 'r' 'a' 'm' 'e' 't' 'e' 'r' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_80_97_114_97_109_101_116_101_114_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'S' 't' 'r' 'u' 'c' 't' 'u' 'r' 'a' 'l' 'F' 'e' 'a' 't' 'u' 'r' 'e' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'T' 'y' 'p' 'e' 'A' 'r' 'g' 'u' 'm' 'e' 'n' 't' 's' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_84_121_112_101_65_114_103_117_109_101_110_116_115_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'e' 'c' 'o' 'r' 'e' ':' 'E' 'P' 'a' 'c' 'k' 'a' 'g' 'e' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101_GreaterThan);
+					makeToken($_LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '/' 'x' 'm' 'i' ':' 'X' 'M' 'I' '>'
 		/.$BeginAction
-				makeToken($_LessThan_Slash_120_109_105_Colon_88_77_73_GreaterThan);
+					makeToken($_LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '<' '?' 'x' 'm' 'l'
 		/.$BeginAction
-				makeToken($_LessThan_QuestionMark_120_109_108);
+					makeToken($_LANGLE_QUERY_120_109_108);
 		  $EndAction
 		./
 
 	Token ::= '<' 'd' 'e' 't' 'a' 'i' 'l' 's'
 		/.$BeginAction
-				makeToken($_LessThan_100_101_116_97_105_108_115);
+					makeToken($_LANGLE_100_101_116_97_105_108_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'A' 'n' 'n' 'o' 't' 'a' 't' 'i' 'o' 'n' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_65_110_110_111_116_97_116_105_111_110_115);
+					makeToken($_LANGLE_101_65_110_110_111_116_97_116_105_111_110_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'C' 'l' 'a' 's' 's' 'i' 'f' 'i' 'e' 'r' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_67_108_97_115_115_105_102_105_101_114_115);
+					makeToken($_LANGLE_101_67_108_97_115_115_105_102_105_101_114_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'G' 'e' 'n' 'e' 'r' 'i' 'c' 'T' 'y' 'p' 'e'
 		/.$BeginAction
-				makeToken($_LessThan_101_71_101_110_101_114_105_99_84_121_112_101);
+					makeToken($_LANGLE_101_71_101_110_101_114_105_99_84_121_112_101);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'O' 'p' 'e' 'r' 'a' 't' 'i' 'o' 'n' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_79_112_101_114_97_116_105_111_110_115);
+					makeToken($_LANGLE_101_79_112_101_114_97_116_105_111_110_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'P' 'a' 'c' 'k' 'a' 'g' 'e' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_80_97_99_107_97_103_101_115);
+					makeToken($_LANGLE_101_80_97_99_107_97_103_101_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'P' 'a' 'r' 'a' 'm' 'e' 't' 'e' 'r' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_80_97_114_97_109_101_116_101_114_115);
+					makeToken($_LANGLE_101_80_97_114_97_109_101_116_101_114_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'S' 't' 'r' 'u' 'c' 't' 'u' 'r' 'a' 'l' 'F' 'e' 'a' 't' 'u' 'r' 'e' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115);
+					makeToken($_LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'T' 'y' 'p' 'e' 'A' 'r' 'g' 'u' 'm' 'e' 'n' 't' 's'
 		/.$BeginAction
-				makeToken($_LessThan_101_84_121_112_101_65_114_103_117_109_101_110_116_115);
+					makeToken($_LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115);
 		  $EndAction
 		./
 
 	Token ::= '<' 'e' 'c' 'o' 'r' 'e' ':' 'E' 'P' 'a' 'c' 'k' 'a' 'g' 'e'
 		/.$BeginAction
-				makeToken($_LessThan_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101);
+					makeToken($_LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101);
 		  $EndAction
 		./
 
 	Token ::= '<' 'x' 'm' 'i' ':' 'X' 'M' 'I'
 		/.$BeginAction
-				makeToken($_LessThan_120_109_105_Colon_88_77_73);
+					makeToken($_LANGLE_120_109_105_COLON_88_77_73);
 		  $EndAction
 		./
 
 	Token ::= '='
 		/.$BeginAction
-				makeToken($_Equal);
+					makeToken($_EQUALS);
 		  $EndAction
 		./
 
 	Token ::= '>'
 		/.$BeginAction
-				makeToken($_GreaterThan);
+					makeToken($_RANGLE);
 		  $EndAction
 		./
 
 	Token ::= '?' '>'
 		/.$BeginAction
-				makeToken($_QuestionMark_GreaterThan);
+					makeToken($_QUERY_RANGLE);
 		  $EndAction
 		./
 
@@ -299,120 +288,481 @@
 
 	UPPERS -> 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'
 
-	RANGE_2 -> '_'
+	RANGE_1 -> '_'
 
 	LOWERS -> 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z'
 
-	Token ::= IDENTIFIER
+	IDENTIFIER ::= IDENTIFIER_4
 		/.$BeginAction
-				makeToken($_IDENTIFIER);
+						makeToken($_IDENTIFIER);
 		  $EndAction
 		./
-	IDENTIFIER -> IDENTIFIER_4
-	IDENTIFIER_4 -> DIGITS
-	IDENTIFIER_4 -> LOWERS
-	IDENTIFIER_4 -> RANGE_2
-	IDENTIFIER_4 -> UPPERS
-	IDENTIFIER_4 -> DIGITS IDENTIFIER_4
-	IDENTIFIER_4 -> LOWERS IDENTIFIER_4
-	IDENTIFIER_4 -> RANGE_2 IDENTIFIER_4
-	IDENTIFIER_4 -> UPPERS IDENTIFIER_4
+	IDENTIFIER_4 ::= DIGITS
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= LOWERS
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= RANGE_1
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= UPPERS
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= DIGITS IDENTIFIER_4
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= LOWERS IDENTIFIER_4
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= RANGE_1 IDENTIFIER_4
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
+	IDENTIFIER_4 ::= UPPERS IDENTIFIER_4
+		/.$BeginAction
+						makeToken($_IDENTIFIER_4);
+		  $EndAction
+		./
 
-	Token ::= STRING
+	STRING ::= DQUOTE DQUOTE
 		/.$BeginAction
-				makeToken($_STRING);
+						makeToken($_STRING);
 		  $EndAction
 		./
-	STRING -> DoubleQuote DoubleQuote
-	STRING -> DoubleQuote STRING_9 DoubleQuote
-	STRING_6 -> LOWERS STRING_6
-	STRING_6 -> LOWERS SemiColon
-	STRING_6 -> UPPERS STRING_6
-	STRING_6 -> UPPERS SemiColon
-	STRING_9 -> HT
-	STRING_9 -> LF
-	STRING_9 -> CR
-	STRING_9 -> Space
-	STRING_9 -> Exclamation
-	STRING_9 -> Sharp
-	STRING_9 -> DollarSign
-	STRING_9 -> Percent
-	STRING_9 -> SingleQuote
-	STRING_9 -> LeftParen
-	STRING_9 -> RightParen
-	STRING_9 -> Star
-	STRING_9 -> Plus
-	STRING_9 -> Comma
-	STRING_9 -> Minus
-	STRING_9 -> Dot
-	STRING_9 -> Slash
-	STRING_9 -> Colon
-	STRING_9 -> SemiColon
-	STRING_9 -> GreaterThan
-	STRING_9 -> AtSign
-	STRING_9 -> LeftBracket
-	STRING_9 -> BackSlash
-	STRING_9 -> RightBracket
-	STRING_9 -> Caret
-	STRING_9 -> BackQuote
-	STRING_9 -> LeftBrace
-	STRING_9 -> VerticalBar
-	STRING_9 -> RightBrace
-	STRING_9 -> Tilde
-	STRING_9 -> DIGITS
-	STRING_9 -> LOWERS
-	STRING_9 -> RANGE_2
-	STRING_9 -> UPPERS
-	STRING_9 -> STRING_9 HT
-	STRING_9 -> STRING_9 LF
-	STRING_9 -> STRING_9 CR
-	STRING_9 -> STRING_9 Space
-	STRING_9 -> STRING_9 Exclamation
-	STRING_9 -> STRING_9 Sharp
-	STRING_9 -> STRING_9 DollarSign
-	STRING_9 -> STRING_9 Percent
-	STRING_9 -> STRING_9 SingleQuote
-	STRING_9 -> STRING_9 LeftParen
-	STRING_9 -> STRING_9 RightParen
-	STRING_9 -> STRING_9 Star
-	STRING_9 -> STRING_9 Plus
-	STRING_9 -> STRING_9 Comma
-	STRING_9 -> STRING_9 Minus
-	STRING_9 -> STRING_9 Dot
-	STRING_9 -> STRING_9 Slash
-	STRING_9 -> STRING_9 Colon
-	STRING_9 -> STRING_9 SemiColon
-	STRING_9 -> STRING_9 GreaterThan
-	STRING_9 -> STRING_9 AtSign
-	STRING_9 -> STRING_9 LeftBracket
-	STRING_9 -> STRING_9 BackSlash
-	STRING_9 -> STRING_9 RightBracket
-	STRING_9 -> STRING_9 Caret
-	STRING_9 -> STRING_9 BackQuote
-	STRING_9 -> STRING_9 LeftBrace
-	STRING_9 -> STRING_9 VerticalBar
-	STRING_9 -> STRING_9 RightBrace
-	STRING_9 -> STRING_9 Tilde
-	STRING_9 -> STRING_9 DIGITS
-	STRING_9 -> STRING_9 LOWERS
-	STRING_9 -> STRING_9 RANGE_2
-	STRING_9 -> STRING_9 UPPERS
-	STRING_9 -> Ampersand STRING_6
-	STRING_9 -> STRING_9 Ampersand STRING_6
+	STRING ::= DQUOTE STRING_9 DQUOTE
+		/.$BeginAction
+						makeToken($_STRING);
+		  $EndAction
+		./
+	STRING_6 ::= LOWERS STRING_6
+		/.$BeginAction
+						makeToken($_STRING_6);
+		  $EndAction
+		./
+	STRING_6 ::= LOWERS SEMICOLON
+		/.$BeginAction
+						makeToken($_STRING_6);
+		  $EndAction
+		./
+	STRING_6 ::= UPPERS STRING_6
+		/.$BeginAction
+						makeToken($_STRING_6);
+		  $EndAction
+		./
+	STRING_6 ::= UPPERS SEMICOLON
+		/.$BeginAction
+						makeToken($_STRING_6);
+		  $EndAction
+		./
+	STRING_9 ::= HTAB
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= LF
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= CR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= SPACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= PLING
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= HASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= T_36
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= T_37
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= SQUOTE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= LPAREN
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= RPAREN
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STAR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= PLUS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= COMMA
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= MINUS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= DOT
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= SLASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= COLON
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= SEMICOLON
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= RANGLE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= AT
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= LSQUARE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= BSLASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= RSQUARE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= CARET
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= T_96
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= LBRACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= BAR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= RBRACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= T_126
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= DIGITS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= LOWERS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= RANGE_1
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= UPPERS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 HTAB
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 LF
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 CR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 SPACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 PLING
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 HASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 T_36
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 T_37
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 SQUOTE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 LPAREN
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 RPAREN
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 STAR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 PLUS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 COMMA
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 MINUS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 DOT
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 SLASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 COLON
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 SEMICOLON
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 RANGLE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 AT
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 LSQUARE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 BSLASH
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 RSQUARE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 CARET
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 T_96
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 LBRACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 BAR
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 RBRACE
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 T_126
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 DIGITS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 LOWERS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 RANGE_1
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 UPPERS
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= AND STRING_6
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
+	STRING_9 ::= STRING_9 AND STRING_6
+		/.$BeginAction
+						makeToken($_STRING_9);
+		  $EndAction
+		./
 
-	Token ::= WS
+	WS ::= WS_3
 		/.$BeginAction
-				skipToken();
+						makeToken($_WS);
 		  $EndAction
 		./
-	WS -> WS_3
-	WS_3 -> HT
-	WS_3 -> LF
-	WS_3 -> CR
-	WS_3 -> Space
-	WS_3 -> HT WS_3
-	WS_3 -> LF WS_3
-	WS_3 -> CR WS_3
-	WS_3 -> Space WS_3
+	WS_3 ::= HTAB
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= LF
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= CR
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= SPACE
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= HTAB WS_3
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= LF WS_3
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= CR WS_3
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
+	WS_3 ::= SPACE WS_3
+		/.$BeginAction
+						makeToken($_WS_3);
+		  $EndAction
+		./
 
 %End

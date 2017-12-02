@@ -11,7 +11,7 @@ Options in effect for Ecore2XtextParser.gi:
     EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="Ecore2XtextParser"  NOFIRST
     NOFOLLOW  NOGLR  NOGOTO-DEFAULT  GRM-FILE="Ecore2XtextParser.gi"  
     IMP-FILE="Ecore2XtextParserimp.java"  IMPORT-TERMINALS="Ecore2XtextLexer.gi"
-    INCLUDE-DIRECTORY="E:\Development\Chital\Workspace\org.eclipse.ocl.examples.ecore2xtext\lpg;"
+    INCLUDE-DIRECTORY="E:\GIT\org.eclipse.ocl\examples\org.eclipse.ocl.examples.ecore2xtext\lpg;"
     LALR=1  LEGACY  NOLIST  MARGIN=4  MAX-CASES=1024  NAMES=OPTIMIZED  
     NONT-CHECK  OR_MARKER='|'  OUT-DIRECTORY=""  
     PACKAGE="org.eclipse.ocl.examples.ecore2xtext"  NOPARENT-SAVE  

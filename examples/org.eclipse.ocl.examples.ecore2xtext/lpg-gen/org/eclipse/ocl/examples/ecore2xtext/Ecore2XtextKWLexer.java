@@ -5,6 +5,8 @@
 
 package org.eclipse.ocl.examples.ecore2xtext;
 
+import lpg.runtime.*;
+
 
 public class Ecore2XtextKWLexer extends Ecore2XtextKWLexerprs
 {

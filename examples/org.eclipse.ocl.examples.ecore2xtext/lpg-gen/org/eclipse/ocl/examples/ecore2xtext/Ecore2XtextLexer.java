@@ -134,257 +134,6 @@ public class Ecore2XtextLexer implements RuleAction
         }        
     }
 
-    //
-    // The Lexer contains an array of characters as the input stream to be parsed.
-    // There are methods to retrieve and classify characters.
-    // The lexparser "token" is implemented simply as the index of the next character in the array.
-    // The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
-    // method getKind.  The template defines the Lexer class and the lexer() method.
-    // A driver creates the action class, "Lexer", passing an Option object to the constructor.
-    //
-    Ecore2XtextKWLexer kwLexer;
-    boolean printTokens;
-    private final static int ECLIPSE_TAB_VALUE = 4;
-
-    public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
-
-    public Ecore2XtextLexer(String filename) throws java.io.IOException
-    {
-        this(filename, ECLIPSE_TAB_VALUE);
-        this.kwLexer = new Ecore2XtextKWLexer(lexStream.getInputChars(), Ecore2XtextParsersym.TK_IDENTIFIER);
-    }
-
-    /**
-     * @deprecated function replaced by {@link #reset(char [] content, String filename)}
-     */
-    public void initialize(char [] content, String filename)
-    {
-        reset(content, filename);
-    }
-    
-    final void makeToken(int left_token, int right_token, int kind)
-    {
-        lexStream.makeToken(left_token, right_token, kind);
-    }
-    
-    final void makeToken(int kind)
-    {
-        int startOffset = getLeftSpan(),
-            endOffset = getRightSpan();
-        lexStream.makeToken(startOffset, endOffset, kind);
-        if (printTokens) printValue(startOffset, endOffset);
-    }
-
-    final void makeComment(int kind)
-    {
-        int startOffset = getLeftSpan(),
-            endOffset = getRightSpan();
-        lexStream.getIPrsStream().makeAdjunct(startOffset, endOffset, kind);
-    }
-
-    final void skipToken()
-    {
-        if (printTokens) printValue(getLeftSpan(), getRightSpan());
-    }
-    
-    final void checkForKeyWord()
-    {
-        int startOffset = getLeftSpan(),
-            endOffset = getRightSpan(),
-            kwKind = kwLexer.lexer(startOffset, endOffset);
-        lexStream.makeToken(startOffset, endOffset, kwKind);
-        if (printTokens) printValue(startOffset, endOffset);
-    }
-    
-    //
-    // This flavor of checkForKeyWord is necessary when the default kind
-    // (which is returned when the keyword filter doesn't match) is something
-    // other than _IDENTIFIER.
-    //
-    final void checkForKeyWord(int defaultKind)
-    {
-        int startOffset = getLeftSpan(),
-            endOffset = getRightSpan(),
-            kwKind = kwLexer.lexer(startOffset, endOffset);
-        if (kwKind == Ecore2XtextParsersym.TK_IDENTIFIER)
-            kwKind = defaultKind;
-        lexStream.makeToken(startOffset, endOffset, kwKind);
-        if (printTokens) printValue(startOffset, endOffset);
-    }
-    
-    final void printValue(int startOffset, int endOffset)
-    {
-        String s = new String(lexStream.getInputChars(), startOffset, endOffset - startOffset + 1);
-        System.out.print(s);
-    }
-
-    //
-    //
-    //
-    static class Ecore2XtextLexerLpgLexStream extends LpgLexStream
-    {
-    public final static int tokenKind[] =
-    {
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 000    0x00
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 001    0x01
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 002    0x02
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 003    0x03
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 004    0x04
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 005    0x05
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 006    0x06
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 007    0x07
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 008    0x08
-        Ecore2XtextLexersym.Char_HT,              // 009    0x09
-        Ecore2XtextLexersym.Char_LF,              // 010    0x0A
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 011    0x0B
-        Ecore2XtextLexersym.Char_FF,              // 012    0x0C
-        Ecore2XtextLexersym.Char_CR,              // 013    0x0D
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 014    0x0E
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 015    0x0F
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 016    0x10
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 017    0x11
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 018    0x12
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 019    0x13
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 020    0x14
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 021    0x15
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 022    0x16
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 023    0x17
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 024    0x18
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 025    0x19
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 026    0x1A
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 027    0x1B
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 028    0x1C
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 029    0x1D
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 030    0x1E
-        Ecore2XtextLexersym.Char_CtlCharNotWS,    // 031    0x1F
-        Ecore2XtextLexersym.Char_Space,           // 032    0x20
-        Ecore2XtextLexersym.Char_Exclamation,     // 033    0x21
-        Ecore2XtextLexersym.Char_DoubleQuote,     // 034    0x22
-        Ecore2XtextLexersym.Char_Sharp,           // 035    0x23
-        Ecore2XtextLexersym.Char_DollarSign,      // 036    0x24
-        Ecore2XtextLexersym.Char_Percent,         // 037    0x25
-        Ecore2XtextLexersym.Char_Ampersand,       // 038    0x26
-        Ecore2XtextLexersym.Char_SingleQuote,     // 039    0x27
-        Ecore2XtextLexersym.Char_LeftParen,       // 040    0x28
-        Ecore2XtextLexersym.Char_RightParen,      // 041    0x29
-        Ecore2XtextLexersym.Char_Star,            // 042    0x2A
-        Ecore2XtextLexersym.Char_Plus,            // 043    0x2B
-        Ecore2XtextLexersym.Char_Comma,           // 044    0x2C
-        Ecore2XtextLexersym.Char_Minus,           // 045    0x2D
-        Ecore2XtextLexersym.Char_Dot,             // 046    0x2E
-        Ecore2XtextLexersym.Char_Slash,           // 047    0x2F
-        Ecore2XtextLexersym.Char_0,               // 048    0x30
-        Ecore2XtextLexersym.Char_1,               // 049    0x31
-        Ecore2XtextLexersym.Char_2,               // 050    0x32
-        Ecore2XtextLexersym.Char_3,               // 051    0x33
-        Ecore2XtextLexersym.Char_4,               // 052    0x34
-        Ecore2XtextLexersym.Char_5,               // 053    0x35
-        Ecore2XtextLexersym.Char_6,               // 054    0x36
-        Ecore2XtextLexersym.Char_7,               // 055    0x37
-        Ecore2XtextLexersym.Char_8,               // 056    0x38
-        Ecore2XtextLexersym.Char_9,               // 057    0x39
-        Ecore2XtextLexersym.Char_Colon,           // 058    0x3A
-        Ecore2XtextLexersym.Char_SemiColon,       // 059    0x3B
-        Ecore2XtextLexersym.Char_LessThan,        // 060    0x3C
-        Ecore2XtextLexersym.Char_Equal,           // 061    0x3D
-        Ecore2XtextLexersym.Char_GreaterThan,     // 062    0x3E
-        Ecore2XtextLexersym.Char_QuestionMark,    // 063    0x3F
-        Ecore2XtextLexersym.Char_AtSign,          // 064    0x40
-        Ecore2XtextLexersym.Char_A,               // 065    0x41
-        Ecore2XtextLexersym.Char_B,               // 066    0x42
-        Ecore2XtextLexersym.Char_C,               // 067    0x43
-        Ecore2XtextLexersym.Char_D,               // 068    0x44
-        Ecore2XtextLexersym.Char_E,               // 069    0x45
-        Ecore2XtextLexersym.Char_F,               // 070    0x46
-        Ecore2XtextLexersym.Char_G,               // 071    0x47
-        Ecore2XtextLexersym.Char_H,               // 072    0x48
-        Ecore2XtextLexersym.Char_I,               // 073    0x49
-        Ecore2XtextLexersym.Char_J,               // 074    0x4A
-        Ecore2XtextLexersym.Char_K,               // 075    0x4B
-        Ecore2XtextLexersym.Char_L,               // 076    0x4C
-        Ecore2XtextLexersym.Char_M,               // 077    0x4D
-        Ecore2XtextLexersym.Char_N,               // 078    0x4E
-        Ecore2XtextLexersym.Char_O,               // 079    0x4F
-        Ecore2XtextLexersym.Char_P,               // 080    0x50
-        Ecore2XtextLexersym.Char_Q,               // 081    0x51
-        Ecore2XtextLexersym.Char_R,               // 082    0x52
-        Ecore2XtextLexersym.Char_S,               // 083    0x53
-        Ecore2XtextLexersym.Char_T,               // 084    0x54
-        Ecore2XtextLexersym.Char_U,               // 085    0x55
-        Ecore2XtextLexersym.Char_V,               // 086    0x56
-        Ecore2XtextLexersym.Char_W,               // 087    0x57
-        Ecore2XtextLexersym.Char_X,               // 088    0x58
-        Ecore2XtextLexersym.Char_Y,               // 089    0x59
-        Ecore2XtextLexersym.Char_Z,               // 090    0x5A
-        Ecore2XtextLexersym.Char_LeftBracket,     // 091    0x5B
-        Ecore2XtextLexersym.Char_BackSlash,       // 092    0x5C
-        Ecore2XtextLexersym.Char_RightBracket,    // 093    0x5D
-        Ecore2XtextLexersym.Char_Caret,           // 094    0x5E
-        Ecore2XtextLexersym.Char__,               // 095    0x5F
-        Ecore2XtextLexersym.Char_BackQuote,       // 096    0x60
-        Ecore2XtextLexersym.Char_a,               // 097    0x61
-        Ecore2XtextLexersym.Char_b,               // 098    0x62
-        Ecore2XtextLexersym.Char_c,               // 099    0x63
-        Ecore2XtextLexersym.Char_d,               // 100    0x64
-        Ecore2XtextLexersym.Char_e,               // 101    0x65
-        Ecore2XtextLexersym.Char_f,               // 102    0x66
-        Ecore2XtextLexersym.Char_g,               // 103    0x67
-        Ecore2XtextLexersym.Char_h,               // 104    0x68
-        Ecore2XtextLexersym.Char_i,               // 105    0x69
-        Ecore2XtextLexersym.Char_j,               // 106    0x6A
-        Ecore2XtextLexersym.Char_k,               // 107    0x6B
-        Ecore2XtextLexersym.Char_l,               // 108    0x6C
-        Ecore2XtextLexersym.Char_m,               // 109    0x6D
-        Ecore2XtextLexersym.Char_n,               // 110    0x6E
-        Ecore2XtextLexersym.Char_o,               // 111    0x6F
-        Ecore2XtextLexersym.Char_p,               // 112    0x70
-        Ecore2XtextLexersym.Char_q,               // 113    0x71
-        Ecore2XtextLexersym.Char_r,               // 114    0x72
-        Ecore2XtextLexersym.Char_s,               // 115    0x73
-        Ecore2XtextLexersym.Char_t,               // 116    0x74
-        Ecore2XtextLexersym.Char_u,               // 117    0x75
-        Ecore2XtextLexersym.Char_v,               // 118    0x76
-        Ecore2XtextLexersym.Char_w,               // 119    0x77
-        Ecore2XtextLexersym.Char_x,               // 120    0x78
-        Ecore2XtextLexersym.Char_y,               // 121    0x79
-        Ecore2XtextLexersym.Char_z,               // 122    0x7A
-        Ecore2XtextLexersym.Char_LeftBrace,       // 123    0x7B
-        Ecore2XtextLexersym.Char_VerticalBar,     // 124    0x7C
-        Ecore2XtextLexersym.Char_RightBrace,      // 125    0x7D
-        Ecore2XtextLexersym.Char_Tilde,           // 126    0x7E
-
-        Ecore2XtextLexersym.Char_AfterASCII,      // for all chars in range 128..65534
-        Ecore2XtextLexersym.Char_EOF              // for '\uffff' or 65535 
-    };
-            
-    public final int getKind(int i)  // Classify character at ith location
-    {
-        int c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
-        return (c < 128 // ASCII Character
-                  ? tokenKind[c]
-                  : c == '\uffff'
-                       ? Ecore2XtextLexersym.Char_EOF
-                       : Ecore2XtextLexersym.Char_AfterASCII);
-    }
-
-    public String[] orderedExportedSymbols() { return Ecore2XtextParsersym.orderedTerminalSymbols; }
-
-    public Ecore2XtextLexerLpgLexStream(String filename, int tab) throws java.io.IOException
-    {
-        super(filename, tab);
-    }
-
-    public Ecore2XtextLexerLpgLexStream(char[] input_chars, String filename, int tab)
-    {
-        super(input_chars, filename, tab);
-    }
-
-    public Ecore2XtextLexerLpgLexStream(char[] input_chars, String filename)
-    {
-        super(input_chars, filename, 1);
-    }
-    }
-
     public void ruleAction(int ruleNumber)
     {
         switch(ruleNumber)
@@ -394,7 +143,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 1:  Token ::= / >
             //
             case 1: { 
-			makeToken(Ecore2XtextParsersym.TK_Slash_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_SLASH_RANGLE);
 	              break;
             }
 	
@@ -402,7 +151,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 2:  Token ::= :
             //
             case 2: { 
-			makeToken(Ecore2XtextParsersym.TK_Colon);
+				makeToken(Ecore2XtextParsersym.TK_COLON);
 	              break;
             }
 	
@@ -410,7 +159,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 3:  Token ::= <
             //
             case 3: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE);
 	              break;
             }
 	
@@ -418,7 +167,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 4:  Token ::= < /
             //
             case 4: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH);
 	              break;
             }
 	
@@ -426,7 +175,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 5:  Token ::= < / d e t a i l s >
             //
             case 5: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_100_101_116_97_105_108_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE);
 	              break;
             }
 	
@@ -434,7 +183,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 6:  Token ::= < / e A n n o t a t i o n s >
             //
             case 6: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_65_110_110_111_116_97_116_105_111_110_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE);
 	              break;
             }
 	
@@ -442,7 +191,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 7:  Token ::= < / e C l a s s i f i e r s >
             //
             case 7: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_67_108_97_115_115_105_102_105_101_114_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE);
 	              break;
             }
 	
@@ -450,7 +199,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 8:  Token ::= < / e G e n e r i c T y p e >
             //
             case 8: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_71_101_110_101_114_105_99_84_121_112_101_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE);
 	              break;
             }
 	
@@ -458,7 +207,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 9:  Token ::= < / e O p e r a t i o n s >
             //
             case 9: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_79_112_101_114_97_116_105_111_110_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE);
 	              break;
             }
 	
@@ -466,7 +215,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 10:  Token ::= < / e P a c k a g e s >
             //
             case 10: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_80_97_99_107_97_103_101_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE);
 	              break;
             }
 	
@@ -474,7 +223,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 11:  Token ::= < / e P a r a m e t e r s >
             //
             case 11: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_80_97_114_97_109_101_116_101_114_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE);
 	              break;
             }
 	
@@ -482,7 +231,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 12:  Token ::= < / e S t r u c t u r a l F e a t u r e s >
             //
             case 12: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE);
 	              break;
             }
 	
@@ -490,7 +239,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 13:  Token ::= < / e T y p e A r g u m e n t s >
             //
             case 13: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_84_121_112_101_65_114_103_117_109_101_110_116_115_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE);
 	              break;
             }
 	
@@ -498,7 +247,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 14:  Token ::= < / e c o r e : E P a c k a g e >
             //
             case 14: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE);
 	              break;
             }
 	
@@ -506,7 +255,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 15:  Token ::= < / x m i : X M I >
             //
             case 15: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_Slash_120_109_105_Colon_88_77_73_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE);
 	              break;
             }
 	
@@ -514,7 +263,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 16:  Token ::= < ? x m l
             //
             case 16: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_QuestionMark_120_109_108);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_QUERY_120_109_108);
 	              break;
             }
 	
@@ -522,7 +271,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 17:  Token ::= < d e t a i l s
             //
             case 17: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_100_101_116_97_105_108_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_100_101_116_97_105_108_115);
 	              break;
             }
 	
@@ -530,7 +279,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 18:  Token ::= < e A n n o t a t i o n s
             //
             case 18: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_65_110_110_111_116_97_116_105_111_110_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_65_110_110_111_116_97_116_105_111_110_115);
 	              break;
             }
 	
@@ -538,7 +287,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 19:  Token ::= < e C l a s s i f i e r s
             //
             case 19: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_67_108_97_115_115_105_102_105_101_114_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_67_108_97_115_115_105_102_105_101_114_115);
 	              break;
             }
 	
@@ -546,7 +295,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 20:  Token ::= < e G e n e r i c T y p e
             //
             case 20: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_71_101_110_101_114_105_99_84_121_112_101);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_71_101_110_101_114_105_99_84_121_112_101);
 	              break;
             }
 	
@@ -554,7 +303,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 21:  Token ::= < e O p e r a t i o n s
             //
             case 21: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_79_112_101_114_97_116_105_111_110_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_79_112_101_114_97_116_105_111_110_115);
 	              break;
             }
 	
@@ -562,7 +311,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 22:  Token ::= < e P a c k a g e s
             //
             case 22: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_80_97_99_107_97_103_101_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_80_97_99_107_97_103_101_115);
 	              break;
             }
 	
@@ -570,7 +319,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 23:  Token ::= < e P a r a m e t e r s
             //
             case 23: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_80_97_114_97_109_101_116_101_114_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_80_97_114_97_109_101_116_101_114_115);
 	              break;
             }
 	
@@ -578,7 +327,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 24:  Token ::= < e S t r u c t u r a l F e a t u r e s
             //
             case 24: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115);
 	              break;
             }
 	
@@ -586,7 +335,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 25:  Token ::= < e T y p e A r g u m e n t s
             //
             case 25: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_84_121_112_101_65_114_103_117_109_101_110_116_115);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115);
 	              break;
             }
 	
@@ -594,7 +343,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 26:  Token ::= < e c o r e : E P a c k a g e
             //
             case 26: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_101_99_111_114_101_Colon_69_80_97_99_107_97_103_101);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101);
 	              break;
             }
 	
@@ -602,7 +351,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 27:  Token ::= < x m i : X M I
             //
             case 27: { 
-			makeToken(Ecore2XtextParsersym.TK_LessThan_120_109_105_Colon_88_77_73);
+				makeToken(Ecore2XtextParsersym.TK_LANGLE_120_109_105_COLON_88_77_73);
 	              break;
             }
 	
@@ -610,7 +359,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 28:  Token ::= =
             //
             case 28: { 
-			makeToken(Ecore2XtextParsersym.TK_Equal);
+				makeToken(Ecore2XtextParsersym.TK_EQUALS);
 	              break;
             }
 	
@@ -618,7 +367,7 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 29:  Token ::= >
             //
             case 29: { 
-			makeToken(Ecore2XtextParsersym.TK_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_RANGLE);
 	              break;
             }
 	
@@ -626,31 +375,759 @@ public class Ecore2XtextLexer implements RuleAction
             // Rule 30:  Token ::= ? >
             //
             case 30: { 
-			makeToken(Ecore2XtextParsersym.TK_QuestionMark_GreaterThan);
+				makeToken(Ecore2XtextParsersym.TK_QUERY_RANGLE);
 	              break;
             }
 	
             //
-            // Rule 94:  Token ::= IDENTIFIER
+            // Rule 94:  IDENTIFIER ::= IDENTIFIER_4
             //
             case 94: { 
-			make Token(Ecore2XtextParsersym.TK_IDENTIFIER);check keyword
+					makeToken(Ecore2XtextParsersym.TK_IDENTIFIER);
 	              break;
             }
 	
             //
-            // Rule 104:  Token ::= STRING
+            // Rule 95:  IDENTIFIER_4 ::= DIGITS
+            //
+            case 95: { 
+					makeToken($_IDENTIFIER_4);
+	              break;
+            }
+	
+            //
+            // Rule 96:  IDENTIFIER_4 ::= LOWERS
+            //
+            case 96: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 97:  IDENTIFIER_4 ::= RANGE_1
+            //
+            case 97: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 98:  IDENTIFIER_4 ::= UPPERS
+            //
+            case 98: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 99:  IDENTIFIER_4 ::= DIGITS IDENTIFIER_4
+            //
+            case 99: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 100:  IDENTIFIER_4 ::= LOWERS IDENTIFIER_4
+            //
+            case 100: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 101:  IDENTIFIER_4 ::= RANGE_1 IDENTIFIER_4
+            //
+            case 101: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 102:  IDENTIFIER_4 ::= UPPERS IDENTIFIER_4
+            //
+            case 102: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 103:  STRING ::= DQUOTE DQUOTE
+            //
+            case 103: { 
+					makeToken(Ecore2XtextParsersym.TK_STRING);
+	              break;
+            }
+	
+            //
+            // Rule 104:  STRING ::= DQUOTE STRING_9 DQUOTE
             //
             case 104: { 
-			makeToken(Ecore2XtextParsersym.TK_STRING);
+					makeToken(Ecore2XtextParsersym.TK_STRING);
 	              break;
             }
 	
             //
-            // Rule 181:  Token ::= WS
+            // Rule 105:  STRING_6 ::= LOWERS STRING_6
+            //
+            case 105: { 
+					makeToken($_STRING_6);
+	              break;
+            }
+	
+            //
+            // Rule 106:  STRING_6 ::= LOWERS SEMICOLON
+            //
+            case 106: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 107:  STRING_6 ::= UPPERS STRING_6
+            //
+            case 107: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 108:  STRING_6 ::= UPPERS SEMICOLON
+            //
+            case 108: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 109:  STRING_9 ::= HTAB
+            //
+            case 109: { 
+					makeToken($_STRING_9);
+	              break;
+            }
+	
+            //
+            // Rule 110:  STRING_9 ::= LF
+            //
+            case 110: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 111:  STRING_9 ::= CR
+            //
+            case 111: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 112:  STRING_9 ::= SPACE
+            //
+            case 112: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 113:  STRING_9 ::= PLING
+            //
+            case 113: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 114:  STRING_9 ::= HASH
+            //
+            case 114: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 115:  STRING_9 ::= T_36
+            //
+            case 115: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 116:  STRING_9 ::= T_37
+            //
+            case 116: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 117:  STRING_9 ::= SQUOTE
+            //
+            case 117: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 118:  STRING_9 ::= LPAREN
+            //
+            case 118: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 119:  STRING_9 ::= RPAREN
+            //
+            case 119: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 120:  STRING_9 ::= STAR
+            //
+            case 120: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 121:  STRING_9 ::= PLUS
+            //
+            case 121: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 122:  STRING_9 ::= COMMA
+            //
+            case 122: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 123:  STRING_9 ::= MINUS
+            //
+            case 123: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 124:  STRING_9 ::= DOT
+            //
+            case 124: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 125:  STRING_9 ::= SLASH
+            //
+            case 125: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 126:  STRING_9 ::= COLON
+            //
+            case 126: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 127:  STRING_9 ::= SEMICOLON
+            //
+            case 127: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 128:  STRING_9 ::= RANGLE
+            //
+            case 128: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 129:  STRING_9 ::= AT
+            //
+            case 129: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 130:  STRING_9 ::= LSQUARE
+            //
+            case 130: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 131:  STRING_9 ::= BSLASH
+            //
+            case 131: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 132:  STRING_9 ::= RSQUARE
+            //
+            case 132: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 133:  STRING_9 ::= CARET
+            //
+            case 133: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 134:  STRING_9 ::= T_96
+            //
+            case 134: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 135:  STRING_9 ::= LBRACE
+            //
+            case 135: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 136:  STRING_9 ::= BAR
+            //
+            case 136: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 137:  STRING_9 ::= RBRACE
+            //
+            case 137: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 138:  STRING_9 ::= T_126
+            //
+            case 138: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 139:  STRING_9 ::= DIGITS
+            //
+            case 139: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 140:  STRING_9 ::= LOWERS
+            //
+            case 140: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 141:  STRING_9 ::= RANGE_1
+            //
+            case 141: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 142:  STRING_9 ::= UPPERS
+            //
+            case 142: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 143:  STRING_9 ::= STRING_9 HTAB
+            //
+            case 143: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 144:  STRING_9 ::= STRING_9 LF
+            //
+            case 144: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 145:  STRING_9 ::= STRING_9 CR
+            //
+            case 145: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 146:  STRING_9 ::= STRING_9 SPACE
+            //
+            case 146: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 147:  STRING_9 ::= STRING_9 PLING
+            //
+            case 147: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 148:  STRING_9 ::= STRING_9 HASH
+            //
+            case 148: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 149:  STRING_9 ::= STRING_9 T_36
+            //
+            case 149: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 150:  STRING_9 ::= STRING_9 T_37
+            //
+            case 150: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 151:  STRING_9 ::= STRING_9 SQUOTE
+            //
+            case 151: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 152:  STRING_9 ::= STRING_9 LPAREN
+            //
+            case 152: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 153:  STRING_9 ::= STRING_9 RPAREN
+            //
+            case 153: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 154:  STRING_9 ::= STRING_9 STAR
+            //
+            case 154: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 155:  STRING_9 ::= STRING_9 PLUS
+            //
+            case 155: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 156:  STRING_9 ::= STRING_9 COMMA
+            //
+            case 156: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 157:  STRING_9 ::= STRING_9 MINUS
+            //
+            case 157: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 158:  STRING_9 ::= STRING_9 DOT
+            //
+            case 158: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 159:  STRING_9 ::= STRING_9 SLASH
+            //
+            case 159: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 160:  STRING_9 ::= STRING_9 COLON
+            //
+            case 160: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 161:  STRING_9 ::= STRING_9 SEMICOLON
+            //
+            case 161: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 162:  STRING_9 ::= STRING_9 RANGLE
+            //
+            case 162: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 163:  STRING_9 ::= STRING_9 AT
+            //
+            case 163: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 164:  STRING_9 ::= STRING_9 LSQUARE
+            //
+            case 164: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 165:  STRING_9 ::= STRING_9 BSLASH
+            //
+            case 165: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 166:  STRING_9 ::= STRING_9 RSQUARE
+            //
+            case 166: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 167:  STRING_9 ::= STRING_9 CARET
+            //
+            case 167: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 168:  STRING_9 ::= STRING_9 T_96
+            //
+            case 168: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 169:  STRING_9 ::= STRING_9 LBRACE
+            //
+            case 169: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 170:  STRING_9 ::= STRING_9 BAR
+            //
+            case 170: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 171:  STRING_9 ::= STRING_9 RBRACE
+            //
+            case 171: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 172:  STRING_9 ::= STRING_9 T_126
+            //
+            case 172: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 173:  STRING_9 ::= STRING_9 DIGITS
+            //
+            case 173: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 174:  STRING_9 ::= STRING_9 LOWERS
+            //
+            case 174: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 175:  STRING_9 ::= STRING_9 RANGE_1
+            //
+            case 175: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 176:  STRING_9 ::= STRING_9 UPPERS
+            //
+            case 176: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 177:  STRING_9 ::= AND STRING_6
+            //
+            case 177: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 178:  STRING_9 ::= STRING_9 AND STRING_6
+            //
+            case 178: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 179:  WS ::= WS_3
+            //
+            case 179: { 
+					makeToken(Ecore2XtextParsersym.TK_WS);
+	              break;
+            }
+	
+            //
+            // Rule 180:  WS_3 ::= HTAB
+            //
+            case 180: { 
+					makeToken($_WS_3);
+	              break;
+            }
+	
+            //
+            // Rule 181:  WS_3 ::= LF
             //
             case 181: { 
-			skipToken();
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 182:  WS_3 ::= CR
+            //
+            case 182: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 183:  WS_3 ::= SPACE
+            //
+            case 183: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 184:  WS_3 ::= HTAB WS_3
+            //
+            case 184: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 185:  WS_3 ::= LF WS_3
+            //
+            case 185: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 186:  WS_3 ::= CR WS_3
+            //
+            case 186: { 
+					makeToken();
+	              break;
+            }
+	
+            //
+            // Rule 187:  WS_3 ::= SPACE WS_3
+            //
+            case 187: { 
+					makeToken();
 	              break;
             }
 	

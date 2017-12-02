@@ -11,7 +11,7 @@ Options in effect for Ecore2XtextKWLexer.gi:
     FACTORY="new "  FILE-PREFIX="Ecore2XtextKWLexer"  NOFIRST  NOFOLLOW  NOGLR
     NOGOTO-DEFAULT  GRM-FILE="Ecore2XtextKWLexer.gi"  
     IMP-FILE="Ecore2XtextKWLexerimp.java"  
-    INCLUDE-DIRECTORY="E:\Development\Chital\Workspace\org.eclipse.ocl.examples.ecore2xtext\lpg;"
+    INCLUDE-DIRECTORY="E:\GIT\org.eclipse.ocl\examples\org.eclipse.ocl.examples.ecore2xtext\lpg;"
     LEGACY  NOLIST  MARGIN=4  MAX-CASES=1024  NAMES=OPTIMIZED  NONT-CHECK  
     OR_MARKER='|'  OUT-DIRECTORY=""  
     PACKAGE="org.eclipse.ocl.examples.ecore2xtext"  NOPARENT-SAVE  
@@ -23,25 +23,25 @@ Options in effect for Ecore2XtextKWLexer.gi:
     TABLE  TEMPLATE="../lpg/KeywordTemplateF.gi"  TRACE=CONFLICTS  NOVARIABLES
     NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"  WARNINGS  NOXREF  
 
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:14:24:14:24:309:309: Warning: The macro "$" is undefined. No substitution made
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:2:5:2:14:17:26: Informative: The terminal DollarSign is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:3:5:3:11:41:47: Informative: The terminal Percent is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:4:5:4:5:62:62: Informative: The terminal _ is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:5:23:5:23:87:87: Informative: The terminal j is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:5:37:5:37:101:101: Informative: The terminal q is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:5:6:5:126:126: Informative: The terminal A is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:11:6:11:132:132: Informative: The terminal D is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:15:6:15:136:136: Informative: The terminal F is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:17:6:17:138:138: Informative: The terminal G is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:19:6:19:140:140: Informative: The terminal H is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:23:6:23:144:144: Informative: The terminal J is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:25:6:25:146:146: Informative: The terminal K is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:29:6:29:150:150: Informative: The terminal M is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:37:6:37:158:158: Informative: The terminal Q is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:49:6:49:170:170: Informative: The terminal W is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:51:6:51:172:172: Informative: The terminal X is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:53:6:53:174:174: Informative: The terminal Y is useless.
-E:/Development/Chital/Workspace/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:55:6:55:176:176: Informative: The terminal Z is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:14:24:14:24:296:296: Warning: The macro "$" is undefined. No substitution made
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:2:5:2:14:16:25: Informative: The terminal DollarSign is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:3:5:3:11:39:45: Informative: The terminal Percent is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:4:5:4:5:59:59: Informative: The terminal _ is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:5:23:5:23:83:83: Informative: The terminal j is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:5:37:5:37:97:97: Informative: The terminal q is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:5:6:5:121:121: Informative: The terminal A is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:11:6:11:127:127: Informative: The terminal D is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:15:6:15:131:131: Informative: The terminal F is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:17:6:17:133:133: Informative: The terminal G is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:19:6:19:135:135: Informative: The terminal H is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:23:6:23:139:139: Informative: The terminal J is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:25:6:25:141:141: Informative: The terminal K is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:29:6:29:145:145: Informative: The terminal M is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:37:6:37:153:153: Informative: The terminal Q is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:49:6:49:165:165: Informative: The terminal W is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:51:6:51:167:167: Informative: The terminal X is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:53:6:53:169:169: Informative: The terminal Y is useless.
+E:/GIT/org.eclipse.ocl/examples/org.eclipse.ocl.examples.ecore2xtext/lpg/KWLexerMapF.gi:6:55:6:55:171:171: Informative: The terminal Z is useless.
 
 
 Ecore2XtextKWLexer.gi:71:9:71:15:982:988: Informative: Grammar is  LR(0).
