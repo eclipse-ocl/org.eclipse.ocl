@@ -1,74 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xbnf:Syntax xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:xbnf="http://www.eclipse.org/ocl/XBNF" xmlns:xbnfwc="http://www.eclipse.org/ocl/XBNFwithCardinality" name="org.eclipse.ocl.examples.ecore2xtext.Ecore2Xtext">
-  <grammars xsi:type="xbnf:LexerGrammar" name="org.eclipse.ocl.examples.ecore2xtext.Ecore2XtextLexer" goals="#//@grammars.0/@rules.1">
-    <rules xsi:type="xbnf:TerminalRule" name="IDENTIFIER" kind="TerminalRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <element xsi:type="xbnfwc:OneOrMore" debug="+">
-        <element xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnfwc:Alternatives" debug="|">
-            <elements xsi:type="xbnf:CharacterRange" debug="[a-z]" left="a" right="z"/>
-            <elements xsi:type="xbnf:CharacterRange" debug="[A-Z]" left="A" right="Z"/>
-            <elements xsi:type="xbnf:CharacterRange" debug="[_-_]" left="_" right="_"/>
-          </elements>
-          <elements xsi:type="xbnf:CharacterRange" debug="[0-9]" left="0" right="9"/>
-        </element>
-      </element>
-    </rules>
+  <grammars xsi:type="xbnf:LexerGrammar" name="org.eclipse.ocl.examples.ecore2xtext.Ecore2XtextLexer" goals="#//@grammars.0/@rules.0">
     <rules xsi:type="xbnf:TerminalRule" name="STRING" kind="TerminalRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;&quot;&quot;" value="&quot;"/>
         <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
           <element xsi:type="xbnfwc:Alternatives" debug="|">
-            <elements xsi:type="xbnfwc:Alternatives" debug="|">
-              <elements xsi:type="xbnf:CharacterRange" debug="[a-z]" left="a" right="z"/>
-              <elements xsi:type="xbnf:CharacterRange" debug="[A-Z]" left="A" right="Z"/>
-              <elements xsi:type="xbnf:CharacterRange" debug="[_-_]" left="_" right="_"/>
-            </elements>
-            <elements xsi:type="xbnf:CharacterRange" debug="[0-9]" left="0" right="9"/>
-            <elements xsi:type="xbnfwc:Alternatives" debug="|">
-              <elements xsi:type="xbnf:Keyword" debug="&quot; &quot;" value=" "/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;&#x9;&quot;" value="&#x9;"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;&#xD;&quot;" value="&#xD;"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;&#xA;&quot;" value="&#xA;"/>
-            </elements>
-            <elements xsi:type="xbnfwc:Alternatives" debug="|">
-              <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;/&quot;" value="/"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;.&quot;" value="."/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;-&quot;" value="-"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;|&quot;" value="|"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;~&quot;" value="~"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;{&quot;" value="{"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;}&quot;" value="}"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;`&quot;" value="`"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;[&quot;" value="["/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;]&quot;" value="]"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;^&quot;" value="^"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;!&quot;" value="!"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;@&quot;" value="@"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;;&quot;" value=";"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;,&quot;" value=","/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;*&quot;" value="*"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;+&quot;" value="+"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;(&quot;" value="("/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;)&quot;" value=")"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;'&quot;" value="'"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;\&quot;" value="\"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;$&quot;" value="$"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;%&quot;" value="%"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;#&quot;" value="#"/>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            </elements>
-            <elements xsi:type="xbnfwc:Succession">
-              <elements xsi:type="xbnf:Keyword" debug="&quot;&amp;&quot;" value="&amp;"/>
-              <elements xsi:type="xbnfwc:OneOrMore" debug="+">
-                <element xsi:type="xbnfwc:Alternatives" debug="|">
-                  <elements xsi:type="xbnf:CharacterRange" debug="[a-z]" left="a" right="z"/>
-                  <elements xsi:type="xbnf:CharacterRange" debug="[A-Z]" left="A" right="Z"/>
-                </element>
-              </elements>
-              <elements xsi:type="xbnf:Keyword" debug="&quot;;&quot;" value=";"/>
-            </elements>
+            <elements xsi:type="xbnf:CharacterRange" debug="[ -!]" left=" " right="!"/>
+            <elements xsi:type="xbnf:CharacterRange" debug="[#-~]" left="#" right="~"/>
           </element>
         </elements>
         <elements xsi:type="xbnf:Keyword" debug="&quot;&quot;&quot;" value="&quot;"/>
@@ -84,52 +24,144 @@
         </element>
       </element>
     </rules>
+    <rules xsi:type="xbnf:TerminalRule" name="IDENTIFIER" kind="TerminalRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:CharacterRange" debug="[a-z]" left="a" right="z"/>
+          <elements xsi:type="xbnf:CharacterRange" debug="[A-Z]" left="A" right="Z"/>
+          <elements xsi:type="xbnf:CharacterRange" debug="[_-_]" left="_" right="_"/>
+        </elements>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives" debug="|">
+            <elements xsi:type="xbnf:CharacterRange" debug="[a-z]" left="a" right="z"/>
+            <elements xsi:type="xbnf:CharacterRange" debug="[A-Z]" left="A" right="Z"/>
+            <elements xsi:type="xbnf:CharacterRange" debug="[_-_]" left="_" right="_"/>
+            <elements xsi:type="xbnf:CharacterRange" debug="[0-9]" left="0" right="9"/>
+          </element>
+        </elements>
+      </element>
+    </rules>
   </grammars>
-  <grammars xsi:type="xbnf:ParserGrammar" name="org.eclipse.ocl.examples.ecore2xtext.Ecore2XtextParser" goals="#//@grammars.1/@rules.19">
+  <grammars xsi:type="xbnf:ParserGrammar" name="org.eclipse.ocl.examples.ecore2xtext.Ecore2XtextParser" goals="#//@grammars.1/@rules.27">
+    <rules xsi:type="xbnf:ParserRule" name="Terminal_String" kind="ParserRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <element xsi:type="xbnf:RuleCall" debug="STRING" referredRule="#//@grammars.0/@rules.0"/>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="XMLAttribute_xmlns_" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLAttribute_xmlns_">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;xmlns&quot;" value="xmlns"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 ns=Terminal_Identifier" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLAttribute_xmlns_/ns"
+            operator="=" referredRule="#//@grammars.1/@rules.35"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="XMLAttribute_xsi_type" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLAttribute_xsi_type">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;xsi&quot;" value="xsi"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;type&quot;" value="type"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="XmlAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute">
+      <element xsi:type="xbnfwc:Alternatives" debug="|">
+        <elements xsi:type="xbnf:RuleCall" debug="BooleanAttribute" referredRule="#//@grammars.1/@rules.16"/>
+        <elements xsi:type="xbnf:RuleCall" debug="IntegerAttribute" referredRule="#//@grammars.1/@rules.26"/>
+        <elements xsi:type="xbnf:RuleCall" debug="StringAttribute" referredRule="#//@grammars.1/@rules.11"/>
+        <elements xsi:type="xbnf:RuleCall" debug="OtherAttribute" referredRule="#//@grammars.1/@rules.9"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EReference_eOpposite" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EReference_eOpposite">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;eOpposite&quot;" value="eOpposite"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStringToStringMapEntry_key" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStringToStringMapEntry_key">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;key&quot;" value="key"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="InstanceClassNameAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//InstanceClassNameAttribute">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;instanceClassName&quot;" value="instanceClassName"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EClass_eSuperTypes" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EClass_eSuperTypes">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;eSuperTypes&quot;" value="eSuperTypes"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EPackage_nsURI" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EPackage_nsURI">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;nsURI&quot;" value="nsURI"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
     <rules xsi:type="xbnf:ParserRule" name="OtherAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherAttribute">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 tag=IDENTIFIER" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherAttribute/tag"
-            operator="=" referredRule="#//@grammars.0/@rules.0"/>
+            operator="=" referredRule="#//@grammars.0/@rules.2"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="SourceAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//SourceAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_ETypedElement_upperBound" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_ETypedElement_upperBound">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;source&quot;" value="source"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;upperBound&quot;" value="upperBound"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EClassifierAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EClassifierAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;eClassifier&quot;" value="eClassifier"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+    <rules xsi:type="xbnf:ParserRule" name="StringAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//StringAttribute">
+      <element xsi:type="xbnfwc:Alternatives" debug="|">
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EPackage_eClassifiers" referredRule="#//@grammars.1/@rules.43"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EOperation_eExceptions" referredRule="#//@grammars.1/@rules.18"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EReference_eOpposite" referredRule="#//@grammars.1/@rules.4"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EClass_eSuperTypes" referredRule="#//@grammars.1/@rules.7"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_ETypedElement_eType" referredRule="#//@grammars.1/@rules.36"/>
+        <elements xsi:type="xbnf:RuleCall" debug="InstanceClassNameAttribute" referredRule="#//@grammars.1/@rules.6"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStringToStringMapEntry_key" referredRule="#//@grammars.1/@rules.5"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_ENamedElement_name" referredRule="#//@grammars.1/@rules.46"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EPackage_nsPrefix" referredRule="#//@grammars.1/@rules.21"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EPackage_nsURI" referredRule="#//@grammars.1/@rules.8"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EAnnotation_source" referredRule="#//@grammars.1/@rules.44"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStringToStringMapEntry_value" referredRule="#//@grammars.1/@rules.13"/>
+        <elements xsi:type="xbnf:RuleCall" debug="XMLAttribute_xmi_version" referredRule="#//@grammars.1/@rules.37"/>
+        <elements xsi:type="xbnf:RuleCall" debug="XMLAttribute_xmlns_" referredRule="#//@grammars.1/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCall" debug="XMLAttribute_xsi_type" referredRule="#//@grammars.1/@rules.2"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="RootEPackage" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EPackage">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EGenericType_eTypeArguments" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EGenericType_eTypeArguments">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;ecore:EPackage&quot;" value="&lt;ecore:EPackage"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eTypeArguments&quot;" value="&lt;eTypeArguments"/>
         <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
           <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XmiVersionAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.18"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XmlnsAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.25"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NsURIAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NsPrefixAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.31"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_eClassifiers" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.43"/>
             <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
           </element>
         </elements>
         <elements xsi:type="xbnfwc:Alternatives" debug="|">
@@ -138,83 +170,168 @@
             <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
             <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
               <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EClassifier" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.40"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
                 <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
               </element>
             </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/ecore:EPackage>&quot;" value="&lt;/ecore:EPackage>"/>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eTypeArguments>&quot;" value="&lt;/eTypeArguments>"/>
           </elements>
         </elements>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="IntegerAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//IntegerAttribute">
-      <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="LowerBoundAttribute" referredRule="#//@grammars.1/@rules.14"/>
-        <elements xsi:type="xbnf:RuleCall" debug="UpperBoundAttribute" referredRule="#//@grammars.1/@rules.11"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ValueAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ValueAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStringToStringMapEntry_value" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStringToStringMapEntry_value">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;value&quot;" value="value"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="StringAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//StringAttribute">
-      <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="EClassifierAttribute" referredRule="#//@grammars.1/@rules.2"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EExceptionsAttribute" referredRule="#//@grammars.1/@rules.44"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EOppositeAttribute" referredRule="#//@grammars.1/@rules.36"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ESuperTypeAttribute" referredRule="#//@grammars.1/@rules.15"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ETypeAttribute" referredRule="#//@grammars.1/@rules.8"/>
-        <elements xsi:type="xbnf:RuleCall" debug="InstanceClassNameAttribute" referredRule="#//@grammars.1/@rules.17"/>
-        <elements xsi:type="xbnf:RuleCall" debug="KeyAttribute" referredRule="#//@grammars.1/@rules.13"/>
-        <elements xsi:type="xbnf:RuleCall" debug="NameAttribute" referredRule="#//@grammars.1/@rules.27"/>
-        <elements xsi:type="xbnf:RuleCall" debug="NsPrefixAttribute" referredRule="#//@grammars.1/@rules.31"/>
-        <elements xsi:type="xbnf:RuleCall" debug="NsURIAttribute" referredRule="#//@grammars.1/@rules.46"/>
-        <elements xsi:type="xbnf:RuleCall" debug="SourceAttribute" referredRule="#//@grammars.1/@rules.1"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ValueAttribute" referredRule="#//@grammars.1/@rules.5"/>
-        <elements xsi:type="xbnf:RuleCall" debug="XmiVersionAttribute" referredRule="#//@grammars.1/@rules.18"/>
-        <elements xsi:type="xbnf:RuleCall" debug="XmlnsAttribute" referredRule="#//@grammars.1/@rules.25"/>
-        <elements xsi:type="xbnf:RuleCall" debug="XsiTypeAttribute" referredRule="#//@grammars.1/@rules.26"/>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_changeable" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_changeable">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;changeable&quot;" value="changeable"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EPackage_eClassifiers" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EPackage_eClassifiers">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eClassifiers&quot;" value="&lt;eClassifiers"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EClass_abstract" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.20"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=InstanceClassNameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.6"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EDataType_serializable" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.24"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EClass_eSuperTypes" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.7"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EClass_eStructuralFeatures" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.31"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EClass_eOperations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.17"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eClassifiers>&quot;" value="&lt;/eClassifiers>"/>
+          </elements>
+        </elements>
       </element>
     </rules>
     <rules xsi:type="xbnf:ParserRule" name="BooleanAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//BooleanAttribute">
       <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="AbstractAttribute" referredRule="#//@grammars.1/@rules.37"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ChangeableAttribute" referredRule="#//@grammars.1/@rules.33"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ContainmentAttribute" referredRule="#//@grammars.1/@rules.35"/>
-        <elements xsi:type="xbnf:RuleCall" debug="DefaultValueLiteralAttribute" referredRule="#//@grammars.1/@rules.29"/>
-        <elements xsi:type="xbnf:RuleCall" debug="DerivedAttribute" referredRule="#//@grammars.1/@rules.12"/>
-        <elements xsi:type="xbnf:RuleCall" debug="OrderedAttribute" referredRule="#//@grammars.1/@rules.22"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ResolveProxiesAttribute" referredRule="#//@grammars.1/@rules.10"/>
-        <elements xsi:type="xbnf:RuleCall" debug="SerializableAttribute" referredRule="#//@grammars.1/@rules.28"/>
-        <elements xsi:type="xbnf:RuleCall" debug="TransientAttribute" referredRule="#//@grammars.1/@rules.45"/>
-        <elements xsi:type="xbnf:RuleCall" debug="UnsettableAttribute" referredRule="#//@grammars.1/@rules.41"/>
-        <elements xsi:type="xbnf:RuleCall" debug="VolatileAttribute" referredRule="#//@grammars.1/@rules.32"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EClass_abstract" referredRule="#//@grammars.1/@rules.20"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_changeable" referredRule="#//@grammars.1/@rules.14"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EReference_containment" referredRule="#//@grammars.1/@rules.38"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral" referredRule="#//@grammars.1/@rules.25"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_derived" referredRule="#//@grammars.1/@rules.42"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_ETypedElement_ordered" referredRule="#//@grammars.1/@rules.30"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EReference_resolveProxies" referredRule="#//@grammars.1/@rules.45"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EDataType_serializable" referredRule="#//@grammars.1/@rules.24"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_transient" referredRule="#//@grammars.1/@rules.40"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_unsettable" referredRule="#//@grammars.1/@rules.29"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EStructuralFeature_volatile" referredRule="#//@grammars.1/@rules.41"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ETypeAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ETypeAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EClass_eOperations" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EClass_eOperations">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;eType&quot;" value="eType"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eOperations&quot;" value="&lt;eOperations"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_eType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.36"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EOperation_eExceptions" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.18"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EOperation_eParameters" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_ETypedElement_eGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.23"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eOperations>&quot;" value="&lt;/eOperations>"/>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EOperation_eExceptions" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EOperation_eExceptions">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;eExceptions&quot;" value="eExceptions"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_ETypedElement_lowerBound" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_ETypedElement_lowerBound">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;lowerBound&quot;" value="lowerBound"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EClass_abstract" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EClass_abstract">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;abstract&quot;" value="abstract"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EPackage_nsPrefix" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EPackage_nsPrefix">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;nsPrefix&quot;" value="nsPrefix"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
     <rules xsi:type="xbnf:ParserRule" name="OtherElement" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherElement">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;&quot;" value="&lt;"/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 tag=ID" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherElement/tag"
-            operator="=" referredRule="#//@grammars.1/@rules.16"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 tag=Terminal_Identifier" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherElement/tag"
+            operator="=" referredRule="#//@grammars.1/@rules.35"/>
         <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
           <element xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XmlAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-              operator="+=" referredRule="#//@grammars.1/@rules.30"/>
+              operator="+=" referredRule="#//@grammars.1/@rules.3"/>
         </elements>
         <elements xsi:type="xbnfwc:Alternatives" debug="|">
           <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
@@ -222,67 +339,311 @@
             <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
             <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
               <element xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=XmlElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                  operator="+=" referredRule="#//@grammars.1/@rules.24"/>
+                  operator="+=" referredRule="#//@grammars.1/@rules.34"/>
             </elements>
             <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/&quot;" value="&lt;/"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 endTag=ID" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherElement/endTag"
-                operator="=" referredRule="#//@grammars.1/@rules.16"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 endTag=Terminal_Identifier" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//OtherElement/endTag"
+                operator="=" referredRule="#//@grammars.1/@rules.35"/>
             <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
           </elements>
         </elements>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ResolveProxiesAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ResolveProxiesAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_ETypedElement_eGenericType" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_ETypedElement_eGenericType">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;resolveProxies&quot;" value="resolveProxies"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eGenericType&quot;" value="&lt;eGenericType"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_eClassifiers" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.43"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EGenericType_eTypeArguments" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.12"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eGenericType>&quot;" value="&lt;/eGenericType>"/>
+          </elements>
+        </elements>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="UpperBoundAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//UpperBoundAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EDataType_serializable" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EDataType_serializable">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;upperBound&quot;" value="upperBound"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;serializable&quot;" value="serializable"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="DerivedAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//DerivedAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;derived&quot;" value="derived"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;defaultValueLiteral&quot;" value="defaultValueLiteral"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="KeyAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//KeyAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;key&quot;" value="key"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="LowerBoundAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//LowerBoundAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;lowerBound&quot;" value="lowerBound"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ESuperTypeAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ESuperTypeAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;eSuperTypes&quot;" value="eSuperTypes"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ID" kind="ParserRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <rules xsi:type="xbnf:ParserRule" name="IntegerAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//IntegerAttribute">
       <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="IDENTIFIER" referredRule="#//@grammars.0/@rules.0"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_ETypedElement_lowerBound" referredRule="#//@grammars.1/@rules.19"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_ETypedElement_upperBound" referredRule="#//@grammars.1/@rules.10"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="XMLDocument_ecore_EPackage" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;?xml&quot;" value="&lt;?xml"/>
+        <elements xsi:type="xbnfwc:ZeroOrOne" debug="?">
+          <element xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;version&quot;" value="version"/>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 version=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/version"
+                operator="=" referredRule="#//@grammars.1/@rules.0"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:ZeroOrOne" debug="?">
+          <element xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;encoding&quot;" value="encoding"/>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 encoding=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/encoding"
+                operator="=" referredRule="#//@grammars.1/@rules.0"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;?>&quot;" value="?>"/>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 body+=EcoreRoot_ecore_EPackage" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/body"
+              operator="+=" referredRule="#//@grammars.1/@rules.47"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;xmi:XMI&quot;" value="&lt;xmi:XMI"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xmi_version" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/attributes"
+                    operator="+=" referredRule="#//@grammars.1/@rules.37"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xmlns_" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/attributes"
+                    operator="+=" referredRule="#//@grammars.1/@rules.1"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnfwc:Alternatives" debug="|">
+              <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+              <elements xsi:type="xbnfwc:Succession">
+                <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+                <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+                  <element xsi:type="xbnf:RuleCallAssignment" debug="#2 body+=XmlElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLDocument_ecore_EPackage/body"
+                      operator="+=" referredRule="#//@grammars.1/@rules.34"/>
+                </elements>
+                <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/xmi:XMI>&quot;" value="&lt;/xmi:XMI>"/>
+              </elements>
+            </elements>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EModelElement_eAnnotations" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EModelElement_eAnnotations">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eAnnotations&quot;" value="&lt;eAnnotations"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EAnnotation_source" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.44"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreFeature_ecore_EAnnotation_details" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.33"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eAnnotations>&quot;" value="&lt;/eAnnotations>"/>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_unsettable" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_unsettable">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;unsettable&quot;" value="unsettable"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_ETypedElement_ordered" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_ETypedElement_ordered">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;ordered&quot;" value="ordered"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EClass_eStructuralFeatures" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EClass_eStructuralFeatures">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eStructuralFeatures&quot;" value="&lt;eStructuralFeatures"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_changeable" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.14"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_transient" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.40"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_derived" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.42"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EReference_containment" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.38"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_lowerBound" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.19"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_upperBound" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.10"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_ordered" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.30"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_unsettable" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.29"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_volatile" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.41"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_eType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.36"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EReference_resolveProxies" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.45"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EReference_eOpposite" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.4"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral"
+                feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes" operator="+=" referredRule="#//@grammars.1/@rules.25"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_ETypedElement_eGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.23"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eStructuralFeatures>&quot;" value="&lt;/eStructuralFeatures>"/>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EPackage_eSubpackages" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EPackage_eSubpackages">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eSubpackages&quot;" value="&lt;eSubpackages"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_nsURI" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.8"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_nsPrefix" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.21"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EPackage_eClassifiers" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.15"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_ETypedElement_eGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.23"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/ePackages>&quot;" value="&lt;/ePackages>"/>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EAnnotation_details" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EAnnotation_details">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;details&quot;" value="&lt;details"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStringToStringMapEntry_key" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.5"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EStringToStringMapEntry_value" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.13"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/details>&quot;" value="&lt;/details>"/>
+          </elements>
+        </elements>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="XmlElement" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement">
+      <element xsi:type="xbnfwc:Alternatives" debug="|">
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EClass_eOperations" referredRule="#//@grammars.1/@rules.17"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EClass_eStructuralFeatures" referredRule="#//@grammars.1/@rules.31"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EGenericType_eTypeArguments" referredRule="#//@grammars.1/@rules.12"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EModelElement_eAnnotations" referredRule="#//@grammars.1/@rules.28"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EOperation_eParameters" referredRule="#//@grammars.1/@rules.39"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EPackage_eClassifiers" referredRule="#//@grammars.1/@rules.15"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_EPackage_eSubpackages" referredRule="#//@grammars.1/@rules.32"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreClass_ecore_ETypedElement_eGenericType" referredRule="#//@grammars.1/@rules.23"/>
+        <elements xsi:type="xbnf:RuleCall" debug="EcoreFeature_ecore_EAnnotation_details" referredRule="#//@grammars.1/@rules.33"/>
+        <elements xsi:type="xbnf:RuleCall" debug="OtherElement" referredRule="#//@grammars.1/@rules.22"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="Terminal_Identifier" kind="ParserRule" type="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <element xsi:type="xbnfwc:Alternatives" debug="|">
+        <elements xsi:type="xbnf:RuleCall" debug="IDENTIFIER" referredRule="#//@grammars.0/@rules.2"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;abstract&quot;" value="abstract"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;changeable&quot;" value="changeable"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;containment&quot;" value="containment"/>
@@ -310,87 +671,49 @@
         <elements xsi:type="xbnf:Keyword" debug="&quot;value&quot;" value="value"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;version&quot;" value="version"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;volatile&quot;" value="volatile"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;xmi&quot;" value="xmi"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;xsi&quot;" value="xsi"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="InstanceClassNameAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//InstanceClassNameAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_ETypedElement_eType" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_ETypedElement_eType">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;instanceClassName&quot;" value="instanceClassName"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;eType&quot;" value="eType"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XmiVersionAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmiVersionAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="XMLAttribute_xmi_version" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XMLAttribute_xmi_version">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;xmi&quot;" value="xmi"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;version&quot;" value="version"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XmlRoot" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EReference_containment" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EReference_containment">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;?xml&quot;" value="&lt;?xml"/>
-        <elements xsi:type="xbnfwc:ZeroOrOne" debug="?">
-          <element xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;version&quot;" value="version"/>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 version=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/version"
-                operator="=" referredRule="#//@grammars.0/@rules.1"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:ZeroOrOne" debug="?">
-          <element xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;encoding&quot;" value="encoding"/>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 encoding=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/encoding"
-                operator="=" referredRule="#//@grammars.0/@rules.1"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;?>&quot;" value="?>"/>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 body+=RootEPackage" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/body"
-              operator="+=" referredRule="#//@grammars.1/@rules.3"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;xmi:XMI&quot;" value="&lt;xmi:XMI"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XmiVersionAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/attributes"
-                    operator="+=" referredRule="#//@grammars.1/@rules.18"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XmlnsAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/attributes"
-                    operator="+=" referredRule="#//@grammars.1/@rules.25"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnfwc:Alternatives" debug="|">
-              <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-              <elements xsi:type="xbnfwc:Succession">
-                <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-                <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-                  <element xsi:type="xbnf:RuleCallAssignment" debug="#2 body+=XmlElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlRoot/body"
-                      operator="+=" referredRule="#//@grammars.1/@rules.24"/>
-                </elements>
-                <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/xmi:XMI>&quot;" value="&lt;/xmi:XMI>"/>
-              </elements>
-            </elements>
-          </elements>
-        </elements>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;containment&quot;" value="containment"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EParameter" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EParameter">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreClass_ecore_EOperation_eParameters" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EOperation_eParameters">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eParameters&quot;" value="&lt;eParameters"/>
         <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
           <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ETypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.8"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ETypedElement_eType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.36"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
             <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
           </element>
         </elements>
         <elements xsi:type="xbnfwc:Alternatives" debug="|">
@@ -399,12 +722,12 @@
             <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
             <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
               <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.38"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_ETypedElement_eGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.23"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
                 <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
               </element>
             </elements>
             <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eParameters>&quot;" value="&lt;/eParameters>"/>
@@ -412,462 +735,102 @@
         </elements>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EStructuralFeature" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EStructuralFeature">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eStructuralFeatures&quot;" value="&lt;eStructuralFeatures"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ChangeableAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.33"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=TransientAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.45"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=DerivedAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.12"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ContainmentAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.35"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=LowerBoundAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.14"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=UpperBoundAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.11"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OrderedAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.22"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=UnsettableAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.41"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=VolatileAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.32"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ETypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.8"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ResolveProxiesAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.10"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EOppositeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.36"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=DefaultValueLiteralAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.29"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.38"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eStructuralFeatures>&quot;" value="&lt;/eStructuralFeatures>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="OrderedAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//OrderedAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;ordered&quot;" value="ordered"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EPackage" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EPackage">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;ePackages&quot;" value="&lt;ePackages"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NsURIAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NsPrefixAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.31"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EClassifier" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.40"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.38"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/ePackages>&quot;" value="&lt;/ePackages>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XmlElement" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement">
-      <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="EAnnotation" referredRule="#//@grammars.1/@rules.39"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EClassifier" referredRule="#//@grammars.1/@rules.40"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EDetail" referredRule="#//@grammars.1/@rules.34"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EGenericType" referredRule="#//@grammars.1/@rules.38"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EOperation" referredRule="#//@grammars.1/@rules.43"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EParameter" referredRule="#//@grammars.1/@rules.20"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EStructuralFeature" referredRule="#//@grammars.1/@rules.21"/>
-        <elements xsi:type="xbnf:RuleCall" debug="EPackage" referredRule="#//@grammars.1/@rules.23"/>
-        <elements xsi:type="xbnf:RuleCall" debug="ETypeArgument" referredRule="#//@grammars.1/@rules.42"/>
-        <elements xsi:type="xbnf:RuleCall" debug="OtherElement" referredRule="#//@grammars.1/@rules.9"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XmlnsAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlnsAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;xmlns&quot;" value="xmlns"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 ns=ID" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlnsAttribute/ns"
-            operator="=" referredRule="#//@grammars.1/@rules.16"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XsiTypeAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XsiTypeAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;xsi&quot;" value="xsi"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;:&quot;" value=":"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;type&quot;" value="type"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="NameAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//NameAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;name&quot;" value="name"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="SerializableAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//SerializableAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;serializable&quot;" value="serializable"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="DefaultValueLiteralAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//DefaultValueLiteralAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;defaultValueLiteral&quot;" value="defaultValueLiteral"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="XmlAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute">
-      <element xsi:type="xbnfwc:Alternatives" debug="|">
-        <elements xsi:type="xbnf:RuleCall" debug="BooleanAttribute" referredRule="#//@grammars.1/@rules.7"/>
-        <elements xsi:type="xbnf:RuleCall" debug="IntegerAttribute" referredRule="#//@grammars.1/@rules.4"/>
-        <elements xsi:type="xbnf:RuleCall" debug="StringAttribute" referredRule="#//@grammars.1/@rules.6"/>
-        <elements xsi:type="xbnf:RuleCall" debug="OtherAttribute" referredRule="#//@grammars.1/@rules.0"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="NsPrefixAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//NsPrefixAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;nsPrefix&quot;" value="nsPrefix"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="VolatileAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//VolatileAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;volatile&quot;" value="volatile"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ChangeableAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ChangeableAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;changeable&quot;" value="changeable"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EDetail" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EDetail">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;details&quot;" value="&lt;details"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=KeyAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.13"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ValueAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.5"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/details>&quot;" value="&lt;/details>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ContainmentAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ContainmentAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;containment&quot;" value="containment"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EOppositeAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EOppositeAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;eOpposite&quot;" value="eOpposite"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="AbstractAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//AbstractAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;abstract&quot;" value="abstract"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EGenericType" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EGenericType">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eGenericType&quot;" value="&lt;eGenericType"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EClassifierAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=ETypeArgument" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.42"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eGenericType>&quot;" value="&lt;/eGenericType>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EAnnotation" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EAnnotation">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eAnnotations&quot;" value="&lt;eAnnotations"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=SourceAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.1"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EDetail" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.34"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eAnnotations>&quot;" value="&lt;/eAnnotations>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EClassifier" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EClassifier">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eClassifiers&quot;" value="&lt;eClassifiers"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=AbstractAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.37"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=InstanceClassNameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.17"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=SerializableAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.28"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ESuperTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.15"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EStructuralFeature" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.21"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EOperation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.43"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eClassifiers>&quot;" value="&lt;/eClassifiers>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="UnsettableAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//UnsettableAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;unsettable&quot;" value="unsettable"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="ETypeArgument" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//ETypeArgument">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eTypeArguments&quot;" value="&lt;eTypeArguments"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EClassifierAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eTypeArguments>&quot;" value="&lt;/eTypeArguments>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EOperation" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EOperation">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;eOperations&quot;" value="&lt;eOperations"/>
-        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-          <element xsi:type="xbnfwc:Alternatives">
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XsiTypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.26"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=ETypeAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.8"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EExceptionsAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.44"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=NameAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.27"/>
-            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
-                operator="+=" referredRule="#//@grammars.1/@rules.0"/>
-          </element>
-        </elements>
-        <elements xsi:type="xbnfwc:Alternatives" debug="|">
-          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
-          <elements xsi:type="xbnfwc:Succession">
-            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
-            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
-              <element xsi:type="xbnfwc:Alternatives">
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EParameter" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.20"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EGenericType" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.38"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EAnnotation" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.39"/>
-                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
-                    operator="+=" referredRule="#//@grammars.1/@rules.9"/>
-              </element>
-            </elements>
-            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/eOperations>&quot;" value="&lt;/eOperations>"/>
-          </elements>
-        </elements>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="EExceptionsAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EExceptionsAttribute">
-      <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;eExceptions&quot;" value="eExceptions"/>
-        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
-      </element>
-    </rules>
-    <rules xsi:type="xbnf:ParserRule" name="TransientAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//TransientAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_transient" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_transient">
       <element xsi:type="xbnfwc:Succession">
         <elements xsi:type="xbnf:Keyword" debug="&quot;transient&quot;" value="transient"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
       </element>
     </rules>
-    <rules xsi:type="xbnf:ParserRule" name="NsURIAttribute" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//NsURIAttribute">
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_volatile" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_volatile">
       <element xsi:type="xbnfwc:Succession">
-        <elements xsi:type="xbnf:Keyword" debug="&quot;nsURI&quot;" value="nsURI"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;volatile&quot;" value="volatile"/>
         <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
-        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=STRING" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
-            operator="=" referredRule="#//@grammars.0/@rules.1"/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EStructuralFeature_derived" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EStructuralFeature_derived">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;derived&quot;" value="derived"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EPackage_eClassifiers" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EPackage_eClassifiers">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;eClassifiers&quot;" value="eClassifiers"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EAnnotation_source" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EAnnotation_source">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;source&quot;" value="source"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_EReference_resolveProxies" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_EReference_resolveProxies">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;resolveProxies&quot;" value="resolveProxies"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreFeature_ecore_ENamedElement_name" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreFeature_ecore_ENamedElement_name">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;name&quot;" value="name"/>
+        <elements xsi:type="xbnf:Keyword" debug="&quot;=&quot;" value="="/>
+        <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 value=Terminal_String" feature="ecore:EAttribute ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlAttribute/value"
+            operator="=" referredRule="#//@grammars.1/@rules.0"/>
+      </element>
+    </rules>
+    <rules xsi:type="xbnf:ParserRule" name="EcoreRoot_ecore_EPackage" kind="ParserRule" type="ecore:EClass ../../../../../../model/generated/Ecore2Xtext.ecore#//EcoreClass_ecore_EPackage_eSubpackages">
+      <element xsi:type="xbnfwc:Succession">
+        <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;ecore:EPackage&quot;" value="&lt;ecore:EPackage"/>
+        <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+          <element xsi:type="xbnfwc:Alternatives">
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xmi_version" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.37"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xmlns_" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.1"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=XMLAttribute_xsi_type" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.2"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_ENamedElement_name" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.46"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_nsURI" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.8"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=EcoreFeature_ecore_EPackage_nsPrefix" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.21"/>
+            <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 attributes+=OtherAttribute" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/attributes"
+                operator="+=" referredRule="#//@grammars.1/@rules.9"/>
+          </element>
+        </elements>
+        <elements xsi:type="xbnfwc:Alternatives" debug="|">
+          <elements xsi:type="xbnf:Keyword" debug="&quot;/>&quot;" value="/>"/>
+          <elements xsi:type="xbnfwc:Succession">
+            <elements xsi:type="xbnf:Keyword" debug="&quot;>&quot;" value=">"/>
+            <elements xsi:type="xbnfwc:ZeroOrMore" debug="*">
+              <element xsi:type="xbnfwc:Alternatives">
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EPackage_eClassifiers" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.15"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=EcoreClass_ecore_EModelElement_eAnnotations" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.28"/>
+                <elements xsi:type="xbnf:RuleCallAssignment" debug="#2 elements+=OtherElement" feature="ecore:EReference ../../../../../../model/generated/Ecore2Xtext.ecore#//XmlElement/elements"
+                    operator="+=" referredRule="#//@grammars.1/@rules.22"/>
+              </element>
+            </elements>
+            <elements xsi:type="xbnf:Keyword" debug="&quot;&lt;/ecore:EPackage>&quot;" value="&lt;/ecore:EPackage>"/>
+          </elements>
+        </elements>
       </element>
     </rules>
   </grammars>
+  <metamodelDeclarations name="ecore" referredPackage="http://www.eclipse.org/emf/2002/Ecore#/"/>
 </xbnf:Syntax>

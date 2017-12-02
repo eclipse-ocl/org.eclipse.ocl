@@ -32,12 +32,12 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.TypedRuleImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.TypedRuleImpl#getSubrules <em>Subrules</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.TypedRuleImpl#getGrammar <em>Grammar</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

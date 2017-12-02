@@ -75,6 +75,7 @@ public class XBNFFactoryImpl extends EFactoryImpl implements XBNFFactory {
 			case XBNFPackage.KEYWORD: return createKeyword();
 			case XBNFPackage.KEYWORD_ASSIGNMENT: return createKeywordAssignment();
 			case XBNFPackage.LEXER_GRAMMAR: return createLexerGrammar();
+			case XBNFPackage.METAMODEL_DECLARATION: return createMetamodelDeclaration();
 			case XBNFPackage.NEGATED_TOKEN: return createNegatedToken();
 			case XBNFPackage.PARSER_GRAMMAR: return createParserGrammar();
 			case XBNFPackage.PARSER_RULE: return createParserRule();
@@ -198,6 +199,16 @@ public class XBNFFactoryImpl extends EFactoryImpl implements XBNFFactory {
 	public LexerGrammar createLexerGrammar() {
 		LexerGrammarImpl lexerGrammar = new LexerGrammarImpl();
 		return lexerGrammar;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MetamodelDeclaration createMetamodelDeclaration() {
+		MetamodelDeclarationImpl metamodelDeclaration = new MetamodelDeclarationImpl();
+		return metamodelDeclaration;
 	}
 
 	/**

@@ -27,11 +27,11 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AssignmentImpl#getFeature <em>Feature</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -222,7 +222,7 @@ public abstract class AssignmentImpl extends AbstractElementImpl implements Assi
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (operator: ");
 		result.append(operator);
 		result.append(')');

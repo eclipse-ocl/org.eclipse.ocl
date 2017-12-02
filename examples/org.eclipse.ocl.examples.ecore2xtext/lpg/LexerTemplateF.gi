@@ -47,8 +47,8 @@
                   getPrsStream()./
     $setSym1 /. // macro setSym1 is deprecated. Use function setResult
                lexParser.setSym1./
-    $setResult /. // macro setResult is deprecated. Use function setResult
-                 lexParser.setSym1./
+    $setResult /. // macro setResult is deprecated. Use function setResult/2/
+                 makeToken./
     $getSym /. // macro getSym is deprecated. Use function getLastToken
               lexParser.getSym./
     $getToken /. // macro getToken is deprecated. Use function getToken
@@ -238,7 +238,7 @@
          * simply report a lexical error. Otherwise, we produce a bad token.
          */
         public void reportLexicalError(int startLoc, int endLoc) {
-            IPrsStream prs_stream = lexStream.getPrsStream();
+            IPrsStream prs_stream = lexStream.getIPrsStream();
             if (prs_stream == null)
                 lexStream.reportLexicalError(startLoc, endLoc);
             else {

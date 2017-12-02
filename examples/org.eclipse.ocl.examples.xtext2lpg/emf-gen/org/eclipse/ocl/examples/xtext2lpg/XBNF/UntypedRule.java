@@ -18,10 +18,10 @@ package org.eclipse.ocl.examples.xtext2lpg.XBNF;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.UntypedRule#getTypedRule <em>Typed Rule</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getUntypedRule()
  * @model

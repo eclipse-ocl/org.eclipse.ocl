@@ -135,7 +135,7 @@
     
     $setSym1 /. // macro setSym1 is deprecated. Use function setResult
                 getParser().setSym1./
-    $setResult /. // macro setResult is deprecated. Use function setResult
+    $setResult /. // macro setResult is deprecated. Use function setResult/1/
                  getParser().setSym1./
     $getSym /. // macro getSym is deprecated. Use function getRhsSym
               getParser().getSym./
@@ -156,19 +156,21 @@
 
 %Headers
     /.
-    public class $action_type implements RuleAction$additional_interfaces
+    public class $action_type extends $super_parser_class implements RuleAction$additional_interfaces
     {
-        private PrsStream prsStream = null;
-        
-        private boolean unimplementedSymbolsWarning = $unimplemented_symbols_warning;
-
         private static ParseTable prsTable = new $prs_type();
+
+        private PrsStream prsStream = null;        
+        private boolean unimplementedSymbolsWarning = $unimplemented_symbols_warning;
+        private DeterministicParser dtParser = null;
+
         public ParseTable getParseTable() { return prsTable; }
 
-        private DeterministicParser dtParser = null;
         public DeterministicParser getParser() { return dtParser; }
 
-        private void setResult(Object object) { dtParser.setSym1(object); }
+        private void setResult(Object object) {
+        	dtParser.setSym1(object);
+        }
         public Object getRhsSym(int i) { return dtParser.getSym(i); }
 
         public int getRhsTokenIndex(int i) { return dtParser.getToken(i); }
@@ -199,6 +201,10 @@
             return (ErrorToken) (err instanceof ErrorToken ? err : null);
         }
 
+		protected String getRhsTokenText(int i) { 
+			return prsStream.getTokenText(getRhsTokenIndex(i));
+		}
+
         public void reset(ILexStream lexStream)
         {
             prsStream = new PrsStream(lexStream);
@@ -215,7 +221,7 @@
             catch(UnimplementedTerminalsException e)
             {
                 if (unimplementedSymbolsWarning) {
-                    java.util.ArrayList unimplemented_symbols = e.getSymbols();
+                    java.util.ArrayList<?> unimplemented_symbols = e.getSymbols();
                     System.out.println("The Lexer will not scan the following token(s):");
                     for (int i = 0; i < unimplemented_symbols.size(); i++)
                     {
@@ -233,8 +239,9 @@
             }
         }
         
-        public $action_type()
+        public $action_type(org.eclipse.emf.ecore.xmi.XMLResource xmlResource)
         {
+			super(xmlResource);
             try
             {
                 dtParser = new DeterministicParser(prsStream, prsTable, (RuleAction) this);
@@ -250,9 +257,9 @@
             }
         }
 
-        public $action_type(ILexStream lexStream)
+        public $action_type(org.eclipse.emf.ecore.xmi.XMLResource xmlResource, ILexStream lexStream)
         {
-            this();
+            this(xmlResource);
             reset(lexStream);
         }
 

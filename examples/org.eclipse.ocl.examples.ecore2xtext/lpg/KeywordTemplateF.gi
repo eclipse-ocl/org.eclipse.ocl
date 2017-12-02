@@ -55,7 +55,7 @@
 %End
 
 %Globals
-    /.import lpg.runtime.*;
+    /.//import lpg.runtime.*;
     ./
 %End
 

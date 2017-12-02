@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ecore2Xtext" nsURI="http://www.eclipse.org/ocl/example/ecore2xtext/Ecore2Xtext"
     nsPrefix="ecore2Xtext">
-  <eClassifiers xsi:type="ecore:EClass" name="XmlRoot">
+  <eClassifiers xsi:type="ecore:EClass" name="XMLDocument_ecore_EPackage">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" upperBound="-1" eType="#//XmlElement"
@@ -10,15 +10,24 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//StringAttribute" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EPackage" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EAnnotation" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EClassifier" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EDetail" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EGenericType" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EOperation" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EParameter" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EStructuralFeature" eSuperTypes="#//XmlElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ETypeArgument" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EPackage_eSubpackages"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EModelElement_eAnnotations"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EPackage_eClassifiers"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EAnnotation_details"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_ETypedElement_eGenericType"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EClass_eOperations"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EOperation_eParameters"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EClass_eStructuralFeatures"
+      eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreClass_ecore_EGenericType_eTypeArguments"
+      eSuperTypes="#//XmlElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="OtherElement" eSuperTypes="#//XmlElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -29,36 +38,59 @@
   <eClassifiers xsi:type="ecore:EClass" name="BooleanAttribute" eSuperTypes="#//XmlAttribute"/>
   <eClassifiers xsi:type="ecore:EClass" name="IntegerAttribute" eSuperTypes="#//XmlAttribute"/>
   <eClassifiers xsi:type="ecore:EClass" name="StringAttribute" eSuperTypes="#//XmlAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ChangeableAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ContainmentAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DefaultValueLiteralAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DerivedAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EClassifierAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EExceptionsAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EOppositeAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ESuperTypeAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ETypeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EClass_abstract"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_changeable"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EReference_containment"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_derived"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EPackage_eClassifiers"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EOperation_eExceptions"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EReference_eOpposite"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EClass_eSuperTypes"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_ETypedElement_eType"
+      eSuperTypes="#//StringAttribute"/>
   <eClassifiers xsi:type="ecore:EClass" name="InstanceClassNameAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="KeyAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LowerBoundAttribute" eSuperTypes="#//IntegerAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NameAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NsURIAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NsPrefixAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="OrderedAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ResolveProxiesAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SerializableAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SourceAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TransientAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="UnsettableAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="UpperBoundAttribute" eSuperTypes="#//IntegerAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ValueAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="VolatileAttribute" eSuperTypes="#//BooleanAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="XmiVersionAttribute" eSuperTypes="#//StringAttribute"/>
-  <eClassifiers xsi:type="ecore:EClass" name="XmlnsAttribute" eSuperTypes="#//StringAttribute">
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStringToStringMapEntry_key"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_ETypedElement_lowerBound"
+      eSuperTypes="#//IntegerAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_ENamedElement_name"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EPackage_nsURI" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EPackage_nsPrefix"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_ETypedElement_ordered"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EReference_resolveProxies"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EDataType_serializable"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EAnnotation_source"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_transient"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_unsettable"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_ETypedElement_upperBound"
+      eSuperTypes="#//IntegerAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStringToStringMapEntry_value"
+      eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EcoreFeature_ecore_EStructuralFeature_volatile"
+      eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XMLAttribute_xmi_version" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XMLAttribute_xmlns_" eSuperTypes="#//StringAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ns" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="XsiTypeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XMLAttribute_xsi_type" eSuperTypes="#//StringAttribute"/>
   <eClassifiers xsi:type="ecore:EClass" name="OtherAttribute" eSuperTypes="#//XmlAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

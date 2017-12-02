@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractElement#getDebug <em>Debug</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractElement#getParentRule <em>Parent Rule</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getAbstractElement()
  * @model abstract="true"

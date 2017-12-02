@@ -36,6 +36,12 @@ main() {
 mapping XBNF::Syntax::syntax2syntax() : XBNF::Syntax {
 	name := self.name;
 	grammars := self.grammars->map grammar2grammar();
+	metamodelDeclarations := self.metamodelDeclarations->map metamodelDeclaration2metamodelDeclaration();
+}
+
+mapping XBNF::MetamodelDeclaration::metamodelDeclaration2metamodelDeclaration() : XBNF::MetamodelDeclaration {
+	name := self.name;
+	result.referredPackage := self.referredPackage;
 }
 
 mapping XBNF::Grammar::grammar2grammar() : XBNF::Grammar
@@ -293,6 +299,7 @@ CharacterRange::characterRange2element,
 Epsilon::epsilon2element,
 KeywordAssignment::keywordAssignment2element,
 Keyword::keyword2element,
+NegatedToken::negatedToken2element,
 RuleCallAssignment::ruleCallAssignment2element,
 RuleCall::ruleCall2element,
 AbstractElement::element2element_default
@@ -329,6 +336,11 @@ inherits XBNF::Keyword::keyword2element
 {
 	feature := self.feature;
 	operator := self.operator;
+}
+
+mapping XBNF::NegatedToken::negatedToken2element(disambiguator : ElementRun) : XBNF::NegatedToken {
+	debug := self.debug;
+	terminal := self.terminal.map element2element(disambiguator);
 }
 
 mapping XBNF::RuleCall::ruleCall2element(disambiguator : ElementRun) : XBNF::RuleCall {

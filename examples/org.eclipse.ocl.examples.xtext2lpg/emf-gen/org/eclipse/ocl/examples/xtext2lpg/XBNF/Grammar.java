@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar#getSyntax <em>Syntax</em>}</li>
@@ -28,7 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar#getRules <em>Rules</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar#getDebug <em>Debug</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getGrammar()
  * @model

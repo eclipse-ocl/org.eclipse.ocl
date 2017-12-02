@@ -52,10 +52,16 @@ mapping XBNF::Syntax::syntax2syntax() : XBNF::Syntax {
 	var firstRules : OrderedSet(TypedRule) = allRules->collect(r1 | allRules->select(r2 | r1.name = r2.name)->first())->asOrderedSet();
 	name := self.name;
 	grammars := Sequence { self.map grammars2lexerGrammar(firstRules), self.map grammars2parserGrammar(firstRules) };
+	metamodelDeclarations := self.metamodelDeclarations->map metamodelDeclaration2metamodelDeclaration();
 	var untypedRules : Sequence(UntypedRule) := grammars.allSubobjectsOfKind(UntypedRule)->selectByKind(UntypedRule);
 	untypedRules->forEach(untypedRule) {
 		untypedRule.name := untypedRule.typedRule.name + '_' + untypedRule.typedRule.subrules->indexOf(untypedRule).toString();
 	};
+}
+
+mapping XBNF::MetamodelDeclaration::metamodelDeclaration2metamodelDeclaration() : XBNF::MetamodelDeclaration {
+	name := self.name;
+	result.referredPackage := self.referredPackage;
 }
 
 ---------------------------------------------------------------------------------------

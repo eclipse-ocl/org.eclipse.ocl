@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/OCL/Import ecore='http://www.eclipse.org/emf/2002/Ecore'"
  *        annotation="http://www.eclipse.org/emf/2002/Ecore invocationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' settingDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' validationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot'"
  * @generated
  */
@@ -854,6 +853,52 @@ public interface XBNFPackage extends EPackage {
 	int LEXER_GRAMMAR_OPERATION_COUNT = GRAMMAR_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.MetamodelDeclarationImpl <em>Metamodel Declaration</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.MetamodelDeclarationImpl
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getMetamodelDeclaration()
+	 * @generated
+	 */
+	int METAMODEL_DECLARATION = 13;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_DECLARATION__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Referred Package</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_DECLARATION__REFERRED_PACKAGE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Metamodel Declaration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_DECLARATION_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Metamodel Declaration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_DECLARATION_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.NegatedTokenImpl <em>Negated Token</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -861,7 +906,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getNegatedToken()
 	 * @generated
 	 */
-	int NEGATED_TOKEN = 13;
+	int NEGATED_TOKEN = 14;
 
 	/**
 	 * The feature id for the '<em><b>Debug</b></em>' attribute.
@@ -916,7 +961,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getParserGrammar()
 	 * @generated
 	 */
-	int PARSER_GRAMMAR = 14;
+	int PARSER_GRAMMAR = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -989,7 +1034,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getTypedRule()
 	 * @generated
 	 */
-	int TYPED_RULE = 20;
+	int TYPED_RULE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1080,7 +1125,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getParserRule()
 	 * @generated
 	 */
-	int PARSER_RULE = 15;
+	int PARSER_RULE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1171,7 +1216,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getRuleCall()
 	 * @generated
 	 */
-	int RULE_CALL = 16;
+	int RULE_CALL = 17;
 
 	/**
 	 * The feature id for the '<em><b>Debug</b></em>' attribute.
@@ -1235,7 +1280,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getRuleCallAssignment()
 	 * @generated
 	 */
-	int RULE_CALL_ASSIGNMENT = 17;
+	int RULE_CALL_ASSIGNMENT = 18;
 
 	/**
 	 * The feature id for the '<em><b>Debug</b></em>' attribute.
@@ -1317,7 +1362,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getSyntax()
 	 * @generated
 	 */
-	int SYNTAX = 18;
+	int SYNTAX = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1347,13 +1392,22 @@ public interface XBNFPackage extends EPackage {
 	int SYNTAX__DEBUG = 2;
 
 	/**
+	 * The feature id for the '<em><b>Metamodel Declarations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNTAX__METAMODEL_DECLARATIONS = 3;
+
+	/**
 	 * The number of structural features of the '<em>Syntax</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYNTAX_FEATURE_COUNT = 3;
+	int SYNTAX_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Syntax</em>' class.
@@ -1372,7 +1426,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getTerminalRule()
 	 * @generated
 	 */
-	int TERMINAL_RULE = 19;
+	int TERMINAL_RULE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1463,7 +1517,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getUntilToken()
 	 * @generated
 	 */
-	int UNTIL_TOKEN = 21;
+	int UNTIL_TOKEN = 22;
 
 	/**
 	 * The feature id for the '<em><b>Debug</b></em>' attribute.
@@ -1518,7 +1572,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getUntypedRule()
 	 * @generated
 	 */
-	int UNTYPED_RULE = 22;
+	int UNTYPED_RULE = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1591,7 +1645,7 @@ public interface XBNFPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getWildcard()
 	 * @generated
 	 */
-	int WILDCARD = 23;
+	int WILDCARD = 24;
 
 	/**
 	 * The feature id for the '<em><b>Debug</b></em>' attribute.
@@ -1970,6 +2024,38 @@ public interface XBNFPackage extends EPackage {
 	EClass getLexerGrammar();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration <em>Metamodel Declaration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Metamodel Declaration</em>'.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration
+	 * @generated
+	 */
+	EClass getMetamodelDeclaration();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration#getName()
+	 * @see #getMetamodelDeclaration()
+	 * @generated
+	 */
+	EAttribute getMetamodelDeclaration_Name();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration#getReferredPackage <em>Referred Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Referred Package</em>'.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration#getReferredPackage()
+	 * @see #getMetamodelDeclaration()
+	 * @generated
+	 */
+	EReference getMetamodelDeclaration_ReferredPackage();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.NegatedToken <em>Negated Token</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2094,6 +2180,17 @@ public interface XBNFPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSyntax_Debug();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getMetamodelDeclarations <em>Metamodel Declarations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Metamodel Declarations</em>'.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getMetamodelDeclarations()
+	 * @see #getSyntax()
+	 * @generated
+	 */
+	EReference getSyntax_MetamodelDeclarations();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.TerminalRule <em>Terminal Rule</em>}'.
@@ -2506,6 +2603,32 @@ public interface XBNFPackage extends EPackage {
 		EClass LEXER_GRAMMAR = eINSTANCE.getLexerGrammar();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.MetamodelDeclarationImpl <em>Metamodel Declaration</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.MetamodelDeclarationImpl
+		 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.XBNFPackageImpl#getMetamodelDeclaration()
+		 * @generated
+		 */
+		EClass METAMODEL_DECLARATION = eINSTANCE.getMetamodelDeclaration();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METAMODEL_DECLARATION__NAME = eINSTANCE.getMetamodelDeclaration_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Referred Package</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference METAMODEL_DECLARATION__REFERRED_PACKAGE = eINSTANCE.getMetamodelDeclaration_ReferredPackage();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.NegatedTokenImpl <em>Negated Token</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2612,6 +2735,14 @@ public interface XBNFPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SYNTAX__DEBUG = eINSTANCE.getSyntax_Debug();
+
+		/**
+		 * The meta object literal for the '<em><b>Metamodel Declarations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SYNTAX__METAMODEL_DECLARATIONS = eINSTANCE.getSyntax_MetamodelDeclarations();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.TerminalRuleImpl <em>Terminal Rule</em>}' class.

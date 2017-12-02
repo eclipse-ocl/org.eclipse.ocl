@@ -21,12 +21,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getGrammars <em>Grammars</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getDebug <em>Debug</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax#getMetamodelDeclarations <em>Metamodel Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getSyntax()
  * @model
@@ -102,5 +103,21 @@ public interface Syntax extends EObject {
 	 * @generated
 	 */
 	void setDebug(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Metamodel Declarations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Metamodel Declarations</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Metamodel Declarations</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getSyntax_MetamodelDeclarations()
+	 * @model containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<MetamodelDeclaration> getMetamodelDeclarations();
 
 } // Syntax

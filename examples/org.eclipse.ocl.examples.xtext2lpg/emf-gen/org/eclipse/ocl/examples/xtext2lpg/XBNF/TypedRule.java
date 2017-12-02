@@ -21,12 +21,12 @@ import org.eclipse.emf.ecore.EClassifier;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.TypedRule#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.TypedRule#getSubrules <em>Subrules</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.TypedRule#getGrammar <em>Grammar</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getTypedRule()
  * @model abstract="true"

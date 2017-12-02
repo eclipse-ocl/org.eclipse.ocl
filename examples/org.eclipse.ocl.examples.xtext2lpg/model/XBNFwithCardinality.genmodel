@@ -11,6 +11,9 @@
     <genClasses image="false" ecoreClass="XBNFwithCardinality.ecore#//CompoundElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNFwithCardinality.ecore#//CompoundElement/elements"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="XBNFwithCardinality.ecore#//MultiplicityElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNFwithCardinality.ecore#//MultiplicityElement/element"/>
+    </genClasses>
     <genClasses ecoreClass="XBNFwithCardinality.ecore#//OneOrMore"/>
     <genClasses ecoreClass="XBNFwithCardinality.ecore#//Succession"/>
     <genClasses ecoreClass="XBNFwithCardinality.ecore#//ZeroOrMore"/>
@@ -59,6 +62,10 @@
     </genClasses>
     <genClasses ecoreClass="XBNF.ecore#//KeywordAssignment"/>
     <genClasses ecoreClass="XBNF.ecore#//LexerGrammar"/>
+    <genClasses ecoreClass="XBNF.ecore#//MetamodelDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XBNF.ecore#//MetamodelDeclaration/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference XBNF.ecore#//MetamodelDeclaration/referredPackage"/>
+    </genClasses>
     <genClasses ecoreClass="XBNF.ecore#//NegatedToken">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNF.ecore#//NegatedToken/terminal"/>
     </genClasses>
@@ -66,12 +73,14 @@
     <genClasses ecoreClass="XBNF.ecore#//ParserRule"/>
     <genClasses ecoreClass="XBNF.ecore#//RuleCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference XBNF.ecore#//RuleCall/referredRule"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute XBNF.ecore#//RuleCall/name"/>
     </genClasses>
     <genClasses ecoreClass="XBNF.ecore#//RuleCallAssignment"/>
     <genClasses ecoreClass="XBNF.ecore#//Syntax">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XBNF.ecore#//Syntax/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNF.ecore#//Syntax/grammars"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XBNF.ecore#//Syntax/debug"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNF.ecore#//Syntax/metamodelDeclarations"/>
     </genClasses>
     <genClasses ecoreClass="XBNF.ecore#//TerminalRule"/>
     <genClasses image="false" ecoreClass="XBNF.ecore#//TypedRule">
@@ -82,7 +91,9 @@
     <genClasses ecoreClass="XBNF.ecore#//UntilToken">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference XBNF.ecore#//UntilToken/terminal"/>
     </genClasses>
-    <genClasses ecoreClass="XBNF.ecore#//UntypedRule"/>
+    <genClasses ecoreClass="XBNF.ecore#//UntypedRule">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference XBNF.ecore#//UntypedRule/typedRule"/>
+    </genClasses>
     <genClasses ecoreClass="XBNF.ecore#//Wildcard"/>
   </genPackages>
 </genmodel:GenModel>

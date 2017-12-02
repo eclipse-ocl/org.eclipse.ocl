@@ -19,8 +19,6 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.ZeroOrOne;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Zero Or One</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

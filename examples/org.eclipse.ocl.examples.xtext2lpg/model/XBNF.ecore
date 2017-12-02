@@ -59,6 +59,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordAssignment" eSuperTypes="#//Assignment #//Keyword"/>
   <eClassifiers xsi:type="ecore:EClass" name="LexerGrammar" eSuperTypes="#//Grammar"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MetamodelDeclaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredPackage" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NegatedToken" eSuperTypes="#//AbstractElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="terminal" lowerBound="1"
         eType="#//AbstractElement" containment="true"/>
@@ -81,6 +86,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="grammars" upperBound="-1"
         eType="#//Grammar" containment="true" eOpposite="#//Grammar/syntax"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="debug" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metamodelDeclarations"
+        ordered="false" upperBound="-1" eType="#//MetamodelDeclaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TerminalRule" eSuperTypes="#//TypedRule"/>
   <eClassifiers xsi:type="ecore:EClass" name="TypedRule" abstract="true" eSuperTypes="#//AbstractRule">

@@ -29,11 +29,11 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.RuleCallAssignmentImpl#getReferredRule <em>Referred Rule</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.RuleCallAssignmentImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

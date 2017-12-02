@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Assignment#getFeature <em>Feature</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Assignment#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getAssignment()
  * @model abstract="true"

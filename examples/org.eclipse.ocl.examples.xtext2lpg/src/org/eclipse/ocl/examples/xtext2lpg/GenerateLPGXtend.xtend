@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext2lpg
 
@@ -41,7 +41,10 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 	}
 	
  	protected def String generateKWLexer(/*@NonNull*/ LexerGrammar lexerGrammar, /*@NonNull*/ ParserGrammar parserGrammar) {
-		var keywordValues = getSortedKWValues(parserGrammar);
+		var keywordValues = getSortedIdentifierKWValues(parserGrammar);
+		var keywordCharacters = getSortedCharacters(keywordValues);
+		var keywordAlphaNumericCharacters = getAlphaNumericCharacters(keywordCharacters);
+		var keywordPunctuationCharacters = getPunctuationCharacters(keywordCharacters);
 		'''
 		%options slr
 		%options fp=«syntaxName»KWLexer,prefix=Char_
@@ -50,9 +53,31 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 		%options template=../lpg/KeywordTemplateF.gi
 		%options export_terminals=("«syntaxName»Parsersym.java", "TK_")
 		%options include_directory="../lpg"
-
-		%Import
-			KWLexerMapF.gi
+		
+		%Terminals
+			«FOR keywordCharacter : keywordAlphaNumericCharacters»
+				«keywordCharacter» 
+			«ENDFOR»
+			«FOR keywordCharacter : keywordPunctuationCharacters»
+				«emitLabel(keywordCharacter)» ::= «emitCharacter(keywordCharacter)»
+			«ENDFOR»
+		%End
+		
+		%Headers
+			/.
+				final static int tokenKind[] = new int[128];
+				static
+				{
+					«FOR keywordCharacter : keywordCharacters»
+						tokenKind[«emitCharacter(keywordCharacter)»] = $sym_type.$prefix$«emitLabel(keywordCharacter)»$suffix$;
+					«ENDFOR»
+				};
+			
+				final int getKind(char c)
+				{
+					return (((c & 0xFFFFFF80) == 0) /* 0 <= c < 128? */ ? tokenKind[c] : 0);
+				}
+			./
 		%End
 		
 		%Define
@@ -105,10 +130,6 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
  	protected def String generateLexer(/*@NonNull*/ LexerGrammar lexerGrammar, /*@NonNull*/ ParserGrammar parserGrammar) {
 		var syntax = lexerGrammar.getSyntax();
 		var syntaxName = emitSyntaxName(syntax);
-		var punctValues = getSortedPunctValues(parserGrammar);
-		var terminalRules = getSortedTerminalRules(syntax);
-		var punctChars = getSortedPunctChars(lexerGrammar);
-		var characterRanges = getSortedCharacterRanges(lexerGrammar);
 		'''
 		%options escape=$
 		%options la=2
@@ -121,6 +142,137 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 		%options export_terminals=("«syntaxName»Parsersym.java", "TK_")
 		%options include_directory="../lpg"
 		
+		%Headers
+			--
+			-- Additional methods for the action class not provided in the template
+			--
+			/.
+				//
+				// The Lexer contains an array of characters as the input stream to be parsed.
+				// There are methods to retrieve and classify characters.
+				// The lexparser "token" is implemented simply as the index of the next character in the array.
+				// The Lexer extends the abstract class LpgLexStream with an implementation of the abstract
+				// method getKind.  The template defines the Lexer class and the lexer() method.
+				// A driver creates the action class, "Lexer", passing an Option object to the constructor.
+				//
+				$kw_lexer_class kwLexer;
+				boolean printTokens;
+				private final static int ECLIPSE_TAB_VALUE = 4;
+		
+				public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
+		
+				public $action_type(String filename) throws java.io.IOException
+				{
+					this(filename, ECLIPSE_TAB_VALUE);
+					this.kwLexer = new $kw_lexer_class(lexStream.getInputChars(), $_IDENTIFIER);
+				}
+		
+				/**
+				 * @deprecated function replaced by {@link #reset(char [] content, String filename)}
+				 */
+				public void initialize(char [] content, String filename)
+				{
+					reset(content, filename);
+				}
+				
+				final void makeToken(int left_token, int right_token, int kind)
+				{
+					lexStream.makeToken(left_token, right_token, kind);
+				}
+				
+				final void makeToken(int kind)
+				{
+					int startOffset = getLeftSpan(),
+						endOffset = getRightSpan();
+					lexStream.makeToken(startOffset, endOffset, kind);
+					if (printTokens) printValue(startOffset, endOffset);
+				}
+		
+				final void makeIdentifier(int kind)
+				{
+					checkForKeyWord(kind);
+				}
+		
+				final void makeComment(int kind)
+				{
+					int startOffset = getLeftSpan(),
+						endOffset = getRightSpan();
+					lexStream.getIPrsStream().makeAdjunct(startOffset, endOffset, kind);
+				}
+		
+				final void skipToken(int kind)
+				{
+					if (printTokens) printValue(getLeftSpan(), getRightSpan());
+				}
+				
+				final void checkForKeyWord()
+				{
+					int startOffset = getLeftSpan(),
+						endOffset = getRightSpan(),
+						kwKind = kwLexer.lexer(startOffset, endOffset);
+					lexStream.makeToken(startOffset, endOffset, kwKind);
+					if (printTokens) printValue(startOffset, endOffset);
+				}
+				
+				//
+				// This flavor of checkForKeyWord is necessary when the default kind
+				// (which is returned when the keyword filter doesn't match) is something
+				// other than _IDENTIFIER.
+				//
+				final void checkForKeyWord(int defaultKind)
+				{
+					int startOffset = getLeftSpan(),
+						endOffset = getRightSpan(),
+						kwKind = kwLexer.lexer(startOffset, endOffset);
+					if (kwKind == $_IDENTIFIER)
+						kwKind = defaultKind;
+					lexStream.makeToken(startOffset, endOffset, kwKind);
+					if (printTokens) printValue(startOffset, endOffset);
+				}
+				
+				final void printValue(int startOffset, int endOffset)
+				{
+					String s = new String(lexStream.getInputChars(), startOffset, endOffset - startOffset + 1);
+					System.out.print(s);
+				}
+		
+				//
+				//
+				//
+				static class $super_stream_class extends LpgLexStream
+				{
+					«generateLexerTokenKinds(lexerGrammar, parserGrammar)»
+						
+				public final int getKind(int i)  // Classify character at ith location
+				{
+					int c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
+					return (c < 128 // ASCII Character
+							  ? tokenKind[c]
+							  : c == '\uffff'
+								   ? $sym_type.$prefix$EOF$suffix$
+								   : $sym_type.$prefix$AfterASCII$suffix$);
+				}
+		
+				public String[] orderedExportedSymbols() { return $exp_type.orderedTerminalSymbols; }
+		
+				public $super_stream_class(String filename, int tab) throws java.io.IOException
+				{
+					super(filename, tab);
+				}
+		
+				public $super_stream_class(char[] input_chars, String filename, int tab)
+				{
+					super(input_chars, filename, tab);
+				}
+			
+				public $super_stream_class(char[] input_chars, String filename)
+				{
+					super(input_chars, filename, 1);
+				}
+				}
+			./
+		%End
+		
 		%Define
 		
 			--
@@ -130,53 +282,120 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 			$kw_lexer_class /.«syntaxName»KWLexer./
 		
 		%End
-		
+
 		%Export
-			«FOR terminalRule : terminalRules»
+			«FOR terminalRule : getSortedTerminalRules(syntax)»
 				«terminalRule.name»
 			«ENDFOR»
-		
-			«FOR keywordValue : punctValues»
+
+			«FOR keywordValue : getSortedNonIdentifierKWValues(parserGrammar)»
 				«emitLabel(keywordValue)»
 			«ENDFOR»
 		%End
 		
-		%Terminals
-			«FOR characterRange : characterRanges»
-				«FOR c : getCharacters(characterRange) SEPARATOR ' '»«c»«ENDFOR»
+		«generateLexerTerminals(lexerGrammar, parserGrammar)»
 
-			«ENDFOR»
-			«FOR c : punctChars»
-				«emitLabel(c)» ::= «emitQuotedCharacter(c)»
-			«ENDFOR»
-		%End
-		
 		%Start
 			Token
 		%End
 		
 		%Rules
-			«FOR keywordValue : punctValues»
-			Token ::= «FOR c : keywordValue.toCharArray() SEPARATOR ' '»'«c»'«ENDFOR»
-				/.$BeginAction
-							makeToken($_«emitLabel(keywordValue)»);
-				  $EndAction
-				./
+		-- The Goal for the parser is a single Token
+			«FOR keywordValue : getSortedNonIdentifierKWValues(parserGrammar)»
 
+			«generateLexerKeywordRule(keywordValue)»
 			«ENDFOR»
-			«FOR characterRange : characterRanges»
-			«characterRange.getDebug()» -> «FOR c : getCharacters(characterRange) SEPARATOR ' | '»'«c»'«ENDFOR»
+			«FOR characterRange : getSortedCharacterRanges(lexerGrammar)»
 
+			«generateLexerCharacterRangeRule(characterRange)»
 			«ENDFOR»
-			«FOR terminalRule : terminalRules»
-			«generateTerminalRule(terminalRule)»
+			«FOR terminalRule : getSortedTerminalRules(syntax)»
 
+			«generateLexerTerminalRule(terminalRule)»
 			«ENDFOR»
 		%End
 		'''
 	}
 
- 	protected def String generateParser(/*@NonNull*/ ParserGrammar parserGrammar) {
+	protected def String generateLexerCharacterRangeRule(CharacterRange characterRange) {
+		'''
+			«characterRange.getDebug()» -> «FOR c : getCharacters(characterRange) SEPARATOR ' | '»«emitQuotedCharacter(c.charAt(0))»«ENDFOR»
+		'''
+	}
+
+	protected def String generateLexerDisjunction(AbstractRule rule) {
+		'''
+		«FOR conjunction : getSortedConjunctions(rule.element as Disjunction)»
+		«rule.name» ->«IF conjunction.elements.isEmpty()» %empty«ELSE»«FOR element : conjunction.elements» «generateTerm(element)»«ENDFOR»«ENDIF»
+		«ENDFOR»
+		'''
+	}
+
+	protected def String generateLexerKeywordRule(String keyword) {
+		'''
+			Token ::=«FOR c : keyword.toCharArray()» «c»«ENDFOR»
+				/.$BeginAction
+					makeToken($_«emitLabel(keyword)»);
+				  $EndAction
+			./
+		'''
+	}
+
+	protected def String generateLexerTerminalRule(TypedRule rule) {
+		'''
+			Token ::= «emitLabel(rule.name)»
+				/.$BeginAction
+							«if ("WS".equals(rule.name)) "skipToken" else if ("IDENTIFIER".equals(rule.name)) "makeIdentifier" else "makeToken"»(«syntaxName»Parsersym.TK_«rule.name»);
+				  $EndAction
+				./
+
+		«generateLexerDisjunction(rule)»
+		«FOR subrule : getSortedSubRules(rule.subrules)»
+			«generateLexerDisjunction(subrule)»
+		«ENDFOR»
+		'''
+	}
+
+	protected def String generateLexerTerminals(/*@NonNull*/ LexerGrammar lexerGrammar, /*@NonNull*/ ParserGrammar parserGrammar) {
+		var punctChars = getSortedPunctChars(lexerGrammar, parserGrammar);
+		var keywordCharacters = punctChars;
+		var alphaNumericCharacters = getAlphaNumericCharacters(keywordCharacters);
+		var punctuationCharacters = getPunctuationCharacters(keywordCharacters);
+		'''
+		%Terminals			
+			Default
+			
+			«FOR keywordCharacter : alphaNumericCharacters»
+				«keywordCharacter» 
+			«ENDFOR»			
+			«FOR c : punctuationCharacters»
+				«emitLabel(c)» ::= «emitQuotedCharacter(c)»
+			«ENDFOR»
+			
+			AfterASCII			
+		%End
+		'''
+	}
+
+	protected def String generateLexerTokenKinds(/*@NonNull*/ LexerGrammar lexerGrammar, /*@NonNull*/ ParserGrammar parserGrammar) {
+		var characterRanges = getSortedCharacterRanges(lexerGrammar);
+		var punctChars = getSortedPunctChars(lexerGrammar, parserGrammar);
+		var characterIndexes = getSortedCharacterIndexes();
+		var index2character = getSortedCharacterIndexes(punctChars, characterRanges);
+		'''
+				public final static int tokenKind[] =
+				{
+					«FOR i : characterIndexes»
+						$sym_type.$prefix$«emitLabel(index2character.get(Integer.valueOf(i)), "Default")»$suffix$,	// «i as int» 0x«Integer.toHexString(i)»
+					«ENDFOR»
+
+					$sym_type.$prefix$AfterASCII$suffix$,	  // for all chars in range 128..65534
+					$sym_type.$prefix$EOF$suffix$			  // for '\uffff' or 65535 
+				};
+		'''
+	}
+
+	protected def String generateParser(/*@NonNull*/ ParserGrammar parserGrammar) {
 		var syntax = parserGrammar.getSyntax();
 		var syntaxName = emitSyntaxName(syntax);
 		'''
@@ -186,7 +405,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 		%options noserialize
 		%options package=«emitSyntaxPackage(syntax)»
 		%options import_terminals=«syntaxName»Lexer.gi
-		%options ast_type=CSTNode
+		%options ast_type=XMLResource
 		%options template=dtParserTemplateF.gi
 		%options include_directory=".;../lpg"
 		
@@ -194,6 +413,13 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 		«FOR rule : parserGrammar.goals»
 			«rule.name»
 		«ENDFOR»
+		%End
+				
+		%Define
+		    -- Redefinition of macros used in the parser template
+		    --
+		    $default_repair_count /.getDefaultRepairCount()./
+			$super_parser_class /.AbstractEcore2XtextParser./
 		%End
 		
 		%Notice
@@ -205,6 +431,8 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 		%Globals
 			/.
 			/* imports */
+			import org.eclipse.emf.ecore.*;
+			import org.eclipse.emf.ecore.xmi.XMLResource;
 			./
 		%End
 		
@@ -221,7 +449,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 				«terminalRule.name»
 			«ENDFOR»
 			
-			«FOR keywordValue : getSortedPunctValues(parserGrammar)»
+			«FOR keywordValue : getSortedNonIdentifierKWValues(parserGrammar)»
 				«emitLabel(keywordValue)» ::= '«keywordValue»'
 			«ENDFOR»
 		%End
@@ -238,38 +466,33 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 
 	protected def String generateParserRule(TypedRule rule) {
 		'''
-		«generateParserDisjunction(rule)»
+		«generateParserRuleDisjunction(rule)»
 		«FOR subrule : getSortedSubRules(rule.subrules)»
-			«generateParserDisjunction(subrule)»
+			«generateParserSubruleDisjunction(subrule)»
 		«ENDFOR»
 		'''
 	}
 
-	protected def String generateTerminalRule(TypedRule rule) {
-		'''
-		«generateLexerDisjunction(rule)»
-		«FOR subrule : getSortedSubRules(rule.subrules)»
-			«generateLexerDisjunction(subrule)»
-		«ENDFOR»
-		'''
-	}
-
-	protected def String generateLexerDisjunction(AbstractRule rule) {
-		'''
-		«FOR conjunction : getSortedConjunctions(rule.element as Disjunction)»
-		«rule.name» ::=«IF conjunction.elements.isEmpty()» %empty«ELSE»«FOR element : conjunction.elements» «generateTerm(element)»«ENDFOR»«ENDIF»
-			/.$BeginAction
-							makeToken($_«rule.name»);
-			  $EndAction
-			./
-		«ENDFOR»
-		'''
-	}
-
-	protected def String generateParserDisjunction(AbstractRule rule) {
+	protected def String generateParserRuleDisjunction(AbstractRule rule) {
 		'''
 		«FOR conjunction : getSortedConjunctions(rule.element as Disjunction)»
 		«rule.name» ::=«IF conjunction.elements.isEmpty()» %empty«ELSE»«FOR element : conjunction.elements» «generateTerm(element)»«ENDFOR»«ENDIF» --«nextState()»
+				/.$BeginAction
+							setResult(«emitCreateEObject(conjunction)»);
+				  $EndAction
+				./
+		«ENDFOR»
+		'''
+	}
+
+	protected def String generateParserSubruleDisjunction(AbstractRule rule) {
+		'''
+		«FOR conjunction : getSortedConjunctions(rule.element as Disjunction)»
+		«rule.name» ::=«IF conjunction.elements.isEmpty()» %empty«ELSE»«FOR element : conjunction.elements» «generateTerm(element)»«ENDFOR»«ENDIF» --«nextState()»
+				/.$BeginAction
+							setResult(«emitContinueEObject(conjunction)»);
+				  $EndAction
+				./
 		«ENDFOR»
 		'''
 	}

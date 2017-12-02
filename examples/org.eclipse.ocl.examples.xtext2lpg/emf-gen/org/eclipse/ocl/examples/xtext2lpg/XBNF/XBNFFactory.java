@@ -129,6 +129,15 @@ public interface XBNFFactory extends EFactory {
 	LexerGrammar createLexerGrammar();
 
 	/**
+	 * Returns a new object of class '<em>Metamodel Declaration</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Metamodel Declaration</em>'.
+	 * @generated
+	 */
+	MetamodelDeclaration createMetamodelDeclaration();
+
+	/**
 	 * Returns a new object of class '<em>Negated Token</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

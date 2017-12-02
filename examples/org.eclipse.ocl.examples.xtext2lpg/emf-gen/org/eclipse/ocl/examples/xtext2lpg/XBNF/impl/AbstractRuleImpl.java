@@ -29,13 +29,13 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AbstractRuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AbstractRuleImpl#getElement <em>Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AbstractRuleImpl#getDebug <em>Debug</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.AbstractRuleImpl#getKind <em>Kind</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -362,7 +362,7 @@ public class AbstractRuleImpl extends MinimalEObjectImpl.Container implements Ab
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", debug: ");

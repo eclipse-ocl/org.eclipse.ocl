@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.Keyword;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.KeywordAssignment;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.LexerGrammar;
+import org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.NegatedToken;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.ParserGrammar;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.ParserRule;
@@ -150,6 +151,13 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass metamodelDeclarationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass negatedTokenEClass = null;
 
 	/**
@@ -250,7 +258,7 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link XBNFPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -264,12 +272,14 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 		if (isInited) return (XBNFPackage)EPackage.Registry.INSTANCE.getEPackage(XBNFPackage.eNS_URI);
 
 		// Obtain or create and register package
-		XBNFPackageImpl theXBNFPackage = (XBNFPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof XBNFPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new XBNFPackageImpl());
+		Object registeredXBNFPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		XBNFPackageImpl theXBNFPackage = registeredXBNFPackage instanceof XBNFPackageImpl ? (XBNFPackageImpl)registeredXBNFPackage : new XBNFPackageImpl();
 
 		isInited = true;
 
 		// Obtain or create and register interdependencies
-		XBNFwithCardinalityPackageImpl theXBNFwithCardinalityPackage = (XBNFwithCardinalityPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(XBNFwithCardinalityPackage.eNS_URI) instanceof XBNFwithCardinalityPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(XBNFwithCardinalityPackage.eNS_URI) : XBNFwithCardinalityPackage.eINSTANCE);
+		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(XBNFwithCardinalityPackage.eNS_URI);
+		XBNFwithCardinalityPackageImpl theXBNFwithCardinalityPackage = (XBNFwithCardinalityPackageImpl)(registeredPackage instanceof XBNFwithCardinalityPackageImpl ? registeredPackage : XBNFwithCardinalityPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theXBNFPackage.createPackageContents();
@@ -282,7 +292,6 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 		// Mark meta-data to indicate it can't be changed
 		theXBNFPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(XBNFPackage.eNS_URI, theXBNFPackage);
 		return theXBNFPackage;
@@ -581,6 +590,33 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getMetamodelDeclaration() {
+		return metamodelDeclarationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMetamodelDeclaration_Name() {
+		return (EAttribute)metamodelDeclarationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMetamodelDeclaration_ReferredPackage() {
+		return (EReference)metamodelDeclarationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNegatedToken() {
 		return negatedTokenEClass;
 	}
@@ -682,6 +718,15 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 	 */
 	public EAttribute getSyntax_Debug() {
 		return (EAttribute)syntaxEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSyntax_MetamodelDeclarations() {
+		return (EReference)syntaxEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -847,6 +892,10 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 
 		lexerGrammarEClass = createEClass(LEXER_GRAMMAR);
 
+		metamodelDeclarationEClass = createEClass(METAMODEL_DECLARATION);
+		createEAttribute(metamodelDeclarationEClass, METAMODEL_DECLARATION__NAME);
+		createEReference(metamodelDeclarationEClass, METAMODEL_DECLARATION__REFERRED_PACKAGE);
+
 		negatedTokenEClass = createEClass(NEGATED_TOKEN);
 		createEReference(negatedTokenEClass, NEGATED_TOKEN__TERMINAL);
 
@@ -864,6 +913,7 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 		createEAttribute(syntaxEClass, SYNTAX__NAME);
 		createEReference(syntaxEClass, SYNTAX__GRAMMARS);
 		createEAttribute(syntaxEClass, SYNTAX__DEBUG);
+		createEReference(syntaxEClass, SYNTAX__METAMODEL_DECLARATIONS);
 
 		terminalRuleEClass = createEClass(TERMINAL_RULE);
 
@@ -978,6 +1028,10 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 
 		initEClass(lexerGrammarEClass, LexerGrammar.class, "LexerGrammar", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(metamodelDeclarationEClass, MetamodelDeclaration.class, "MetamodelDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMetamodelDeclaration_Name(), ecorePackage.getEString(), "name", null, 1, 1, MetamodelDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMetamodelDeclaration_ReferredPackage(), ecorePackage.getEPackage(), null, "referredPackage", null, 1, 1, MetamodelDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(negatedTokenEClass, NegatedToken.class, "NegatedToken", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNegatedToken_Terminal(), this.getAbstractElement(), null, "terminal", null, 1, 1, NegatedToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -995,6 +1049,7 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 		initEAttribute(getSyntax_Name(), ecorePackage.getEString(), "name", null, 1, 1, Syntax.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSyntax_Grammars(), this.getGrammar(), this.getGrammar_Syntax(), "grammars", null, 0, -1, Syntax.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSyntax_Debug(), ecorePackage.getEString(), "debug", null, 0, 1, Syntax.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSyntax_MetamodelDeclarations(), this.getMetamodelDeclaration(), null, "metamodelDeclarations", null, 0, -1, Syntax.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(terminalRuleEClass, TerminalRule.class, "TerminalRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1015,28 +1070,10 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/OCL/Import
-		createImportAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
 		createPivotAnnotations();
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Import</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import";	
-		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] {
-			 "ecore", "http://www.eclipse.org/emf/2002/Ecore"
-		   });
 	}
 
 	/**
@@ -1046,14 +1083,14 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";	
+		String source = "http://www.eclipse.org/emf/2002/Ecore";
 		addAnnotation
-		  (this, 
-		   source, 
+		  (this,
+		   source,
 		   new String[] {
-			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+			   "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+			   "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+			   "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
 		   });
 	}
 
@@ -1064,12 +1101,12 @@ public class XBNFPackageImpl extends EPackageImpl implements XBNFPackage {
 	 * @generated
 	 */
 	protected void createPivotAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";	
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";
 		addAnnotation
-		  (getRuleCall_Name(), 
-		   source, 
+		  (getRuleCall_Name(),
+		   source,
 		   new String[] {
-			 "derivation", "if referredRule <> null then referredRule.name else \'\' endif"
+			   "derivation", "if referredRule <> null then referredRule.name else \'\' endif"
 		   });
 	}
 

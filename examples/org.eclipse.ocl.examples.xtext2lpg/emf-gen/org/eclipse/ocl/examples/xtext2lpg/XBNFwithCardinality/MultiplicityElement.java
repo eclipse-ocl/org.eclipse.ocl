@@ -19,10 +19,10 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractElement;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.MultiplicityElement#getElement <em>Element</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.XBNFwithCardinalityPackage#getMultiplicityElement()
  * @model abstract="true"

@@ -19,8 +19,6 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Parser Grammar</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

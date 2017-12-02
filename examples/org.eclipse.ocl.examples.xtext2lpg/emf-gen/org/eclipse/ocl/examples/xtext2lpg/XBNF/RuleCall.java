@@ -18,11 +18,11 @@ package org.eclipse.ocl.examples.xtext2lpg.XBNF;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.RuleCall#getReferredRule <em>Referred Rule</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.RuleCall#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getRuleCall()
  * @model
@@ -66,7 +66,7 @@ public interface RuleCall extends AbstractElement {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getRuleCall_Name()
 	 * @model transient="true" changeable="false" volatile="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='if referredRule <> null then referredRule.name else \'\' endif'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='if referredRule &lt;&gt; null then referredRule.name else \'\' endif'"
 	 * @generated
 	 */
 	String getName();

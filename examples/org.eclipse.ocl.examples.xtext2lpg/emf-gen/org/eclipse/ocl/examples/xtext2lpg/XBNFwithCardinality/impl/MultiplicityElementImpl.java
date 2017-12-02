@@ -26,10 +26,10 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.XBNFwithCardinalit
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.impl.MultiplicityElementImpl#getElement <em>Element</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

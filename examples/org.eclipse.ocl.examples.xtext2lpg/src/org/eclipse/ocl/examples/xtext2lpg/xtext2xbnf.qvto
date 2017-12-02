@@ -48,6 +48,7 @@ mapping XTEXT::Grammar::grammar2syntax() : XBNF::Syntax {
 --	var ruleCalls : Set(RuleCall) = self.oclAsType(EObject)->closure(eContents())->select(oclIsKindOf(RuleCall)).oclAsType(RuleCall)->asSet();
 --	debug := XTEXT::Grammar.allInstances()->size().toString() + ' ' + ruleCalls->size().toString();
 	grammars := allGrammars->iterate(g ; acc : Sequence(XBNF::Grammar) = Sequence{} | acc->append(g.map grammar2lexerGrammar())->append(g.map grammar2parserGrammar()));
+	metamodelDeclarations := allGrammars.metamodelDeclarations->select(alias <> null)->map metamodelDeclaration2metamodelDeclaration();
 }
 
 /*query gatherRules(knownRules : Set(AbstractRule), candidateRules : Set(AbstractRule)) : Set(AbstractRule)
@@ -76,6 +77,11 @@ mapping XTEXT::Grammar::grammar2parserGrammar() : XBNF::ParserGrammar {
 	name := self.name + 'Parser';
 	rules := parserRules->sortedBy(name);
 	goals := parserRules->first()->asSequence();
+}
+
+mapping XTEXT::AbstractMetamodelDeclaration::metamodelDeclaration2metamodelDeclaration() : XBNF::MetamodelDeclaration {
+	name := self.alias;
+	result.referredPackage := self.ePackage;
 }
 
 ---------------------------------------------------------------------------------------

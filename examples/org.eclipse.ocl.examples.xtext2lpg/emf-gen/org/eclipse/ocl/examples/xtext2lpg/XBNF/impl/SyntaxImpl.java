@@ -23,10 +23,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.Grammar;
+import org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
 
@@ -36,12 +38,13 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.SyntaxImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.SyntaxImpl#getGrammars <em>Grammars</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.SyntaxImpl#getDebug <em>Debug</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.SyntaxImpl#getMetamodelDeclarations <em>Metamodel Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -95,6 +98,16 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 	 * @ordered
 	 */
 	protected String debug = DEBUG_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getMetamodelDeclarations() <em>Metamodel Declarations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMetamodelDeclarations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<MetamodelDeclaration> metamodelDeclarations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +187,18 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<MetamodelDeclaration> getMetamodelDeclarations() {
+		if (metamodelDeclarations == null) {
+			metamodelDeclarations = new EObjectContainmentEList<MetamodelDeclaration>(MetamodelDeclaration.class, this, XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS);
+		}
+		return metamodelDeclarations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -194,6 +219,8 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 		switch (featureID) {
 			case XBNFPackage.SYNTAX__GRAMMARS:
 				return ((InternalEList<?>)getGrammars()).basicRemove(otherEnd, msgs);
+			case XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS:
+				return ((InternalEList<?>)getMetamodelDeclarations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -212,6 +239,8 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 				return getGrammars();
 			case XBNFPackage.SYNTAX__DEBUG:
 				return getDebug();
+			case XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS:
+				return getMetamodelDeclarations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -235,6 +264,10 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 			case XBNFPackage.SYNTAX__DEBUG:
 				setDebug((String)newValue);
 				return;
+			case XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS:
+				getMetamodelDeclarations().clear();
+				getMetamodelDeclarations().addAll((Collection<? extends MetamodelDeclaration>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -256,6 +289,9 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 			case XBNFPackage.SYNTAX__DEBUG:
 				setDebug(DEBUG_EDEFAULT);
 				return;
+			case XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS:
+				getMetamodelDeclarations().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -274,6 +310,8 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 				return grammars != null && !grammars.isEmpty();
 			case XBNFPackage.SYNTAX__DEBUG:
 				return DEBUG_EDEFAULT == null ? debug != null : !DEBUG_EDEFAULT.equals(debug);
+			case XBNFPackage.SYNTAX__METAMODEL_DECLARATIONS:
+				return metamodelDeclarations != null && !metamodelDeclarations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -287,7 +325,7 @@ public class SyntaxImpl extends MinimalEObjectImpl.Container implements Syntax {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", debug: ");

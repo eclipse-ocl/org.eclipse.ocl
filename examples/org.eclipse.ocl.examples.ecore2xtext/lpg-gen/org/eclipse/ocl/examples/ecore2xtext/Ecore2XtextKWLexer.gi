@@ -6,8 +6,95 @@
 %options export_terminals=("Ecore2XtextParsersym.java", "TK_")
 %options include_directory="../lpg"
 
-%Import
-	KWLexerMapF.gi
+%Terminals
+	B
+	C
+	E
+	I
+	L
+	N
+	O
+	P
+	R
+	S
+	T
+	U
+	V
+	a
+	b
+	c
+	d
+	e
+	f
+	g
+	h
+	i
+	k
+	l
+	m
+	n
+	o
+	p
+	r
+	s
+	t
+	u
+	v
+	w
+	x
+	y
+	z
+%End
+
+%Headers
+	/.
+		final static int tokenKind[] = new int[128];
+		static
+		{
+			tokenKind['B'] = $sym_type.$prefix$B$suffix$;
+			tokenKind['C'] = $sym_type.$prefix$C$suffix$;
+			tokenKind['E'] = $sym_type.$prefix$E$suffix$;
+			tokenKind['I'] = $sym_type.$prefix$I$suffix$;
+			tokenKind['L'] = $sym_type.$prefix$L$suffix$;
+			tokenKind['N'] = $sym_type.$prefix$N$suffix$;
+			tokenKind['O'] = $sym_type.$prefix$O$suffix$;
+			tokenKind['P'] = $sym_type.$prefix$P$suffix$;
+			tokenKind['R'] = $sym_type.$prefix$R$suffix$;
+			tokenKind['S'] = $sym_type.$prefix$S$suffix$;
+			tokenKind['T'] = $sym_type.$prefix$T$suffix$;
+			tokenKind['U'] = $sym_type.$prefix$U$suffix$;
+			tokenKind['V'] = $sym_type.$prefix$V$suffix$;
+			tokenKind['a'] = $sym_type.$prefix$a$suffix$;
+			tokenKind['b'] = $sym_type.$prefix$b$suffix$;
+			tokenKind['c'] = $sym_type.$prefix$c$suffix$;
+			tokenKind['d'] = $sym_type.$prefix$d$suffix$;
+			tokenKind['e'] = $sym_type.$prefix$e$suffix$;
+			tokenKind['f'] = $sym_type.$prefix$f$suffix$;
+			tokenKind['g'] = $sym_type.$prefix$g$suffix$;
+			tokenKind['h'] = $sym_type.$prefix$h$suffix$;
+			tokenKind['i'] = $sym_type.$prefix$i$suffix$;
+			tokenKind['k'] = $sym_type.$prefix$k$suffix$;
+			tokenKind['l'] = $sym_type.$prefix$l$suffix$;
+			tokenKind['m'] = $sym_type.$prefix$m$suffix$;
+			tokenKind['n'] = $sym_type.$prefix$n$suffix$;
+			tokenKind['o'] = $sym_type.$prefix$o$suffix$;
+			tokenKind['p'] = $sym_type.$prefix$p$suffix$;
+			tokenKind['r'] = $sym_type.$prefix$r$suffix$;
+			tokenKind['s'] = $sym_type.$prefix$s$suffix$;
+			tokenKind['t'] = $sym_type.$prefix$t$suffix$;
+			tokenKind['u'] = $sym_type.$prefix$u$suffix$;
+			tokenKind['v'] = $sym_type.$prefix$v$suffix$;
+			tokenKind['w'] = $sym_type.$prefix$w$suffix$;
+			tokenKind['x'] = $sym_type.$prefix$x$suffix$;
+			tokenKind['y'] = $sym_type.$prefix$y$suffix$;
+			tokenKind['z'] = $sym_type.$prefix$z$suffix$;
+		};
+
+		final int getKind(char c)
+		{
+			return (((c & 0xFFFFFF80) == 0) /* 0 <= c < 128? */ ? tokenKind[c] : 0);
+		}
+	./
 %End
 
 %Define
@@ -40,6 +127,7 @@
 	defaultValueLiteral
 	derived
 	eClassifier
+	eClassifiers
 	eExceptions
 	eOpposite
 	eSuperTypes
@@ -109,6 +197,12 @@
 		| e C l a s s i f i e r
 		/.$BeginAction
 			$setResult($_eClassifier);
+		  $EndAction
+		./
+
+		| e C l a s s i f i e r s
+		/.$BeginAction
+			$setResult($_eClassifiers);
 		  $EndAction
 		./
 

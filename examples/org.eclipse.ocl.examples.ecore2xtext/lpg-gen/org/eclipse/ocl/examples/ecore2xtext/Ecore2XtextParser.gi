@@ -4,12 +4,19 @@
 %options noserialize
 %options package=org.eclipse.ocl.examples.ecore2xtext
 %options import_terminals=Ecore2XtextLexer.gi
-%options ast_type=CSTNode
+%options ast_type=XMLResource
 %options template=dtParserTemplateF.gi
 %options include_directory=".;../lpg"
 
 %Start
-XmlRoot
+XMLDocument_ecore_EPackage
+%End
+
+%Define
+    -- Redefinition of macros used in the parser template
+    --
+    $default_repair_count /.getDefaultRepairCount()./
+	$super_parser_class /.AbstractEcore2XtextParser./
 %End
 
 %Notice
@@ -21,6 +28,8 @@ XmlRoot
 %Globals
 	/.
 	/* imports */
+	import org.eclipse.emf.ecore.*;
+	import org.eclipse.emf.ecore.xmi.XMLResource;
 	./
 %End
 
@@ -37,462 +46,1994 @@ XmlRoot
 	STRING
 	WS
 
-	SLASH_RANGLE ::= '/>'
+	SLASH_GT ::= '/>'
 	COLON ::= ':'
-	LANGLE ::= '<'
-	LANGLE_SLASH ::= '</'
-	LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE ::= '</details>'
-	LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE ::= '</eAnnotations>'
-	LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE ::= '</eClassifiers>'
-	LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE ::= '</eGenericType>'
-	LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE ::= '</eOperations>'
-	LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE ::= '</ePackages>'
-	LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE ::= '</eParameters>'
-	LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE ::= '</eStructuralFeatures>'
-	LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE ::= '</eTypeArguments>'
-	LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE ::= '</ecore:EPackage>'
-	LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE ::= '</xmi:XMI>'
-	LANGLE_QUERY_120_109_108 ::= '<?xml'
-	LANGLE_100_101_116_97_105_108_115 ::= '<details'
-	LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 ::= '<eAnnotations'
-	LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 ::= '<eClassifiers'
-	LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 ::= '<eGenericType'
-	LANGLE_101_79_112_101_114_97_116_105_111_110_115 ::= '<eOperations'
-	LANGLE_101_80_97_99_107_97_103_101_115 ::= '<ePackages'
-	LANGLE_101_80_97_114_97_109_101_116_101_114_115 ::= '<eParameters'
-	LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 ::= '<eStructuralFeatures'
-	LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 ::= '<eTypeArguments'
-	LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 ::= '<ecore:EPackage'
-	LANGLE_120_109_105_COLON_88_77_73 ::= '<xmi:XMI'
-	EQUALS ::= '='
-	RANGLE ::= '>'
-	QUERY_RANGLE ::= '?>'
+	LT ::= '<'
+	LT_SLASH ::= '</'
+	LT_SLASH_d_e_t_a_i_l_s_GT ::= '</details>'
+	LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT ::= '</eAnnotations>'
+	LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT ::= '</eClassifiers>'
+	LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT ::= '</eGenericType>'
+	LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT ::= '</eOperations>'
+	LT_SLASH_e_P_a_c_k_a_g_e_s_GT ::= '</ePackages>'
+	LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT ::= '</eParameters>'
+	LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT ::= '</eStructuralFeatures>'
+	LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT ::= '</eTypeArguments>'
+	LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT ::= '</ecore:EPackage>'
+	LT_SLASH_x_m_i_COLON_X_M_I_GT ::= '</xmi:XMI>'
+	LT_QUERY_x_m_l ::= '<?xml'
+	LT_d_e_t_a_i_l_s ::= '<details'
+	LT_e_A_n_n_o_t_a_t_i_o_n_s ::= '<eAnnotations'
+	LT_e_C_l_a_s_s_i_f_i_e_r_s ::= '<eClassifiers'
+	LT_e_G_e_n_e_r_i_c_T_y_p_e ::= '<eGenericType'
+	LT_e_O_p_e_r_a_t_i_o_n_s ::= '<eOperations'
+	LT_e_P_a_r_a_m_e_t_e_r_s ::= '<eParameters'
+	LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s ::= '<eStructuralFeatures'
+	LT_e_S_u_b_p_a_c_k_a_g_e_s ::= '<eSubpackages'
+	LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s ::= '<eTypeArguments'
+	LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e ::= '<ecore:EPackage'
+	LT_x_m_i_COLON_X_M_I ::= '<xmi:XMI'
+	EQ ::= '='
+	GT ::= '>'
+	QUERY_GT ::= '?>'
 %End
 
 %Rules
-AbstractAttribute ::= abstract EQUALS STRING --1
+BooleanAttribute ::= EcoreFeature_ecore_EClass_abstract --1
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EDataType_serializable --2
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EReference_containment --3
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EReference_resolveProxies --4
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_changeable --5
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral --6
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_derived --7
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_transient --8
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_unsettable --9
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_EStructuralFeature_volatile --10
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+BooleanAttribute ::= EcoreFeature_ecore_ETypedElement_ordered --11
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 
-BooleanAttribute ::= AbstractAttribute --2
-BooleanAttribute ::= ChangeableAttribute --3
-BooleanAttribute ::= ContainmentAttribute --4
-BooleanAttribute ::= DefaultValueLiteralAttribute --5
-BooleanAttribute ::= DerivedAttribute --6
-BooleanAttribute ::= OrderedAttribute --7
-BooleanAttribute ::= ResolveProxiesAttribute --8
-BooleanAttribute ::= SerializableAttribute --9
-BooleanAttribute ::= TransientAttribute --10
-BooleanAttribute ::= UnsettableAttribute --11
-BooleanAttribute ::= VolatileAttribute --12
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s SLASH_GT --12
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s EcoreClass_ecore_EClass_eOperations_8 SLASH_GT --13
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s GT LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT --14
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s EcoreClass_ecore_EClass_eOperations_8 GT LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT --15
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s GT EcoreClass_ecore_EClass_eOperations_3 LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT --16
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations ::= LT_e_O_p_e_r_a_t_i_o_n_s EcoreClass_ecore_EClass_eOperations_8 GT EcoreClass_ecore_EClass_eOperations_3 LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT --17
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__EOPERATIONS, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --18
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EOperation_eParameters --19
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_ETypedElement_eGenericType --20
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= OtherElement --21
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EClass_eOperations_3 EcoreClass_ecore_EModelElement_eAnnotations --22
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EClass_eOperations_3 EcoreClass_ecore_EOperation_eParameters --23
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EClass_eOperations_3 EcoreClass_ecore_ETypedElement_eGenericType --24
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_3 ::= EcoreClass_ecore_EClass_eOperations_3 OtherElement --25
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreFeature_ecore_ENamedElement_name --26
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreFeature_ecore_EOperation_eExceptions --27
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreFeature_ecore_ETypedElement_eType --28
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= OtherAttribute --29
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= XMLAttribute_xsi_type --30
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreClass_ecore_EClass_eOperations_8 EcoreFeature_ecore_ENamedElement_name --31
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreClass_ecore_EClass_eOperations_8 EcoreFeature_ecore_EOperation_eExceptions --32
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreClass_ecore_EClass_eOperations_8 EcoreFeature_ecore_ETypedElement_eType --33
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreClass_ecore_EClass_eOperations_8 OtherAttribute --34
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eOperations_8 ::= EcoreClass_ecore_EClass_eOperations_8 XMLAttribute_xsi_type --35
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-ChangeableAttribute ::= changeable EQUALS STRING --13
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s SLASH_GT --36
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s EcoreClass_ecore_EClass_eStructuralFeatures_8 SLASH_GT --37
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s GT LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT --38
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s EcoreClass_ecore_EClass_eStructuralFeatures_8 GT LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT --39
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s GT EcoreClass_ecore_EClass_eStructuralFeatures_3 LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT --40
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures ::= LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s EcoreClass_ecore_EClass_eStructuralFeatures_8 GT EcoreClass_ecore_EClass_eStructuralFeatures_3 LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT --41
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --42
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= EcoreClass_ecore_ETypedElement_eGenericType --43
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= OtherElement --44
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= EcoreClass_ecore_EClass_eStructuralFeatures_3 EcoreClass_ecore_EModelElement_eAnnotations --45
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= EcoreClass_ecore_EClass_eStructuralFeatures_3 EcoreClass_ecore_ETypedElement_eGenericType --46
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_3 ::= EcoreClass_ecore_EClass_eStructuralFeatures_3 OtherElement --47
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_ENamedElement_name --48
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EReference_containment --49
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EReference_eOpposite --50
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EReference_resolveProxies --51
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_changeable --52
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral --53
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_derived --54
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_transient --55
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_unsettable --56
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_EStructuralFeature_volatile --57
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_ETypedElement_eType --58
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_ETypedElement_lowerBound --59
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_ETypedElement_ordered --60
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreFeature_ecore_ETypedElement_upperBound --61
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= OtherAttribute --62
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= XMLAttribute_xsi_type --63
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_ENamedElement_name --64
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EReference_containment --65
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EReference_eOpposite --66
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EReference_resolveProxies --67
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_changeable --68
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral --69
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_derived --70
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_transient --71
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_unsettable --72
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_EStructuralFeature_volatile --73
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_ETypedElement_eType --74
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_ETypedElement_lowerBound --75
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_ETypedElement_ordered --76
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 EcoreFeature_ecore_ETypedElement_upperBound --77
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 OtherAttribute --78
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EClass_eStructuralFeatures_8 ::= EcoreClass_ecore_EClass_eStructuralFeatures_8 XMLAttribute_xsi_type --79
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-ContainmentAttribute ::= containment EQUALS STRING --14
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s SLASH_GT --80
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s EcoreClass_ecore_EGenericType_eTypeArguments_8 SLASH_GT --81
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s GT LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT --82
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s EcoreClass_ecore_EGenericType_eTypeArguments_8 GT LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT --83
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s GT EcoreClass_ecore_EGenericType_eTypeArguments_3 LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT --84
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments ::= LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s EcoreClass_ecore_EGenericType_eTypeArguments_8 GT EcoreClass_ecore_EGenericType_eTypeArguments_3 LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT --85
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EGENERIC_TYPE__ETYPE_ARGUMENTS, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --86
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_3 ::= OtherElement --87
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_3 ::= EcoreClass_ecore_EGenericType_eTypeArguments_3 EcoreClass_ecore_EModelElement_eAnnotations --88
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_3 ::= EcoreClass_ecore_EGenericType_eTypeArguments_3 OtherElement --89
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= EcoreFeature_ecore_EPackage_eClassifiers --90
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= OtherAttribute --91
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= XMLAttribute_xsi_type --92
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= EcoreClass_ecore_EGenericType_eTypeArguments_8 EcoreFeature_ecore_EPackage_eClassifiers --93
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= EcoreClass_ecore_EGenericType_eTypeArguments_8 OtherAttribute --94
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EGenericType_eTypeArguments_8 ::= EcoreClass_ecore_EGenericType_eTypeArguments_8 XMLAttribute_xsi_type --95
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-DefaultValueLiteralAttribute ::= defaultValueLiteral EQUALS STRING --15
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s SLASH_GT --96
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s EcoreClass_ecore_EModelElement_eAnnotations_8 SLASH_GT --97
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s GT LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT --98
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s EcoreClass_ecore_EModelElement_eAnnotations_8 GT LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT --99
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s GT EcoreClass_ecore_EModelElement_eAnnotations_3 LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT --100
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations ::= LT_e_A_n_n_o_t_a_t_i_o_n_s EcoreClass_ecore_EModelElement_eAnnotations_8 GT EcoreClass_ecore_EModelElement_eAnnotations_3 LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT --101
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EMODEL_ELEMENT__EANNOTATIONS, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --102
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= EcoreFeature_ecore_EAnnotation_details --103
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= OtherElement --104
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= EcoreClass_ecore_EModelElement_eAnnotations_3 EcoreClass_ecore_EModelElement_eAnnotations --105
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= EcoreClass_ecore_EModelElement_eAnnotations_3 EcoreFeature_ecore_EAnnotation_details --106
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_3 ::= EcoreClass_ecore_EModelElement_eAnnotations_3 OtherElement --107
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= EcoreFeature_ecore_EAnnotation_source --108
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= OtherAttribute --109
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= XMLAttribute_xsi_type --110
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= EcoreClass_ecore_EModelElement_eAnnotations_8 EcoreFeature_ecore_EAnnotation_source --111
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= EcoreClass_ecore_EModelElement_eAnnotations_8 OtherAttribute --112
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EModelElement_eAnnotations_8 ::= EcoreClass_ecore_EModelElement_eAnnotations_8 XMLAttribute_xsi_type --113
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-DerivedAttribute ::= derived EQUALS STRING --16
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s SLASH_GT --114
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s EcoreClass_ecore_EOperation_eParameters_8 SLASH_GT --115
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s GT LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT --116
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s EcoreClass_ecore_EOperation_eParameters_8 GT LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT --117
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s GT EcoreClass_ecore_EOperation_eParameters_3 LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT --118
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters ::= LT_e_P_a_r_a_m_e_t_e_r_s EcoreClass_ecore_EOperation_eParameters_8 GT EcoreClass_ecore_EOperation_eParameters_3 LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT --119
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EPARAMETERS, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --120
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= EcoreClass_ecore_ETypedElement_eGenericType --121
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= OtherElement --122
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= EcoreClass_ecore_EOperation_eParameters_3 EcoreClass_ecore_EModelElement_eAnnotations --123
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= EcoreClass_ecore_EOperation_eParameters_3 EcoreClass_ecore_ETypedElement_eGenericType --124
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_3 ::= EcoreClass_ecore_EOperation_eParameters_3 OtherElement --125
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreFeature_ecore_ENamedElement_name --126
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreFeature_ecore_ETypedElement_eType --127
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= OtherAttribute --128
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= XMLAttribute_xsi_type --129
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreClass_ecore_EOperation_eParameters_8 EcoreFeature_ecore_ENamedElement_name --130
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreClass_ecore_EOperation_eParameters_8 EcoreFeature_ecore_ETypedElement_eType --131
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreClass_ecore_EOperation_eParameters_8 OtherAttribute --132
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EOperation_eParameters_8 ::= EcoreClass_ecore_EOperation_eParameters_8 XMLAttribute_xsi_type --133
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 SLASH_RANGLE --17
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 EAnnotation_8 SLASH_RANGLE --18
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 RANGLE LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE --19
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 EAnnotation_8 RANGLE LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE --20
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 RANGLE EAnnotation_3 LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE --21
-EAnnotation ::= LANGLE_101_65_110_110_111_116_97_116_105_111_110_115 EAnnotation_8 RANGLE EAnnotation_3 LANGLE_SLASH_101_65_110_110_111_116_97_116_105_111_110_115_RANGLE --22
-EAnnotation_3 ::= EAnnotation --23
-EAnnotation_3 ::= EDetail --24
-EAnnotation_3 ::= OtherElement --25
-EAnnotation_3 ::= EAnnotation_3 EAnnotation --26
-EAnnotation_3 ::= EAnnotation_3 EDetail --27
-EAnnotation_3 ::= EAnnotation_3 OtherElement --28
-EAnnotation_8 ::= OtherAttribute --29
-EAnnotation_8 ::= SourceAttribute --30
-EAnnotation_8 ::= XsiTypeAttribute --31
-EAnnotation_8 ::= EAnnotation_8 OtherAttribute --32
-EAnnotation_8 ::= EAnnotation_8 SourceAttribute --33
-EAnnotation_8 ::= EAnnotation_8 XsiTypeAttribute --34
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s SLASH_GT --134
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s EcoreClass_ecore_EPackage_eClassifiers_8 SLASH_GT --135
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s GT LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT --136
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s EcoreClass_ecore_EPackage_eClassifiers_8 GT LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT --137
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s GT EcoreClass_ecore_EPackage_eClassifiers_3 LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT --138
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers ::= LT_e_C_l_a_s_s_i_f_i_e_r_s EcoreClass_ecore_EPackage_eClassifiers_8 GT EcoreClass_ecore_EPackage_eClassifiers_3 LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT --139
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EClass_eOperations --140
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EClass_eStructuralFeatures --141
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --142
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= OtherElement --143
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EPackage_eClassifiers_3 EcoreClass_ecore_EClass_eOperations --144
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EPackage_eClassifiers_3 EcoreClass_ecore_EClass_eStructuralFeatures --145
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EPackage_eClassifiers_3 EcoreClass_ecore_EModelElement_eAnnotations --146
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_3 ::= EcoreClass_ecore_EPackage_eClassifiers_3 OtherElement --147
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreFeature_ecore_EClass_abstract --148
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreFeature_ecore_EClass_eSuperTypes --149
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreFeature_ecore_EDataType_serializable --150
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreFeature_ecore_ENamedElement_name --151
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= InstanceClassNameAttribute --152
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= OtherAttribute --153
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= XMLAttribute_xsi_type --154
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 EcoreFeature_ecore_EClass_abstract --155
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 EcoreFeature_ecore_EClass_eSuperTypes --156
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 EcoreFeature_ecore_EDataType_serializable --157
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 EcoreFeature_ecore_ENamedElement_name --158
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 InstanceClassNameAttribute --159
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 OtherAttribute --160
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eClassifiers_8 ::= EcoreClass_ecore_EPackage_eClassifiers_8 XMLAttribute_xsi_type --161
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 SLASH_RANGLE --35
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 EClassifier_8 SLASH_RANGLE --36
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 RANGLE LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE --37
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 EClassifier_8 RANGLE LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE --38
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 RANGLE EClassifier_3 LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE --39
-EClassifier ::= LANGLE_101_67_108_97_115_115_105_102_105_101_114_115 EClassifier_8 RANGLE EClassifier_3 LANGLE_SLASH_101_67_108_97_115_115_105_102_105_101_114_115_RANGLE --40
-EClassifier_3 ::= EAnnotation --41
-EClassifier_3 ::= EOperation --42
-EClassifier_3 ::= EStructuralFeature --43
-EClassifier_3 ::= OtherElement --44
-EClassifier_3 ::= EClassifier_3 EAnnotation --45
-EClassifier_3 ::= EClassifier_3 EOperation --46
-EClassifier_3 ::= EClassifier_3 EStructuralFeature --47
-EClassifier_3 ::= EClassifier_3 OtherElement --48
-EClassifier_8 ::= AbstractAttribute --49
-EClassifier_8 ::= ESuperTypeAttribute --50
-EClassifier_8 ::= InstanceClassNameAttribute --51
-EClassifier_8 ::= NameAttribute --52
-EClassifier_8 ::= OtherAttribute --53
-EClassifier_8 ::= SerializableAttribute --54
-EClassifier_8 ::= XsiTypeAttribute --55
-EClassifier_8 ::= EClassifier_8 AbstractAttribute --56
-EClassifier_8 ::= EClassifier_8 ESuperTypeAttribute --57
-EClassifier_8 ::= EClassifier_8 InstanceClassNameAttribute --58
-EClassifier_8 ::= EClassifier_8 NameAttribute --59
-EClassifier_8 ::= EClassifier_8 OtherAttribute --60
-EClassifier_8 ::= EClassifier_8 SerializableAttribute --61
-EClassifier_8 ::= EClassifier_8 XsiTypeAttribute --62
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s SLASH_GT --162
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s EcoreClass_ecore_EPackage_eSubpackages_8 SLASH_GT --163
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s GT LT_SLASH_e_P_a_c_k_a_g_e_s_GT --164
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s EcoreClass_ecore_EPackage_eSubpackages_8 GT LT_SLASH_e_P_a_c_k_a_g_e_s_GT --165
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s GT EcoreClass_ecore_EPackage_eSubpackages_3 LT_SLASH_e_P_a_c_k_a_g_e_s_GT --166
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages ::= LT_e_S_u_b_p_a_c_k_a_g_e_s EcoreClass_ecore_EPackage_eSubpackages_8 GT EcoreClass_ecore_EPackage_eSubpackages_3 LT_SLASH_e_P_a_c_k_a_g_e_s_GT --167
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ESUBPACKAGES, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --168
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EPackage_eClassifiers --169
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_ETypedElement_eGenericType --170
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= OtherElement --171
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EPackage_eSubpackages_3 EcoreClass_ecore_EModelElement_eAnnotations --172
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EPackage_eSubpackages_3 EcoreClass_ecore_EPackage_eClassifiers --173
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EPackage_eSubpackages_3 EcoreClass_ecore_ETypedElement_eGenericType --174
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_3 ::= EcoreClass_ecore_EPackage_eSubpackages_3 OtherElement --175
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreFeature_ecore_ENamedElement_name --176
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreFeature_ecore_EPackage_nsPrefix --177
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreFeature_ecore_EPackage_nsURI --178
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= OtherAttribute --179
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= XMLAttribute_xsi_type --180
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreClass_ecore_EPackage_eSubpackages_8 EcoreFeature_ecore_ENamedElement_name --181
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreClass_ecore_EPackage_eSubpackages_8 EcoreFeature_ecore_EPackage_nsPrefix --182
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreClass_ecore_EPackage_eSubpackages_8 EcoreFeature_ecore_EPackage_nsURI --183
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreClass_ecore_EPackage_eSubpackages_8 OtherAttribute --184
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_EPackage_eSubpackages_8 ::= EcoreClass_ecore_EPackage_eSubpackages_8 XMLAttribute_xsi_type --185
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-EClassifierAttribute ::= eClassifier EQUALS STRING --63
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e SLASH_GT --186
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e EcoreClass_ecore_ETypedElement_eGenericType_8 SLASH_GT --187
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e GT LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT --188
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e EcoreClass_ecore_ETypedElement_eGenericType_8 GT LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT --189
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e GT EcoreClass_ecore_ETypedElement_eGenericType_3 LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT --190
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType ::= LT_e_G_e_n_e_r_i_c_T_y_p_e EcoreClass_ecore_ETypedElement_eGenericType_8 GT EcoreClass_ecore_ETypedElement_eGenericType_3 LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT --191
+		/.$BeginAction
+					setResult(createEcoreClass(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__EGENERIC_TYPE, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= EcoreClass_ecore_EGenericType_eTypeArguments --192
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --193
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= OtherElement --194
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= EcoreClass_ecore_ETypedElement_eGenericType_3 EcoreClass_ecore_EGenericType_eTypeArguments --195
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= EcoreClass_ecore_ETypedElement_eGenericType_3 EcoreClass_ecore_EModelElement_eAnnotations --196
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_3 ::= EcoreClass_ecore_ETypedElement_eGenericType_3 OtherElement --197
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= EcoreFeature_ecore_EPackage_eClassifiers --198
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= OtherAttribute --199
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= XMLAttribute_xsi_type --200
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= EcoreClass_ecore_ETypedElement_eGenericType_8 EcoreFeature_ecore_EPackage_eClassifiers --201
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= EcoreClass_ecore_ETypedElement_eGenericType_8 OtherAttribute --202
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreClass_ecore_ETypedElement_eGenericType_8 ::= EcoreClass_ecore_ETypedElement_eGenericType_8 XMLAttribute_xsi_type --203
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-EDetail ::= LANGLE_100_101_116_97_105_108_115 SLASH_RANGLE --64
-EDetail ::= LANGLE_100_101_116_97_105_108_115 EDetail_8 SLASH_RANGLE --65
-EDetail ::= LANGLE_100_101_116_97_105_108_115 RANGLE LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE --66
-EDetail ::= LANGLE_100_101_116_97_105_108_115 EDetail_8 RANGLE LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE --67
-EDetail ::= LANGLE_100_101_116_97_105_108_115 RANGLE EDetail_3 LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE --68
-EDetail ::= LANGLE_100_101_116_97_105_108_115 EDetail_8 RANGLE EDetail_3 LANGLE_SLASH_100_101_116_97_105_108_115_RANGLE --69
-EDetail_3 ::= EAnnotation --70
-EDetail_3 ::= OtherElement --71
-EDetail_3 ::= EDetail_3 EAnnotation --72
-EDetail_3 ::= EDetail_3 OtherElement --73
-EDetail_8 ::= KeyAttribute --74
-EDetail_8 ::= OtherAttribute --75
-EDetail_8 ::= ValueAttribute --76
-EDetail_8 ::= XsiTypeAttribute --77
-EDetail_8 ::= EDetail_8 KeyAttribute --78
-EDetail_8 ::= EDetail_8 OtherAttribute --79
-EDetail_8 ::= EDetail_8 ValueAttribute --80
-EDetail_8 ::= EDetail_8 XsiTypeAttribute --81
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s SLASH_GT --204
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s EcoreFeature_ecore_EAnnotation_details_8 SLASH_GT --205
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s GT LT_SLASH_d_e_t_a_i_l_s_GT --206
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s EcoreFeature_ecore_EAnnotation_details_8 GT LT_SLASH_d_e_t_a_i_l_s_GT --207
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s GT EcoreFeature_ecore_EAnnotation_details_3 LT_SLASH_d_e_t_a_i_l_s_GT --208
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details ::= LT_d_e_t_a_i_l_s EcoreFeature_ecore_EAnnotation_details_8 GT EcoreFeature_ecore_EAnnotation_details_3 LT_SLASH_d_e_t_a_i_l_s_GT --209
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__DETAILS));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --210
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_3 ::= OtherElement --211
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_3 ::= EcoreFeature_ecore_EAnnotation_details_3 EcoreClass_ecore_EModelElement_eAnnotations --212
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_3 ::= EcoreFeature_ecore_EAnnotation_details_3 OtherElement --213
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EStringToStringMapEntry_key --214
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EStringToStringMapEntry_value --215
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= OtherAttribute --216
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= XMLAttribute_xsi_type --217
+		/.$BeginAction
+					setResult(SetMapAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EAnnotation_details_8 EcoreFeature_ecore_EStringToStringMapEntry_key --218
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EAnnotation_details_8 EcoreFeature_ecore_EStringToStringMapEntry_value --219
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EAnnotation_details_8 OtherAttribute --220
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreFeature_ecore_EAnnotation_details_8 ::= EcoreFeature_ecore_EAnnotation_details_8 XMLAttribute_xsi_type --221
+		/.$BeginAction
+					setResult(SetMapAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-EExceptionsAttribute ::= eExceptions EQUALS STRING --82
+EcoreFeature_ecore_EAnnotation_source ::= source EQ Terminal_String --222
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EANNOTATION__SOURCE));
+		  $EndAction
+		./
 
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 SLASH_RANGLE --83
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 EGenericType_8 SLASH_RANGLE --84
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 RANGLE LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE --85
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 EGenericType_8 RANGLE LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE --86
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 RANGLE EGenericType_3 LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE --87
-EGenericType ::= LANGLE_101_71_101_110_101_114_105_99_84_121_112_101 EGenericType_8 RANGLE EGenericType_3 LANGLE_SLASH_101_71_101_110_101_114_105_99_84_121_112_101_RANGLE --88
-EGenericType_3 ::= EAnnotation --89
-EGenericType_3 ::= ETypeArgument --90
-EGenericType_3 ::= OtherElement --91
-EGenericType_3 ::= EGenericType_3 EAnnotation --92
-EGenericType_3 ::= EGenericType_3 ETypeArgument --93
-EGenericType_3 ::= EGenericType_3 OtherElement --94
-EGenericType_8 ::= EClassifierAttribute --95
-EGenericType_8 ::= OtherAttribute --96
-EGenericType_8 ::= XsiTypeAttribute --97
-EGenericType_8 ::= EGenericType_8 EClassifierAttribute --98
-EGenericType_8 ::= EGenericType_8 OtherAttribute --99
-EGenericType_8 ::= EGenericType_8 XsiTypeAttribute --100
+EcoreFeature_ecore_EClass_abstract ::= abstract EQ Terminal_String --223
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ABSTRACT));
+		  $EndAction
+		./
 
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 SLASH_RANGLE --101
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 EOperation_8 SLASH_RANGLE --102
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 RANGLE LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE --103
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 EOperation_8 RANGLE LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE --104
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 RANGLE EOperation_3 LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE --105
-EOperation ::= LANGLE_101_79_112_101_114_97_116_105_111_110_115 EOperation_8 RANGLE EOperation_3 LANGLE_SLASH_101_79_112_101_114_97_116_105_111_110_115_RANGLE --106
-EOperation_3 ::= EAnnotation --107
-EOperation_3 ::= EGenericType --108
-EOperation_3 ::= EParameter --109
-EOperation_3 ::= OtherElement --110
-EOperation_3 ::= EOperation_3 EAnnotation --111
-EOperation_3 ::= EOperation_3 EGenericType --112
-EOperation_3 ::= EOperation_3 EParameter --113
-EOperation_3 ::= EOperation_3 OtherElement --114
-EOperation_8 ::= EExceptionsAttribute --115
-EOperation_8 ::= ETypeAttribute --116
-EOperation_8 ::= NameAttribute --117
-EOperation_8 ::= OtherAttribute --118
-EOperation_8 ::= XsiTypeAttribute --119
-EOperation_8 ::= EOperation_8 EExceptionsAttribute --120
-EOperation_8 ::= EOperation_8 ETypeAttribute --121
-EOperation_8 ::= EOperation_8 NameAttribute --122
-EOperation_8 ::= EOperation_8 OtherAttribute --123
-EOperation_8 ::= EOperation_8 XsiTypeAttribute --124
+EcoreFeature_ecore_EClass_eSuperTypes ::= eSuperTypes EQ Terminal_String --224
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ECLASS__ESUPER_TYPES));
+		  $EndAction
+		./
 
-EOppositeAttribute ::= eOpposite EQUALS STRING --125
+EcoreFeature_ecore_EDataType_serializable ::= serializable EQ Terminal_String --225
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EDATA_TYPE__SERIALIZABLE));
+		  $EndAction
+		./
 
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 SLASH_RANGLE --126
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 EPackage_8 SLASH_RANGLE --127
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 RANGLE LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE --128
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 EPackage_8 RANGLE LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE --129
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 RANGLE EPackage_3 LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE --130
-EPackage ::= LANGLE_101_80_97_99_107_97_103_101_115 EPackage_8 RANGLE EPackage_3 LANGLE_SLASH_101_80_97_99_107_97_103_101_115_RANGLE --131
-EPackage_3 ::= EAnnotation --132
-EPackage_3 ::= EClassifier --133
-EPackage_3 ::= EGenericType --134
-EPackage_3 ::= OtherElement --135
-EPackage_3 ::= EPackage_3 EAnnotation --136
-EPackage_3 ::= EPackage_3 EClassifier --137
-EPackage_3 ::= EPackage_3 EGenericType --138
-EPackage_3 ::= EPackage_3 OtherElement --139
-EPackage_8 ::= NameAttribute --140
-EPackage_8 ::= NsPrefixAttribute --141
-EPackage_8 ::= NsURIAttribute --142
-EPackage_8 ::= OtherAttribute --143
-EPackage_8 ::= XsiTypeAttribute --144
-EPackage_8 ::= EPackage_8 NameAttribute --145
-EPackage_8 ::= EPackage_8 NsPrefixAttribute --146
-EPackage_8 ::= EPackage_8 NsURIAttribute --147
-EPackage_8 ::= EPackage_8 OtherAttribute --148
-EPackage_8 ::= EPackage_8 XsiTypeAttribute --149
+EcoreFeature_ecore_ENamedElement_name ::= name EQ Terminal_String --226
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ENAMED_ELEMENT__NAME));
+		  $EndAction
+		./
 
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 SLASH_RANGLE --150
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 EParameter_8 SLASH_RANGLE --151
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 RANGLE LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE --152
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 EParameter_8 RANGLE LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE --153
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 RANGLE EParameter_3 LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE --154
-EParameter ::= LANGLE_101_80_97_114_97_109_101_116_101_114_115 EParameter_8 RANGLE EParameter_3 LANGLE_SLASH_101_80_97_114_97_109_101_116_101_114_115_RANGLE --155
-EParameter_3 ::= EAnnotation --156
-EParameter_3 ::= EGenericType --157
-EParameter_3 ::= OtherElement --158
-EParameter_3 ::= EParameter_3 EAnnotation --159
-EParameter_3 ::= EParameter_3 EGenericType --160
-EParameter_3 ::= EParameter_3 OtherElement --161
-EParameter_8 ::= ETypeAttribute --162
-EParameter_8 ::= NameAttribute --163
-EParameter_8 ::= OtherAttribute --164
-EParameter_8 ::= XsiTypeAttribute --165
-EParameter_8 ::= EParameter_8 ETypeAttribute --166
-EParameter_8 ::= EParameter_8 NameAttribute --167
-EParameter_8 ::= EParameter_8 OtherAttribute --168
-EParameter_8 ::= EParameter_8 XsiTypeAttribute --169
+EcoreFeature_ecore_EOperation_eExceptions ::= eExceptions EQ Terminal_String --227
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EOPERATION__EEXCEPTIONS));
+		  $EndAction
+		./
 
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 SLASH_RANGLE --170
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 EStructuralFeature_8 SLASH_RANGLE --171
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 RANGLE LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE --172
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 EStructuralFeature_8 RANGLE LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE --173
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 RANGLE EStructuralFeature_3 LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE --174
-EStructuralFeature ::= LANGLE_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115 EStructuralFeature_8 RANGLE EStructuralFeature_3 LANGLE_SLASH_101_83_116_114_117_99_116_117_114_97_108_70_101_97_116_117_114_101_115_RANGLE --175
-EStructuralFeature_3 ::= EAnnotation --176
-EStructuralFeature_3 ::= EGenericType --177
-EStructuralFeature_3 ::= OtherElement --178
-EStructuralFeature_3 ::= EStructuralFeature_3 EAnnotation --179
-EStructuralFeature_3 ::= EStructuralFeature_3 EGenericType --180
-EStructuralFeature_3 ::= EStructuralFeature_3 OtherElement --181
-EStructuralFeature_8 ::= ChangeableAttribute --182
-EStructuralFeature_8 ::= ContainmentAttribute --183
-EStructuralFeature_8 ::= DefaultValueLiteralAttribute --184
-EStructuralFeature_8 ::= DerivedAttribute --185
-EStructuralFeature_8 ::= EOppositeAttribute --186
-EStructuralFeature_8 ::= ETypeAttribute --187
-EStructuralFeature_8 ::= LowerBoundAttribute --188
-EStructuralFeature_8 ::= NameAttribute --189
-EStructuralFeature_8 ::= OrderedAttribute --190
-EStructuralFeature_8 ::= OtherAttribute --191
-EStructuralFeature_8 ::= ResolveProxiesAttribute --192
-EStructuralFeature_8 ::= TransientAttribute --193
-EStructuralFeature_8 ::= UnsettableAttribute --194
-EStructuralFeature_8 ::= UpperBoundAttribute --195
-EStructuralFeature_8 ::= VolatileAttribute --196
-EStructuralFeature_8 ::= XsiTypeAttribute --197
-EStructuralFeature_8 ::= EStructuralFeature_8 ChangeableAttribute --198
-EStructuralFeature_8 ::= EStructuralFeature_8 ContainmentAttribute --199
-EStructuralFeature_8 ::= EStructuralFeature_8 DefaultValueLiteralAttribute --200
-EStructuralFeature_8 ::= EStructuralFeature_8 DerivedAttribute --201
-EStructuralFeature_8 ::= EStructuralFeature_8 EOppositeAttribute --202
-EStructuralFeature_8 ::= EStructuralFeature_8 ETypeAttribute --203
-EStructuralFeature_8 ::= EStructuralFeature_8 LowerBoundAttribute --204
-EStructuralFeature_8 ::= EStructuralFeature_8 NameAttribute --205
-EStructuralFeature_8 ::= EStructuralFeature_8 OrderedAttribute --206
-EStructuralFeature_8 ::= EStructuralFeature_8 OtherAttribute --207
-EStructuralFeature_8 ::= EStructuralFeature_8 ResolveProxiesAttribute --208
-EStructuralFeature_8 ::= EStructuralFeature_8 TransientAttribute --209
-EStructuralFeature_8 ::= EStructuralFeature_8 UnsettableAttribute --210
-EStructuralFeature_8 ::= EStructuralFeature_8 UpperBoundAttribute --211
-EStructuralFeature_8 ::= EStructuralFeature_8 VolatileAttribute --212
-EStructuralFeature_8 ::= EStructuralFeature_8 XsiTypeAttribute --213
+EcoreFeature_ecore_EPackage_eClassifiers ::= eClassifiers EQ Terminal_String --228
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__ECLASSIFIERS));
+		  $EndAction
+		./
 
-ESuperTypeAttribute ::= eSuperTypes EQUALS STRING --214
+EcoreFeature_ecore_EPackage_nsPrefix ::= nsPrefix EQ Terminal_String --229
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__NS_PREFIX));
+		  $EndAction
+		./
 
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 SLASH_RANGLE --215
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 ETypeArgument_8 SLASH_RANGLE --216
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 RANGLE LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE --217
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 ETypeArgument_8 RANGLE LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE --218
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 RANGLE ETypeArgument_3 LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE --219
-ETypeArgument ::= LANGLE_101_84_121_112_101_65_114_103_117_109_101_110_116_115 ETypeArgument_8 RANGLE ETypeArgument_3 LANGLE_SLASH_101_84_121_112_101_65_114_103_117_109_101_110_116_115_RANGLE --220
-ETypeArgument_3 ::= EAnnotation --221
-ETypeArgument_3 ::= OtherElement --222
-ETypeArgument_3 ::= ETypeArgument_3 EAnnotation --223
-ETypeArgument_3 ::= ETypeArgument_3 OtherElement --224
-ETypeArgument_8 ::= EClassifierAttribute --225
-ETypeArgument_8 ::= OtherAttribute --226
-ETypeArgument_8 ::= XsiTypeAttribute --227
-ETypeArgument_8 ::= ETypeArgument_8 EClassifierAttribute --228
-ETypeArgument_8 ::= ETypeArgument_8 OtherAttribute --229
-ETypeArgument_8 ::= ETypeArgument_8 XsiTypeAttribute --230
+EcoreFeature_ecore_EPackage_nsURI ::= nsURI EQ Terminal_String --230
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE__NS_URI));
+		  $EndAction
+		./
 
-ETypeAttribute ::= eType EQUALS STRING --231
+EcoreFeature_ecore_EReference_containment ::= containment EQ Terminal_String --231
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EREFERENCE__CONTAINMENT));
+		  $EndAction
+		./
 
-ID ::= abstract --232
-ID ::= changeable --233
-ID ::= containment --234
-ID ::= defaultValueLiteral --235
-ID ::= derived --236
-ID ::= eClassifier --237
-ID ::= eExceptions --238
-ID ::= eOpposite --239
-ID ::= eSuperTypes --240
-ID ::= eType --241
-ID ::= encoding --242
-ID ::= instanceClassName --243
-ID ::= key --244
-ID ::= lowerBound --245
-ID ::= name --246
-ID ::= nsPrefix --247
-ID ::= nsURI --248
-ID ::= ordered --249
-ID ::= resolveProxies --250
-ID ::= serializable --251
-ID ::= source --252
-ID ::= transient --253
-ID ::= unsettable --254
-ID ::= upperBound --255
-ID ::= value --256
-ID ::= version --257
-ID ::= volatile --258
-ID ::= IDENTIFIER --259
+EcoreFeature_ecore_EReference_eOpposite ::= eOpposite EQ Terminal_String --232
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EREFERENCE__EOPPOSITE));
+		  $EndAction
+		./
 
-InstanceClassNameAttribute ::= instanceClassName EQUALS STRING --260
+EcoreFeature_ecore_EReference_resolveProxies ::= resolveProxies EQ Terminal_String --233
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.EREFERENCE__RESOLVE_PROXIES));
+		  $EndAction
+		./
 
-IntegerAttribute ::= LowerBoundAttribute --261
-IntegerAttribute ::= UpperBoundAttribute --262
+EcoreFeature_ecore_EStringToStringMapEntry_key ::= key EQ Terminal_String --234
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY__KEY));
+		  $EndAction
+		./
 
-KeyAttribute ::= key EQUALS STRING --263
+EcoreFeature_ecore_EStringToStringMapEntry_value ::= value EQ Terminal_String --235
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY__VALUE));
+		  $EndAction
+		./
 
-LowerBoundAttribute ::= lowerBound EQUALS STRING --264
+EcoreFeature_ecore_EStructuralFeature_changeable ::= changeable EQ Terminal_String --236
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__CHANGEABLE));
+		  $EndAction
+		./
 
-NameAttribute ::= name EQUALS STRING --265
+EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral ::= defaultValueLiteral EQ Terminal_String --237
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__DEFAULT_VALUE_LITERAL));
+		  $EndAction
+		./
 
-NsPrefixAttribute ::= nsPrefix EQUALS STRING --266
+EcoreFeature_ecore_EStructuralFeature_derived ::= derived EQ Terminal_String --238
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__DERIVED));
+		  $EndAction
+		./
 
-NsURIAttribute ::= nsURI EQUALS STRING --267
+EcoreFeature_ecore_EStructuralFeature_transient ::= transient EQ Terminal_String --239
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__TRANSIENT));
+		  $EndAction
+		./
 
-OrderedAttribute ::= ordered EQUALS STRING --268
+EcoreFeature_ecore_EStructuralFeature_unsettable ::= unsettable EQ Terminal_String --240
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__UNSETTABLE));
+		  $EndAction
+		./
 
-OtherAttribute ::= IDENTIFIER EQUALS STRING --269
+EcoreFeature_ecore_EStructuralFeature_volatile ::= volatile EQ Terminal_String --241
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRUCTURAL_FEATURE__VOLATILE));
+		  $EndAction
+		./
 
-OtherElement ::= LANGLE ID SLASH_RANGLE --270
-OtherElement ::= LANGLE ID OtherElement_6 SLASH_RANGLE --271
-OtherElement ::= LANGLE ID RANGLE LANGLE_SLASH ID RANGLE --272
-OtherElement ::= LANGLE ID OtherElement_6 RANGLE LANGLE_SLASH ID RANGLE --273
-OtherElement ::= LANGLE ID RANGLE OtherElement_2 LANGLE_SLASH ID RANGLE --274
-OtherElement ::= LANGLE ID OtherElement_6 RANGLE OtherElement_2 LANGLE_SLASH ID RANGLE --275
-OtherElement_2 ::= XmlElement --276
-OtherElement_2 ::= OtherElement_2 XmlElement --277
-OtherElement_6 ::= XmlAttribute --278
-OtherElement_6 ::= OtherElement_6 XmlAttribute --279
+EcoreFeature_ecore_ETypedElement_eType ::= eType EQ Terminal_String --242
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__ETYPE));
+		  $EndAction
+		./
 
-ResolveProxiesAttribute ::= resolveProxies EQUALS STRING --280
+EcoreFeature_ecore_ETypedElement_lowerBound ::= lowerBound EQ Terminal_String --243
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__LOWER_BOUND));
+		  $EndAction
+		./
 
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 SLASH_RANGLE --281
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 RootEPackage_8 SLASH_RANGLE --282
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 RANGLE LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE --283
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 RootEPackage_8 RANGLE LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE --284
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 RANGLE RootEPackage_3 LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE --285
-RootEPackage ::= LANGLE_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101 RootEPackage_8 RANGLE RootEPackage_3 LANGLE_SLASH_101_99_111_114_101_COLON_69_80_97_99_107_97_103_101_RANGLE --286
-RootEPackage_3 ::= EAnnotation --287
-RootEPackage_3 ::= EClassifier --288
-RootEPackage_3 ::= OtherElement --289
-RootEPackage_3 ::= RootEPackage_3 EAnnotation --290
-RootEPackage_3 ::= RootEPackage_3 EClassifier --291
-RootEPackage_3 ::= RootEPackage_3 OtherElement --292
-RootEPackage_8 ::= NameAttribute --293
-RootEPackage_8 ::= NsPrefixAttribute --294
-RootEPackage_8 ::= NsURIAttribute --295
-RootEPackage_8 ::= OtherAttribute --296
-RootEPackage_8 ::= XmiVersionAttribute --297
-RootEPackage_8 ::= XmlnsAttribute --298
-RootEPackage_8 ::= XsiTypeAttribute --299
-RootEPackage_8 ::= RootEPackage_8 NameAttribute --300
-RootEPackage_8 ::= RootEPackage_8 NsPrefixAttribute --301
-RootEPackage_8 ::= RootEPackage_8 NsURIAttribute --302
-RootEPackage_8 ::= RootEPackage_8 OtherAttribute --303
-RootEPackage_8 ::= RootEPackage_8 XmiVersionAttribute --304
-RootEPackage_8 ::= RootEPackage_8 XmlnsAttribute --305
-RootEPackage_8 ::= RootEPackage_8 XsiTypeAttribute --306
+EcoreFeature_ecore_ETypedElement_ordered ::= ordered EQ Terminal_String --244
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__ORDERED));
+		  $EndAction
+		./
 
-SerializableAttribute ::= serializable EQUALS STRING --307
+EcoreFeature_ecore_ETypedElement_upperBound ::= upperBound EQ Terminal_String --245
+		/.$BeginAction
+					setResult(createEcoreFeature(org.eclipse.emf.ecore.EcorePackage.Literals.ETYPED_ELEMENT__UPPER_BOUND));
+		  $EndAction
+		./
 
-SourceAttribute ::= source EQUALS STRING --308
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e SLASH_GT --246
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e EcoreRoot_ecore_EPackage_8 SLASH_GT --247
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e GT LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT --248
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e EcoreRoot_ecore_EPackage_8 GT LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT --249
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE, getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e GT EcoreRoot_ecore_EPackage_3 LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT --250
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE, getRhsSym(3)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage ::= LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e EcoreRoot_ecore_EPackage_8 GT EcoreRoot_ecore_EPackage_3 LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT --251
+		/.$BeginAction
+					setResult(createEcoreRoot(org.eclipse.emf.ecore.EcorePackage.Literals.EPACKAGE, getRhsSym(2), getRhsSym(4)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= EcoreClass_ecore_EModelElement_eAnnotations --252
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= EcoreClass_ecore_EPackage_eClassifiers --253
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= OtherElement --254
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= EcoreRoot_ecore_EPackage_3 EcoreClass_ecore_EModelElement_eAnnotations --255
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= EcoreRoot_ecore_EPackage_3 EcoreClass_ecore_EPackage_eClassifiers --256
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_3 ::= EcoreRoot_ecore_EPackage_3 OtherElement --257
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreFeature_ecore_ENamedElement_name --258
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreFeature_ecore_EPackage_nsPrefix --259
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreFeature_ecore_EPackage_nsURI --260
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= OtherAttribute --261
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= XMLAttribute_xmi_version --262
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= XMLAttribute_xmlns_ --263
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= XMLAttribute_xsi_type --264
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 EcoreFeature_ecore_ENamedElement_name --265
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 EcoreFeature_ecore_EPackage_nsPrefix --266
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 EcoreFeature_ecore_EPackage_nsURI --267
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 OtherAttribute --268
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 XMLAttribute_xmi_version --269
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 XMLAttribute_xmlns_ --270
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+EcoreRoot_ecore_EPackage_8 ::= EcoreRoot_ecore_EPackage_8 XMLAttribute_xsi_type --271
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-StringAttribute ::= EClassifierAttribute --309
-StringAttribute ::= EExceptionsAttribute --310
-StringAttribute ::= EOppositeAttribute --311
-StringAttribute ::= ESuperTypeAttribute --312
-StringAttribute ::= ETypeAttribute --313
-StringAttribute ::= InstanceClassNameAttribute --314
-StringAttribute ::= KeyAttribute --315
-StringAttribute ::= NameAttribute --316
-StringAttribute ::= NsPrefixAttribute --317
-StringAttribute ::= NsURIAttribute --318
-StringAttribute ::= SourceAttribute --319
-StringAttribute ::= ValueAttribute --320
-StringAttribute ::= XmiVersionAttribute --321
-StringAttribute ::= XmlnsAttribute --322
-StringAttribute ::= XsiTypeAttribute --323
+InstanceClassNameAttribute ::= instanceClassName EQ Terminal_String --272
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 
-TransientAttribute ::= transient EQUALS STRING --324
+IntegerAttribute ::= EcoreFeature_ecore_ETypedElement_lowerBound --273
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+IntegerAttribute ::= EcoreFeature_ecore_ETypedElement_upperBound --274
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 
-UnsettableAttribute ::= unsettable EQUALS STRING --325
+OtherAttribute ::= IDENTIFIER EQ Terminal_String --275
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 
-UpperBoundAttribute ::= upperBound EQUALS STRING --326
+OtherElement ::= LT Terminal_Identifier SLASH_GT --276
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement ::= LT Terminal_Identifier OtherElement_6 SLASH_GT --277
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement ::= LT Terminal_Identifier GT LT_SLASH Terminal_Identifier GT --278
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement ::= LT Terminal_Identifier OtherElement_6 GT LT_SLASH Terminal_Identifier GT --279
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement ::= LT Terminal_Identifier GT OtherElement_2 LT_SLASH Terminal_Identifier GT --280
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement ::= LT Terminal_Identifier OtherElement_6 GT OtherElement_2 LT_SLASH Terminal_Identifier GT --281
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+OtherElement_2 ::= XmlElement --282
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+OtherElement_2 ::= OtherElement_2 XmlElement --283
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+OtherElement_6 ::= XmlAttribute --284
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+OtherElement_6 ::= OtherElement_6 XmlAttribute --285
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-ValueAttribute ::= value EQUALS STRING --327
+StringAttribute ::= EcoreFeature_ecore_EAnnotation_source --286
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EClass_eSuperTypes --287
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_ENamedElement_name --288
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EOperation_eExceptions --289
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EPackage_eClassifiers --290
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EPackage_nsPrefix --291
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EPackage_nsURI --292
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EReference_eOpposite --293
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EStringToStringMapEntry_key --294
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_EStringToStringMapEntry_value --295
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= EcoreFeature_ecore_ETypedElement_eType --296
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= InstanceClassNameAttribute --297
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= XMLAttribute_xmi_version --298
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= XMLAttribute_xmlns_ --299
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+StringAttribute ::= XMLAttribute_xsi_type --300
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 
-VolatileAttribute ::= volatile EQUALS STRING --328
+Terminal_Identifier ::= abstract --301
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= changeable --302
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= containment --303
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= defaultValueLiteral --304
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= derived --305
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= eClassifier --306
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= eExceptions --307
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= eOpposite --308
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= eSuperTypes --309
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= eType --310
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= encoding --311
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= instanceClassName --312
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= key --313
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= lowerBound --314
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= name --315
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= nsPrefix --316
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= nsURI --317
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= ordered --318
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= resolveProxies --319
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= serializable --320
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= source --321
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= transient --322
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= unsettable --323
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= upperBound --324
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= value --325
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= version --326
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= volatile --327
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= xmi --328
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= xsi --329
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
+Terminal_Identifier ::= IDENTIFIER --330
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
 
-XmiVersionAttribute ::= xmi COLON version EQUALS STRING --329
+Terminal_String ::= STRING --331
+		/.$BeginAction
+					setResult(getRhsTokenText(1));
+		  $EndAction
+		./
 
-XmlAttribute ::= BooleanAttribute --330
-XmlAttribute ::= IntegerAttribute --331
-XmlAttribute ::= OtherAttribute --332
-XmlAttribute ::= StringAttribute --333
+XMLAttribute_xmi_version ::= xmi COLON version EQ Terminal_String --332
+		/.$BeginAction
+					setResult(createXMIAttribute("version"));
+		  $EndAction
+		./
 
-XmlElement ::= EAnnotation --334
-XmlElement ::= EClassifier --335
-XmlElement ::= EDetail --336
-XmlElement ::= EGenericType --337
-XmlElement ::= EOperation --338
-XmlElement ::= EPackage --339
-XmlElement ::= EParameter --340
-XmlElement ::= EStructuralFeature --341
-XmlElement ::= ETypeArgument --342
-XmlElement ::= OtherElement --343
+XMLAttribute_xmlns_ ::= xmlns COLON Terminal_Identifier EQ Terminal_String --333
+		/.$BeginAction
+					setResult(createXMLNSAttribute());
+		  $EndAction
+		./
 
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE RootEPackage --344
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 SLASH_RANGLE --345
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 SLASH_RANGLE --346
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --347
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --348
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --349
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE RootEPackage --350
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE RootEPackage --351
-XmlRoot ::= LANGLE_QUERY_120_109_108 QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --352
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 SLASH_RANGLE --353
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 SLASH_RANGLE --354
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 SLASH_RANGLE --355
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --356
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 SLASH_RANGLE --357
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --358
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --359
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --360
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --361
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --362
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE RootEPackage --363
-XmlRoot ::= LANGLE_QUERY_120_109_108 encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --364
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --365
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 SLASH_RANGLE --366
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 SLASH_RANGLE --367
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --368
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --369
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --370
-XmlRoot ::= LANGLE_QUERY_120_109_108 version EQUALS STRING encoding EQUALS STRING QUERY_RANGLE LANGLE_120_109_105_COLON_88_77_73 XmlRoot_7 RANGLE XmlRoot_2 LANGLE_SLASH_120_109_105_COLON_88_77_73_RANGLE --371
-XmlRoot_2 ::= XmlElement --372
-XmlRoot_2 ::= XmlRoot_2 XmlElement --373
-XmlRoot_7 ::= XmiVersionAttribute --374
-XmlRoot_7 ::= XmlnsAttribute --375
-XmlRoot_7 ::= XmlRoot_7 XmiVersionAttribute --376
-XmlRoot_7 ::= XmlRoot_7 XmlnsAttribute --377
+XMLAttribute_xsi_type ::= xsi COLON type EQ Terminal_String --334
+		/.$BeginAction
+					setResult(createXSIAttribute("type"));
+		  $EndAction
+		./
 
-XmlnsAttribute ::= xmlns COLON ID EQUALS STRING --378
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT EcoreRoot_ecore_EPackage --335
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(3)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --336
+		/.$BeginAction
+					setResult(createXMLDocument());
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --337
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --338
+		/.$BeginAction
+					setResult(createXMLDocument());
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --339
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --340
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(5)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --341
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --342
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --343
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --344
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --345
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --346
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --347
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --348
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --349
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --350
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --351
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(8)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --352
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --353
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(8)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --354
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --355
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --356
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --357
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --358
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --359
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --360
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --361
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(11)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --362
+		/.$BeginAction
+					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10), getRhsSym(12)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_2 ::= XmlElement --363
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_2 ::= XMLDocument_ecore_EPackage_2 XmlElement --364
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmi_version --365
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmlns_ --366
+		/.$BeginAction
+					setResult(SetAttributes.create(getRhsSym(1)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmi_version --367
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
+XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmlns_ --368
+		/.$BeginAction
+					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
+		  $EndAction
+		./
 
-XsiTypeAttribute ::= xsi COLON type EQUALS STRING --379
+XmlAttribute ::= BooleanAttribute --369
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlAttribute ::= IntegerAttribute --370
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlAttribute ::= OtherAttribute --371
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlAttribute ::= StringAttribute --372
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+
+XmlElement ::= EcoreClass_ecore_EClass_eOperations --373
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EClass_eStructuralFeatures --374
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EGenericType_eTypeArguments --375
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EModelElement_eAnnotations --376
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EOperation_eParameters --377
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EPackage_eClassifiers --378
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_EPackage_eSubpackages --379
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreClass_ecore_ETypedElement_eGenericType --380
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= EcoreFeature_ecore_EAnnotation_details --381
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+XmlElement ::= OtherElement --382
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
 %End

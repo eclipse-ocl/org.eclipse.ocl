@@ -19,13 +19,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractRule#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractRule#getElement <em>Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractRule#getDebug <em>Debug</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.AbstractRule#getKind <em>Kind</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getAbstractRule()
  * @model

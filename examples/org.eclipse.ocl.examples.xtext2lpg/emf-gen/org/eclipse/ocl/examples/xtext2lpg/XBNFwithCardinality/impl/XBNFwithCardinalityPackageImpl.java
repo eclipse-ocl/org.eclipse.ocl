@@ -114,7 +114,7 @@ public class XBNFwithCardinalityPackageImpl extends EPackageImpl implements XBNF
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link XBNFwithCardinalityPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -128,12 +128,14 @@ public class XBNFwithCardinalityPackageImpl extends EPackageImpl implements XBNF
 		if (isInited) return (XBNFwithCardinalityPackage)EPackage.Registry.INSTANCE.getEPackage(XBNFwithCardinalityPackage.eNS_URI);
 
 		// Obtain or create and register package
-		XBNFwithCardinalityPackageImpl theXBNFwithCardinalityPackage = (XBNFwithCardinalityPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof XBNFwithCardinalityPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new XBNFwithCardinalityPackageImpl());
+		Object registeredXBNFwithCardinalityPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		XBNFwithCardinalityPackageImpl theXBNFwithCardinalityPackage = registeredXBNFwithCardinalityPackage instanceof XBNFwithCardinalityPackageImpl ? (XBNFwithCardinalityPackageImpl)registeredXBNFwithCardinalityPackage : new XBNFwithCardinalityPackageImpl();
 
 		isInited = true;
 
 		// Obtain or create and register interdependencies
-		XBNFPackageImpl theXBNFPackage = (XBNFPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(XBNFPackage.eNS_URI) instanceof XBNFPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(XBNFPackage.eNS_URI) : XBNFPackage.eINSTANCE);
+		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(XBNFPackage.eNS_URI);
+		XBNFPackageImpl theXBNFPackage = (XBNFPackageImpl)(registeredPackage instanceof XBNFPackageImpl ? registeredPackage : XBNFPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theXBNFwithCardinalityPackage.createPackageContents();
@@ -146,7 +148,6 @@ public class XBNFwithCardinalityPackageImpl extends EPackageImpl implements XBNF
 		// Mark meta-data to indicate it can't be changed
 		theXBNFwithCardinalityPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(XBNFwithCardinalityPackage.eNS_URI, theXBNFwithCardinalityPackage);
 		return theXBNFwithCardinalityPackage;

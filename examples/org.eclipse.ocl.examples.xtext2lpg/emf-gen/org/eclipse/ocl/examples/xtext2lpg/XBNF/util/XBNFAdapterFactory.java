@@ -128,6 +128,10 @@ public class XBNFAdapterFactory extends AdapterFactoryImpl {
 				return createLexerGrammarAdapter();
 			}
 			@Override
+			public Adapter caseMetamodelDeclaration(MetamodelDeclaration object) {
+				return createMetamodelDeclarationAdapter();
+			}
+			@Override
 			public Adapter caseNegatedToken(NegatedToken object) {
 				return createNegatedTokenAdapter();
 			}
@@ -370,6 +374,20 @@ public class XBNFAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLexerGrammarAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration <em>Metamodel Declaration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.MetamodelDeclaration
+	 * @generated
+	 */
+	public Adapter createMetamodelDeclarationAdapter() {
 		return null;
 	}
 

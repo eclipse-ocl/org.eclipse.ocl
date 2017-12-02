@@ -165,6 +165,12 @@ public class XBNFSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case XBNFPackage.METAMODEL_DECLARATION: {
+				MetamodelDeclaration metamodelDeclaration = (MetamodelDeclaration)theEObject;
+				T result = caseMetamodelDeclaration(metamodelDeclaration);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case XBNFPackage.NEGATED_TOKEN: {
 				NegatedToken negatedToken = (NegatedToken)theEObject;
 				T result = caseNegatedToken(negatedToken);
@@ -441,6 +447,21 @@ public class XBNFSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseLexerGrammar(LexerGrammar object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Metamodel Declaration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Metamodel Declaration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMetamodelDeclaration(MetamodelDeclaration object) {
 		return null;
 	}
 

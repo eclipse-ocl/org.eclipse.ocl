@@ -35,10 +35,10 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.XBNFwithCardinalit
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.impl.CompoundElementImpl#getElements <em>Elements</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

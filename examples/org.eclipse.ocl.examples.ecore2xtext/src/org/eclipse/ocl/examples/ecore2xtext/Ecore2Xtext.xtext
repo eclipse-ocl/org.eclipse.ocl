@@ -4,56 +4,56 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore2Xtext.ecore"
 //generate ecore2Xtext "http://www.eclipse.org/ocl/example/ecore2xtext/Ecore2Xtext"
 
-XmlRoot: {XmlRoot} '<?xml' ('version' '=' version=STRING)? ('encoding' '=' encoding=STRING)? '?>'
-	(body+=RootEPackage | ('<xmi:XMI' attributes+=(XmiVersionAttribute | XmlnsAttribute)* ( '/>' | ('>' (body+=XmlElement)* '</xmi:XMI>'))))
+XMLDocument_ecore_EPackage: {XMLDocument_ecore_EPackage} '<?xml' ('version' '=' version=Terminal_String)? ('encoding' '=' encoding=Terminal_String)? '?>'
+	(body+=EcoreRoot_ecore_EPackage | ('<xmi:XMI' attributes+=(XMLAttribute_xmi_version | XMLAttribute_xmlns_)* ( '/>' | ('>' (body+=XmlElement)* '</xmi:XMI>'))))
 ;
 
-RootEPackage returns EPackage: {EPackage}
-	'<ecore:EPackage' attributes+=(XmiVersionAttribute | XmlnsAttribute | XsiTypeAttribute | NameAttribute | NsURIAttribute | NsPrefixAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EClassifier | EAnnotation | OtherElement)* '</ecore:EPackage>'));
+EcoreRoot_ecore_EPackage returns EcoreClass_ecore_EPackage_eSubpackages: {EcoreClass_ecore_EPackage_eSubpackages}
+	'<ecore:EPackage' attributes+=(XMLAttribute_xmi_version | XMLAttribute_xmlns_ | XMLAttribute_xsi_type | EcoreFeature_ecore_ENamedElement_name | EcoreFeature_ecore_EPackage_nsURI | EcoreFeature_ecore_EPackage_nsPrefix | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EPackage_eClassifiers | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</ecore:EPackage>'));
 
-EAnnotation: {EAnnotation}
-	'<eAnnotations' attributes+=(XsiTypeAttribute | SourceAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EDetail | EAnnotation | OtherElement)* '</eAnnotations>'));
+EcoreClass_ecore_EModelElement_eAnnotations: {EcoreClass_ecore_EModelElement_eAnnotations}
+	'<eAnnotations' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_EAnnotation_source | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreFeature_ecore_EAnnotation_details | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eAnnotations>'));
 
-EClassifier: {EClassifier}
-	'<eClassifiers' attributes+=(XsiTypeAttribute | NameAttribute | AbstractAttribute | InstanceClassNameAttribute | SerializableAttribute | ESuperTypeAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EStructuralFeature | EOperation | EAnnotation | OtherElement)* '</eClassifiers>'));
+EcoreClass_ecore_EPackage_eClassifiers: {EcoreClass_ecore_EPackage_eClassifiers}
+	'<eClassifiers' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ENamedElement_name | EcoreFeature_ecore_EClass_abstract | InstanceClassNameAttribute | EcoreFeature_ecore_EDataType_serializable | EcoreFeature_ecore_EClass_eSuperTypes | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EClass_eStructuralFeatures | EcoreClass_ecore_EClass_eOperations | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eClassifiers>'));
 
-EDetail: {EDetail}
-	'<details' attributes+=(XsiTypeAttribute | KeyAttribute | ValueAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EAnnotation | OtherElement)* '</details>'));
+EcoreFeature_ecore_EAnnotation_details: {EcoreFeature_ecore_EAnnotation_details}
+	'<details' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_EStringToStringMapEntry_key | EcoreFeature_ecore_EStringToStringMapEntry_value | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</details>'));
 
-EGenericType: {EGenericType}
-	'<eGenericType' attributes+=(XsiTypeAttribute | EClassifierAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(ETypeArgument | EAnnotation | OtherElement)* '</eGenericType>'));
+EcoreClass_ecore_ETypedElement_eGenericType: {EcoreClass_ecore_ETypedElement_eGenericType}
+	'<eGenericType' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_EPackage_eClassifiers | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EGenericType_eTypeArguments | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eGenericType>'));
 
-EOperation: {EOperation}
-	'<eOperations' attributes+=(XsiTypeAttribute | ETypeAttribute | EExceptionsAttribute | NameAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EParameter | EGenericType | EAnnotation | OtherElement)* '</eOperations>'));
+EcoreClass_ecore_EClass_eOperations: {EcoreClass_ecore_EClass_eOperations}
+	'<eOperations' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ETypedElement_eType | EcoreFeature_ecore_EOperation_eExceptions | EcoreFeature_ecore_ENamedElement_name | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EOperation_eParameters | EcoreClass_ecore_ETypedElement_eGenericType | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eOperations>'));
 
-EPackage: {EPackage}
-	'<ePackages' attributes+=(XsiTypeAttribute | NameAttribute | NsURIAttribute | NsPrefixAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EClassifier | EGenericType | EAnnotation | OtherElement)* '</ePackages>'));
+EcoreClass_ecore_EPackage_eSubpackages: {EcoreClass_ecore_EPackage_eSubpackages}
+	'<eSubpackages' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ENamedElement_name | EcoreFeature_ecore_EPackage_nsURI | EcoreFeature_ecore_EPackage_nsPrefix | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EPackage_eClassifiers | EcoreClass_ecore_ETypedElement_eGenericType | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</ePackages>'));
 
-EParameter: {EParameter}
-	'<eParameters' attributes+=(XsiTypeAttribute | ETypeAttribute | NameAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EGenericType | EAnnotation | OtherElement)* '</eParameters>'));
+EcoreClass_ecore_EOperation_eParameters: {EcoreClass_ecore_EOperation_eParameters}
+	'<eParameters' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ETypedElement_eType | EcoreFeature_ecore_ENamedElement_name | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_ETypedElement_eGenericType | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eParameters>'));
 
-EStructuralFeature: {EStructuralFeature}
-	'<eStructuralFeatures' attributes+=(XsiTypeAttribute | NameAttribute | ChangeableAttribute | TransientAttribute | DerivedAttribute
-		| ContainmentAttribute | LowerBoundAttribute | UpperBoundAttribute | OrderedAttribute | UnsettableAttribute | VolatileAttribute
-		| ETypeAttribute | ResolveProxiesAttribute | EOppositeAttribute | DefaultValueLiteralAttribute | OtherAttribute
+EcoreClass_ecore_EClass_eStructuralFeatures: {EcoreClass_ecore_EClass_eStructuralFeatures}
+	'<eStructuralFeatures' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ENamedElement_name | EcoreFeature_ecore_EStructuralFeature_changeable | EcoreFeature_ecore_EStructuralFeature_transient | EcoreFeature_ecore_EStructuralFeature_derived
+		| EcoreFeature_ecore_EReference_containment | EcoreFeature_ecore_ETypedElement_lowerBound | EcoreFeature_ecore_ETypedElement_upperBound | EcoreFeature_ecore_ETypedElement_ordered | EcoreFeature_ecore_EStructuralFeature_unsettable | EcoreFeature_ecore_EStructuralFeature_volatile
+		| EcoreFeature_ecore_ETypedElement_eType | EcoreFeature_ecore_EReference_resolveProxies | EcoreFeature_ecore_EReference_eOpposite | EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral | OtherAttribute
 	)*
-	( '/>' | ('>' elements+=(EGenericType | EAnnotation | OtherElement)* '</eStructuralFeatures>'));
+	( '/>' | ('>' elements+=(EcoreClass_ecore_ETypedElement_eGenericType | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eStructuralFeatures>'));
 
-ETypeArgument: {ETypeArgument}
-	'<eTypeArguments' attributes+=(XsiTypeAttribute | EClassifierAttribute | OtherAttribute)*
-	( '/>' | ('>' elements+=(EAnnotation | OtherElement)* '</eTypeArguments>'));
+EcoreClass_ecore_EGenericType_eTypeArguments: {EcoreClass_ecore_EGenericType_eTypeArguments}
+	'<eTypeArguments' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_EPackage_eClassifiers | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eTypeArguments>'));
 
 OtherElement:
-	'<' tag=ID attributes+=(XmlAttribute)*
-	( '/>' | ('>' elements+=(XmlElement)* '</' endTag=ID '>'))
+	'<' tag=Terminal_Identifier attributes+=(XmlAttribute)*
+	( '/>' | ('>' elements+=(XmlElement)* '</' endTag=Terminal_Identifier '>'))
 ;
 
 XmlAttribute:
@@ -64,143 +64,145 @@ XmlAttribute:
 ;
 
 BooleanAttribute:
-	AbstractAttribute
-  | ChangeableAttribute
-  | ContainmentAttribute
-  | DefaultValueLiteralAttribute
-  | DerivedAttribute
-  | OrderedAttribute
-  | ResolveProxiesAttribute
-  | SerializableAttribute
-  | TransientAttribute
-  | UnsettableAttribute
-  | VolatileAttribute
+	EcoreFeature_ecore_EClass_abstract
+  | EcoreFeature_ecore_EStructuralFeature_changeable
+  | EcoreFeature_ecore_EReference_containment
+  | EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral
+  | EcoreFeature_ecore_EStructuralFeature_derived
+  | EcoreFeature_ecore_ETypedElement_ordered
+  | EcoreFeature_ecore_EReference_resolveProxies
+  | EcoreFeature_ecore_EDataType_serializable
+  | EcoreFeature_ecore_EStructuralFeature_transient
+  | EcoreFeature_ecore_EStructuralFeature_unsettable
+  | EcoreFeature_ecore_EStructuralFeature_volatile
 ;
 
 IntegerAttribute:
-	LowerBoundAttribute
-  | UpperBoundAttribute
+	EcoreFeature_ecore_ETypedElement_lowerBound
+  | EcoreFeature_ecore_ETypedElement_upperBound
 ;
 
 StringAttribute:
-	EClassifierAttribute
-  | EExceptionsAttribute
-  | EOppositeAttribute
-  | ESuperTypeAttribute
-  | ETypeAttribute
+	EcoreFeature_ecore_EPackage_eClassifiers
+  | EcoreFeature_ecore_EOperation_eExceptions
+  | EcoreFeature_ecore_EReference_eOpposite
+  | EcoreFeature_ecore_EClass_eSuperTypes
+  | EcoreFeature_ecore_ETypedElement_eType
   | InstanceClassNameAttribute
-  | KeyAttribute
-  | NameAttribute
-  | NsPrefixAttribute
-  | NsURIAttribute
-  | SourceAttribute
-  | ValueAttribute
-  | XmiVersionAttribute
-  | XmlnsAttribute
-  | XsiTypeAttribute
+  | EcoreFeature_ecore_EStringToStringMapEntry_key
+  | EcoreFeature_ecore_ENamedElement_name
+  | EcoreFeature_ecore_EPackage_nsPrefix
+  | EcoreFeature_ecore_EPackage_nsURI
+  | EcoreFeature_ecore_EAnnotation_source
+  | EcoreFeature_ecore_EStringToStringMapEntry_value
+  | XMLAttribute_xmi_version
+  | XMLAttribute_xmlns_
+  | XMLAttribute_xsi_type
 ;
 
-AbstractAttribute:
-	'abstract' '=' value=STRING;
+EcoreFeature_ecore_EClass_abstract:
+	'abstract' '=' value=Terminal_String;
 
-ChangeableAttribute:
-	'changeable' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_changeable:
+	'changeable' '=' value=Terminal_String;
 
-ContainmentAttribute:
-	'containment' '=' value=STRING;
+EcoreFeature_ecore_EReference_containment:
+	'containment' '=' value=Terminal_String;
 	
-DefaultValueLiteralAttribute:
-	'defaultValueLiteral' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_defaultValueLiteral:
+	'defaultValueLiteral' '=' value=Terminal_String;
 
-DerivedAttribute:
-	'derived' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_derived:
+	'derived' '=' value=Terminal_String;
 
-EClassifierAttribute:
-	'eClassifier' '=' value=STRING;
+EcoreFeature_ecore_EPackage_eClassifiers:
+	'eClassifiers' '=' value=Terminal_String;
 
-EExceptionsAttribute:
-	'eExceptions' '=' value=STRING;
+EcoreFeature_ecore_EOperation_eExceptions:
+	'eExceptions' '=' value=Terminal_String;
 	
-EOppositeAttribute:
-	'eOpposite' '=' value=STRING;
+EcoreFeature_ecore_EReference_eOpposite:
+	'eOpposite' '=' value=Terminal_String;
 
-ESuperTypeAttribute:
-	'eSuperTypes' '=' value=STRING;
+EcoreFeature_ecore_EClass_eSuperTypes:
+	'eSuperTypes' '=' value=Terminal_String;
 
-ETypeAttribute:
-	'eType' '=' value=STRING;
+EcoreFeature_ecore_ETypedElement_eType:
+	'eType' '=' value=Terminal_String;
 
 InstanceClassNameAttribute:
-	'instanceClassName' '=' value=STRING;
+	'instanceClassName' '=' value=Terminal_String;
 
-KeyAttribute:
-	'key' '=' value=STRING;
+EcoreFeature_ecore_EStringToStringMapEntry_key:
+	'key' '=' value=Terminal_String;
 
-LowerBoundAttribute:
-	'lowerBound' '=' value=STRING;
+EcoreFeature_ecore_ETypedElement_lowerBound:
+	'lowerBound' '=' value=Terminal_String;
 
-NameAttribute:
-	'name' '=' value=STRING;
+EcoreFeature_ecore_ENamedElement_name:
+	'name' '=' value=Terminal_String;
 
-NsURIAttribute:
-	'nsURI' '=' value=STRING;
+EcoreFeature_ecore_EPackage_nsURI:
+	'nsURI' '=' value=Terminal_String;
 
-NsPrefixAttribute:
-	'nsPrefix' '=' value=STRING;
+EcoreFeature_ecore_EPackage_nsPrefix:
+	'nsPrefix' '=' value=Terminal_String;
 
-OrderedAttribute:
-	'ordered' '=' value=STRING;
+EcoreFeature_ecore_ETypedElement_ordered:
+	'ordered' '=' value=Terminal_String;
 
-ResolveProxiesAttribute:
-	'resolveProxies' '=' value=STRING;
+EcoreFeature_ecore_EReference_resolveProxies:
+	'resolveProxies' '=' value=Terminal_String;
 
-SerializableAttribute:
-	'serializable' '=' value=STRING;
+EcoreFeature_ecore_EDataType_serializable:
+	'serializable' '=' value=Terminal_String;
 
-SourceAttribute:
-	'source' '=' value=STRING;
+EcoreFeature_ecore_EAnnotation_source:
+	'source' '=' value=Terminal_String;
 
-TransientAttribute:
-	'transient' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_transient:
+	'transient' '=' value=Terminal_String;
 
-UnsettableAttribute:
-	'unsettable' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_unsettable:
+	'unsettable' '=' value=Terminal_String;
 
-UpperBoundAttribute:
-	'upperBound' '=' value=STRING;
+EcoreFeature_ecore_ETypedElement_upperBound:
+	'upperBound' '=' value=Terminal_String;
 
-ValueAttribute:
-	'value' '=' value=STRING;
+EcoreFeature_ecore_EStringToStringMapEntry_value:
+	'value' '=' value=Terminal_String;
 
-VolatileAttribute:
-	'volatile' '=' value=STRING;
+EcoreFeature_ecore_EStructuralFeature_volatile:
+	'volatile' '=' value=Terminal_String;
 
-XmiVersionAttribute:
-	'xmi' ':' 'version' '=' value=STRING;
+XMLAttribute_xmi_version:
+	'xmi' ':' 'version' '=' value=Terminal_String;
 
-XmlnsAttribute:
-	'xmlns' ':' ns=ID '=' value=STRING;
+XMLAttribute_xmlns_:
+	'xmlns' ':' ns=Terminal_Identifier '=' value=Terminal_String;
 
-XsiTypeAttribute:
-	'xsi' ':' 'type' '=' value=STRING;
+XMLAttribute_xsi_type:
+	'xsi' ':' 'type' '=' value=Terminal_String;
 
 OtherAttribute:
-	tag=IDENTIFIER '=' value=STRING;
+	tag=IDENTIFIER '=' value=Terminal_String;
 
 XmlElement:
-	EAnnotation
-  | EClassifier
-  | EDetail
-  | EGenericType
-  | EOperation
-  | EParameter
-  | EStructuralFeature
-  | EPackage
-  | ETypeArgument
+	EcoreClass_ecore_EClass_eOperations
+  | EcoreClass_ecore_EClass_eStructuralFeatures
+  | EcoreClass_ecore_EGenericType_eTypeArguments
+  | EcoreClass_ecore_EModelElement_eAnnotations
+  | EcoreClass_ecore_EOperation_eParameters
+  | EcoreClass_ecore_EPackage_eClassifiers
+  | EcoreClass_ecore_EPackage_eSubpackages
+  | EcoreClass_ecore_ETypedElement_eGenericType
+  | EcoreFeature_ecore_EAnnotation_details
   | OtherElement
 ;
 
-ID : IDENTIFIER
+Terminal_String : STRING;
+
+Terminal_Identifier : IDENTIFIER
   | 'abstract'
   | 'changeable'
   | 'containment'
@@ -228,6 +230,8 @@ ID : IDENTIFIER
   | 'value'
   | 'version'
   | 'volatile'
+  | 'xmi'
+  | 'xsi'
 ;
 
 //terminal LETTER  	: 'a'..'z'|'A'..'Z';
@@ -235,14 +239,13 @@ ID : IDENTIFIER
 //terminal PUNCT		: '_' | '.' | '-' | '|' | '~' | '{' | '}' | '`' | '[' | ']' | '^' | '!' | '@' | ';' | ',' | '*' | '+' | '(' | ')' | '&' | '\'' | '\\' | '$' | '%' | '#';
 //terminal WS_CHAR	: (' '|'\t'|'\r'|'\n'/*|'\f'*/);
 
-terminal STRING	: '"' (
-					('a'..'z'|'A'..'Z'|'_'..'_')
-					| ('0'..'9') 
-					| (' '|'\t'|'\r'|'\n'/*|'\f'*/)
-					| (':' | '/' | '.' | '-' | '|' | '~' | '{' | '}' | '`' | '[' | ']' | '^' | '!' | '@' | ';' | ',' | '*' | '+' | '(' | ')' | '\'' | '\\' | '$' | '%' | '#' | '>')
-					| ('&' ('a'..'z'|'A'..'Z')+ ';')
-					)* '"'; 
-terminal IDENTIFIER  		: (('a'..'z'|'A'..'Z'|'_'..'_') | ('0'..'9'))+;	// xtext2lpg only considers ranges for letters etc
+//terminal STRING	: '"' (
+//					('&' (('a' 'm' 'p') | ('a' 'p' 'o' 's') | ('g' 't') | ('l' 't') | ('q' 'u' 'o' 't')) ';')
+//					| ' '..'!' /* " */ | '#'..'%' /* & ' */ | '('..';' /* < */ | '='..'=' /* > */ | '?'..'~' 
+//					)* '"';
+/** LPG cannot negate, so enumerate all positives, XML entities need pruning later */
+terminal STRING	: '"' (' '..'!' /* " */ | '#'..'~')* '"'; 
+terminal IDENTIFIER : ('a'..'z'|'A'..'Z'|'_'..'_') ('a'..'z'|'A'..'Z'|'_'..'_'|'0'..'9')*;	// xtext2lpg only considers ranges for letters etc
 terminal WS			: (' '|'\t'|'\r'|'\n'/*|'\f'*/)+;
 
 //terminal ANY_OTHER: .;

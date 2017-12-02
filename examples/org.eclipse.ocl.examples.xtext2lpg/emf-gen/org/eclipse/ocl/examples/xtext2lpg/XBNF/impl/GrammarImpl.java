@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -39,6 +38,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.GrammarImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.GrammarImpl#getSyntax <em>Syntax</em>}</li>
@@ -46,7 +46,6 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.GrammarImpl#getRules <em>Rules</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.impl.GrammarImpl#getDebug <em>Debug</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -396,7 +395,7 @@ public class GrammarImpl extends MinimalEObjectImpl.Container implements Grammar
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", debug: ");

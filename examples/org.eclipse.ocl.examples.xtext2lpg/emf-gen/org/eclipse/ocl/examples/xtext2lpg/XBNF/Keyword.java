@@ -18,10 +18,10 @@ package org.eclipse.ocl.examples.xtext2lpg.XBNF;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext2lpg.XBNF.Keyword#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage#getKeyword()
  * @model

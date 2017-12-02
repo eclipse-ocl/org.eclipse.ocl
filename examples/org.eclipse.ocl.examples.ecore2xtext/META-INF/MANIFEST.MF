@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.ocl.examples.xtext2lpg,
  org.eclipse.ocl.pivot,
  org.eclipse.xtext.generator;bundle-version="2.10.0",
- lpg.runtime.java;bundle-version="2.0.17"
+ lpg.runtime.java;bundle-version="2.0.17",
+ org.eclipse.ocl.examples.xtext.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.examples.ecore2xtext
 Import-Package: org.apache.log4j

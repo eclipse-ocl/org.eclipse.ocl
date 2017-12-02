@@ -19,8 +19,6 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNFwithCardinality.XBNFwithCardinalit
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Alternatives</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
