@@ -87,5 +87,8 @@ org.eclipse.emf.mwe2.runtime.workflow.Workflow {
     	lpgIncs = "${lpgIncs}"
     	lpgOpts = "${lpgOpts}"
     }
+	component = ConvertToUnixLineEndings {
+		directory = "lpg-gen"
+	}
 }
 
