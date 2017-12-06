@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -53,14 +54,25 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 
 	/**
 	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
-	 * for the meta-models managed by metamodelManager.
+	 * for the meta-models managed by a newly created environmentFactory.
+	 *
+	 * @deprecated Use the three argument constructor
+	 */
+	@Deprecated
+	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI) {
+		this(ePackage, oclURI, OCL.newInstance().getEnvironmentFactory());
+	}
+
+	/**
+	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
+	 * for the meta-models managed by environmentFactory.
 	 */
 	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI, @NonNull EnvironmentFactory environmentFactory) {
 		super(null);
 		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
 		this.ePackage = ePackage;
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			URIConverter uriConverter = environmentFactory.getResourceSet().getURIConverter();
+			URIConverter uriConverter = this.environmentFactory.getResourceSet().getURIConverter();
 			this.oclURI = uriConverter.normalize(oclURI);	// Convert platform:/resource to platform:/plugin if no project
 		}
 		else {
