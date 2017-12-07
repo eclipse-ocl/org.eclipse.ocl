@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.build.utilities.*
  */
 Workflow {
   component = @GeneratePivotModel {}
+  component = @GenerateAnnotationModel {}
   component = @GenerateCSModels {}
   component = @GenerateCGModels {}
   component = @GenerateAllEditors {}

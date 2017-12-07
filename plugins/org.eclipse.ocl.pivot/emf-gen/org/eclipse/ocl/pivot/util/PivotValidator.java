@@ -2245,9 +2245,27 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateExpressionInOCL(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
+	private boolean validateExpressionInOCLGen(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(expressionInOCL, diagnostics, context);
+	}
+	public boolean validateExpressionInOCL(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		/*		if ((expressionInOCL.getOwnedBody() == null) && (expressionInOCL.getBody() != null)) {
+			assert context != null;
+			OCL ocl = PivotDiagnostician.getOCL(context, expressionInOCL);
+			try {
+				ocl.getMetamodelManager().parseSpecification(expressionInOCL);
+			} catch (ParserException e) {
+				if (diagnostics != null) {
+					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+						e.getLocalizedMessage(),
+						new Object[] {expressionInOCL}));
+				}
+				return false;
+			}
+		} */
+		return validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
 	}
 
 	/**
