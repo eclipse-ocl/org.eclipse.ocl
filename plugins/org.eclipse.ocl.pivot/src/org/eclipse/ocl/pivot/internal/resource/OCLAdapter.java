@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
  * An OCLAdapter extends an EnvironmentFactoryAdapter so that the lifetime
  * of the OCL for a ResourceSet terminates with the ResourceSet adapter. If the
  * ResourceSet is the AdapterFactoryEditingDomainResourceSet of an Ecore Editor,
- * an AdapterFactory is registeed to ensure that the OCLAdapter disposes with
+ * an AdapterFactory is registered to ensure that the OCLAdapter disposes with
  * the editor rather than locking it into memory.
  */
 public class OCLAdapter extends EnvironmentFactoryAdapter implements AdapterFactory, IDisposable
@@ -48,7 +48,7 @@ public class OCLAdapter extends EnvironmentFactoryAdapter implements AdapterFact
 		notifier.eAdapters().add(adapter);
 		return adapter.getEnvironmentFactory();
 	}
-	
+
 	public static @NonNull EnvironmentFactoryInternal createEnvironmentFactory( @NonNull Notifier notifier) {
 		return createEnvironmentFactory(BasicProjectManager.createDefaultProjectManager(), notifier);
 	}
@@ -69,9 +69,9 @@ public class OCLAdapter extends EnvironmentFactoryAdapter implements AdapterFact
 		}
 		return oclAdapter;
 	}
-	
+
 	protected OCL ocl;				// Set null once disposed
-	
+
 	protected OCLAdapter(@NonNull OCLInternal ocl, @NonNull Notifier notifier) {
 		super(ocl.getEnvironmentFactory(), notifier);
 		this.ocl = ocl;

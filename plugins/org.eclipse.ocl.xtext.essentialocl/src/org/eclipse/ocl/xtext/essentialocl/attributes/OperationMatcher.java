@@ -34,7 +34,7 @@ public class OperationMatcher extends AbstractOperationMatcher
 		for (NavigatingArgCS csNavigatingArg : csRoundBracketedClause.getOwnedArguments()) {
 			if (csNavigatingArg.getRole() == NavigationRole.EXPRESSION) {
 				OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
-				asArguments.add(ClassUtil.nonNullState(asArgument));
+				asArguments.add(ClassUtil.nonNullState(asArgument));						// FIXME move from constructor exception to init() fail
 			}
 		}
 	}
