@@ -365,14 +365,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else if (unboxedValue.getClass().isArray()) {
 			try {
-				@NonNull Object @NonNull [] unboxedValues = (@NonNull Object @NonNull [])unboxedValue;
+				@Nullable Object @NonNull [] unboxedValues = (@Nullable Object @NonNull [])unboxedValue;
 				Type dynamicType = getDynamicTypeOf(unboxedValues);
 				if (dynamicType == null) {
 					dynamicType = standardLibrary.getOclInvalidType();
 				}
 				TypeId elementTypeId = dynamicType.getTypeId();
 				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
-				return createSequenceOfEach(collectedTypeId, (@NonNull Object @NonNull [])unboxedValue);
+				return createSequenceOfEach(collectedTypeId, (@Nullable Object @NonNull [])unboxedValue);
 			}
 			catch (IllegalArgumentException e) {}
 		}
@@ -501,7 +501,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
 		Bag<Object> boxedValues = new BagImpl<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -593,7 +593,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
 		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -611,7 +611,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
 		List<Object> boxedValues = new ArrayList<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -629,7 +629,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
 		Set<Object> boxedValues = new HashSet<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -824,7 +824,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @Nullable Type getDynamicTypeOf(@NonNull Object @NonNull ... values) {
+	public @Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values) {
 		Type elementType = null;
 		for (Object value : values) {
 			org.eclipse.ocl.pivot.Class valueType = getDynamicTypeOf(value);

@@ -52,21 +52,21 @@ public interface IdResolver extends IdVisitor<Element>
 		@Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> getModelClassesOf(@NonNull Object value);
 		int oclHashCode(@Nullable Object anObject);
 	}
-	
+
 	void addRoot(@NonNull EObject eObject);
-	
+
 	@Nullable Object boxedValueOf(@Nullable Object unboxedValue);
-	
+
 	@Nullable Object boxedValueOf(@NonNull Object unboxedValue, @Nullable EClassifier eClassifier);
-	
+
 	@Nullable Object boxedValueOf(@NonNull Object unboxedValue, @NonNull ETypedElement eFeature, @Nullable TypeId typeId);
 
 	@NonNull BagValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
-	
+	@NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
+
 	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues);
-	
+
 	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<?> unboxedValues);
 
 	@Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue);
@@ -75,15 +75,15 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
 
 	@NonNull SequenceValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
 
 	@NonNull SetValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
 
 	void dispose();
 
@@ -101,7 +101,7 @@ public interface IdResolver extends IdVisitor<Element>
 	/** @deprecated no longer used */
 	@Deprecated
 	@NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values);
-	
+
 	/** @deprecated no longer used */
 	@Deprecated
 	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object... values);
@@ -116,20 +116,20 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	@NonNull Type getDynamicTypeOf(@Nullable Object value);
 
-	@Nullable Type getDynamicTypeOf(@NonNull Object @NonNull ... values);
+	@Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values);
 
 	@Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values);
 
 	@NonNull CompleteEnvironment getEnvironment();
 
 	@NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier);
-	
+
 	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass);
 
 	@NonNull Type getMapType(@NonNull MapTypeId typeId);
 
 	@NonNull Operation getOperation(@NonNull OperationId operationId);
-	
+
 	org.eclipse.ocl.pivot.@NonNull Package getPackage(@NonNull PackageId packageId);
 
 	@NonNull Property getProperty(@NonNull PropertyId propertyId);
@@ -153,10 +153,10 @@ public interface IdResolver extends IdVisitor<Element>
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
 
 	@Nullable Object unboxedValueOf(@Nullable Object boxedValue);
-	
+
 	@NonNull Enumerator unboxedValueOf(@NonNull EnumerationLiteralId enumerationLiteralId);
-	
+
 	@NonNull EList<Object> unboxedValuesOfAll(@NonNull Collection<? extends Object> boxedValues);
-	
+
 	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object... boxedValues);
 }
