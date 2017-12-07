@@ -317,6 +317,7 @@
       </eOperations>
       <eOperations name="toString" eType="#/0/String"/>
       <eOperations name="oclAsSet" eType="#/0/Set(T)"/>
+      <eOperations name="toInteger" eType="#/0/Integer"/>
     </eClassifiers>
     <eClassifiers xsi:type="ocl.ecore:PrimitiveType" name="Real" instanceClassName="java.lang.Double"/>
     <eClassifiers xsi:type="ecore:EClass" name="Real_Class">
@@ -539,7 +540,8 @@
     <eClassifiers xsi:type="ocl.ecore:ElementType" name="OclElement"/>
     <eClassifiers xsi:type="ocl.ecore:ElementType" name="State"/>
     <eClassifiers xsi:type="ocl.ecore:ElementType" name="OclExpression"/>
-    <eClassifiers xsi:type="ocl.ecore:CollectionType" name="Collection(T)" elementType="#/0/T"/>
+    <eClassifiers xsi:type="ocl.ecore:CollectionType" name="Collection(T)" instanceClassName="java.util.Collection"
+        elementType="#/0/T"/>
     <eClassifiers xsi:type="ecore:EClass" name="Collection(T)_Class">
       <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL" references="#/0/Collection(T)"/>
       <eOperations name="count" eType="#/0/Integer">
@@ -1230,7 +1232,8 @@
   <ecore:EPackage name="collections">
     <eClassifiers xsi:type="ocl.ecore:SetType" name="Set(Tuple(first : T, second : T2))"
         instanceClassName="java.util.Set" elementType="#/1/Tuple(first%20%3A%20T%2C%20second%20%3A%20T2)"/>
-    <eClassifiers xsi:type="ocl.ecore:CollectionType" name="Collection(T2)" elementType="#/0/T2"/>
+    <eClassifiers xsi:type="ocl.ecore:CollectionType" name="Collection(T2)" instanceClassName="java.util.Collection"
+        elementType="#/0/T2"/>
     <eClassifiers xsi:type="ocl.ecore:SetType" name="Set(T2)" instanceClassName="java.util.Set"
         elementType="#/0/T2"/>
     <eClassifiers xsi:type="ocl.ecore:BagType" name="Bag(T2)" instanceClassName="org.eclipse.ocl.util.Bag"

@@ -1178,6 +1178,10 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultInvalid("let u1 : UnlimitedNatural = null, u2 : UnlimitedNatural = null in u1 * u2");
 	}
 
+	public void testUnlimitedToInteger() {
+		assertResultInvalid("*.toInteger()");
+	}
+
 	public void testUnlimitedUnaryMinus() {
 		/*
 		 * FIXME OCL doesn't have a negative infinity, this should then be

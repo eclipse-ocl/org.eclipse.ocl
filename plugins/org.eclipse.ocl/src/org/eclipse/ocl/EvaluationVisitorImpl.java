@@ -562,8 +562,14 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 						return "true".equals(sourceVal); //$NON-NLS-1$
 
 					case PredefinedType.TO_INTEGER:
-						// String::toInteger()
-						return Integer.valueOf((String) sourceVal);
+						if (sourceType == getString()) {
+							// String::toInteger()
+							return Integer.valueOf((String) sourceVal);
+						} else if ((sourceVal != UNLIMITED) && (sourceType == getUnlimitedNatural())) {
+							return Integer.valueOf(sourceVal.toString());
+						} else {
+							return getInvalid();
+						}
 
 					case PredefinedType.TO_REAL:
 						// String::toReal()

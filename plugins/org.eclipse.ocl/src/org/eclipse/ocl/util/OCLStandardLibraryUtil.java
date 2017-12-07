@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   IBM - Initial API and implementation
  *   E.D.Willink - Refactoring to support extensibility and flexible error handling
  *       - Bug 259819
@@ -14,7 +14,204 @@
  *******************************************************************************/
 package org.eclipse.ocl.util;
 
-import static org.eclipse.ocl.utilities.PredefinedType.*;
+import static org.eclipse.ocl.utilities.PredefinedType.ABS;
+import static org.eclipse.ocl.utilities.PredefinedType.ABS_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.ALL_INSTANCES;
+import static org.eclipse.ocl.utilities.PredefinedType.ALL_INSTANCES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AND;
+import static org.eclipse.ocl.utilities.PredefinedType.AND_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.ANY;
+import static org.eclipse.ocl.utilities.PredefinedType.ANY_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.APPEND;
+import static org.eclipse.ocl.utilities.PredefinedType.APPEND_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_BAG;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_BAG_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_ORDERED_SET;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_ORDERED_SET_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_SEQUENCE;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_SEQUENCE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_SET;
+import static org.eclipse.ocl.utilities.PredefinedType.AS_SET_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.AT;
+import static org.eclipse.ocl.utilities.PredefinedType.AT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.CHARACTERS;
+import static org.eclipse.ocl.utilities.PredefinedType.CHARACTERS_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.CLOSURE;
+import static org.eclipse.ocl.utilities.PredefinedType.CLOSURE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.COLLECT;
+import static org.eclipse.ocl.utilities.PredefinedType.COLLECT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.COLLECT_NESTED;
+import static org.eclipse.ocl.utilities.PredefinedType.COLLECT_NESTED_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.CONCAT;
+import static org.eclipse.ocl.utilities.PredefinedType.CONCAT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.COUNT;
+import static org.eclipse.ocl.utilities.PredefinedType.COUNT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.DIV;
+import static org.eclipse.ocl.utilities.PredefinedType.DIVIDE;
+import static org.eclipse.ocl.utilities.PredefinedType.DIVIDE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.DIV_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.ENDS_WITH;
+import static org.eclipse.ocl.utilities.PredefinedType.ENDS_WITH_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EQUAL;
+import static org.eclipse.ocl.utilities.PredefinedType.EQUALS_IGNORE_CASE;
+import static org.eclipse.ocl.utilities.PredefinedType.EQUALS_IGNORE_CASE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EQUAL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDES;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDES_ALL;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDES_ALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDING;
+import static org.eclipse.ocl.utilities.PredefinedType.EXCLUDING_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.EXISTS;
+import static org.eclipse.ocl.utilities.PredefinedType.EXISTS_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.FIRST;
+import static org.eclipse.ocl.utilities.PredefinedType.FIRST_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.FLATTEN;
+import static org.eclipse.ocl.utilities.PredefinedType.FLATTEN_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.FLOOR;
+import static org.eclipse.ocl.utilities.PredefinedType.FLOOR_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.FOR_ALL;
+import static org.eclipse.ocl.utilities.PredefinedType.FOR_ALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.GREATER_THAN;
+import static org.eclipse.ocl.utilities.PredefinedType.GREATER_THAN_EQUAL;
+import static org.eclipse.ocl.utilities.PredefinedType.GREATER_THAN_EQUAL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.GREATER_THAN_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.HAS_RETURNED;
+import static org.eclipse.ocl.utilities.PredefinedType.HAS_RETURNED_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.IMPLIES;
+import static org.eclipse.ocl.utilities.PredefinedType.IMPLIES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDES;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDES_ALL;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDES_ALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDING;
+import static org.eclipse.ocl.utilities.PredefinedType.INCLUDING_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INDEX_OF;
+import static org.eclipse.ocl.utilities.PredefinedType.INDEX_OF_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INSERT_AT;
+import static org.eclipse.ocl.utilities.PredefinedType.INSERT_AT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.INTERSECTION;
+import static org.eclipse.ocl.utilities.PredefinedType.INTERSECTION_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_EMPTY;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_EMPTY_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_OPERATION_CALL;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_OPERATION_CALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_SIGNAL_SENT;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_SIGNAL_SENT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_UNIQUE;
+import static org.eclipse.ocl.utilities.PredefinedType.IS_UNIQUE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.LAST;
+import static org.eclipse.ocl.utilities.PredefinedType.LAST_INDEX_OF;
+import static org.eclipse.ocl.utilities.PredefinedType.LAST_INDEX_OF_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.LAST_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.LESS_THAN;
+import static org.eclipse.ocl.utilities.PredefinedType.LESS_THAN_EQUAL;
+import static org.eclipse.ocl.utilities.PredefinedType.LESS_THAN_EQUAL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.LESS_THAN_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.MATCHES;
+import static org.eclipse.ocl.utilities.PredefinedType.MATCHES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.MAX;
+import static org.eclipse.ocl.utilities.PredefinedType.MAX_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.MIN;
+import static org.eclipse.ocl.utilities.PredefinedType.MINUS;
+import static org.eclipse.ocl.utilities.PredefinedType.MINUS_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.MIN_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.MOD;
+import static org.eclipse.ocl.utilities.PredefinedType.MOD_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT_EMPTY;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT_EMPTY_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT_EQUAL;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT_EQUAL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.NOT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_AS_SET;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_AS_SET_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_AS_TYPE;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_AS_TYPE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_INVALID;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_INVALID_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_IN_STATE;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_IN_STATE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_KIND_OF;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_KIND_OF_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_NEW;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_NEW_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_TYPE_OF;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_TYPE_OF_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_UNDEFINED;
+import static org.eclipse.ocl.utilities.PredefinedType.OCL_IS_UNDEFINED_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.ONE;
+import static org.eclipse.ocl.utilities.PredefinedType.ONE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.OR;
+import static org.eclipse.ocl.utilities.PredefinedType.OR_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.PLUS;
+import static org.eclipse.ocl.utilities.PredefinedType.PLUS_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.PREPEND;
+import static org.eclipse.ocl.utilities.PredefinedType.PREPEND_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.PRODUCT;
+import static org.eclipse.ocl.utilities.PredefinedType.PRODUCT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.REJECT;
+import static org.eclipse.ocl.utilities.PredefinedType.REJECT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.REPLACE_ALL;
+import static org.eclipse.ocl.utilities.PredefinedType.REPLACE_ALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.REPLACE_FIRST;
+import static org.eclipse.ocl.utilities.PredefinedType.REPLACE_FIRST_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.RESULT;
+import static org.eclipse.ocl.utilities.PredefinedType.RESULT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.ROUND;
+import static org.eclipse.ocl.utilities.PredefinedType.ROUND_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT_BY_KIND;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT_BY_KIND_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT_BY_TYPE;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT_BY_TYPE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SELECT_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SIZE;
+import static org.eclipse.ocl.utilities.PredefinedType.SIZE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SORTED_BY;
+import static org.eclipse.ocl.utilities.PredefinedType.SORTED_BY_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.STARTS_WITH;
+import static org.eclipse.ocl.utilities.PredefinedType.STARTS_WITH_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTITUTE_ALL;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTITUTE_ALL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTITUTE_FIRST;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTITUTE_FIRST_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTRING;
+import static org.eclipse.ocl.utilities.PredefinedType.SUBSTRING_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUB_ORDERED_SET;
+import static org.eclipse.ocl.utilities.PredefinedType.SUB_ORDERED_SET_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUB_SEQUENCE;
+import static org.eclipse.ocl.utilities.PredefinedType.SUB_SEQUENCE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SUM;
+import static org.eclipse.ocl.utilities.PredefinedType.SUM_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.SYMMETRIC_DIFFERENCE;
+import static org.eclipse.ocl.utilities.PredefinedType.SYMMETRIC_DIFFERENCE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TIMES;
+import static org.eclipse.ocl.utilities.PredefinedType.TIMES_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TOKENIZE;
+import static org.eclipse.ocl.utilities.PredefinedType.TOKENIZE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_BOOLEAN;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_BOOLEAN_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_INTEGER;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_INTEGER_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_LOWER;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_LOWER_CASE;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_LOWER_CASE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_LOWER_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_REAL;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_REAL_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_STRING;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_STRING_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_UPPER;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_UPPER_CASE;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_UPPER_CASE_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TO_UPPER_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.TRIM;
+import static org.eclipse.ocl.utilities.PredefinedType.TRIM_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.UNION;
+import static org.eclipse.ocl.utilities.PredefinedType.UNION_NAME;
+import static org.eclipse.ocl.utilities.PredefinedType.XOR;
+import static org.eclipse.ocl.utilities.PredefinedType.XOR_NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -57,7 +254,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
  * See the {@link Environment} class for a description of the generic type
  * parameters of this class.
  * </p>
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 public final class OCLStandardLibraryUtil {
@@ -203,26 +400,26 @@ public final class OCLStandardLibraryUtil {
 
 	/**
 	 * Obtains the numeric code of the specified pre-defined (by OCL) operaiton.
-	 * 
+	 *
 	 * @param operName
 	 *            the operation name
 	 * @return the corresponding code (as defined by the {@link PredefinedType}
 	 *         interface), or <code>0</code> if the operation name is not a
 	 *         pre-defined operation
-	 * 
+	 *
 	 * @see #getOperationName(int)
 	 */
 	public static int getOperationCode(String operName) {
 		Integer code = operationCodes.get(operName);
 
 		return code == null
-			? 0
-			: code;
+				? 0
+					: code;
 	}
 
 	/**
 	 * Obtains the numeric code of the specified <tt>OclAny</tt> operaiton.
-	 * 
+	 *
 	 * @param operName
 	 *            the operation name
 	 * @return the corresponding code (as defined by the {@link PredefinedType}
@@ -233,18 +430,18 @@ public final class OCLStandardLibraryUtil {
 		Integer code = oclAnyOperationCodes.get(operName);
 
 		return code == null
-			? 0
-			: code;
+				? 0
+					: code;
 	}
 
 	/**
 	 * Returns the operation name corresponding to the opcode.
-	 * 
+	 *
 	 * @param opcode
 	 *            an operation code
 	 * @return the name corresponding to the opcode, or <code>null</code> if the
 	 *         code is not one defined by the {@link PredefinedType} interface
-	 * 
+	 *
 	 * @see #getOperationCode(String)
 	 */
 	public static String getOperationName(int opcode) {
@@ -457,7 +654,7 @@ public final class OCLStandardLibraryUtil {
 	 * Library. Many of the OCL Standard Library operations are either generic
 	 * themselves or defined by generic types, so the return results depend on
 	 * the argument and source types.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment (indicating the metamodel binding)
 	 * @param sourceType
@@ -469,13 +666,13 @@ public final class OCLStandardLibraryUtil {
 	 *            the arguments of the operation call, as expressions or
 	 *            variables
 	 * @return the result type of the corresponding operation
-	 * 
+	 *
 	 * @throws SemanticException
 	 *             if any of the argument types does not correspond to the
 	 *             source type and/or expected parameter types of the operation
-	 * 
+	 *
 	 * @see #getOperationCode(String)
-	 * 
+	 *
 	 * @deprecated Use the
 	 *             {@link #getResultTypeOf(Object, Environment, Object, int, List)}
 	 *             method, instead, which doesn't fail on the first problem
@@ -484,7 +681,7 @@ public final class OCLStandardLibraryUtil {
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> C getResultTypeOf(
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env,
 			C sourceType, int opcode, List<? extends TypedElement<C>> args)
-			throws SemanticException {
+					throws SemanticException {
 
 		StringProblemHandler handler = null;
 		ProblemHandler oldHandler = null;
@@ -504,9 +701,9 @@ public final class OCLStandardLibraryUtil {
 
 			if (result == null) {
 				String message = handler != null
-					? handler.getProblemString()
-					: "No handler"; //$NON-NLS-1$
-				throw new SemanticException(message);
+						? handler.getProblemString()
+							: "No handler"; //$NON-NLS-1$
+						throw new SemanticException(message);
 			}
 
 			return result;
@@ -522,7 +719,7 @@ public final class OCLStandardLibraryUtil {
 	 * Library. Many of the OCL Standard Library operations are either generic
 	 * themselves or defined by generic types, so the return results depend on
 	 * the argument and source types.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment (indicating the metamodel binding)
 	 * @param sourceType
@@ -537,7 +734,7 @@ public final class OCLStandardLibraryUtil {
 	 *         reporting a problem to env if any of the argument types do not
 	 *         correspond to the source type and/or expected parameter types of
 	 *         the operation
-	 * 
+	 *
 	 * @see #getOperationCode(String)
 	 */
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> C getResultTypeOf(
@@ -601,7 +798,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		TypedElement<C> arg;
 		C argType;
@@ -630,8 +827,8 @@ public final class OCLStandardLibraryUtil {
 						getOperationName(opcode), args);
 
 					if ((oper == null)
-						&& ParsingOptions.getValue(env,
-							ParsingOptions.USE_COMPARE_TO_OPERATION)) {
+							&& ParsingOptions.getValue(env,
+								ParsingOptions.USE_COMPARE_TO_OPERATION)) {
 						// source must either be a DataType that is Comparable,
 						// or
 						// else be a Elass, with an operation:
@@ -676,8 +873,8 @@ public final class OCLStandardLibraryUtil {
 				}
 
 				if ((oper != null)
-					&& "compareTo".equals(uml.getName(oper)) //$NON-NLS-1$
-					&& (TypeUtil.resolveType(env, uml.getOCLType(oper)) != stdlib
+						&& "compareTo".equals(uml.getName(oper)) //$NON-NLS-1$
+						&& (TypeUtil.resolveType(env, uml.getOCLType(oper)) != stdlib
 						.getInteger())) {
 					String message = OCLMessages.ResultCompareToInt_ERROR_;
 					error(env, message, "anyTypeResultTypeOf", problemObject); //$NON-NLS-1$
@@ -703,7 +900,7 @@ public final class OCLStandardLibraryUtil {
 				if (sourceType instanceof CollectionType<?, ?>) {
 					String message = OCLMessages.bind(
 						OCLMessages.Noncomforming_ERROR_, uml
-							.getName(sourceType), getOperationName(opcode));
+						.getName(sourceType), getOperationName(opcode));
 					error(env, message, "anyTypeResultTypeOf", problemObject); //$NON-NLS-1$
 					return null;
 				}
@@ -1303,7 +1500,7 @@ public final class OCLStandardLibraryUtil {
 		EList<Variable<C, PM>> result = new BasicEList<Variable<C, PM>>();
 
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 		OCLFactory oclFactory = env.getOCLFactory();
 
 		Variable<C, PM> var = oclFactory.createVariable();
@@ -1352,7 +1549,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		switch (opcode) {
 			case HAS_RETURNED :
@@ -1361,9 +1558,9 @@ public final class OCLStandardLibraryUtil {
 				return stdlib.getBoolean();
 			case RESULT :
 				return (messageType.getReferredOperation() == null)
-					? stdlib.getOclInvalid()
-					: TypeUtil.resolveType(env, uml.getOCLType(messageType
-						.getReferredOperation()));
+						? stdlib.getOclInvalid()
+							: TypeUtil.resolveType(env, uml.getOCLType(messageType
+								.getReferredOperation()));
 		}
 		@SuppressWarnings("unchecked")
 		C sourceType = (C) messageType;
@@ -1383,7 +1580,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EQUAL_NAME,
 			stdlib.getOclAny(), "object")); //$NON-NLS-1$
@@ -1415,7 +1612,7 @@ public final class OCLStandardLibraryUtil {
 	 * the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>OclAny</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1429,7 +1626,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			LESS_THAN_NAME, stdlib.getT(), "object"));//$NON-NLS-1$
@@ -1448,7 +1645,7 @@ public final class OCLStandardLibraryUtil {
 	 * of the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>OclType</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1473,7 +1670,7 @@ public final class OCLStandardLibraryUtil {
 	 * type of the OCL Standard library. This is useful for implementors of
 	 * metamodel bindings ({@link Environment}s) to initialize their
 	 * implementations of the <code>OclMessage</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1487,7 +1684,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createUnaryOperation(uml, stdlib.getBoolean(),
 			HAS_RETURNED_NAME));
@@ -1505,7 +1702,7 @@ public final class OCLStandardLibraryUtil {
 	 * the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>String</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1519,7 +1716,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			LESS_THAN_NAME, stdlib.getString(), "s"));//$NON-NLS-1$
@@ -1539,19 +1736,19 @@ public final class OCLStandardLibraryUtil {
 			TO_INTEGER_NAME));
 		result.add(createUnaryOperation(uml, stdlib.getReal(), TO_REAL_NAME));
 		result
-			.add(createUnaryOperation(uml, stdlib.getString(), TO_LOWER_NAME));
+		.add(createUnaryOperation(uml, stdlib.getString(), TO_LOWER_NAME));
 		result
-			.add(createUnaryOperation(uml, stdlib.getString(), TO_UPPER_NAME));
+		.add(createUnaryOperation(uml, stdlib.getString(), TO_UPPER_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getString(), PLUS_NAME,
 			stdlib.getString(), "s"));//$NON-NLS-1$
 		result
-			.add(createUnaryOperation(uml, stdlib.getString(), TO_LOWER_CASE_NAME));
+		.add(createUnaryOperation(uml, stdlib.getString(), TO_LOWER_CASE_NAME));
 		result
-			.add(createUnaryOperation(uml, stdlib.getString(), TO_UPPER_CASE_NAME));
+		.add(createUnaryOperation(uml, stdlib.getString(), TO_UPPER_CASE_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getString(),
 			AT_NAME, stdlib.getInteger(), "index"));//$NON-NLS-1$
 		result
-			.add(createUnaryOperation(uml, stdlib.getSequence(), CHARACTERS_NAME));
+		.add(createUnaryOperation(uml, stdlib.getSequence(), CHARACTERS_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			ENDS_WITH_NAME, stdlib.getString(), "s"));//$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
@@ -1573,15 +1770,15 @@ public final class OCLStandardLibraryUtil {
 		result.add(createTernaryOperation(uml, stdlib.getString(),
 			SUBSTITUTE_FIRST_NAME, stdlib.getString(), "regex", stdlib.getString(), "replacement"));//$NON-NLS-1$ //$NON-NLS-2$
 		result
-			.add(createUnaryOperation(uml, stdlib.getBoolean(), TO_BOOLEAN_NAME));
+		.add(createUnaryOperation(uml, stdlib.getBoolean(), TO_BOOLEAN_NAME));
 		result
-			.add(createUnaryOperation(uml, stdlib.getSequence(), TOKENIZE_NAME));
+		.add(createUnaryOperation(uml, stdlib.getSequence(), TOKENIZE_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getSequence(),
 			TOKENIZE_NAME, stdlib.getString(), "delimiters"));//$NON-NLS-1$
 		result.add(createTernaryOperation(uml, stdlib.getSequence(),
 			TOKENIZE_NAME, stdlib.getString(), "delimiters", stdlib.getBoolean(), "returnDelimiters"));//$NON-NLS-1$ //$NON-NLS-2$
 		result
-			.add(createUnaryOperation(uml, stdlib.getString(), TRIM_NAME));
+		.add(createUnaryOperation(uml, stdlib.getString(), TRIM_NAME));
 
 		return result;
 	}
@@ -1591,7 +1788,7 @@ public final class OCLStandardLibraryUtil {
 	 * the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>Real</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1605,7 +1802,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			LESS_THAN_NAME, stdlib.getReal(), "r"));//$NON-NLS-1$
@@ -1640,7 +1837,7 @@ public final class OCLStandardLibraryUtil {
 	 * of the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>Integer</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1654,7 +1851,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			LESS_THAN_NAME, stdlib.getInteger(), "i"));//$NON-NLS-1$
@@ -1677,7 +1874,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>UnlimitedNatural</code> type of the OCL Standard library. This is
 	 * useful for implementors of metamodel bindings ({@link Environment}s) to
 	 * initialize their implementations of the <code>Integer</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1691,7 +1888,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			LESS_THAN_NAME, stdlib.getUnlimitedNatural(), "n"));//$NON-NLS-1$
@@ -1701,6 +1898,8 @@ public final class OCLStandardLibraryUtil {
 			LESS_THAN_EQUAL_NAME, stdlib.getUnlimitedNatural(), "n"));//$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			GREATER_THAN_EQUAL_NAME, stdlib.getUnlimitedNatural(), "n"));//$NON-NLS-1$
+		result.add(createUnaryOperation(uml, stdlib.getInteger(),
+			TO_INTEGER_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getInteger(), DIV_NAME,
 			stdlib.getUnlimitedNatural(), "n")); //$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getInteger(), MOD_NAME,
@@ -1714,7 +1913,7 @@ public final class OCLStandardLibraryUtil {
 	 * of the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>Boolean</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1728,7 +1927,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createUnaryOperation(uml, stdlib.getBoolean(), NOT_NAME));
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), AND_NAME,
@@ -1750,7 +1949,7 @@ public final class OCLStandardLibraryUtil {
 	 * type of the OCL Standard library. This is useful for implementors of
 	 * metamodel bindings ({@link Environment}s) to initialize their
 	 * implementations of the <code>Collection(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1762,7 +1961,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			EQUAL_NAME, stdlib.getCollection(), "c"));//$NON-NLS-1$
@@ -1780,7 +1979,7 @@ public final class OCLStandardLibraryUtil {
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
 			INCLUDES_ALL_NAME, stdlib.getCollection(), "c2"));//$NON-NLS-1$
 		result
-			.add(createUnaryOperation(uml, stdlib.getBoolean(), IS_EMPTY_NAME));
+		.add(createUnaryOperation(uml, stdlib.getBoolean(), IS_EMPTY_NAME));
 		result.add(createUnaryOperation(uml, stdlib.getBoolean(),
 			NOT_EMPTY_NAME));
 
@@ -1813,7 +2012,7 @@ public final class OCLStandardLibraryUtil {
 	 * the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>Set(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1827,7 +2026,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EQUAL_NAME,
 			stdlib.getSet(), "set"));//$NON-NLS-1$
@@ -1866,7 +2065,7 @@ public final class OCLStandardLibraryUtil {
 	 * type of the OCL Standard library. This is useful for implementors of
 	 * metamodel bindings ({@link Environment}s) to initialize their
 	 * implementations of the <code>OrderedSet(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1880,7 +2079,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EQUAL_NAME,
 			stdlib.getOrderedSet(), "s"));//$NON-NLS-1$
@@ -1911,7 +2110,7 @@ public final class OCLStandardLibraryUtil {
 	 * the OCL Standard library. This is useful for implementors of metamodel
 	 * bindings ({@link Environment}s) to initialize their implementations of
 	 * the <code>Bag(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1920,13 +2119,13 @@ public final class OCLStandardLibraryUtil {
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> List<O> createBagOperations(
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env) {
 		List<O> result = new java.util.ArrayList<O>(
-			COLLECTION_OPERATION_COUNT + 13);
+				COLLECTION_OPERATION_COUNT + 13);
 
 		result.addAll(createCollectionOperations(env));
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EQUAL_NAME,
 			stdlib.getBag(), "bag"));//$NON-NLS-1$
@@ -1961,7 +2160,7 @@ public final class OCLStandardLibraryUtil {
 	 * type of the OCL Standard library. This is useful for implementors of
 	 * metamodel bindings ({@link Environment}s) to initialize their
 	 * implementations of the <code>Sequence(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the standard
@@ -1970,13 +2169,13 @@ public final class OCLStandardLibraryUtil {
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> List<O> createSequenceOperations(
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env) {
 		List<O> result = new java.util.ArrayList<O>(
-			COLLECTION_OPERATION_COUNT + 18);
+				COLLECTION_OPERATION_COUNT + 18);
 
 		result.addAll(createCollectionOperations(env));
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EQUAL_NAME,
 			stdlib.getSequence(), "s"));//$NON-NLS-1$
@@ -2023,7 +2222,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>Collection(T)</code> type of the OCL Standard library. This is
 	 * useful for implementors of metamodel bindings ({@link Environment}s) to
 	 * initialize their implementations of the <code>Collection(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the pre-defined iterators
@@ -2035,7 +2234,7 @@ public final class OCLStandardLibraryUtil {
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBoolean(), EXISTS_NAME,
 			stdlib.getOclExpression(), "expr")); //$NON-NLS-1$
@@ -2070,7 +2269,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>Set(T)</code> type of the OCL Standard library. This is useful for
 	 * implementors of metamodel bindings ({@link Environment}s) to initialize
 	 * their implementations of the <code>Set(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the pre-defined iterators
@@ -2084,7 +2283,7 @@ public final class OCLStandardLibraryUtil {
 
 		result.addAll(createCollectionIterators(env));
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getSet(), SELECT_NAME,
 			stdlib.getOclExpression(), "expr")); //$NON-NLS-1$
@@ -2107,7 +2306,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>OrderedSet(T)</code> type of the OCL Standard library. This is
 	 * useful for implementors of metamodel bindings ({@link Environment}s) to
 	 * initialize their implementations of the <code>OrderedSet(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the pre-defined iterators
@@ -2127,7 +2326,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>Bag(T)</code> type of the OCL Standard library. This is useful for
 	 * implementors of metamodel bindings ({@link Environment}s) to initialize
 	 * their implementations of the <code>Bag(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the pre-defined iterators
@@ -2136,13 +2335,13 @@ public final class OCLStandardLibraryUtil {
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> List<O> createBagIterators(
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env) {
 		List<O> result = new java.util.ArrayList<O>(
-			COLLECTION_ITERATOR_COUNT + 4);
+				COLLECTION_ITERATOR_COUNT + 4);
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 
 		result.addAll(createCollectionIterators(env));
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.add(createBinaryOperation(uml, stdlib.getBag(), SELECT_NAME,
 			stdlib.getOclExpression(), "expr")); //$NON-NLS-1$
@@ -2165,7 +2364,7 @@ public final class OCLStandardLibraryUtil {
 	 * <code>Sequence(T)</code> type of the OCL Standard library. This is useful
 	 * for implementors of metamodel bindings ({@link Environment}s) to
 	 * initialize their implementations of the <code>Sequence(T)</code>.
-	 * 
+	 *
 	 * @param env
 	 *            an OCL environment
 	 * @return a list of new operations representing the pre-defined iterators
@@ -2174,11 +2373,11 @@ public final class OCLStandardLibraryUtil {
 	public static <PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> List<O> createSequenceIterators(
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env) {
 		List<O> result = new java.util.ArrayList<O>(
-			COLLECTION_ITERATOR_COUNT + 4);
+				COLLECTION_ITERATOR_COUNT + 4);
 
 		OCLStandardLibrary<C> stdlib = env.getOCLStandardLibrary();
 		UMLReflection<PK, C, O, P, EL, PM, ?, COA, SSA, CT> uml = env
-			.getUMLReflection();
+				.getUMLReflection();
 
 		result.addAll(createCollectionIterators(env));
 
@@ -2239,7 +2438,7 @@ public final class OCLStandardLibraryUtil {
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env,
 			OCLFactory factory, C elementType) {
 		return TypeUtil
-			.resolveType(env, (C) factory.createBagType(elementType));
+				.resolveType(env, (C) factory.createBagType(elementType));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2247,7 +2446,7 @@ public final class OCLStandardLibraryUtil {
 			Environment<PK, C, O, P, EL, PM, ST, COA, SSA, CT, CLS, E> env,
 			OCLFactory factory, C elementType) {
 		return TypeUtil
-			.resolveType(env, (C) factory.createSetType(elementType));
+				.resolveType(env, (C) factory.createSetType(elementType));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2284,7 +2483,7 @@ public final class OCLStandardLibraryUtil {
 	/**
 	 * Convenience method invoking
 	 * <code>getProblemHandler().utilityProblem</code> with an error severity.
-	 * 
+	 *
 	 * @param problemMessage
 	 *            message describing the problem
 	 * @param problemContext
@@ -2302,7 +2501,7 @@ public final class OCLStandardLibraryUtil {
 	/**
 	 * Convenience method invoking
 	 * <code>getProblemHandler().utilityProblem</code> with a warning severity.
-	 * 
+	 *
 	 * @param problemMessage
 	 *            message describing the problem
 	 * @param problemContext
@@ -2317,14 +2516,14 @@ public final class OCLStandardLibraryUtil {
 		if (benv != null) {
 			CSTNode cstNode = benv.getASTMapping(problemObject);
 			int startOffset = (cstNode != null)
-				? cstNode.getStartOffset()
-				: -1;
-			int endOffset = (cstNode != null)
-				? cstNode.getEndOffset()
-				: -1;
-			benv.getProblemHandler().utilityProblem(
-				ProblemHandler.Severity.WARNING, problemMessage,
-				problemContext, startOffset, endOffset);
+					? cstNode.getStartOffset()
+						: -1;
+					int endOffset = (cstNode != null)
+							? cstNode.getEndOffset()
+								: -1;
+							benv.getProblemHandler().utilityProblem(
+								ProblemHandler.Severity.WARNING, problemMessage,
+								problemContext, startOffset, endOffset);
 		}
 	}
 
@@ -2338,14 +2537,14 @@ public final class OCLStandardLibraryUtil {
 	 * <tt>{@literal Set<Apple>}</tt>. Rather, only
 	 * <tt>{@literal Collection<T>}</tt> is. This method also does not handle
 	 * the void and invalid types.
-	 * 
+	 *
 	 * @param env
 	 *            the contextual environment
 	 * @param type
 	 *            an OCL re-defined type
 	 * @return an unmodifiable collection of the supertypes, which may be empty
 	 *         in some cases
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	@SuppressWarnings("unchecked")

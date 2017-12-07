@@ -87,6 +87,12 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultFalse("(3.0).oclIsTypeOf(OclInvalid)");
 	}
 
+	@Override
+	public void testNumberToString() {											// BUG 378036 this doesn't work for UML
+		super.testNumberToString();
+		assertResult("6", "6.oclAsType(UnlimitedNatural).toString()");			// Tests fix for BUG 528246
+	}
+
 	public void testUnlimitedOclIsKindOf() {									// BUG 378036 this doesn't work for UML
 		assertResultTrue("*.oclIsKindOf(Integer)");
 		assertResultTrue("*.oclIsKindOf(Real)");
@@ -98,8 +104,10 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 	}
 
 	@Override
-	public void testNumberToString() {											// BUG 378036 this doesn't work for UML
-		super.testNumberToString();
-		assertResult("6", "6.oclAsType(UnlimitedNatural).toString()");			// Tests fix for BUG 528246
+	public void testUnlimitedToInteger() {											// BUG 378036 this doesn't work for UML
+		super.testUnlimitedToInteger();
+		assertResult(Integer.valueOf(-1), "-1.oclAsType(UnlimitedNatural).toInteger()");
+		assertResultInvalid("(-1).oclAsType(UnlimitedNatural).toInteger()");
+		assertResult(Integer.valueOf(4), "4.oclAsType(UnlimitedNatural).toInteger()");
 	}
 }
