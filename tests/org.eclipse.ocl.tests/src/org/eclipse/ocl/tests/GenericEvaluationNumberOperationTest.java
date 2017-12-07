@@ -22,7 +22,7 @@ import org.eclipse.ocl.options.ParsingOptions;
  * This unit test focuses on the Standard library's Integer and Real operations.
  * The unlimited natural will be considered as conforming to Integer. This will
  * need revisting once bug 261008 is fixed.
- * 
+ *
  * @author Laurent Goubet (lgoubet)
  */
 @SuppressWarnings("nls")
@@ -36,8 +36,8 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 
 		assertResult(2147483647, "2147483647.abs()");
 		assertParserError("2147483648.abs()", "For input string: \"{0}\"", "2147483648");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
-        assertResult(2147483648L, "2147483648.abs()");
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		assertResult(2147483648L, "2147483648.abs()");
 		assertResult(2147483649L, "(-2147483649).abs()");
 		assertResult(2147483648L, "(-2147483648).abs()");
 
@@ -45,7 +45,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResult(Double.valueOf(3d), "(3.0).abs()");
 		assertResult(Double.valueOf(3d), "(-3.0).abs()");
 		assertResult(Double.valueOf(3.1758d), "(3.1758).abs()");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberAbsInvalid() {
@@ -184,7 +184,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberGreaterThan() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::greaterThan(Integer)
 		assertResultTrue("3 > 2");
 		assertResultFalse("-3 > 2");
@@ -218,7 +218,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultFalse("-3 > 3.0");
 		assertResultTrue("3 > -3.0");
 		assertResultFalse("-3 > -3.0");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberGreaterThanInvalid() {
@@ -242,7 +242,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberGreaterThanOrEqual() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::greaterThanOrEqual(Integer)
 		assertResultTrue("3 >= 2");
 		assertResultFalse("-3 >= 2");
@@ -271,7 +271,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultFalse("-3 >= 3.0");
 		assertResultTrue("3 >= -3.0");
 		assertResultTrue("-3 >= -3.0");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 	}
 
 	public void testNumberGreaterThanOrEqualInvalid() {
@@ -295,7 +295,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberLessThan() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::lessThan(Integer)
 		assertResultFalse("3 < 2");
 		assertResultTrue("-3 < 2");
@@ -324,7 +324,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultTrue("-3 < 3.0");
 		assertResultFalse("3 < -3.0");
 		assertResultFalse("-3 < -3.0");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberLessThanInvalid() {
@@ -348,7 +348,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberLessThanOrEqual() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::lessThanOrEqual(Integer)
 		assertResultFalse("3 <= 2");
 		assertResultTrue("-3 <= 2");
@@ -377,7 +377,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultTrue("-3 <= 3.0");
 		assertResultFalse("3 <= -3.0");
 		assertResultTrue("-3 <= -3.0");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberLessThanOrEqualInvalid() {
@@ -401,7 +401,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberMax() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::max(Integer)
 		assertResult(Integer.valueOf(3), "3.max(2)");
 		assertResult(Integer.valueOf(2), "(-3).max(2)");
@@ -430,7 +430,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResult(Double.valueOf(2d), "(-3.0).max(2.0)");
 		assertResult(Double.valueOf(3d), "(3.0).max(-2.0)");
 		assertResult(Double.valueOf(-2d), "(-3.0).max(-2.0)");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberMaxInvalid() {
@@ -454,7 +454,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberMin() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::min(Integer)
 		assertResult(Integer.valueOf(2), "3.min(2)");
 		assertResult(Integer.valueOf(-3), "(-3).min(2)");
@@ -483,7 +483,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResult(Double.valueOf(-3d), "(-3.0).min(2.0)");
 		assertResult(Double.valueOf(-2d), "(3.0).min(-2.0)");
 		assertResult(Double.valueOf(-3d), "(-3.0).min(-2.0)");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberMinInvalid() {
@@ -507,7 +507,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberMinus() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::-(Integer)
 		assertResult(Integer.valueOf(0), "1 - 1");
 		assertResult(Integer.valueOf(5), "1 - -4");
@@ -532,7 +532,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		// Real::-(Real)
 		assertResult(Double.valueOf(0d), "1.0 - 1.0");
 		assertResult(Double.valueOf(-0.01d), "1.11 - 1.12");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberMinusInvalid() {
@@ -577,7 +577,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberNegate() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		assertResult(-1, "-1");
 		assertResult(-1.0, "-1.0");
 
@@ -591,7 +591,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		// null
 		assertResultInvalid("let i : Integer = null in -i");
 		assertResultInvalid("let r : Real = null in -r");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberNotEqual() {
@@ -637,7 +637,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 	}
 
 	public void testNumberPlus() {
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
 		// Integer::+(Integer)
 		assertResult(Integer.valueOf(2), "1 + 1");
 		assertResult(Integer.valueOf(-3), "1 + -4");
@@ -662,7 +662,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		// Real::+(Real)
 		assertResult(Double.valueOf(2d), "1.0 + 1.0");
 		assertResult(Double.valueOf(2.23d), "1.11 + 1.12");
-        ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, false);
 	}
 
 	public void testNumberPlusInvalid() {
@@ -751,6 +751,7 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResult("null", "null.toString()");
 		assertResult("invalid", "invalid.toString()");
 		assertResult("*", "*.toString()");
+		assertResult("-1", "(-1).toString()");
 	}
 
 	public void testNumberUnaryMinus() {
@@ -1089,10 +1090,10 @@ extends GenericEvaluationTestSuite<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, P
 		assertResultInvalid("*.oclAsType(Integer)");
 		assertResultInvalid("*.oclAsType(Real)");
 		assertResult(UnlimitedNaturalLiteralExp.UNLIMITED,
-			"*.oclAsType(UnlimitedNatural)");
+				"*.oclAsType(UnlimitedNatural)");
 		assertResultInvalid("*.oclAsType(String)");
 		assertResult(UnlimitedNaturalLiteralExp.UNLIMITED,
-			"*.oclAsType(OclAny)");
+				"*.oclAsType(OclAny)");
 		assertResultInvalid("*.oclAsType(OclVoid)");
 		assertResultInvalid("*.oclAsType(OclInvalid)");
 	}

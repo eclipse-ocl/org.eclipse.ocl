@@ -96,4 +96,10 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultFalse("*.oclIsKindOf(OclVoid)");
 		assertResultFalse("*.oclIsKindOf(OclInvalid)");
 	}
+
+	@Override
+	public void testNumberToString() {											// BUG 378036 this doesn't work for UML
+		super.testNumberToString();
+		assertResult("6", "6.oclAsType(UnlimitedNatural).toString()");			// Tests fix for BUG 528246
+	}
 }
