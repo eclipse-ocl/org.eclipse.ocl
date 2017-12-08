@@ -53,9 +53,11 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -209,7 +211,10 @@ public class EcoreOCLEValidator implements EValidator
 	/**
 	 * WeakOCLReference maintains the reference to the OCL context within the Diagnostician context and
 	 * disposes of it once the Diagnostician is done.
+	 *
+	 * @deprecated use PivotDiagnostician.getOCL
 	 */
+	@Deprecated
 	protected static final class WeakOCLReference extends WeakReference<OCLInternal>
 	{
 		protected final @NonNull OCLInternal ocl;
@@ -256,18 +261,12 @@ public class EcoreOCLEValidator implements EValidator
 	/**
 	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
 	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
+	 *
+	 * @deprecated use PivotDiagnostician.getOCL
 	 */
-	protected OCLInternal getOCL(@NonNull Map<Object, Object> context) {
-		OCLInternal ocl = null;
-		Object oclRef = context.get(WeakOCLReference.class);
-		if (oclRef instanceof WeakOCLReference) {
-			ocl = ((WeakOCLReference)oclRef).get();
-		}
-		if (ocl == null) {
-			ocl = OCLInternal.newInstance();
-			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
-		}
-		return ocl;
+	@Deprecated
+	protected @NonNull OCLInternal getOCL(@NonNull Map<Object, Object> context) {
+		return (OCLInternal)PivotDiagnostician.getOCL(context, null);
 	}
 
 	protected boolean isOCL(List<String> someDelegates) {
@@ -338,8 +337,8 @@ public class EcoreOCLEValidator implements EValidator
 		String constraintsAnnotation = EcoreUtil.getAnnotation(eClassifier, EcorePackage.eNS_URI, "constraints");
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if (eAnnotation != null) {
-			OCLInternal ocl = getOCL(context);
-			MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+			OCL ocl = PivotDiagnostician.getOCL(context, eClassifier);
+			MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal) ocl.getMetamodelManager();
 			StandardLibrary standardLibrary = ocl.getStandardLibrary();
 			EMap<String, String> details = eAnnotation.getDetails();
 			for (String constraintName : details.keySet()) {
@@ -358,10 +357,10 @@ public class EcoreOCLEValidator implements EValidator
 				}
 			}
 			else {
-				Set<String> ecoreConstraints = new HashSet<String>(EcoreUtil.getConstraints(eClassifier));
+				Set<String> ecoreConstraintNames = new HashSet<String>(EcoreUtil.getConstraints(eClassifier));
 				Set<String> oclConstraints = new HashSet<String>(details.keySet());
-				oclConstraints.removeAll(ecoreConstraints);
-				ecoreConstraints.removeAll(details.keySet());
+				oclConstraints.removeAll(ecoreConstraintNames);
+				ecoreConstraintNames.removeAll(details.keySet());
 				for (String aConstraint : oclConstraints) {
 					if (diagnostics != null) {
 						String objectLabel = EObjectValidator.getObjectLabel(eClassifier, context);
@@ -373,10 +372,10 @@ public class EcoreOCLEValidator implements EValidator
 						allOk = false;
 					}
 				}
-				for (String aConstraint : ecoreConstraints) {
+				for (String ecoreConstraintName : ecoreConstraintNames) {
 					if (diagnostics != null) {
 						String objectLabel = EObjectValidator.getObjectLabel(eClassifier, context);
-						String message = StringUtil.bind(EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, aConstraint, objectLabel);
+						String message = StringUtil.bind(EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, ecoreConstraintName, objectLabel);
 						diagnostics.add(new BasicDiagnostic(Diagnostic.WARNING, EcoreValidator.DIAGNOSTIC_SOURCE,
 							0, message,  new Object[] { eClassifier }));
 					}
@@ -455,8 +454,8 @@ public class EcoreOCLEValidator implements EValidator
 		boolean allOk = true;
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eOperation);
 		if (eAnnotation != null) {
-			OCLInternal ocl = getOCL(context);
-			MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+			OCL ocl = PivotDiagnostician.getOCL(context, eOperation);
+			MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal) ocl.getMetamodelManager();
 			StandardLibrary standardLibrary = ocl.getStandardLibrary();
 			EMap<String, String> details = eAnnotation.getDetails();
 			Set<String> knownKeys = new HashSet<String>();
@@ -556,8 +555,8 @@ public class EcoreOCLEValidator implements EValidator
 				}
 			}
 			else {
-				OCLInternal ocl = getOCL(context);
-				MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+				OCL ocl = PivotDiagnostician.getOCL(context, eStructuralFeature);
+				MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal) ocl.getMetamodelManager();
 				allOk = validateExpression(metamodelManager, eStructuralFeature, value, null, null, diagnostics, context);
 			}
 		}
