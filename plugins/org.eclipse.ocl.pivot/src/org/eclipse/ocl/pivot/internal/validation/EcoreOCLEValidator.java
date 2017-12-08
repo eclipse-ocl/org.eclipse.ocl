@@ -457,38 +457,30 @@ public class EcoreOCLEValidator implements EValidator
 			OCL ocl = PivotDiagnostician.getOCL(context, eOperation);
 			MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal) ocl.getMetamodelManager();
 			StandardLibrary standardLibrary = ocl.getStandardLibrary();
+			org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 			EMap<String, String> details = eAnnotation.getDetails();
-			Set<String> knownKeys = new HashSet<String>();
-			if (details.containsKey(InvocationBehavior.BODY_CONSTRAINT_KEY)) {
-				knownKeys.add(InvocationBehavior.BODY_CONSTRAINT_KEY);
-				String value = details.get(InvocationBehavior.BODY_CONSTRAINT_KEY);
-				Type requiredType = EcoreUtil.isInvariant(eOperation) ? standardLibrary.getBooleanType() : null;
-				allOk = validateExpression(metamodelManager, eOperation, value, requiredType, InvocationBehavior.BODY_CONSTRAINT_KEY, diagnostics, context);
-			}
-			if (details.containsKey("pre")) {
-				knownKeys.add("pre");
-				String value = details.get("pre");
-				allOk = validateExpression(metamodelManager, eOperation, value, standardLibrary.getBooleanType(), "pre", diagnostics, context);
-			}
-			if (details.containsKey("post")) {
-				knownKeys.add("post");
-				String value = details.get("post");
-				allOk = validateExpression(metamodelManager, eOperation, value, standardLibrary.getBooleanType(), "post", diagnostics, context);
-			}
-			Set<String> actualKeys = details.keySet();
-			Set<String> unknownKeys = new HashSet<String>(actualKeys);
-			unknownKeys.removeAll(knownKeys);
-			if (unknownKeys.size() > 0) {
-				if (diagnostics != null) {
-					for (String unknownKey : unknownKeys) {
+			for (String key : details.keySet()) {
+				String value = details.get(key);
+				if (key.equals(InvocationBehavior.BODY_CONSTRAINT_KEY)) {
+					Type requiredType = EcoreUtil.isInvariant(eOperation) ? booleanType : null;
+					allOk = validateExpression(metamodelManager, eOperation, value, requiredType, InvocationBehavior.BODY_CONSTRAINT_KEY, diagnostics, context);
+				}
+				else if (key.startsWith("pre")) {
+					allOk = validateExpression(metamodelManager, eOperation, value, booleanType, "pre", diagnostics, context);
+				}
+				else if (key.startsWith("post")) {
+					allOk = validateExpression(metamodelManager, eOperation, value, booleanType, "post", diagnostics, context);
+				}
+				else {
+					if (diagnostics != null) {
 						String objectLabel = EObjectValidator.getObjectLabel(eOperation, context);
-						String message = StringUtil.bind(UNKNOWN_DETAIL, unknownKey, objectLabel);
+						String message = StringUtil.bind(UNKNOWN_DETAIL, key, objectLabel);
 						diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
 							0, message,  new Object[] { eOperation }));
 					}
-				}
-				else {
-					allOk = false;
+					else {
+						allOk = false;
+					}
 				}
 			}
 		}
