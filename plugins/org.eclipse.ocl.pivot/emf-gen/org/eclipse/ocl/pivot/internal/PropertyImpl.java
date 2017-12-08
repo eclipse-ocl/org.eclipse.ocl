@@ -1687,7 +1687,7 @@ implements Property {
 	@Override
 	public void unloaded(@NonNull ASResource asResource) {
 		super.unloaded(asResource);
-		Property asOpposite = getOpposite();
+		Property asOpposite = basicGetOpposite();
 		if (asOpposite != null) {
 			Resource eResource = asOpposite.eResource();
 			if ((eResource != null) && (eResource != asResource)) {
