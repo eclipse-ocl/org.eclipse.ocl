@@ -176,4 +176,21 @@
       	class="org.eclipse.ocl.pivot.internal.labels.ValueLabelGenerator"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.annotation_validator">
+      <validator uri="http://www.eclipse.org/emf/2002/Ecore/OCL"
+      	class="org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Blank"/>
+      <validator uri="http://www.eclipse.org/emf/2002/Ecore/OCL/Debug"
+      	class="org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Debug"/>
+      <validator uri="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+      	class="org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Pivot"/>
+      <validator uri="http://www.eclipse.org/OCL/ASLibrary"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_ASLibrary_AnnotationValidator"/>
+      <validator uri="http://www.eclipse.org/OCL/ASMetamodel"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_ASMetamodel_AnnotationValidator"/>
+      <validator uri="http://www.eclipse.org/OCL/Collection"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_Collection_AnnotationValidator"/>
+      <validator uri="http://www.eclipse.org/OCL/Import"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_Import_AnnotationValidator"/>
+   </extension>
+
 </plugin>
