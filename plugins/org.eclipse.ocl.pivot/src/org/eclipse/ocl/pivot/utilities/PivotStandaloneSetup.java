@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.scoping.PivotScoping;
-import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -58,9 +57,9 @@ public class PivotStandaloneSetup //implements ISetup
 		OCLASResourceFactory theOCLASResourceFactory = OCLASResourceFactory.getInstance();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(ASResource.FILE_EXTENSION, theOCLASResourceFactory);
+			//			PivotEAnnotationValidator.initializePivotEAnnotationValidators();
 		}
 		EcorePackage.eINSTANCE.getClass();
-		PivotEAnnotationValidator.initializeEcoreEAnnotationValidators();
 		PivotScoping.init();
 		ToStringVisitor.FACTORY.getClass();
 		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);

@@ -63,7 +63,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		}
 	}
 
-	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.hasEcoreEAnnotationValidators() ? 3 : 0;
+	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null? 3 : 0;
 
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);
@@ -218,7 +218,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			Resource newResource = resourceSet.getResource(newFileURI, true);
 			EObject eObject = newResource.getContents().get(0);
 			assertTrue(eObject instanceof RootNode);
-			URI appendFileExtension = newFileURI.trimFileExtension().appendFileExtension(PivotEAnnotationValidator.hasEcoreEAnnotationValidators() ? "referenceWithEAnnotationValidators" : "reference");
+			URI appendFileExtension = newFileURI.trimFileExtension().appendFileExtension(PivotEAnnotationValidator.getEAnnotationValidatorRegistry() != null ? "referenceWithEAnnotationValidators" : "reference");
 			Resource refResource = resourceSet.getResource(appendFileExtension.appendFileExtension("validity"), true);
 			refResource.setURI(newFileURI);
 			TestUtil.assertSameModel(refResource, newResource);

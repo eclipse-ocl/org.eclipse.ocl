@@ -44,8 +44,10 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -54,6 +56,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -63,6 +66,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.Normalizer;
+import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -323,6 +327,53 @@ public class TestUtil
 			}
 		}
 		return projectURL;
+	}
+
+	public static boolean initializeEcoreEAnnotationValidators() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
+		Map<String, Object> eAnnotationValidatorRegistry2 = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+		if (eAnnotationValidatorRegistry2 != null) {
+			try {
+				PivotEAnnotationValidator.installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.ecore.util.EcoreAnnotationValidator");
+				PivotEAnnotationValidator.installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator");
+				PivotEAnnotationValidator.installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.codegen.ecore.genmodel.util.GenModelAnnotatonValidator");
+				EPackage.Registry.INSTANCE.put("http:///org/eclipse/emf/ecore/util/EcoreAnnotation"/*ePackage.getNsURI()*/, new EPackage.Descriptor()
+				{
+					@Override
+					public EPackage getEPackage() {
+						ResourceSet resourceSet = new ResourceSetImpl();
+						OCL.CLASS_PATH.initializeResourceSet(resourceSet);
+						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+						Resource eResource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/EcoreAnnotation.ecore", true), true);
+						return (EPackage) eResource.getContents().get(0);
+					}
+
+					@Override
+					public EFactory getEFactory() {
+						return getEPackage().getEFactoryInstance();
+					}
+				});
+				EPackage.Registry.INSTANCE.put("http:///org/eclipse/emf/ecore/util/ExtendedMetaData"/*ePackage.getNsURI()*/, new EPackage.Descriptor()
+				{
+					@Override
+					public EPackage getEPackage() {
+						ResourceSet resourceSet = new ResourceSetImpl();
+						OCL.CLASS_PATH.initializeResourceSet(resourceSet);
+						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+						Resource eResource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/ExtendedMetaData.ecore", true), true);
+						return (EPackage) eResource.getContents().get(0);
+					}
+
+					@Override
+					public EFactory getEFactory() {
+						return getEPackage().getEFactoryInstance();
+					}
+				});
+				return true;
+			}
+			catch (Exception e) {}
+		}
+		return false;
 	}
 
 	public static void mkdirs(IContainer parent) throws CoreException {

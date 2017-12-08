@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.validation;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EAnnotationValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -22,8 +23,8 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.4
  */
-public class PivotEAnnotationValidator {
-
+public class PivotEAnnotationValidator
+{
 	/**
 	 * Set true if EMF has EAnnotationValidator support, else false and there is no EAnnotationValidator checking.
 	 */
@@ -40,19 +41,17 @@ public class PivotEAnnotationValidator {
 	}
 
 	/**
-	 * Return true if there is EAnnotationValidator support.
+	 * Return the non-null registry if there is EAnnotationValidator support.
 	 */
-	public static boolean hasEcoreEAnnotationValidators() {
-		return eAnnotationValidatorRegistry != null;
+	public static @Nullable Map<String, Object> getEAnnotationValidatorRegistry() {
+		return eAnnotationValidatorRegistry;
 	}
 
-	public static boolean initializeEcoreEAnnotationValidators() {
+	public static boolean initializePivotEAnnotationValidators() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		Map<String, Object> eAnnotationValidatorRegistry2 = eAnnotationValidatorRegistry;
 		if (eAnnotationValidatorRegistry2 != null) {
 			try {
-				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.ecore.util.EcoreAnnotationValidator");
-				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator");
-				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.emf.codegen.ecore.genmodel.util.GenModelAnnotatonValidator");
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Blank");
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Debug");
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.Ecore_OCL_AnnotationValidator$Pivot");
@@ -69,9 +68,9 @@ public class PivotEAnnotationValidator {
 
 	/**
 	 * Install the annotationValidatorClassName in the eAnnotationValidatorRegistry using reflection
-	 * to load the class in case it does not exist in EMF, or it inherits from an non-existent EMF class.
+	 * to load the class in case it does not exist in EMF, or it inherits from a non-existent EMF class.
 	 */
-	protected static void installAnnotationValidator(@NonNull Map<String, Object> eAnnotationValidatorRegistry, @NonNull String annotationValidatorClassName) {
+	public static void installAnnotationValidator(@NonNull Map<String, Object> eAnnotationValidatorRegistry, @NonNull String annotationValidatorClassName) {
 		try {
 			Class<?> annotationValidatorClass = Class.forName(annotationValidatorClassName);
 			Object annotationValidatorInstance = annotationValidatorClass.getField("INSTANCE").get(null);
