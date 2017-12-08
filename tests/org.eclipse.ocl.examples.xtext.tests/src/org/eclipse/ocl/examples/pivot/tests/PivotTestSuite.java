@@ -207,10 +207,6 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 		return feature;
 	}
 
-	protected @NonNull String getTestPackageName() {
-		return "test_package";
-	}
-
 	protected void initializeResourceSet() {
 		resourceSet = createResourceSet();
 		standardResources = new ArrayList<Resource>(resourceSet.getResources());

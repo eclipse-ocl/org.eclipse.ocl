@@ -35,7 +35,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -59,7 +59,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * WARNING. These tests fail as plugin tests if an OCLinEcore tutorial project is open.
  */
 @SuppressWarnings({"nls","null"})
-public class OCLinEcoreTutorialExamples extends PivotTestCase
+public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
 	public void testOCLinEcoreTutorialUsingLPGForLPG() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  */
-public abstract class AbstractProjectMapTest extends PivotTestCase
+public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDown
 {
 /*	protected void doTestProjectMapRegistered(/ *@NonNull* / EPackage modelPackage, @NonNull String modelPath) {
 		URI nsURI = URI.createURI(modelPackage.getNsURI());

@@ -15,10 +15,10 @@ import java.net.URL;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.export.IValidityExporter;
-import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 
-public class StandaloneTestCase extends PivotTestCase
+public class StandaloneTestCase extends PivotTestCaseWithAutoTearDown
 {
 	protected final @NonNull String inputModelName = getProjectFileName("models/EcoreTestFile.ecore"); //$NON-NLS-1$
 	protected final @NonNull String inputOCLFileName = getProjectFileName("models/eclipse_ocl_rule.ocl"); //$NON-NLS-1$

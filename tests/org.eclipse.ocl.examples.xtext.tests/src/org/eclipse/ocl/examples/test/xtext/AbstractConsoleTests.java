@@ -18,7 +18,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.console.ColorManager;
 import org.eclipse.ocl.examples.xtext.console.OCLConsole;
 import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
@@ -35,8 +35,8 @@ import org.eclipse.ui.part.IPageBookViewPage;
 /**
  * Tests that exercise the Xtext OCL Console.
  */
-public abstract class AbstractConsoleTests extends PivotTestCase
-{	
+public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
+{
 	public static class TestConsole extends OCLConsole
 	{
 		private static TestConsole instance;
@@ -45,12 +45,12 @@ public abstract class AbstractConsoleTests extends PivotTestCase
 			if (instance == null) {
 				instance = new TestConsole();
 				ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] {instance});
-			}			
+			}
 			return instance;
 		}
 
 		private TestConsolePage page;
-		
+
 		@Override
 		public void close() {
 			super.close();
@@ -63,12 +63,12 @@ public abstract class AbstractConsoleTests extends PivotTestCase
 			page = new TestConsolePage(this);
 			return page;
 		}
-		
+
 		public final TestConsolePage getPage() {
 			return page;
 		}
 	}
-	
+
 	public static class TestConsolePage extends OCLConsolePage
 	{
 		private StringBuilder s = new StringBuilder();
@@ -148,7 +148,7 @@ public abstract class AbstractConsoleTests extends PivotTestCase
 		consolePage.refreshSelection(contextObject);
 		TestUIUtil.flushEvents();
 		BaseDocument editorDocument = consolePage.getEditorDocument();
-//		System.out.println("Set " + testExpression);
+		//		System.out.println("Set " + testExpression);
 		editorDocument.set(testExpression);
 		TestUIUtil.flushEvents();			// Let ValidationJob and other activities have a go
 		consolePage.evaluate(testExpression);
@@ -166,14 +166,14 @@ public abstract class AbstractConsoleTests extends PivotTestCase
 			IProject project = workspace.getRoot().getProject(testProjectName);
 			project.delete(true, true, null);
 		}
-/*		else {
+		/*		else {
 			File dir = new File("src-gen/" + testProjectName);
 			if (dir.exists()) {
 				doDeleteDirectory(dir);
 			}
 		} */
 	}
-	
+
 	protected @NonNull TestConsolePage openConsole() {
 		TestUIUtil.closeIntro();
 		TestUIUtil.flushEvents();
@@ -188,23 +188,23 @@ public abstract class AbstractConsoleTests extends PivotTestCase
 		}
 		assert consolePage != null;
 		return consolePage;
-	}	
-	
+	}
+
 	@Override
-    protected void setUp() throws Exception {
-		TestUIUtil.suppressGitPrefixPopUp();    		
-        super.setUp();
+	protected void setUp() throws Exception {
+		TestUIUtil.suppressGitPrefixPopUp();
+		super.setUp();
 		OCLstdlib.install();
 		consolePage = openConsole();
-    }
+	}
 
 	@Override
 	protected void tearDown() throws Exception {
 		TestUIUtil.cancelAndWaitForValidationJob();
-//		System.out.println(Thread.currentThread().getName() + " pre-tearDown " + NameUtil.debugSimpleName(this));
+		//		System.out.println(Thread.currentThread().getName() + " pre-tearDown " + NameUtil.debugSimpleName(this));
 		TestConsole.getInstance().close();
 		consolePage = null;
 		super.tearDown();
-//		System.out.println(Thread.currentThread().getName() + " post-tearDown " + NameUtil.debugSimpleName(this));
+		//		System.out.println(Thread.currentThread().getName() + " post-tearDown " + NameUtil.debugSimpleName(this));
 	}
 }

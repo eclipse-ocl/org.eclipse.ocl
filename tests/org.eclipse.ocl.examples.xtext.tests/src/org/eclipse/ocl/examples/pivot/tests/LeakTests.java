@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Christian W. Damus and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  *
  * Contributors:
  *   Christian W. Damus - Initial API and implementation
- *   
+ *
  */
 
 package org.eclipse.ocl.examples.pivot.tests;
@@ -44,7 +44,7 @@ import org.eclipse.uml2.uml.util.UMLUtil;
 /**
  * A test case that demonstrates a memory leak in the OCL Validation infrastructure.
  */
-public class LeakTests extends PivotTestCase
+public class LeakTests extends PivotTestCaseWithAutoTearDown
 {
 	/**
 	 * This is based on the way Papyrus does validation.
@@ -136,15 +136,15 @@ public class LeakTests extends PivotTestCase
 			}
 		}
 	}
-	
+
 	/**
 	 * A test that demonstrates the memory leak from validation of the model.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	public void testValidateProfileLeak() throws InterruptedException, ParserException {	// Bug 459276
 		GlobalEnvironmentFactory.disposeInstance();
-//		PartialModels.PARTIAL_MODELS.setState(true);
-//		UML2AS.CONVERT_RESOURCE.setState(true);
+		//		PartialModels.PARTIAL_MODELS.setState(true);
+		//		UML2AS.CONVERT_RESOURCE.setState(true);
 		UMLStandaloneSetup.init();
 		ResourceSet resourceSet = new ResourceSetImpl();
 		UMLResourcesUtil.init(resourceSet);
