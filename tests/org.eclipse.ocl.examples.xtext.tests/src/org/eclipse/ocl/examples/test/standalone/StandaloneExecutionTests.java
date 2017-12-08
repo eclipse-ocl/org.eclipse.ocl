@@ -38,7 +38,7 @@ import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 import org.eclipse.ocl.examples.validity.locator.AbstractPivotConstraintLocator;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
-import org.eclipse.ocl.pivot.internal.resource.PivotEAnnotationValidator;
+import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.junit.Test;
 
 public class StandaloneExecutionTests extends StandaloneTestCase
