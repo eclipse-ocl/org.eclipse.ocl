@@ -71,7 +71,7 @@ import junit.framework.TestCase;
  */
 public class ValidateTests extends AbstractValidateTests
 {
-	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, String... messages) {
+	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
 			validationContext.put(OCL.class,  ocl);
@@ -135,11 +135,10 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Check EObjectValidator errors
 		//
-		checkValidationDiagnostics(temp, Diagnostic.ERROR);
-		assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource,
-			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
-			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),
-			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, ValidationBehavior.NAME, LabelUtil.getLabel(temp)),
+		@NonNull String[] messages1 = new @NonNull String[] {
+			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
+			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),
+			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, ValidationBehavior.NAME, LabelUtil.getLabel(temp)),
 			StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, "extraInvariant", LabelUtil.getLabel(tester)),
 			StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, "missingInvariant", LabelUtil.getLabel(tester)),
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", LabelUtil.getLabel(badOp), "body"),
@@ -147,9 +146,23 @@ public class ValidateTests extends AbstractValidateTests
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "post"),
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_1, "Boolean", LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
 			StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
-			StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial"))));
-		//
-		ocl.dispose();
+			StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
+			checkValidationDiagnostics(temp, Diagnostic.ERROR, NO_MESSAGES/*messages1*/);
+			@NonNull String[] messages2 = new @NonNull String[] {
+				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
+				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),
+				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, ValidationBehavior.NAME, LabelUtil.getLabel(temp)),
+				StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, "extraInvariant", LabelUtil.getLabel(tester)),
+				StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, "missingInvariant", LabelUtil.getLabel(tester)),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", LabelUtil.getLabel(badOp), "body"),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "pre"),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "post"),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_1, "Boolean", LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
+				StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
+				StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
+				assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource, messages2);
+				//
+				ocl.dispose();
 	}
 
 	public void testValidate_Bug418552_oclinecore() throws IOException, InterruptedException {
@@ -168,8 +181,8 @@ public class ValidateTests extends AbstractValidateTests
 						"}\n";
 		createOCLinEcoreFile("Bug418552.oclinecore", testDocument);
 		OCL ocl1 = createOCL();
-		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, "temp::Tester::total"));
+		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552", getMessages(
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, "temp::Tester::total")));
 		Object property = diagnostics.get(0).getData().get(0);
 		assert property != null;
 		assertEquals(PivotPackage.Literals.PROPERTY, ((EObject)property).eClass());
@@ -322,10 +335,10 @@ public class ValidateTests extends AbstractValidateTests
 		createOCLinEcoreFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
-		assertValidationDiagnostics("Without Complete OCL", resource,
+		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
 			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"));
+			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3")));
 		//
 		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
 			@Override
@@ -338,11 +351,11 @@ public class ValidateTests extends AbstractValidateTests
 		assertTrue(helper.loadDocument(oclURI));
 		helper.installPackages();
 
-		assertValidationDiagnostics("Without Complete OCL", resource, //validationContext,
+		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(//validationContext,
 			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2")));
 		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
@@ -402,7 +415,7 @@ public class ValidateTests extends AbstractValidateTests
 			}
 		}
 		assert uNamed != null;
-		assertValidationDiagnostics("Without Complete OCL", resource);
+		assertValidationDiagnostics("Without Complete OCL", resource, NO_MESSAGES);
 		//
 		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
 			@Override
@@ -417,11 +430,11 @@ public class ValidateTests extends AbstractValidateTests
 		String objectLabel1 = LabelUtil.getLabel(uNamed);
 		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
 		//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());
-		assertValidationDiagnostics("Without Complete OCL", resource,
+		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel3),	// FIXME BUG 437450
-			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel4)*/);	// FIXME BUG 437450
+			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel4)*/));	// FIXME BUG 437450
 		//		adapter.getMetamodelManager().dispose();
 		//		disposeResourceSet(resourceSet);
 		helper.dispose();

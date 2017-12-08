@@ -99,9 +99,10 @@ import junit.framework.TestCase;
 /**
  * Tests for OclAny operations.
  */
-@SuppressWarnings("nls")
 public class PivotTestCase extends TestCase
 {
+	public static final @NonNull String @NonNull [] NO_MESSAGES = new @NonNull String[] {};
+	public static final @NonNull String @NonNull [] SUPPRESS_VALIDATION = new @NonNull String[] {"FIXME"};	// FIXME should not be needed
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.examples.xtext.tests";
 	public static final @NonNull TracingOption TEST_START = new TracingOption(PLUGIN_ID, "test/start");
 	//	private static StandaloneProjectMap projectMap = null;
@@ -191,13 +192,12 @@ public class PivotTestCase extends TestCase
 		return xtextResource;
 	}
 
-	public static @NonNull Resource as2ecore(@NonNull OCL ocl, @NonNull Resource asResource, @Nullable URI ecoreURI, boolean validateSaved) throws IOException {
-		Resource ecoreResource = ocl.as2ecore(asResource, ecoreURI != null ? ecoreURI : ClassUtil.nonNullEMF(URI.createURI("test.ecore")));
-		if (ecoreURI != null) {
-			ecoreResource.save(null);
-		}
-		if (validateSaved) {
-			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
+	public static @NonNull Resource as2ecore(@NonNull OCL ocl, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
+		Resource ecoreResource = ocl.as2ecore(asResource, ecoreURI);
+		ecoreResource.save(null);
+		if (asValidationMessages != SUPPRESS_VALIDATION) {
+			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
+			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
 		}
 		return ecoreResource;
 	}
@@ -466,7 +466,7 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull Resource cs2ecore(@NonNull OCL ocl, @NonNull String testDocument, @Nullable URI ecoreURI) throws IOException {
+	public static @NonNull Resource cs2ecore(@NonNull OCL ocl, @NonNull String testDocument, @NonNull URI ecoreURI) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
@@ -475,7 +475,7 @@ public class PivotTestCase extends TestCase
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
 		Resource asResource = cs2as(ocl, xtextResource, null);
-		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, true);
+		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
 
@@ -601,6 +601,16 @@ public class PivotTestCase extends TestCase
 			}
 		}
 		return s != null ? s.toString() : null;
+	}
+
+	public static @NonNull String @NonNull [] getMessages(String... messages) {
+		@NonNull String[] messageArray = new @NonNull String[messages.length];
+		for (int i = 0; i < messages.length; i++) {
+			String message = messages[i];
+			assert message != null;
+			messageArray[i] = message;
+		}
+		return messageArray;
 	}
 
 	public static @NonNull StandaloneProjectMap getProjectMap() {

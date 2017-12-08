@@ -122,7 +122,7 @@ public class EditTests extends XtextTestCase
 		if (validSave) {
 			assertNoValidationErrors(contextMessage, asResource);
 		}
-		Resource ecoreResource = as2ecore(ocl, asResource, null, true);
+		Resource ecoreResource = as2ecore(ocl, asResource, getTestFileURI("test.ecore"), NO_MESSAGES);
 		assertNoResourceErrors(contextMessage, ecoreResource);
 		return ecoreResource;
 	}
@@ -132,7 +132,7 @@ public class EditTests extends XtextTestCase
 		CSResource xtextResource = ocl.getCSResource(xtextURI, testDocument);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
 		Resource asResource = cs2as(ocl, xtextResource, null);
-		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, true);
+		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
 
@@ -162,7 +162,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
 			asResource = cs2as(ocl, xtextResource, null);
-			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
 		//	Change NsURI.
@@ -174,7 +174,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 		}
 		//
 		//	Revert NsURI.
@@ -186,7 +186,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Unpasting operation", asResource);
 			assertNoValidationErrors("Unpasting operation", asResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 		}
 		ocl.dispose();
 	}
@@ -225,7 +225,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, oldDocument);
 			asResource = cs2as(ocl, xtextResource, null);
-			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
 		//	Change NsURI.
@@ -237,7 +237,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 		}
 		//
 		//	Revert NsURI.
@@ -249,7 +249,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Unpasting operation", asResource);
 			assertNoValidationErrors("Unpasting operation", asResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 		}
 		ocl.dispose();
 	}
@@ -286,7 +286,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
 			asResource = cs2as(ocl, xtextResource, null);
-			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
 		//	Change "/*$$*/" to "pasteText".
@@ -298,7 +298,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 		}
 		//
 		//	Change "pasteText" back to "/*$$*/".
@@ -310,7 +310,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Unpasting operation", asResource);
 			assertNoValidationErrors("Unpasting operation", asResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 		}
 		ocl.dispose();
 	}
@@ -323,7 +323,8 @@ public class EditTests extends XtextTestCase
 		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		String testDocument =
-				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore' ; import uml : 'http://www.eclipse.org/uml2/5.0.0/UML' ;\n" +
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore' ;\n" +
+						"import uml : 'http://www.eclipse.org/uml2/5.0.0/UML' ;\n" +
 						"\n" +
 						"package UML2EcoreMapping : u2e = 'http://www.eclipse.org/ocl/2012/UML2EcoreMapping'\n" +
 						"{\n" +
@@ -492,13 +493,13 @@ public class EditTests extends XtextTestCase
 		//		System.out.println("------Load--------------------------------");
 		Resource asResource;
 		{
-			URI ecoreURI1 = getProjectFileURI("Bug473249a.ecore");
-			URI outputURI = getProjectFileURI("Bug473249.oclinecore");
+			URI ecoreURI1 = getTestFileURI("Bug473249a.ecore");
+			URI outputURI = getTestFileURI("Bug473249.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
 			//			System.out.println("------cs2as--------------------------------");
 			asResource = cs2as(ocl, xtextResource, null);
 			//			System.out.println("------as2ecore--------------------------------");
-			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
 		//	Change "/*$$*/" to "pasteText".
@@ -511,9 +512,9 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Pasting operation", xtextResource);
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
-			URI ecoreURI2 = getProjectFileURI("Bug473249b.ecore");
+			URI ecoreURI2 = getTestFileURI("Bug473249b.ecore");
 			//			System.out.println("------as2ecore--------------------------------");
-			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 		}
 		ocl.dispose();
 	}
@@ -541,7 +542,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument_class);
 			asResource = cs2as(ocl, xtextResource, null);
-			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_class, ecoreResource1);
 		}
 		//
@@ -551,7 +552,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "class", "datatype");
 			assertNoResourceErrors("Reclassing to datatype", xtextResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 			TestUtil.assertSameModel(ecoreResource_datatype, ecoreResource2);
 		}
 		//
@@ -561,7 +562,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "datatype", "class");
 			assertNoResourceErrors("Reclassing to class", xtextResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_class, ecoreResource3);
 		}
 		ocl_class.dispose();
@@ -608,7 +609,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument_uncommented);
 			asResource = cs2as(ocl, xtextResource, null);
-			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_uncommented, ecoreResource1);
 		}
 		//
@@ -618,7 +619,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "class", "/* a comment */class");
 			assertNoResourceErrors("Adding comment", xtextResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 			TestUtil.assertSameModel(ecoreResource_commented, ecoreResource2);
 		}
 		//
@@ -628,7 +629,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "/* a comment */", "/* yet\n* another\n * comment */");
 			assertNoResourceErrors("Changing comment", xtextResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_recommented, ecoreResource3);
 		}
 		//
@@ -638,7 +639,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "/* yet\n* another\n * comment */", "");
 			assertNoResourceErrors("Removing comment", xtextResource);
 			URI ecoreURI4 = getProjectFileURI("test4.ecore");
-			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, true);
+			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_uncommented, ecoreResource4);
 		}
 		ocl_uncommented.dispose();
@@ -762,7 +763,7 @@ public class EditTests extends XtextTestCase
 			URI outputURI = getProjectFileURI("test.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
 			asResource = cs2as(ocl, xtextResource, null);
-			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
 		//
@@ -772,7 +773,7 @@ public class EditTests extends XtextTestCase
 			xtextResource.update(0, 0, " ");
 			assertNoResourceErrors("Adding space", xtextResource);
 			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, true);
+			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource2);
 		}
 		//
@@ -782,7 +783,7 @@ public class EditTests extends XtextTestCase
 			xtextResource.update(0, 1, "");
 			assertNoResourceErrors("Deleting space", xtextResource);
 			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource3);
 		}
 		//
@@ -792,7 +793,7 @@ public class EditTests extends XtextTestCase
 			replace(xtextResource, "p1", "pkg");
 			assertNoResourceErrors("Renaming", xtextResource);
 			URI ecoreURI4 = getProjectFileURI("test4.ecore");
-			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, true);
+			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, NO_MESSAGES);
 			((EPackage)ecoreResource0.getContents().get(0)).setName("pkg");
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource4);
 		}
@@ -824,7 +825,7 @@ public class EditTests extends XtextTestCase
 		CSResource xtextResource = ClassUtil.nonNullState(ocl.getCSResource(outputURI, testDocument));
 		Resource asResource = cs2as(ocl, xtextResource, null);
 		{
-			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
 		Type pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
@@ -906,7 +907,7 @@ public class EditTests extends XtextTestCase
 		CSResource xtextResource = ocl.getCSResource(outputURI, testDocument);
 		Resource asResource = cs2as(ocl, xtextResource, null);
 		{
-			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
 		Type pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));

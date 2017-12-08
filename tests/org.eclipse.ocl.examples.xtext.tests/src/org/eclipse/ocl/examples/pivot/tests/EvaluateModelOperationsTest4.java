@@ -156,7 +156,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"    property anEDate : ecore::EDate;\n" +
 						"  }\n" +
 						"}\n";
-		Resource metamodel = cs2ecore(ocl, metamodelText, null);
+		Resource metamodel = cs2ecore(ocl, metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
 		EClass eClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifiers().get(0));
 		//        helper.setContext(metamodelManager.getIdResolver().getType(eClass));
@@ -295,7 +295,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"    attribute name : String;\n" +
 						"  }\n" +
 						"}\n";
-		Resource metamodel = cs2ecore(ocl, metamodelText, null);
+		Resource metamodel = cs2ecore(ocl, metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
 		EClass aClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("A"));
 		EClass bClass = (EClass) ePackage.getEClassifier("B");
@@ -364,7 +364,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"	}\n" +
 						"}\n";
 		OCL ocl1 = createOCL();
-		Resource metamodel = cs2ecore(ocl1, metamodelText, null);
+		Resource metamodel = cs2ecore(ocl1, metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
 		EClass parentClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Parent"));
 		EClass child1Class = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Child1"));
@@ -469,7 +469,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"		property right#right : Parent[?] { ordered };\n" +
 						"	}\n" +
 						"}\n";
-		Resource metamodel = cs2ecore(ocl, metamodelText, null);
+		Resource metamodel = cs2ecore(ocl, metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
 		EClass parentClass = (EClass) ePackage.getEClassifier("Parent");
 		EClass childClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Child"));
