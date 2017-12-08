@@ -147,7 +147,7 @@ public class ValidateTests extends AbstractValidateTests
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_1, "Boolean", LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
 			StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 			StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
-			checkValidationDiagnostics(temp, Diagnostic.ERROR, NO_MESSAGES/*messages1*/);
+			checkValidationDiagnostics(temp, Diagnostic.ERROR, messages1);
 			@NonNull String[] messages2 = new @NonNull String[] {
 				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
 				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),

@@ -687,7 +687,7 @@ public class SerializeTests extends XtextTestCase
 		//				"	The ''LetVariable::CompatibleTypeForInitializer'' constraint is violated for ''firstLetter : String[?] = invalid.oclBadOperation()''");
 		String message4 = StringUtil.bind("Parsing error ''org.eclipse.ocl.pivot.utilities.SemanticException: The ''states::State'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
 				"1: Unresolved Operation ''OclInvalid::substring(1, 1)'''' for ''states::State'' ''NameIsLeadingUpperCase''");
-		doSerialize(ocl, "States", "States", options, false, NO_MESSAGES/*getMessages(message1, message2)*/, NO_MESSAGES/*getMessages(message4)*/);
+		doSerialize(ocl, "States", "States", options, false, NO_MESSAGES/*getMessages(message1, message2)*/, getMessages(message4));
 		//			new String[] {StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1")});
 		ocl.dispose();
 	}
