@@ -64,15 +64,39 @@ public abstract class PivotDiagnostician extends Diagnostician
 	/**
 	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
 	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
+	 *
+	 * @deprecated pass a null eObject to getOCL(context, eObject)
 	 */
+	@Deprecated
 	public static @NonNull OCL getOCL(@NonNull Map<Object, Object> context) {
+		return getOCL(context, null);
+	}
+
+	/**
+	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
+	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
+	 *
+	 * If no OCL context is cached a new one is created first by creating an OCL for an EnvironmentFactory adapting
+	 * a non-null eObject's Rsource or ResourceSet. Otherwise by creating a new global OCL.
+	 *
+	 * @since 1.4
+	 */
+	public static @NonNull OCL getOCL(@NonNull  Map<Object, Object> context, @Nullable EObject eObject) {
 		OCL ocl = null;
 		Object oclRef = context.get(WeakOCLReference.class);
 		if (oclRef instanceof WeakOCLReference) {
 			ocl = ((WeakOCLReference)oclRef).get();
 		}
 		if (ocl == null) {
-			ocl = OCL.newInstance();
+			if (eObject != null) {
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(eObject);
+				if (environmentFactory != null) {
+					ocl = environmentFactory.createOCL();
+				}
+			}
+			if (ocl == null) {
+				ocl = OCL.newInstance();
+			}
 			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 		}
 		return ocl;

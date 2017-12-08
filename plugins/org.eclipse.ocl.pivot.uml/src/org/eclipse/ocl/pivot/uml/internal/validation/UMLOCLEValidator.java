@@ -319,7 +319,7 @@ public class UMLOCLEValidator implements EValidator
 					if (umlResource != null) {
 						EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(umlResource);
 						if (environmentFactory == null) {
-							OCL ocl = PivotDiagnostician.getOCL(context);
+							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
 							environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
 						}
 						MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -594,7 +594,7 @@ public class UMLOCLEValidator implements EValidator
 	 * cached results between successive validations. Returns true if successful, false otherwise.
 	 */
 	protected boolean validateSyntax1(@NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		OCL ocl = PivotDiagnostician.getOCL(context);
+		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
 		try {
 			MetamodelManager metamodelManager = ocl.getMetamodelManager();
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = metamodelManager.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
@@ -631,7 +631,7 @@ public class UMLOCLEValidator implements EValidator
 	}
 
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		OCL ocl = PivotDiagnostician.getOCL(context);
+		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
 		ExpressionInOCL asQuery = null;
 		try {
 			MetamodelManager metamodelManager = ocl.getMetamodelManager();
