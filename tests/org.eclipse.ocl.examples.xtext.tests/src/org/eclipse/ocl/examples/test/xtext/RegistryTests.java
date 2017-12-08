@@ -27,8 +27,6 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry.Registration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.xtext.testing.GlobalRegistries;
-import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
 import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
@@ -53,9 +51,9 @@ public class RegistryTests extends TestCase
 	}
 
 	public void testCompleteOCLRegistry_Access() {
-		GlobalStateMemento copyOfGlobalState = null;
+		GlobalRegistries2.GlobalStateMemento copyOfGlobalState = null;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			copyOfGlobalState = GlobalRegistries.makeCopyOfGlobalState();
+			copyOfGlobalState = GlobalRegistries2.makeCopyOfGlobalState();
 		}
 		try {
 			EcorePlugin.ExtensionProcessor.process(null);
