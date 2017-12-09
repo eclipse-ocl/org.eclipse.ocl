@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -692,6 +693,9 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Empty_ecore() throws IOException, InterruptedException {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			TestUtil.initializeEcoreEAnnotationValidators();
+		}
 		OCL ocl = createOCL();
 		doLoad(ocl, "Empty", "ecore");
 		ocl.dispose();

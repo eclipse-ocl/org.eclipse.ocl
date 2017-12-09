@@ -187,6 +187,9 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 	public void doRoundTripFromEcore(URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			TestUtil.initializeEcoreEAnnotationValidators();
+		}
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
 		ocl.dispose();

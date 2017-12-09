@@ -865,8 +865,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			Model model = (Model) umlResource.getContents().get(0);
 			org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
 			assertNoResourceErrors("Load", umlResource);
-			assertValidationDiagnostics("Validate", umlResource,
-				EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[]{"Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)}));
+			assertValidationDiagnostics("Validate", umlResource, getMessages(
+				EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[]{"Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)})));
 			umlEditor.dispose();
 		}
 		ocl.dispose();

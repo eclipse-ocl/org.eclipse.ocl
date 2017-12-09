@@ -29,6 +29,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -63,6 +64,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -202,9 +204,9 @@ public class PivotTestCase extends TestCase
 		return ecoreResource;
 	}
 
-	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, String... messages) {
+	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
 		Map<String, Integer> expected = new HashMap<String, Integer>();
-		for (String message : messages) {
+		for (@NonNull String message : messages) {
 			Integer count = expected.get(message);
 			count = count == null ? 1 : count + 1;
 			expected.put(message, count);
@@ -313,18 +315,27 @@ public class PivotTestCase extends TestCase
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
-		List<Diagnostic> children = diagnostic.getChildren();
+		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		BasicDiagnostic diagnostics = BasicEAnnotationValidator2.validate(eObject, validationContext);
+		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {
 			return;
 		}
 		StringBuilder s = new StringBuilder();
 		s.append(children.size() + " validation errors");
-		for (Diagnostic child : children){
-			s.append("\n\t");
-			s.append(child.getMessage());
-		}
+		appendChildren(s, children, 0);
 		fail(s.toString());
+	}
+
+	protected static void appendChildren(StringBuilder s, List<Diagnostic> children, int depth) {
+		for (Diagnostic child : children){
+			s.append("\n");
+			for (int i = 0; i < depth; i++) {
+				s.append("    ");
+			}
+			s.append(child.getMessage());
+			appendChildren(s, child.getChildren(), depth+1);
+		}
 	}
 
 	public static void assertResourceErrors(@NonNull String prefix, @NonNull Resource resource, String... messages) {
@@ -387,15 +398,16 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, String... messages) {
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @NonNull [] messages) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, Map<Object, Object> validationContext, String... messages) {
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, Map<Object, Object> validationContext, @NonNull String @Nullable [] messages) {
 		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
 		for (EObject eObject : resource.getContents()) {
-			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+			//			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+			Diagnostic diagnostic = BasicEAnnotationValidator2.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
 		return messages != null ? assertDiagnostics(prefix, diagnostics, messages) : Collections.emptyList();
