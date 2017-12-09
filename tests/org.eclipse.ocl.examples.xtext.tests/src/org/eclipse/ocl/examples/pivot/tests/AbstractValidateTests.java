@@ -31,7 +31,6 @@ import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 //import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -72,7 +71,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 			expectedMessages.add(message);
 		}
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic diagnostics = BasicEAnnotationValidator2.validate(testInstance, validationContext);
+		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {
 			//			assertEquals(severity, diagnostic.getSeverity());

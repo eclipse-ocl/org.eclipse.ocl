@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.validation;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,10 +30,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.util.BasicEAnnotationValidator;
-import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.osgi.util.NLS;
 
@@ -46,35 +43,6 @@ import org.eclipse.osgi.util.NLS;
  */
 public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidator
 {
-	/**
-	 * BasicDiagnosticWithRemove supports the migration of child diagnostics to grandchildren in the more
-	 * efficient validateFeatureDetail override.
-	 *
-	 * The enhancement is facilitated by a remove. The actual requirement is to split off all children after a
-	 * given index for additional to another BasicDiagnostic. Perhaps a truncate(index) or split(index) might
-	 * be better; many low level alternatives possible. Maybe just a getRawChildren().
-	 */
-	public static class BasicDiagnosticWithRemove extends BasicDiagnostic {
-
-		public BasicDiagnosticWithRemove(String source, int code, String message, Object[] data) {
-			super(source, code, message, data);
-		}
-
-		Diagnostic remove(int index) {
-			return children.remove(index);
-		}
-	}
-
-	/**
-	 * This validate is a convenience method demonstrating how the BasicDiagnosticWithRemove enhancement
-	 * can be exploited.
-	 */
-	public static BasicDiagnostic validate(EObject eObject, Map<Object, Object> validationContext) {
-		BasicDiagnostic diagnostics = new BasicEAnnotationValidator2.BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { Diagnostician.INSTANCE.getObjectLabel(eObject) }), new Object [] { eObject });
-		Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext);
-		return diagnostics;
-	}
-
 	/**
 	 * The valid locations; the list of actual annotatable EClass in the annotated model for which annotation classes
 	 * are declared. This list is eagerly populated by creation of the annotation model during construction.
@@ -243,7 +211,7 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 			Map<Object, Object> context) {
 		int oldChildren;
 		BasicDiagnostic childDiagnostic;
-		if (diagnostics instanceof BasicDiagnosticWithRemove) {
+		if (diagnostics instanceof PivotDiagnostician.BasicDiagnosticWithRemove) {
 			childDiagnostic = (BasicDiagnostic)diagnostics;
 			oldChildren = childDiagnostic.getChildren().size();
 		}
@@ -265,12 +233,12 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 				}
 				if (!result && (diagnostics != null))
 				{
-					if ((childDiagnostic instanceof BasicDiagnosticWithRemove) && (oldChildren >= 0))
+					if ((childDiagnostic instanceof PivotDiagnostician.BasicDiagnosticWithRemove) && (oldChildren >= 0))
 					{
 						BasicDiagnostic badValueDiagnostic = createValueDiagnostic(eAnnotation, eModelElement, entry, feature);
 						List<Diagnostic> children = childDiagnostic.getChildren();
 						for (int i = oldChildren; i < children.size(); i++) {
-							badValueDiagnostic.add(((BasicDiagnosticWithRemove)childDiagnostic).remove(i));
+							badValueDiagnostic.add(((PivotDiagnostician.BasicDiagnosticWithRemove)childDiagnostic).remove(i));
 						}
 						diagnostics.add(badValueDiagnostic);
 					}

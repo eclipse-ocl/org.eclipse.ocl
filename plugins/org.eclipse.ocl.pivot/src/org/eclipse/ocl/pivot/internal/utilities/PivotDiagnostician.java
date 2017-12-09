@@ -17,14 +17,18 @@ import java.util.Map;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EValidatorRegistryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -180,6 +184,37 @@ public abstract class PivotDiagnostician extends Diagnostician
 					ocl.dispose();
 				}
 			}.start();
+		}
+	}
+
+	/**
+	 * BasicDiagnosticWithRemove supports the migration of child diagnostics to grandchildren in the more
+	 * efficient validateFeatureDetail override.
+	 *
+	 * The enhancement is facilitated by a remove. The actual requirement is to split off all children after a
+	 * given index for additional to another BasicDiagnostic. Perhaps a truncate(index) or split(index) might
+	 * be better; many low level alternatives possible. Maybe just a getRawChildren().
+	 *
+	 * @since 1.4
+	 */
+	public static class BasicDiagnosticWithRemove extends BasicDiagnostic
+	{
+		/**
+		 * This validate is a convenience method demonstrating how the BasicDiagnosticWithRemove enhancement
+		 * can be exploited.
+		 */
+		public static BasicDiagnostic validate(EObject eObject, Map<Object, Object> validationContext) {
+			BasicDiagnostic diagnostics = new BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { Diagnostician.INSTANCE.getObjectLabel(eObject) }), new Object [] { eObject });
+			Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext);
+			return diagnostics;
+		}
+
+		public BasicDiagnosticWithRemove(String source, int code, String message, Object[] data) {
+			super(source, code, message, data);
+		}
+
+		public Diagnostic remove(int index) {
+			return children.remove(index);
 		}
 	}
 

@@ -62,9 +62,9 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -316,7 +316,7 @@ public class PivotTestCase extends TestCase
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
-		BasicDiagnostic diagnostics = BasicEAnnotationValidator2.validate(eObject, validationContext);
+		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {
 			return;
@@ -407,7 +407,7 @@ public class PivotTestCase extends TestCase
 		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
 		for (EObject eObject : resource.getContents()) {
 			//			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
-			Diagnostic diagnostic = BasicEAnnotationValidator2.validate(eObject, validationContext);
+			Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
 		return messages != null ? assertDiagnostics(prefix, diagnostics, messages) : Collections.emptyList();

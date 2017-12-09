@@ -27,6 +27,8 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry.Registration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.xtext.testing.GlobalRegistries;
 import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
@@ -41,7 +43,7 @@ public class RegistryTests extends TestCase
 {
 	@Override
 	public String getName() {
-		return TestUtil.getName(super.getName());
+		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
 	@Override
@@ -51,9 +53,15 @@ public class RegistryTests extends TestCase
 	}
 
 	public void testCompleteOCLRegistry_Access() {
-		GlobalRegistries2.GlobalStateMemento copyOfGlobalState = null;
+		GlobalRegistries.GlobalStateMemento copyOfGlobalState1 = null;
+		GlobalRegistries2.GlobalStateMemento copyOfGlobalState2 = null;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			copyOfGlobalState = GlobalRegistries2.makeCopyOfGlobalState();
+			try {
+				copyOfGlobalState2 = GlobalRegistries2.makeCopyOfGlobalState();
+			}
+			catch (Throwable e) {
+				copyOfGlobalState1 = GlobalRegistries.makeCopyOfGlobalState();
+			}
 		}
 		try {
 			EcorePlugin.ExtensionProcessor.process(null);
@@ -74,8 +82,11 @@ public class RegistryTests extends TestCase
 			// (running only) platform:/plugin/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl
 		}
 		finally {		// Remove the bad Xtext ResourceFactories that EcorePlugin.ExtensionProcessor finds
-			if (copyOfGlobalState != null) {
-				copyOfGlobalState.restoreGlobalState();
+			if (copyOfGlobalState2 != null) {
+				copyOfGlobalState2.restoreGlobalState();
+			}
+			else if (copyOfGlobalState1 != null) {
+				copyOfGlobalState1.restoreGlobalState();
 			}
 		}
 	}

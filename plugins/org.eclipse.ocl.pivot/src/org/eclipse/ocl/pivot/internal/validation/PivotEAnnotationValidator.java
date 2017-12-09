@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.validation;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EAnnotationValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -74,8 +73,8 @@ public class PivotEAnnotationValidator
 		try {
 			Class<?> annotationValidatorClass = Class.forName(annotationValidatorClassName);
 			Object annotationValidatorInstance = annotationValidatorClass.getField("INSTANCE").get(null);
-			if (annotationValidatorInstance instanceof EAnnotationValidator) {
-				String annotationSource = ((EAnnotationValidator)annotationValidatorInstance).getAnnotationSource();
+			if (annotationValidatorInstance instanceof org.eclipse.emf.ecore.EAnnotationValidator) {
+				String annotationSource = ((org.eclipse.emf.ecore.EAnnotationValidator)annotationValidatorInstance).getAnnotationSource();
 				if (!eAnnotationValidatorRegistry.containsKey(annotationSource)) {
 					eAnnotationValidatorRegistry.put(annotationSource, annotationValidatorInstance);
 				}
