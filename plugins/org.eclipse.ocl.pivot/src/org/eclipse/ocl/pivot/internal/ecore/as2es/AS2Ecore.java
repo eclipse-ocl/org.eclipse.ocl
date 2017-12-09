@@ -50,12 +50,14 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -63,6 +65,75 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class AS2Ecore extends AbstractConversion
 {
+	/**
+	 * An InverseConversion is installed as an Ecore2AS converter following an AS2Ecore conversion so
+	 * that requests for Ecore2AS conversions are satisfoed by inverting the AS2Ecore rather than by
+	 * performing an additional conflicting Ecore2AS conversion.
+	 */
+	private class InverseConversion extends AbstractConversion implements External2AS
+	{
+		protected final @NonNull Resource ecoreResource;
+
+		/**
+		 * Mapping of E elements to the oriinating AS elements.
+		 */
+		private final @NonNull Map<@NonNull EObject, @NonNull Element> inverseCreateMap = new HashMap<>();
+
+		protected InverseConversion(@NonNull Resource ecoreResource) {
+			super(AS2Ecore.this.environmentFactory);
+			this.ecoreResource = ecoreResource;
+			for (@NonNull Element asElement : createMap.keySet()) {
+				EModelElement eObject = createMap.get(asElement);
+				assert eObject != null;
+				inverseCreateMap.put(eObject, asElement);
+			}
+		}
+
+		@Override
+		public void dispose() {}
+
+		@Override
+		public @NonNull Model getASModel() throws ParserException {
+			throw new UnsupportedOperationException(); // This is never used by Ecore. We could tunnel through the ecoreResource contents looking for a conversion ti Model.
+		}
+
+		@Override
+		public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
+			Element asElement = inverseCreateMap.get(eObject);
+			//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
+			if (asElement == null) {
+				return null;
+			}
+			if (!requiredClass.isAssignableFrom(asElement.getClass())) {
+				logger.error("AS " + asElement.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
+				return null;
+			}
+			@SuppressWarnings("unchecked")
+			T castElement = (T) asElement;
+			return castElement;
+		}
+
+		@Override
+		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+			return inverseCreateMap;
+		}
+
+		@Override
+		public @Nullable Resource getResource() {
+			return ecoreResource;
+		}
+
+		@Override
+		public @NonNull URI getURI() {
+			return ClassUtil.nonNullState(ecoreResource.getURI());
+		}
+
+		public void putCreated(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
+			Element oldPivot = inverseCreateMap.put(eModelElement, pivotElement);
+			assert oldPivot == null;
+		}
+	}
+
 	public static final Logger logger = Logger.getLogger(AS2Ecore.class);
 
 	/**
@@ -306,6 +377,7 @@ public class AS2Ecore extends AbstractConversion
 	protected final @NonNull AS2EcoreReferenceVisitor pass2;
 	protected final @NonNull URI ecoreURI;
 	protected final @Nullable String primitiveTypesUriPrefix;
+	private @Nullable InverseConversion ecore2as;
 
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		super(environmentFactory);
@@ -357,6 +429,8 @@ public class AS2Ecore extends AbstractConversion
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
 				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
 			}
+			ecore2as = new InverseConversion(ecoreResource);
+			environmentFactory.addExternal2AS(ecore2as);
 			return ecoreResource;
 		}
 		finally {
@@ -455,9 +529,15 @@ public class AS2Ecore extends AbstractConversion
 		//		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 		EModelElement oldPivot = createMap.put(pivotElement, eModelElement);
 		assert oldPivot == null;
+		if (ecore2as != null) {
+			ecore2as.putCreated(eModelElement, pivotElement);
+		}
 		if ((pivotElement != primaryElement) && !createMap.containsKey(primaryElement)) {
 			//			System.out.println("Put2 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 			createMap.put(primaryElement, eModelElement);
+			if (ecore2as != null) {
+				ecore2as.putCreated(eModelElement, primaryElement);
+			}
 		}
 	}
 

@@ -112,17 +112,18 @@ public class EditTests extends XtextTestCase
 		return debugRef.object == null;
 	}
 
-	protected @NonNull Resource doRename(@NonNull OCL ocl, @NonNull CSResource xtextResource, @NonNull Resource asResource, String oldString, String newString, String... expectedErrors) throws IOException {
+	protected @NonNull Resource doRename(@NonNull OCL ocl, @NonNull CSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
+			@NonNull String @NonNull[] asErrors, @NonNull String @NonNull[] ecoreErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
 		//		System.out.println("-----------------" + contextMessage + "----------------");
 		replace(xtextResource, oldString, newString);
-		assertResourceErrors(contextMessage, xtextResource, expectedErrors);
+		assertResourceErrors(contextMessage, xtextResource, asErrors);
 		assertNoResourceErrors(contextMessage, asResource);
-		boolean validSave = expectedErrors.length == 0;
+		boolean validSave = asErrors.length == 0;
 		if (validSave) {
 			assertNoValidationErrors(contextMessage, asResource);
 		}
-		Resource ecoreResource = as2ecore(ocl, asResource, getTestFileURI("test.ecore"), NO_MESSAGES);
+		Resource ecoreResource = as2ecore(ocl, asResource, getTestFileURI("test.ecore"), ecoreErrors);
 		assertNoResourceErrors(contextMessage, ecoreResource);
 		return ecoreResource;
 	}
@@ -834,50 +835,50 @@ public class EditTests extends XtextTestCase
 		//
 		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
 			//			ClassUtil.bind(OCLMessages.Unresolved_ERROR_, "Type", pivotTestClass1.getName()),
-			StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()),
-			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclInvalid", "testProperty1"),
-			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "testOperation", "123456"));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()),
+				StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclInvalid", "testProperty1"),
+				StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "testOperation", "123456")), NO_MESSAGES);
 		//
 		//	Changing "Testing" back to "TestClass1" restores the type and the invariant.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
 		pivotTestClass1 = ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1");
 		//
 		//	Changing "testProperty1" to "tProperty" renames the property and breaks the invariant.
 		//
 		doRename(ocl, xtextResource, asResource, "testProperty1", "tProperty",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, pivotTestClass1 + "", "testProperty1"));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, pivotTestClass1 + "", "testProperty1")), NO_MESSAGES);
 		//
 		//	Changing "tProperty" back to "testProperty" restores the property and the invariant.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "tProperty", "testProperty1"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "tProperty", "testProperty1", NO_MESSAGES, NO_MESSAGES));
 		//
 		//	Changing "testOperation" to "tOperation" renames the operation and breaks the invariant.
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation", "tOperation",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456"));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456")), NO_MESSAGES);
 		//
 		//	Changing "tOperation" back to "testOperation" restores the operation and the invariant.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "tOperation", "testOperation"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "tOperation", "testOperation", NO_MESSAGES, NO_MESSAGES));
 		//
 		//	Changing "testOperation(i : Integer)" to "testOperation()" mismatches the operation signature and breaks the invariant.
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation(i : Integer)", "testOperation()",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456"));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456")), NO_MESSAGES);
 		//
 		//	Changing "testOperation()" back to "testOperation(i : Integer)" restores the operation and the invariant.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "testOperation()", "testOperation(i : Integer)"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "testOperation()", "testOperation(i : Integer)", NO_MESSAGES, NO_MESSAGES));
 		//
 		//	Changing "testOperation(i : Integer)" to "testOperation(s : String)" mismatches the operation signature and breaks the invariant.
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation(i : Integer)", "testOperation(s : String)",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "Integer"));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "Integer")), NO_MESSAGES);
 		//
 		//	Changing "testOperation()" back to "testOperation(i : Integer)" restores the operation and the invariant.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "testOperation(s : String)", "testOperation(i : Integer)"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "testOperation(s : String)", "testOperation(i : Integer)", NO_MESSAGES, NO_MESSAGES));
 		//
 		ocl1.dispose();
 		ocl.dispose();
@@ -915,21 +916,29 @@ public class EditTests extends XtextTestCase
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
 		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName())),
+			getMessages("OCL Validation error for \"testProperty2?->select(testOperation() = testProperty1)->isEmpty()\"\n" +
+					"	The 'CallExp::TypeIsNotInvalid' constraint is violated for '1_.oclBadOperation()'\n" +
+					"	The 'VariableExp::TypeIsNotInvalid' constraint is violated for '1_'\n" +
+					"	The 'VariableDeclaration::TypeIsNotInvalid' constraint is violated for '1_ : OclInvalid[1]'"));
 		//
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
 		pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
 		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
-			StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()));
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName())),
+			getMessages("OCL Validation error for \"testProperty2?->select(testOperation() = testProperty1)->isEmpty()\"\n" +
+					"	The 'CallExp::TypeIsNotInvalid' constraint is violated for '1_.oclBadOperation()'\n" +
+					"	The 'VariableExp::TypeIsNotInvalid' constraint is violated for '1_'\n" +
+					"	The 'VariableDeclaration::TypeIsNotInvalid' constraint is violated for '1_ : OclInvalid[1]'"));
 		//
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1"));
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
 		pivotTestClass1 = ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1");
 		//
 		ocl1.dispose();
@@ -961,11 +970,11 @@ public class EditTests extends XtextTestCase
 		WeakReference<Type> sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		assertNull(sequenceMyType.get());
 		//
-		doRename(ocl, xtextResource, asResource, "Boolean", "Sequence(MyType)");
+		doRename(ocl, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
 		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		assertNotNull(sequenceMyType.get());
 		//
-		doRename(ocl, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)");
+		doRename(ocl, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
 		System.gc();
 		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		boolean isNull = debugStateRef(sequenceMyType);

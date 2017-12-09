@@ -21,12 +21,37 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
+/**
+ * External2AS defines the common behaviour of an external (e.g. Ecore or UML) system to AS con version.
+ */
 public interface External2AS
 {
 	void dispose();
+
+	/**
+	 * Return the AS model that results from this conversion.
+	 *
+	 * FIXME Only the asResource is a tually needed, and only by UML support.
+	 */
 	@NonNull Model getASModel() throws ParserException;
+
+	/**
+	 * Return the AS element of type requiredClass corresponding to the external eOBJect, or null if none available.
+	 */
 	@Nullable <T extends Element> T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject);
+
+	/**
+	 * Return the map of all external objects to all AS elements.
+	 */
 	@Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap();
+
+	/**
+	 * Return the external resource.
+	 */
 	@Nullable Resource getResource();
+
+	/**
+	 * Return the URI of the external resource.
+	 */
 	@NonNull URI getURI();
 }
