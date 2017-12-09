@@ -1280,6 +1280,20 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull Constraint> getOwnedPostconditions(@NonNull Operation asOperation) {
+		return ClassUtil.nullFree(asOperation.getOwnedPostconditions());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull Constraint> getOwnedPreconditions(@NonNull Operation asOperation) {
+		return ClassUtil.nullFree(asOperation.getOwnedPreconditions());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Property> getOwnedProperties(org.eclipse.ocl.pivot.@NonNull Class asClass) {

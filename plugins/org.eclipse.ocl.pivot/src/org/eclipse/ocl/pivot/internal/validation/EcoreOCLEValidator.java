@@ -42,6 +42,7 @@ import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -60,6 +61,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -571,7 +573,25 @@ public class EcoreOCLEValidator implements EValidator
 		try {
 			NamedElement asNamedElement = metamodelManager.getASOf(NamedElement.class, eNamedElement);
 			if (asNamedElement != null) {
-				ParserContext parserContext = metamodelManager.createParserContext(asNamedElement);
+				Constraint asConstraint = null;
+				if (asNamedElement instanceof Operation) {
+					Operation asOperation = (Operation)asNamedElement;	// FIXME workaround Bug 528355 that inhibits use of the detail entry
+					for (@NonNull Constraint asPrecondition: PivotUtil.getOwnedPreconditions(asOperation)) {
+						if (expression.equals(asPrecondition.getOwnedSpecification().getBody())) {
+							asConstraint = asPrecondition;
+							break;
+						}
+					}
+					if (asConstraint == null) {
+						for (@NonNull Constraint asPostcondition: PivotUtil.getOwnedPostconditions(asOperation)) {
+							if (expression.equals(asPostcondition.getOwnedSpecification().getBody())) {
+								asConstraint = asPostcondition;
+								break;
+							}
+						}
+					}
+				}
+				ParserContext parserContext = metamodelManager.createParserContext(asConstraint != null ? asConstraint : asNamedElement);
 				if (parserContext == null) {
 					throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(asNamedElement), PivotConstantsInternal.OWNED_CONSTRAINT_ROLE);
 				}
