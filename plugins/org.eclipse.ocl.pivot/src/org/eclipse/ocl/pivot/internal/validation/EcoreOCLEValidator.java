@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -87,6 +88,14 @@ public class EcoreOCLEValidator implements EValidator
 	public static final String MISSING_CONSTRAINTS = "Missing constraints annotation for ''{0}''";
 	public static final String PARSING_ERROR_2 = "Parsing error ''{0}'' for ''{1}'' ''{2}''";
 	public static final String PARSING_ERROR_1 = "Parsing error ''{0}'' for ''{1}''";
+	/**
+	 * @since 1.4
+	 */
+	public static final String PARSING_EXCEPTION_2 = "Parsing exception ''{0}'' for ''{1}'' ''{2}''";
+	/**
+	 * @since 1.4
+	 */
+	public static final String PARSING_EXCEPTION_1 = "Parsing exception ''{0}'' for ''{1}''";
 	public static final String INCOMPATIBLE_TYPE_2 = "Incompatible type ''{0}'' for ''{1}'' ''{2}''";
 	public static final String INCOMPATIBLE_TYPE_1 = "Incompatible type ''{0}'' for ''{1}''";
 	public static final String NULL_EXPRESSION = "Null expression for ''{0}''";
@@ -651,6 +660,30 @@ public class EcoreOCLEValidator implements EValidator
 					: StringUtil.bind(PARSING_ERROR_2, e, objectLabel, role);
 				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { eNamedElement }));
+			}
+			else {
+				return false;
+			}
+		}
+		catch (WrappedException e) {
+			if (diagnostics != null) {
+				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
+				String message = role == null ? StringUtil.bind(PARSING_EXCEPTION_1, e.getCause(), objectLabel)
+					: StringUtil.bind(PARSING_EXCEPTION_2, e.getCause(), objectLabel, role);
+				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
+					0, message,  new Object[] { e, eNamedElement }));
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Throwable e) {
+			if (diagnostics != null) {
+				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
+				String message = role == null ? StringUtil.bind(PARSING_EXCEPTION_1, e, objectLabel)
+					: StringUtil.bind(PARSING_EXCEPTION_2, e, objectLabel, role);
+				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
+					0, message,  new Object[] { e, eNamedElement }));
 			}
 			else {
 				return false;
