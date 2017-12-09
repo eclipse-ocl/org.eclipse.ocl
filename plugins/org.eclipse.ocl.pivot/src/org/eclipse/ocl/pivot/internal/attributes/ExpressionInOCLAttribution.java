@@ -15,6 +15,8 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -25,6 +27,7 @@ import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class ExpressionInOCLAttribution extends AbstractAttribution
 {
@@ -56,9 +59,20 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 				if (userType instanceof org.eclipse.ocl.pivot.Class) {
 					Package contextPackage = ((org.eclipse.ocl.pivot.Class)userType).getOwningPackage();
 					if (contextPackage != null) {
-						if (targetExpression.eContainer() == null) {
-							environmentView.addRootPackages();
-							environmentView.addAllPackages(contextPackage);
+						if (targetExpression.eContainer() == null) {			// If this a root ExpressionInOCL; an embedded expression being independently parsed
+							Model model = PivotUtil.getContainingModel(type);
+							if (model != null) {
+								for (Import asImport : model.getOwnedImports()) {
+									String alias = asImport.getName();
+									if (alias != null) {
+										environmentView.addElement(alias, asImport.getImportedNamespace());
+									}
+								}
+							}
+							if (!environmentView.hasFinalResult()) {
+								environmentView.addRootPackages();
+								environmentView.addAllPackages(contextPackage);
+							}
 						}
 						if (!environmentView.hasFinalResult()) {
 							environmentView.addElementsOfScope(contextPackage, scopeView);
