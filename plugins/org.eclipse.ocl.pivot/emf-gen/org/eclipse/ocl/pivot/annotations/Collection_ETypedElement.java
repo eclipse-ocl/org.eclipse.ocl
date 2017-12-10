@@ -12,24 +12,23 @@ package org.eclipse.ocl.pivot.annotations;
 
 import org.eclipse.emf.ecore.EObject;
 
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Collection EModel Element</b></em>'.
+ * A representation of the model object '<em><b>Collection ETyped Element</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.annotations.Collection_EModelElement#isNullFree <em>Null Free</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree <em>Null Free</em>}</li>
  * </ul>
  *
- * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getCollection_EModelElement()
+ * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getCollection_ETypedElement()
  * @model
  * @generated
  */
-public interface Collection_EModelElement extends EObject {
+public interface Collection_ETypedElement extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Null Free</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -40,14 +39,14 @@ public interface Collection_EModelElement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Null Free</em>' attribute.
 	 * @see #setNullFree(boolean)
-	 * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getCollection_EModelElement_NullFree()
+	 * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getCollection_ETypedElement_NullFree()
 	 * @model
 	 * @generated
 	 */
 	boolean isNullFree();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.annotations.Collection_EModelElement#isNullFree <em>Null Free</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree <em>Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Null Free</em>' attribute.
@@ -56,4 +55,4 @@ public interface Collection_EModelElement extends EObject {
 	 */
 	void setNullFree(boolean value);
 
-} // Collection_EModelElement
+} // Collection_ETypedElement

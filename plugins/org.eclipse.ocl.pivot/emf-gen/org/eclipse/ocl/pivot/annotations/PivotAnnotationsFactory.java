@@ -48,13 +48,31 @@ public interface PivotAnnotationsFactory extends EFactory {
 	ASMetamodel_EPackage createASMetamodel_EPackage();
 
 	/**
-	 * Returns a new object of class '<em>Collection EModel Element</em>'.
+	 * Returns a new object of class '<em>Collection EClass</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Collection EModel Element</em>'.
+	 * @return a new object of class '<em>Collection EClass</em>'.
 	 * @generated
 	 */
-	Collection_EModelElement createCollection_EModelElement();
+	Collection_EClass createCollection_EClass();
+
+	/**
+	 * Returns a new object of class '<em>Collection EPackage</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Collection EPackage</em>'.
+	 * @generated
+	 */
+	Collection_EPackage createCollection_EPackage();
+
+	/**
+	 * Returns a new object of class '<em>Collection ETyped Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Collection ETyped Element</em>'.
+	 * @generated
+	 */
+	Collection_ETypedElement createCollection_ETypedElement();
 
 	/**
 	 * Returns a new object of class '<em>Ecore OCL EClassifier</em>'.

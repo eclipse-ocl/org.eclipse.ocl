@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.annotations.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.annotations.*;
 
 /**
@@ -28,7 +29,7 @@ import org.eclipse.ocl.pivot.annotations.*;
  * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage
  * @generated
  */
-public class PivotAnnotationsSwitch<T> extends Switch<T> {
+public class PivotAnnotationsSwitch<@Nullable T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -84,9 +85,21 @@ public class PivotAnnotationsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT: {
-				Collection_EModelElement collection_EModelElement = (Collection_EModelElement)theEObject;
-				T result = caseCollection_EModelElement(collection_EModelElement);
+			case PivotAnnotationsPackage.COLLECTION_ECLASS: {
+				Collection_EClass collection_EClass = (Collection_EClass)theEObject;
+				T result = caseCollection_EClass(collection_EClass);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE: {
+				Collection_EPackage collection_EPackage = (Collection_EPackage)theEObject;
+				T result = caseCollection_EPackage(collection_EPackage);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT: {
+				Collection_ETypedElement collection_ETypedElement = (Collection_ETypedElement)theEObject;
+				T result = caseCollection_ETypedElement(collection_ETypedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -149,17 +162,47 @@ public class PivotAnnotationsSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Collection EModel Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Collection EClass</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Collection EModel Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Collection EClass</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCollection_EModelElement(Collection_EModelElement object) {
+	public T caseCollection_EClass(Collection_EClass object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Collection EPackage</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Collection EPackage</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCollection_EPackage(Collection_EPackage object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Collection ETyped Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Collection ETyped Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCollection_ETypedElement(Collection_ETypedElement object) {
 		return null;
 	}
 

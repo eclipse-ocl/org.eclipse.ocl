@@ -14,23 +14,23 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.ocl.pivot.annotations.Collection_EModelElement;
+import org.eclipse.ocl.pivot.annotations.Collection_EPackage;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Collection EModel Element</b></em>'.
+ * An implementation of the model object '<em><b>Collection EPackage</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EModelElementImpl#isNullFree <em>Null Free</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl#isNullFree <em>Null Free</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container implements Collection_EModelElement {
+public class Collection_EPackageImpl extends MinimalEObjectImpl.Container implements Collection_EPackage {
 	/**
 	 * The default value of the '{@link #isNullFree() <em>Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -56,7 +56,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Collection_EModelElementImpl() {
+	protected Collection_EPackageImpl() {
 		super();
 	}
 
@@ -67,7 +67,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return PivotAnnotationsPackage.Literals.COLLECTION_EMODEL_ELEMENT;
+		return PivotAnnotationsPackage.Literals.COLLECTION_EPACKAGE;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 		boolean oldNullFree = nullFree;
 		nullFree = newNullFree;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT__NULL_FREE, oldNullFree, nullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotAnnotationsPackage.COLLECTION_EPACKAGE__NULL_FREE, oldNullFree, nullFree));
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT__NULL_FREE:
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE__NULL_FREE:
 				return isNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +115,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT__NULL_FREE:
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE__NULL_FREE:
 				setNullFree((Boolean)newValue);
 				return;
 		}
@@ -130,7 +130,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT__NULL_FREE:
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE__NULL_FREE:
 				setNullFree(NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -145,7 +145,7 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT__NULL_FREE:
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE__NULL_FREE:
 				return nullFree != NULL_FREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -166,4 +166,6 @@ public class Collection_EModelElementImpl extends MinimalEObjectImpl.Container i
 		result.append(')');
 		return result.toString();
 	}
-} //Collection_EModelElementImpl
+
+
+} //Collection_EPackageImpl

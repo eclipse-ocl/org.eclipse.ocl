@@ -120,14 +120,14 @@ public interface PivotAnnotationsPackage extends EPackage {
 	int AS_METAMODEL_EPACKAGE_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EModelElementImpl <em>Collection EModel Element</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl <em>Collection EClass</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EModelElementImpl
-	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EModelElement()
+	 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl
+	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EClass()
 	 * @generated
 	 */
-	int COLLECTION_EMODEL_ELEMENT = 2;
+	int COLLECTION_ECLASS = 2;
 
 	/**
 	 * The feature id for the '<em><b>Null Free</b></em>' attribute.
@@ -136,25 +136,99 @@ public interface PivotAnnotationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_EMODEL_ELEMENT__NULL_FREE = 0;
+	int COLLECTION_ECLASS__NULL_FREE = 0;
 
 	/**
-	 * The number of structural features of the '<em>Collection EModel Element</em>' class.
+	 * The number of structural features of the '<em>Collection EClass</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_EMODEL_ELEMENT_FEATURE_COUNT = 1;
+	int COLLECTION_ECLASS_FEATURE_COUNT = 1;
 
 	/**
-	 * The number of operations of the '<em>Collection EModel Element</em>' class.
+	 * The number of operations of the '<em>Collection EClass</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_EMODEL_ELEMENT_OPERATION_COUNT = 0;
+	int COLLECTION_ECLASS_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl <em>Collection EPackage</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl
+	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EPackage()
+	 * @generated
+	 */
+	int COLLECTION_EPACKAGE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Null Free</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_EPACKAGE__NULL_FREE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Collection EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_EPACKAGE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Collection EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_EPACKAGE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl <em>Collection ETyped Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl
+	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_ETypedElement()
+	 * @generated
+	 */
+	int COLLECTION_ETYPED_ELEMENT = 4;
+
+	/**
+	 * The feature id for the '<em><b>Null Free</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_ETYPED_ELEMENT__NULL_FREE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Collection ETyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_ETYPED_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Collection ETyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_ETYPED_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EClassifierImpl <em>Ecore OCL EClassifier</em>}' class.
@@ -164,7 +238,7 @@ public interface PivotAnnotationsPackage extends EPackage {
 	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getEcore_OCL_EClassifier()
 	 * @generated
 	 */
-	int ECORE_OCL_ECLASSIFIER = 3;
+	int ECORE_OCL_ECLASSIFIER = 5;
 
 	/**
 	 * The number of structural features of the '<em>Ecore OCL EClassifier</em>' class.
@@ -192,7 +266,7 @@ public interface PivotAnnotationsPackage extends EPackage {
 	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getEcore_OCL_EOperation()
 	 * @generated
 	 */
-	int ECORE_OCL_EOPERATION = 4;
+	int ECORE_OCL_EOPERATION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' attribute.
@@ -229,7 +303,7 @@ public interface PivotAnnotationsPackage extends EPackage {
 	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getEcore_OCL_EStructuralFeature()
 	 * @generated
 	 */
-	int ECORE_OCL_ESTRUCTURAL_FEATURE = 5;
+	int ECORE_OCL_ESTRUCTURAL_FEATURE = 7;
 
 	/**
 	 * The feature id for the '<em><b>Derivation</b></em>' attribute.
@@ -266,7 +340,7 @@ public interface PivotAnnotationsPackage extends EPackage {
 	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getImport_EPackage()
 	 * @generated
 	 */
-	int IMPORT_EPACKAGE = 6;
+	int IMPORT_EPACKAGE = 8;
 
 	/**
 	 * The number of structural features of the '<em>Import EPackage</em>' class.
@@ -307,25 +381,67 @@ public interface PivotAnnotationsPackage extends EPackage {
 	EClass getASMetamodel_EPackage();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.Collection_EModelElement <em>Collection EModel Element</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.Collection_EClass <em>Collection EClass</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Collection EModel Element</em>'.
-	 * @see org.eclipse.ocl.pivot.annotations.Collection_EModelElement
+	 * @return the meta object for class '<em>Collection EClass</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EClass
 	 * @generated
 	 */
-	EClass getCollection_EModelElement();
+	EClass getCollection_EClass();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_EModelElement#isNullFree <em>Null Free</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_EClass#isNullFree <em>Null Free</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Null Free</em>'.
-	 * @see org.eclipse.ocl.pivot.annotations.Collection_EModelElement#isNullFree()
-	 * @see #getCollection_EModelElement()
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EClass#isNullFree()
+	 * @see #getCollection_EClass()
 	 * @generated
 	 */
-	EAttribute getCollection_EModelElement_NullFree();
+	EAttribute getCollection_EClass_NullFree();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.Collection_EPackage <em>Collection EPackage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Collection EPackage</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EPackage
+	 * @generated
+	 */
+	EClass getCollection_EPackage();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_EPackage#isNullFree <em>Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EPackage#isNullFree()
+	 * @see #getCollection_EPackage()
+	 * @generated
+	 */
+	EAttribute getCollection_EPackage_NullFree();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement <em>Collection ETyped Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Collection ETyped Element</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_ETypedElement
+	 * @generated
+	 */
+	EClass getCollection_ETypedElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree <em>Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree()
+	 * @see #getCollection_ETypedElement()
+	 * @generated
+	 */
+	EAttribute getCollection_ETypedElement_NullFree();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier <em>Ecore OCL EClassifier</em>}'.
@@ -431,21 +547,53 @@ public interface PivotAnnotationsPackage extends EPackage {
 		 */
 		EClass AS_METAMODEL_EPACKAGE = eINSTANCE.getASMetamodel_EPackage();
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EModelElementImpl <em>Collection EModel Element</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl <em>Collection EClass</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EModelElementImpl
-		 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EModelElement()
+		 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl
+		 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EClass()
 		 * @generated
 		 */
-		EClass COLLECTION_EMODEL_ELEMENT = eINSTANCE.getCollection_EModelElement();
+		EClass COLLECTION_ECLASS = eINSTANCE.getCollection_EClass();
 		/**
 		 * The meta object literal for the '<em><b>Null Free</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute COLLECTION_EMODEL_ELEMENT__NULL_FREE = eINSTANCE.getCollection_EModelElement_NullFree();
+		EAttribute COLLECTION_ECLASS__NULL_FREE = eINSTANCE.getCollection_EClass_NullFree();
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl <em>Collection EPackage</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl
+		 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_EPackage()
+		 * @generated
+		 */
+		EClass COLLECTION_EPACKAGE = eINSTANCE.getCollection_EPackage();
+		/**
+		 * The meta object literal for the '<em><b>Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLECTION_EPACKAGE__NULL_FREE = eINSTANCE.getCollection_EPackage_NullFree();
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl <em>Collection ETyped Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl
+		 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getCollection_ETypedElement()
+		 * @generated
+		 */
+		EClass COLLECTION_ETYPED_ELEMENT = eINSTANCE.getCollection_ETypedElement();
+		/**
+		 * The meta object literal for the '<em><b>Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLECTION_ETYPED_ELEMENT__NULL_FREE = eINSTANCE.getCollection_ETypedElement_NullFree();
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EClassifierImpl <em>Ecore OCL EClassifier</em>}' class.
 		 * <!-- begin-user-doc -->

@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.annotations.*;
 
 /**
@@ -70,8 +71,8 @@ public class PivotAnnotationsAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PivotAnnotationsSwitch<Adapter> modelSwitch =
-			new PivotAnnotationsSwitch<Adapter>() {
+	protected PivotAnnotationsSwitch<@Nullable Adapter> modelSwitch =
+			new PivotAnnotationsSwitch<@Nullable Adapter>() {
 			@Override
 			public Adapter caseASLibrary_EPackage(ASLibrary_EPackage object) {
 				return createASLibrary_EPackageAdapter();
@@ -81,8 +82,16 @@ public class PivotAnnotationsAdapterFactory extends AdapterFactoryImpl {
 				return createASMetamodel_EPackageAdapter();
 			}
 			@Override
-			public Adapter caseCollection_EModelElement(Collection_EModelElement object) {
-				return createCollection_EModelElementAdapter();
+			public Adapter caseCollection_EClass(Collection_EClass object) {
+				return createCollection_EClassAdapter();
+			}
+			@Override
+			public Adapter caseCollection_EPackage(Collection_EPackage object) {
+				return createCollection_EPackageAdapter();
+			}
+			@Override
+			public Adapter caseCollection_ETypedElement(Collection_ETypedElement object) {
+				return createCollection_ETypedElementAdapter();
 			}
 			@Override
 			public Adapter caseEcore_OCL_EClassifier(Ecore_OCL_EClassifier object) {
@@ -149,16 +158,44 @@ public class PivotAnnotationsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.annotations.Collection_EModelElement <em>Collection EModel Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.annotations.Collection_EClass <em>Collection EClass</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.annotations.Collection_EModelElement
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EClass
 	 * @generated
 	 */
-	public Adapter createCollection_EModelElementAdapter() {
+	public Adapter createCollection_EClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.annotations.Collection_EPackage <em>Collection EPackage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_EPackage
+	 * @generated
+	 */
+	public Adapter createCollection_EPackageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement <em>Collection ETyped Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_ETypedElement
+	 * @generated
+	 */
+	public Adapter createCollection_ETypedElementAdapter() {
 		return null;
 	}
 

@@ -11,8 +11,14 @@
       ecorePackage="PivotAnnotations.ecore#/">
     <genClasses ecoreClass="PivotAnnotations.ecore#//ASLibrary_EPackage"/>
     <genClasses ecoreClass="PivotAnnotations.ecore#//ASMetamodel_EPackage"/>
-    <genClasses ecoreClass="PivotAnnotations.ecore#//Collection_EModelElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_EModelElement/nullFree"/>
+    <genClasses ecoreClass="PivotAnnotations.ecore#//Collection_EClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_EClass/nullFree"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotAnnotations.ecore#//Collection_EPackage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_EPackage/nullFree"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotAnnotations.ecore#//Collection_ETypedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_ETypedElement/nullFree"/>
     </genClasses>
     <genClasses ecoreClass="PivotAnnotations.ecore#//Ecore_OCL_EClassifier"/>
     <genClasses ecoreClass="PivotAnnotations.ecore#//Ecore_OCL_EOperation">

@@ -27,6 +27,9 @@ public final class OCL_Collection_AnnotationValidator extends BasicEAnnotationVa
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
 	public OCL_Collection_AnnotationValidator() {
-		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE, PivotAnnotationsPackage.Literals.COLLECTION_EMODEL_ELEMENT);
+		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE,
+			PivotAnnotationsPackage.Literals.COLLECTION_ECLASS,
+			PivotAnnotationsPackage.Literals.COLLECTION_EPACKAGE,
+			PivotAnnotationsPackage.Literals.COLLECTION_ETYPED_ELEMENT);
 	}
 }

@@ -19,7 +19,9 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage;
 import org.eclipse.ocl.pivot.annotations.ASMetamodel_EPackage;
-import org.eclipse.ocl.pivot.annotations.Collection_EModelElement;
+import org.eclipse.ocl.pivot.annotations.Collection_EClass;
+import org.eclipse.ocl.pivot.annotations.Collection_EPackage;
+import org.eclipse.ocl.pivot.annotations.Collection_ETypedElement;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature;
@@ -73,7 +75,9 @@ public class PivotAnnotationsFactoryImpl extends EFactoryImpl implements PivotAn
 		switch (eClass.getClassifierID()) {
 			case PivotAnnotationsPackage.AS_LIBRARY_EPACKAGE: return createASLibrary_EPackage();
 			case PivotAnnotationsPackage.AS_METAMODEL_EPACKAGE: return createASMetamodel_EPackage();
-			case PivotAnnotationsPackage.COLLECTION_EMODEL_ELEMENT: return createCollection_EModelElement();
+			case PivotAnnotationsPackage.COLLECTION_ECLASS: return createCollection_EClass();
+			case PivotAnnotationsPackage.COLLECTION_EPACKAGE: return createCollection_EPackage();
+			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT: return createCollection_ETypedElement();
 			case PivotAnnotationsPackage.ECORE_OCL_ECLASSIFIER: return createEcore_OCL_EClassifier();
 			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION: return createEcore_OCL_EOperation();
 			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE: return createEcore_OCL_EStructuralFeature();
@@ -111,9 +115,31 @@ public class PivotAnnotationsFactoryImpl extends EFactoryImpl implements PivotAn
 	 * @generated
 	 */
 	@Override
-	public @NonNull Collection_EModelElement createCollection_EModelElement() {
-		Collection_EModelElementImpl collection_EModelElement = new Collection_EModelElementImpl();
-		return collection_EModelElement;
+	public @NonNull Collection_EClass createCollection_EClass() {
+		Collection_EClassImpl collection_EClass = new Collection_EClassImpl();
+		return collection_EClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull Collection_EPackage createCollection_EPackage() {
+		Collection_EPackageImpl collection_EPackage = new Collection_EPackageImpl();
+		return collection_EPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull Collection_ETypedElement createCollection_ETypedElement() {
+		Collection_ETypedElementImpl collection_ETypedElement = new Collection_ETypedElementImpl();
+		return collection_ETypedElement;
 	}
 
 	/**
