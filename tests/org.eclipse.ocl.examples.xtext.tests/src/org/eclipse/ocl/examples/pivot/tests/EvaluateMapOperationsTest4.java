@@ -48,22 +48,22 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
 	@Override
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateMapOperations";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -97,7 +97,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{} = OrderedSet{}");
 		ocl.assertQueryFalse(null, "Map{} = Sequence{}");
 		ocl.assertQueryFalse(null, "Map{} = Set{}");
-		
+
 		ocl.assertQueryFalse(null, "Map{1 <- 1} = 1");
 		ocl.assertQueryFalse(null, "1 = Map{1 <- 1}");
 		ocl.assertQueryFalse(null, "Set{1} = Set{Set{1}}");
@@ -134,7 +134,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.0)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(4.0)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('test')");
-		
+
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.5)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(8)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('tst')");
@@ -204,7 +204,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8, 4 <- 'tst', 'test' <- true})");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{4.0 <- 'tst'})");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{'test' <- true})");
-		
+
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3.5 <- 8})");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8, 3.5 <- 8, 4.0 <- 'tst', 'test' <- true})");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- true})");
@@ -240,7 +240,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.0, 8)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(4.0, 'tst')");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('test', true)");
-		
+
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.5, 8)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3, true)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('tst', 4.0)");
@@ -272,7 +272,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(8.0)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue('tst')");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(true)");
-		
+
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(3.5)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(3)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue('test')");
@@ -362,7 +362,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.0)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(4.0)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('test')");
-		
+
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.5)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(8)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('tst')");
@@ -426,7 +426,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8, 4 <- 'tst', 'test' <- true})");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{4.0 <- 'tst'})");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{'test' <- true})");
-		
+
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3.5 <- 8})");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8, 3.5 <- 8, 4.0 <- 'tst', 'test' <- true})");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- true})");
@@ -459,7 +459,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.0, 8)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(4.0, 'tst')");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('test', true)");
-		
+
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.5, 8)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3, true)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('tst', 4.0)");
@@ -491,7 +491,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(8.0)");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue('tst')");
 		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(true)");
-		
+
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(3.5)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(3)");
 		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue('test')");
@@ -583,10 +583,10 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{1 <- true, 2.0 <- true, '3' <- true}->oclType().keyType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 <- true, 2 <- true, 3 <- true}->oclType().keyType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 <- true, 2 <- true, 3 <- true}->oclAsType(Map(Real, Boolean))->oclType().keyType");
-// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
-//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
-// FIXME fails because common type is inadequate for implicit collect
-//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.elementType");
+		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
+		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
+		// FIXME fails because common type is inadequate for implicit collect
+		//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.elementType");
 	}
 
 	@Test public void testMapKeys() {
@@ -616,7 +616,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 1, "Map{null<-'b'}->size()");
 		ocl.assertQueryEquals(null, 1, "Map{'a'<-null}->size()");
 		ocl.assertQueryEquals(null, 1, "Map{null<-null}->size()");
-		
+
 		ocl.assertQueryInvalid(null, "Map{invalid<-'b'}", "invalid", InvalidValueException.class);
 		ocl.assertQueryInvalid(null, "Map{'a'<-invalid}", "invalid", InvalidValueException.class);
 		ocl.assertQueryInvalid(null, "Map{invalid<-invalid}", "invalid", InvalidValueException.class);
@@ -642,12 +642,12 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	@Test public void testMapNotEqual() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Map{1 <- 1} <> Map{1 <- 1}");
-//
+		//
 		ocl.assertQueryTrue(null, "Map{} <> Bag{}");
 		ocl.assertQueryTrue(null, "Map{} <> OrderedSet{}");
 		ocl.assertQueryTrue(null, "Map{} <> Sequence{}");
 		ocl.assertQueryTrue(null, "Map{} <> Set{}");
-		
+
 		ocl.assertQueryTrue(null, "Map{1 <- 1} <> 1");
 		ocl.assertQueryTrue(null, "1 <> Map{1 <- 1}");
 		ocl.assertQueryTrue(null, "Set{1} <> Set{Set{1}}");
@@ -692,10 +692,10 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'1' <- 1, '2' <- 2.0, '3' <- '3'}->oclType().valueType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' <- 1, '2' <- 2, '3' <- 3}->oclType().valueType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' <- 1, '2' <- 2, '3' <- 3}->oclAsType(Map(String, Real))->oclType().valueType");
-// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
-//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->valueType");
-// FIXME fails because common type is inadequate for implicit collect
-//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.valueType");
+		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
+		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->valueType");
+		// FIXME fails because common type is inadequate for implicit collect
+		//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.valueType");
 	}
 
 	@Test public void testMapValues() {

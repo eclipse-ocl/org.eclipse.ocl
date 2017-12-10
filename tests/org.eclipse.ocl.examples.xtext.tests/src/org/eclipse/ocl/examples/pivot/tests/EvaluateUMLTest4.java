@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Package;
@@ -68,8 +69,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		EFactory statefulEFactory;
 		EClass c1Class;
 
-		public MyOCL(@NonNull String testPackageName, @NonNull String name) {
-			super(testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
+			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
@@ -140,7 +141,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
 	}
 
 	@Override

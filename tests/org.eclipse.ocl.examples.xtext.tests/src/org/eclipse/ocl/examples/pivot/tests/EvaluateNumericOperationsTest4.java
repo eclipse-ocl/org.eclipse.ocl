@@ -37,7 +37,7 @@ import org.junit.runners.Parameterized.Parameters;
 @SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateNumericOperationsTest4 extends PivotTestSuite
-{	 
+{
 	@Parameters
 	public static Collection<Object[]> data() {
 		Object[][] data = new Object[][]{{false}, {true}};
@@ -52,22 +52,22 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
 	@Override
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateNumericOperations";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -94,21 +94,21 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		assert ValueUtil.integerValueOf(BigInteger.valueOf(Long.MIN_VALUE)) instanceof LongIntegerValueImpl;
 		assert ValueUtil.integerValueOf(BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE)) instanceof BigIntegerValueImpl;
 		ocl.dispose();
-    }
+	}
 
-    @Test public void testIntPlus() {
+	@Test public void testIntPlus() {
 		// hashCode, equals
-    }
+	}
 
-    @Test public void testIntMinus() {
+	@Test public void testIntMinus() {
 		// hashCode, equals
-    }
-    
+	}
+
 	@Test public void testNumber() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 0, "0");
-//		ocl.assertSemanticErrorQuery2(null, "00", "extraneous input ''{0}'' expecting EOF", "0");
-//		ocl.assertSemanticErrorQuery2(null, "01", "extraneous input ''{0}'' expecting EOF", "1");
+		//		ocl.assertSemanticErrorQuery2(null, "00", "extraneous input ''{0}'' expecting EOF", "0");
+		//		ocl.assertSemanticErrorQuery2(null, "01", "extraneous input ''{0}'' expecting EOF", "1");
 		ocl.assertQueryEquals(null, 3, "3");
 		ocl.assertQueryEquals(null, 3.1, "3.1");
 		ocl.assertQueryEquals(null, 3.1e1, "3.1e1");
@@ -140,7 +140,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(null, "3.1e+ 1", "no viable alternative at ''{0}''", "e");
 		ocl.dispose();
 	}
-    
+
 	@Test public void testNumberAbs() {
 		TestOCL ocl = createOCL();
 		// Integer::abs()
@@ -207,7 +207,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		// Real::/(Real)
 		ocl.assertQueryEquals(null, 1.0, "1.0 / 1.0", 0.0);
 		ocl.assertQueryEquals(null, 1.11 / 1.12, "1.11 / 1.12", 1 * doubleEpsilon);
-		
+
 		// by zero
 		ocl.assertQueryInvalid(null, "1 / 0");
 		ocl.assertQueryInvalid(null, "1.0 / 0");
@@ -686,7 +686,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 
 		// null
 		ocl.assertQueryInvalid(null, "let i : Integer = null in 1.mod(i)");
-//		ocl.assertQueryInvalid(null, "let i : Integer = null in mod(1)");
+		//		ocl.assertQueryInvalid(null, "let i : Integer = null in mod(1)");
 
 		ocl.assertQueryInvalid(null, "let i1 : Integer = null, i2 : Integer = null in i1.mod(i2)");
 		ocl.dispose();
@@ -859,7 +859,7 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, "3.0", "3.0.toString()");
 		ocl.assertQueryEquals(null, "4.0", "(1.0+3.0).toString()");
 		ocl.assertQueryEquals(null, "null", "null.toString()");
-//		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
+		//		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
 		ocl.assertQueryInvalid(null, "invalid.toString()");
 		ocl.assertQueryEquals(null, "*", "*.toString()");
 		ocl.dispose();
@@ -875,13 +875,13 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-/* FIXME	@Test public void testUnlimitedDiv() {
+	/* FIXME	@Test public void testUnlimitedDiv() {
 		TestOCL ocl = createMyOCL();
 		/ *
-		 * FIXME I'm expecting the UnlimitedNatural to conform to Integer, div
-		 * and mod calls should then at least parse for them even though they
-		 * return an invalid value.
-		 * /
+	 * FIXME I'm expecting the UnlimitedNatural to conform to Integer, div
+	 * and mod calls should then at least parse for them even though they
+	 * return an invalid value.
+	 * /
 		ocl.assertQueryInvalid(null, "1.div(*)");
 		ocl.assertQueryInvalid(null, "*.div(1)");
 
@@ -1130,13 +1130,13 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-/* FIXME	@Test public void testUnlimitedMod() {
+	/* FIXME	@Test public void testUnlimitedMod() {
 		TestOCL ocl = createMyOCL();
 		/ *
-		 * FIXME I'm expecting the UnlimitedNatural to conform to Integer, div
-		 * and mod calls should then at least parse for them even though they
-		 * return an invalid value.
-		 * /
+	 * FIXME I'm expecting the UnlimitedNatural to conform to Integer, div
+	 * and mod calls should then at least parse for them even though they
+	 * return an invalid value.
+	 * /
 		ocl.assertQueryInvalid(null, "1.mod(*)");
 		ocl.assertQueryInvalid(null, "*.mod(1)");
 

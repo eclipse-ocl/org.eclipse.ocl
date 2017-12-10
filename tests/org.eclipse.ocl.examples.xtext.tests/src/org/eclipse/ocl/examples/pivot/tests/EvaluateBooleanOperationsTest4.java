@@ -43,7 +43,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestPackageName(), getTestName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getTestName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
 	@Override

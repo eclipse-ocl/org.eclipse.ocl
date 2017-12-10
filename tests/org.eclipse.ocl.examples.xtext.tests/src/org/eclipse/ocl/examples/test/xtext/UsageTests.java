@@ -138,7 +138,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	@Override
 	protected @NonNull TestOCL createOCL() throws Exception {
-		return new TestOCL(getTestPackageName(), getName(), getTestProjectManager());
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getTestProjectManager());
 	}
 
 	/**

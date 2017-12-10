@@ -164,7 +164,7 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected @NonNull TestOCL createOCL() throws Exception {
-		return new TestOCL(getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
 	public @NonNull ResourceSet createResourceSet() {

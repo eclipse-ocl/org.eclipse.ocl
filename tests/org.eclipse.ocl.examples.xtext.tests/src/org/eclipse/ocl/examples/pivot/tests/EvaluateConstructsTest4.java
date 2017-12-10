@@ -47,33 +47,33 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
 	}
 
 	@Override
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateConstructs";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
 		super.tearDown();
 	}
 
-	@Test public void testConstruct_if() throws Exception {		
+	@Test public void testConstruct_if() throws Exception {
 		TestOCL ocl = createOCL();
 		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IfExp_c_c_ConditionTypeIsBoolean, "if null then 1 else 2 endif");
-//
+		//
 		ocl.assertQueryFalse(null, "if true then false else false endif");
 		ocl.assertQueryEquals(null, 1, "if true then 1 else 2 endif");
 		ocl.assertQueryEquals(null, 2, "if false then 1 else 2 endif");
@@ -99,7 +99,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test public void testConstruct_let() {		
+	@Test public void testConstruct_let() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 3, "let a : Integer = 1 in a + 2");
 		ocl.assertQueryEquals(null, 7, "1 + let a : Integer = 2 in a * 3");
@@ -120,7 +120,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test public void testConstruct_invalidIndexOf_456057() {		
+	@Test public void testConstruct_invalidIndexOf_456057() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryInvalid(null, "let s = Sequence{0.0,0.0,0.0}, t = Sequence{1.0,2.0,3.0} in s->collect(r | r + t->at(t->indexOf(r))) ");
 		ocl.assertQueryResults(null, "Sequence{1.0,1.0,1.0}", "let s = Sequence{0.0,0.0,0.0} in s->collect(r | r + Sequence{1.0,2.0,3.0}->at(s->indexOf(r)))");

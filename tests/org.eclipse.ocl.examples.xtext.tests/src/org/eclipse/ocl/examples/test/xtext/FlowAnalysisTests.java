@@ -48,7 +48,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	public class MyOCL extends TestOCL
 	{
 		public MyOCL() {
-			super("FlowAnalysisTests", getName(), OCL.NO_PROJECTS);
+			super(getTestFileSystem(), "FlowAnalysisTests", getName(), OCL.NO_PROJECTS);
 		}
 
 		public void assertIsNonNull(@NonNull OCLExpression asExpression) {

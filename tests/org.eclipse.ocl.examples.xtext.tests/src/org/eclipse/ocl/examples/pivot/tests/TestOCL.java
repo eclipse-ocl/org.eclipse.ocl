@@ -29,6 +29,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.common.CodeGenHelper;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaGenModelCodeGenHelper;
 import org.eclipse.ocl.examples.xtext.tests.NoHttpURIHandlerImpl;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -79,15 +81,25 @@ import junit.framework.TestCase;
 
 public class TestOCL extends OCLInternal
 {
+	protected final @NonNull TestFileSystem testFileSystem ;
+	private TestProject testProject = null;
 	protected final @NonNull String testPackageName;
 	protected final @NonNull String testName;
+	private int testCounter = 0;
 
-	public TestOCL(@NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager) {
+	public TestOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager) {
 		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null));
+		this.testFileSystem = testFileSystem;
 		ResourceSet resourceSet = getResourceSet();
 		NoHttpURIHandlerImpl.install(resourceSet);
 		this.testPackageName = testPackageName;
-		this.testName = testName;
+		int index = testName.indexOf("[");
+		if (index > 0) {
+			this.testName = testName.substring(0, index);
+		}
+		else {
+			this.testName = testName;
+		}
 		projectManager.initializeResourceSet(resourceSet);
 		EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
 		packageRegistry.put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
@@ -650,7 +662,7 @@ public class TestOCL extends OCLInternal
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			Resource asResource = csResource.getASResource();
 			String expectedMessage = StringUtil.bind(messageTemplate, bindings);
-			PivotTestSuite.assertValidationDiagnostics("Validating", asResource, new String[] {expectedMessage});
+			PivotTestSuite.assertValidationDiagnostics("Validating", asResource, PivotTestCase.getMessages(expectedMessage));
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
 		} catch (Exception e) {
 			TestCase.fail(e.getMessage());
@@ -770,12 +782,16 @@ public class TestOCL extends OCLInternal
 		}
 		else {
 			CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
-			File targetFolder = new File("../" + PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
-			targetFolder.mkdir();
-			String packageName = testPackageName;
-			String className = "TestClass" + PivotTestSuite.testCounter++;
-			File dir = new File(targetFolder, packageName);
-			dir.mkdir();
+			//			File targetFolder = new File(PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
+			String packagePath = testPackageName + "/" + testName;
+			String packageName = testPackageName + "." + testName;
+			if (testProject == null) {
+				testProject = testFileSystem.getTestProject("OCLtests", false);
+				testProject.getOutputFile("test-src/" + packagePath).getFile().mkdirs();
+				testProject.getOutputFile("test-bin/" + packagePath).getFile().mkdirs();
+			}
+			File targetFolder = testProject.getOutputFile("test-src").getFile();
+			String className = "TestClass" + testCounter++;
 			LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
 			assert testInstance != null;
 			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);

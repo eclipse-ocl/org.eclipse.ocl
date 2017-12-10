@@ -121,11 +121,11 @@ public class LoadTests extends XtextTestCase
 	} */
 
 	public @NonNull TestOCL createOCL() {
-		return new TestOCL("LoadTests", getName(), OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS);
 	}
 
 	public @NonNull TestOCL createOCLWithProjectMap() {
-		return new TestOCL("LoadTests", getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), getProjectMap());
 	}
 
 	public Resource doLoad(@NonNull OCL ocl, String stem, String extension) throws IOException {

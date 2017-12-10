@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -71,8 +72,8 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
 		org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
 
-		public MyOCL(@NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
-			super(testPackageName, name, projectManager);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
+			super(testFileSystem, testPackageName, name, projectManager);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
 
@@ -87,7 +88,12 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 
 	//	@Override
 	protected @NonNull MyOCL createOCL(@NonNull ProjectManager classPath) {
-		return new MyOCL(getTestPackageName(), getName(), classPath);
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), classPath);
+	}
+
+	@Override
+	protected @NonNull String getTestPackageName() {
+		return "EvaluateClassifierOperations";
 	}
 
 	@Override

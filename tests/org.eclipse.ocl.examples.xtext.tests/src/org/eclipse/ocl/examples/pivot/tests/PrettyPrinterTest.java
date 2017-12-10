@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -28,8 +29,8 @@ public class PrettyPrinterTest extends PivotTestSuite
 {
 	public static class MyOCL extends TestOCL
 	{
-		public MyOCL(@NonNull String testPackageName, @NonNull String name) {
-			super(testPackageName, name, OCL.NO_PROJECTS);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
+			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS);
 		}
 
 		protected @Nullable Object assertPrintResults(@Nullable Object context, @NonNull String expression) {
@@ -39,7 +40,7 @@ public class PrettyPrinterTest extends PivotTestSuite
 				String prettyExpression = PrettyPrinter.print(query);
 				assertEquals(expression, prettyExpression);
 			} catch (ParserException e) {
-	            fail("Failed to parse \"" + expression + "\": " + e.getLocalizedMessage());
+				fail("Failed to parse \"" + expression + "\": " + e.getLocalizedMessage());
 			}
 			return null;
 		}
@@ -51,25 +52,25 @@ public class PrettyPrinterTest extends PivotTestSuite
 				String prettyExpression = PrettyPrinter.print(query);
 				assertEquals(expectedExpression, prettyExpression);
 			} catch (ParserException e) {
-	            fail("Failed to parse \"" + expression + "\": " + e.getLocalizedMessage());
+				fail("Failed to parse \"" + expression + "\": " + e.getLocalizedMessage());
 			}
 			return null;
 		}
 	}
-	
+
 	public PrettyPrinterTest() {
 		super(false);
 	}
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
 	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {

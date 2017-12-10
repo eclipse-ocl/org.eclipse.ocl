@@ -37,13 +37,13 @@ public class InheritanceTests extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -96,13 +96,13 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
 			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
-	//		InheritanceInheritance collectionInheritance = metamodelManager.getStandardLibrary().getInheritance(metamodelManager.getStandardLibrary().getCollectionType());
+			//		InheritanceInheritance collectionInheritance = metamodelManager.getStandardLibrary().getInheritance(metamodelManager.getStandardLibrary().getCollectionType());
 			SetType setType = standardLibrary.getSetType();
 			CompleteInheritance setInheritance = standardLibrary.getInheritance(setType);
 			assert setInheritance.getDepth() == 3;
 			Iterator<InheritanceFragment> allSuperInheritances = setInheritance.getAllSuperFragments().iterator();
 			assert allSuperInheritances.next().getBaseInheritance() == oclAnyInheritance;
-	//		assert allSuperInheritances.next().getBaseInheritance() == collectionInheritance;
+			//		assert allSuperInheritances.next().getBaseInheritance() == collectionInheritance;
 			CompleteInheritance next = allSuperInheritances.next().getBaseInheritance();
 			while (allSuperInheritances.hasNext()) {
 				next = allSuperInheritances.next().getBaseInheritance();
@@ -112,9 +112,9 @@ public class InheritanceTests extends PivotTestSuite
 			Iterator<InheritanceFragment> depth0Inheritances = setInheritance.getSuperFragments(0).iterator();
 			assert depth0Inheritances.next().getBaseInheritance() == oclAnyInheritance;
 			assert !depth0Inheritances.hasNext();
-	//		Iterator<InheritanceInheritance> depth1Inheritances = setInheritance.getSuperFragments(1).iterator();
-	//		assert depth1Inheritances.next() == collectionInheritance;
-	//		assert !depth1Inheritances.hasNext();
+			//		Iterator<InheritanceInheritance> depth1Inheritances = setInheritance.getSuperFragments(1).iterator();
+			//		assert depth1Inheritances.next() == collectionInheritance;
+			//		assert !depth1Inheritances.hasNext();
 			Iterator<InheritanceFragment> depth3Inheritances = setInheritance.getSuperFragments(3).iterator();
 			assert depth3Inheritances.next().getBaseInheritance() == setInheritance;
 			assert !depth3Inheritances.hasNext();
@@ -161,8 +161,8 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
 			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
-//			DomainInheritance realTypeInheritance = standardLibrary.getInheritance(standardLibrary.getRealType());
-//			DomainInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
+			//			DomainInheritance realTypeInheritance = standardLibrary.getInheritance(standardLibrary.getRealType());
+			//			DomainInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
 			CompleteInheritance unlimitedNaturalTypeInheritance = standardLibrary.getInheritance(standardLibrary.getUnlimitedNaturalType());
 			assertEquals(2, unlimitedNaturalTypeInheritance.getDepth());
 			Iterator<InheritanceFragment> allSuperInheritances = unlimitedNaturalTypeInheritance.getAllSuperFragments().iterator();
@@ -170,12 +170,12 @@ public class InheritanceTests extends PivotTestSuite
 			Iterator<InheritanceFragment> depth0Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(0).iterator();
 			assertEquals(oclAnyInheritance, depth0Inheritances.next().getBaseInheritance());
 			assert !depth0Inheritances.hasNext();
-//			Iterator<DomainFragment> depth2Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(2).iterator();
-//			assertEquals(realTypeInheritance, depth2Inheritances.next().getBaseInheritance());
-//			assert !depth2Inheritances.hasNext();
-//			Iterator<DomainFragment> depth3Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(3).iterator();
-//			assertEquals(integerTypeInheritance, depth3Inheritances.next().getBaseInheritance());
-//			assert !depth3Inheritances.hasNext();
+			//			Iterator<DomainFragment> depth2Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(2).iterator();
+			//			assertEquals(realTypeInheritance, depth2Inheritances.next().getBaseInheritance());
+			//			assert !depth2Inheritances.hasNext();
+			//			Iterator<DomainFragment> depth3Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(3).iterator();
+			//			assertEquals(integerTypeInheritance, depth3Inheritances.next().getBaseInheritance());
+			//			assert !depth3Inheritances.hasNext();
 			Iterator<InheritanceFragment> depth2Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(2).iterator();
 			assertEquals(unlimitedNaturalTypeInheritance, depth2Inheritances.next().getBaseInheritance());
 			assert !depth2Inheritances.hasNext();
@@ -185,7 +185,7 @@ public class InheritanceTests extends PivotTestSuite
 	}
 
 	/**
-	 * Check that an inheritance loop is diagnosed. 
+	 * Check that an inheritance loop is diagnosed.
 	 */
 	public void test_Inheritance_Loop() {
 		TestOCL ocl = createOCL();
@@ -208,7 +208,7 @@ public class InheritanceTests extends PivotTestSuite
 	}
 
 	/**
-	 * Check that addition of a supertype invalidates cached inheritances. 
+	 * Check that addition of a supertype invalidates cached inheritances.
 	 */
 	public void test_Inheritance_Addition() {
 		TestOCL ocl = createOCL();
@@ -230,7 +230,7 @@ public class InheritanceTests extends PivotTestSuite
 
 
 	/**
-	 * Check that removal of a supertype invalidates cached inheritances. 
+	 * Check that removal of a supertype invalidates cached inheritances.
 	 */
 	public void test_Inheritance_Removal() {
 		TestOCL ocl = createOCL();
