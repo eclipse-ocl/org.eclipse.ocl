@@ -20,29 +20,123 @@ import java.util.Map.Entry;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.BasicEAnnotationValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.osgi.util.NLS;
 
 
 /**
- *  An abstact annotation validator that supports building useful caches during construction.
+ *  An abstact annotation validator exploits a genmodelled EAnnotation metamodel to build an EAnnotationValidator
+ *  that exploits caches tp avoid repeated feature traversals.
  *
  * @since 1.4
  */
 public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidator
 {
+	/**
+	 * Derived BasicEAnnotationValidator2 classes may implement createAssistant to create a derived MapAssistant that
+	 * provides a dynamic EClass with an EStructuralFeature per EAnnotation detail.
+	 */
+	protected static abstract class MapAssistant extends Assistant
+	{
+		private final /*@NonNull*/ EClass dynamicAnnotationClass;
+
+		private final /*@NonNull*/ List</*@NonNull*/ EStructuralFeature> dynamicAnnotationFeatures;
+		{
+		}
+
+		protected MapAssistant(@NonNull BasicEAnnotationValidator eAnnotationValidator, /*@NonNull*/ String className) {
+			super(eAnnotationValidator);
+			//
+			//	Construct a pseudo Resource-EPackage-EClass to host the dynamically created EStructuralFeatures
+			//	for the prevailing details.
+			//
+			Resource dynamicAnnotationResource = new XMIResourceImpl(URI.createURI(PivotAnnotationsPackage.eINSTANCE.getNsURI()));
+			EPackage dynamicAnnotationPackage = EcoreFactory.eINSTANCE.createEPackage();
+			dynamicAnnotationPackage.setName(PivotAnnotationsPackage.eINSTANCE.getName());
+			dynamicAnnotationPackage.setNsPrefix(PivotAnnotationsPackage.eINSTANCE.getNsPrefix());
+			dynamicAnnotationPackage.setNsURI(PivotAnnotationsPackage.eINSTANCE.getNsURI());
+			dynamicAnnotationResource.getContents().add(dynamicAnnotationPackage);
+			dynamicAnnotationClass = EcoreFactory.eINSTANCE.createEClass();
+			dynamicAnnotationClass.setName(className);
+			dynamicAnnotationPackage.getEClassifiers().add(dynamicAnnotationClass);
+			dynamicAnnotationFeatures = dynamicAnnotationClass.getEStructuralFeatures();
+		}
+
+		protected abstract @NonNull EStructuralFeature createEStructuralFeature(/*@NonNull*/ String key);
+
+		@Override
+		public EObject createInstance(EClass eClass, EAnnotation eAnnotation) {
+			refreshDynamicEClass(eAnnotation);
+			EObject eInstance = EcoreUtil.create(dynamicAnnotationClass);
+			for (EStructuralFeature eStructuralFeature : dynamicAnnotationFeatures) {
+				String value = eAnnotation.getDetails().get(eStructuralFeature.getName());
+				eInstance.eSet(eStructuralFeature, value);
+			}
+			return eInstance;
+		}
+
+		@Override
+		public Map<String, EStructuralFeature> getProperties(EModelElement eModelElement) {
+			Map<String, EStructuralFeature> properties = new HashMap<>();
+			EAnnotation eAnnotation = eModelElement.getEAnnotation(eAnnotationValidator.getAnnotationSource());
+			if (eAnnotation != null) {		// Should never be null.
+				refreshDynamicEClass(eAnnotation);
+				for (String key : eAnnotation.getDetails().keySet()) {
+					properties.put(key, dynamicAnnotationClass.getEStructuralFeature(key));
+				}
+			}
+			return properties;
+		}
+
+		private void refreshDynamicEClass(EAnnotation eAnnotation) {
+			Map<String, EStructuralFeature> properties = new HashMap<>();
+			//				EAnnotation eAnnotation = eModelElement.getEAnnotation(annotationSource);
+			if (eAnnotation != null) {		// Should never be null.
+				EMap<String, String> details = eAnnotation.getDetails();
+				for (int i = dynamicAnnotationFeatures.size(); --i >= 0; ) {
+					EStructuralFeature eStructuralFeature = dynamicAnnotationFeatures.get(i);
+					String key = eStructuralFeature.getName();
+					if (details.containsKey(key)) {
+						properties.put(key, eStructuralFeature);
+					}
+					else {
+						dynamicAnnotationFeatures.remove(i);
+					}
+				}
+				for (Map.Entry<String, String> detail : details) {
+					String key = detail.getKey();
+					EStructuralFeature eStructuralFeature = properties.get(key);
+					if (eStructuralFeature == null) {
+						eStructuralFeature = createEStructuralFeature(key);
+						dynamicAnnotationFeatures.add(eStructuralFeature);
+						properties.put(key, eStructuralFeature);
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * The valid locations; the list of actual annotatable EClass in the annotated model for which annotation classes
 	 * are declared. This list is eagerly populated by creation of the annotation model during construction.

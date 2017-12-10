@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -37,20 +39,32 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  */
 public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValidator2
 {
+
 	public static final @NonNull OCL_Import_AnnotationValidator INSTANCE = new OCL_Import_AnnotationValidator();
 	public static final @NonNull String ANNOTATION_NAME = "OCL_Import";
 	public static final @NonNull String ANNOTATION_SOURCE = PivotConstants.IMPORT_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
-	//	private final List<EStructuralFeature> dynamicAnnotationFeatures;
-
 	public OCL_Import_AnnotationValidator() {
 		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE, PivotAnnotationsPackage.Literals.IMPORT_EPACKAGE);
-		//
-		//	Construct a pseudo Resource-EPackage-EClass to host the dynamically created EStructuralFeatures
-		//	for the prevailing details.
-		//
-		//		dynamicAnnotationFeatures = createDynamicStructuralFeatures(PivotAnnotationsPackage.Literals.IMPORT_EPACKAGE);
+	}
+
+	/**
+	 * Creates an assistant that creates a map of properties corresponding tp the details.
+	 */
+	@Override
+	protected Assistant createAssistant()
+	{
+		return new MapAssistant(this, PivotAnnotationsPackage.Literals.IMPORT_EPACKAGE.getName())
+		{
+			@Override
+			protected @NonNull EStructuralFeature createEStructuralFeature(String key) {
+				EStructuralFeature eStructuralFeature = EcoreFactory.eINSTANCE.createEAttribute();
+				eStructuralFeature.setName(String.valueOf(key));
+				eStructuralFeature.setEType(EcorePackage.Literals.ESTRING);
+				return eStructuralFeature;
+			}
+		};
 	}
 
 	/**
@@ -59,7 +73,6 @@ public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValida
 	@Override
 	protected Map<String, EStructuralFeature> getProperties(EModelElement eModelElement) {
 		return getNoFeatureProperties(eModelElement);
-		//		return refreshProperties(eModelElement, dynamicAnnotationFeatures, PivotAnnotationsPackage.Literals.IMPORT_URI);
 	}
 
 	@Override

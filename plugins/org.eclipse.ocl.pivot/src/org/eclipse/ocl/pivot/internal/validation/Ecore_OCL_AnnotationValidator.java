@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
@@ -68,6 +70,24 @@ public class Ecore_OCL_AnnotationValidator extends BasicEAnnotationValidator2
 	}
 
 	/**
+	 * Creates an assistant that creates a map of properties corresponding tp the details.
+	 */
+	@Override
+	protected Assistant createAssistant()
+	{
+		return new MapAssistant(this, PivotAnnotationsPackage.Literals.ECORE_OCL_ECLASSIFIER.getName())
+		{
+			@Override
+			protected @NonNull EStructuralFeature createEStructuralFeature(String key) {
+				EStructuralFeature eStructuralFeature = EcoreFactory.eINSTANCE.createEAttribute();
+				eStructuralFeature.setName(String.valueOf(key));
+				eStructuralFeature.setEType(EcorePackage.Literals.ESTRING);
+				return eStructuralFeature;
+			}
+		};
+	}
+
+	/**
 	 * Refresh a no-feature map of the prevailing detail keys.
 	 */
 	@Override
@@ -91,6 +111,5 @@ public class Ecore_OCL_AnnotationValidator extends BasicEAnnotationValidator2
 		else {
 			return super.validateDetails(eAnnotation, eModelElement, diagnostics, context);
 		}
-		//		return true;
 	}
 }
