@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -49,23 +50,41 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * TemplateParameterSubstitutionHelper instances support irregular TemplateParameterSubstitution deduction for difficult to
  * model operations such as flatten().
  * <p>
- * The TemplateParameterSubstitutionHelper maintains a registry of helpers indexed by their implementatin class.
+ * The TemplateParameterSubstitutionHelper maintains a registry of helpers indexed by their implementation class.
  */
 public abstract class TemplateParameterSubstitutionHelper
 {
+	/**
+	 * Add any templateParameter substitutions to templateParameterSubstitutions that the regular library modeling omits.
+	 *
+	 * THe default implementation adds nothing. The intended usage for flatten where the input/output types are irregular.
+	 */
 	public void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {}
 
+	/**
+	 * Return the actual type of te body of callExp for which the regular library modeling suggests bodyType.
+	 *
+	 * The default implementation just returns bodyType.
+	 */
 	public @Nullable Type resolveBodyType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type bodyType) {
 		return bodyType;
 	}
 
 	/**
+	 * Return the actual return nullity of callExp for which the regular library modeling suggests returnIsRequired.
+	 *
+	 * The default implementation just returns returnIsRequired.
 	 * @since 1.3
 	 */
 	public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
 		return returnIsRequired;
 	}
 
+	/**
+	 * Return the actual return type of callExp for which the regular library modeling suggests returnType.
+	 *
+	 * The default implementation just returns returnType.
+	 */
 	public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
 		return returnType;
 	}
@@ -189,6 +208,30 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
+	//	Special case processing for an any(true) return from a non-empty null-free collection.
+	//
+	private static class CollectionAnyHelper extends CollectionSourceHelper
+	{
+		@Override
+		public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			OCLExpression ownedBody = ((LoopExp)callExp).getOwnedBody();
+			if ((ownedBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)ownedBody).isBooleanSymbol()) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getType();
+					if (sourceType instanceof CollectionType) {
+						CollectionType collectionType = (CollectionType)sourceType;
+						if (collectionType.isIsNullFree() && (collectionType.getLowerValue().signum() > 0)) {
+							return true;
+						}
+					}
+				}
+			}
+			return returnIsRequired;
+		}
+	}
+
+	//
 	//	Special case processing for return collection types based on the source collection types.
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
@@ -233,7 +276,7 @@ public abstract class TemplateParameterSubstitutionHelper
 
 	static
 	{
-		addHelper(AnyIteration.class, new CollectionSourceHelper());
+		addHelper(AnyIteration.class, new CollectionAnyHelper());
 		addHelper(CollectIteration.class, new CollectionCollectHelper());
 		addHelper(CollectionAsBagOperation.class, new CollectionAsCollectionHelper());
 		addHelper(CollectionAsOrderedSetOperation.class, new CollectionAsCollectionHelper());
