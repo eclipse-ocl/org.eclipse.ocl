@@ -7,10 +7,11 @@
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
     <repository location="http://download.eclipse.org/releases/photon/201709221000"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.14milestones/core"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.13"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.14milestones/core"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -20,7 +21,7 @@
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/tools/orbit/S-builds/S20170912163609/repository"/>
+    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20171130170529/repository"/>
   </location>
 </locations>
 </target>
