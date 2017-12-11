@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,6 +21,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -30,6 +32,8 @@ import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMinOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
@@ -232,6 +236,76 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
+	//	Special case processing for including() that deduces nullFree both source and argument.
+	//
+	private static class CollectionIncludingHelper extends TemplateParameterSubstitutionHelper
+	{
+		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType instanceof CollectionType) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getType();
+					if (sourceType instanceof CollectionType) {
+						CollectionType sourceCollectionType = (CollectionType)sourceType;
+						List<OCLExpression> arguments = ((OperationCallExp)callExp).getOwnedArguments();
+						if (arguments.size() > 0) {
+							OCLExpression ownedArgument = arguments.get(0);
+							if (ownedArgument != null) {
+								boolean isNullFree = sourceCollectionType.isIsNullFree() && ownedArgument.isIsRequired();
+								CollectionType returnCollectionType = (CollectionType)returnType;
+								if (returnCollectionType.isIsNullFree() != isNullFree) {
+									@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
+									returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
+										elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+								}
+							}
+						}
+					}
+				}
+			}
+			return returnType;
+		}
+	}
+
+	//
+	//	Special case processing for includingAll() that deduces nullFree both source and argument.
+	//
+	private static class CollectionIncludingAllHelper extends TemplateParameterSubstitutionHelper
+	{
+		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType instanceof CollectionType) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getType();
+					if (sourceType instanceof CollectionType) {
+						CollectionType sourceCollectionType = (CollectionType)sourceType;
+						List<OCLExpression> arguments = ((OperationCallExp)callExp).getOwnedArguments();
+						if (arguments.size() > 0) {
+							OCLExpression ownedArgument = arguments.get(0);
+							if (ownedArgument != null) {
+								Type argumentType = ownedArgument.getType();
+								if (argumentType instanceof CollectionType) {
+									CollectionType argumentCollectionType = (CollectionType)argumentType;
+									boolean isNullFree = sourceCollectionType.isIsNullFree() && argumentCollectionType.isIsNullFree();
+									CollectionType returnCollectionType = (CollectionType)returnType;
+									if (returnCollectionType.isIsNullFree() != isNullFree) {
+										@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
+										returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
+											elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return returnType;
+		}
+	}
+
+	//
 	//	Special case processing for return collection types based on the source collection types.
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
@@ -284,8 +358,8 @@ public abstract class TemplateParameterSubstitutionHelper
 		addHelper(CollectionAsSetOperation.class, new CollectionAsCollectionHelper());
 		addHelper(CollectionExcludingOperation.class, new CollectionSourceHelper());
 		addHelper(CollectionExcludingAllOperation.class, new CollectionSourceHelper());
-		//		addHelper(CollectionIncludingOperation.class, new CollectionSourceAndArgumentHelper());
-		//		addHelper(CollectionIncludingAllOperation.class, new CollectionSourceAndArgumentHelper());
+		addHelper(CollectionIncludingOperation.class, new CollectionIncludingHelper());
+		addHelper(CollectionIncludingAllOperation.class, new CollectionIncludingAllHelper());
 		addHelper(CollectionIntersectionOperation.class, new CollectionSourceHelper()/*OrArgument*/);
 		addHelper(CollectionMinOperation.class, new CollectionSourceHelper());
 		addHelper(OrderedCollectionAtOperation.class, new CollectionSourceElementHelper());
