@@ -36,15 +36,16 @@ import org.eclipse.ocl.examples.modelregistry.ModelRegistryFactory;
 import org.eclipse.ocl.examples.modelregistry.ModelRegistryPackage;
 import org.eclipse.ocl.examples.modelregistry.ModelRegistrySettings;
 import org.eclipse.ocl.examples.modelregistry.environment.FileHandle;
-import org.eclipse.ocl.examples.modelregistry.environment.ProjectHandle;
 import org.eclipse.ocl.examples.modelregistry.environment.ModelRegistryEnvironment;
 import org.eclipse.ocl.examples.modelregistry.environment.ModelSerializationRegistry;
+import org.eclipse.ocl.examples.modelregistry.environment.ProjectHandle;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
  * A ProjectRegistry instance forms the root of a model registry. It provides the in-memory
  * form of the org.eclipse.ocl.modelregistry model read from and updated in the
  * project .settings folder.
- * 
+ *
  * The ProjectRegistry contains a FileHandleRegistry for each file handle for which models are
  * registered. The FileHandleRegistry in turn contains an AccessorRegistry for each Accessor class
  * and the AccessorRegistry contains the model Registrations.
@@ -59,7 +60,7 @@ public class ProjectRegistry
 	private Resource model = null;
 	private Map<String, String> unregisteredNamespaces = null;
 	// FIXME Add a ResourceChangeListener to reload registry on external change.
-	
+
 	public ProjectRegistry(ProjectHandle projectHandle) {
 		this.projectHandle = projectHandle;
 		resourceSet = new ResourceSetImpl();
@@ -72,7 +73,7 @@ public class ProjectRegistry
 		map.put(fileHandle, fileHandleRegistry);
 		return fileHandleRegistry;
 	}
-	
+
 	public <A extends Accessor<A>> Registration<A> add(Registration<A> registration) {
 		FileHandle fileHandle = registration.getFileHandle();
 		FileHandleRegistry fileHandleRegistry = getOrCreate(fileHandle);
@@ -102,7 +103,7 @@ public class ProjectRegistry
 						modelRegistration.setSerialization(registration.getSerializationName());
 					modelRegistration.setUri(registration.getURIString());
 					modelRegistry.getEntry().add(modelRegistration);
-				} 
+				}
 			}
 		}
 		return modelRegistrySettings;
@@ -120,9 +121,9 @@ public class ProjectRegistry
 		}
 		return fileHandleRegistry;
 	}
-	
+
 	public ProjectHandle getProject() { return projectHandle; }
-	
+
 	/**
 	 * Return the registration applicable to accessor in the context of fileHandle
 	 * @param <A> kind of accessor
@@ -141,7 +142,7 @@ public class ProjectRegistry
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return all registrations applicable to accessorClass in the context of fileHandle, typically
 	 * to treat all such registrations as a look-up path.
@@ -165,11 +166,11 @@ public class ProjectRegistry
 		}
 		return flatAccessorRegistry.getRegistrations();
 	}
-	
+
 	/**
 	 * Return the URI that resolves accessor within the context of fileHandle
 	 * after resolution against the URI of the project.
-	 * 
+	 *
 	 * @param fileHandle defining look-up context
 	 * @param accessor name and kind of accessor
 	 * @return the resolved URI
@@ -177,7 +178,7 @@ public class ProjectRegistry
 	public <A extends Accessor<A>> URI getResolvedURI(FileHandle fileHandle, A accessor) {
 		return resolveURI(getURI(fileHandle, accessor));
 	}
-		
+
 	/**
 	 * Return the ResourceSet that contains the model registry.
 	 */
@@ -193,7 +194,7 @@ public class ProjectRegistry
 		Registration<?> registration = getRegistration(fileHandle, accessor);
 		return registration != null ? registration.getURI() : null;
 	}
-	
+
 	private <A extends Accessor<A>> void importFromModel(Resource model, URI registryURI, Accessor.Namespace<A> unusedNamespace) {
 		// The unusedNamespace parameter avoids a spurious cannot bind A error.
 		map.clear();
@@ -236,7 +237,7 @@ public class ProjectRegistry
 			}
 		}
 	}
-	
+
 	public boolean loadModel() {
 		List<URI> registryURIs = projectHandle.getRegistryURIs();
 		for (URI registryURI : registryURIs) {
@@ -268,7 +269,7 @@ public class ProjectRegistry
 		FileHandleRegistry fileHandleRegistry = map.get(fileHandle);
 		return fileHandleRegistry.remove(registration);
 	}
-	
+
 	/**
 	 * Return the URI after resolution against the project file handle URI.
 	 * @param uri uri to resolve
@@ -279,14 +280,14 @@ public class ProjectRegistry
 			return uri;
 		return uri.resolve(projectHandle.getURI());
 	}
-	
+
 	public boolean saveModel() {
 		URI registryURI = projectHandle.getRegistryURI();
 		ModelRegistrySettings settings = exportToModel();
 		model = resourceSet.createResource(registryURI);
 		model.getContents().add(settings);
 		try {
-			model.save(null);			// FIXME rename original as a backup till successful
+			model.save(XMIUtil.createSaveOptions());			// FIXME rename original as a backup till successful
 			projectHandle.refreshRegistry();
 		} catch (IOException e) {
 			ModelRegistryEnvironment.logError("Failed to create model registry at '" + registryURI + "'", e);
@@ -294,7 +295,7 @@ public class ProjectRegistry
 		}
 		return true;
 	}
-		
+
 	@Override public String toString() {
 		return getProject().toString();
 	}

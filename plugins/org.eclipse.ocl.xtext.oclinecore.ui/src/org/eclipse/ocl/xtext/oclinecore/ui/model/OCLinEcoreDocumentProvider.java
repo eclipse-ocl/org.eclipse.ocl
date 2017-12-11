@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.model.BaseCSorASDocumentProvider;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
@@ -270,7 +271,8 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				//				StringWriter writer = new StringWriter();
 				try {
 					//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
-					csResource.save(outputStream, null);
+					Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+					csResource.save(outputStream, saveOptions);
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
 					diagnoseErrors((XtextResource) csResource, e);

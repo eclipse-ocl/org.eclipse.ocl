@@ -203,13 +203,13 @@ public class PivotTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(output2URI);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-		xtextResource.save(null);
+		xtextResource.save(XMIUtil.createSaveOptions());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xtextResource);
 		Resource xmiResource = resourceSet.createResource(outputURI);
 		xmiResource.getContents().addAll(xtextResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-		xmiResource.save(null);
+		xmiResource.save(XMIUtil.createSaveOptions());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
 		xtextResource.getContents().addAll(xmiResource.getContents());
@@ -237,7 +237,7 @@ public class PivotTests extends XtextTestCase
 		assertNoValidationErrors("Pivot validation problems", asResource);
 		URI savedPivotURI = asResource.getURI();
 		asResource.setURI(pivotURI);
-		asResource.save(null);
+		asResource.save(XMIUtil.createSaveOptions());
 		asResource.setURI(savedPivotURI);
 		//
 		//	Check CS and Pivot have consistent content
@@ -326,7 +326,7 @@ public class PivotTests extends XtextTestCase
 		//		cs2asResourceMap.put(csResource, asResource);
 		AS2CS as2cs = new OCLinEcoreAS2CS(cs2asResourceMap, metamodelManager.getEnvironmentFactory());
 		as2cs.update();
-		csResource.save(null);
+		csResource.save(XMIUtil.createSaveOptions());
 		ocl.dispose();
 	}
 

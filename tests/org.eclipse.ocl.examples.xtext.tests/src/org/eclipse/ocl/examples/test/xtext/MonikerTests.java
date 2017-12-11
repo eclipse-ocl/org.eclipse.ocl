@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
@@ -95,11 +96,11 @@ public class MonikerTests extends XtextTestCase
 				assertEquals("Pivot moniker for CS:", csMoniker, pivotMoniker);
 			}
 			else {
-//				System.out.println("[" + csElement.eClass().getName() + "] : " + csMoniker);				
+//				System.out.println("[" + csElement.eClass().getName() + "] : " + csMoniker);
 			}
 		}
 	} */
-	
+
 	/**
 	 * Check that all pivot elements that should have monikers do, and that
 	 * there are no duplicates. Return a map of moniker to pivot.
@@ -153,9 +154,9 @@ public class MonikerTests extends XtextTestCase
 					fail("Duplicate moniker " + moniker + " for " + eElement.eClass().getName());
 				}
 				monikerMap.put(moniker, eElement);
-//				System.out.println(eObject.eClass().getName() + " : " + moniker);
-//				String signature = Ecore2Moniker.toSignature(eElement);
-//				System.out.println(eObject.eClass().getName() + " : " + signature);
+				//				System.out.println(eObject.eClass().getName() + " : " + moniker);
+				//				String signature = Ecore2Moniker.toSignature(eElement);
+				//				System.out.println(eObject.eClass().getName() + " : " + signature);
 			}
 		}
 		ocl.dispose();
@@ -181,19 +182,19 @@ public class MonikerTests extends XtextTestCase
 		//
 		//	Get the pivot resource and check for load failures
 		//
-		Resource asResource = csResource.getASResource();		
+		Resource asResource = csResource.getASResource();
 		assertNoValidationErrors("Pivot validation problems", asResource);
 		asResource.setURI(pivotURI);
-		asResource.save(null);
+		asResource.save(XMIUtil.createSaveOptions());
 		//
 		//	Check CS-Pivot moniker consistency
 		//
-//		Map<String, MonikeredElementCS> csMonikerMap = checkCSMonikers(csResource);
-//		checkCShasPivots(csResource, csMonikerMap);
-//		checkCSandPivotMonikers(csMonikerMap);
-//		MetamodelManager metamodelManager = adapter.getMetamodelManager();
-//		Map<String, MonikeredElement> pivotMonikerMap = checkPivotMonikers(metamodelManager.getPivotResourceSet());
-/*		{
+		//		Map<String, MonikeredElementCS> csMonikerMap = checkCSMonikers(csResource);
+		//		checkCShasPivots(csResource, csMonikerMap);
+		//		checkCSandPivotMonikers(csMonikerMap);
+		//		MetamodelManager metamodelManager = adapter.getMetamodelManager();
+		//		Map<String, MonikeredElement> pivotMonikerMap = checkPivotMonikers(metamodelManager.getPivotResourceSet());
+		/*		{
 			StringBuilder s = null;
 			for (String m : csMonikerMap.keySet()) {
 				if (!pivotMonikerMap.containsKey(m)) {
@@ -227,7 +228,7 @@ public class MonikerTests extends XtextTestCase
 				fail("Extra Pivot monikers" + s.toString());
 			}
 		} */
-//		assertEquals(csMonikerMap.size(), pivotMonikerMap.size());
+		//		assertEquals(csMonikerMap.size(), pivotMonikerMap.size());
 		ocl.dispose();
 	}
 
@@ -243,25 +244,25 @@ public class MonikerTests extends XtextTestCase
 		doMonikerTestEcore("OCLEcore");
 	}
 
-//	public void testMoniker_midi_oclstdlib() throws IOException, InterruptedException {
-//		BaseScopeProvider.LOOKUP.setState(true);
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-//		doMonikerTestOCLstdlib("midi");
-//	}
+	//	public void testMoniker_midi_oclstdlib() throws IOException, InterruptedException {
+	//		BaseScopeProvider.LOOKUP.setState(true);
+	//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+	//		doMonikerTestOCLstdlib("midi");
+	//	}
 
-//	public void testMoniker_mini_oclstdlib() throws IOException, InterruptedException {
-//		BaseScopeProvider.LOOKUP.setState(true);
-//		doMonikerTestOCLstdlib("mini");
-//	}
+	//	public void testMoniker_mini_oclstdlib() throws IOException, InterruptedException {
+	//		BaseScopeProvider.LOOKUP.setState(true);
+	//		doMonikerTestOCLstdlib("mini");
+	//	}
 
 	public void testMoniker_oclstdlib_oclstdlib() throws IOException, InterruptedException {
-//		BaseScopeProvider.LOOKUP.setState(true);
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		//		BaseScopeProvider.LOOKUP.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doMonikerTestOCLstdlib("oclstdlib");
 	}
 
-//	public void testMoniker_OCL_2_3_oclstdlib() throws IOException, InterruptedException {
-//		BaseScopeProvider.LOOKUP.setState(true);
-//		doMonikerTestOCLstdlib("OCL-2.3x");
-//	}
+	//	public void testMoniker_OCL_2_3_oclstdlib() throws IOException, InterruptedException {
+	//		BaseScopeProvider.LOOKUP.setState(true);
+	//		doMonikerTestOCLstdlib("OCL-2.3x");
+	//	}
 }

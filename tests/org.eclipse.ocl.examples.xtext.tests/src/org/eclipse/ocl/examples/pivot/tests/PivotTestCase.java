@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
@@ -176,7 +177,7 @@ public class PivotTestCase extends TestCase
 		URI savedURI = ClassUtil.nonNullState(asResource.getURI());
 		//		asResource.setURI(PivotUtil.getNonPivotURI(savedURI).appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
 		asResource.setURI(outputURI.trimFileExtension().trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
-		asResource.save(null);
+		asResource.save(XMIUtil.createSaveOptions());
 		asResource.setURI(savedURI);
 
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
@@ -196,7 +197,7 @@ public class PivotTestCase extends TestCase
 
 	public static @NonNull Resource as2ecore(@NonNull OCL ocl, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
 		Resource ecoreResource = ocl.as2ecore(asResource, ecoreURI);
-		ecoreResource.save(null);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		if (asValidationMessages != SUPPRESS_VALIDATION) {
 			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
 			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
@@ -508,7 +509,7 @@ public class PivotTestCase extends TestCase
 		assertNoUnresolvedProxies("Unresolved proxies", asResource);
 		if (pivotURI != null) {
 			asResource.setURI(pivotURI);
-			asResource.save(null);
+			asResource.save(XMIUtil.createSaveOptions());
 		}
 		return asResource;
 	}
@@ -680,7 +681,7 @@ public class PivotTestCase extends TestCase
 				ecoreResource.setID(eObject,  EcoreUtil.generateUUID());
 			}
 		}
-		ecoreResource.save(null);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		return ecoreURI;
 	}
 

@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -710,7 +711,7 @@ public class EditTests extends XtextTestCase
 		//
 		StringWriter writer = new StringWriter();
 		OutputStream outputStream = new URIConverter.WriteableOutputStream(writer, "UTF-8");
-		ecoreResource.save(outputStream, null);
+		ecoreResource.save(outputStream, XMIUtil.createSaveOptions());
 		ecoreResource.unload();
 		InputStream inputStream = new URIConverter.ReadableInputStream(writer.toString().replace("tuttut",  "tut"), "UTF-8");
 		ecoreResource.load(inputStream, null);

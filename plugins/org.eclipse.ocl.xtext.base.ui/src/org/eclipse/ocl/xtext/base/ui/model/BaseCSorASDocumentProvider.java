@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ui.IEditorInput;
@@ -455,14 +456,15 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//				StringWriter writer = new StringWriter();
 				try {
 					//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+					Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
 					try {
-						csResource.save(outputStream, null);
+						csResource.save(outputStream, saveOptions);
 					}
 					catch (RuntimeException e) {
 						outputStream.reset();
 						Resource csResource2 = new XMIResourceFactoryImpl().createResource(csResource.getURI().appendFileExtension("xmi"));
 						csResource2.getContents().addAll(csResource.getContents());
-						csResource2.save(outputStream, null);
+						csResource2.save(outputStream, saveOptions);
 						csResource.getContents().addAll(csResource2.getContents());
 						BaseUiPluginHelper helper = BaseUiPluginHelper.INSTANCE;
 						String title = helper.getString("_UI_SerializationFailure_title", true);

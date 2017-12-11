@@ -164,7 +164,7 @@ public class LoadTests extends XtextTestCase
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			resource.setURI(output2URI);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			resource.save(null);
+			resource.save(XMIUtil.createSaveOptions());
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", resource);
 		}
@@ -207,7 +207,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			xtextResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			xtextResource.save(null);
+			xtextResource.save(XMIUtil.createSaveOptions());
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", xtextResource);
 			//
@@ -252,7 +252,7 @@ public class LoadTests extends XtextTestCase
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			ecoreResource.setURI(output2URI);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			ecoreResource.save(null);
+			ecoreResource.save(XMIUtil.createSaveOptions());
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", ecoreResource);
 			ecoreResource.setURI(inputURI);
@@ -361,7 +361,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			umlResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			umlResource.save(null);
+			umlResource.save(XMIUtil.createSaveOptions());
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", umlResource);
 			umlResource.setURI(inputURI);
@@ -442,7 +442,7 @@ public class LoadTests extends XtextTestCase
 							CompleteOCLDocumentCS csDocument = (CompleteOCLDocumentCS)csRoot;
 							if (csDocument.getOwnedPackages().size() > 0) {
 								hasOCLcontent = true;
-								xtextResource.save(null);
+								xtextResource.save(XMIUtil.createSaveOptions());
 							}
 						}
 					}
@@ -655,7 +655,7 @@ public class LoadTests extends XtextTestCase
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 		Resource xmiResource = resourceSet.createResource(xmiURI);
 		xmiResource.getContents().addAll(resource.getContents());
-		Map<String, Object> options = new HashMap<String, Object>();
+		Map<Object, Object> options = XMIUtil.createSaveOptions();
 		//		options.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
 		xmiResource.save(options);
 		assertNoResourceErrors("Save failed", xmiResource);
@@ -710,7 +710,7 @@ public class LoadTests extends XtextTestCase
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
-		ecoreResource.save(null);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		ocl.dispose();
 	}
 
@@ -848,7 +848,7 @@ public class LoadTests extends XtextTestCase
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
-		ecoreResource.save(null);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		ocl.dispose();
 	}
 
@@ -1439,7 +1439,7 @@ public class LoadTests extends XtextTestCase
 		//
 		URI asURI = esasURI.trimFileExtension().trimFileExtension().appendFileExtension("oclas");
 		asResource.setURI(asURI);
-		asResource.save(null);		// Bug 418412 gave a duplicate xmi:id ISE failure here.
+		asResource.save(XMIUtil.createSaveOptions());		// Bug 418412 gave a duplicate xmi:id ISE failure here.
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);

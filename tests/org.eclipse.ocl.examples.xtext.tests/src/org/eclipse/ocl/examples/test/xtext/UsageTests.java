@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -693,7 +694,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 			genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 			genModelResource.setURI(targetGenModelURI);
-			genModelResource.save(null);
+			genModelResource.save(XMIUtil.createSaveOptions());
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
@@ -740,7 +741,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 			genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 			genModelResource.setURI(targetGenModelURI);
-			genModelResource.save(null);
+			genModelResource.save(XMIUtil.createSaveOptions());
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
@@ -774,7 +775,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-			resource.save(outputStream, null);
+			resource.save(outputStream, XMIUtil.createSaveOptions());
 
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IProject project = workspace.getRoot().getProject(testProjectName);
@@ -825,8 +826,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			Resource modelResource = resourceSet2.getResource(sourceModelURI, true);
 			profileResource.setURI(targetProfileURI);
 			modelResource.setURI(targetModelURI);
-			profileResource.save(null);
-			modelResource.save(null);
+			profileResource.save(XMIUtil.createSaveOptions());
+			modelResource.save(XMIUtil.createSaveOptions());
 			//
 			IProject iProject = TestUIUtil.createIProject(getTestProject().getName());
 			IFile modelFile = iProject.getFile("Bug469251.uml");

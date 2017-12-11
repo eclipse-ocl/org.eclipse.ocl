@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
@@ -72,7 +73,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		//		if (ecoreURI != null) {
-		ecoreResource.save(null);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		//		}
 		return ecoreResource;
 	}
@@ -102,7 +103,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
-		xtextResource.save(null);
+		xtextResource.save(XMIUtil.createSaveOptions());
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		return (BaseCSResource) xtextResource;
@@ -121,7 +122,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
-		xtextResource.save(null);
+		xtextResource.save(XMIUtil.createSaveOptions());
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource) xtextResource);
 		return xtextResource;
@@ -150,7 +151,7 @@ public class RoundTripTests extends XtextTestCase
 			environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
-			pivotResource1.save(null);
+			pivotResource1.save(XMIUtil.createSaveOptions());
 			ASResource pivotResource2 = ClassUtil.nonNullState(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
 			@SuppressWarnings("unused")
 			CSResource xtextResource2 = createCompleteOCLXtextFromPivot(environmentFactory1, pivotResource2, outputURI);
@@ -222,13 +223,13 @@ public class RoundTripTests extends XtextTestCase
 				tit.prune();
 			}
 		}
-		asResource.save(null);
-		@NonNull String @Nullable[] validationDiagnostics = saveOptions != null ? (@NonNull String @Nullable[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : null;
+		asResource.save(XMIUtil.createSaveOptions());
+		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
 		Resource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
-		outputResource.save(outputStream, null);
+		outputResource.save(outputStream, XMIUtil.createSaveOptions());
 		outputStream.close();
 		assertNoValidationErrors("Ecore2AS invalid", outputResource);
 
@@ -319,7 +320,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource asResource = pivotModel.eResource();
 		asResource.setURI(pivotURI);
 		assertNoResourceErrors("UML2AS failed", asResource);
-		asResource.save(null);
+		asResource.save(XMIUtil.createSaveOptions());
 		assertNoValidationErrors("UML2AS invalid", asResource);
 
 		List<? extends @NonNull EObject> outputObjects = new ArrayList<>(AS2UML.createResource(environmentFactory, asResource));
@@ -333,7 +334,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource outputResource = resourceSet.createResource(outputURI);
 		outputResource.getContents().addAll(outputObjects);
 		assertNoResourceErrors("UML2AS failed", outputResource);
-		outputResource.save(null);
+		outputResource.save(XMIUtil.createSaveOptions());
 		assertNoValidationErrors("UML2AS invalid", outputResource);
 		TestUtil.assertSameModel(inputResource, outputResource);
 		ocl.dispose();

@@ -29,6 +29,7 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
@@ -181,7 +182,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	public void saveAsPivot(@NonNull StringWriter writer) throws CoreException, IOException {
 		XMLResource asResource = getASResource();
 		if (asResource != null) {
-			asResource.save(writer, null);
+			asResource.save(writer, XMIUtil.createSaveOptions());
 		}
 	}
 

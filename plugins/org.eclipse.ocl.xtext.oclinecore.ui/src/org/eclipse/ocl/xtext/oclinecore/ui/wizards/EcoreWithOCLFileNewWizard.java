@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   E.D.Willink - initial API and implementation 
+ *   E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui.wizards;
 
@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -35,7 +36,7 @@ import org.eclipse.ocl.xtext.oclinecore.ui.messages.OCLinEcoreUIMessages;
  * Wizard allowing the user to create a new OCLinEcore file.
  */
 public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
-{	
+{
 	private static final Logger logger = Logger.getLogger(EcoreWithOCLFileNewWizard.class);
 
 	@Override
@@ -58,7 +59,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 			ASResource asResource = ocl.cs2as(csResource);
 			Resource eResource = ocl.as2ecore(asResource, ecoreURI);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			eResource.save(outputStream, null);
+			eResource.save(outputStream, XMIUtil.createSaveOptions());
 			@SuppressWarnings("null")@NonNull String string = outputStream.toString();
 			return string;
 		} catch (IOException e) {
@@ -77,7 +78,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 	public @NonNull String getNewFileLabel() {
 		return OCLinEcoreUIMessages.Ecore_NewWizardPage_fileNameLabel;
 	}
-	
+
 	@SuppressWarnings("null")
 	@Override
 	public @NonNull String getPageDescription() {

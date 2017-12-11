@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -512,7 +513,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 				}
 			}
 			Writer writer = new StringWriter();
-			ecoreResource.save(writer, null);
+			ecoreResource.save(writer, XMIUtil.createSaveOptions());
 			return ClassUtil.nonNullState(writer.toString());
 		}
 		finally {

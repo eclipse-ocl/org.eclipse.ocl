@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
@@ -122,7 +123,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			assertNoResourceErrors("Save failed", xtextResource);
 			asResource.setURI(pivotURI);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-			asResource.save(null);
+			asResource.save(XMIUtil.createSaveOptions());
 			return asResource;
 		}
 

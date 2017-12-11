@@ -31,6 +31,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.Mapping;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
  * Splits the composite 'in' Ecore file into a distinct URI per selected EPackage.
@@ -41,9 +42,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CSSplitter extends AbstractWorkflowComponent
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
-	protected URI in;	
+	private Logger log = Logger.getLogger(getClass());
+	private ResourceSet resourceSet = null;
+	protected URI in;
 	private Map<String, URI> includes = new HashMap<String, URI>();
 	private Map<String, URI> excludes = new HashMap<String, URI>();
 
@@ -64,6 +65,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 	/**
 	 * @see org.eclipse.emf.mwe.core.WorkflowComponent#checkConfiguration(org.eclipse.emf.mwe.core.issues.Issues)
 	 */
+	@Override
 	public void checkConfiguration(final Issues issues) {
 		if (in == null) {
 			issues.addError(this, "in not specified.");
@@ -83,7 +85,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 		ResourceSet resourceSet = getResourceSet();
 		Resource resource = resourceSet.getResource(in, true);
 		EcoreUtil.resolveAll(resource);
-//	    System.out.println("ResolvedAll " + resource.getClass().getName() + "@" + Integer.toHexString(resource.hashCode()) + " " + resource.getURI());
+		//	    System.out.println("ResolvedAll " + resource.getClass().getName() + "@" + Integer.toHexString(resource.hashCode()) + " " + resource.getURI());
 		ResourceUtils.checkResource(resource);
 		EcoreUtil.resolveAll(resourceSet);
 		ResourceUtils.checkResourceSet(resourceSet);
@@ -105,7 +107,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 		for (Resource csResource : resources) {
 			try {
 				log.info(" to '" + csResource.getURI() + "'");
-				csResource.save(null);
+				csResource.save(XMIUtil.createSaveOptions());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,7 +143,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 			}
 		}
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}
