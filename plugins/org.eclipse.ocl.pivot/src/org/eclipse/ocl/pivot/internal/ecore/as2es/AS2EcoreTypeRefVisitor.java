@@ -13,15 +13,24 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -43,20 +52,26 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
-public class AS2EcoreTypeRefVisitor
-extends AbstractExtendingVisitor<EObject, AS2Ecore>
+public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
+	private static final Logger logger = Logger.getLogger(AS2EcoreTypeRefVisitor.class);
+
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	/**
 	 * @since 1.3
 	 */
 	protected final boolean isRequired;
+
+	private /*@Nullable*/ EPackage oclstdlibEPackage;
+	private @Nullable EClassifier oclAnyEClass;
+	private @Nullable EClassifier oclInvalidEClass;
+	private @Nullable EClassifier oclVoidEClass;
 
 	/* @deprecated provide isRequired argument */
 	@Deprecated
@@ -72,6 +87,37 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 		this.metamodelManager = context.getMetamodelManager();
 		this.standardLibrary = context.getStandardLibrary();
 		this.isRequired = isRequired;
+	}
+
+	private @Nullable EClassifier getOclStdlibEClassifier(/*@NonNull*/ String className) {
+		if (oclstdlibEPackage == null) {
+			URI oclstdlibURI = null;
+			try {
+				ResourceSet resourceSet = new ResourceSetImpl();
+				resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore",  new EcoreResourceFactoryImpl());
+				if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+					oclstdlibURI = URI.createPlatformResourceURI(PivotPlugin.PLUGIN_ID + "/model-gen/oclstdlib.ecore", true);
+					resourceSet.getURIConverter().getURIMap().put(URI.createPlatformResourceURI(PivotPlugin.PLUGIN_ID, true),
+						URI.createURI(PivotPlugin.INSTANCE.getBaseURL().toString()));
+				}
+				else {
+					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PivotPlugin.PLUGIN_ID);
+					if ((project != null) && project.exists()) {
+						oclstdlibURI = URI.createPlatformResourceURI(PivotPlugin.PLUGIN_ID + "/model-gen/oclstdlib.ecore", true);
+					}
+					else {
+						oclstdlibURI = URI.createPlatformPluginURI(PivotPlugin.PLUGIN_ID + "/model-gen/oclstdlib.ecore", true);
+					}
+				}
+				Resource resource = resourceSet.getResource(oclstdlibURI, true);
+				oclstdlibEPackage = (EPackage) resource.getContents().get(0);
+			}
+			catch (Exception e) {
+				logger.error("Failed to load '" + oclstdlibURI + "'", e);
+				oclstdlibEPackage = OCLstdlibPackage.eINSTANCE;
+			}
+		}
+		return oclstdlibEPackage.getEClassifier(className);
 	}
 
 	public EGenericType resolveEGenericType(org.eclipse.ocl.pivot.@NonNull Class type) {
@@ -126,7 +172,10 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 			return eClassifier;
 		}
 		else {
-			return OCLstdlibPackage.Literals.OCL_ANY;
+			if (oclAnyEClass == null) {
+				oclAnyEClass = getOclStdlibEClassifier(OCLstdlibPackage.Literals.OCL_ANY.getName());
+			}
+			return oclAnyEClass;
 		}
 	}
 
@@ -183,7 +232,7 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 					}
 				}
 			}
-			return NameUtil.getENamedElement(OCLstdlibPackage.eINSTANCE.getEClassifiers(), pivotType.getName());
+			return getOclStdlibEClassifier(pivotType.getName());
 		}
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EObject eClassifier2 = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
@@ -207,14 +256,17 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 			return eClassifier;
 		}
 		else {
-			return OCLstdlibPackage.Literals.OCL_INVALID;
+			if (oclInvalidEClass == null) {
+				oclInvalidEClass = getOclStdlibEClassifier(OCLstdlibPackage.Literals.OCL_INVALID.getName());
+			}
+			return oclInvalidEClass;
 		}
 	}
 
 	@Override
 	public EObject visitMapType(@NonNull MapType object) {
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		EClassifier eClassifier = NameUtil.getENamedElement(OCLstdlibPackage.eINSTANCE.getEClassifiers(), object.getName());
+		EClassifier eClassifier = getOclStdlibEClassifier(object.getName());
 		eGenericType.setEClassifier(eClassifier);
 		safeVisitAll(eGenericType.getETypeArguments(), object.getOwnedBindings().get(0).getOwnedSubstitutions());
 		safeVisitAll(eGenericType.getETypeArguments(), object.getOwnedBindings().get(1).getOwnedSubstitutions());
@@ -307,7 +359,10 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 			return eClassifier;
 		}
 		else {
-			return OCLstdlibPackage.Literals.OCL_VOID;
+			if (oclVoidEClass == null) {
+				oclVoidEClass = getOclStdlibEClassifier(OCLstdlibPackage.Literals.OCL_VOID.getName());
+			}
+			return oclVoidEClass;
 		}
 	}
 }

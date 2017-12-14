@@ -535,6 +535,10 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Apple::name");
 		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant, "self.name");
+		//
+		ocl.assertQueryFalse(redApple, "self.color = Color::green");
+		ocl.assertQueryTrue(redApple, "self.color = Color::red");
+		ocl.assertQueryFalse(redApple, "self.color = 'red'");
 		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(Apple)");
 		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(fruit::Apple)");
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "self->oclAsType(Set(Fruit))");
