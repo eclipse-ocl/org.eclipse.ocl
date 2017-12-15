@@ -120,14 +120,14 @@
    
    <extension point="org.eclipse.emf.ecore.edit.annotation_item_provider_adapter_factory">
       <factory uri="http://www.eclipse.org/emf/2002/Ecore/OCL"
-            class="org.eclipse.ocl.pivot.ui.AnnotationItemProviderAdapterFactories$Ecore_OCL_Blank"/>
+            class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
       <factory uri="http://www.eclipse.org/emf/2002/Ecore/OCL/Debug"
-            class="org.eclipse.ocl.pivot.ui.AnnotationItemProviderAdapterFactories$Ecore_OCL_Debug"/>
+            class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
       <factory uri="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-            class="org.eclipse.ocl.pivot.ui.AnnotationItemProviderAdapterFactories$Ecore_OCL_Pivot"/>
+            class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
       <factory uri="http://www.eclipse.org/OCL/Collection"
-            class="org.eclipse.ocl.pivot.ui.AnnotationItemProviderAdapterFactories$OCL_Collection"/>
+            class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
       <factory uri="http://www.eclipse.org/OCL/Import"
-            class="org.eclipse.ocl.pivot.ui.AnnotationItemProviderAdapterFactories$OCL_Import"/>
+            class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
    </extension>
 </plugin>
