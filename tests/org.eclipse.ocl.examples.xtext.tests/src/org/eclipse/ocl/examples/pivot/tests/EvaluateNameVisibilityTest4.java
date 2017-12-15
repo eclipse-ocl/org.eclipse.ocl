@@ -297,6 +297,32 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.dispose();
 	}
 
+	@Test public void test_cg_equals_528829() throws Exception {
+		TestOCL ocl = createOCL();
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			OCLinEcoreStandaloneSetup.doSetup();
+		}
+		String metamodelText =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
+						"package pkg : pkg = 'pkg' {\n" +
+						"  class A {\n" +
+						"    property kind : Kind;\n" +
+						"  }\n" +
+						"  enum Kind {\n" +
+						"    literal X;\n" +
+						"  }\n" +
+						"}\n";
+		Resource metamodel = cs2as(ocl, metamodelText);
+		Model pivotModel = (Model) metamodel.getContents().get(0);
+		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
+		org.eclipse.ocl.pivot.Class pivotType = pivotPackage.getOwnedClasses().get(0);
+		EClass eClass = ocl.getMetamodelManager().getEcoreOfPivot(EClass.class, pivotType);
+		Object testObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
+		ocl.assertQueryFalse(testObject, "kind = 'kind'");
+		ocl.assertQueryFalse(testObject, "'kind' = kind");
+		ocl.dispose();
+	}
+
 	@Test public void test_cg_loop_source_self_or() throws ParserException, IOException {
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {

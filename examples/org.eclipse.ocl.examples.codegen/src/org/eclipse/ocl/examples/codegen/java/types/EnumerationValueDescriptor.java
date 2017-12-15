@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -28,13 +29,13 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 {
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull Class<?> ecoreJavaClass;
-	
+
 	public EnumerationValueDescriptor(@NonNull ElementId elementId, @NonNull EClassifier eClassifier, @NonNull Class<?> ecoreJavaClass) {
 		super(elementId, EnumerationLiteralId.class);
 		this.eClassifier = eClassifier;
 		this.ecoreJavaClass = ecoreJavaClass;
 	}
-	
+
 	@Override
 	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
@@ -54,11 +55,17 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue,
 			@NonNull CGValuedElement thatValue, boolean notEquals) {
-		js.appendValueName(thisValue);
-		js.append(notEquals ? " != " : " == ");
-		js.appendValueName(thatValue);
+		TypeDescriptor thatTypeDescriptor = js.getCodeGenerator().getTypeDescriptor(thatValue);
+		if (thatTypeDescriptor.getEClassifier() != eClassifier) {
+			js.appendBooleanString(false);
+		}
+		else {
+			js.appendValueName(thisValue);
+			js.append(notEquals ? " != " : " == ");
+			js.appendValueName(thatValue);
+		}
 	}
-	
+
 	@Override
 	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
