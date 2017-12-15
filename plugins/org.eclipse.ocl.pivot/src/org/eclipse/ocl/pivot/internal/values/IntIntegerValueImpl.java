@@ -32,7 +32,7 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 
 	private final int value;			// The value.
 	private BigInteger bigValue = null;	// Lazily computed BigInteger counterpart.
-	
+
 	public IntIntegerValueImpl(int value) {
 		this.value = value;
 	}
@@ -85,25 +85,24 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 
 	@Override
 	public @NonNull Integer asInteger() {
-		@SuppressWarnings("null") @NonNull Integer result = Integer.valueOf(value);
+		Integer result = Integer.valueOf(value);
 		return result;
 	}
-	
+
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull Number asNumber() {
 		return Integer.valueOf(value);
 	}
 
 	@Override
 	public @NonNull Object asObject() {
-		@SuppressWarnings("null") @NonNull Integer result = Integer.valueOf(value);
+		Integer result = Integer.valueOf(value);
 		return result;
 	}
 
 	@Override
 	public @NonNull Object asUnboxedObject(@NonNull IdResolver idResolver) {
-		@SuppressWarnings("null") @NonNull Integer result = Integer.valueOf(value);
+		Integer result = Integer.valueOf(value);
 		return result;
 	}
 
@@ -196,7 +195,7 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 	public int hashCode() {
 		return value;
 	}
-	
+
 	@Override
 	public int intValue() {
 		return value;

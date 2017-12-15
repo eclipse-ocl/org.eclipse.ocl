@@ -257,7 +257,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				this.eAnnotation = eAnnotation;
 				this.detailName = detailName;
 				EMap<String, String> details = eAnnotation.getDetails();
-				this.index = details.indexOf(detailName);
+				this.index = details.indexOfKey(detailName);
 				this.value = details.get(detailName);
 				if (index >= 0) {
 					details.remove(index);
@@ -268,7 +268,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				this.eAnnotation = eAnnotation;
 				this.detailName = detailName;
 				EMap<String, String> details = eAnnotation.getDetails();
-				this.index = details.indexOf(detailName);
+				this.index = details.indexOfKey(detailName);
 				this.value = details.put(detailName, value);
 			}
 
@@ -276,11 +276,11 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			public void undo() {
 				EMap<String, String> details = eAnnotation.getDetails();
 				if (index < 0) {
-					details.remove(detailName);
+					details.removeKey(detailName);
 				}
 				else {
 					details.put(detailName, value);
-					int newIndex = details.indexOf(detailName);
+					int newIndex = details.indexOfKey(detailName);
 					if (newIndex != index) {
 						details.move(index, newIndex);
 					}

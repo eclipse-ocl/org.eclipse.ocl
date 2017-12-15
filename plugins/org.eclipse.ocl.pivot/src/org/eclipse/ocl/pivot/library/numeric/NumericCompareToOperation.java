@@ -30,11 +30,11 @@ public class NumericCompareToOperation extends AbstractSimpleBinaryOperation
 			return compareTo;
 		}
 		else {
-			@SuppressWarnings("null")@NonNull Integer valueOf = Integer.valueOf(ValueUtil.throwUnsupportedCompareTo(left, right));
+			@NonNull Integer valueOf = Integer.valueOf(ValueUtil.throwUnsupportedCompareTo(left, right));
 			return valueOf;
 		}
-//		RealValue leftNumeric = asRealValue(left);
-//		RealValue rightNumeric = asRealValue(right);
-//		return integerValueOf(leftNumeric.compareTo(rightNumeric));
+		//		RealValue leftNumeric = asRealValue(left);
+		//		RealValue rightNumeric = asRealValue(right);
+		//		return integerValueOf(leftNumeric.compareTo(rightNumeric));
 	}
 }

@@ -32,7 +32,7 @@ public class LongIntegerValueImpl extends IntegerValueImpl
 
 	private final long value;			// The value.
 	private BigInteger bigValue = null;	// Lazily computed BigInteger counterpart.
-	
+
 	public LongIntegerValueImpl(long value) {
 		this.value = value;
 	}
@@ -76,13 +76,13 @@ public class LongIntegerValueImpl extends IntegerValueImpl
 		@SuppressWarnings("null") @NonNull Double result = Double.valueOf(value);
 		return result;
 	}
-	
+
 	@Override
 	public @NonNull Integer asInteger() {
-		@SuppressWarnings("null") @NonNull Integer result = Integer.valueOf(intValue());
+		Integer result = Integer.valueOf(intValue());
 		return result;
 	}
-	
+
 	@Override
 	@SuppressWarnings("null")
 	public @NonNull Number asNumber() {
@@ -190,13 +190,13 @@ public class LongIntegerValueImpl extends IntegerValueImpl
 	public int hashCode() {
 		return (int)(value ^ (value >>> 32));
 	}
-	
+
 	@Override
 	public int intValue() {
 		int intValue = (int) value;
-//		if (intValue != value) {
-//			throw new InvalidValueException("intValue() overflow");
-//		}
+		//		if (intValue != value) {
+		//			throw new InvalidValueException("intValue() overflow");
+		//		}
 		return intValue;
 	}
 
@@ -204,7 +204,7 @@ public class LongIntegerValueImpl extends IntegerValueImpl
 	public boolean isUnlimitedNatural() {
 		return value >= 0;
 	}
-	
+
 	@Override
 	public long longValue() {
 		return value;

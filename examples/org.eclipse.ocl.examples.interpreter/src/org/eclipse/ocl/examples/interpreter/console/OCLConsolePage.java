@@ -409,7 +409,6 @@ extends Page {
 					if (selected instanceof EObject) {
 						context = (EObject) selected;
 					} else if (selected instanceof IAdaptable) {
-						@SuppressWarnings("cast")			// Cast not needed after Mars M6
 						EObject adapter = ((IAdaptable) selected).getAdapter(EObject.class);
 						context = adapter;
 					}

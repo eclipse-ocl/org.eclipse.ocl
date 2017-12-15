@@ -29,7 +29,7 @@ public class BigIntegerValueImpl extends IntegerValueImpl
 	private static final long serialVersionUID = 6202182719851208124L;
 
 	private final @NonNull BigInteger value;
-	
+
 	@SuppressWarnings("null")
 	public BigIntegerValueImpl(long value) {
 		this(BigInteger.valueOf(value));
@@ -66,13 +66,13 @@ public class BigIntegerValueImpl extends IntegerValueImpl
 			return super.asEcoreObject(idResolver, instanceClass);
 		}
 	}
-	
+
 	@Override
 	public @NonNull Integer asInteger() {
-		@SuppressWarnings("null") @NonNull Integer result = Integer.valueOf(intValue());
+		Integer result = Integer.valueOf(intValue());
 		return result;
 	}
-	
+
 	@Override
 	public @NonNull Number asNumber() {
 		return value;
@@ -153,13 +153,13 @@ public class BigIntegerValueImpl extends IntegerValueImpl
 	public int hashCode() {
 		return value.hashCode();
 	}
-	
+
 	@Override
 	public int intValue() {
 		int intValue = value.intValue();
-//		if (!BigInteger.valueOf(intValue).equals(value)) {
-//			throw new InvalidValueException("intValue() overflow");
-//		}
+		//		if (!BigInteger.valueOf(intValue).equals(value)) {
+		//			throw new InvalidValueException("intValue() overflow");
+		//		}
 		return intValue;
 	}
 
