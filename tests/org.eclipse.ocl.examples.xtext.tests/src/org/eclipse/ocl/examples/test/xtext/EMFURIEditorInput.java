@@ -15,11 +15,13 @@ import java.net.URISyntaxException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.CommonUIPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IURIEditorInput;
@@ -44,7 +46,7 @@ public class EMFURIEditorInput implements IURIEditorInput
 	@Override
 	public boolean equals(Object o) {
 		return this == o || o instanceof EMFURIEditorInput
-			&& emfURI.equals(((EMFURIEditorInput) o).emfURI);
+				&& emfURI.equals(((EMFURIEditorInput) o).emfURI);
 	}
 
 	/**
@@ -67,7 +69,7 @@ public class EMFURIEditorInput implements IURIEditorInput
 	/**
 	 * Returns <b>true</b> only if the URI represents a file and if this file
 	 * exists.
-	 * 
+	 *
 	 * @see org.eclipse.ui.IEditorInput#exists()
 	 */
 	@Override
@@ -85,7 +87,7 @@ public class EMFURIEditorInput implements IURIEditorInput
 
 	/**
 	 * Returns the <i>toString</i> value of the associated URI.
-	 * 
+	 *
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	@Override
@@ -93,7 +95,7 @@ public class EMFURIEditorInput implements IURIEditorInput
 		return URI.decode(emfURI.isHierarchical()
 			&& emfURI.lastSegment() != null
 			? emfURI.lastSegment()
-			: emfURI.toString());
+				: emfURI.toString());
 	}
 
 	@Override
@@ -127,25 +129,32 @@ public class EMFURIEditorInput implements IURIEditorInput
 		return CommonUIPlugin.getPlugin().getSymbolicName();
 	}
 
-	protected static class EclipseUtil {
-
+	protected static class EclipseUtil
+	{
 		public static Object getAdatper(Class<?> adapter, URI uri) {
 			if ((adapter == IFile.class || adapter == IResource.class)
-				&& uri.isPlatformResource()) {
+					&& uri.isPlatformResource()) {
 				return ResourcesPlugin.getWorkspace().getRoot()
-					.getFile(new Path(uri.toPlatformString(true)));
-			} else {
+						.getFile(new Path(uri.toPlatformString(true)));
+			}
+			else {
 				return null;
 			}
 		}
 
 		public static boolean exists(URI uri) {
 			if (uri.isPlatformResource()) {
-				return ResourcesPlugin.getWorkspace().getRoot()
-					.getFile(new Path(uri.toPlatformString(true))).exists();
-			} else {
-				return false;
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				Path path = new Path(uri.toPlatformString(true));
+				IFile file = root.getFile(path);
+				if (file != null) {
+					return file.exists();
+				}
 			}
+			else if (uri.isPlatformPlugin()) {
+				return URIConverter.INSTANCE.exists(uri, null);
+			}
+			return false;
 		}
 	}
 }

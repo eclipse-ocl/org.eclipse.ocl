@@ -50,6 +50,7 @@ import org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLUiModule;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
 import org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibUiModule;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -70,7 +71,7 @@ import org.eclipse.xtext.validation.CheckMode;
  */
 @SuppressWarnings("null")
 public class EditorTests extends XtextTestCase
-{	
+{
 	protected FileEditorInput createEcoreFileEditorInput(String projectName, String fileName, String testDocument)throws IOException, CoreException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String ecoreString = createEcoreString(ocl, fileName, testDocument, true);
@@ -160,8 +161,9 @@ public class EditorTests extends XtextTestCase
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-		XtextEditor editor = (XtextEditor) IDE.openEditor(page, input, editorId, true);
+		IEditorPart openEditor = IDE.openEditor(page, input, editorId, true);
 		TestUIUtil.wait(750);
+		XtextEditor editor = (XtextEditor) openEditor;
 		String languageName = editor.getLanguageName();
 		assertEquals(editorId, languageName);
 		XtextDocument document = (XtextDocument) editor.getDocument();
@@ -197,7 +199,7 @@ public class EditorTests extends XtextTestCase
 		finally {
 			doTearDown(editor);
 		}
-	}	
+	}
 
 	protected Set<EObject> indexPivotContent(XtextDocument document, final String prefix) {
 		@SuppressWarnings("unused") String doc = document.get();
@@ -206,14 +208,14 @@ public class EditorTests extends XtextTestCase
 		{
 			@Override
 			public Object exec(@Nullable XtextResource resource) throws Exception {
-//				assertNoResourceErrors("Loaded CS", resource);
+				//				assertNoResourceErrors("Loaded CS", resource);
 				CS2AS cs2as = ((BaseCSResource)resource).getCS2AS();
 				if (cs2as != null) {
 					Resource asResource = cs2as.getASResource();
 					assertNoResourceErrors(prefix, asResource);
 					for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 						EObject eObject = tit.next();
-//						System.out.println(PivotUtil.debugSimpleName(eObject));
+						//						System.out.println(PivotUtil.debugSimpleName(eObject));
 						pivotContent.add(eObject);
 					}
 				}
@@ -221,66 +223,66 @@ public class EditorTests extends XtextTestCase
 			}
 		});
 		return pivotContent;
-	}	
-	
+	}
+
 	@Override
 	protected void setUp() throws Exception {
-		TestUIUtil.suppressGitPrefixPopUp();    		
+		TestUIUtil.suppressGitPrefixPopUp();
 		super.setUp();
 	}
 
 	public void testEditor_OpenCompleteOCLEditor() throws Exception {
 		doTestEditor(CompleteOCLUiModule.EDITOR_ID, "test.ocl",
 			"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'\n"+
-			"package ecore\n"+
-			"endpackage");
-	}	
-	
+					"package ecore\n"+
+				"endpackage");
+	}
+
 	public void testEditor_OpenCompleteOCLEditor4Pivot_OCL() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/Pivot.ocl", true);
 		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("inv SourceIsCollection: ownedSource?.type.oclIsKindOf(CollectionType)"));
-	}	
-	
+	}
+
 	public void testEditor_OpenCompleteOCLEditor4Fruit_OCL() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.examples.xtext.tests/src/org/eclipse/ocl/examples/test/xtext/models/Fruit.ocl", true);
 		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("body: Color::red"));
-	}	
-	
+	}
+
 	public void testEditor_OpenEssentialOCLEditor() throws Exception {
 		doTestEditor(EssentialOCLUiModule.EDITOR_ID, "test.essentialocl", "1 + 4");
 	}
-	
+
 	public void testEditor_OpenOCLinEcoreEditor() throws Exception {
 		doTestEditor(OCLinEcoreUiModule.EDITOR_ID, "test.oclinecore", "package test : test = 'test' { }");
 	}
-	
+
 	public void testEditor_OpenOCLinEcoreEditor4Ecore() throws Exception {
 		doTestEditor(OCLinEcoreUiModule.EDITOR_ID, "test.ecore", "package test : test = 'test' { }");
-	}	
-	
+	}
+
 	public void testEditor_OpenOCLinEcoreEditor_Bug460625() throws Exception {
-//		BaseOutlineWithEditorLinker.LOCATE.setState(true);;
-		String testContent = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" + 
-		"\n" + 
-		"package test : tut = 'http://bug/382087'\n" + 
-		"{\n" + 
-		"	class Test\n" + 
-		"	{\n" + 
-		"		invariant Testing: self->select(self);\n" + 
-		"	}\n" + 
-		"}\n";
+		//		BaseOutlineWithEditorLinker.LOCATE.setState(true);;
+		String testContent = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
+				"\n" +
+				"package test : tut = 'http://bug/382087'\n" +
+				"{\n" +
+				"	class Test\n" +
+				"	{\n" +
+				"		invariant Testing: self->select(self);\n" +
+				"	}\n" +
+				"}\n";
 		XtextEditor editor = doStartUp(OCLinEcoreUiModule.EDITOR_ID, "Bug460625.ecore", testContent);
 		int selectionOffset = testContent.indexOf("->");
 		int selectionLength = "->".length();
 		editor.selectAndReveal(selectionOffset, selectionLength);
-//		TestUtil.flushEvents();
-//		ISelection editorSelection = editor.getSelectionProvider().getSelection();
-//		TestUtil.flushEvents();
-//		IContentOutlinePage outlinePage = (IContentOutlinePage) editor.getAdapter(IContentOutlinePage.class);
+		//		TestUtil.flushEvents();
+		//		ISelection editorSelection = editor.getSelectionProvider().getSelection();
+		//		TestUtil.flushEvents();
+		//		IContentOutlinePage outlinePage = (IContentOutlinePage) editor.getAdapter(IContentOutlinePage.class);
 		// FIXME This only works if debugger slows everything down. ? How to wait for Outline progress ?
-/*		BaseOutlineNode outlineNode = null;
+		/*		BaseOutlineNode outlineNode = null;
 		for (int i= 0; i < 1000; i++) {
 			TestUtil.flushEvents();
 			Thread.yield();
@@ -295,26 +297,26 @@ public class EditorTests extends XtextTestCase
 		assertEquals(selectionOffset, significantTextRegion.getOffset());
 		assertEquals(selectionLength, significantTextRegion.getLength()); */
 		doTearDown(editor);
-	}	
-	
+	}
+
 	public void testEditor_OpenOCLinEcoreEditor4Pivot() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/Pivot.ecore", true);
 		String documentText = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("primitive datatype _'Boolean'"));
-	}	
-	
+	}
+
 	public void testEditor_OpenOCLStdLibEditor() throws Exception {
 		doTestEditor(OCLstdlibUiModule.EDITOR_ID, "test.oclstdlib",
-			"import '" + LibraryConstants.STDLIB_URI + "';\n" + 
-			"library test : xxx = '" + LibraryConstants.STDLIB_URI + "' { }");
-	}	
-	
+			"import '" + LibraryConstants.STDLIB_URI + "';\n" +
+					"library test : xxx = '" + LibraryConstants.STDLIB_URI + "' { }");
+	}
+
 	public void testEditor_OpenOCLStdLibEditor4OCL_OCLstdlib() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 		String documentText = doTestEditor(OCLstdlibUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("type UniqueCollection(T) : CollectionType conformsTo Collection(T) {"));
-	}	
-	
+	}
+
 	public void testEditor_OpenOCLinEcoreEditor4Ecore_Ecore() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
@@ -325,8 +327,8 @@ public class EditorTests extends XtextTestCase
 		} finally {
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
 		}
-	}	
-	
+	}
+
 	// FIXME Disabled for BUG 425505
 	public void zztestEditor_OpenOCLinEcoreEditor4Pivot_Ecore() throws Exception {
 		URI uri = URI.createPlatformPluginURI(PivotConstantsInternal.PIVOT_ECORE, true);
@@ -334,21 +336,21 @@ public class EditorTests extends XtextTestCase
 		assertTrue(documentText.contains("abstract class Visitable : 'org.eclipse.ocl.pivot.util.Visitable' { interface };"));
 		assertTrue(documentText.contains("reference Type::ownedAttribute"));							// Tests Bug 363141 EAnnotation reference
 	}
-	
+
 	// FIXME Bug 399762 fails on Hudson
 	public void zztestEditor_OpenOCLinEcoreEditor4Test_Ecore_Update() throws Exception {
-		String testDocument = 
-			"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
-			"{\n" +
-			"	class Library\n" +
-			"	{\n" +
-			"		property books#library : Book[*] { composes };\n" +
-			"	}\n" +
-			"	class Book\n" +
-			"	{\n" +
-			"		property library#books : Library[?];\n" +
-			"	}\n" +
-			"}\n";
+		String testDocument =
+				"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
+						"{\n" +
+						"	class Library\n" +
+						"	{\n" +
+						"		property books#library : Book[*] { composes };\n" +
+						"	}\n" +
+						"	class Book\n" +
+						"	{\n" +
+						"		property library#books : Library[?];\n" +
+						"	}\n" +
+						"}\n";
 		FileEditorInput fileEditorInput = createEcoreFileEditorInput("test", "RefreshTest.ecore", testDocument);
 		XtextEditor editor = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, fileEditorInput);
 		XtextDocument document = (XtextDocument) editor.getDocument();
@@ -372,5 +374,5 @@ public class EditorTests extends XtextTestCase
 		assertEquals(oldPivotContent, newPivotContent);
 		TestUIUtil.flushEvents();
 		doTearDown(editor);
-	}		
+	}
 }
