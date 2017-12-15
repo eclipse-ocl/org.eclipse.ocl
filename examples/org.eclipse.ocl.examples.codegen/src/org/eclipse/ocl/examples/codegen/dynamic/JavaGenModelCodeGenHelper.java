@@ -151,7 +151,10 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 		}
 		OCLstdlibTables.LIBRARY.getClass();		// Ensure coherent initialization
 		File explicitClassPath = new File(targetFolder.getParentFile(), "test-bin");
-		OCL2JavaFileObject.saveClass(String.valueOf(explicitClassPath), qualifiedClassName, javaCodeSource);
+		String problems = OCL2JavaFileObject.saveClass(String.valueOf(explicitClassPath), qualifiedClassName, javaCodeSource);
+		if (problems != null) {
+			throw new IOException("Failed to compile " + qualifiedClassName + "\n" + problems);
+		}
 		Class<?> testClass = OCL2JavaFileObject.loadExplicitClass(explicitClassPath, qualifiedClassName);
 		return (LibraryOperation) testClass.newInstance();
 	}
