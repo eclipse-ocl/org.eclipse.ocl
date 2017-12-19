@@ -23,7 +23,6 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.eclipse.gmt.umlx.registry.editor.ModelRegistryNature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 	</natures>
 </projectDescription>
