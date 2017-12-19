@@ -79,14 +79,12 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionHelper;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -1287,36 +1285,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
-		// FIXME following code is now in PivotHelper.createOperationCallExp too
-		Type returnType = null;
-		Type formalType = operation.getType();
-		if ((formalType != null) && (sourceType != null)) {
-			if (operation.isIsTypeof()) {
-				returnType = metamodelManager.specializeType(formalType, callExp, sourceType, null);
-			}
-			else {
-				returnType = metamodelManager.specializeType(formalType, callExp, sourceType, source != null ? source.getTypeValue() : null);
-			}
-		}
-		//
-		//	The flattening of collect() and consequently implicit-collect is not modelled accurately so we need to code it.
-		//
-		boolean returnIsRequired = operation.isIsRequired();
-		LibraryFeature implementationClass = operation.getImplementation();
-		if (implementationClass != null) {
-			Class<? extends LibraryFeature> className = implementationClass.getClass();
-			TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
-			if (helper != null) {
-				returnType = helper.resolveReturnType(metamodelManager, callExp, returnType);
-				returnIsRequired = helper.resolveReturnNullity(metamodelManager, callExp, returnIsRequired);
-			}
-		}
-		if (operation.isIsTypeof()) {
-			context.setType(callExp, standardLibrary.getClassType(), returnIsRequired, returnType);
-		}
-		else {
-			context.setType(callExp, returnType, returnIsRequired, null);
-		}
+		helper.setOperationReturnType(callExp, operation);
 	}
 
 	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {

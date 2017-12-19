@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -558,6 +559,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public final @NonNull CS2AS getConverter() {
 		return converter;
+	}
+
+	public final @NonNull PivotHelper getHelper() {
+		return converter.getHelper();
 	}
 
 	@SuppressWarnings("unchecked")

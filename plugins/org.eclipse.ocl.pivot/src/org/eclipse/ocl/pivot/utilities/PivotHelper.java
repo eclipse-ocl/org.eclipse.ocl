@@ -202,14 +202,7 @@ public class PivotHelper
 		asCallExp.getOwnedIterators().addAll(asIterators);
 		asCallExp.setOwnedResult(asResult);
 		asCallExp.setOwnedBody(asBody);
-		Type formalType = asIteration.getType();
-		assert formalType != null;
-		asCallExp.setType(formalType);
-		asCallExp.setIsRequired(asIteration.isIsRequired());
-		Type actualType = asSource.getType();
-		assert actualType != null;
-		Type returnType = getMetamodelManager().specializeType(formalType, asCallExp, actualType, asSource.getTypeValue());
-		asCallExp.setType(returnType);
+		setOperationReturnType(asCallExp, asIteration);
 		return asCallExp;
 	}
 
@@ -220,14 +213,7 @@ public class PivotHelper
 		asCallExp.setOwnedSource(asSource);
 		asCallExp.getOwnedIterators().addAll(asIterators);
 		asCallExp.setOwnedBody(asBody);
-		Type formalType = asIteration.getType();
-		assert formalType != null;
-		asCallExp.setType(formalType);
-		asCallExp.setIsRequired(asIteration.isIsRequired());
-		Type actualType = asSource.getType();
-		assert actualType != null;
-		Type returnType = getMetamodelManager().specializeType(formalType, asCallExp, actualType, asSource.getTypeValue());
-		asCallExp.setType(returnType);
+		setOperationReturnType(asCallExp, asIteration);
 		return asCallExp;
 	}
 
@@ -368,41 +354,7 @@ public class PivotHelper
 		if (asArguments != null) {
 			asOperationCallExp.getOwnedArguments().addAll(asArguments);
 		}
-		asOperationCallExp.setIsRequired(asOperation.isIsRequired());
-		Type formalType = asOperation.getType();
-		Type sourceType = null;
-		Type sourceTypeValue = null;
-		if (asSourceExpression != null) {
-			sourceType = asSourceExpression.getType();
-			sourceTypeValue = asSourceExpression.getTypeValue();
-		}
-		Type returnType = null;
-		if ((formalType != null) && (sourceType != null)) {
-			PivotMetamodelManager metamodelManager = getMetamodelManager();
-			if (asOperation.isIsTypeof()) {
-				returnType = metamodelManager.specializeType(formalType, asOperationCallExp, sourceType, null);
-			}
-			else {
-				returnType = metamodelManager.specializeType(formalType, asOperationCallExp, sourceType, sourceTypeValue);
-			}
-
-			boolean returnIsRequired = asOperation.isIsRequired();
-			LibraryFeature implementationClass = asOperation.getImplementation();
-			if (implementationClass != null) {
-				Class<? extends LibraryFeature> className = implementationClass.getClass();
-				TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
-				if (helper != null) {
-					returnType = helper.resolveReturnType(metamodelManager, asOperationCallExp, returnType);
-					returnIsRequired = helper.resolveReturnNullity(metamodelManager, asOperationCallExp, returnIsRequired);
-				}
-			}
-			if (asOperation.isIsTypeof()) {
-				setType(asOperationCallExp, standardLibrary.getClassType(), returnIsRequired, returnType);
-			}
-			else {
-				setType(asOperationCallExp, returnType, returnIsRequired, null);
-			}
-		}
+		setOperationReturnType(asOperationCallExp, asOperation);
 		return asOperationCallExp;
 	}
 
@@ -645,6 +597,47 @@ public class PivotHelper
 		LetExp safeExp = createLetExp(unsafeSourceVariable, safeObjectCallExp);
 		//
 		eContainer.eSet(eContainmentFeature, safeExp);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public void setOperationReturnType(@NonNull CallExp asCallExp, @NonNull Operation asOperation) {
+		OCLExpression asSourceExpression = asCallExp.getOwnedSource();
+		asCallExp.setIsRequired(asOperation.isIsRequired());
+		Type formalType = asOperation.getType();
+		Type sourceType = null;
+		Type sourceTypeValue = null;
+		if (asSourceExpression != null) {
+			sourceType = asSourceExpression.getType();
+			sourceTypeValue = asSourceExpression.getTypeValue();
+		}
+		Type returnType = null;
+		if ((formalType != null) && (sourceType != null)) {
+			PivotMetamodelManager metamodelManager = getMetamodelManager();
+			if (asOperation.isIsTypeof()) {
+				returnType = metamodelManager.specializeType(formalType, asCallExp, sourceType, null);
+			}
+			else {
+				returnType = metamodelManager.specializeType(formalType, asCallExp, sourceType, sourceTypeValue);
+			}
+			boolean returnIsRequired = asOperation.isIsRequired();
+			LibraryFeature implementationClass = asOperation.getImplementation();
+			if (implementationClass != null) {
+				Class<? extends LibraryFeature> className = implementationClass.getClass();
+				TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
+				if (helper != null) {
+					returnType = helper.resolveReturnType(metamodelManager, asCallExp, returnType);
+					returnIsRequired = helper.resolveReturnNullity(metamodelManager, asCallExp, returnIsRequired);
+				}
+			}
+			if (asOperation.isIsTypeof()) {
+				setType(asCallExp, standardLibrary.getClassType(), returnIsRequired, returnType);
+			}
+			else {
+				setType(asCallExp, returnType, returnIsRequired, null);
+			}
+		}
 	}
 
 	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -46,6 +47,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
@@ -81,7 +83,7 @@ import org.eclipse.xtext.util.Tuples;
  * and their corresponding Pivot Resources creating a CS2ASConversion
  * to update.
  */
-public abstract class CS2AS extends AbstractConversion
+public abstract class CS2AS extends AbstractConversion	// FIXME migrate functionality to PivotHelper
 {
 	public static interface UnresolvedProxyMessageProvider
 	{
@@ -395,6 +397,11 @@ public abstract class CS2AS extends AbstractConversion
 	 */
 	protected final @NonNull CSI2ASMapping csi2asMapping;
 
+	/**
+	 * Construction helper, lazily created by the overrideable getHelper/createHelper.
+	 */
+	private @Nullable PivotHelper helper = null;
+
 	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
 
 	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
@@ -427,6 +434,10 @@ public abstract class CS2AS extends AbstractConversion
 		return new CS2ASConversion(this, diagnosticsConsumer);
 	}
 
+	protected @NonNull PivotHelper createHelper() {
+		return new PivotHelper(environmentFactory);
+	}
+
 	protected abstract @NonNull BaseCSVisitor<Element> createLeft2RightVisitor(@NonNull CS2ASConversion cs2asConversion);
 	protected abstract @NonNull BaseCSVisitor<Continuation<?>> createPostOrderVisitor(@NonNull CS2ASConversion converter) ;
 	protected abstract @NonNull BaseCSVisitor<Continuation<?>> createPreOrderVisitor(@NonNull CS2ASConversion converter);
@@ -445,6 +456,14 @@ public abstract class CS2AS extends AbstractConversion
 
 	public @NonNull BaseCSResource getCSResource() {
 		return csResource;
+	}
+
+	public @NonNull PivotHelper getHelper() {
+		PivotHelper helper2 = helper;
+		if (helper2 == null) {
+			helper = helper2 = createHelper();
+		}
+		return helper2;
 	}
 
 	public Element getPivotElement(@NonNull ModelElementCS csElement) {
@@ -630,7 +649,8 @@ public abstract class CS2AS extends AbstractConversion
 			PivotUtilInternal.resetContainer(pivotElement);		// Bypass child-stealing detector
 		}
 		if ((pivotElement == null) || (pivotEClass != pivotElement.eClass())) {
-			@NonNull Element pivotElement3 = (Element) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
+			EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
+			@NonNull Element pivotElement3 = (Element) eFactoryInstance.create(pivotEClass);
 			pivotElement2 = pivotElement3;
 		}
 		else {

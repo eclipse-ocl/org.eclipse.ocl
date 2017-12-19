@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
@@ -33,8 +34,14 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 public class BaseCSLeft2RightVisitor extends AbstractExtendingBaseCSVisitor<Element, CS2ASConversion>
 {
+	/**
+	 * Construction helper.
+	 */
+	protected final @NonNull PivotHelper helper;
+
 	public BaseCSLeft2RightVisitor(@NonNull CS2ASConversion context) {
 		super(context);
+		this.helper = context.getHelper();
 	}
 
 	@Override
