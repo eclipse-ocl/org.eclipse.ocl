@@ -597,6 +597,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Iteration asIteration = ClassUtil.nonNullState(element.getReferredIteration());
 		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+		boolean isRequired = element.isIsRequired();
 		if (iterationHelper != null) {
 			CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 			cgBuiltInIterationCallExp.setReferredIteration(asIteration);
@@ -640,7 +641,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				//				variablesStack.putVariable(asVariable, cgAccumulator);
 				//				cgAccumulator.setNonInvalid();
 			}
-			cgBuiltInIterationCallExp.setRequired(asIteration.isIsRequired());
+			cgBuiltInIterationCallExp.setRequired(isRequired);
+			if (isRequired) {
+				cgBuiltInIterationCallExp.setNonNull();
+			}
 			return cgBuiltInIterationCallExp;
 		}
 		CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
@@ -654,7 +658,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgLibraryIterationCallExp.getIterators().add(getIterator(iterator));
 		}
 		cgLibraryIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
-		cgLibraryIterationCallExp.setRequired(asIteration.isIsRequired());
+		cgLibraryIterationCallExp.setRequired(isRequired);
 		//		cgIterationCallExp.setOperation(getOperation(element.getReferredOperation()));
 		return cgLibraryIterationCallExp;
 	}

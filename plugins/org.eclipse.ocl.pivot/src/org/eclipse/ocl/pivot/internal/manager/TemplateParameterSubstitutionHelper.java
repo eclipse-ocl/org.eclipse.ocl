@@ -212,7 +212,7 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
-	//	Special case processing for an any(true) return from a non-empty null-free collection.
+	//	Special case processing for an any(true) return from a null-free collection.
 	//
 	private static class CollectionAnyHelper extends CollectionSourceHelper
 	{
@@ -225,7 +225,7 @@ public abstract class TemplateParameterSubstitutionHelper
 					Type sourceType = ownedSource.getType();
 					if (sourceType instanceof CollectionType) {
 						CollectionType collectionType = (CollectionType)sourceType;
-						if (collectionType.isIsNullFree() && (collectionType.getLowerValue().signum() > 0)) {
+						if (collectionType.isIsNullFree()) {
 							return true;
 						}
 					}
