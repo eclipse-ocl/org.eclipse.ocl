@@ -140,7 +140,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			if (node != null) {
 				String varName = ElementUtil.getTextName(csName);
 				assert varName != null;
-				context.refreshName(parameter, varName);
+				helper.refreshName(parameter, varName);
 				List<PathElementCS> path = csPathName.getOwnedPathElements();
 				PathElementCS csPathElement = path.get(path.size()-1);
 				csPathElement.setReferredElement(parameter);	// Resolve the reference that is actually a definition
@@ -241,7 +241,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				parts.add(asMessagePart);
 				parts.add(asStatusPart);
 			}
-			context.refreshList(asTupleLiteralExp.getOwnedParts(), parts);
+			helper.refreshList(asTupleLiteralExp.getOwnedParts(), parts);
 		}
 		return null;
 	}

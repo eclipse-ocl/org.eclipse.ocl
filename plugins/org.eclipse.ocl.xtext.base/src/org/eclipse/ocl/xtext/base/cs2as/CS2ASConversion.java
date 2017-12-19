@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -1018,6 +1019,20 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.refreshModelElement(pivotClass, pivotEClass, csElement);
 	}
 
+	/* @deprecated use PivotHelper.refreshName() */
+	@Override
+	@Deprecated
+	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
+		getHelper().refreshName(pivotNamedElement, newName);
+	}
+
+	/* @deprecated use PivotHelper.refreshNsURI() */
+	@Override
+	@Deprecated
+	public void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
+		getHelper().refreshNsURI(pivotPackage, newNsURI);
+	}
+
 	public <T extends Element> void refreshPivotList(@NonNull Class<T> pivotClass, /*@NonNull*/ List<? super T> pivotElements,
 			/*@NonNull*/ Iterable<? extends ModelElementCS> csElements) {
 		assert pivotElements != null;
@@ -1092,6 +1107,20 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
+	/* @deprecated use PivotHelper.setBehavioralType() */
+	@Override
+	@Deprecated
+	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
+		getHelper().setBehavioralType(targetElement, sourceElement);
+	}
+
+	/* @deprecated use PivotHelper.setContextVariable() */
+	@Override
+	@Deprecated
+	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
+		getHelper().setContextVariable(pivotSpecification, selfVariableName, contextType, contextInstance);
+	}
+
 	public void setReferredIteration(@NonNull LoopExp expression, @Nullable Iteration iteration) {
 		expression.setReferredIteration(iteration);
 		expression.setName(iteration != null ? iteration.getName() : null);
@@ -1100,6 +1129,27 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void setReferredOperation(@NonNull OperationCallExp expression, @Nullable Operation operation) {
 		expression.setReferredOperation(operation);
 		expression.setName(operation != null ? operation.getName() : null);
+	}
+
+	/* @deprecated use PivotHelper.setType() */
+	@Override
+	@Deprecated
+	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+		getHelper().setType(pivotElement, type, isRequired, typeValue);
+	}
+
+	/* @deprecated use PivotHelper.setType() */
+	@Override
+	@Deprecated
+	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+		getHelper().setType(pivotElement, type, isRequired, typeValue);
+	}
+
+	/* @deprecated use PivotHelper.setType() */
+	@Override
+	@Deprecated
+	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
+		getHelper().setType(pivotElement, type, isRequired);
 	}
 
 	/**

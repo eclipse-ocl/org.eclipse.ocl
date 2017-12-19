@@ -44,7 +44,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 {
 	static final Logger logger = Logger.getLogger(EssentialOCLCSPostOrderVisitor.class);
 
-	public static class ConstraintCSCompletion extends SingleContinuation<ConstraintCS>
+	public class ConstraintCSCompletion extends SingleContinuation<ConstraintCS>
 	{
 		public ConstraintCSCompletion(@NonNull CS2ASConversion context, @NonNull ConstraintCS csElement) {
 			super(context, null, null, csElement);
@@ -69,7 +69,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						OCLExpression asExpression = context.visitLeft2Right(OCLExpression.class, csStatusExpression);
 						asSpecification.setOwnedBody(asExpression);
 						boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-						context.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+						helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
 						PivotUtil.setBody(asSpecification, asExpression, statusText);
 					}
 					else {
@@ -81,7 +81,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						OCLExpression asMessageExpression = csMessageExpression != null ? context.visitLeft2Right(OCLExpression.class, csMessageExpression) : null;
 						asMessageTuplePart.setOwnedInit(asMessageExpression);
 						@SuppressWarnings("null")@NonNull OCLExpression asTuplePartExp = asSpecification.getOwnedBody();
-						context.setType(asSpecification, asTuplePartExp.getType(), true);
+						helper.setType(asSpecification, asTuplePartExp.getType(), true);
 						String messageText = csMessageExpression != null ? ElementUtil.getExpressionText(csMessageExpression) : "null";
 						String tupleText = PivotUtil.createTupleValuedConstraint(statusText, null, messageText);
 						PivotUtil.setBody(asSpecification, asTuplePartExp, tupleText);
@@ -109,7 +109,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 		}
 	}
 
-	public static class ExpSpecificationCSCompletion extends SingleContinuation<ExpSpecificationCS>
+	public class ExpSpecificationCSCompletion extends SingleContinuation<ExpSpecificationCS>
 	{
 		public ExpSpecificationCSCompletion(@NonNull CS2ASConversion context, @NonNull ExpSpecificationCS csElement) {
 			super(context, null, null, csElement);
@@ -125,7 +125,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 				String statusText = csExpression != null ? ElementUtil.getExpressionText(csExpression) : "null";
 				PivotUtil.setBody(asSpecification, asExpression, statusText);
 				boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-				context.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+				helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
 			}
 			return null;
 		}

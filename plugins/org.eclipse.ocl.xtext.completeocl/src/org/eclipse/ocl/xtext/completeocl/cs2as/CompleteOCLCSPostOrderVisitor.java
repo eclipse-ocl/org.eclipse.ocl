@@ -81,7 +81,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 				String statusText = csExpression != null ? ElementUtil.getExpressionText(csExpression) : "null";
 				PivotUtil.setBody(asSpecification, asExpression, statusText);
 				boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-				context.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+				helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
 			}
 			return null;
 		}
@@ -142,8 +142,8 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 		if ((modelOperation != null) && !modelOperation.eIsProxy()) {
 			Operation contextOperation = PivotUtil.getPivot(Operation.class, csElement);
 			if (contextOperation != null) {
-				context.refreshName(contextOperation, ClassUtil.nonNullModel(modelOperation.getName()));
-				context.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());		// FIXME type consistency check
+				helper.refreshName(contextOperation, ClassUtil.nonNullModel(modelOperation.getName()));
+				helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());		// FIXME type consistency check
 			}
 		}
 		return null;

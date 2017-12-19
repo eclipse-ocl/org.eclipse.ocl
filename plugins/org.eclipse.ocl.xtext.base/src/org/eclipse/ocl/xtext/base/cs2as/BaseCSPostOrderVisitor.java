@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
@@ -89,9 +90,15 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
+	/**
+	 * Construction helper.
+	 */
+	protected final @NonNull PivotHelper helper;
+
 	public BaseCSPostOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.metamodelManager= context.getMetamodelManager();
+		this.helper = context.getHelper();
 	}
 
 	protected @Nullable TemplateableElementCS getTemplateableElementContainer(@NonNull ElementCS csElement) {
@@ -135,7 +142,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						references.add(element);
 					}
 				}
-				context.refreshList(pivotElement.getReferences(), references);
+				helper.refreshList(pivotElement.getReferences(), references);
 			}
 			else {
 				pivotElement.getReferences().clear();
@@ -286,7 +293,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 				pivotOpposite = null;
 			}
 			pivotElement.setOpposite(pivotOpposite);
-			context.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
+			helper.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
 			//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
 			//			assert continuation == null;
 			if (pivotOpposite == null) {

@@ -46,13 +46,18 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	 * Set of all expression nodes whose type involves an UnspecifiedType. These are
 	 * created during the left2right pass and are finally resolved to
 	 * minimize invalidity.
+	 *
+	 * @deprecated no longer used
 	 */
+	@Deprecated
 	private HashSet<TypedElement> underspecifiedTypedElements = null;
 
 	protected AbstractBase2ASConversion(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 	}
 
+	/* @deprecated no longer used */
+	@Deprecated
 	protected void addUnderspecifiedTypedElement(@NonNull TypedElement pivotElement) {
 		if (underspecifiedTypedElements == null) {
 			underspecifiedTypedElements  = new HashSet<>();
@@ -60,6 +65,8 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		underspecifiedTypedElements.add(pivotElement);
 	}
 
+	/* @deprecated use PivotHelper.refreshName() */
+	@Deprecated
 	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
 		String oldName = pivotNamedElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
@@ -67,6 +74,8 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 
+	/* @deprecated no longer used / use PivotHelper.refreshNsURI() */
+	@Deprecated
 	public void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
 		String oldNsURI = pivotPackage.getURI();
 		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
@@ -74,6 +83,8 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 
+	/* @deprecated use PivotHelper.setBehavioralType() */
+	@Deprecated
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		if (!sourceElement.eIsProxy()) {
 			Type type = PivotUtilInternal.getBehavioralType(sourceElement);
@@ -82,6 +93,19 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			}
 			boolean isRequired = sourceElement.isIsRequired();
 			setType(targetElement, type, isRequired);
+		}
+	}
+
+	@Override
+	public void setClassifierContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Type contextType) {
+		Variable contextVariable = pivotSpecification.getOwnedContext();
+		if (contextVariable != null) {
+			if (contextType.eIsProxy()) {
+				setType(contextVariable, null, false);
+			}
+			else {
+				setType(contextVariable, contextType, true);
+			}
 		}
 	}
 
@@ -98,19 +122,6 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 		refreshName(contextVariable, selfVariableName);
 		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
-	}
-
-	@Override
-	public void setClassifierContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Type contextType) {
-		Variable contextVariable = pivotSpecification.getOwnedContext();
-		if (contextVariable != null) {
-			if (contextType.eIsProxy()) {
-				setType(contextVariable, null, false);
-			}
-			else {
-				setType(contextVariable, contextType, true);
-			}
-		}
 	}
 
 	public void setOperationContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @Nullable String resultName) {
@@ -194,11 +205,15 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	/**
 	 * Set the type and so potentially satisfy some TypeOfDependency. This method ensures that
 	 * type is not set to null.
+	 *
+	 * @deprecated no longer used / use PivotHelper.refreshNsURI()
 	 */
 	@Deprecated
 	public void setType(@NonNull TypedElement pivotElement, Type type) {
 		setType(pivotElement, type, pivotElement.isIsRequired());
 	}
+
+	@Deprecated /* @deprecated no longer used */
 	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
 		setType(pivotElement, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
@@ -206,6 +221,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
 	}
+	@Deprecated /* @deprecated only used locally */
 	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
 		setType(pivotElement, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
@@ -213,7 +229,10 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
 	}
-	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {	// FIXME redirect to PivotHelper
+
+	/* @deprecated only used locally / use PivotHelper.setType() */
+	@Deprecated
+	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 		if (primaryType != pivotElement.getType()) {
 			pivotElement.setType(primaryType);

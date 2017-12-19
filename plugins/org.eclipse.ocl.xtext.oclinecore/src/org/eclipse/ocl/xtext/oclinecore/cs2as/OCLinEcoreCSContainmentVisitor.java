@@ -28,7 +28,7 @@ public class OCLinEcoreCSContainmentVisitor extends AbstractOCLinEcoreCSContainm
 	@Override
 	public Continuation<?> visitSysMLCS(@NonNull SysMLCS csElement) {
 		@NonNull Annotation pivotElement = context.refreshModelElement(Annotation.class, PivotPackage.Literals.ANNOTATION, csElement);
-		context.refreshName(pivotElement, PivotConstants.SYSML_ANNOTATION_SOURCE);
+		helper.refreshName(pivotElement, PivotConstants.SYSML_ANNOTATION_SOURCE);
 		context.refreshComments(pivotElement, csElement);
 		return null;
 	}

@@ -175,8 +175,8 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Class contextClass = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, csElement);
 		contextClass.setName(modelClass.getName());
 		context.refreshPivotList(Constraint.class, contextClass.getOwnedInvariants(), allInvariants);
-		context.refreshList(contextClass.getOwnedOperations(), contextOperations);
-		context.refreshList(contextClass.getOwnedProperties(), contextProperties);
+		helper.refreshList(contextClass.getOwnedOperations(), contextOperations);
+		helper.refreshList(contextClass.getOwnedProperties(), contextProperties);
 		context.refreshComments(contextClass, csElement);
 		for (@NonNull ContextDeclCS contextDecl : contextDecls) {
 			if (contextDecl instanceof ClassifierContextDeclCS) {
@@ -190,8 +190,8 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Operation contextOperation = context.refreshModelElement(Operation.class, PivotPackage.Literals.OPERATION, operationContextDecl);
 		Operation modelOperation = operationContextDecl.getReferredOperation();
 		if (modelOperation != null) {
-			context.refreshName(contextOperation, ClassUtil.nonNullModel(modelOperation.getName()));
-			context.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());
+			helper.refreshName(contextOperation, ClassUtil.nonNullModel(modelOperation.getName()));
+			helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());
 			List<ExpSpecificationCS> ownedBodies = operationContextDecl.getOwnedBodies();
 			ExpSpecificationCS ownedBody = ownedBodies.size() > 0 ? ownedBodies.get(0) : null;
 			LanguageExpression languageExpression = ownedBody != null ? PivotUtil.getPivot(LanguageExpression.class,  ownedBody) : null;
@@ -237,7 +237,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Package contextPackage = context.refreshModelElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, csElement);
 		contextPackage.setName(modelPackage.getName());
 		contextPackage.setURI(modelPackage.getURI());
-		context.refreshList(contextPackage.getOwnedClasses(), contextClasses);
+		helper.refreshList(contextPackage.getOwnedClasses(), contextClasses);
 		context.refreshComments(contextPackage, csElement);
 		for (int i = 1; i < packageDecls.size(); i++) {
 			csElement = packageDecls.get(i);
@@ -277,8 +277,8 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Property contextProperty = context.refreshModelElement(Property.class, PivotPackage.Literals.PROPERTY, propertyContextDecl);
 		Property modelProperty = propertyContextDecl.getReferredProperty();
 		if (modelProperty != null) {
-			context.refreshName(contextProperty, ClassUtil.nonNullModel(modelProperty.getName()));
-			context.setType(contextProperty, modelProperty.getType(), modelProperty.isIsRequired());
+			helper.refreshName(contextProperty, ClassUtil.nonNullModel(modelProperty.getName()));
+			helper.setType(contextProperty, modelProperty.getType(), modelProperty.isIsRequired());
 			List<ExpSpecificationCS> ownedDefaultExpressions = propertyContextDecl.getOwnedDefaultExpressions();
 			ExpSpecificationCS ownedDefaultExpression = ownedDefaultExpressions.size() > 0 ? ownedDefaultExpressions.get(0) : null;
 			LanguageExpression languageExpression = ownedDefaultExpression != null ? PivotUtil.getPivot(LanguageExpression.class,  ownedDefaultExpression) : null;
@@ -379,10 +379,10 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 			assert childContextPackages != null;
 			Collections.sort(childContextPackages, NameUtil.NAMEABLE_COMPARATOR);
 			if (contextPackage != null) {
-				context.refreshList(contextPackage.getOwnedPackages(), childContextPackages);
+				helper.refreshList(contextPackage.getOwnedPackages(), childContextPackages);
 			}
 			else {
-				context.refreshList(contextRoot.getOwnedPackages(), childContextPackages);
+				helper.refreshList(contextRoot.getOwnedPackages(), childContextPackages);
 			}
 		}
 		context.refreshPivotList(Import.class, contextRoot.getOwnedImports(), csElement.getOwnedImports());

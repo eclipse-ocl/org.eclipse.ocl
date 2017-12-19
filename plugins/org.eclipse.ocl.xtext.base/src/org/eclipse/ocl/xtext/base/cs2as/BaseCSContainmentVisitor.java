@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
@@ -95,10 +96,16 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 
+	/**
+	 * Construction helper.
+	 */
+	protected final @NonNull PivotHelper helper;
+
 	public BaseCSContainmentVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.metamodelManager = context.getMetamodelManager();
 		this.standardLibrary = metamodelManager.getStandardLibrary();
+		this.helper = context.getHelper();
 	}
 
 	protected PackageId getPackageId(@NonNull PackageCS csElement) {
@@ -143,7 +150,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		T pivotElement = context.refreshModelElement(pivotClass, pivotEClass, csElement);
 		String name = csElement.getName();
 		if (name != null) {
-			context.refreshName(pivotElement, name);
+			helper.refreshName(pivotElement, name);
 			context.refreshComments(pivotElement, csElement);
 		}
 		return pivotElement;
@@ -182,7 +189,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			@SuppressWarnings("unchecked")
 			T pivotElement2 = (T) pivotObject;
 			pivotElement = pivotElement2;
-			context.refreshName(pivotElement, name);
+			helper.refreshName(pivotElement, name);
 		}
 		context.getConverter().installPivotDefinition(csElement, pivotElement);
 		context.refreshComments(pivotElement, csElement);
@@ -469,7 +476,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				}
 				newImports.add(pivotElement);
 			}
-			context.refreshList(root.getOwnedImports(), newImports);
+			helper.refreshList(root.getOwnedImports(), newImports);
 		}
 		else {
 			root.getOwnedImports().clear();

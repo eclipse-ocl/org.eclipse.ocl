@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
@@ -436,8 +437,14 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
+	/**
+	 * Construction helper.
+	 */
+	protected final @NonNull PivotHelper helper;
+
 	public BaseCSPreOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
+		this.helper = context.getHelper();
 	}
 
 	@Override
