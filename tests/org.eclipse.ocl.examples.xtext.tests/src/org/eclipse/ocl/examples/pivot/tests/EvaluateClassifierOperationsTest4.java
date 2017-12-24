@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -192,11 +193,11 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclContents() {
 		MyOCL ocl = createOCL(OCL.NO_PROJECTS);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		try {
-			IdResolver idResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
-			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
-			@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			org.eclipse.ocl.pivot.Class classType = environmentFactory.getStandardLibrary().getClassType();
+			@SuppressWarnings("null") @NonNull Type packageType = environmentFactory.getASClass("Package");
 			CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 			ocl.assertSemanticErrorQuery(classType, "invalid.oclContents()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "OclInvalid", "oclContents");
 			ocl.assertQueryInvalid(ocl.pkg2, "let s : OclElement = invalid in s.oclContents()");

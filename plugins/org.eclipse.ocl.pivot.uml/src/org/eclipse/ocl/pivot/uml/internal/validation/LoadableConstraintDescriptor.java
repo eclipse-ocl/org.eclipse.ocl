@@ -28,8 +28,8 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.uml.Stereotype;
@@ -52,7 +52,7 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 			return targetType.isInstance(eObject);
 		}
 	}
-	
+
 	public static class UML extends LoadableConstraintDescriptor<Stereotype>
 	{
 		public UML(@NonNull Stereotype targetType, @NonNull Constraint constraint, int code) {
@@ -88,16 +88,16 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 			return isKindOf(nsURI, name, eClass);
 		}
 	}
-	
+
 	private static final Logger logger = Logger.getLogger(LoadableConstraintDescriptor.class);
-	
+
 	private final @NonNull Constraint constraint;
 	protected final @NonNull T targetType;
 	private final @NonNull String id;
 	private final @NonNull String name;
 	private final int code;
 	private ExpressionInOCL query = null;
-	
+
 	public LoadableConstraintDescriptor(@NonNull T targetType, @NonNull Constraint constraint,
 			String targetNamespace, String targetName, int code) {
 		this.constraint = constraint;
@@ -106,16 +106,16 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 		if (name == null) {
 			name = Long.toHexString(System.identityHashCode(constraint));
 		}
-		
+
 		id = "'" + targetNamespace + "'::" + targetName + "::" + name;
 		this.name = targetName + "::" + name;
 		this.code = code;
 	}
-	
+
 	final Constraint getConstraint() {
 		return constraint;
 	}
-	
+
 	@Override
 	public String getBody() {
 		return PrettyPrinter.print(constraint);
@@ -175,11 +175,11 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 		OCL ocl = LoadableConstraintProvider.getOCL();
 		ExpressionInOCL query2 = query;
 		if (query2 == null) {
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 			EClass eClass = target.eClass();
 			NamedElement contextElement = null;
 			try {
-				contextElement = metamodelManager.getASOf(NamedElement.class, eClass);
+				contextElement = environmentFactory.getASOf(NamedElement.class, eClass);
 			} catch (ParserException e) {
 				logger.error("Failed to convert " + eClass, e);
 			}
@@ -191,7 +191,7 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 				return ctx.createFailureStatus(target);
 			}
 			try {
-				query = query2 = metamodelManager.parseSpecification(specification);
+				query = query2 = environmentFactory.parseSpecification(specification);
 			} catch (ParserException e) {
 				return ctx.createFailureStatus(e.getLocalizedMessage());
 			}

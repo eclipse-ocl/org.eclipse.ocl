@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -280,7 +281,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	}
 
 	protected @NonNull VariableExp createThisVariableExp(@NonNull Variable thisVariable) {
-		return PivotUtil.createVariableExp(thisVariable);
+		return PivotUtil.createVariableExp((VariableDeclaration)thisVariable);
 	}
 
 	abstract protected @NonNull String getLookupVisitorClassName(@NonNull String prefix);
@@ -323,7 +324,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		return getSuperVisitorPackageName();
 	}
 
-	@SuppressWarnings("null")
 	protected @NonNull String extractTypeNameFromEnvOp(@NonNull String envOpName) {
 		boolean isGeneralLookup = envOperationName.equals(envOpName);
 		return isGeneralLookup ? "" : envOperationName.substring(envOpName.length() + 1 /*extra underscore */);
@@ -337,7 +337,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 			Operation asOperation = envOperation2asOperation.get(envOperation);
 			assert asOperation != null;
 			LanguageExpression envSpecification = ClassUtil.nonNullState(envOperation.getBodyExpression());
-			ExpressionInOCL envExpressionInOCL = metamodelManager.parseSpecification(envSpecification);
+			ExpressionInOCL envExpressionInOCL = environmentFactory.parseSpecification(envSpecification);
 			Variable asElement = (Variable) reDefinitions.get(envExpressionInOCL.getOwnedContext());
 			OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.nonNullState(envExpressionInOCL.getOwnedBody()), reDefinitions);
 			ExpressionInOCL asExpressionInOCL = PivotUtil.createExpressionInOCL(null, asExpression, asElement);

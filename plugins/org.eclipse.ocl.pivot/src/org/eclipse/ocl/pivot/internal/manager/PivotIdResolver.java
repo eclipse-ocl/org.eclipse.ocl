@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -44,7 +45,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	
+
 	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory.getMetamodelManager().getCompleteEnvironment());
 		this.environmentFactory = environmentFactory;
@@ -122,14 +123,14 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 		org.eclipse.ocl.pivot.Class pivotType;
 		try {
-			pivotType = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, eType);
+			pivotType = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(org.eclipse.ocl.pivot.Class.class, eType);
 			if (pivotType != null) {
 				return metamodelManager.getPrimaryClass(pivotType);
 			}
 		} catch (ParserException e) {
 			logger.error("Failed to convert '" + eType + "'", e);
 		}
-//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
+		//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
 		return metamodelManager.getStandardLibrary().getOclInvalidType();
 	}
 
@@ -139,19 +140,19 @@ public class PivotIdResolver extends AbstractIdResolver
 		assert type != null;
 		return (Type)type;
 	}
-	
+
 	@Override
 	public @Nullable Object unboxedValueOf(@Nullable Object boxedValue) {
 		if (boxedValue instanceof EnumerationLiteralId) {
 			EnumerationLiteral enumerationLiteral = visitEnumerationLiteralId((EnumerationLiteralId)boxedValue);
 			if (enumerationLiteral instanceof PivotObjectImpl) {
 				EObject eTarget = ((PivotObjectImpl)enumerationLiteral).getESObject();
-//				if (eTarget instanceof EEnumLiteral) {				// Ecore unboxes to the Enumerator
-//					return ((EEnumLiteral)eTarget).getInstance();
-//				}
-//				else {												// UML unboxes to UML's EnumerationLiteral
-					return eTarget;
-//				}
+				//				if (eTarget instanceof EEnumLiteral) {				// Ecore unboxes to the Enumerator
+				//					return ((EEnumLiteral)eTarget).getInstance();
+				//				}
+				//				else {												// UML unboxes to UML's EnumerationLiteral
+				return eTarget;
+				//				}
 			}
 			else {
 				return enumerationLiteral;

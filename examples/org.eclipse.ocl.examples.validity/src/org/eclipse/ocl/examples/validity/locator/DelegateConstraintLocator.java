@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -61,7 +62,7 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 		if (constrainingObject instanceof EAnnotation) {
 			EObject eObject = ((EAnnotation) constrainingObject).eContainer();
 			if (eObject instanceof EOperation) {
-				return metamodelManager.getASOf(Constraint.class, eObject);
+				return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).getASOf(Constraint.class, eObject);
 			}
 		}
 		else if (constrainingObject instanceof EStringToStringMapEntryImpl) {
@@ -70,7 +71,7 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 			if (eAnnotation instanceof EAnnotation) {
 				EObject eClassifier = ((EAnnotation)eAnnotation).eContainer();
 				if (eClassifier instanceof EClassifier) {
-					org.eclipse.ocl.pivot.Class asType = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, eClassifier);
+					org.eclipse.ocl.pivot.Class asType = ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).getASOf(org.eclipse.ocl.pivot.Class.class, eClassifier);
 					if (asType != null) {
 						return NameUtil.getNameable(asType.getOwnedInvariants(), eEntry.getKey());
 					}

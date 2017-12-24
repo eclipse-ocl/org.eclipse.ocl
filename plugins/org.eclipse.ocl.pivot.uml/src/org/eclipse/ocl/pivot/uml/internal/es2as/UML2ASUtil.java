@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.uml.Element;
@@ -35,7 +35,7 @@ import org.eclipse.uml2.uml.Element;
  */
 public class UML2ASUtil
 {
-//	private static final Logger logger = Logger.getLogger(UML2ASUtil.class);
+	//	private static final Logger logger = Logger.getLogger(UML2ASUtil.class);
 
 	public static @NonNull Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> computeAppliedStereotypes(@NonNull Iterable<EObject> umlStereotypeApplications) {
 		//
@@ -83,7 +83,7 @@ public class UML2ASUtil
 	 * Return the metaType of umlElement using the UML meta namespace identifiable from stereotype applications.
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class getMetaType(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.uml2.uml.@NonNull Element umlElement) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactoryInternalExtension = (EnvironmentFactoryInternalExtension)environmentFactory;
 		EClass umlEClass = umlElement.eClass();
 		for (org.eclipse.uml2.uml.Stereotype umlStereotype : umlElement.getApplicableStereotypes()) {
 			for (org.eclipse.uml2.uml.Class umlMetaclass : umlStereotype.getAllExtendedMetaclasses()) {
@@ -91,7 +91,7 @@ public class UML2ASUtil
 				org.eclipse.uml2.uml.Type umlType = umlPackage.getOwnedType(umlEClass.getName());
 				if (umlType != null) {
 					try {
-						org.eclipse.ocl.pivot.Class umlAStype = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, umlType);
+						org.eclipse.ocl.pivot.Class umlAStype = environmentFactoryInternalExtension.getASOf(org.eclipse.ocl.pivot.Class.class, umlType);
 						if (umlAStype != null) {
 							return umlAStype;
 						}
@@ -115,8 +115,8 @@ public class UML2ASUtil
 		for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures()) {
 			String featureName = eStructuralFeature.getName();
 			if ((featureName != null) && featureName.startsWith(UML2AS.STEREOTYPE_BASE_PREFIX)
-			  && (eStructuralFeature instanceof EReference)
-			  && umlStereotypeApplication.eIsSet(eStructuralFeature)) {						// Unset for an applicable stereotype that has not been applied
+					&& (eStructuralFeature instanceof EReference)
+					&& umlStereotypeApplication.eIsSet(eStructuralFeature)) {						// Unset for an applicable stereotype that has not been applied
 				Object umlStereotypedElement = umlStereotypeApplication.eGet(eStructuralFeature);
 				if (umlStereotypedElement instanceof org.eclipse.uml2.uml.Element) {
 					umlStereotypedElements.add((org.eclipse.uml2.uml.Element) umlStereotypedElement);

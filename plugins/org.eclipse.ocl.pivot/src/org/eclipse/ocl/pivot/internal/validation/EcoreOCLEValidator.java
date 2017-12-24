@@ -53,11 +53,13 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -580,7 +582,8 @@ public class EcoreOCLEValidator implements EValidator
 			}
 		}
 		try {
-			NamedElement asNamedElement = metamodelManager.getASOf(NamedElement.class, eNamedElement);
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory();
+			NamedElement asNamedElement = environmentFactory.getASOf(NamedElement.class, eNamedElement);
 			if (asNamedElement != null) {
 				Constraint asConstraint = null;
 				if (asNamedElement instanceof Operation) {
@@ -600,7 +603,7 @@ public class EcoreOCLEValidator implements EValidator
 						}
 					}
 				}
-				ParserContext parserContext = metamodelManager.createParserContext(asConstraint != null ? asConstraint : asNamedElement);
+				ParserContext parserContext = ((AbstractEnvironmentFactory)environmentFactory).createParserContext2(asConstraint != null ? asConstraint : asNamedElement);
 				if (parserContext == null) {
 					throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(asNamedElement), PivotConstantsInternal.OWNED_CONSTRAINT_ROLE);
 				}

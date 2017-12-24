@@ -30,7 +30,7 @@ import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -73,14 +73,14 @@ public class DebuggerTests extends XtextTestCase
 		assertNoResourceErrors("Load failed", oclResource);
 		assertNoUnresolvedProxies("Unresolved proxies", oclResource);
 		assertNoValidationErrors("Validation errors", ClassUtil.nonNullState(oclResource.getContents().get(0)));
-		
+
 		EStructuralFeature ref_RandL_Customer = xmiRoot.eClass().getEStructuralFeature("ref_RandL_Customer");
 		@SuppressWarnings("unchecked")List<EObject> customers = (List<EObject>) xmiRoot.eGet(ref_RandL_Customer);
 		EObject eObject = customers.get(0);
-		
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
-		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.nonNullState(metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
-		Iterable<Constraint> customerInvariants = metamodelManager.getAllInvariants(customerClass);
+
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.nonNullState(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
+		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
 		Constraint constraint = ClassUtil.nonNullState(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
 
 		ILaunchConfigurationWorkingCopy launchConfiguration = createLaunchConfiguration(iProject, constraint, eObject);

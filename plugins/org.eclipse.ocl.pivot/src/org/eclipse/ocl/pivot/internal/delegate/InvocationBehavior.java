@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -34,10 +35,10 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	public static final @NonNull String BODY_CONSTRAINT_KEY = "body"; //$NON-NLS-1$
 	public static final @NonNull String NAME = "invocationDelegates"; //$NON-NLS-1$
 
-//	public boolean appliesTo(EOperation operation) {
-//      	String annotation = EcoreUtil.getAnnotation(operation, OCLDelegateDomain.OCL_DELEGATE_URI, BODY_CONSTRAINT_KEY);
-//		return annotation != null;
-//	}
+	//	public boolean appliesTo(EOperation operation) {
+	//      	String annotation = EcoreUtil.getAnnotation(operation, OCLDelegateDomain.OCL_DELEGATE_URI, BODY_CONSTRAINT_KEY);
+	//		return annotation != null;
+	//	}
 
 	@Override
 	public InvocationDelegate.@Nullable Factory getDefaultFactory() {
@@ -58,14 +59,14 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	public InvocationDelegate.@Nullable Factory getFactory(@NonNull DelegateDomain delegateDomain, @NonNull EOperation eOperation) {
 		Class<InvocationDelegate.Factory.@NonNull Registry> castClass = InvocationDelegate.Factory.Registry.class;
 		InvocationDelegate.Factory.@NonNull Registry registry = OCLDelegateDomain.getDelegateResourceSetRegistry(eOperation, castClass, getDefaultRegistry());
-	    return registry.getFactory(delegateDomain.getURI());
+		return registry.getFactory(delegateDomain.getURI());
 	}
 
 	@Override
 	public @NonNull Class<InvocationDelegate.Factory> getFactoryClass() {
 		return InvocationDelegate.Factory.class;
 	}
-	
+
 	@Override
 	public @NonNull String getName() {
 		return NAME;
@@ -75,7 +76,7 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	 * Return the operation body associated with operation, if necessary using
 	 * <code>ocl</code> to create the relevant parsing environment for a textual
 	 * definition.
-	 * @throws OCLDelegateException 
+	 * @throws OCLDelegateException
 	 */
 	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Operation operation) throws OCLDelegateException {
 		LanguageExpression specification = operation.getBodyExpression();
@@ -83,7 +84,7 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
 		}
 		try {
-			return metamodelManager.parseSpecification(specification);
+			return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}

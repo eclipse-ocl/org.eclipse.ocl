@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -37,7 +37,7 @@ public class StereotypeProperty extends ConstrainedProperty
 	public StereotypeProperty(@NonNull Property property) {
 		super(property);
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		IdResolver idResolver = executor.getIdResolver();
@@ -77,7 +77,7 @@ public class StereotypeProperty extends ConstrainedProperty
 				extensionProperty.setOwnedExpression(defaultExpression);
 				elementExtension.getOwnedProperties().add(extensionProperty);
 			}
-/*			Property extensionProperty = ClassUtil.getNamedElement(elementExtension.getOwnedAttribute(), propertyName);
+			/*			Property extensionProperty = ClassUtil.getNamedElement(elementExtension.getOwnedAttribute(), propertyName);
 			if (extensionProperty == null) {
 				boolean gotIt = false;
 				EObject umlStereotypeApplication = elementExtension.getETarget();
@@ -94,10 +94,10 @@ public class StereotypeProperty extends ConstrainedProperty
 						return null;
 					}
 			} */
-//			Property theProperty = ClassUtil.getNamedElement(elementExtension.getStereotype().getOwnedAttribute(), property.getName());
-//			if (theProperty == null) {
-//				return super.evaluate(executor, returnTypeId, sourceValue);
-//			}
+			//			Property theProperty = ClassUtil.getNamedElement(elementExtension.getStereotype().getOwnedAttribute(), property.getName());
+			//			if (theProperty == null) {
+			//				return super.evaluate(executor, returnTypeId, sourceValue);
+			//			}
 			Object defaultValue = extensionProperty.getDefaultValue();
 			LanguageExpression defaultExpression = extensionProperty.getOwnedExpression();
 			if (!extensionProperty.isIsDerived()) {
@@ -107,8 +107,8 @@ public class StereotypeProperty extends ConstrainedProperty
 				String body = defaultExpression.getBody();
 				if (body != null) {
 					try {
-						MetamodelManager metamodelManager = executor.getMetamodelManager();
-						ExpressionInOCL expr = metamodelManager.parseSpecification(defaultExpression);
+						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
+						ExpressionInOCL expr = environmentFactory.parseSpecification(defaultExpression);
 						OCLExpression bodyExpression = expr.getOwnedBody();
 						if (bodyExpression != null) {
 							boxedValue = executor.evaluate(bodyExpression);		// FIXME errors

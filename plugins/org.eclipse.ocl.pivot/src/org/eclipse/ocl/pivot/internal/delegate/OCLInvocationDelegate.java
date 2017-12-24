@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -48,7 +49,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 
 	/**
 	 * Initializes me with my operation.
-	 * 
+	 *
 	 * @param operation
 	 *            the operation that I handle
 	 */
@@ -130,12 +131,12 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint.getContext(), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
 		}
 		try {
-			return metamodelManager.parseSpecification(specification);
+			return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		if (operation != null) {
@@ -143,8 +144,8 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 		}
 		else {
 			String name = eOperation.getEContainingClass().getEPackage().getName()
-			+ "::" + eOperation.getEContainingClass().getName()
-			+ "." + eOperation.getName();
+					+ "::" + eOperation.getEContainingClass().getName()
+					+ "." + eOperation.getName();
 			return "<" + delegateDomain.getURI() + ":invocation> " + name; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}

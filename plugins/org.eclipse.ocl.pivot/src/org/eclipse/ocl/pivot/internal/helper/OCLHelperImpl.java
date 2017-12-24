@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -38,37 +39,37 @@ public class OCLHelperImpl implements OCLHelper
 {
 	protected final @NonNull OCL ocl;
 	protected final @Nullable EObject context;
-//	private Diagnostic problems;
+	//	private Diagnostic problems;
 	private org.eclipse.ocl.pivot.@Nullable Class contextClass = null;
 	private @Nullable Operation contextOperation = null;
 	private @Nullable Property contextProperty = null;
 
 	/**
 	 * Initializes me with my environment.
-	 * 
+	 *
 	 * @param ocl the OCL environment
 	 */
 	public OCLHelperImpl(@NonNull OCL ocl, @Nullable EObject context) throws ParserException {
-        this.ocl = ocl;
+		this.ocl = ocl;
 		this.context = context;
 		Element asContext;
 		if (context instanceof Element) {
 			asContext =  (Element)context;
 		}
 		else {
-			asContext = getMetamodelManager().getASOf(Element.class, context);
+			asContext = ((EnvironmentFactoryInternalExtension)getEnvironmentFactory()).getASOf(Element.class, context);
 		}
-        if (asContext instanceof org.eclipse.ocl.pivot.Class) {
-        	contextClass = (org.eclipse.ocl.pivot.Class)asContext;
-        }
-        else if (asContext instanceof Operation) {
-        	contextOperation = (Operation)asContext;
-        	contextClass = contextOperation.getOwningClass();
-        }
-        else if (asContext instanceof Property) {
-        	contextProperty = (Property)asContext;
-        	contextClass = contextProperty.getOwningClass();
-        }
+		if (asContext instanceof org.eclipse.ocl.pivot.Class) {
+			contextClass = (org.eclipse.ocl.pivot.Class)asContext;
+		}
+		else if (asContext instanceof Operation) {
+			contextOperation = (Operation)asContext;
+			contextClass = contextOperation.getOwningClass();
+		}
+		else if (asContext instanceof Property) {
+			contextProperty = (Property)asContext;
+			contextClass = contextProperty.getOwningClass();
+		}
 	}
 
 	@Override
@@ -139,7 +140,7 @@ public class OCLHelperImpl implements OCLHelper
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, contextClass, null);
 		return parserContext.parse(contextClass, expression);
 	}
-	
+
 	@Override
 	public @Nullable Type getContextClass() {
 		return contextClass;
@@ -149,38 +150,38 @@ public class OCLHelperImpl implements OCLHelper
 	public @Nullable Property getContextProperty() {
 		return contextProperty;
 	}
-	
+
 	@Override
 	public @Nullable Operation getContextOperation() {
 		return contextOperation;
 	}
-	
+
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ocl.getEnvironmentFactory();
 	}
-	
+
 	public @NonNull MetamodelManager getMetamodelManager() {
 		return ocl.getMetamodelManager();
 	}
-	
+
 	@Override
 	public @NonNull OCL getOCL() {
-        return ocl;
-    }
-	
-//	@Override
-//	public Resource.Diagnostic getProblems() {
-//		parserContext.createBaseResource(expression)
-//		return problems;
-//	}
-    
-//	@Override
-//	public boolean isValidating() {
-//		return validating;
-//	}
-	
-//	@Override
-//	public void setValidating(boolean validating) {
-//		this.validating = validating;
-//	}
+		return ocl;
+	}
+
+	//	@Override
+	//	public Resource.Diagnostic getProblems() {
+	//		parserContext.createBaseResource(expression)
+	//		return problems;
+	//	}
+
+	//	@Override
+	//	public boolean isValidating() {
+	//		return validating;
+	//	}
+
+	//	@Override
+	//	public void setValidating(boolean validating) {
+	//		this.validating = validating;
+	//	}
 }

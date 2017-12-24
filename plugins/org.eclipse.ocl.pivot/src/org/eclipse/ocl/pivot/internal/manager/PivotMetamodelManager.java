@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
@@ -69,15 +68,12 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
@@ -98,10 +94,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.context.ClassContext;
-import org.eclipse.ocl.pivot.internal.context.OperationContext;
-import org.eclipse.ocl.pivot.internal.context.PropertyContext;
-import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -112,9 +104,9 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -126,6 +118,7 @@ import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -396,7 +389,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Assign xmi:id values to referenceable elements in the libraries.
 	 */
 	@Deprecated /* @deprecated only used when AS2XMIID generates legacy Model.xmiidVersion 0 xmiids */
-	public void assignLibraryIds(@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
+	public void assignLibraryIds(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		for (@NonNull Library asLibrary : asLibraries) {
 			Resource eResource = asLibrary.eResource();
 			if (eResource instanceof ASResource) {
@@ -545,116 +538,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
 	 *
 	 * @throws ParserException if eObject cannot be converted to a Pivot element
+	 *
+	 * @deprecated use AbstractEnvironmentFactory.createParserContext()
 	 */
+	@Deprecated
 	@Override
 	public @Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) {
-		Element pivotElement = element;
-		if (element instanceof ExpressionInOCL) {
-			EObject pivotContainer = pivotElement.eContainer();
-			if (pivotContainer instanceof Operation) {							// Operation.bodyExpression
-				Operation pivotOperation = (Operation) pivotContainer;
-				return new OperationContext(environmentFactory, null, pivotOperation, null);
-			}
-			if (pivotContainer instanceof Property) {
-				Property pivotProperty = (Property) pivotContainer;
-				return new PropertyContext(environmentFactory, null, pivotProperty);
-			}
-			if (pivotContainer instanceof Constraint) {							// Operation.pre/postCondition
-				EObject pivotContainerContainer = pivotContainer.eContainer();
-				if (pivotContainerContainer instanceof Operation) {
-					Operation pivotOperation = (Operation) pivotContainerContainer;
-					String resultName = null;
-					if (pivotOperation.getOwnedPostconditions().contains(pivotContainer)) {
-						Type resultType = pivotOperation.getType();
-						if ((resultType != null) && !(resultType instanceof VoidType)) {
-							resultName = PivotConstants.RESULT_NAME;
-						}
-					}
-					return new OperationContext(environmentFactory, null, pivotOperation, resultName);
-				}
-				if (pivotContainerContainer instanceof org.eclipse.ocl.pivot.Class) {
-					org.eclipse.ocl.pivot.Class pivotType = (org.eclipse.ocl.pivot.Class) pivotContainerContainer;
-					return new ClassContext(environmentFactory, null, pivotType, null);
-				}
-			}
-			if (pivotContainer instanceof Slot) {
-				Property asDefiningFeature = ((Slot)pivotContainer).getDefiningProperty();
-				if (asDefiningFeature != null) {
-					org.eclipse.ocl.pivot.Class pivotType = asDefiningFeature.getOwningClass();
-					if (pivotType != null) {
-						return new ClassContext(environmentFactory, null, pivotType, null);
-					}
-				}
-			}
-		}
-		//
-		//	The JUnit tests are satisfied by the new code above. The following provides legacy support, perhaps satisfying unusual invocations
-		//
-		if (pivotElement instanceof Constraint) {
-			EObject pivotContainer = pivotElement.eContainer();
-			if (pivotContainer instanceof Operation) {
-				Operation pivotOperation = (Operation) pivotContainer;
-				String resultName = null;
-				if (pivotOperation.getOwnedPostconditions().contains(pivotElement)) {
-					Type resultType = pivotOperation.getType();
-					if ((resultType != null) && !(resultType instanceof VoidType)) {
-						resultName = PivotConstants.RESULT_NAME;
-					}
-				}
-				return new OperationContext(environmentFactory, null, pivotOperation, resultName);
-			}
-		}
-
-		if (pivotElement instanceof Property) {
-			return new PropertyContext(environmentFactory, null, (Property) pivotElement);
-		}
-		else if (pivotElement instanceof Operation) {
-			return new OperationContext(environmentFactory, null, (Operation) pivotElement, null);
-		}
-		else if (pivotElement instanceof OppositePropertyCallExp) {
-			Property referredOppositeProperty = ((OppositePropertyCallExp) pivotElement).getReferredProperty();
-			if (referredOppositeProperty != null) {
-				Property referredProperty = referredOppositeProperty.getOpposite();
-				if (referredProperty != null) {
-					return new PropertyContext(environmentFactory, null, referredProperty);
-				}
-			}
-		}
-		else if (pivotElement instanceof PropertyCallExp) {
-			Property referredProperty = ((PropertyCallExp) pivotElement).getReferredProperty();
-			if (referredProperty != null) {
-				return new PropertyContext(environmentFactory, null, referredProperty);
-			}
-		}
-		else if (pivotElement instanceof OperationCallExp) {
-			Operation referredOperation = ((OperationCallExp) pivotElement).getReferredOperation();
-			if (referredOperation != null) {
-				return new OperationContext(environmentFactory, null, referredOperation, null);
-			}
-		}
-		else if (pivotElement instanceof LoopExp) {
-			Iteration referredIteration = ((LoopExp) pivotElement).getReferredIteration();
-			if (referredIteration != null) {
-				return new OperationContext(environmentFactory, null, referredIteration, null);
-			}
-		}
-		//		else if (pivotElement instanceof Stereotype) {
-		//			Stereotype pivotStereotype = (Stereotype) pivotElement;
-		//			return new ClassContext(this, null, pivotStereotype);
-		//		}
-		//		else if (pivotElement instanceof org.eclipse.ocl.pivot.Class) {
-		//			org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class) pivotElement;
-		////			Metaclass<?> metaClass = getMetaclass(pivotClass);
-		//			return new ClassContext(this, null, pivotClass);
-		//		}
-		else {		// Class, Stereotype, State
-			for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-				if ((eObject instanceof org.eclipse.ocl.pivot.Class) && (((org.eclipse.ocl.pivot.Class)eObject).getOwningPackage() != null)) {	// StateMachines etc do not have Packages
-					return new ClassContext(environmentFactory, null, (org.eclipse.ocl.pivot.Class)eObject, null);
-				}
-			}
-		}
-		return null;
+		return ((AbstractEnvironmentFactory)environmentFactory).createParserContext2(element, todoParameters);
 	}
 
 	protected @NonNull PrecedenceManager createPrecedenceManager() {
@@ -802,17 +692,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
+	/*
+	 * @deprecated use EnvironmentFactoryInternalExtension.getASOf()
+	 */
+	@Deprecated
 	@Override
 	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException {
-		if (eObject != null) {
-			Resource eResource = eObject.eResource();
-			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
-			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
-			if (bestHelper != null) {
-				return bestHelper.getASElement(environmentFactory, pivotClass, eObject);
-			}
-		}
-		return null;
+		return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(pivotClass, eObject);
 	}
 
 	@Override
@@ -954,7 +840,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple bodies for " + operation);
 				}
 				try {
-					bodyExpression = parseSpecification(anExpression);
+					bodyExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -1076,7 +962,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple derivations for " + property);
 				}
 				try {
-					defaultExpression = parseSpecification(anExpression);
+					defaultExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -1289,7 +1175,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = parseSpecification(specification);
+							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -1336,7 +1222,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = parseSpecification(specification);
+							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -2069,7 +1955,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			//
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
-				return getASOf(Element.class, ePackage);
+				return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, ePackage);
 			}
 			//
 			//	fragment-less URI may be an OCL Standard Library
@@ -2099,7 +1985,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				if (eResource instanceof XMLResource) {
 					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
 					if (eObject != null) {
-						Element asElement = getASOf(Element.class, eObject);
+						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
 						if (asElement != null) {
 							return asElement;
 						}
@@ -2202,23 +2088,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
 	 * Throws a ParserException if conversion fails.
+	 *
+	 * @deprecated use EnvironmentFactoryInternalExtension.parseSpecification()
 	 */
+	@Deprecated
 	@Override
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
-		EObject contextElement = ClassUtil.nonNullState(specification.eContainer());
-		if ((specification instanceof ExpressionInOCL) && ((ExpressionInOCL)specification).getOwnedBody() != null) {
-			return (ExpressionInOCL)specification;
-		}
-		String expression = specification.getBody();
-		if (expression == null) {
-			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
-		}
-		ParserContext parserContext = createParserContext(specification);
-		if (parserContext == null) {
-			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
-		}
-		parserContext.setRootElement(specification);
-		return parserContext.parse(contextElement, expression);
+		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 	}
 
 	public void removeExternalResource(@NonNull External2AS external2as) {

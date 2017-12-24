@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -33,6 +33,7 @@ import org.eclipse.ocl.common.delegate.DelegateResourceSetAdapter;
 import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -72,7 +73,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			return new OCLValidationDelegateFactory(oclDelegateURI);
 		}
 	}
-	
+
 	protected static class PivotOnlyRegistry extends ValidationDelegateRegistryImpl
 	{
 		private static final long serialVersionUID = 1L;
@@ -84,7 +85,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			return OCLValidationDelegateFactory.Global.INSTANCE;
 		}
 	}
-	
+
 	protected static class PivotOnlyVirtualDelegateMapping extends VirtualDelegateMapping
 	{
 		public static final @NonNull PivotOnlyVirtualDelegateMapping INSTANCE = new PivotOnlyVirtualDelegateMapping();
@@ -103,13 +104,13 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			return PivotConstants.OCL_DELEGATE_URI_PIVOT;
 		}
 	}
-	
+
 	// FIXME workaround BUG 485093 giving a false non-null analysis
 	@SuppressWarnings("null")
 	private static @NonNull DelegateResourceSetAdapter getDelegateResourceSetAdapter(@NonNull ResourceSet resourceSet) {
 		return DelegateResourceSetAdapter.getAdapter(resourceSet);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -127,7 +128,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		@Nullable T registry = getDelegateResourceSetAdapterRegistry(adapter, registryClass);
 		return registry != null ? registry : defaultRegistry;
 	}
-	
+
 	// FIXME workaround BUG 485093 giving a false non-null analysis
 	private static <T> @Nullable T getDelegateResourceSetAdapterRegistry(@NonNull DelegateResourceSetAdapter adapter, @NonNull Class<T> registryClass) {
 		return adapter.getRegistry(registryClass);
@@ -135,15 +136,15 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 	/**
 	 * Initialize the resourceSet registries, if non-null, or the global registries, if null,
-	 * to support usage of the Pivot OCL Delegate Evaluator for the Pivot OCL Delegate URI. 
+	 * to support usage of the Pivot OCL Delegate Evaluator for the Pivot OCL Delegate URI.
 	 */
 	public static void initialize(@Nullable ResourceSet resourceSet) {
 		initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 	}
-	
+
 	/**
 	 * Initialize the resourceSet registries, if non-null, or the global registries, if null,
-	 * to support usage of the Pivot OCL Delegate Evaluator for the oclDelegateURI. 
+	 * to support usage of the Pivot OCL Delegate Evaluator for the oclDelegateURI.
 	 */
 	public static void initialize(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
 		lazyInitializeGlobals(oclDelegateURI, true);
@@ -179,7 +180,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, VirtualDelegateMapping.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, VirtualDelegateMapping.class, new VirtualDelegateMapping(delegationMode.getPluginId(), delegationMode.getKey(), delegationMode.getPreferredValue()));
 		}
-		
+
 		// Install a local DelegateDomain.Factory
 		DelegateDomain.Factory.Registry.Impl delegateDomainFactory = new DelegateDomain.Factory.Registry.Impl();
 		if (forceInitialization || !delegateDomainFactory.containsKey(oclDelegateURI)) {
@@ -249,7 +250,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			}
 		}
 	}
-	
+
 	// FIXME workaround BUG 485093 giving a false non-null analysis
 	private static @Nullable <T> T putDelegateResourceSetRegistry(@NonNull DelegateResourceSetAdapter adapter, @NonNull Class<T> registryClass, @NonNull T newRegistry) {
 		return adapter.putRegistry(registryClass, newRegistry);
@@ -259,17 +260,17 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	protected final @NonNull EPackage ePackage;
 	protected OCL ocl = null;				// Lazily initialized and re-initialized
 	// FIXME Introduce a lightweight function (? a lambda function) to avoid the need for a CompleteEnvironment for queries
-//	private Map<CompletePackage, org.eclipse.ocl.pivot.Package> queryPackages = null;
-//	private Map<CompleteType, org.eclipse.ocl.pivot.Class> queryTypes = null;
-	
+	//	private Map<CompletePackage, org.eclipse.ocl.pivot.Package> queryPackages = null;
+	//	private Map<CompleteType, org.eclipse.ocl.pivot.Class> queryTypes = null;
+
 	/**
 	 * Initializes me with my delegate URI and package.
-	 * 
+	 *
 	 * @param delegateURI
 	 *            the delegate namespace I handle
 	 * @param ePackage
 	 *            the package that I handle
-	 * 
+	 *
 	 * @throws ParserException
 	 *             if the operation's OCL body expression is invalid
 	 */
@@ -283,7 +284,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		reset();
 	}
 
-/*	private @NonNull EnvironmentFactory getEnvironmentFactory() {
+	/*	private @NonNull EnvironmentFactory getEnvironmentFactory() {
 		Resource res = ePackage.eResource();
 		EnvironmentFactory envFactory = null;
 		if (res != null) {
@@ -321,23 +322,23 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		if (ocl2 == null) {
 			// Delegates are an application-independent extension of EMF
 			//  so we must use the neutral/global context see Bug 338501
-//			EnvironmentFactory environmentFactory = getEnvironmentFactory();
+			//			EnvironmentFactory environmentFactory = getEnvironmentFactory();
 			GlobalEnvironmentFactory environmentFactory = GlobalEnvironmentFactory.getInstance();
 			ocl2 = ocl = environmentFactory.createOCL();
 			environmentFactory.addListener(this);
 		}
 		return ocl2;
 	}
-	
+
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension) getOCL().getEnvironmentFactory();
 		try {
-			return metamodelManager.getASOf(requiredClass, eObject);
+			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public final @NonNull String getURI() {
 		return uri;

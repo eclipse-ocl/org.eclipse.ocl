@@ -40,9 +40,9 @@ import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -53,16 +53,16 @@ import org.eclipse.swt.widgets.Shell;
 
 public class PivotUIConstraintLocator extends PivotConstraintLocator implements ConstraintUILocator
 {
-    /**
-     * The DebugStarter sequences the start up of the debugger off the thread.
-     */
-    protected static class DebugStarter implements IRunnableWithProgress
+	/**
+	 * The DebugStarter sequences the start up of the debugger off the thread.
+	 */
+	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-    	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-    	protected final @Nullable EObject contextObject;
-    	protected final @NonNull ExpressionInOCL constraint;
-    	private @Nullable ILaunch launch = null;
+		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @Nullable EObject contextObject;
+		protected final @NonNull ExpressionInOCL constraint;
+		private @Nullable ILaunch launch = null;
 
 		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull ExpressionInOCL constraint) {
 			this.shell = shell;
@@ -70,7 +70,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 			this.contextObject = contextObject;
 			this.constraint = constraint;
 		}
-		
+
 		public ILaunch getLaunch() {
 			return launch;
 		}
@@ -119,7 +119,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		}
 	}
 
-    public static @NonNull PivotUIConstraintLocator INSTANCE = new PivotUIConstraintLocator();
+	public static @NonNull PivotUIConstraintLocator INSTANCE = new PivotUIConstraintLocator();
 
 	public static @NonNull IStatus createStatus(Throwable e, String messageTemplate, Object... bindings) {
 		String message = StringUtil.bind(messageTemplate, bindings);
@@ -135,8 +135,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		if (eResource == null) {
 			return false;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(eResource);
 		Constraint asConstraint = null;
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof Constraint) {
@@ -153,7 +152,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		}
 		ExpressionInOCL query;
 		try {
-			query = metamodelManager.parseSpecification(specification);
+			query = environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			IStatus status = createStatus(e, PivotMessagesInternal.InvalidSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(asConstraint), PivotConstantsInternal.OWNED_CONSTRAINT_ROLE);
 			throw new CoreException(status);
@@ -163,7 +162,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 			return false;
 		}
 		EObject eObject = parent.getConstrainedObject();
-		
+
 		Shell shell = validityView.getSite().getShell();
 		if (shell == null) {
 			return false;

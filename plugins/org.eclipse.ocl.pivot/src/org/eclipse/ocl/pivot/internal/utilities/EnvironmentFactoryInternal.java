@@ -57,7 +57,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	/**
 	 * @since 1.1
 	 */
-	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension
+	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2
 	{
 		/**
 		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
@@ -66,14 +66,14 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 		 */
 		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 	}
-	
+
 	void addExternal2AS(@NonNull External2AS external2as);
 
 	/**
 	 * Add all resources in ResourceSet to the externalResourceSet.
 	 */
 	void addExternalResources(@NonNull ResourceSet externalResourceSet);
-	
+
 	void attach(Object object);
 
 	/**
@@ -93,15 +93,15 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Create and initialize the AS ResourceSet used by metamodelManager to contain the AS forms of CS and Ecore/UML resources.
 	 */
 	@NonNull ResourceSetImpl createASResourceSet();
-	
+
 	@NonNull CompleteEnvironmentInternal createCompleteEnvironment();
 
 	/**
 	 * Create and initialize the IdResolver used by metamodelManager to convert Ids to Elements.
 	 */
 	@NonNull IdResolver createIdResolver();
-	
-	
+
+
 	@NonNull ImplementationManager createImplementationManager();
 
 	@NonNull PivotMetamodelManager createMetamodelManager();
@@ -113,7 +113,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Create a ParserContext that may be used to parse OCL expressions in the given context,
 	 * which may be an EClassifier/EOperation/EStructuralFeature or Type/Operation/Property.
 	 * Returns a ModelContext if no more specfic context can be determined if none can be created.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
 

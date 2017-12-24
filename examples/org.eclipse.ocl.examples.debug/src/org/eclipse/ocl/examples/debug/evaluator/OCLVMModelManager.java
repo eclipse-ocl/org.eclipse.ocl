@@ -21,34 +21,35 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
  * OCL Domain Manager is the class responsible for managing the OCL virtual
- * machine meta-models and models. 
- * A OCL Domain Manager object encapsulates the domain information need to 
- * modify the domains's models. 
+ * machine meta-models and models.
+ * A OCL Domain Manager object encapsulates the domain information need to
+ * modify the domains's models.
  */
 public class OCLVMModelManager extends AbstractModelManager
 {
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	/**
 	 * The types upon which execution of the transformation may invoke allInstances().
 	 */
-//	private @NonNull Set<Type> allInstancesTypes;
-	
+	//	private @NonNull Set<Type> allInstancesTypes;
+
 	/**
 	 * Instantiates a new OCL Domain Manager. Responsible for creating new
 	 * instances of the middle model and the middle model EFactory.
 	 */
 	public OCLVMModelManager(@NonNull MetamodelManagerInternal metamodelManager) {
-		this.metamodelManager = metamodelManager;
-//	    super(metamodelManager);
-//	    this.allInstancesTypes = transformationAnalysis.getAllInstancesTypes();
+		this.environmentFactory = (EnvironmentFactoryInternalExtension) metamodelManager.getEnvironmentFactory();
+		//	    super(metamodelManager);
+		//	    this.allInstancesTypes = transformationAnalysis.getAllInstancesTypes();
 	}
 
+	@Override
 	public @NonNull Set<@NonNull EObject> get(org.eclipse.ocl.pivot.@NonNull Class type) {
 		throw new UnsupportedOperationException();
 	}
@@ -69,18 +70,18 @@ public class OCLVMModelManager extends AbstractModelManager
 		Type objectType = null;
 		if (ePackage == PivotPackage.eINSTANCE) {
 			String name = ClassUtil.nonNullEMF(eClass.getName());
-			objectType = metamodelManager.getASClass(name);
+			objectType = environmentFactory.getASClass(name);
 		}
 		else {
 			try {
-				objectType = metamodelManager.getASOf(Type.class,  eClass);
+				objectType = environmentFactory.getASOf(Type.class,  eClass);
 			} catch (ParserException e) {
-// FIXME				if (!generatedErrorMessage) {
-//					generatedErrorMessage = true;
-//					logger.error("Failed to load an '" + eClass.getName() + "'", e);
-//				}
+				// FIXME				if (!generatedErrorMessage) {
+				//					generatedErrorMessage = true;
+				//					logger.error("Failed to load an '" + eClass.getName() + "'", e);
+				//				}
 			}
 		}
-	    return (objectType != null) && objectType.conformsTo(metamodelManager.getStandardLibrary(), requiredType);
+		return (objectType != null) && objectType.conformsTo(environmentFactory.getStandardLibrary(), requiredType);
 	}
 }

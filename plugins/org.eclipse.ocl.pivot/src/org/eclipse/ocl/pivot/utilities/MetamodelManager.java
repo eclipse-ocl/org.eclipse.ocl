@@ -27,12 +27,13 @@ public interface MetamodelManager
 {
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 
+	@Deprecated /* @deprecated use PivotHelper.getASOf() */
 	@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
 
 	@Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject);
 
 	@NonNull ResourceSet getASResourceSet();
-	
+
 	@NonNull CompleteModel getCompleteModel();
 
 	@Nullable <T extends EObject> T getEcoreOfPivot(@NonNull Class<T> ecoreClass, @NonNull Element element);
@@ -40,7 +41,7 @@ public interface MetamodelManager
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass);
-	
+
 	@NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation);
 
 	org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package eObject);
@@ -48,7 +49,7 @@ public interface MetamodelManager
 	@NonNull Property getPrimaryProperty(@NonNull Property pivotProperty);
 
 	@NonNull StandardLibrary getStandardLibrary();
-	
+
 	/**
 	 * Convert the specification of an OCL expression from textual CS form to parsed executable AS form. The textual form typically
 	 * results from simple construction from source text or a UML OpaqueExpression.
@@ -57,9 +58,12 @@ public interface MetamodelManager
 	 * from textual to executable form. Redundant re-invocation of parseSpecification is harmless.
 	 * <p>
 	 * The specification's container, typically a Constraint or Operation is used as the contextElement to determine self within the expression.
-	 * 
+	 *
 	 * @throws ParserException if text parsing fails
+	 *
+	 * @deprecated use PivotHelper.parseSpecification()
 	 */
+	@Deprecated /* @deprecated use PivotHelper.createParserContext() */
 	@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
-	
+
 }

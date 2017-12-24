@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -52,7 +53,7 @@ public class SettingBehavior extends AbstractDelegatedBehavior<EStructuralFeatur
 	/**
 	 * Return the feature body associated with structuralFeature, if necessary using ocl to
 	 * create the relevant parsing environment for a textual definition..
-	 * @throws OCLDelegateException 
+	 * @throws OCLDelegateException
 	 */
 	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Property property) throws OCLDelegateException {
 		LanguageExpression specification = property.getOwnedExpression();
@@ -61,7 +62,7 @@ public class SettingBehavior extends AbstractDelegatedBehavior<EStructuralFeatur
 			throw new OCLDelegateException(new SemanticException(message));
 		}
 		try {
-			return metamodelManager.parseSpecification(specification);
+			return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}
@@ -72,13 +73,13 @@ public class SettingBehavior extends AbstractDelegatedBehavior<EStructuralFeatur
 		@SuppressWarnings("null")Class<SettingDelegate.Factory.@NonNull Registry> castClass = getRegistryClass();
 		SettingDelegate.Factory.Registry registry = OCLDelegateDomain.getDelegateResourceSetRegistry(eStructuralFeature, castClass, getDefaultRegistry());
 		return registry.getFactory(delegateDomain.getURI());
-	}	
+	}
 
 	@Override
 	public @NonNull Class<SettingDelegate.Factory> getFactoryClass() {
 		return SettingDelegate.Factory.class;
 	}
-	
+
 	@Override
 	public @NonNull String getName() {
 		return NAME;

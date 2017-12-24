@@ -83,7 +83,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -239,7 +239,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
@@ -252,7 +252,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	public EssentialOCLCSLeft2RightVisitor(@NonNull CS2ASConversion context) {
 		super(context);
-		this.environmentFactory = context.getEnvironmentFactory();
+		this.environmentFactory = (EnvironmentFactoryInternalExtension) context.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		/*this.nameResolver = new PivotNameResolver(environmentFactory); // FIXME factory method*/
@@ -1388,7 +1388,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected StateExp resolveStateExp(@NonNull ExpCS csExp, @NonNull State state) {
 		StateExp expression = context.refreshModelElement(StateExp.class, PivotPackage.Literals.STATE_EXP, csExp);
-		helper.setType(expression, metamodelManager.getASClass("State"), true, null);		// FIXME What should this be
+		helper.setType(expression, environmentFactory.getASClass("State"), true, null);		// FIXME What should this be
 		expression.setReferredState(state);
 		expression.setName(state.getName());
 		return expression;

@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -165,10 +166,9 @@ public class PivotEObjectValidator implements EValidator
 			//			if ((specification.getBodyExpression() == null) && (specification.getBody().size() <= 0)) {	// May be null for declations of hand coded Java
 			//				return null;
 			//			}
-			final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query;
 			try {
-				query = metamodelManager.parseSpecification(specification);
+				query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 			} catch (ParserException e) {
 				String message = e.getLocalizedMessage();
 				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
@@ -196,6 +196,7 @@ public class PivotEObjectValidator implements EValidator
 					evaluationVisitor.setMonitor((Monitor) monitor);
 				}
 			}
+			final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluator<Diagnostic>(query)
 			{
 				@Override

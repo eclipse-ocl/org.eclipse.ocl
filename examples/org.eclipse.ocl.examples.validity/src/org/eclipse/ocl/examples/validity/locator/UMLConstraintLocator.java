@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -60,7 +60,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 {
 	public static @NonNull UMLConstraintLocator INSTANCE = new UMLConstraintLocator();
-	
+
 	protected void appendPath(@NonNull StringBuilder s, @NonNull NamedElement eObject) {
 		EObject eContainer = eObject.eContainer();
 		if (eContainer instanceof NamedElement) {
@@ -135,20 +135,20 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 
 	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@NonNull ValidityModel validityModel,
-		@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
-			Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
-			for (@NonNull Resource resource : resources) {
-				if (monitor.isCanceled()) {
-					return null;
-				}
-				for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-					EObject eObject = tit.next();
-					if (eObject instanceof Constraint) {
-						Constraint umlConstraint = (Constraint)eObject;
-						Element contextElement = umlConstraint.getContext();
-						if (contextElement instanceof Type) {
-							@NonNull String label = String.valueOf(umlConstraint.getName());
-	/*					LeafConstrainingNode constraint = validityModel.createLeafConstrainingNode();
+			@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
+		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
+		for (@NonNull Resource resource : resources) {
+			if (monitor.isCanceled()) {
+				return null;
+			}
+			for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof Constraint) {
+					Constraint umlConstraint = (Constraint)eObject;
+					Element contextElement = umlConstraint.getContext();
+					if (contextElement instanceof Type) {
+						@NonNull String label = String.valueOf(umlConstraint.getName());
+						/*					LeafConstrainingNode constraint = validityModel.createLeafConstrainingNode();
 						constraint.setConstraintLocator(this);
 						constraint.setConstrainingObject(umlConstraint);
 						constraint.setLabel(label);
@@ -163,17 +163,17 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 							map.put(constrainedElement, constraints);
 						}
 						constraints.add(constraint); */
-	//						EClass eC = constrainedElement.eClass();
-							map = createLeafConstrainingNode(map, validityModel, contextElement, umlConstraint, label);
-						}
-					}
-					if (monitor.isCanceled()) {
-						return null;
+						//						EClass eC = constrainedElement.eClass();
+						map = createLeafConstrainingNode(map, validityModel, contextElement, umlConstraint, label);
 					}
 				}
+				if (monitor.isCanceled()) {
+					return null;
+				}
 			}
-			return map;
 		}
+		return map;
+	}
 
 	@Override
 	public @Nullable Collection<@NonNull Resource> getImports(@NonNull EPackage ePackage, @NonNull Resource resource) {
@@ -189,11 +189,11 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 						imports.add(eResource);
 					}
 				}
-//				tit.prune();
+				//				tit.prune();
 			}
-//			else if (eObject instanceof Type) {
-//				tit.prune();
-//			}
+			//			else if (eObject instanceof Type) {
+			//				tit.prune();
+			//			}
 			Resource eResource = eObject.eClass().eResource();
 			if (eResource != null) {
 				imports.add(eResource);
@@ -321,18 +321,18 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 		if (umlConstraint == null) {
 			return;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(umlConstraint);
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.findEnvironmentFactory(umlConstraint);
 		if (environmentFactory == null) {
 			Resource eResource = umlConstraint.eResource();
 			if (eResource == null) {
 				return;
 			}
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
+			environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(eResource);
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Severity severity = Severity.UNKNOWN;
 		try {
-			final org.eclipse.ocl.pivot.Constraint pivotConstraint = metamodelManager.getASOf(org.eclipse.ocl.pivot.Constraint.class, umlConstraint);
+			final org.eclipse.ocl.pivot.Constraint pivotConstraint = environmentFactory.getASOf(org.eclipse.ocl.pivot.Constraint.class, umlConstraint);
 			if (pivotConstraint == null) {
 				throw new ParserException("Failed to create pivot Constraint");
 			}
@@ -346,7 +346,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 					protected String getObjectLabel() {
 						org.eclipse.ocl.pivot.Type type = PivotUtil.getContainingType(pivotConstraint);
 						return type != null ? type.getName() : "??";
-					}	
+					}
 				};
 				@Nullable Diagnostic diagnostic = constraintEvaluator.evaluate(evaluationVisitor);
 				result.setDiagnostic(diagnostic);

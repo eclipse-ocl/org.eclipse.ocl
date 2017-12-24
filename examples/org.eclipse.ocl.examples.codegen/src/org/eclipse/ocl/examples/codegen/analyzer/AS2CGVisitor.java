@@ -164,7 +164,7 @@ import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -201,7 +201,7 @@ import com.google.common.collect.Iterables;
 public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElement, @NonNull CodeGenAnalyzer>
 {
 	protected final @NonNull CodeGenerator codeGenerator;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 
@@ -292,7 +292,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public AS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
 		codeGenerator = context.getCodeGenerator();
-		environmentFactory = codeGenerator.getEnvironmentFactory();
+		environmentFactory = (EnvironmentFactoryInternalExtension) codeGenerator.getEnvironmentFactory();
 		metamodelManager = environmentFactory.getMetamodelManager();
 		genModelHelper = codeGenerator.getGenModelHelper();
 	}
@@ -418,7 +418,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (specification != null) {
 			Variables savedVariablesStack = variablesStack;
 			try {
-				ExpressionInOCL query = metamodelManager.parseSpecification(specification);
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				variablesStack = new Variables(null);
 				createParameters(cgOperation, query);
 			} catch (ParserException e) {
@@ -1105,7 +1105,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @Nullable Iterable<@NonNull Operation> getReferencedFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
-			prototype = metamodelManager.parseSpecification(specification);
+			prototype = environmentFactory.parseSpecification(specification);
 		}
 		catch (ParserException e) {
 			// FIXME log error
@@ -1132,7 +1132,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @Nullable Iterable<@NonNull Operation> getReferencedNonFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
-			prototype = metamodelManager.parseSpecification(specification);
+			prototype = environmentFactory.parseSpecification(specification);
 		}
 		catch (ParserException e) {
 			// FIXME log error
@@ -1200,7 +1200,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @Nullable CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
-			prototype = metamodelManager.parseSpecification(specification);
+			prototype = environmentFactory.parseSpecification(specification);
 		}
 		catch (ParserException e) {
 			// FIXME log error
@@ -1365,7 +1365,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LanguageExpression specification = element.getOwnedSpecification();
 		if (specification != null) {
 			try {
-				ExpressionInOCL query = metamodelManager.parseSpecification(specification);
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
 					CGParameter cgParameter = getParameter(contextVariable, null);
@@ -1520,7 +1520,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification != null) {
 			try {
-				ExpressionInOCL query = metamodelManager.parseSpecification(specification);
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				createParameters(cgOperation, query);
 				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
@@ -1604,7 +1604,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LanguageExpression specification = element.getOwnedExpression();
 		if (specification != null) {
 			try {
-				ExpressionInOCL query = metamodelManager.parseSpecification(specification);
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
 					getParameter(contextVariable, null);

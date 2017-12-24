@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -36,11 +37,11 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class ExtensionProperty extends AbstractProperty
 {
 	protected final @NonNull Property property;
-	
+
 	public ExtensionProperty(@NonNull Property property) {
 		this.property = property;
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		Type staticType = property.getType();
@@ -53,7 +54,7 @@ public class ExtensionProperty extends AbstractProperty
 		}
 		else {
 			try {
-				element = executor.getMetamodelManager().getASOf(Element.class, (EObject)sourceValue);
+				element = ((EnvironmentFactoryInternalExtension)executor.getEnvironmentFactory()).getASOf(Element.class, (EObject)sourceValue);
 			} catch (ParserException e) {
 				return new InvalidValueException(e, "Failed to parse " + property);
 			}
@@ -83,6 +84,6 @@ public class ExtensionProperty extends AbstractProperty
 				return new InvalidValueException("Multiple applied stereotypes for " + property);
 			}
 		}
-		return staticType; 
+		return staticType;
 	}
 }

@@ -71,6 +71,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 
+	@Deprecated /* @deprecated use EnvironmentFactory.createParserContext() */
 	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters);
 
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();

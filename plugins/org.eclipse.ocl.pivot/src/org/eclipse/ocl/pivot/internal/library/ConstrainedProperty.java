@@ -21,8 +21,8 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -35,7 +35,7 @@ public class ConstrainedProperty extends AbstractProperty
 {
 	protected final @NonNull Property property;
 	protected /*@LazyNonNull*/ ExpressionInOCL expression = null;
-	
+
 	public ConstrainedProperty(@NonNull Property property) {
 		this.property = property;
 	}
@@ -49,8 +49,8 @@ public class ConstrainedProperty extends AbstractProperty
 				throw new InvalidValueException("No defaultExpression for '{0}'", property);
 			}
 			try {
-				MetamodelManager metamodelManager = executor.getMetamodelManager();
-				expression = expression2 = metamodelManager.parseSpecification(defaultSpecification);
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
+				expression = expression2 = environmentFactory.parseSpecification(defaultSpecification);
 			} catch (ParserException e) {
 				throw new InvalidValueException(e, "Bad defaultExpression for '{0}'", property);
 			}

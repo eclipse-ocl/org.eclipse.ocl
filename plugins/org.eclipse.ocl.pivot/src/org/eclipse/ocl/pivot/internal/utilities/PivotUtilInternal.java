@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class PivotUtilInternal //extends PivotUtil
@@ -92,6 +93,14 @@ public class PivotUtilInternal //extends PivotUtil
 		String fileExtension = uri.fileExtension();
 		assert !fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 		return uri.trimFileExtension().appendFileExtension(fileExtension + PivotConstants.AS_EXTENSION_SUFFIX);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Deprecated /* @deprecated FIXME BUG 509309 move to EnvironmentFactory.createHelper() */
+	public static @NonNull PivotHelper createHelper(@NonNull EnvironmentFactory environmentFactory) {
+		return new PivotHelper(environmentFactory);
 	}
 
 	public static void debugPrintln(@Nullable Object string) {

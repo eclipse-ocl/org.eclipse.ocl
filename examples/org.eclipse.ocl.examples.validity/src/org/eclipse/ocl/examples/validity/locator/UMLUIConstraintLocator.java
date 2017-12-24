@@ -45,9 +45,9 @@ import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -212,11 +212,10 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 		if (eResource == null) {
 			return false;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(eResource);
 		Constraint constraint = null;
 		try {
-			constraint = metamodelManager.getASOf(Constraint.class, umlConstraint);
+			constraint = environmentFactory.getASOf(Constraint.class, umlConstraint);
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

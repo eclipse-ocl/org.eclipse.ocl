@@ -19,18 +19,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyModelManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public class PivotModelManager extends LazyModelManager
-{	
+{
 	private static final Logger logger = Logger.getLogger(PivotModelManager.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	private boolean generatedErrorMessage = false;
-	
+
 	public PivotModelManager(@NonNull EnvironmentFactoryInternal environmentFactory, EObject context) {
 		super(context);
 		this.environmentFactory = environmentFactory;
@@ -38,17 +38,17 @@ public class PivotModelManager extends LazyModelManager
 
 	@Override
 	protected boolean isInstance(@NonNull Type requiredType, @NonNull EObject eObject) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)this.environmentFactory;
 		EClass eClass = eObject.eClass();
 		EPackage ePackage = eClass.getEPackage();
 		Type objectType = null;
 		if (ePackage == PivotPackage.eINSTANCE) {
 			String name = ClassUtil.nonNullEMF(eClass.getName());
-			objectType = metamodelManager.getASClass(name);
+			objectType = environmentFactory.getASClass(name);
 		}
 		else {
 			try {
-				objectType = metamodelManager.getASOf(Type.class,  eClass);
+				objectType = environmentFactory.getASOf(Type.class,  eClass);
 			} catch (ParserException e) {
 				if (!generatedErrorMessage) {
 					generatedErrorMessage = true;
@@ -56,6 +56,6 @@ public class PivotModelManager extends LazyModelManager
 				}
 			}
 		}
-	    return (objectType != null) && objectType.conformsTo(environmentFactory.getStandardLibrary(), requiredType);
+		return (objectType != null) && objectType.conformsTo(environmentFactory.getStandardLibrary(), requiredType);
 	}
 }

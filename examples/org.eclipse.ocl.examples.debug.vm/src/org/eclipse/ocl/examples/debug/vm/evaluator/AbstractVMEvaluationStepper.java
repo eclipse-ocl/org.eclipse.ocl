@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
@@ -65,7 +66,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 	private @NonNull UnitLocation fCurrentLocation;
 	protected @NonNull VMSuspension fCurrentStepMode;
 	private final @NonNull Variable invalidVariable;
-	
+
 	protected AbstractVMEvaluationStepper(@NonNull EvaluationVisitor evaluationVisitor, @NonNull IVMContext vmContext, @NonNull IStepperVisitor stepperVisitor) {
 		this.evaluationVisitor = evaluationVisitor;
 		this.vmExecutor = (VMExecutor) ((EvaluationVisitor.EvaluationVisitorExtension)evaluationVisitor).getExecutor();
@@ -78,27 +79,27 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		invalidVariable = ClassUtil.nonNullEMF(PivotFactory.eINSTANCE.createVariable());
 		invalidVariable.setName("$invalid");
 		String typeName = ClassUtil.nonNullEMF(PivotPackage.Literals.OCL_EXPRESSION.getName());
-		invalidVariable.setType(vmExecutor.getEnvironmentFactory().getMetamodelManager().getASClass(typeName));
+		invalidVariable.setType(((EnvironmentFactoryInternalExtension)vmExecutor.getEnvironmentFactory()).getASClass(typeName));
 	}
 
 	protected abstract @NonNull VMStackFrameData @NonNull [] createStackFrame();
 
 	protected /*private*/ @NonNull VMSuspendEvent createVMSuspendEvent(@NonNull VMSuspension suspension) {
 		// build the VM stack frames
-		@NonNull VMStackFrameData @NonNull [] vmStack = createStackFrame();		
+		@NonNull VMStackFrameData @NonNull [] vmStack = createStackFrame();
 		assert vmStack.length > 0;
 		return new VMSuspendEvent(vmStack, suspension);
 	}
-	
-	
+
+
 	protected void doProcessRequest(@NonNull UnitLocation location, @NonNull VMRequest request) {
 		if (VMVirtualMachine.VM_REQUEST.isActive()) {
 			VMVirtualMachine.VM_REQUEST.println(">[" + Thread.currentThread().getName() + "] " + location.toString() + " " + request);
 		}
 		if (request instanceof VMResumeRequest) {
 			VMResumeRequest resumeRequest = (VMResumeRequest) request;
-//			fCurrentLocation = getCurrentLocation();
-//			fCurrentLocation = fCurrentStepMode == VMSuspension.STEP_INTO ? null : getCurrentLocation();
+			//			fCurrentLocation = getCurrentLocation();
+			//			fCurrentLocation = fCurrentStepMode == VMSuspension.STEP_INTO ? null : getCurrentLocation();
 			fCurrentStepMode = resumeRequest.suspension;
 			if (fCurrentStepMode == VMSuspension.UNSPECIFIED) {
 				fIterateBPHelper.removeAllIterateBreakpoints();
@@ -113,10 +114,11 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		}
 	}
 
+	@Override
 	public @NonNull UnitLocation getCurrentLocation() {
 		VMEvaluationEnvironment evaluationEnvironment = getVMEvaluationEnvironment();
 		return evaluationEnvironment.getCurrentLocation();
-//		return fCurrentLocation;
+		//		return fCurrentLocation;
 	}
 
 	@Override
@@ -124,6 +126,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		return evaluationVisitor;
 	}
 
+	@Override
 	public @NonNull List<UnitLocation> getLocationStack() {
 		List<UnitLocation> fLocationStack = new ArrayList<UnitLocation>();
 		VMEvaluationEnvironment leafEvaluationEnvironment = getVMEvaluationEnvironment();
@@ -168,17 +171,17 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		if (VMVirtualMachine.LOCATION.isActive()) {
 			VMVirtualMachine.LOCATION.println("[" + Thread.currentThread().getName() + "] " + element.eClass().getName() + ": " + element.toString() + " @ " + location + " " + (isElementEnd ? "start" : "end"));
 		}
-//		DebugQVTiEvaluationVisitor currentVisitor = visitorStack.peek();
-//		UnitLocation fCurrentLocation = currentVisitor.getEvaluationEnvironment().getCurrentLocation();
-//		if (fCurrentLocation == null) {
-//			return;
-//		}
-		
-//		ValidBreakpointLocator validbreakpointlocator = QVTiDebuggableRunnerFactory.validBreakpointLocator;
-//		if(false == (!isElementEnd ? validbreakpointlocator.isBreakpointableElementStart(element) : 
-//			validbreakpointlocator.isBreakpointableElementEnd(element))) {
-//			return;
-//		}
+		//		DebugQVTiEvaluationVisitor currentVisitor = visitorStack.peek();
+		//		UnitLocation fCurrentLocation = currentVisitor.getEvaluationEnvironment().getCurrentLocation();
+		//		if (fCurrentLocation == null) {
+		//			return;
+		//		}
+
+		//		ValidBreakpointLocator validbreakpointlocator = QVTiDebuggableRunnerFactory.validBreakpointLocator;
+		//		if(false == (!isElementEnd ? validbreakpointlocator.isBreakpointableElementStart(element) :
+		//			validbreakpointlocator.isBreakpointableElementEnd(element))) {
+		//			return;
+		//		}
 		boolean doSuspendAndResume = false;
 		if (fCurrentStepMode == VMSuspension.STEP_INTO) {
 			doSuspendAndResume = true;
@@ -201,25 +204,25 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		// check if we trigger a registered breakpoint
 		for (VMBreakpoint breakpoint : fBPM.getBreakpoints(element)) {	// FIXME Use Adapters to avoid potentially long loop
 			if (breakpoint.getLineNumber() != location.getLineNum()) {
-				 //TODO - faster to indicate in and or beginning enablement in VMBreakpoint ?
-				//|| !((!isElementEnd) ? ValidBreakpointLocator.isBreakpointableElementStart(element) : 
-					//ValidBreakpointLocator.isBreakpointableElementEnd(element))) {
+				//TODO - faster to indicate in and or beginning enablement in VMBreakpoint ?
+				//|| !((!isElementEnd) ? ValidBreakpointLocator.isBreakpointableElementStart(element) :
+				//ValidBreakpointLocator.isBreakpointableElementEnd(element))) {
 				// no breakpoint can be triggered
 				continue;
 			}
-					
+
 			Boolean isTriggered = null;
 			try {
 				isTriggered = Boolean.valueOf(breakpoint.hitAndCheckIfTriggered(this));
 			} catch(CoreException e) {
 				IStatus status = e.getStatus();
-				String reason = null; //$NON-NLS-1$
+				String reason = null;
 				if(status.getCode() == ConditionChecker.ERR_CODE_COMPILATION) {
 					reason = "Breakpoint condition compilation failed";
 				} else if(status.getCode() == ConditionChecker.ERR_CODE_EVALUATION) {
 					reason = "Breakpoint condition evaluation failed";
 				}
-				
+
 				if(reason != null) {
 					// breakpoint condition parsing or evaluation failed, notify the debug client
 					VMSuspendEvent suspendOnBpConditionErrr = createVMSuspendEvent(VMSuspension.BREAKPOINT_CONDITION_ERR);
@@ -230,14 +233,14 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 				} else {
 					log(e.getStatus());
 				}
-				
+
 				continue;
 			}
-			
+
 			if (Boolean.TRUE.equals(isTriggered)) {
 				boolean isIterateBp = fIterateBPHelper.isIterateBreakpoint(breakpoint);
 				VMSuspension vmSuspension = isIterateBp ? fCurrentStepMode : VMSuspension.BREAKPOINT;
-				
+
 				// let the VM suspend and wait for resume request
 				suspendAndWaitForResume(location, vmSuspension);
 
@@ -246,7 +249,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 				}
 			}
 		}
-		
+
 	}
 
 	/**
@@ -277,18 +280,20 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		return location.getStackDepth() < fCurrentLocation.getStackDepth();
 	}
 
-    protected abstract void log(IStatus status);
+	protected abstract void log(IStatus status);
 
 	private @NonNull UnitLocation newLocalLocation(@NonNull VMEvaluationEnvironment evalEnv, @NonNull Element node, int startPosition, int endPosition) {
 		return new UnitLocation(startPosition, endPosition, evalEnv, node);
 	}
 
+	@Override
 	public void postIterate(@NonNull LoopExp loopExp/*, Object preState */) {
-//		if (preState instanceof VMBreakpoint) {
-//			fIterateBPHelper.removeIterateBreakpoint((VMBreakpoint) preState);
-//		}
+		//		if (preState instanceof VMBreakpoint) {
+		//			fIterateBPHelper.removeIterateBreakpoint((VMBreakpoint) preState);
+		//		}
 	}
 
+	@Override
 	public void preIterate(@NonNull LoopExp loopExp) {
 		UnitLocation topLocation = getCurrentLocation();
 		boolean skipIterate = (fCurrentStepMode == VMSuspension.UNSPECIFIED)
@@ -304,22 +309,22 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		if (event == null) {
 			return;
 		}
-		
+
 		doProcessRequest(location, event);
 	}
 
-//	@Override
+	//	@Override
 	protected void processDeferredTasks() {
-//		IDebugEvaluationEnvironment evalEnv = getEvaluationEnvironment();
-//		Transformation transformation = evalEnv.getTransformation();
-//		UnitLocation startLocation = newLocalLocation(evalEnv, transformation, ASTBindingHelper.getEndPosition(transformation));//, 0);
-//		try {
-//			pushLocation(startLocation);
+		//		IDebugEvaluationEnvironment evalEnv = getEvaluationEnvironment();
+		//		Transformation transformation = evalEnv.getTransformation();
+		//		UnitLocation startLocation = newLocalLocation(evalEnv, transformation, ASTBindingHelper.getEndPosition(transformation));//, 0);
+		//		try {
+		//			pushLocation(startLocation);
 
-//			superProcessDeferredTasks();
-//		} finally {
-//			popLocation();
-//		}
+		//			superProcessDeferredTasks();
+		//		} finally {
+		//			popLocation();
+		//		}
 	}
 
 	protected Element setCurrentEnvInstructionPointer(Element element) {
@@ -332,36 +337,37 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 	}
 
 	private void setCurrentLocation(@NonNull Element element, UnitLocation newLocation, boolean atEnd) {
-//		if (fLocationStack.isEmpty()) {
-//			return;
-//		}
+		//		if (fLocationStack.isEmpty()) {
+		//			return;
+		//		}
 
 		// do not change to position-less locations
 		if (newLocation.getStartPosition() < 0) {
 			return;
 		}
 
-//		fLocationStack.set(0, newLocation);
+		//		fLocationStack.set(0, newLocation);
 		handleLocationChanged(element, newLocation, atEnd);
 	}
 
+	@Override
 	public void start(boolean suspendOnStartup) {
-//		UnitLocation newLocation = newLocalLocation((IDebugEvaluationEnvironment) evalEnv, transformation, ASTBindingHelper.getStartPosition(transformation)); //, getNodeLength(element));
-//		setCurrentLocation(transformation, newLocation, false);
+		//		UnitLocation newLocation = newLocalLocation((IDebugEvaluationEnvironment) evalEnv, transformation, ASTBindingHelper.getStartPosition(transformation)); //, getNodeLength(element));
+		//		setCurrentLocation(transformation, newLocation, false);
 
 		fDebugShell.sessionStarted(this);
 
-		VMRequest request = null; 
+		VMRequest request = null;
 		try {
 			// suspend to let others to wake up us on demand
 			trace(DebugOptions.EVALUATOR, "Debug evaluator going to initial SUSPEND state"); //$NON-NLS-1$
-			
+
 			request = fDebugShell.waitAndPopRequest(new VMStartEvent(getMainModuleName(), suspendOnStartup));
 		} catch (InterruptedException e) {
 			Thread.interrupted();
 			terminate();
 		}
-		
+
 		if (request instanceof VMResumeRequest) {
 			fCurrentStepMode = ((VMResumeRequest)request).suspension;
 		}
@@ -376,26 +382,26 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		VMEvaluationEnvironment evalEnv = getVMEvaluationEnvironment();
 		evalEnv.processDeferredTasks();
 	}
-	
+
 	protected /*private*/ void suspendAndWaitForResume(@NonNull UnitLocation location, @NonNull VMSuspension vmSuspension) {
 		suspendAndWaitForResume(location, createVMSuspendEvent(vmSuspension));
 	}
-	
-	protected /*private*/ void suspendAndWaitForResume(@NonNull UnitLocation location, @NonNull VMSuspendEvent suspendEvent) {		
+
+	protected /*private*/ void suspendAndWaitForResume(@NonNull UnitLocation location, @NonNull VMSuspendEvent suspendEvent) {
 		fCurrentLocation = location;
-		try {			
+		try {
 			VMSuspendEvent vmSuspend = suspendEvent;
-			
+
 			// send to the client runner, wait for resume
-			VMRequest nextRequest = fDebugShell.waitAndPopRequest(vmSuspend);			
+			VMRequest nextRequest = fDebugShell.waitAndPopRequest(vmSuspend);
 			assert nextRequest != null;
-			
+
 			if(nextRequest instanceof VMResumeRequest) {
 				fDebugShell.handleVMEvent(new VMResumeEvent());
 			}
 
 			doProcessRequest(location, nextRequest);
-			
+
 		} catch (InterruptedException e) {
 			terminate();
 		}
@@ -450,7 +456,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 				}
 				VMEvaluationEnvironment evalEnv = getVMEvaluationEnvironment();
 				Stack<VMEvaluationEnvironment.StepperEntry> stepperStack = evalEnv.getStepperStack();
-//				setCurrentEnvInstructionPointer(zzparentElement);
+				//				setCurrentEnvInstructionPointer(zzparentElement);
 				if (!stepperStack.isEmpty()) {
 					IStepper parentStepper = null;
 					EObject eContainer = element.eContainer();

@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -40,7 +41,6 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLElementExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -75,12 +75,12 @@ public class StereotypesTest extends PivotTestSuite
 			umlInFrenchStereotype = umlProfile.getOwnedStereotype("InFrench");
 			umlInGermanStereotype = umlProfile.getOwnedStereotype("InGerman");
 			umlFace = (org.eclipse.uml2.uml.Enumeration) umlProfile.getOwnedType("Face");
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			asProfile = metamodelManager.getASOf(Profile.class, umlProfile);
-			asInEnglishStereotype = metamodelManager.getASOf(Stereotype.class, umlInEnglishStereotype);
-			asInFrenchStereotype = metamodelManager.getASOf(Stereotype.class, umlInFrenchStereotype);
-			asInGermanStereotype = metamodelManager.getASOf(Stereotype.class, umlInGermanStereotype);
-			asFace = metamodelManager.getASOf(Enumeration.class, umlFace);
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			asProfile = environmentFactory.getASOf(Profile.class, umlProfile);
+			asInEnglishStereotype = environmentFactory.getASOf(Stereotype.class, umlInEnglishStereotype);
+			asInFrenchStereotype = environmentFactory.getASOf(Stereotype.class, umlInFrenchStereotype);
+			asInGermanStereotype = environmentFactory.getASOf(Stereotype.class, umlInGermanStereotype);
+			asFace = environmentFactory.getASOf(Enumeration.class, umlFace);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class StereotypesTest extends PivotTestSuite
 		ElementExtension asGermanClassInEnglish;
 
 		public InternationalizedMetamodel(@NonNull OCL ocl, @NonNull InternationalizedProfile mmm, org.eclipse.uml2.uml.Package umlPackage) throws ParserException {
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 			this.umlPackage = umlPackage;
 			//	        umlMMM = metamodelManager.getPivotOf(Element.class, umlRoot.eClass());
 			//	        asResource = ocl.uml2as(umlResource);
@@ -117,9 +117,9 @@ public class StereotypesTest extends PivotTestSuite
 			umlLanguageClass = umlPackage.getOwnedType("LanguageClass");
 			umlPlainClass = umlPackage.getOwnedType("PlainClass");
 			umlString = umlPackage.getOwnedType("String");
-			asEnglishClass = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, umlEnglishClass);
-			asFrenchClass = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, umlFrenchClass);
-			asGermanClass = metamodelManager.getASOf(org.eclipse.ocl.pivot.Class.class, umlGermanClass);
+			asEnglishClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlEnglishClass);
+			asFrenchClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlFrenchClass);
+			asGermanClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlGermanClass);
 			//
 			umlEnglishClassInEnglish = (UMLElementExtension) UMLElementExtension.getUMLElementExtension(mmm.asInEnglishStereotype, umlEnglishClass);
 			asEnglishClassInEnglish = NameUtil.getNameable(asEnglishClass.getOwnedExtensions(), "EnglishClass$InEnglish");

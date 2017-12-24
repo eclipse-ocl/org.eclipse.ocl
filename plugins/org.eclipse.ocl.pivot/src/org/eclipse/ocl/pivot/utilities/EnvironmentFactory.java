@@ -15,12 +15,15 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -58,8 +61,29 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 		 * Executor directly.
 		 */
 		@NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager);
-		
+
 		boolean isEvaluationTracingEnabled();
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public interface EnvironmentFactoryExtension2 extends EnvironmentFactoryExtension
+	{
+		@Nullable ParserContext createParserContext2(@NonNull Element element, Object... todoParameters) throws ParserException;
+		/**
+		 * Return the pivot model class for className with the Pivot Model.
+		 */
+		org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
+
+		@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
+
+		/**
+		 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
+		 * Throws a ParserException if conversion fails.
+		 * @since 1.4
+		 */
+		@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 	}
 
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
@@ -67,31 +91,36 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
 	 * an OCL expression as it is evaluated.
-	 * 
+	 *
 	 * @return a new evaluation environment
 	 */
 	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull NamedElement executableObject, @NonNull ModelManager modelManager);
-	
+
 	/** @deprecated no longer used */
 	@Deprecated
 	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject);
 
-    /**
-     * Creates a new evaluation visitor, for the evaluation of an OCL expression on a context using an environment and a modelManager.
-     * If environment is null, a root environment is created and used.
-     * If context is null and the expression uses self subsequent evaluations will give invalid as the result.
-     * If modelManager is null, the context object's ResoutceSet is analyzed to create one.
-     */
+	/**
+	 * Creates a new evaluation visitor, for the evaluation of an OCL expression on a context using an environment and a modelManager.
+	 * If environment is null, a root environment is created and used.
+	 * If context is null and the expression uses self subsequent evaluations will give invalid as the result.
+	 * If modelManager is null, the context object's ResoutceSet is analyzed to create one.
+	 */
 	@NonNull EvaluationVisitor createEvaluationVisitor(@Nullable Object context, @NonNull ExpressionInOCL expression, @Nullable ModelManager modelManager);
-	
-    /**
-     * Creates a new evaluation visitor, for the evaluation of OCL expressions.
-     * 
-     * @param evalEnv the evaluation environment that the visitor is to use
-     *    for tracking variables, navigating properties, etc.
-     * @return the new evaluation visitor
-     */
+
+	/**
+	 * Creates a new evaluation visitor, for the evaluation of OCL expressions.
+	 *
+	 * @param evalEnv the evaluation environment that the visitor is to use
+	 *    for tracking variables, navigating properties, etc.
+	 * @return the new evaluation visitor
+	 */
 	@NonNull EvaluationVisitor createEvaluationVisitor(@NonNull EvaluationEnvironment evalEnv);
+
+	/**
+	 * Return a Helper that provides a variety of useful API facilities.
+	 *
+	@NonNull PivotHelper createHelper(); */	// FIXME Bug 509309 wait for major version
 
 	/**
 	 * Creates an extent map for invocation of <tt>OclType.allInstances()</tt>
@@ -109,7 +138,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * all entries, all keys, all values, etc.  This knowledge could help
 	 * optimization.
 	 * </p>
-	 * 
+	 *
 	 * @param object a context object in the scope that covers the OCL
 	 *     classifier extents
 	 * @return the extent map
@@ -118,10 +147,10 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 
 	/**
 	 * <p>Creates a new {@link OCL} instance attached to this {@link EnvironmentFactory}.</p>
-	 * 
+	 *
 	 * <p>Clients should call {@link OCL#dispose()} to detach once they have no further use for
 	 * the OCL.</p>
-	 * 
+	 *
 	 * @return a new {@link OCL} instance attached to this {@link EnvironmentFactory}
 	 */
 	@NonNull OCL createOCL();
@@ -153,7 +182,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * projects that enable those resources to be accessed and exploited.
 	 */
 	@NonNull ProjectManager getProjectManager();
-	
+
 	/**
 	 * Return the external ResourceSet used to hold External Syntax (e.g. Ecore or UML) and/or Concrete Syntax model representations.
 	 * The internal ResoutrceSet used for Abstract Syntax resources is available by invoking getMetamodelmanager().getASResourceSet().
@@ -175,7 +204,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * Define the StatusCodes severity with which the validation identified by validationKey is reported.
 	 * StatusCodes.OK severity suppresses the validation altogether.
-	 * 
+	 *
 	 * Returns any previous setting.
 	 */
 	StatusCodes.@Nullable Severity setSeverity(@NonNull Object validationKey, StatusCodes.Severity severity);

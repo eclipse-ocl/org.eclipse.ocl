@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -43,17 +44,17 @@ public class EObjectContext extends AbstractParserContext
 				if (eObject instanceof Type) {
 					classContext2 = metamodelManager.getMetaclass((Type)eObject);
 				}
-//				else if (eObject instanceof NamedElement) {
-//					classContext = eObject;
-//				}
-//				else if (eObject instanceof EClassifier) {
-//					Type type = metamodelManager.getPivotOf(Type.class, eObject);
-//					if (type != null) {
-//						classContext = metamodelManager.getMetaclass(type);
-//					}
-//				}
+				//				else if (eObject instanceof NamedElement) {
+				//					classContext = eObject;
+				//				}
+				//				else if (eObject instanceof EClassifier) {
+				//					Type type = metamodelManager.getPivotOf(Type.class, eObject);
+				//					if (type != null) {
+				//						classContext = metamodelManager.getMetaclass(type);
+				//					}
+				//				}
 				else if (eObject != null) {
-					classContext2 = metamodelManager.getASOf(Type.class, eObject.eClass());
+					classContext2 = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Type.class, eObject.eClass());
 				}
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block

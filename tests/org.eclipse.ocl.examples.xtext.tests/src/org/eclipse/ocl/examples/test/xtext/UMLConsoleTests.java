@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 /**
@@ -169,7 +169,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_UML() throws Exception {
 		doDelete(PLUGIN_ID);
 		OCL ocl = consolePage.getEditorOCL();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = ocl.getResourceSet();
 
 		Resource umlResource = resourceSet.getResource(getTestModelURI("model/InternationalizedClasses.uml"), true);
@@ -183,7 +183,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		org.eclipse.uml2.uml.Stereotype umlInEnglishStereotype = umlProfile.getOwnedStereotype("InEnglish");
 		org.eclipse.uml2.uml.Stereotype umlInFrenchStereotype = umlProfile.getOwnedStereotype("InFrench");
 		org.eclipse.uml2.uml.Stereotype umlInGermanStereotype = umlProfile.getOwnedStereotype("InGerman");
-		Type asEnglishClass = metamodelManager.getASOf(Type.class, umlEnglishClass);
+		Type asEnglishClass = environmentFactory.getASOf(Type.class, umlEnglishClass);
 		//        Type englishClass = ClassUtil.getNamedElement(modelPackage.getOwnedType(), "EnglishClass");
 		//        Type frenchClass = ClassUtil.getNamedElement(modelPackage.getOwnedType(), "FrenchClass");
 		//        Type germanClass = ClassUtil.getNamedElement(modelPackage.getOwnedType(), "GermanClass");

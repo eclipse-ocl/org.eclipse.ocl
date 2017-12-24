@@ -21,8 +21,8 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -46,7 +46,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 {
 	protected final org.eclipse.uml2.uml.@NonNull Property property;
 	protected final @Nullable CollectionTypeId collectionTypeId;				// Non null for a Collection value
-	
+
 	public InstanceSlotNavigationProperty(org.eclipse.uml2.uml.@NonNull Property property, @Nullable CollectionTypeId collectionTypeId) {
 		this.property = property;
 		this.collectionTypeId = collectionTypeId;
@@ -55,7 +55,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		if (sourceValue != null) {
-			InstanceSpecification instanceSpecification = (InstanceSpecification)sourceValue; 
+			InstanceSpecification instanceSpecification = (InstanceSpecification)sourceValue;
 			for (Slot slot : instanceSpecification.getSlots()) {
 				if (slot.getDefiningFeature() == property) {
 					List<ValueSpecification> values = slot.getValues();
@@ -73,16 +73,16 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 						ValueSpecification valueSpecification = values.get(0);
 						if (valueSpecification instanceof OpaqueExpression) {
 							try {
-								MetamodelManager metamodelManager = executor.getMetamodelManager();
-								ExpressionInOCL specification = metamodelManager.getASOf(ExpressionInOCL.class, valueSpecification);
+								EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
+								ExpressionInOCL specification = environmentFactory.getASOf(ExpressionInOCL.class, valueSpecification);
 								if (specification == null) {
 									throw new InvalidValueException("Missing spec for " + specification);
 								}
-								ExpressionInOCL query = metamodelManager.parseSpecification(specification);
+								ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 								OCLExpression bodyExpression = query.getOwnedBody();
 								assert bodyExpression != null;
 								Object umlValue = executor.evaluate(bodyExpression);
-								return metamodelManager.getEnvironmentFactory().getIdResolver().boxedValueOf(umlValue);
+								return environmentFactory.getIdResolver().boxedValueOf(umlValue);
 							} catch (ParserException e) {
 								throw new InvalidValueException(e, "Parse fail for " + valueSpecification);
 							}

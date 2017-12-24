@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASUtil;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLElementExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -61,7 +62,7 @@ public class UMLIdResolver extends PivotIdResolver
 	 */
 	protected @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @NonNull EObject eObject) {
 		try {
-			return metamodelManager.getASOf(pivotClass, eObject);
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(pivotClass, eObject);
 		} catch (ParserException e) {
 			Resource resource = eObject.eResource();
 			if (resource != null) {
@@ -74,7 +75,7 @@ public class UMLIdResolver extends PivotIdResolver
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getDynamicTypeOf(@Nullable Object value) {
 		if (value instanceof org.eclipse.uml2.uml.Element) {
-			org.eclipse.ocl.pivot.Class metaType = UML2ASUtil.getMetaType(metamodelManager.getEnvironmentFactory(), (org.eclipse.uml2.uml.Element)value);
+			org.eclipse.ocl.pivot.Class metaType = UML2ASUtil.getMetaType(environmentFactory, (org.eclipse.uml2.uml.Element)value);
 			if (metaType != null) {
 				return metaType;
 			}
@@ -82,7 +83,7 @@ public class UMLIdResolver extends PivotIdResolver
 		else if (value instanceof UMLElementExtension) {
 			org.eclipse.uml2.uml.Stereotype umlStereotype = ((UMLElementExtension)value).getDynamicStereotype();
 			Stereotype asStereotype = getASOf(Stereotype.class, umlStereotype);
-			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();
+			return asStereotype != null ? asStereotype : environmentFactory.getStandardLibrary().getOclInvalidType();
 		}
 		else if (!(value instanceof CollectionValue)) {			// Fast test to bypass redundant derived getStaticTypeOf
 			return super.getStaticTypeOf(value);
@@ -157,7 +158,7 @@ public class UMLIdResolver extends PivotIdResolver
 				}
 			}
 
-			org.eclipse.ocl.pivot.Class metaType = UML2ASUtil.getMetaType(metamodelManager.getEnvironmentFactory(), (org.eclipse.uml2.uml.Element)value);
+			org.eclipse.ocl.pivot.Class metaType = UML2ASUtil.getMetaType(environmentFactory, (org.eclipse.uml2.uml.Element)value);
 			if (metaType != null) {
 				return metaType;
 			}
@@ -165,7 +166,7 @@ public class UMLIdResolver extends PivotIdResolver
 		else if (value instanceof UMLElementExtension) {
 			org.eclipse.uml2.uml.Stereotype umlStereotype = ((UMLElementExtension)value).getStaticStereotype();
 			Stereotype asStereotype = getASOf(Stereotype.class, umlStereotype);
-			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();
+			return asStereotype != null ? asStereotype : environmentFactory.getStandardLibrary().getOclInvalidType();
 			//			return ((UMLElementExtension)value).getStaticType();
 		}
 		return super.getStaticTypeOf(value);

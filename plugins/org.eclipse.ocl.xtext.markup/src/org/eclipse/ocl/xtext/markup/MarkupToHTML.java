@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
@@ -60,9 +61,9 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 	{
 		public InvalidMarkupException(Exception e) {
 			super(e);
-		}		
+		}
 	}
-	
+
 	public static String toString(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Object context, @NonNull MarkupElement element) throws Exception {
 		MarkupToHTML toString = new MarkupToHTML(environmentFactory, context);
 		try {
@@ -71,16 +72,16 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 			throw (Exception)e.getCause();
 		}
 	}
-	
-//	private @Nullable OCL ocl = null;
-	private @NonNull EnvironmentFactoryInternal environmentFactory;
+
+	//	private @Nullable OCL ocl = null;
+	private @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @Nullable Object context;
 	protected final @NonNull HTMLBuffer s = new HTMLBuffer();
 
 	public MarkupToHTML(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Object context) {
-		this.environmentFactory = environmentFactory;
+		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
 		this.context = context;
-	}	
+	}
 
 	@Override
 	public HTMLBuffer caseBulletElement(BulletElement object) {
@@ -90,7 +91,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 		s.endBulletLevel(level);
 		return s;
 	}
-	
+
 	@Override
 	public HTMLBuffer caseCompoundElement(CompoundElement object) {
 		for (MarkupElement element : object.getElements()) {
@@ -187,7 +188,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 		s.startFontName("pre");
 		List<MarkupElement> elements = object.getElements();
 		assert elements != null;
-		String oclString = MarkupToString.toString(elements);		
+		String oclString = MarkupToString.toString(elements);
 		try {
 			ExpressionInOCL query = createQuery(oclString);
 			String text = PrettyPrinter.print(query);
@@ -204,7 +205,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 	public HTMLBuffer caseOCLEvalElement(OCLEvalElement object) {
 		List<MarkupElement> elements = object.getElements();
 		assert elements != null;
-		String oclString = MarkupToString.toString(elements);		
+		String oclString = MarkupToString.toString(elements);
 		try {
 			OCL ocl = environmentFactory.createOCL();
 			ExpressionInOCL query = createQuery(oclString);
@@ -222,7 +223,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 		s.startFontName("tt");
 		List<MarkupElement> elements = object.getElements();
 		assert elements != null;
-		String oclString = MarkupToString.toString(elements);		
+		String oclString = MarkupToString.toString(elements);
 		try {
 			ExpressionInOCL query = createQuery(oclString);
 			PrettyPrintOptions.Global options = PrettyPrinter.createOptions(null);
@@ -283,7 +284,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 				EClass eClass = ((EObject)context).eClass();
 				String name = eClass.getName();
 				assert name != null;
-				parserContext2 = environmentFactory.getMetamodelManager().getASClass(name);
+				parserContext2 = environmentFactory.getASClass(name);
 				if (parserContext2 == null) {
 					Resource resource = eClass.eResource();
 					if (resource != null) {

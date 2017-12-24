@@ -104,7 +104,7 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -1644,12 +1644,12 @@ public class PivotUtil
 	 */
 	public static boolean setParserContext(@NonNull CSResource csResource, @NonNull EObject eObject, Object... todoParameters) throws ParserException {
 		EnvironmentFactoryAdapter adapter = OCLInternal.adapt(csResource);
-		EnvironmentFactoryInternal environmentFactory = adapter.getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) adapter.getEnvironmentFactory();
 		Element pivotElement = environmentFactory.getTechnology().getParseableElement(environmentFactory, eObject);
 		if (pivotElement == null) {
 			return false;
 		}
-		ParserContext parserContext = environmentFactory.getMetamodelManager().createParserContext(pivotElement, todoParameters);
+		ParserContext parserContext = environmentFactory.createParserContext2(pivotElement, todoParameters);
 		if (parserContext == null) {
 			return false;
 		}

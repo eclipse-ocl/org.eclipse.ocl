@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -672,7 +673,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					return null;
 				}
 				try {
-					return metamodelManager.getASOf(requiredClass, eObject);
+					return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(requiredClass, eObject);
 				} catch (ParserException e) {
 					return null;		// Never happens since UML element will never be a parsed one such as an OCLExpression
 				}

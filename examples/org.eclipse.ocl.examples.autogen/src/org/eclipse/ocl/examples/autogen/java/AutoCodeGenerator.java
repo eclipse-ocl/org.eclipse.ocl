@@ -164,7 +164,8 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull CGClass getExternalClass(@NonNull Class<?> javaClass, CGClass... javaGenerics) {
 		String packageName = javaClass.getPackage().getName();
-		@SuppressWarnings("null")@NonNull String className = javaClass.getSimpleName();
+		String className = javaClass.getSimpleName();
+		assert className != null;
 		CGClass externalClass = getExternalClass(packageName, className, javaClass.isInterface());
 		if (javaGenerics != null) {
 			for (CGClass javaGeneric : javaGenerics) {
@@ -257,7 +258,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected @NonNull ExpressionInOCL getExpressionInOCL(Operation op) {
 		try {
 			LanguageExpression envSpecification = ClassUtil.nonNullState(op.getBodyExpression());
-			return metamodelManager.parseSpecification(envSpecification);
+			return environmentFactory.parseSpecification(envSpecification);
 		} catch (ParserException e) {
 			throw new IllegalStateException(e);
 		}
@@ -284,8 +285,10 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Class<?> javaClass,
 			boolean isReadOnly, boolean isRequired) {
 		Package javaPackage = javaClass.getPackage();
-		@SuppressWarnings("null")@NonNull String packageName = javaPackage.getName();
-		@SuppressWarnings("null")@NonNull String className = javaClass.getSimpleName();
+		String packageName = javaPackage.getName();
+		assert packageName != null;
+		String className = javaClass.getSimpleName();
+		assert className != null;
 		RootPackageId javaPackageId = IdManager.getRootPackageId(packageName);
 		Orphanage orphanage = metamodelManager.getCompleteModel().getOrphanage();
 		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), packageName);

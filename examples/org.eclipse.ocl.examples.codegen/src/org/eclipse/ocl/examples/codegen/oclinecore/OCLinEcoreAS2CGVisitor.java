@@ -81,7 +81,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		LanguageExpression specification = element.getOwnedSpecification();
 		if (specification != null) {
 			try {
-				ExpressionInOCL oldQuery = metamodelManager.parseSpecification(specification);
+				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(element);
 				EObject eContainer = element.eContainer();
 				if (eContainer instanceof NamedElement) {
