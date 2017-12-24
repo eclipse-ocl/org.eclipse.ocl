@@ -175,7 +175,9 @@ public class OCLQueryDelegate implements QueryDelegate
 	@Override
 	public void prepare() throws InvocationTargetException {
 		try {
-			specification = parserContext.parse(parserContext.getClassContext(), expression);
+			if (specification == null) {
+				specification = parserContext.parse(parserContext.getClassContext(), expression);
+			}
 		} catch (Exception e) {
 			throw new InvocationTargetException(e);
 		}
