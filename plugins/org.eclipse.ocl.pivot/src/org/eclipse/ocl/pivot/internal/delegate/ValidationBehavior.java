@@ -49,7 +49,7 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 				return constraint;
 			}
 		}
-		throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.OWNED_CONSTRAINT_ROLE));
+		throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.CONSTRAINT_ROLE));
 	}
 
 	@Override

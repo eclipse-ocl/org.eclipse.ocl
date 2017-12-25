@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.test.xtext.models.ParserModels;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.completeocl.ui.messages.CompleteOCLUIMessages;
@@ -136,7 +137,7 @@ public class FileNewWizardTest extends TestCase
 
 	@Override
 	public String getName() {
-		return TestUtil.getName(super.getName());
+		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
 	protected @NonNull String readNewFile(String fileName) throws CoreException, IOException {

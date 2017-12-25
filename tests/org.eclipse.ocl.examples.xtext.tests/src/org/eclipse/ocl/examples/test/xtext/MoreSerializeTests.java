@@ -37,7 +37,7 @@ public class MoreSerializeTests extends SerializeTests
 	// Fails because no support for redefines
 	public void test_Fruit_uml_Serialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerializeUML(ocl, "Fruit", null);
+		doSerializeUML(ocl, "Fruit", SUPPRESS_VALIDATION);
 		ocl.dispose();
 	}
 

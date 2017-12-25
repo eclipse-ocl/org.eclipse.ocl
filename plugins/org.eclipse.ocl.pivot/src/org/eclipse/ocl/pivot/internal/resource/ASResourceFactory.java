@@ -28,12 +28,10 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
-import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
@@ -77,7 +75,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * @deprecated AS2XMIid replaced by as2IS
 	 */
 	@Deprecated
-	@NonNull AS2XMIidVisitor createAS2XMIidVisitor(@NonNull AS2XMIid as2id);
+	org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id);
 
 	/**
 	 * Create a visitor to locate orphan specializations.

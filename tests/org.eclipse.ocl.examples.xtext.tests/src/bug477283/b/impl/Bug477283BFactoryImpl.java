@@ -12,15 +12,16 @@
  */
 package bug477283.b.impl;
 
-import bug477283.b.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
+
+import bug477283.b.B;
+import bug477283.b.Bug477283BFactory;
+import bug477283.b.Bug477283BPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,7 +65,7 @@ public class Bug477283BFactoryImpl extends EFactoryImpl implements Bug477283BFac
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case Bug477283BPackage.B: return createB();
 			default:
@@ -77,7 +78,8 @@ public class Bug477283BFactoryImpl extends EFactoryImpl implements Bug477283BFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public B createB() {
+	@Override
+	public @NonNull B createB() {
 		BImpl b = new BImpl();
 		return b;
 	}
@@ -87,6 +89,7 @@ public class Bug477283BFactoryImpl extends EFactoryImpl implements Bug477283BFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug477283BPackage getBug477283BPackage() {
 		return (Bug477283BPackage)getEPackage();
 	}

@@ -312,7 +312,8 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull BagValue getValues() {
 		CollectionTypeId bagId = TypeId.BAG.getSpecializedId(typeId.getValueTypeId());
-		return ValueUtil.createBagValue(bagId, new BagImpl<Object>(boxedValues.values()));
+		Iterable<Object> values = boxedValues.values();
+		return ValueUtil.createBagValue(bagId, new BagImpl<>(values));
 	}
 
 	@Override

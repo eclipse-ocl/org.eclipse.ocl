@@ -31,8 +31,6 @@ public class AbstractModels extends XtextTestCase
 		URL fileURL = getTestResource(fileName);
 		File file = new File(fileURL.getFile());
 		URI uri = URI.createFileURI(file.toString());
-		if (uri == null)
-			fail("Cannot create URI for '" + file.toString() + "'");
 		return uri;
 	}
 }

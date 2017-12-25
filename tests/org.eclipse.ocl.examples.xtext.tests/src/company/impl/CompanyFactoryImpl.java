@@ -3,16 +3,20 @@
  *******************************************************************************/
 package company.impl;
 
-import company.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
+
+import company.Bug418716;
+import company.Company;
+import company.CompanyFactory;
+import company.CompanyPackage;
+import company.CompanySizeKind;
+import company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,7 +60,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case CompanyPackage.COMPANY: return createCompany();
 			case CompanyPackage.EMPLOYEE: return createEmployee();
@@ -102,7 +106,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	 * @generated
 	 */
 	@Override
-	public Company createCompany() {
+	public @NonNull Company createCompany() {
 		CompanyImpl company = new CompanyImpl();
 		return company;
 	}
@@ -113,7 +117,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	 * @generated
 	 */
 	@Override
-	public Employee createEmployee() {
+	public @NonNull Employee createEmployee() {
 		EmployeeImpl employee = new EmployeeImpl();
 		return employee;
 	}
@@ -123,7 +127,8 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Bug418716 createBug418716() {
+	@Override
+	public @NonNull Bug418716 createBug418716() {
 		Bug418716Impl bug418716 = new Bug418716Impl();
 		return bug418716;
 	}

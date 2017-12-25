@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import junit.framework.TestCase;
 
@@ -21,7 +22,7 @@ public class PluginLabelTests extends TestCase
 {
 	@Override
 	public String getName() {
-		return TestUtil.getName(super.getName());
+		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
 	public void testEcoreURIGlobalLabel() {

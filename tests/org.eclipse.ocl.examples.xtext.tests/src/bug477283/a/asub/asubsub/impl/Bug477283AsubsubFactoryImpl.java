@@ -12,15 +12,16 @@
  */
 package bug477283.a.asub.asubsub.impl;
 
-import bug477283.a.asub.asubsub.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
+
+import bug477283.a.asub.asubsub.ASubSub;
+import bug477283.a.asub.asubsub.Bug477283AsubsubFactory;
+import bug477283.a.asub.asubsub.Bug477283AsubsubPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,7 +65,7 @@ public class Bug477283AsubsubFactoryImpl extends EFactoryImpl implements Bug4772
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case Bug477283AsubsubPackage.ASUB_SUB: return createASubSub();
 			default:
@@ -77,7 +78,8 @@ public class Bug477283AsubsubFactoryImpl extends EFactoryImpl implements Bug4772
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ASubSub createASubSub() {
+	@Override
+	public @NonNull ASubSub createASubSub() {
 		ASubSubImpl aSubSub = new ASubSubImpl();
 		return aSubSub;
 	}
@@ -87,6 +89,7 @@ public class Bug477283AsubsubFactoryImpl extends EFactoryImpl implements Bug4772
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug477283AsubsubPackage getBug477283AsubsubPackage() {
 		return (Bug477283AsubsubPackage)getEPackage();
 	}

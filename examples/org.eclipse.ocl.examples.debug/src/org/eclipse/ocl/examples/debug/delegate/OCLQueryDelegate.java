@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
  * An implementation of a query delegate for OCL expressions.
- * 
+ *
  * @see OCLQueryDelegateFactory
  * @since 3.1
  */
@@ -53,7 +53,7 @@ public class OCLQueryDelegate implements QueryDelegate
 
 	/**
 	 * Initializes me with my domain, context, variables, and expression.
-	 * 
+	 *
 	 * @param delegateDomain
 	 *            my domain
 	 * @param context
@@ -74,7 +74,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 * is the OCL evaluation result which may be a Number, String, Collection or
 	 * other object for normal returns or a NullLiteralExp for null, or an
 	 * InvalidLiteralExp for invalid.
-	 * 
+	 *
 	 * @param target
 	 *            the object on which to execute the query; this must be an
 	 *            instance of the context with which the delegate was created
@@ -86,8 +86,8 @@ public class OCLQueryDelegate implements QueryDelegate
 	 *             in case of failure to prepare or execute the query, usually
 	 *             because of an exception
 	 */
+	@Override
 	public Object execute(@Nullable Object target, Map<String, ?> arguments) throws InvocationTargetException {
-		@SuppressWarnings("null")
 		@NonNull Map<String, ?> nonNullArguments = (arguments != null ? arguments : (Map<String, ?>)Collections.<String, Object>emptyMap());
 		try {
 			if (specification == null) {
@@ -152,9 +152,10 @@ public class OCLQueryDelegate implements QueryDelegate
 	 * This method is lazily invoked from execute, but may be invoked eagerly
 	 * to detect compilation errors earlier or incur compilation costs at a more
 	 * convenient time.
-	 *  
+	 *
 	 * @throws InvocationTargetException wrapping any parser, io exceptions
 	 */
+	@Override
 	public void prepare() throws InvocationTargetException {
 		try {
 			specification = parserContext.parse(parserContext.getClassContext(), expression);

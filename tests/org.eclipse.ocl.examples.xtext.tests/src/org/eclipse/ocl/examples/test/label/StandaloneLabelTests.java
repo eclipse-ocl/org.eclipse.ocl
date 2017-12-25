@@ -15,6 +15,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.labels.EcoreURILabelGenerator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import junit.framework.TestCase;
 
@@ -22,7 +23,7 @@ public class StandaloneLabelTests extends TestCase
 {
 	@Override
 	public String getName() {
-		return TestUtil.getName(super.getName());
+		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
 	public void testEcoreURILabel() {

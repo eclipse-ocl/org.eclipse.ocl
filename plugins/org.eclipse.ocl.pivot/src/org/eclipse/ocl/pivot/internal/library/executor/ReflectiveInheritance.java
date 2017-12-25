@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -239,7 +240,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		@SuppressWarnings("unused") List<@NonNull ReflectiveInheritance> debugOldUninstalledInheritances = new ArrayList<>(uninstalledInheritances);
 		while (true) {
 			Boolean gotOne = false;
-			for (ListIterator<@NonNull ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
+			for (Iterator<@NonNull ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
 				@NonNull ReflectiveInheritance uninstalledInheritance = it.next();
 				if (uninstalledInheritance.isInstallable()) {
 					uninstalledInheritance.install();

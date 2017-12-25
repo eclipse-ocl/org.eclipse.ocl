@@ -3,16 +3,19 @@
  *******************************************************************************/
 package noreflectioncompany.impl;
 
-import noreflectioncompany.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
+
+import noreflectioncompany.Company;
+import noreflectioncompany.CompanySizeKind;
+import noreflectioncompany.Employee;
+import noreflectioncompany.NoreflectioncompanyFactory;
+import noreflectioncompany.NoreflectioncompanyPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,7 +59,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case NoreflectioncompanyPackage.COMPANY: return createCompany();
 			case NoreflectioncompanyPackage.EMPLOYEE: return createEmployee();
@@ -101,7 +104,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * @generated
 	 */
 	@Override
-	public Company createCompany() {
+	public @NonNull Company createCompany() {
 		CompanyImpl company = new CompanyImpl();
 		return company;
 	}
@@ -112,7 +115,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * @generated
 	 */
 	@Override
-	public Employee createEmployee() {
+	public @NonNull Employee createEmployee() {
 		EmployeeImpl employee = new EmployeeImpl();
 		return employee;
 	}

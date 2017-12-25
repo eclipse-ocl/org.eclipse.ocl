@@ -16,9 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
@@ -27,13 +25,13 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull CompleteOCLASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.COMPLETE_OCL_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (CompleteOCLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new CompleteOCLASResourceFactory();											// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.COMPLETE_OCL_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (CompleteOCLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new CompleteOCLASResourceFactory();											// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install(PivotConstants.OCL_FILE_EXTENSION, null);
 		}
@@ -45,8 +43,9 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 		super(ASResource.COMPLETE_OCL_CONTENT_TYPE);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public @NonNull AS2XMIidVisitor createAS2XMIidVisitor(@NonNull AS2XMIid as2id) {
+	public org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id) {
 		return new CompleteOCLAS2XMIidVisitor(as2id);
 	}
 
@@ -55,7 +54,7 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 		assert uri != null;
 		ASResource asResource = new CompleteOCLASResourceImpl(uri, this);
 		configureResource(asResource);
-	    return asResource;
+		return asResource;
 	}
 
 	@Override

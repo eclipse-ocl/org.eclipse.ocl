@@ -27,7 +27,7 @@ public class OCLinEcoreResourceForEditorInputFactory extends JavaClassPathResour
 
 	@Inject
 	private IStorage2UriMapper storageToUriMapper;
-	
+
 	@Inject
 	private Provider<XtextResource> provider;
 
@@ -41,6 +41,7 @@ public class OCLinEcoreResourceForEditorInputFactory extends JavaClassPathResour
 		//  so create an XtextResource for an ecore file
 		if (resource == null) {
 			resource = (XtextResource) new XtextResourceFactory(provider).createResource(uri);
+			assert resource != null;
 			resourceSet.getResources().add(resource);
 		}
 		resource.setValidationDisabled(false);
@@ -57,6 +58,7 @@ public class OCLinEcoreResourceForEditorInputFactory extends JavaClassPathResour
 		//  so create an XtextResource for an ecore file
 		if (resource == null) {
 			resource = (XtextResource) new XtextResourceFactory(provider).createResource(uri);
+			assert resource != null;
 			resourceSet.getResources().add(resource);
 		}
 		resource.setValidationDisabled(true);

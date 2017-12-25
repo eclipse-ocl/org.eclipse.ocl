@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  * 	 E.D.Willink (Obeo) - Bug 416287 - tuple-valued constraints
@@ -46,7 +46,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * of compiled constraints and invariants.
  */
 public class OCLValidationDelegate implements ValidationDelegate
-{	
+{
 	protected static class CheckingConstraintEvaluator extends AbstractConstraintEvaluator<Boolean>
 	{
 		protected final @NonNull EClassifier eClassifier;
@@ -60,7 +60,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		public Boolean evaluate(@NonNull EvaluationVisitor evaluationVisitor) {
 			if (!isBooleanConstraint()) {
 				String objectLabel = LabelUtil.getLabel(query.getType());
-//				String constraintTypeName = getConstraintTypeName(query);
+				//				String constraintTypeName = getConstraintTypeName(query);
 				String constraintTypeName = getConstraintTypeName();
 				String constraintName = getConstraintName();
 				String checkMessage = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsNotBooleanType_ERROR_,
@@ -124,10 +124,10 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected final @NonNull OCLDelegateDomain delegateDomain;
 	protected final @NonNull EClassifier eClassifier;
-	  
+
 	/**
 	 * Initializes me with the classifier whose DelegateEClassifierAdapter delegates to me.
-	 * 
+	 *
 	 * @param classifier
 	 *            my classifier
 	 */
@@ -136,12 +136,12 @@ public class OCLValidationDelegate implements ValidationDelegate
 		this.eClassifier = classifier;
 	}
 
-//	protected boolean check(@NonNull EvaluationVisitor evaluationVisitor, @NonNull String constraintName, @NonNull ExpressionInOCL query) {
-//		ConstraintEvaluator<Boolean> constraintEvaluator = new CheckingConstraintEvaluator(eClassifier, query);
-//		return constraintEvaluator.evaluate(evaluationVisitor);
-//	}
+	//	protected boolean check(@NonNull EvaluationVisitor evaluationVisitor, @NonNull String constraintName, @NonNull ExpressionInOCL query) {
+	//		ConstraintEvaluator<Boolean> constraintEvaluator = new CheckingConstraintEvaluator(eClassifier, query);
+	//		return constraintEvaluator.evaluate(evaluationVisitor);
+	//	}
 
-/*	public @NonNull ExpressionInOCL getExpressionInOCL(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) {
+	/*	public @NonNull ExpressionInOCL getExpressionInOCL(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) {
 		ExpressionInOCL query = null;
 		ExpressionInOCL valueSpecification = constraint.getSpecification();
 		if (valueSpecification instanceof ExpressionInOCL) {
@@ -273,7 +273,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 			@Override
 			protected String getObjectLabel() {
 				return NameUtil.qualifiedNameFor(value);
-//				return ClassUtil.getLabel(eClassifier, value, context);
+				//				return ClassUtil.getLabel(eClassifier, value, context);
 			}
 
 			@Override
@@ -302,7 +302,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);
 		if (constraint == null) {
-			SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.OWNED_CONSTRAINT_ROLE);
+			SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.CONSTRAINT_ROLE);
 			throw new OCLDelegateException(cause);
 		}
 		ExpressionInOCL query = null;
@@ -310,7 +310,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 			query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, constraint);
 		}
 		if (query == null) {
-			SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.OWNED_CONSTRAINT_ROLE);
+			SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.CONSTRAINT_ROLE);
 			throw new OCLDelegateException(cause);
 		}
 		return validateExpressionInOCL(eClassifier, value, diagnostics, context,

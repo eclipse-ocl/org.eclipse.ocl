@@ -28,6 +28,7 @@ import org.eclipse.xtext.resource.XtextResource;
  * BaseDocumentProvider provides an OCL instance whose lifetime correlates
  * with the editor and which is accessible from the Xtext SynchronizedResourceSet.
  */
+@SuppressWarnings("deprecation")
 public class BaseDocumentProvider extends DeferredDocumentProvider
 {
 	private @Nullable OCLInternal ocl;
@@ -45,11 +46,11 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 		}
 		super.disconnected();
 	}
-	
+
 	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getOCL().getEnvironmentFactory();
 	}
-	
+
 	protected @NonNull OCLInternal getOCL() {
 		OCLInternal ocl2 = ocl;
 		if (ocl2 == null) {

@@ -19,13 +19,12 @@ import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
-import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
-public class CompleteOCLAS2XMIidVisitor extends AS2XMIidVisitor
+@SuppressWarnings("deprecation")
+public class CompleteOCLAS2XMIidVisitor extends org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor
 {
-	public CompleteOCLAS2XMIidVisitor(@NonNull AS2XMIid context) {
+	public CompleteOCLAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid context) {
 		super(context);
 	}
 
@@ -51,7 +50,7 @@ public class CompleteOCLAS2XMIidVisitor extends AS2XMIidVisitor
 			s.append("." + index);
 		}
 	}
-	
+
 	@Override
 	public @Nullable Boolean visitClass(@NonNull Class object) {
 		Boolean status = super.visitClass(object);
