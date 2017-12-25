@@ -115,6 +115,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Returns a ModelContext if no more specfic context can be determined if none can be created.
 	 * @throws ParserException
 	 */
+	@Deprecated /* @deprecated not used - evolving towards createParserContext(@NonNull Element) */
 	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
 
 	void detach(Object object);

@@ -839,9 +839,7 @@ public class EditTests extends XtextTestCase
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()),
 				StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclInvalid", "testProperty1"),
 				StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "testOperation", "123456")),
-			getMessages("Parsing error 'org.eclipse.ocl.pivot.utilities.SemanticException: The 'TestPackage::TestClass2' constraint is invalid: 'testProperty2.testProperty1 = testProperty2.testOperation(123456)'\n" +
-					"1: Unresolved Property 'OclInvalid::testProperty1'\n" +
-					"1: Unresolved Operation 'OclInvalid::testOperation(123456)'' for 'TestPackage::TestClass2' 'testInvariant'"));
+			SUPPRESS_VALIDATION);
 		//
 		//	Changing "Testing" back to "TestClass1" restores the type and the invariant.
 		//
@@ -852,8 +850,7 @@ public class EditTests extends XtextTestCase
 		//
 		doRename(ocl, xtextResource, asResource, "testProperty1", "tProperty",
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, pivotTestClass1 + "", "testProperty1")),
-			getMessages("Parsing error 'org.eclipse.ocl.pivot.utilities.SemanticException: The 'TestPackage::TestClass2' constraint is invalid: 'testProperty2.testProperty1 = testProperty2.testOperation(123456)'\n" +
-					"1: Unresolved Property 'TestPackage::TestClass1::testProperty1'' for 'TestPackage::TestClass2' 'testInvariant'"));
+			SUPPRESS_VALIDATION);
 		//
 		//	Changing "tProperty" back to "testProperty" restores the property and the invariant.
 		//
@@ -863,8 +860,7 @@ public class EditTests extends XtextTestCase
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation", "tOperation",
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456")),
-			getMessages("Parsing error 'org.eclipse.ocl.pivot.utilities.SemanticException: The 'TestPackage::TestClass2' constraint is invalid: 'testProperty2.testProperty1 = testProperty2.testOperation(123456)'\n" +
-					"1: Unresolved Operation 'TestPackage::TestClass1::testOperation(123456)'' for 'TestPackage::TestClass2' 'testInvariant'"));
+			SUPPRESS_VALIDATION);
 		//
 		//	Changing "tOperation" back to "testOperation" restores the operation and the invariant.
 		//
@@ -874,8 +870,7 @@ public class EditTests extends XtextTestCase
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation(i : Integer)", "testOperation()",
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "123456")),
-			getMessages("Parsing error 'org.eclipse.ocl.pivot.utilities.SemanticException: The 'TestPackage::TestClass2' constraint is invalid: 'testProperty2.testProperty1 = testProperty2.testOperation(123456)'\n" +
-					"1: Unresolved Operation 'TestPackage::TestClass1::testOperation(123456)'' for 'TestPackage::TestClass2' 'testInvariant'"));
+			SUPPRESS_VALIDATION);
 		//
 		//	Changing "testOperation()" back to "testOperation(i : Integer)" restores the operation and the invariant.
 		//
@@ -885,8 +880,7 @@ public class EditTests extends XtextTestCase
 		//
 		doRename(ocl, xtextResource, asResource, "testOperation(i : Integer)", "testOperation(s : String)",
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, pivotTestClass1 + "", "testOperation", "Integer")),
-			getMessages("Parsing error 'org.eclipse.ocl.pivot.utilities.SemanticException: The 'TestPackage::TestClass2' constraint is invalid: 'testProperty2.testProperty1 = testProperty2.testOperation(123456)'\n" +
-					"1: Unresolved Operation 'TestPackage::TestClass1::testOperation(Integer)'' for 'TestPackage::TestClass2' 'testInvariant'"));
+			SUPPRESS_VALIDATION);
 		//
 		//	Changing "testOperation()" back to "testOperation(i : Integer)" restores the operation and the invariant.
 		//

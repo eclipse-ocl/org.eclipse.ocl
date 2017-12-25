@@ -72,7 +72,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 
 	@Deprecated /* @deprecated use EnvironmentFactory.createParserContext() */
-	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters);
+	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) throws ParserException;
 
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
 

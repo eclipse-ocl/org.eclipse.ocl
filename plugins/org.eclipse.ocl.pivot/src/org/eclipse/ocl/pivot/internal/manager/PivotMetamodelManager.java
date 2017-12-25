@@ -118,7 +118,6 @@ import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -537,14 +536,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
 	 *
-	 * @throws ParserException if eObject cannot be converted to a Pivot element
-	 *
-	 * @deprecated use AbstractEnvironmentFactory.createParserContext()
+	 * @deprecated not used - use AbstractEnvironmentFactory.createParserContext()
 	 */
 	@Deprecated
 	@Override
 	public @Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) {
-		return ((AbstractEnvironmentFactory)environmentFactory).createParserContext2(element, todoParameters);
+		return ((EnvironmentFactoryInternalExtension)environmentFactory).createParserContext(element);
 	}
 
 	protected @NonNull PrecedenceManager createPrecedenceManager() {

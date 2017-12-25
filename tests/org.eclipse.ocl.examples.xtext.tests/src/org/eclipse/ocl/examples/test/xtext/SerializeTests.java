@@ -133,7 +133,11 @@ public class SerializeTests extends XtextTestCase
 			xtextResource2.load(null);
 			Object cs2asErrors = options != null ? options.get("cs2asErrors") : null;
 			if (cs2asErrors != null) {
-				assertResourceErrors("Reload failed", xtextResource2, cs2asErrors.toString());
+				String string = cs2asErrors.toString();
+				assertResourceErrors("Reload failed", xtextResource2, string);
+				if (string.length() > 0) {
+					return null;
+				}
 			}
 			else {
 				assertNoResourceErrors("Reload failed", xtextResource2);
@@ -685,9 +689,9 @@ public class SerializeTests extends XtextTestCase
 		//		String message2 = StringUtil.bind("The ''CallExp::TypeIsNotInvalid'' constraint is violated for ''invalid.oclBadOperation()''");
 		//		String message3 = StringUtil.bind("OCL Validation error for \"let firstLetter : String[?] = invalid.oclBadOperation() in firstLetter.toUpperCase() = firstLetter\"\n" +
 		//				"	The ''LetVariable::CompatibleTypeForInitializer'' constraint is violated for ''firstLetter : String[?] = invalid.oclBadOperation()''");
-		String message4 = StringUtil.bind("Parsing error ''org.eclipse.ocl.pivot.utilities.SemanticException: The ''states::State'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
-				"1: Unresolved Operation ''OclInvalid::substring(1, 1)'''' for ''states::State'' ''NameIsLeadingUpperCase''");
-		doSerialize(ocl, "States", "States", options, false, NO_MESSAGES/*getMessages(message1, message2)*/, getMessages(message4));
+		//		String message4 = StringUtil.bind("Parsing error ''org.eclipse.ocl.pivot.utilities.SemanticException: The ''states::State'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
+		//				"1: Unresolved Operation ''OclInvalid::substring(1, 1)'''' for ''states::State'' ''NameIsLeadingUpperCase''");
+		doSerialize(ocl, "States", "States", options, false, NO_MESSAGES/*getMessages(message1, message2)*/, NO_MESSAGES/*getMessages(message4)*/);
 		//			new String[] {StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1")});
 		ocl.dispose();
 	}

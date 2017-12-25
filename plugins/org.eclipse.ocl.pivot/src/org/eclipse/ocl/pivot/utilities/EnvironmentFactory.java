@@ -70,7 +70,21 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 */
 	public interface EnvironmentFactoryExtension2 extends EnvironmentFactoryExtension
 	{
-		@Nullable ParserContext createParserContext2(@NonNull Element element, Object... todoParameters) throws ParserException;
+		/**
+		 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element,
+		 * which may be the type defining the 'self' context, or an ExpressionInOCL whose ancestor defines
+		 * the 'self' context.
+		 *
+		 * Returns null if parsing of OCL for an element is not supported.
+		 *
+		 * This method is primarily intended for internal use. The parseSpecification method
+		 * provides the additional functionality of maintaining the ExpressionInOCL parsed
+		 * expression cache.
+		 *
+		 * @since 1.4
+		 */
+		@Nullable ParserContext createParserContext(@NonNull Element element);
+
 		/**
 		 * Return the pivot model class for className with the Pivot Model.
 		 */

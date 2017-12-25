@@ -337,51 +337,25 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return new OCLInternal(this);
 	}
 
+	@Deprecated /* @deprecated not used - use createParserContext(@NonNull Element) */
 	@Override
 	public @NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException {
-		Element asContext;
 		if (context instanceof Element) {
-			asContext =  (Element)context;
+			ParserContext parserContext = createParserContext((Element)context);
+			if (parserContext != null) {
+				return parserContext;
+			}
 		}
-		else {
-			asContext = getASOf(Element.class, context);
-		}
-		if (asContext instanceof org.eclipse.ocl.pivot.Class) {
-			return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)asContext, null);
-		}
-		else if (asContext instanceof Operation) {
-			return new OperationContext(this, null, (Operation)asContext, null);
-		}
-		else if (asContext instanceof Property) {
-			return new PropertyContext(this, null, (Property)asContext);
-		}
-		/*        else if (context instanceof EClassifier) {
-        	org.eclipse.ocl.pivot.Class contextClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, context);
-        	return new ClassContext(this, null, contextClass, null);
-        }
-        else if (context instanceof EOperation) {
-    		Operation asOperation = metamodelManager.getASOfEcore(Operation.class, context);
-    		if (asOperation != null) {
-    			return new OperationContext(this, null, asOperation, null);
-    		}
-        }
-        else if (context instanceof EStructuralFeature) {
-        	Property asProperty = metamodelManager.getASOfEcore(Property.class, context);
-    		if (asProperty != null) {
-    			return new PropertyContext(this, null, asProperty);
-    		}
-        } */
 		return new ModelContext(this, null);
 	}
 
 	/**
-	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
+	 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element.
 	 *
-	 * @throws ParserException if eObject cannot be converted to a Pivot element
 	 * @since 1.4
 	 */
 	@Override
-	public @Nullable ParserContext createParserContext2(@NonNull Element element, Object... todoParameters) {
+	public @Nullable ParserContext createParserContext(@NonNull Element element) {
 		Element pivotElement = element;
 		if (element instanceof ExpressionInOCL) {
 			EObject pivotContainer = pivotElement.eContainer();
@@ -803,6 +777,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
 	 * Throws a ParserException if conversion fails.
+	 *
 	 * @since 1.4
 	 */
 	@Override
@@ -815,7 +790,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (expression == null) {
 			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
 		}
-		ParserContext parserContext = createParserContext2(specification);
+		ParserContext parserContext = createParserContext(specification);
 		if (parserContext == null) {
 			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
 		}
