@@ -131,12 +131,12 @@
 			type="markupocl">
 		</parser>
 	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+	<!--extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="org.eclipse.ocl.xtext.markup.ui.MarkupExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="markupocl">
         </resourceServiceProvider>
-    </extension>
+    </extension-->
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.markup.Markup -->

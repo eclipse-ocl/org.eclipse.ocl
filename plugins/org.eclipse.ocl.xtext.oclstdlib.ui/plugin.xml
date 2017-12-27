@@ -142,12 +142,12 @@
 			type="oclstdlib">
 		</parser>
 	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+	<!--extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="oclstdlib">
         </resourceServiceProvider>
-    </extension>
+    </extension-->
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.oclstdlib.OCLstdlib -->

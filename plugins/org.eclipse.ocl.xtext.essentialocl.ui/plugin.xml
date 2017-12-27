@@ -135,12 +135,12 @@
 			type="essentialocl">
 		</parser>
 	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+	<!--extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="essentialocl">
         </resourceServiceProvider>
-    </extension>
+    </extension-->
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.essentialocl.EssentialOCL -->
