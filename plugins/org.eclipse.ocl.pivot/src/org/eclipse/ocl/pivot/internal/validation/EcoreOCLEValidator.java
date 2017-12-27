@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -63,11 +65,8 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -282,7 +281,7 @@ public class EcoreOCLEValidator implements EValidator
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
 				String message = StringUtil.bind(PARSING_ERROR_1, e, objectLabel);
-				diagnostics.add(new BasicDiagnostic(getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
+				diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { eNamedElement }));
 			}
 		}
@@ -295,6 +294,167 @@ public class EcoreOCLEValidator implements EValidator
 			}
 		} */
 		return asElement;
+	}
+
+	/**
+	 * Return the Ecore Detail of eNamedElement that should be the data context for a diagnostic message for asExpression.
+	 * If a detail cannot be located an EAnnotation of eNamedElement of eNamedElement is returned as a fall-back.
+	 *
+	 * FIXME This is a workaround for Bug 528355
+	 */
+	private @NonNull Object getDetailContext(@Nullable LanguageExpression asExpression, @NonNull ENamedElement eNamedElement) {
+		if (asExpression == null) {
+			return eNamedElement;
+		}
+		EObject esObject = asExpression.getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		for (EObject asElement = asExpression; asElement instanceof Element; asElement = asElement.eContainer()) {
+			esObject = ((Element)asElement).getESObject();
+			if (esObject instanceof EModelElement) {
+				break;
+			}
+		}
+		if (esObject == null) {
+			return eNamedElement;
+		}
+		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eNamedElement);
+		if (pivotAnnotation == null) {
+			return eNamedElement;
+		}
+		EMap<String, String> details = pivotAnnotation.getDetails();
+		String detailKey =  null;
+		Constraint asConstraint = asExpression.getOwningConstraint();
+		if (asConstraint != null) {
+			EReference eContainmentFeature = asConstraint.eContainmentFeature();
+			String constraintName = asConstraint.getName();
+			if (eContainmentFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+				detailKey = eNamedElement instanceof EOperation ? "body" : constraintName;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS) {
+				detailKey = constraintName;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
+				detailKey = constraintName != null ? "pre_" + constraintName : "pre";
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
+				detailKey = constraintName != null ? "post_" + constraintName : "post";
+			}
+			else {
+				detailKey = "body";
+			}
+		}
+		else {
+			EReference eContainmentFeature = asExpression.eContainmentFeature();
+			if (eContainmentFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
+				detailKey = details.containsKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY) ? SettingBehavior.DERIVATION_CONSTRAINT_KEY : SettingBehavior.INITIAL_CONSTRAINT_KEY;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
+				detailKey = "body";
+			}
+			else {
+				detailKey = "body";
+			}
+		}
+		int index = details.indexOfKey(detailKey);
+		if (index >= 0) {
+			Entry<String, String> entry = details.get(index);
+			return entry != null ? entry : pivotAnnotation;
+		}
+
+		/*		EObject asContainer = asExpression.eContainer();
+		if (asContainer instanceof Property) {
+
+		}
+		else if (asContainer instanceof Operation) {
+
+		}
+		else if (asContainer instanceof Constraint) {
+			Constraint asConstraint = (Constraint)asContainer;
+			EObject asContainerContainer = asConstraint.eContainer();
+			EReference eContainmentFeature = asConstraint.eContainmentFeature();
+			if (eContainmentFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+
+			}
+			else if (asContainerContainer instanceof Operation) {
+
+			}
+		}
+		else {
+		}
+
+		if ((asElement instanceof Operation) && (role != null)) {
+			Operation asOperation = (Operation)asElement;	// FIXME workaround Bug 528355 that inhibits use of the detail entry
+			if (role.equals("body")) {
+				asSpecification = asOperation.getBodyExpression();
+			}
+			else if (role.equals("pre")) {
+				asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), "");
+				if (asConstraint == null) {
+					asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), null);
+				}
+				requiredType = booleanType;
+			}
+			else if (role.startsWith("pre_")) {
+				asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), role.substring(4));
+				requiredType = booleanType;
+			}
+			else if (role.equals("post")) {
+				asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), "");
+				if (asConstraint == null) {
+					asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), null);
+				}
+				requiredType = booleanType;
+			}
+			else if (role.startsWith("post_")) {
+				asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), role.substring(5));
+				requiredType = booleanType;
+			}
+		}
+		else if (asElement instanceof Property) {
+			Property asProperty = (Property)asElement;
+			asSpecification = asProperty.getOwnedExpression();
+		}
+		else if ((asElement instanceof org.eclipse.ocl.pivot.Class) && (role != null) && (asConstraint == null)) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asElement;
+			asConstraint = NameUtil.getNameable(asClass.getOwnedInvariants(), role);
+			requiredType = booleanType;
+		}
+		else if ((asElement instanceof Namespace) && (role != null) && (asConstraint == null)) {
+			Namespace asNamespace = (Namespace)asElement;
+			asConstraint = NameUtil.getNameable(asNamespace.getOwnedConstraints(), role);
+			requiredType = booleanType;
+		}
+		if ((asSpecification == null) && (asConstraint != null)) {
+			asSpecification = asConstraint.getOwnedSpecification();
+			requiredType = booleanType;
+		}
+
+
+
+		EModelElement eModelElement = (EModelElement)esObject;
+		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eModelElement);
+		if (pivotAnnotation == null) {
+			return eObject;
+		}
+		EMap<String, String> details = pivotAnnotation.getDetails();
+		int index = details.indexOfKey(asExpression.getName());
+		if (index >= 0) {
+			Entry<String, String> entry = details.get(index);
+			return entry != null ? entry : pivotAnnotation;
+		}
+		EAnnotation ecoreAnnotation = eModelElement.getEAnnotation(EcorePackage.eNS_URI);
+		if (ecoreAnnotation == null) {
+			return eObject;
+		}
+		details = ecoreAnnotation.getDetails();
+		index = details.indexOfKey(CONSTRAINTS_KEY);
+		if (index >= 0) {
+			Entry<String, String> entry = details.get(index);
+			return entry != null ? entry : ecoreAnnotation;
+		} */
+		return eNamedElement;
 	}
 
 	/**
@@ -313,52 +473,6 @@ public class EcoreOCLEValidator implements EValidator
 	}
 
 	/**
-	 * Return the Ecore Object that should be the data context for a diagnostic message.
-	 *
-	 * FIXME This is a workaround for Bug 528355
-	 */
-	private @NonNull Object getObjectContext(@Nullable NamedElement asConstraint, @NonNull EObject eObject) {
-		if (asConstraint == null) {
-			return eObject;
-		}
-		EObject esObject = asConstraint.getESObject();
-		if (esObject != null) {
-			return esObject;
-		}
-		for (EObject asElement = asConstraint; asElement instanceof Element; asElement = asElement.eContainer()) {
-			esObject = ((Element)asElement).getESObject();
-			if (esObject instanceof EModelElement) {
-				break;
-			}
-		}
-		if (esObject == null) {
-			return eObject;
-		}
-		EModelElement eModelElement = (EModelElement)esObject;
-		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eModelElement);
-		if (pivotAnnotation == null) {
-			return eObject;
-		}
-		EMap<String, String> details = pivotAnnotation.getDetails();
-		int index = details.indexOfKey(asConstraint.getName());
-		if (index >= 0) {
-			Entry<String, String> entry = details.get(index);
-			return entry != null ? entry : pivotAnnotation;
-		}
-		EAnnotation ecoreAnnotation = eModelElement.getEAnnotation(EcorePackage.eNS_URI);
-		if (ecoreAnnotation == null) {
-			return eObject;
-		}
-		details = ecoreAnnotation.getDetails();
-		index = details.indexOfKey(CONSTRAINTS_KEY);
-		if (index >= 0) {
-			Entry<String, String> entry = details.get(index);
-			return entry != null ? entry : ecoreAnnotation;
-		}
-		return ecoreAnnotation;
-	}
-
-	/**
 	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
 	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
 	 *
@@ -368,19 +482,6 @@ public class EcoreOCLEValidator implements EValidator
 	@Deprecated
 	protected @NonNull OCLInternal getOCL(@NonNull Map<Object, Object> context) {
 		return (OCLInternal)PivotDiagnostician.getOCL(context, null);
-	}
-
-	private int getSeverity(@NonNull EnvironmentFactory environmentFactory) {
-		Severity severity = environmentFactory.getValue(PivotValidationOptions.EcoreValidation);
-		if (severity != null) {
-			switch (severity) {
-				case ERROR: return Diagnostic.ERROR;
-				case IGNORE: return Diagnostic.OK;
-				case INFO: return Diagnostic.INFO;
-				case WARNING: return Diagnostic.WARNING;
-			}
-		}
-		return Diagnostic.ERROR;
 	}
 
 	protected boolean isOCL(List<String> someDelegates) {
@@ -427,16 +528,16 @@ public class EcoreOCLEValidator implements EValidator
 		} catch (ParserException e) {
 			if (diagnostics != null) {
 				//				EObject eObjectContext = getEObjectContext(asSpecification.getOwningConstraint(), eContext);
-				Object objectContext = getObjectContext(asSpecification.getOwningConstraint(), eContext);
+				Object objectContext = getDetailContext(asSpecification, eContext);
 				Object[] data = new Object[] { objectContext };
 				String fullMessage = e.getMessage();
 				String[] messages = fullMessage.split("\n");//StringUtil.bind(PARSING_ERROR_1, e, objectLabel);
 				BasicDiagnostic titleDiagnostic = null;
 				for (String message : messages) {
-					int severity = getSeverity(environmentFactory);
+					int severity = PivotUtil.getSeverity(environmentFactory);
 					if (titleDiagnostic == null) {
 						// ProblemsView needs a multiline to show per-line errors
-						titleDiagnostic = new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE, 0, fullMessage, data);
+						titleDiagnostic = new BasicDiagnostic(EcoreValidator.DIAGNOSTIC_SOURCE, 0, fullMessage, data);
 						diagnostics.add(titleDiagnostic);
 					}
 					else {
@@ -508,10 +609,12 @@ public class EcoreOCLEValidator implements EValidator
 			}
 			Type booleanType = environmentFactory.getStandardLibrary().getBooleanType();
 			for (@NonNull Constraint asConstraint : PivotUtil.getOwnedInvariants(asClass)) {
-				LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
-				if (asSpecification != null) {
-					if (!validateExpressionInOCL(environmentFactory, eClassifier, asConstraint, asSpecification, booleanType, diagnostics, context)) {
-						allOk = false;
+				if (!(asConstraint.getESObject() instanceof EOperation)) {					// Avoid validation as both Class.owndInvariant and EOperation
+					LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
+					if (asSpecification != null) {
+						if (!validateExpressionInOCL(environmentFactory, eClassifier, asConstraint, asSpecification, booleanType, diagnostics, context)) {
+							allOk = false;
+						}
 					}
 				}
 			}
@@ -538,7 +641,7 @@ public class EcoreOCLEValidator implements EValidator
 			}
 		}
 		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
-		int severity = getSeverity(environmentFactory);
+		int severity = PivotUtil.getSeverity(environmentFactory);
 		if (constraintsAnnotation == null) {
 			allOk = false;
 			if (diagnostics != null) {
@@ -604,7 +707,7 @@ public class EcoreOCLEValidator implements EValidator
 		boolean hasInvocationDelegates = isOCL(EcoreUtil.getInvocationDelegates(ePackage));
 		boolean hasSettingDelegates = isOCL(EcoreUtil.getSettingDelegates(ePackage));
 		boolean hasValidationDelegates = isOCL(EcoreUtil.getValidationDelegates(ePackage));
-		int severity = getSeverity(environmentFactory);
+		int severity = PivotUtil.getSeverity(environmentFactory);
 		if (needsInvocationDelegates && !hasInvocationDelegates) {
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(ePackage, context);
@@ -708,7 +811,7 @@ public class EcoreOCLEValidator implements EValidator
 				entries++;
 				value = details.get(SettingBehavior.INITIAL_CONSTRAINT_KEY);
 			}
-			int severity = getSeverity(environmentFactory);
+			int severity = PivotUtil.getSeverity(environmentFactory);
 			if (entries == 0) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
@@ -852,7 +955,7 @@ public class EcoreOCLEValidator implements EValidator
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
 				String message = StringUtil.bind(INCOMPATIBLE_TYPE_2, asExpressionType, role != null ? role : PivotConstantsInternal.UNKNOWN_ROLE, objectLabel);
-				diagnostics.add(new BasicDiagnostic(getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
+				diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { eNamedElement }));
 			}
 			else {
@@ -873,7 +976,7 @@ public class EcoreOCLEValidator implements EValidator
 						s.append(childDiagnostic.getMessage());
 					}
 				}
-				diagnostics.add(new BasicDiagnostic(getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
+				diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
 					0, s.toString(), new Object[] { eNamedElement }));
 			}
 			return false;
@@ -897,31 +1000,38 @@ public class EcoreOCLEValidator implements EValidator
 				if (diagnostics != null) {
 					String role = PivotUtilInternal.getSpecificationRole(asSpecification);
 					String message = StringUtil.bind(INCOMPATIBLE_TYPE_2, asExpressionType, role, NameUtil.qualifiedNameFor(eNamedElement));
-					diagnostics.add(new BasicDiagnostic(getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message,  new Object[] { getObjectContext(asContext, eNamedElement) }));
+					diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
+						0, message,  new Object[] { getDetailContext(asSpecification, eNamedElement) }));
 				}
 				else {
 					return false;
 				}
 			}
 		}
-		Diagnostician nestedDiagnostician = Diagnostician.INSTANCE;
-		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(getEObjectContext(asContext, eNamedElement));
+		Diagnostician nestedDiagnostician = PivotDiagnostician.INSTANCE;
+		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(getEObjectContext(asSpecification, eNamedElement));
 		Map<Object,Object> nestedContext = new HashMap<>(context);
 		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
 		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
 			allOk = false;
 			if (diagnostics != null) {
+				String role = PivotUtilInternal.getSpecificationRole(asSpecification);
+				String contextName = NameUtil.qualifiedNameFor(eNamedElement);
 				StringBuilder s = new StringBuilder();
-				s.append("OCL Validation error for \"" + expressionInOCL.getBody() + "\"");
+				s.append("\"" + expressionInOCL.getBody() + "\"");
 				for (Diagnostic childDiagnostic : nestedDiagnostic.getChildren()) {
 					if (childDiagnostic != null) {
+						// ProblemsView needs a multiline to show per-line errors
 						s.append("\n\t");
 						s.append(childDiagnostic.getMessage());
 					}
 				}
-				diagnostics.add(new BasicDiagnostic(getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
-					0, s.toString(), new Object[] { getObjectContext(asContext, eNamedElement) }));
+				String invalidMessage = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, role, contextName, s.toString());
+				BasicDiagnostic titleDiagnostic = new BasicDiagnostic(EcoreValidator.DIAGNOSTIC_SOURCE,
+					0, invalidMessage, new Object[] { getDetailContext(asSpecification, eNamedElement) });
+				// ValidationDialog needs nested per-line errors
+				titleDiagnostic.addAll(nestedDiagnostic);
+				diagnostics.add(titleDiagnostic);
 			}
 		}
 		return allOk;

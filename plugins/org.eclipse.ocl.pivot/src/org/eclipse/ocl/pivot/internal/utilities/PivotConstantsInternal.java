@@ -136,21 +136,35 @@ public interface PivotConstantsInternal
 
 	static final @NonNull String WILDCARD_NAME = "wildcard";
 
-	static final @NonNull String BODY_EXPRESSION_ROLE = "«body»";
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String BODY_ROLE = "«body»";
+	@Deprecated
+	static final @NonNull String BODY_EXPRESSION_ROLE = BODY_ROLE;
 	/**
 	 * @since 1.4
 	 */
 	static final @NonNull String CONSTRAINT_ROLE = "«constraint»";
-	static final @NonNull String DEFAULT_EXPRESSION_ROLE = "«initializer»";
+	@Deprecated
+	static final @NonNull String OWNED_CONSTRAINT_ROLE = CONSTRAINT_ROLE;
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String INITIALIZER_ROLE = "«initializer»";
+	@Deprecated
+	static final @NonNull String DEFAULT_EXPRESSION_ROLE = INITIALIZER_ROLE;
 	/**
 	 * @since 1.4
 	 */
 	static final @NonNull String INVARIANT_ROLE = "«invariant»";
-	@Deprecated
-	static final @NonNull String OWNED_CONSTRAINT_ROLE = CONSTRAINT_ROLE;
 	static final @NonNull String POSTCONDITION_ROLE = "«postcondition»";
 	static final @NonNull String PRECONDITION_ROLE = "«precondition»";
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String QUERY_ROLE = "«query»";
 	static final @NonNull String UNKNOWN_ROLE = "«unknown»";
 
-	public static @NonNull Map<EStructuralFeature,String> roleNames = new HashMap<EStructuralFeature,String>();
+	static @NonNull Map<EStructuralFeature,String> roleNames = new HashMap<EStructuralFeature,String>();
 }

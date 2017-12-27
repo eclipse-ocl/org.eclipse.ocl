@@ -109,6 +109,8 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -1484,6 +1486,22 @@ public class PivotUtil
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eResource());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static int getSeverity(@NonNull EnvironmentFactory environmentFactory) {
+		Severity severity = environmentFactory.getValue(PivotValidationOptions.EcoreValidation);
+		if (severity != null) {
+			switch (severity) {
+				case ERROR: return Diagnostic.ERROR;
+				case IGNORE: return Diagnostic.OK;
+				case INFO: return Diagnostic.INFO;
+				case WARNING: return Diagnostic.WARNING;
+			}
+		}
+		return Diagnostic.ERROR;
 	}
 
 	/**

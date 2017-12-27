@@ -128,7 +128,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		if (specification == null) {
-			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint.getContext(), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
+			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint.getContext(), PivotConstantsInternal.BODY_ROLE));
 		}
 		try {
 			return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);

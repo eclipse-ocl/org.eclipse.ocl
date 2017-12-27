@@ -542,7 +542,7 @@ public class PivotUtilInternal //extends PivotUtil
 		return ClassUtil.nullFree(asClass.getOwnedProperties());
 	}
 
-	public static String getSpecificationRole(@NonNull LanguageExpression asSpecification) {
+	public static @NonNull String getSpecificationRole(@NonNull LanguageExpression asSpecification) {
 		Constraint asConstraint = asSpecification.getOwningConstraint();
 		if (asConstraint != null) {
 			EReference eContainmentFeature = asConstraint.eContainmentFeature();
@@ -562,10 +562,10 @@ public class PivotUtilInternal //extends PivotUtil
 		else {
 			EReference eContainmentFeature = asSpecification.eContainmentFeature();
 			if (eContainmentFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
-				return PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE;
+				return PivotConstantsInternal.INITIALIZER_ROLE;
 			}
 			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
-				return PivotConstantsInternal.BODY_EXPRESSION_ROLE;
+				return PivotConstantsInternal.BODY_ROLE;
 			}
 		}
 		return PivotConstantsInternal.UNKNOWN_ROLE;

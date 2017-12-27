@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -593,8 +595,8 @@ public class UMLOCLEValidator implements EValidator
 	 */
 	protected boolean validateSyntax1(@NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		try {
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
 				if (diagnostics != null) {
@@ -615,7 +617,32 @@ public class UMLOCLEValidator implements EValidator
 			ExpressionInOCL asQuery = environmentFactory.parseSpecification(asSpecification);
 			return validateSemantics(opaqueElement, asQuery, diagnostics, context);
 		} catch (ParserException e) {
+
 			if (diagnostics != null) {
+				//				EObject eObjectContext = getEObjectContext(asSpecification.getOwningConstraint(), eContext);
+				//				Object objectContext = getDetailContext(asSpecification, eContext);
+				//				Object[] data = new Object[] { objectContext };
+				Object[] data = new Object[] { opaqueElement };
+				String fullMessage = e.getMessage();
+				String[] messages = fullMessage.split("\n");//StringUtil.bind(PARSING_ERROR_1, e, objectLabel);
+				BasicDiagnostic titleDiagnostic = null;
+				for (String message : messages) {
+					int severity = PivotUtil.getSeverity(environmentFactory);
+					if (titleDiagnostic == null) {
+						// ProblemsView needs a multiline to show per-line errors
+						titleDiagnostic = new BasicDiagnostic(EcoreValidator.DIAGNOSTIC_SOURCE, 0, fullMessage, data);
+						diagnostics.add(titleDiagnostic);
+					}
+					else {
+						// ValidationDialog needs nested per-line errors
+						titleDiagnostic.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE, 0, message, data));
+					}
+				}
+			}
+
+
+
+			/*			if (diagnostics != null) {
 				String objectLabel = LabelUtil.getLabel(opaqueElement);
 				String message = StringUtil.bind(PivotMessagesInternal.ParsingError, objectLabel, e.getMessage());
 				if (!mayUseNewLines) {
@@ -623,7 +650,7 @@ public class UMLOCLEValidator implements EValidator
 				}
 				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { opaqueElement }));
-			}
+			} */
 			return false;
 		}
 	}

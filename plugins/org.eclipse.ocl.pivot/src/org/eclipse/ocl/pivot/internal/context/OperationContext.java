@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.context;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -25,7 +26,7 @@ public class OperationContext extends ClassContext
 {
 	private final @NonNull Operation operation;
 	private final @Nullable String resultVariableName;		// Null for none
-	
+
 	public OperationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Operation operation, @Nullable String resultVariableName) {
 		super(environmentFactory, uri, ClassUtil.nonNullModel(operation.getOwningClass()), null);
 		this.operation = operation;
@@ -40,6 +41,14 @@ public class OperationContext extends ClassContext
 		if (resultVariableName2 != null) {
 			conversion.setResultVariable(expression, operation, resultVariableName2);
 		}
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	protected Element getMessageContext() {
+		return getOperation();
 	}
 
 	public @NonNull Operation getOperation() {

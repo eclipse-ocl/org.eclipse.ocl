@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -917,35 +918,36 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
-		Type pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
+		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		Type pivotTestClass1 = ClassUtil.nonNullState(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
+		String testClassName2 = NameUtil.qualifiedNameFor(metamodelManager.getPrimaryType("TestPackage", "TestClass2"));
+		//
+		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
+		//
+		String message2 = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, PivotConstantsInternal.INVARIANT_ROLE, testClassName2,
+			"\"testProperty2?->select(testOperation() = testProperty1)->isEmpty()\"\n" +
+					"	The 'CallExp::TypeIsNotInvalid' constraint is violated for '1_.oclBadOperation()'\n" +
+					"	The 'VariableExp::TypeIsNotInvalid' constraint is violated for '1_'\n" +
+				"	The 'VariableDeclaration::TypeIsNotInvalid' constraint is violated for '1_ : OclInvalid[1]'");
+		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
+			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName())),
+			getMessages(message2));
+		//
+		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
+		//
+		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
+		pivotTestClass1 = ClassUtil.nonNullState(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
 		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
 			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName())),
-			getMessages("OCL Validation error for \"testProperty2?->select(testOperation() = testProperty1)->isEmpty()\"\n" +
-					"	The 'CallExp::TypeIsNotInvalid' constraint is violated for '1_.oclBadOperation()'\n" +
-					"	The 'VariableExp::TypeIsNotInvalid' constraint is violated for '1_'\n" +
-					"	The 'VariableDeclaration::TypeIsNotInvalid' constraint is violated for '1_ : OclInvalid[1]'"));
+			getMessages(message2));
 		//
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
-		//
-		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
-		//
-		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
-			getMessages(StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName())),
-			getMessages("OCL Validation error for \"testProperty2?->select(testOperation() = testProperty1)->isEmpty()\"\n" +
-					"	The 'CallExp::TypeIsNotInvalid' constraint is violated for '1_.oclBadOperation()'\n" +
-					"	The 'VariableExp::TypeIsNotInvalid' constraint is violated for '1_'\n" +
-					"	The 'VariableDeclaration::TypeIsNotInvalid' constraint is violated for '1_ : OclInvalid[1]'"));
-		//
-		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
-		//
-		TestUtil.assertSameModel(ecoreResource0, doRename(ocl, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1");
+		pivotTestClass1 = metamodelManager.getPrimaryType("TestPackage", "TestClass1");
 		//
 		ocl1.dispose();
 		ocl.dispose();

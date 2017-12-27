@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
@@ -40,10 +41,12 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -159,10 +162,6 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		return environmentFactory;
 	}
 
-	public @Nullable Type getInstanceContext() {
-		return null;
-	}
-
 	@Override
 	public @NonNull ExpressionInOCL getExpression(@NonNull CSResource resource) throws ParserException {
 		List<EObject> contents = resource.getContents();
@@ -183,9 +182,25 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		throw new ParserException("Non-expression ignored");
 	}
 
+	public @Nullable Type getInstanceContext() {
+		return null;
+	}
+
 	@Override
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull String getRole() {
+		if (rootElement instanceof LanguageExpression) {
+			return PivotUtilInternal.getSpecificationRole((LanguageExpression) rootElement);
+		}
+		else {
+			return PivotConstantsInternal.UNKNOWN_ROLE;
+		}
 	}
 
 	@Override
@@ -205,10 +220,10 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		CSResource resource = null;
 		try {
 			resource = createBaseResource(expression);
-			String childName = owner instanceof Nameable ? ((Nameable)owner).getName() : "<unknown>";
-			EObject eContainer = owner != null ? owner.eContainer() : null;
-			String parentName = eContainer instanceof Nameable ? ((Nameable)eContainer).getName() : "<unknown>";
-			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, parentName, childName, expression.trim()), resource);
+			String role = getRole();
+			String contextName = NameUtil.qualifiedNameFor(getMessageContext());
+			String invalidMessage = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, role, contextName, expression.trim());
+			PivotUtil.checkResourceErrors(invalidMessage, resource);
 			ExpressionInOCL expressionInOCL = getExpression(resource);
 			expressionInOCL.setBody(expression);
 			return expressionInOCL;
@@ -228,6 +243,13 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				EnvironmentFactoryAdapter.disposeAll(resource);
 			}
 		}
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected Element getMessageContext() {
+		return rootElement != null ? (Element) rootElement.eContainer() : getClassContext();
 	}
 
 	@Override

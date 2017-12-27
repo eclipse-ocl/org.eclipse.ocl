@@ -81,7 +81,7 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Operation operation) throws OCLDelegateException {
 		LanguageExpression specification = operation.getBodyExpression();
 		if (specification == null) {
-			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
+			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		}
 		try {
 			return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);

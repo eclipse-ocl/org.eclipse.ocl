@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -670,16 +671,14 @@ public class UMLValidateTest extends AbstractValidateTests
 		//		Model model = (Model) umlResource.getContents().get(0);
 		//		org.eclipse.uml2.uml.NamedElement xx = model.getOwnedMember("InstanceSpecification1");
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);//,
-		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
-			StringUtil.bind(PivotMessagesInternal.ParsingError, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::" +
-					"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ",
-					"The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
-					"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'"),
-			"OCL Validation error for \"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute\"\n" +
-					"\tThe 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
-					"\tThe 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
-					"\tThe 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'"
-				);
+		String message2 = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, PivotConstantsInternal.INVARIANT_ROLE, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic",
+			"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
+				"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)");
+		String message3 = "OCL Validation error for \"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute\"\n" +
+				"\tThe 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
+				"\tThe 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
+				"\tThe 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'";
+		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,  message2, message3);
 		//		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
 		//			StringUtil.bind(PivotMessagesInternal.ParsingError, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::" +
 		//				"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ",

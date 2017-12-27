@@ -559,13 +559,13 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		//	Syntax error in expression
 		//
 		delegate = factory.createQueryDelegate(companyClass, null, "n=");
-		executeWithException2(delegate, amy, null, getErrorsInMessage("company", "Company", "n=") +
+		executeWithException2(delegate, amy, null, getErrorsInMessage(PivotConstantsInternal.QUERY_ROLE, "company::Company", "n=") +
 			StringUtil.bind("1: no viable alternative following input ''{0}''", "="));
 		//
 		//	Undeclared variable
 		//
 		delegate = factory.createQueryDelegate(companyClass, variables, badName);
-		executeWithException2(delegate, acme, null, getErrorsInMessage("company", "Company", badName) +
+		executeWithException2(delegate, acme, null, getErrorsInMessage(PivotConstantsInternal.QUERY_ROLE, "company::Company", badName) +
 			StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedProperty_ERROR_, "", badName));
 		//
 		//	Definition of undeclared variable
@@ -660,7 +660,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivationBody");
 		Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
 		getWithException(badClassInstance, eStructuralFeature.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE));
+			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
 		ocl.dispose();
 	}
 
@@ -703,7 +703,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		getWithException(badClassInstance, "attributeParsingToLexicalError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "attributeParsingToLexicalError", "gh##jk") +
+			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
 			StringUtil.bind("1: no viable alternative at ''{0}''", "#"));
 	}
 
@@ -712,7 +712,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		getWithException(badClassInstance, "attributeParsingToSemanticError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "attributeParsingToSemanticError", "'5' and 6") +
+			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSemanticError", "'5' and 6") +
 			StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "and", "Integer"));
 	}
 
@@ -722,7 +722,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:9" : "1";
 		getWithException(badClassInstance, "attributeParsingToSyntacticError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "attributeParsingToSyntacticError", "invalid null") +
+			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
 			StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
 	}
 
@@ -946,7 +946,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBody");
 		Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
 		invokeWithException(badClassInstance, eOperation.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
+			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		ocl.dispose();
 	}
 
@@ -959,7 +959,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBodyBody");
 		Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
 		invokeWithException(badClassInstance, eOperation.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_EXPRESSION_ROLE));
+			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		ocl.dispose();
 	}
 
@@ -1018,7 +1018,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 		invokeWithException(badClassInstance, "operationParsingToLexicalError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
+			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
 	}
 
 	public void test_operationParsingToSemanticError() throws InvocationTargetException {
@@ -1026,7 +1026,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		invokeWithException(badClassInstance, "operationParsingToSemanticError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
 	}
 
 	public void test_operationParsingToSyntacticError() throws InvocationTargetException {
@@ -1035,7 +1035,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:5" : "1";
 		invokeWithException(badClassInstance, "operationParsingToSyntacticError",
-			getErrorsInMessage(badClassInstance.eClass().getName(), "operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
+			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
 	}
 
 	/**
@@ -1241,7 +1241,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
-		validateWithDelegationSeverity("parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
+		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToLexicalError::parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
 			SemanticException.class, location + ": Invalid token {0}", "'part");
 	}
 
@@ -1249,7 +1249,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
-		validateWithDelegationSeverity("parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
+		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSemanticError::parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
 			SemanticException.class, "1: " + PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "not");
 	}
 
@@ -1258,7 +1258,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSyntacticError"), null);
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
-		validateWithDelegationSeverity("parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
+		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSyntacticError::parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
 			SemanticException.class, location + ": no viable alternative at input ''{0}''", "else");
 	}
 
@@ -1416,6 +1416,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	<T> T get(EObject owner, EStructuralFeature feature) {
 		Object result = owner.eGet(feature);
 		return (T) result;
+	}
+
+	protected String getErrorsInMessage(@NonNull String role, String qualifiedName, String source) {
+		return source != null ? (StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, role, qualifiedName, source) + "\n") : "";
 	}
 
 	public EOperation getOperation(EClass eClass, String name) {
@@ -1616,13 +1620,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		else if (size != 1) {			// EMF 2.10.0M2 and earlier
 			fail("Validation of '" + constraintName + "' child count: " + size);
 		}
-		String message = getErrorsInMessage(eObject.eClass().getName(), constraintName, source);
+		String message = getErrorsInMessage(PivotConstantsInternal.INVARIANT_ROLE, constraintName, source);
 		message += StringUtil.bind(messageTemplate, bindings);
 		assertEquals("Validation of '" + constraintName + "' data object:", eObject, data.get(0));
 		assertEquals("Validation of '" + constraintName + "' message:", message, diagnostic.getMessage());
-	}
-
-	protected String getErrorsInMessage(String packageName, String typeName, String source) {
-		return source != null ? (StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, packageName, typeName, source) + "\n") : "";
 	}
 }

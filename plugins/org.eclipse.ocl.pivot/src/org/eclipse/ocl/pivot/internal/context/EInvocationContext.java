@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
@@ -29,7 +30,7 @@ public class EInvocationContext extends EClassContext
 {
 	private final Map<String, EClassifier> eParameters;
 	private Map<String, Type> parameters = null;
-	
+
 	public EInvocationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @Nullable EClassifier eClassContext, @Nullable Map<String, EClassifier> eParameters) {
 		super(environmentFactory, uri, eClassContext);
 		this.eParameters = eParameters;
@@ -48,6 +49,14 @@ public class EInvocationContext extends EClassContext
 		@SuppressWarnings("null")
 		@NonNull Map<String, Type> nonNullParameters = parameters;
 		return nonNullParameters;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	protected @NonNull String getRole() {
+		return PivotConstantsInternal.QUERY_ROLE;
 	}
 
 	@Override
