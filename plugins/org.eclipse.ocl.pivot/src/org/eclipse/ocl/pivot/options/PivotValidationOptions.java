@@ -23,33 +23,39 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
  */
 public class PivotValidationOptions
 {
-    public static final @NonNull EnumeratedOption<StatusCodes.Severity> MissingSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
-    		PivotPlugin.PLUGIN_ID, "missing.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
+	/**
+	 * @since 1.4
+	 */
+	public static final @NonNull EnumeratedOption<StatusCodes.Severity> EcoreValidation = new EnumeratedOption<StatusCodes.Severity>(
+			PivotPlugin.PLUGIN_ID, "ecore.validation", StatusCodes.Severity.ERROR, StatusCodes.Severity.class); //$NON-NLS-1$
 
-    public static final @NonNull EnumeratedOption<StatusCodes.Severity> RedundantSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
-    		PivotPlugin.PLUGIN_ID, "redundant.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
+	public static final @NonNull EnumeratedOption<StatusCodes.Severity> MissingSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
+			PivotPlugin.PLUGIN_ID, "missing.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
 
-    /**
-     * A Map from all the safe navigation constraint names to the validation options that control them.
-     * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
-     */
-    public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> safeValidationName2severityOption =
-    		new HashMap<String, EnumeratedOption<StatusCodes.Severity>>();
-    
-    static {
-    	safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeIteratorIsRequired, PivotValidationOptions.RedundantSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_SafeIteratorIsRequired, PivotValidationOptions.RedundantSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
-//    	safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
-    	safeValidationName2severityOption.put(PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
-    }
+	public static final @NonNull EnumeratedOption<StatusCodes.Severity> RedundantSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
+			PivotPlugin.PLUGIN_ID, "redundant.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
 
-    private PivotValidationOptions() {
-        super();
-    }
+	/**
+	 * A Map from all the safe navigation constraint names to the validation options that control them.
+	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
+	 */
+	public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> safeValidationName2severityOption =
+			new HashMap<String, EnumeratedOption<StatusCodes.Severity>>();
+
+	static {
+		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeIteratorIsRequired, PivotValidationOptions.RedundantSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_SafeIteratorIsRequired, PivotValidationOptions.RedundantSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
+		//    	safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
+	}
+
+	private PivotValidationOptions() {
+		super();
+	}
 }

@@ -100,13 +100,13 @@ public class Ecore_OCL_AnnotationValidator extends BasicEAnnotationValidator2
 		assert context != null;
 		assert eAnnotation != null;
 		if (eModelElement instanceof EOperation) {
-			return EcoreOCLEValidator.INSTANCE.validateEOperation((EOperation) eModelElement, diagnostics, context);
+			return EcoreOCLEValidator.NO_NEW_LINES.validateEOperation((EOperation) eModelElement, diagnostics, context);
 		}
 		else if (eModelElement instanceof EStructuralFeature) {
-			return EcoreOCLEValidator.INSTANCE.validateEStructuralFeature((EStructuralFeature) eModelElement, diagnostics, context);
+			return EcoreOCLEValidator.NO_NEW_LINES.validateEStructuralFeature((EStructuralFeature) eModelElement, diagnostics, context);
 		}
 		else if (eModelElement instanceof EClassifier) {
-			return EcoreOCLEValidator.INSTANCE.validateEClassifier((EClassifier) eModelElement, diagnostics, context);
+			return EcoreOCLEValidator.NO_NEW_LINES.validateEClassifier((EClassifier) eModelElement, diagnostics, context);
 		}
 		else {
 			return super.validateDetails(eAnnotation, eModelElement, diagnostics, context);

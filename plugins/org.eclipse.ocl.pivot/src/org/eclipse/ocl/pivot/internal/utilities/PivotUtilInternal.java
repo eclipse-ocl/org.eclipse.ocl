@@ -542,26 +542,33 @@ public class PivotUtilInternal //extends PivotUtil
 		return ClassUtil.nullFree(asClass.getOwnedProperties());
 	}
 
-	public static String getSpecificationRole(@NonNull LanguageExpression specification) {
-		EReference eContainmentFeature = specification.eContainmentFeature();
-		if (eContainmentFeature == PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS) {
-			return PivotConstantsInternal.OWNED_CONSTRAINT_ROLE;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
-			return PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
-			return PivotConstantsInternal.BODY_EXPRESSION_ROLE;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
-			return PivotConstantsInternal.PRECONDITION_ROLE;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
-			return PivotConstantsInternal.POSTCONDITION_ROLE;
+	public static String getSpecificationRole(@NonNull LanguageExpression asSpecification) {
+		Constraint asConstraint = asSpecification.getOwningConstraint();
+		if (asConstraint != null) {
+			EReference eContainmentFeature = asConstraint.eContainmentFeature();
+			if (eContainmentFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+				return PivotConstantsInternal.INVARIANT_ROLE;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS) {
+				return PivotConstantsInternal.CONSTRAINT_ROLE;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
+				return PivotConstantsInternal.PRECONDITION_ROLE;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
+				return PivotConstantsInternal.POSTCONDITION_ROLE;
+			}
 		}
 		else {
-			return PivotConstantsInternal.UNKNOWN_ROLE;
+			EReference eContainmentFeature = asSpecification.eContainmentFeature();
+			if (eContainmentFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
+				return PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE;
+			}
+			else if (eContainmentFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
+				return PivotConstantsInternal.BODY_EXPRESSION_ROLE;
+			}
 		}
+		return PivotConstantsInternal.UNKNOWN_ROLE;
 	}
 
 	/**

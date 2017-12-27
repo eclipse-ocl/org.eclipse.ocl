@@ -93,7 +93,7 @@ public interface PivotConstantsInternal
 	 * @since 1.4
 	 */
 	static final @NonNull String COLLECTION_ELEMENT_SEPARATOR = "|"; //$NON-NLS-1$
-	static final @NonNull String NULL_MARKER = "<<null-element>>"; //$NON-NLS-1$
+	static final @NonNull String NULL_MARKER = "«null»"; //$NON-NLS-1$
 	static final @NonNull String NULL_ROOT = "$null$"; //$NON-NLS-1$
 	static final @NonNull String OVERFLOW_MARKER = "##"; //$NON-NLS-1$
 	static final @NonNull String MONIKER_PART_SEPARATOR = "@"; //$NON-NLS-1$
@@ -114,7 +114,7 @@ public interface PivotConstantsInternal
 	static final @NonNull String TUPLE_SIGNATURE_PART_SEPARATOR = ","; //$NON-NLS-1$
 	static final @NonNull String TUPLE_SIGNATURE_TYPE_SEPARATOR = ":"; //$NON-NLS-1$
 	static final @NonNull String TUPLE_SIGNATURE_SUFFIX = "}"; //$NON-NLS-1$
-	static final @NonNull String UNRESOLVED_PROXY_MARKER = "<<unresolved-proxy>>"; //$NON-NLS-1$
+	static final @NonNull String UNRESOLVED_PROXY_MARKER = "«unresolved-proxy»"; //$NON-NLS-1$
 	static final @NonNull String WILDCARD_INDICATOR = "?"; //$NON-NLS-1$
 
 	static final @NonNull String MONIKER_IF_EXP = "if";
@@ -136,12 +136,21 @@ public interface PivotConstantsInternal
 
 	static final @NonNull String WILDCARD_NAME = "wildcard";
 
-	static final @NonNull String BODY_EXPRESSION_ROLE = "body";
-	static final @NonNull String DEFAULT_EXPRESSION_ROLE = "initializer";
-	static final @NonNull String OWNED_CONSTRAINT_ROLE = "constraint";
-	static final @NonNull String POSTCONDITION_ROLE = "postcondition";
-	static final @NonNull String PRECONDITION_ROLE = "precondition";
-	static final @NonNull String UNKNOWN_ROLE = "<<unknown>>";
+	static final @NonNull String BODY_EXPRESSION_ROLE = "«body»";
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String CONSTRAINT_ROLE = "«constraint»";
+	static final @NonNull String DEFAULT_EXPRESSION_ROLE = "«initializer»";
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String INVARIANT_ROLE = "«invariant»";
+	@Deprecated
+	static final @NonNull String OWNED_CONSTRAINT_ROLE = CONSTRAINT_ROLE;
+	static final @NonNull String POSTCONDITION_ROLE = "«postcondition»";
+	static final @NonNull String PRECONDITION_ROLE = "«precondition»";
+	static final @NonNull String UNKNOWN_ROLE = "«unknown»";
 
 	public static @NonNull Map<EStructuralFeature,String> roleNames = new HashMap<EStructuralFeature,String>();
 }

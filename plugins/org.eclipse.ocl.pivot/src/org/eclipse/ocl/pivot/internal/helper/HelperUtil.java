@@ -7,7 +7,7 @@
  *
  * Contributors:
  *   IBM - Initial API and implementation
- *   E.D.Willink - Refactoring to support extensibility and flexible error handling 
+ *   E.D.Willink - Refactoring to support extensibility and flexible error handling
  *******************************************************************************/
 
 package org.eclipse.ocl.pivot.internal.helper;
@@ -24,8 +24,8 @@ import org.eclipse.ocl.pivot.utilities.OCLHelper;
 /**
  * Utility class in support of the implementation of the {@link OCLHelper}
  * API, also responsible for the creation of {@link OCLHelper}s.
- * 
- * @author Yasser Lulu 
+ *
+ * @author Yasser Lulu
  * @author Christian W. Damus (cdamus)
  */
 public class HelperUtil {
@@ -40,19 +40,19 @@ public class HelperUtil {
 
 	static final String COLON = ":"; //$NON-NLS-1$
 
-	static final String DOUBLE_COLON = "::"; //$NON-NLS-1$    
+	static final String DOUBLE_COLON = "::"; //$NON-NLS-1$
 
-	static final String DOT = "."; //$NON-NLS-1$    
+	static final String DOT = "."; //$NON-NLS-1$
 
 	static final String ARROW = "->"; //$NON-NLS-1$
-	
+
 	static final String CARET = "^"; //$NON-NLS-1$
-	
+
 	static final String DOUBLE_CARET = "^^"; //$NON-NLS-1$
 
 	static final String EMPTY = ""; //$NON-NLS-1$
 
-	static final String HTTP = "http://"; //$NON-NLS-1$	
+	static final String HTTP = "http://"; //$NON-NLS-1$
 
 	/** Not instantiable by clients. */
 	private HelperUtil() {
@@ -66,7 +66,7 @@ public class HelperUtil {
 	 * @param methodName the method that threw the exception
 	 */
 	static void throwException(RuntimeException exception, Class<?> clazz,
-		String methodName) {
+			String methodName) {
 		throwing(clazz, methodName, exception);
 		throw exception;
 	}
@@ -78,7 +78,7 @@ public class HelperUtil {
 	 * @param methodName the method that caught the exception
 	 */
 	static void catchException(Exception exception, Class<?> clazz,
-		String methodName) {
+			String methodName) {
 		catching(clazz, methodName, exception);
 	}
 
@@ -101,19 +101,19 @@ public class HelperUtil {
 	 * This is compatible with the usage of 1.2 and earlier.
 	 */
 	private static boolean traceAll = Boolean
-		.getBoolean("org.eclipse.ocl.debug"); //$NON-NLS-1$;
+			.getBoolean("org.eclipse.ocl.debug"); //$NON-NLS-1$;
 
 	/**
 	 * Traces the catching of the specified throwable in the specified method of
 	 * the specified class.
-	 * 
+	 *
 	 * @param clazz
 	 *            The class in which the throwable is being caught.
 	 * @param methodName
 	 *            The name of the method in which the throwable is being caught.
 	 * @param throwable
 	 *            The throwable that is being caught.
-	 *  
+	 *
 	 */
 	public static void catching(Class<?> clazz, String methodName,
 			Throwable throwable) {
@@ -152,9 +152,9 @@ public class HelperUtil {
 	 * Emits the specified message to the trace log.  It is the caller's
 	 * responsibility to ensure that the appropriate tracing option
 	 * is enabled.
-	 * 
+	 *
 	 * @param message a message
-	 * 
+	 *
 	 * @see #shouldTrace(String)
 	 */
 	public static void trace(String message) {
@@ -164,12 +164,12 @@ public class HelperUtil {
 	/**
 	 * Generates an error log for the specified plug-in, with the specified
 	 * status code, message.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
-	 *  
+	 *
 	 */
 	public static void error(int code, String message) {
 		error(code, message, null);
@@ -178,14 +178,14 @@ public class HelperUtil {
 	/**
 	 * Generates an error log for the specified plug-in, with the specified
 	 * status code, message, and throwable.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
 	 * @param throwable
 	 *            The throwable for the log.
-	 *  
+	 *
 	 */
 	public static void error(int code, String message, Throwable throwable) {
 		log(Diagnostic.ERROR, code, message, throwable);
@@ -194,24 +194,24 @@ public class HelperUtil {
 	/**
 	 * Generates an information log for the specified plug-in, with the
 	 * specified message. Uses OK as status code.
-	 * 
+	 *
 	 * @param message
 	 *            The message for the log.
-	 *  
+	 *
 	 */
 	public static void info(String message) {
-		info(StatusCodes.OK, message);
+		info(StatusCodes.INFO, message);
 	}
 
 	/**
 	 * Generates an information log for the specified plug-in, with the
 	 * specified status code, message.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
-	 *  
+	 *
 	 */
 	public static void info(int code, String message) {
 		info(code, message, null);
@@ -220,14 +220,14 @@ public class HelperUtil {
 	/**
 	 * Generates an information log for the specified plug-in, with the
 	 * specified status code, message, and throwable.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
 	 * @param throwable
 	 *            The throwable for the log.
-	 *  
+	 *
 	 */
 	public static void info(int code, String message, Throwable throwable) {
 		log(Diagnostic.INFO, code, message, throwable);
@@ -236,12 +236,12 @@ public class HelperUtil {
 	/**
 	 * Generates a warning log for the specified plug-in, with the specified
 	 * status code, message.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
-	 *  
+	 *
 	 */
 	public static void warning(int code, String message) {
 		warning(code, message, null);
@@ -250,14 +250,14 @@ public class HelperUtil {
 	/**
 	 * Generates a warning log for the specified plug-in, with the specified
 	 * status code, message, and throwable.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
 	 * @param throwable
 	 *            The throwable for the log.
-	 *  
+	 *
 	 */
 	public static void warning(int code, String message, Throwable throwable) {
 		log(Diagnostic.WARNING, code, message, throwable);
@@ -268,8 +268,8 @@ public class HelperUtil {
 		//
 		// Status ctor requires a non-null message
 		String msg = message == null
-			? "" //$NON-NLS-1$
-			: message;
+				? "" //$NON-NLS-1$
+					: message;
 
 		try {
 			if (PivotPlugin.getPlugin() != null) {

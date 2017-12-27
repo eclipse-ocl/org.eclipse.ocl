@@ -1290,17 +1290,99 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/validation/EcoreOCLEValidator.java" type="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator">
-        <filter id="336658481">
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/PivotConstantsInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal">
+        <filter id="388194388">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator"/>
-                <message_argument value="PARSING_EXCEPTION_1"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="BODY_EXPRESSION_ROLE"/>
+                <message_argument value="body"/>
             </message_arguments>
         </filter>
-        <filter id="336658481">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="DEFAULT_EXPRESSION_ROLE"/>
+                <message_argument value="initializer"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="NULL_MARKER"/>
+                <message_argument value="&lt;&lt;null-element&gt;&gt;"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="OWNED_CONSTRAINT_ROLE"/>
+                <message_argument value="constraint"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="POSTCONDITION_ROLE"/>
+                <message_argument value="postcondition"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="PRECONDITION_ROLE"/>
+                <message_argument value="precondition"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="UNKNOWN_ROLE"/>
+                <message_argument value="&lt;&lt;unknown&gt;&gt;"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal"/>
+                <message_argument value="UNRESOLVED_PROXY_MARKER"/>
+                <message_argument value="&lt;&lt;unresolved-proxy&gt;&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/validation/EcoreOCLEValidator.java" type="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator">
+        <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator"/>
-                <message_argument value="PARSING_EXCEPTION_2"/>
+                <message_argument value="EXTRA_CONSTRAINTS_ANNOTATION_ENTRY"/>
+                <message_argument value="Extra ''constraints'' annotation entry for ''{0}'' in ''{1}''"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator"/>
+                <message_argument value="INCOMPATIBLE_TYPE_2"/>
+                <message_argument value="Incompatible type ''{0}'' for ''{1}'' ''{2}''"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator"/>
+                <message_argument value="MISSING_CONSTRAINTS"/>
+                <message_argument value="Missing constraints annotation for ''{0}''"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator"/>
+                <message_argument value="MISSING_CONSTRAINTS_ANNOTATION_ENTRY"/>
+                <message_argument value="Missing ''constraints'' annotation entry for ''{0}'' in ''{1}''"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="EcoreValidation"/>
             </message_arguments>
         </filter>
     </resource>

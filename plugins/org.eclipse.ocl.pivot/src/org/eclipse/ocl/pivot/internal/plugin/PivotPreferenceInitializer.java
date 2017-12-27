@@ -21,8 +21,9 @@ public class PivotPreferenceInitializer extends AnnotatedPreferenceInitializer
 {
 	@Override
 	public void initializeDefaultPreferences() {
-		putPreference(PivotConsoleOptions.ConsoleModeltypesInformation);	
-		putPreference(PivotValidationOptions.MissingSafeNavigation);	
-		putPreference(PivotValidationOptions.RedundantSafeNavigation);	
+		putPreference(PivotConsoleOptions.ConsoleModeltypesInformation);
+		putPreference(PivotValidationOptions.EcoreValidation);
+		putPreference(PivotValidationOptions.MissingSafeNavigation);
+		putPreference(PivotValidationOptions.RedundantSafeNavigation);
 	}
 }

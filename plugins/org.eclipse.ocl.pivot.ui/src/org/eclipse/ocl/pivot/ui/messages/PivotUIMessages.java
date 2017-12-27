@@ -16,16 +16,18 @@ import org.eclipse.osgi.util.NLS;
  * An accessor class for externalized strings.
  */
 public class PivotUIMessages
-{	
+{
 	static {
 		NLS.initializeMessages(PivotUIMessages.class.getName(), PivotUIMessages.class);
 	}
 
+	public static String Pivot_EcoreValidation;
 	public static String Pivot_MissingSafeNavigation;
 	public static String Pivot_ModelTypeSelection;
 	public static String Pivot_RedundantSafeNavigation;
 
 	public static String Pivot_Severity_Ignore;
+	public static String Pivot_Severity_Info;
 	public static String Pivot_Severity_Warning;
 	public static String Pivot_Severity_Error;
 

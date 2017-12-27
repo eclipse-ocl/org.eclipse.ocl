@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -139,12 +140,12 @@ public class ValidateTests extends AbstractValidateTests
 			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
 			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),
 			//			StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, ValidationBehavior.NAME, LabelUtil.getLabel(temp)),
-			StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, "extraInvariant", LabelUtil.getLabel(tester)),
-			StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, "missingInvariant", LabelUtil.getLabel(tester)),
-			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", LabelUtil.getLabel(badOp), "body"),
-			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "pre"),
-			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "post"),
-			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_1, "Boolean", LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
+			StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, PivotConstantsInternal.INVARIANT_ROLE, LabelUtil.getLabel(tester), "extraInvariant"),
+			StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, PivotConstantsInternal.INVARIANT_ROLE, LabelUtil.getLabel(tester), "missingInvariant"),
+			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", PivotConstantsInternal.BODY_EXPRESSION_ROLE, LabelUtil.getLabel(badOp)),
+			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.PRECONDITION_ROLE, LabelUtil.getLabel(badOp)),
+			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.POSTCONDITION_ROLE, LabelUtil.getLabel(badOp)),
+			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Boolean", PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE, LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
 			StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 			StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
 			checkValidationDiagnostics(temp, Diagnostic.ERROR, messages1);
@@ -152,12 +153,12 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, InvocationBehavior.NAME, LabelUtil.getLabel(temp)),
 				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, SettingBehavior.NAME, LabelUtil.getLabel(temp)),
 				StringUtil.bind(EcoreOCLEValidator.MISSING_DELEGATE, ValidationBehavior.NAME, LabelUtil.getLabel(temp)),
-				StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, "extraInvariant", LabelUtil.getLabel(tester)),
-				StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, "missingInvariant", LabelUtil.getLabel(tester)),
-				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", LabelUtil.getLabel(badOp), "body"),
-				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "pre"),
-				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", LabelUtil.getLabel(badOp), "post"),
-				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_1, "Boolean", LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
+				StringUtil.bind(EcoreOCLEValidator.MISSING_CONSTRAINTS_ANNOTATION_ENTRY, PivotConstantsInternal.INVARIANT_ROLE, LabelUtil.getLabel(tester), "extraInvariant"),
+				StringUtil.bind(EcoreOCLEValidator.EXTRA_CONSTRAINTS_ANNOTATION_ENTRY, PivotConstantsInternal.INVARIANT_ROLE, LabelUtil.getLabel(tester), "missingInvariant"),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "String", PivotConstantsInternal.BODY_EXPRESSION_ROLE, LabelUtil.getLabel(badOp)),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.PRECONDITION_ROLE, LabelUtil.getLabel(badOp)),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.POSTCONDITION_ROLE, LabelUtil.getLabel(badOp)),
+				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Boolean", PivotConstantsInternal.DEFAULT_EXPRESSION_ROLE, LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
 				StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 				StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
 				assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource, messages2);

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
@@ -165,7 +166,7 @@ public class NameUtil
 	 */
 	public static @NonNull String qualifiedNameFor(@Nullable Object object) {
 		if (object == null) {
-			return "<<null>>";
+			return PivotConstantsInternal.NULL_MARKER;
 		}
 		Map<ILabelGenerator.Option<?>, Object> options = new HashMap<ILabelGenerator.Option<?>, Object>();
 		options.put(ILabelGenerator.Builder.SHOW_QUALIFIER, "::");
@@ -194,7 +195,7 @@ public class NameUtil
 	 */
 	public static @NonNull String simpleNameFor(@Nullable Object object) {
 		if (object == null) {
-			return "<<null>>";
+			return PivotConstantsInternal.NULL_MARKER;
 		}
 		return LabelUtil.SIMPLE_NAME_REGISTRY.labelFor(object);
 	}

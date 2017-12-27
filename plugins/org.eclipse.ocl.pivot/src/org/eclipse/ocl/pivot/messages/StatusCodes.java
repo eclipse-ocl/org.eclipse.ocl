@@ -18,32 +18,35 @@ package org.eclipse.ocl.pivot.messages;
 public final class StatusCodes
 {
 	public enum Severity {
-	    /** Validation is suppressed and so ignored */
-	    IGNORE(StatusCodes.OK),
-	    /** Validation problems give a warning. */
-	    WARNING(StatusCodes.WARNING),
-	    /** Validation problems give an error. */
-	    ERROR(StatusCodes.ERROR);
-	    
+		/** Validation is suppressed and so ignored */
+		IGNORE(StatusCodes.OK),
+		/** Validation problems give an info.
+		 * @since 1.4*/
+		INFO(StatusCodes.INFO),
+		/** Validation problems give a warning. */
+		WARNING(StatusCodes.WARNING),
+		/** Validation problems give an error. */
+		ERROR(StatusCodes.ERROR);
+
 		private int statusCode;
-	    
-	    private Severity(int statusCode) {
-	    	this.statusCode = statusCode;
-	    }
-	    
-	    public int getStatusCode() {
-	    	return statusCode;
-	    }
+
+		private Severity(int statusCode) {
+			this.statusCode = statusCode;
+		}
+
+		public int getStatusCode() {
+			return statusCode;
+		}
 	}
-	
+
 	/**
 	 * OK indicates the an evaluation was successful. When used as a validation preference it
 	 * causes the validation to be ignored altogether.
 	 */
 	public static final int OK = 0;
-	
+
 	public static final int INFO = 1;
-	
+
 	public static final int WARNING = 2;
 
 	public static final int ERROR = 4;
