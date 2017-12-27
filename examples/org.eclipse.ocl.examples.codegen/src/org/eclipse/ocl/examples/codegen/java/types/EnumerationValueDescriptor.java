@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.java.types;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -86,5 +87,10 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	@Override
 	protected @NonNull UnboxedDescriptor createUnboxedDescriptor() {
 		return new EnumerationObjectDescriptor(elementId, ecoreJavaClass);
+	}
+
+	@Override
+	public @Nullable EClassifier getEClassifier() {
+		return eClassifier;
 	}
 }
