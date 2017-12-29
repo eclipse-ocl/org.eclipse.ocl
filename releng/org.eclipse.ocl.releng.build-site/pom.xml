@@ -31,9 +31,9 @@
         <artifactId>tycho-p2-repository-plugin</artifactId>
         <configuration>
           <createArtifactRepository>true</createArtifactRepository>
-          <finalName>${project.groupId}-${unqualifiedVersion}.${buildQualifier}</finalName>
+          <finalName>${project.groupId}-${unqualifiedVersion}.${buildId}</finalName>
           <compress>true</compress>
-          <repositoryName>OCL ${unqualifiedVersion}.${buildQualifier}</repositoryName>
+          <repositoryName>OCL ${unqualifiedVersion}.${buildId}</repositoryName>
         </configuration>
       </plugin>
       <plugin>
