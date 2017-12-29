@@ -281,6 +281,19 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return testFile.getURI();
 	}
 
+	public void createManifestFile() throws IOException {
+		String bundleName = "_" + getTestProject().getName();
+		TestFile testFile = getTestProject().getOutputFile("META-INF/MANIFEST.MF");
+		File file = testFile.getFile();
+		Writer writer = new FileWriter(file);
+		writer.append("Manifest-Version: 1.0\n");
+		writer.append("Bundle-ManifestVersion: 2\n");
+		writer.append("Bundle-Name: " + bundleName + "\n");
+		writer.append("Bundle-SymbolicName: " + bundleName + ";singleton:=true\n");
+		writer.append("Bundle-Version: 1.0.0.qualifier\n");
+		writer.close();
+	}
+
 	protected @NonNull URI createModels(@NonNull String testFileStem, @Nullable String oclinecoreFile, @NonNull String genmodelFile)
 			throws Exception {
 		OCL ocl2 = OCL.newInstance(getTestProjectManager());
@@ -406,6 +419,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "    }\n"
 				+ "}\n";
 		String genmodelFile = createGenModelContent("Bug370824", null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		ocl.dispose();
@@ -427,6 +441,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "        operation me() : Clase1 { body: self.oclAsType(Clase1); }\n"
 				+ "    }\n" + "}\n";
 		String genmodelFile = createGenModelContent("Bug409650", null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -498,6 +513,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "        operation upCase(b : ecore::EString) : ecore::EString { body: b.toUpper(); }\n"
 				+ "    }\n" + "}\n";
 		String genmodelFile = createGenModelContent("Bug412736", null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -546,6 +562,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "    }\n"
 				+ "}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -584,6 +601,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "    }\n"
 				+ "}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -612,6 +630,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		genOptions.put("interfacePackageSuffix", "coreI");
 		genOptions.put("metaDataPackageSuffix", "coreM");
 		String genmodelFile = createGenModelContent(testFileStem, genOptions);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -661,6 +680,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "    }\n"
 				+ "}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -698,6 +718,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
+			createManifestFile();
 			File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
 			List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 			ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
@@ -743,6 +764,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			genModelResource.setURI(targetGenModelURI);
 			genModelResource.save(XMIUtil.createSaveOptions());
 			//
+			createManifestFile();
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
 		}
@@ -887,6 +909,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
 		genOptions.put("usedGenPackages", "platform:/plugin/org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot");
 		String genmodelFile = createGenModelContent(testFileStem, genOptions);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -914,6 +937,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    }\n"
 						+ "}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -962,6 +986,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURIA);
 		doCompile(ocl, testProjectNameA);
 		doCompile(ocl, testProjectNameB);
+		createManifestFile();
 		ocl.dispose();
 	}
 
@@ -1002,6 +1027,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						"	}\n" +
 						"}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -1039,6 +1065,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						"    }\n" +
 						"}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
@@ -1082,6 +1109,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						"    }\n" +
 						"}\n";
 		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
