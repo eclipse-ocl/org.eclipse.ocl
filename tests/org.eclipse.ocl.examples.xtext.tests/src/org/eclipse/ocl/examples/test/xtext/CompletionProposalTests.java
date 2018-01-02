@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
@@ -189,6 +190,7 @@ public class CompletionProposalTests extends XtextTestCase
 
 	protected void doSetUp(@NonNull String editorId, Injector injector, @NonNull String fileName, @NonNull String initialContent)
 			throws CoreException, PartInitException, IOException {
+		injector.getInstance(BaseEditorCallback.class).setDontAskForNatureAgain();
 		contentAssistProcessor = injector.getInstance(XtextContentAssistProcessor.class);
 		InputStream inputStream = new URIConverter.ReadableInputStream(initialContent, "UTF-8");
 		IProject project = TestUtil.createJavaProject("CompletionProposalTests");

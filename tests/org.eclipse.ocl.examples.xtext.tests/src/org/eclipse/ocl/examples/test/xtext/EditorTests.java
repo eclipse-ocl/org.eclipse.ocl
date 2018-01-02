@@ -42,13 +42,18 @@ import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
 import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
+import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLUiModule;
+import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
+import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 import org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibUiModule;
+import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
@@ -65,6 +70,8 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.validation.CheckMode;
+
+import com.google.inject.Injector;
 
 /**
  * Tests that load a model and verify that there are no unresolved proxies as a result.
@@ -123,6 +130,22 @@ public class EditorTests extends XtextTestCase
 	}
 
 	protected XtextEditor doTestEditor(String editorId, FileEditorInput fileEditorInput) throws PartInitException, CoreException {
+		Injector injector = null;
+		if (editorId == CompleteOCLUiModule.EDITOR_ID) {
+			injector = CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
+		}
+		else if (editorId == EssentialOCLUiModule.EDITOR_ID) {
+			injector = EssentialOCLActivator.getInstance().getInjector(EssentialOCLActivator.ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL);
+		}
+		else if (editorId == OCLinEcoreUiModule.EDITOR_ID) {
+			injector = OCLinEcoreActivator.getInstance().getInjector(OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE);
+		}
+		else if (editorId == OCLstdlibUiModule.EDITOR_ID) {
+			injector = OCLstdlibActivator.getInstance().getInjector(OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB);
+		}
+		if (injector != null) {
+			injector.getInstance(BaseEditorCallback.class).setDontAskForNatureAgain();
+		}
 		IFile file = fileEditorInput.getFile();
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
