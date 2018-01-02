@@ -1,6 +1,6 @@
 
 /*******************************************************************************
- * Copyright (c) 2011, 2017 Willink Transformations and others.
+ * Copyright (c) 2011, 2018 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -166,7 +166,7 @@ public abstract class AbstractOCLstdlibUiModule extends org.eclipse.xtext.ui.Def
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
-		return org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback.class;
+		return org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
