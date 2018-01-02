@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EValidatorRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -37,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 
 public abstract class PivotDiagnostician extends Diagnostician
 {
@@ -44,9 +46,55 @@ public abstract class PivotDiagnostician extends Diagnostician
 
 	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
 			AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
-		EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
+		return createDiagnostician(resourceSet, null, adapterFactory, progressMonitor);
+
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
+			EValidator.@Nullable Registry globalEValidatorRegistry, AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
+		EValidatorRegistryImpl localEValidatorRegistry = new EValidatorRegistryImpl();
 		for (ASResourceFactory asResourceFactory : ASResourceFactoryRegistry.INSTANCE.getExternalResourceFactories()) {
-			asResourceFactory.initializeEValidatorRegistry(registry);
+			asResourceFactory.initializeEValidatorRegistry(localEValidatorRegistry);
+		}
+		if (globalEValidatorRegistry != null) {
+			for (EPackage ePackage : globalEValidatorRegistry.keySet()) {
+				if (ePackage != null) {
+					Object localEValidator = localEValidatorRegistry.get(ePackage);
+					Object globalEValidator = globalEValidatorRegistry.get(ePackage);
+					if (localEValidator == null) {
+						if (globalEValidator != null) {
+							localEValidatorRegistry.put(ePackage, globalEValidator);
+						}
+					}
+					else {
+						if (globalEValidator != null) {
+							ComposedEValidator composedEValidator = null;
+							if (localEValidator instanceof ComposedEValidator) {
+								composedEValidator = (ComposedEValidator)localEValidator;
+							}
+							else if (localEValidator instanceof EValidator.Descriptor) {
+								composedEValidator = new ComposedEValidator(((EValidator.Descriptor)localEValidator).getEValidator());
+								localEValidatorRegistry.put(ePackage, composedEValidator);
+							}
+							else if (localEValidator instanceof EValidator) {
+								composedEValidator = new ComposedEValidator((EValidator)localEValidator);
+								localEValidatorRegistry.put(ePackage, composedEValidator);
+							}
+							if (composedEValidator != null) {
+								if (globalEValidator instanceof EValidator.Descriptor) {
+									composedEValidator.addChild(((EValidator.Descriptor)globalEValidator).getEValidator());
+								}
+								else if (globalEValidator instanceof EValidator) {
+									composedEValidator.addChild((EValidator)globalEValidator);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		if (diagnosticianHasDoValidate == null) {
 			diagnosticianHasDoValidate = false;
@@ -57,11 +105,11 @@ public abstract class PivotDiagnostician extends Diagnostician
 			}
 		}
 		if (diagnosticianHasDoValidate) {
-			return new Diagnostician_2_9(registry, resourceSet, adapterFactory,
+			return new Diagnostician_2_9(localEValidatorRegistry, resourceSet, adapterFactory,
 				progressMonitor != null ? progressMonitor : new NullProgressMonitor());
 		}
 		else {
-			return new Diagnostician_2_8(registry, resourceSet, adapterFactory);
+			return new Diagnostician_2_8(localEValidatorRegistry, resourceSet, adapterFactory);
 		}
 	}
 
