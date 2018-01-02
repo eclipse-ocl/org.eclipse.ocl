@@ -991,7 +991,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" * In order to ensure correct static initialization, a top level class element must be accessed\n");
 		s.append(" * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.\n");
 		s.append(" */\n");
-		s.append("@SuppressWarnings(\"nls\")\n");
+		//		s.append("@SuppressWarnings(\"nls\")\n");
 		s.append("public class " + tablesClassName + "\n");
 		s.append("{\n");
 		s.append("	static {\n");
