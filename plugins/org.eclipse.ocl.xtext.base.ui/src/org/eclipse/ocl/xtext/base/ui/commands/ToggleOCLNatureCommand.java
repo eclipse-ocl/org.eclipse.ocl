@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation based on org.eclipse.xtext.builder.nature.ToggleXtextNatureCommand
  *******************************************************************************/
-package org.eclipse.ocl.pivot.ui.nature;
+package org.eclipse.ocl.xtext.base.ui.commands;
 
 import java.util.Iterator;
 
@@ -20,14 +20,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ocl.pivot.ui.OCLProjectHelper;
+import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
+import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  */
-public class ToggleOCLNatureCommand extends AbstractHandler {
+public class ToggleOCLNatureCommand extends AbstractHandler implements ToggleNatureCommand {
 
 	private static final Logger log = Logger.getLogger(ToggleOCLNatureCommand.class);
 
@@ -49,7 +52,28 @@ public class ToggleOCLNatureCommand extends AbstractHandler {
 		return null;
 	}
 
-	public void toggleNature(IProject project) {
+	@Override
+	public String getAddNatureDialogText(String projectName) {
+		return NLS.bind(BaseUIMessages.OCLNatureAddingEditorCallback_MessageDialog_Message, projectName);
+	}
+
+	@Override
+	public String getAddNatureDialogTitle() {
+		return BaseUIMessages.OCLNatureAddingEditorCallback_MessageDialog_Title;
+	}
+
+	@Override
+	public @NonNull String getAddNatureKey() {
+		return "add_ocl_nature";
+	}
+
+	@Override
+	public boolean hasNature(@NonNull IProject project) {
+		return OCLProjectHelper.hasNature(project);
+	}
+
+	@Override
+	public void toggleNature(@NonNull IProject project) {
 		try {
 			IProjectDescription description = project.getDescription();
 			String[] natures = description.getNatureIds();
@@ -73,12 +97,7 @@ public class ToggleOCLNatureCommand extends AbstractHandler {
 			description.setNatureIds(newNatures);
 			project.setDescription(description, null);
 		} catch (CoreException e) {
-			log.error("Error toggling Xtext nature", e);
+			log.error("Error toggling OCL nature", e);
 		}
 	}
-
-	public boolean hasNature(IProject project) {
-		return OCLProjectHelper.hasNature(project);
-	}
-
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation based on org.eclipse.xtext.ui.XtextProjectHelper
  *******************************************************************************/
-package org.eclipse.ocl.pivot.ui;
+package org.eclipse.ocl.xtext.base.ui;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
@@ -35,9 +35,6 @@ public class OCLProjectHelper {
 		return false;
 	}
 
-	/**
-	 * @since 2.4
-	 */
 	public static boolean hasBuilder(IProject project) {
 		if (project.isAccessible()) {
 			try {

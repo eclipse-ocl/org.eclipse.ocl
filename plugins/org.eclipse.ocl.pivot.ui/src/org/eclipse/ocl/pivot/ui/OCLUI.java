@@ -34,7 +34,7 @@ import com.google.inject.Module;
  */
 public class OCLUI
 {
-	public static final String PLUGIN_ID = "org.eclipse.ocl.pivot.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.ocl.pivot.ui";
 
 	public static final @NonNull String COMPLETE_OCL_LANGUAGE_ID = CompleteOCLPlugin.LANGUAGE_ID;
 	public static final @NonNull String ESSENTIAL_OCL_LANGUAGE_ID = EssentialOCLPlugin.LANGUAGE_ID;

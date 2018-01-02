@@ -68,6 +68,16 @@ public class BaseUIMessages
 	public static String SaveCS_Description;
 	public static String SaveError_Title;
 
+	public static String OCLNatureAddingEditorCallback_MessageDialog_Message;
+	public static String OCLNatureAddingEditorCallback_MessageDialog_Title;
+
+	public static String MultiValidationJob_Name;
+	public static String MultiValidationJob_Validating;
+
+	public static String MultiValidationJob_Initializing;
+	public static String MultiValidationJob_Queuing;
+	public static String MultiValidationJob_Selecting;
+
 	// source IDEWorkbenchMessages
 	public static String ContainerGroup_message;
 	public static String ContainerGroup_selectFolder;
