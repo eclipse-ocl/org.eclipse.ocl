@@ -373,7 +373,7 @@ public class UMLOCLEValidator implements EValidator
 												if (!mayUseNewLines) {
 													message = message.replace("\n", "");
 												}
-												diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+												diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), UMLValidator.DIAGNOSTIC_SOURCE,
 													0, message,  new Object[] { eObject }));
 											}
 											else {
@@ -605,7 +605,7 @@ public class UMLOCLEValidator implements EValidator
 					if (!mayUseNewLines) {
 						message = message.replace("\n", " ");
 					}
-					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+					diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), UMLValidator.DIAGNOSTIC_SOURCE,
 						0, message,  new Object[] { opaqueElement }));
 				}
 				return false;
@@ -626,17 +626,19 @@ public class UMLOCLEValidator implements EValidator
 				String fullMessage = e.getMessage();
 				String[] messages = fullMessage.split("\n");//StringUtil.bind(PARSING_ERROR_1, e, objectLabel);
 				BasicDiagnostic titleDiagnostic = null;
+				int severity = PivotUtil.getSeverity(environmentFactory);
 				for (String message : messages) {
-					int severity = PivotUtil.getSeverity(environmentFactory);
 					if (titleDiagnostic == null) {
 						// ProblemsView needs a multiline to show per-line errors
 						titleDiagnostic = new BasicDiagnostic(EcoreValidator.DIAGNOSTIC_SOURCE, 0, fullMessage, data);
-						diagnostics.add(titleDiagnostic);
 					}
 					else {
 						// ValidationDialog needs nested per-line errors
 						titleDiagnostic.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE, 0, message, data));
 					}
+				}
+				if (titleDiagnostic != null) {
+					diagnostics.add(titleDiagnostic);
 				}
 			}
 
@@ -658,8 +660,8 @@ public class UMLOCLEValidator implements EValidator
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
 		ExpressionInOCL asQuery = null;
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		try {
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
 				if (diagnostics != null) {
@@ -668,7 +670,7 @@ public class UMLOCLEValidator implements EValidator
 					if (!mayUseNewLines) {
 						message = message.replace("\n", " ");
 					}
-					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+					diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), UMLValidator.DIAGNOSTIC_SOURCE,
 						0, message,  new Object[] { opaqueElement }));
 				}
 				return false;
@@ -684,7 +686,7 @@ public class UMLOCLEValidator implements EValidator
 				if (!mayUseNewLines) {
 					message = message.replace("\n", " ");
 				}
-				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+				diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), UMLValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { opaqueElement }));
 			}
 			return false;
