@@ -25,6 +25,7 @@ import org.eclipse.ocl.xtext.base.ui.autoedit.BaseAutoEditStrategyProvider;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.ocl.xtext.base.ui.model.BaseTerminalsTokenTypeToPartitionMapper;
 import org.eclipse.ocl.xtext.base.ui.model.BaseURIEditorOpener;
+import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineNodeElementOpener;
 import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineWithEditorLinker;
 import org.eclipse.ocl.xtext.base.ui.syntaxcoloring.BaseAntlrTokenToAttributeIdMapper;
@@ -63,7 +64,6 @@ import org.eclipse.xtext.ui.editor.outline.impl.OutlineNodeElementOpener;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
-import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.IResourceValidator;
 
@@ -98,7 +98,7 @@ public class EssentialOCLFragment extends DefaultGeneratorFragment implements Na
 		// pivot: scheme support
 		bindFactory.addTypeToType(IResourceServiceProvider.class.getName(), PivotResourceServiceProvider.class.getName());
 		// pivot AST validation support
-//		bindFactory.addTypeToType(Diagnostician.class.getName(), PivotCancelableDiagnostician.class.getName());
+		//		bindFactory.addTypeToType(Diagnostician.class.getName(), PivotCancelableDiagnostician.class.getName());
 		bindFactory.addTypeToType(IResourceValidator.class.getName(), PivotResourceValidator.class.getName());
 		// DataType text to value parsing.
 		bindFactory.addTypeToType(IValueConverterService.class.getName(), BaseValueConverterService.class.getName());
@@ -114,11 +114,11 @@ public class EssentialOCLFragment extends DefaultGeneratorFragment implements Na
 		bindFactory.addTypeToType(AbstractEditStrategyProvider.class.getName(), BaseAutoEditStrategyProvider.class.getName());
 		bindFactory.addTypeToType(IHighlightingConfiguration.class.getName(), EssentialOCLHighlightingConfiguration.class.getName());
 		bindFactory.addTypeToType(ILocationInFileProvider.class.getName(), EssentialOCLLocationInFileProvider.class.getName());
-//		bindFactory.addTypeToType(org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder.class.getName(), BaseReferenceFinder.class.getName());
+		//		bindFactory.addTypeToType(org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder.class.getName(), BaseReferenceFinder.class.getName());
 		bindFactory.addTypeToType(ISemanticHighlightingCalculator.class.getName(), EssentialOCLSemanticHighlightingCalculator.class.getName());
 		bindFactory.addTypeToType(ITokenTypeToPartitionTypeMapper.class.getName(), BaseTerminalsTokenTypeToPartitionMapper.class.getName());
 		bindFactory.addTypeToType(IURIEditorOpener.class.getName(), BaseURIEditorOpener.class.getName());
-		bindFactory.addTypeToType(IXtextEditorCallback.class.getName(), ValidatingEditorCallback.class.getName());
+		bindFactory.addTypeToType(IXtextEditorCallback.class.getName(), BaseEditorCallback.class.getName());
 		bindFactory.addTypeToType(OutlineWithEditorLinker.class.getName(), BaseOutlineWithEditorLinker.class.getName());
 		bindFactory.addTypeToType(OutlineNodeElementOpener.class.getName(), BaseOutlineNodeElementOpener.class.getName());
 		bindFactory.addTypeToType(XtextDocument.class.getName(), BaseDocument.class.getName());
@@ -130,6 +130,7 @@ public class EssentialOCLFragment extends DefaultGeneratorFragment implements Na
 		return naming;
 	}
 
+	@Override
 	public void registerNaming(Naming naming) {
 		this.naming = naming;
 	}
