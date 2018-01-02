@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
+import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
 public final class EcoreASResourceFactory extends AbstractASResourceFactory
@@ -32,13 +33,13 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull EcoreASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.ECORE_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (EcoreASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new EcoreASResourceFactory();										// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.ECORE_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (EcoreASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new EcoreASResourceFactory();										// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install("ecore", null);
 		}
@@ -55,7 +56,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 		assert uri != null;
 		ASResource asResource = new EcoreASResourceImpl(uri, this);
 		configureResource(asResource);
-	    return asResource;
+		return asResource;
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	public @Nullable Integer getPriority() {
 		return 100;
 	}
-	
+
 	@Override
 	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource, @Nullable URI uri) {
 		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
@@ -104,6 +105,9 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 
 	@Override
 	public void initializeEValidatorRegistry(org.eclipse.emf.ecore.EValidator.@NonNull Registry eValidatorRegistry) {
-		eValidatorRegistry.put(EcorePackage.eINSTANCE, EcoreOCLEValidator.NO_NEW_LINES);
+		// as of Photon M4 OCL embedded in Ecore is validated by EAnnotationValidators
+		if (PivotEAnnotationValidator.getEAnnotationValidatorRegistry() == null) {
+			eValidatorRegistry.put(EcorePackage.eINSTANCE, EcoreOCLEValidator.NO_NEW_LINES);
+		}
 	}
 }
