@@ -93,7 +93,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		fEventListener.add(createVMEventListener());
 
 		EventDispatchJob dispatcher = new EventDispatchJob();
-		Thread eventDispatherThread = new Thread(dispatcher, "OCL Debug"); //$NON-NLS-1$
+		Thread eventDispatherThread = new Thread(dispatcher, getDebugCore().getDebugThreadName());
 		eventDispatherThread.setDaemon(true);
 		eventDispatherThread.start();
 
@@ -246,8 +246,8 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 	}
 
 	@Override
-	public String getName() throws DebugException {
-		return "OCL Debug target";
+	public @NonNull String getName() {
+		return getDebugCore().getDebugTargetName();
 	}
 
 	@Override

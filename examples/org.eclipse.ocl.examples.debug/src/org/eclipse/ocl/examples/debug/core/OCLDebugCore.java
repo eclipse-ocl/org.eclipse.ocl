@@ -49,6 +49,16 @@ public class OCLDebugCore extends VMDebugCore
 	}
 
 	@Override
+	public @NonNull String getDebugTargetName() {
+		return "OCL Debug target";
+	}
+
+	@Override
+	public @NonNull String getDebugThreadName() {
+		return "OCL Debug UI";
+	}
+
+	@Override
 	public @NonNull String getDebuggerActiveProperty() {
 		return DEBUGGER_ACTIVE_PROPERTY;
 	}
@@ -86,6 +96,6 @@ public class OCLDebugCore extends VMDebugCore
 
 	@Override
 	public @NonNull String getVMThreadName() {
-		return "OCL VM";
+		return "OCL Debug VM";
 	}
 }

@@ -22,10 +22,12 @@ public class OCLDebugTarget extends VMDebugTarget
 		super(process, vm);
 	}
 
+	@Override
 	public @NonNull OCLDebugCore getDebugCore() {
 		return OCLDebugCore.INSTANCE;
 	}
-	
+
+	@Override
 	public @NonNull String getModelIdentifier() {
 		return getDebugCore().getModelId();
 	}

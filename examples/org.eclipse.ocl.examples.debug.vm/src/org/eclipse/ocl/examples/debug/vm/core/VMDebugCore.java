@@ -162,6 +162,10 @@ public abstract class VMDebugCore
 		return new Status(IStatus.ERROR, getPluginId(), code, message, throwable);
 	}
 
+	public abstract @NonNull String getDebugTargetName();
+
+	public abstract @NonNull String getDebugThreadName();
+
 	public abstract @NonNull List<@NonNull ? extends VMLineBreakpoint> getLineBreakpoints();
 
 	public abstract @NonNull BaseLocationInFileProvider getLocationInFileProvider();
