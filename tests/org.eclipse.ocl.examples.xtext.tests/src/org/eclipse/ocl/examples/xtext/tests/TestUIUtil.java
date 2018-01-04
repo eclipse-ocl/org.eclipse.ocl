@@ -67,11 +67,11 @@ public class TestUIUtil
 		IJobManager jobManager = Job.getJobManager();
 		for (Job job : jobManager.find(null)) {
 			if (job instanceof ValidationJob) {
-//				System.out.println(Thread.currentThread().getName() + " cancel " + NameUtil.debugSimpleName(job));
+				//				System.out.println(Thread.currentThread().getName() + " cancel " + NameUtil.debugSimpleName(job));
 				if (!job.cancel()) {
 					int i = 0;
 					while ((job.getState() == Job.RUNNING) && (i++ < 10)) {
-//						System.out.println(Thread.currentThread().getName() + " waiting for " + NameUtil.debugSimpleName(job));
+						//						System.out.println(Thread.currentThread().getName() + " waiting for " + NameUtil.debugSimpleName(job));
 						flushEvents();
 						Thread.sleep(100);
 					}
@@ -79,7 +79,7 @@ public class TestUIUtil
 			}
 		}
 	}
-	
+
 	public static @NonNull IFile copyIFile(/*@NonNull*/ IFile outFile, @NonNull URI uri, String encoding) throws CoreException, FileNotFoundException {
 		String string = uri.isFile() ? uri.toFileString() : uri.toString();
 		Reader reader = new BufferedReader(new FileReader(string));
@@ -125,7 +125,7 @@ public class TestUIUtil
 		for (int i = 0; i < 10; i++) {
 			while (workbench.getDisplay().readAndDispatch());
 		}
-/*		for (int i = 0; i < 10; i++) {
+		/*		for (int i = 0; i < 10; i++) {
 			IWorkbench workbench = PlatformUI.getWorkbench();
 			try {
 				while (workbench.getDisplay().readAndDispatch())
@@ -156,7 +156,7 @@ public class TestUIUtil
 		if (!removed.isEmpty()) {
 			ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
 			manager.removeLaunches(removed.toArray(new ILaunch[removed.size()]));
-		}				
+		}
 	}
 
 	/**
@@ -167,10 +167,10 @@ public class TestUIUtil
 	 * Now it just suppresses a Console Log entry.
 	 */
 	public static void suppressGitPrefixPopUp() {
-	    if (!testedEgitUiBundle) {
-	    	testedEgitUiBundle = true;
-	    	Bundle egitUiBundle = Platform.getBundle("org.eclipse.egit.ui");
-	        if (egitUiBundle != null) {
+		if (!testedEgitUiBundle) {
+			testedEgitUiBundle = true;
+			Bundle egitUiBundle = Platform.getBundle("org.eclipse.egit.ui");
+			if (egitUiBundle != null) {
 				try {
 					Class<?> activatorClass = egitUiBundle.loadClass("org.eclipse.egit.ui.Activator");
 					Class<?> preferencesClass = egitUiBundle.loadClass("org.eclipse.egit.ui.UIPreferences");
@@ -186,9 +186,9 @@ public class TestUIUtil
 				}
 				catch (Exception e) {}			// Ignore
 			}
-	    }
+		}
 	}
-	
+
 	public static void wait(int delayTimeInMilliseconds) {
 		for (int i = 0; i < delayTimeInMilliseconds; i += 100) {
 			flushEvents();
@@ -221,7 +221,18 @@ public class TestUIUtil
 			}
 		}
 	}
-	
+
+	public static void waitForNotStepping(@NonNull IThread vmThread) throws InterruptedException, DebugException {
+		for (int i = 0; i < 10; i++){
+			flushEvents();
+			Thread.sleep(100);
+			if (!vmThread.isStepping()) {
+				return;
+			}
+		}
+		TestCase.fail("Failed to not-step");
+	}
+
 	public static void waitForSuspended(@NonNull IThread vmThread) throws InterruptedException, DebugException {
 		for (int i = 0; i < 10; i++){
 			flushEvents();
@@ -232,7 +243,7 @@ public class TestUIUtil
 		}
 		TestCase.fail("Failed to suspend");
 	}
-	
+
 	public static void waitForTerminated(@NonNull IThread vmThread) throws InterruptedException, DebugException {
 		for (int i = 0; i < 10; i++){
 			flushEvents();
