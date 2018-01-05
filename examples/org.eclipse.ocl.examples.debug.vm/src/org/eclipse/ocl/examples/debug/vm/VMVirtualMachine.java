@@ -64,6 +64,9 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 	public static final @NonNull TracingOption VM_REQUEST = new TracingOption(DebugVMPlugin.PLUGIN_ID, "vmRequest");
 	public static final @NonNull TracingOption VM_RESPONSE = new TracingOption(DebugVMPlugin.PLUGIN_ID, "vmResponse");
 
+	public static final @NonNull String EXCEPTION_NAME = "$invalid";
+	public static final @NonNull String PC_NAME = "$pc";
+
 	static {
 		//		LOCATION.setState(true);
 		//		PRE_VISIT.setState(true);

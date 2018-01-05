@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.debug.core.OCLDebugCore;
 import org.eclipse.ocl.examples.debug.vm.UnitLocation;
+import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
 import org.eclipse.ocl.examples.debug.vm.evaluator.VMExecutor;
 import org.eclipse.ocl.examples.debug.vm.evaluator.VMRootEvaluationEnvironment;
 import org.eclipse.ocl.examples.debug.vm.utils.ASTBindingHelper;
@@ -52,7 +53,7 @@ public class OCLVMRootEvaluationEnvironment extends VMRootEvaluationEnvironment 
 		myOperation = executableObject;
 		this.id = id;
 		pcVariable = ClassUtil.nonNullEMF(PivotFactory.eINSTANCE.createVariable());
-		pcVariable.setName("$pc");
+		pcVariable.setName(VMVirtualMachine.PC_NAME);
 		String typeName = ClassUtil.nonNullEMF(PivotPackage.Literals.OCL_EXPRESSION.getName());
 		pcVariable.setType(((EnvironmentFactoryInternalExtension)environmentFactory).getASClass(typeName));
 	}

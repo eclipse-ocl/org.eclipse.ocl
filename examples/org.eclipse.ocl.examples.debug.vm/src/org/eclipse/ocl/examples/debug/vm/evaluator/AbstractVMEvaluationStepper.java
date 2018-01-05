@@ -77,7 +77,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		fCurrentLocation = getCurrentLocation();
 		fCurrentStepMode = VMSuspension.UNSPECIFIED;
 		invalidVariable = ClassUtil.nonNullEMF(PivotFactory.eINSTANCE.createVariable());
-		invalidVariable.setName("$invalid");
+		invalidVariable.setName(VMVirtualMachine.EXCEPTION_NAME);
 		String typeName = ClassUtil.nonNullEMF(PivotPackage.Literals.OCL_EXPRESSION.getName());
 		invalidVariable.setType(((EnvironmentFactoryInternalExtension)vmExecutor.getEnvironmentFactory()).getASClass(typeName));
 	}

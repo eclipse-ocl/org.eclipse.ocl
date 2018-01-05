@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.debug.core.OCLDebugTarget;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
+import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
 import org.eclipse.ocl.examples.debug.vm.core.VMVariable;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -79,16 +80,16 @@ public class ConsoleTests extends AbstractConsoleTests
 			TestUIUtil.waitForSuspended(vmThread);
 			//
 			checkPosition(vmThread, 5, 112, 116);
-			checkVariables(vmThread, "$pc", "self");
-			checkVariable(vmThread, "$pc", asVariableExp);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self");
+			checkVariable(vmThread, VMVirtualMachine.PC_NAME, asVariableExp);
 			checkVariable(vmThread, "self", EcorePackage.Literals.ECLASS);
 			//
 			vmThread.stepInto();
 			TestUIUtil.waitForSuspended(vmThread);
 			//
 			checkPosition(vmThread, 5, 117, 121);
-			checkVariables(vmThread, "$pc", "self", "$ownedSource");
-			checkVariable(vmThread, "$pc", asPropertyCallExpCallExp);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self", "$ownedSource");
+			checkVariable(vmThread, VMVirtualMachine.PC_NAME, asPropertyCallExpCallExp);
 			checkVariable(vmThread, "self", EcorePackage.Literals.ECLASS);
 			checkVariable(vmThread, "$ownedSource", EcorePackage.Literals.ECLASS);
 			//
@@ -96,16 +97,16 @@ public class ConsoleTests extends AbstractConsoleTests
 			TestUIUtil.waitForSuspended(vmThread);
 			//
 			checkPosition(vmThread, 5, 125, 129);
-			checkVariables(vmThread, "$pc", "self");
-			checkVariable(vmThread, "$pc", asNullLiteralExp);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self");
+			checkVariable(vmThread, VMVirtualMachine.PC_NAME, asNullLiteralExp);
 			checkVariable(vmThread, "self", EcorePackage.Literals.ECLASS);
 			//
 			vmThread.stepInto();
 			TestUIUtil.waitForSuspended(vmThread);
 			//
 			checkPosition(vmThread, 5, 122, 124);
-			checkVariables(vmThread, "$pc", "self", "$ownedSource", "$ownedArguments[0]");
-			checkVariable(vmThread, "$pc", asOperationCallExp);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self", "$ownedSource", "$ownedArguments[0]");
+			checkVariable(vmThread, VMVirtualMachine.PC_NAME, asOperationCallExp);
 			checkVariable(vmThread, "self", EcorePackage.Literals.ECLASS);
 			checkVariable(vmThread, "$ownedSource", "EClass");
 			checkVariable(vmThread, "$ownedArguments[0]", null);
@@ -114,8 +115,8 @@ public class ConsoleTests extends AbstractConsoleTests
 			TestUIUtil.waitForSuspended(vmThread);
 			//
 			checkPosition(vmThread, 5, 112, 129);
-			checkVariables(vmThread, "$pc", "self", "$ownedBody");
-			checkVariable(vmThread, "$pc", asExpressionInOCL);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self", "$ownedBody");
+			checkVariable(vmThread, VMVirtualMachine.PC_NAME, asExpressionInOCL);
 			checkVariable(vmThread, "self", EcorePackage.Literals.ECLASS);
 			checkVariable(vmThread, "$ownedBody", true);
 			//
