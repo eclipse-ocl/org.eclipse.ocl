@@ -839,7 +839,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(" " + atNonNull() + " [] ");
 			s.appendScopedTypeName(pClass);
 			s.append(" =\n");
-			s.append("		{");
+			s.append("			{");
 			boolean isFirst = true;
 			for (/*@NonNull*/ Type superClass : superTypes) {
 				assert superClass != null;
@@ -847,7 +847,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(",");
 				}
 				s.append("\n");
-				s.append("			Fragments.");
+				s.append("				Fragments.");
 				s.appendScopedTypeName(pClass);
 				s.append("__");
 				s.appendUnscopedTypeName(metamodelManager, superClass);
@@ -855,7 +855,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				isFirst = false;
 			}
 			s.append("\n");
-			s.append("		};\n");
+			s.append("			};\n");
 			s.append("		private static final int " + atNonNull() + " [] _");
 			s.appendScopedTypeName(pClass);
 			s.append(" = { ");
