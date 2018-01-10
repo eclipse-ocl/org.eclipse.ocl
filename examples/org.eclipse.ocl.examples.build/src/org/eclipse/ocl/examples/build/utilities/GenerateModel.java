@@ -44,6 +44,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 //import org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage;
 
@@ -104,8 +105,9 @@ public class GenerateModel extends AbstractWorkflowComponent {
 			}
 		}
 
-		if (isClearResourceSet()) {
-			resourceSet.getResources().clear();
+		if (isClearResourceSet() && !resourceSet.getResources().isEmpty()) {
+			throw new IllegalStateException("clearResourceSet is not supported see Bug 529484");
+			//			resourceSet.getResources().clear();
 		}
 
 		Resource resource = resourceSet.getResource(fileURI, true);
@@ -167,8 +169,10 @@ public class GenerateModel extends AbstractWorkflowComponent {
 			genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 		}
 		// genModel.setRootExtendsClass("org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container");
+		OCL ocl = OCL.newInstance(resourceSet);
 		Diagnostic diagnostic = genModel.diagnose();
 		reportDiagnostics(issues, diagnostic);
+		ocl.dispose();
 
 		/*
 		 * JavaModelManager.getJavaModelManager().initializePreferences();

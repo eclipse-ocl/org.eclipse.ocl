@@ -33,7 +33,7 @@ import com.google.common.collect.Iterables;
  * The ASResourceFactoryRegistry maintains the mapping from known ASResource content type
  * identifiers to the ASResourceFactory instance appropriate to the content type.
  * <p>
- * 
+ *
  */
 public class ASResourceFactoryRegistry
 {
@@ -68,30 +68,30 @@ public class ASResourceFactoryRegistry
 	}
 
 	public static final @NonNull ASResourceFactoryRegistry INSTANCE = new ASResourceFactoryRegistry();
-	
+
 	protected final @NonNull Map<String, ASResourceFactoryContribution> contentType2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
 	protected final @NonNull Map<String, ASResourceFactoryContribution> extension2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
 	protected final @NonNull Map<String, ASResourceFactoryContribution> resourceClassName2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
-	
+
 	public synchronized Object addASResourceFactory(@Nullable String contentType, @Nullable String oclasExtension, @Nullable String resourceClassName, @NonNull ASResourceFactoryContribution asResourceFactory) {
 		ASResourceFactoryContribution oldASResourceFactory1 = null;
 		if (contentType != null) {
 			oldASResourceFactory1 = contentType2resourceFactory.put(contentType, asResourceFactory);
 			assert (oldASResourceFactory1 == null) || (oldASResourceFactory1 == asResourceFactory)
-				|| (oldASResourceFactory1.basicGetASResourceFactory() == asResourceFactory)
-				|| (oldASResourceFactory1.basicGetASResourceFactory() == null);
+			|| (oldASResourceFactory1.basicGetASResourceFactory() == asResourceFactory)
+			|| (oldASResourceFactory1.basicGetASResourceFactory() == null);
 		}
 		if (oclasExtension != null) {
 			ASResourceFactoryContribution oldASResourceFactory2 = extension2resourceFactory.put(oclasExtension, asResourceFactory);
 			assert (oldASResourceFactory2 == null) || (oldASResourceFactory2 == asResourceFactory)
-				|| (oldASResourceFactory2.basicGetASResourceFactory() == asResourceFactory)
-				|| (oldASResourceFactory2.basicGetASResourceFactory() == null);
+			|| (oldASResourceFactory2.basicGetASResourceFactory() == asResourceFactory)
+			|| (oldASResourceFactory2.basicGetASResourceFactory() == null);
 		}
 		if (resourceClassName != null) {
 			ASResourceFactoryContribution oldASResourceFactory3 = resourceClassName2resourceFactory.put(resourceClassName, asResourceFactory);
 			assert (oldASResourceFactory3 == null) || (oldASResourceFactory3 == asResourceFactory)
-				|| (oldASResourceFactory3.basicGetASResourceFactory() == asResourceFactory)
-				|| (oldASResourceFactory3.basicGetASResourceFactory() == null);
+			|| (oldASResourceFactory3.basicGetASResourceFactory() == asResourceFactory)
+			|| (oldASResourceFactory3.basicGetASResourceFactory() == null);
 		}
 		return oldASResourceFactory1;
 	}
@@ -112,6 +112,12 @@ public class ASResourceFactoryRegistry
 	 * Create a new EnvironmentFactory appropriate to the resources in ResourceSet.
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+		if (externalResourceSet != null) {
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(externalResourceSet);
+			if (environmentFactoryAdapter != null) {
+				return environmentFactoryAdapter.getEnvironmentFactory();
+			}
+		}
 		return new PivotEnvironmentFactory(projectManager, externalResourceSet);
 	}
 

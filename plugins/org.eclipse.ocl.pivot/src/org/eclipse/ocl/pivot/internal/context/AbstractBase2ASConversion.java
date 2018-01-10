@@ -242,7 +242,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			pivotElement.setIsRequired(isRequired);
 		}
 		if (primaryType != null) {
-			PivotUtil.debugWellContainedness(primaryType);
+			if (!PivotUtil.debugWellContainedness(primaryType)) {
+				primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+			}
 		}
 	}
 }

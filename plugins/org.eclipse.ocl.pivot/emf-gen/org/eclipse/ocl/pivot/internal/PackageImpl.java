@@ -62,8 +62,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  * @generated
  */
 public class PackageImpl
-		extends NamespaceImpl
-		implements org.eclipse.ocl.pivot.Package {
+extends NamespaceImpl
+implements org.eclipse.ocl.pivot.Package {
 
 	/**
 	 * The default value of the '{@link #getURI() <em>URI</em>}' attribute.

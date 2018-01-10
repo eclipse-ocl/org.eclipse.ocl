@@ -145,15 +145,23 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull ResourceSet resourceSet) {
-		for (Adapter adapter : resourceSet.eAdapters()) {
-			if (adapter instanceof EnvironmentFactoryAdapter) {
-				return ((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();
+		synchronized (resourceSet) {
+			for (Adapter adapter : resourceSet.eAdapters()) {
+				if (adapter instanceof EnvironmentFactoryAdapter) {
+					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();
+					if (!environmentFactory.isDisposed()) {
+						return environmentFactory;
+					}
+				}
+				else if (adapter instanceof PivotMetamodelManager) {
+					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((PivotMetamodelManager)adapter).getEnvironmentFactory();
+					if (!environmentFactory.isDisposed()) {
+						return environmentFactory;
+					}
+				}
 			}
-			else if (adapter instanceof PivotMetamodelManager) {
-				return ((PivotMetamodelManager)adapter).getEnvironmentFactory();
-			}
+			return null;
 		}
-		return null;
 	}
 
 	public static @Nullable PivotMetamodelManager findMetamodelManager(@NonNull Resource resource) {

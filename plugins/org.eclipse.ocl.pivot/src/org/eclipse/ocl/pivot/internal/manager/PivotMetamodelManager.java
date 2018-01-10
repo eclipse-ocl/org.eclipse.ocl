@@ -340,10 +340,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (es2ases2 == null){
 			es2ases = es2ases2 = new HashMap<>();
 		}
-		External2AS oldES2AS = es2ases2.put(es2as.getResource(), es2as);
-		assert oldES2AS == null;
+		Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
-		external2asMap.put(uri, es2as);
+		External2AS oldES2AS = es2ases2.put(resource, es2as);
+		assert oldES2AS == null;
+		oldES2AS = external2asMap.put(uri, es2as);
+		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
 	}
 
 	@Override
@@ -586,7 +588,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
-		//		System.out.println("dispose AS " + ClassUtil.debugSimpleName(asResourceSet));
+		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<Resource> asResources = asResourceSet.getResources();
 		for (Resource asResource : new ArrayList<>(asResources)) {
@@ -629,10 +631,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		globalNamespaces.clear();
 		globalTypes.clear();
 		external2asMap.clear();
-		if (es2ases != null) {
-			for (External2AS es2as : es2ases.values()) {
+		Map<Resource, External2AS> es2ases2 = es2ases;
+		if (es2ases2 != null) {
+			for (External2AS es2as : es2ases2.values()) {
 				es2as.dispose();
 			}
+			es2ases = null;
 		}
 		lockingAnnotation = null;
 		completeModel.dispose();

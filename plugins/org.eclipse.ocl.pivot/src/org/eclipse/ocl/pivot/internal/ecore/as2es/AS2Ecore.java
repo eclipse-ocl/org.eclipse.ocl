@@ -69,8 +69,10 @@ public class AS2Ecore extends AbstractConversion
 	 * An InverseConversion is installed as an Ecore2AS converter following an AS2Ecore conversion so
 	 * that requests for Ecore2AS conversions are satisfoed by inverting the AS2Ecore rather than by
 	 * performing an additional conflicting Ecore2AS conversion.
+	 *
+	 * @since 1.4
 	 */
-	private class InverseConversion extends AbstractConversion implements External2AS
+	public class InverseConversion extends AbstractConversion implements External2AS
 	{
 		protected final @NonNull Resource ecoreResource;
 

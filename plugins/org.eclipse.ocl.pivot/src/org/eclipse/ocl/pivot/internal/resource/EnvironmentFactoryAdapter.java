@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -18,7 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 
 /**
  * An EnvironmentFactoryAdapter associates an EnvironmentFactory with a Resource or ResourceSet so
@@ -40,7 +42,19 @@ public class EnvironmentFactoryAdapter implements Adapter.Internal
 	 * Return any EnvironmentFactoryAdapter already adapting this notofier.
 	 */
 	public static @Nullable EnvironmentFactoryAdapter find(@NonNull Notifier notifier) {
-		return ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, notifier);
+		synchronized (notifier) {
+			List<Adapter> eAdapters = notifier.eAdapters();
+			for (Adapter adapter : eAdapters) {
+				if (adapter instanceof EnvironmentFactoryAdapter) {
+					EnvironmentFactoryAdapter environmentFactoryAdapter = (EnvironmentFactoryAdapter)adapter;
+					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactoryAdapter.getEnvironmentFactory();
+					if (!environmentFactory.isDisposed()) {
+						return environmentFactoryAdapter;
+					}
+				}
+			}
+			return null;
+		}
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;

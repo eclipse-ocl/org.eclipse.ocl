@@ -163,6 +163,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
+		if (adapter != null) {
+			if (adapter.getEnvironmentFactory() != this) {
+				adapter = null;
+			}
+		}
 		if (adapter == null) {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
@@ -209,7 +214,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public synchronized void attach(Object object) {
-		if (attachCount < 0) {
+		if (isDisposed()) {
 			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this));
 			}
@@ -502,11 +507,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public synchronized void detach(Object object) {
-		if (attachCount < 0) {
-			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this));
-			}
+	public synchronized void detach(Object zobject) {
+		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this));
+		}
+		if (isDisposed()) {
 			return;					// Ignore detach after dispose
 		}
 		if (attachCount == 0) {
@@ -531,7 +536,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Dispose(" + attachCount + ") " + NameUtil.debugSimpleName(this));
 		}
-		if (attachCount < 0) {
+		if (isDisposed()) {
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		attachCount = -1;
@@ -539,7 +544,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	protected void disposeInternal() {
-		assert attachCount == -1;
+		assert isDisposed();
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
 			metamodelManager.dispose();
@@ -759,6 +764,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull Technology getTechnology() {
 		return technology;
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return attachCount < 0;
 	}
 
 	/**
