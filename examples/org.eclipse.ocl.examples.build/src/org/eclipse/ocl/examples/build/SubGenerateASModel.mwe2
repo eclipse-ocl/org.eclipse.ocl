@@ -60,7 +60,7 @@ var genModel = "/${projectName}/${genModelFile}"
  */
 Workflow {
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-    	genModel = genModel
+    	genModel = genModel clearResourceSet = false
     }
     component = GenerateASVisitors { resourceSet = resourceSet skipOnErrors = true
     	projectName = projectName

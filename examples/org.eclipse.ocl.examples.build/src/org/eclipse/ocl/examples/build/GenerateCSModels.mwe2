@@ -30,7 +30,7 @@ Workflow {
     	scanClassPath = true
     }
     bean = EcoreGenModelSetup { resourceSet = resourceSet }
-    bean = UMLGenModelSetup { resourceSet = resourceSet }		// So long as pivot.merged.genmodel is UML-based
+//    bean = UMLGenModelSetup { resourceSet = resourceSet }		// So long as pivot.merged.genmodel is UML-based
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
     	genModel = "/org.eclipse.ocl.xtext.markup/model/Markup.genmodel"
     }
