@@ -5,7 +5,7 @@
     <details key="documentation" value="The CGModel provides a Code Generation friendly form of the OCL Abstract Syntax pivot model, with distinct classes&#xA;such as LibraryPropertyCallExp and EcorePropertyCallExp for distinct purposes. Additional classes&#xA;such as BoxExp, CatchExp and CastExp support rewrite optimizations.&#xA;&lt;p>&#xA;References to the Abstract Syntax model are expressed as attributes with datatype values in order to avoid&#xA;confusion as to whether the new or old pivot mosdel is in use while code generating the pivot model."/>
   </eAnnotations>
   <eAnnotations source="http://www.eclipse.org/OCL/Import">
-    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="CGAccumulator" eSuperTypes="#//CGIterator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
