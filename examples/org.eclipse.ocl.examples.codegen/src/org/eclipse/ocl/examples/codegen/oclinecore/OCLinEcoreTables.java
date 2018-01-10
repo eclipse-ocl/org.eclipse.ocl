@@ -1139,9 +1139,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		StringBuilder s1 = new StringBuilder();
 		s1.append("/*******************************************************************************\n");
 		if (copyright != null) {
-			s1.append(" * ");
-			s1.append(copyright.replace("\r", ""));
-			s1.append("\n");
+			String copyrightText = " * " + copyright.replace("\r", "") + "\n";
+			s1.append(copyrightText.replaceAll("\\s+\\n", "\n"));
 		}
 		s1.append(" *************************************************************************\n");
 		s1.append(" * This code is 100% auto-generated\n");
