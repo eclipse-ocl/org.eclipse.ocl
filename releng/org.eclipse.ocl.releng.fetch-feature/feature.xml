@@ -3,7 +3,7 @@
       id="org.eclipse.ocl.releng.fetch"
       label="OCL Build Fetcher"
       version="1.0.1.v20140414-1359"
-      provider-name="Eclipse Modeling Project"
+      provider-name="Eclipse OCL"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
