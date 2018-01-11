@@ -40,7 +40,7 @@ Export-Package: org.eclipse.ocl,
  org.eclipse.ocl.utilities.util
 Import-Package: com.ibm.icu.lang;version="4.0.0";resolution:=optional,
  com.ibm.icu.text;version="4.0.0";resolution:=optional
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  lpg.runtime.java;bundle-version="[2.0.17,3.0.0)";visibility:=reexport,

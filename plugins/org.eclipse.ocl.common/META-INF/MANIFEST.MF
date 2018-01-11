@@ -17,7 +17,7 @@ Export-Package: org.eclipse.ocl.common,
  org.eclipse.ocl.common.internal.options,
  org.eclipse.ocl.common.internal.preferences,
  org.eclipse.ocl.common.preferences
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport
 Bundle-Vendor: %providerName
 Automatic-Module-Name: org.eclipse.ocl.common
