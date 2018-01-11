@@ -87,6 +87,7 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			BaseUIActivator.getMultiValidationJob().addValidations(selectedFiles);
 			progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Queuing, builderName));
 			progress.worked(1);
+			progress.done();
 		}
 
 		public @Nullable Boolean isSelected(@NonNull IResource resource) {
