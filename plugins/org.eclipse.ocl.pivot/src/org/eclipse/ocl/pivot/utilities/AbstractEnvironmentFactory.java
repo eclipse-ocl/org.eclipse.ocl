@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 
 /**
@@ -93,6 +94,11 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
  */
 public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension
 {
+	/**
+	 * @since 1.4
+	 */
+	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
+
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
@@ -141,6 +147,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			projectManager.initializeResourceSet(externalResourceSet);
 			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(externalResourceSet);
+		}
+		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Create(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(externalResourceSet));
 		}
 		adapt(externalResourceSet);
 		this.metamodelManager = null;
@@ -201,9 +210,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public synchronized void attach(Object object) {
 		if (attachCount < 0) {
+			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this));
+			}
 			throw new IllegalStateException(getClass().getName() + " disposed");
 		}
 		attachCount++;
+		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + (attachCount-1) + ":" + attachCount + ") " + NameUtil.debugSimpleName(this));
+		}
 		//		if (attachers == null) {
 		//			attachers = new ArrayList<WeakReference<Object>>();
 		//		}
@@ -489,6 +504,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public synchronized void detach(Object object) {
 		if (attachCount < 0) {
+			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this));
+			}
 			return;					// Ignore detach after dispose
 		}
 		if (attachCount == 0) {
@@ -505,10 +523,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (--attachCount <= 0) {
 			dispose();
 		}
+		//		ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] gc() " + NameUtil.debugSimpleName(this));
 	}
 
 	@Override
 	public void dispose() {
+		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Dispose(" + attachCount + ") " + NameUtil.debugSimpleName(this));
+		}
 		if (attachCount < 0) {
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
@@ -585,6 +607,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			csi2asMapping.dispose();
 			csi2asMapping = null;
 		}
+		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+		//			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] disposeInternal " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
+		//		}
 	}
 
 	/**
