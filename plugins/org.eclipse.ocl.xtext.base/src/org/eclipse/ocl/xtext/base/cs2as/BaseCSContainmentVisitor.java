@@ -44,6 +44,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -93,6 +95,16 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Continuation<?>, @NonNull CS2ASConversion>
 {
+	private static final class NotOperationFilter implements ScopeFilter
+	{		// FIXME BUG 388627 workaround for BUG 529771 requirement for arbitrary Element literals
+		public static NotOperationFilter INSTANCE = new NotOperationFilter();
+
+		@Override
+		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
+			return !(object instanceof Operation);
+		}
+	}
+
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 
@@ -400,7 +412,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	public Continuation<?> visitModelElementRefCS(@NonNull ModelElementRefCS csElement) {
 		PathNameCS pathName = csElement.getOwnedPathName();
 		if (pathName != null) {
-			CS2AS.setElementType(pathName, PivotPackage.Literals.ELEMENT, csElement, null);
+			CS2AS.setElementType(pathName, PivotPackage.Literals.ELEMENT, csElement, NotOperationFilter.INSTANCE);
 		}
 		return null;
 	}
