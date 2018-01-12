@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigationRole;
@@ -27,25 +26,36 @@ import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
 
 public class OperationMatcher extends AbstractOperationMatcher
 {
-	protected final @NonNull List<@NonNull OCLExpression> asArguments = new ArrayList<>();
+	private @Nullable List<@NonNull OCLExpression> asArguments = null;
 
-	public OperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
+	public OperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
 		super(environmentFactory, sourceType, sourceTypeValue);
-		for (NavigatingArgCS csNavigatingArg : csRoundBracketedClause.getOwnedArguments()) {
-			if (csNavigatingArg.getRole() == NavigationRole.EXPRESSION) {
-				OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
-				asArguments.add(ClassUtil.nonNullState(asArgument));						// FIXME move from constructor exception to init() fail
-			}
-		}
 	}
 
 	@Override
 	public @NonNull OCLExpression getArgument(int i) {
+		assert asArguments != null;
 		return asArguments.get(i);
 	}
 
 	@Override
 	public int getArgumentCount() {
+		assert asArguments != null;
 		return asArguments.size();
+	}
+
+	public boolean init(@NonNull RoundBracketedClauseCS csRoundBracketedClause) {
+		List<@NonNull OCLExpression> asArguments = new ArrayList<>();
+		for (NavigatingArgCS csNavigatingArg : csRoundBracketedClause.getOwnedArguments()) {
+			if (csNavigatingArg.getRole() == NavigationRole.EXPRESSION) {
+				OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
+				if (asArgument == null) {
+					return false;
+				}
+				asArguments.add(asArgument);
+			}
+		}
+		this.asArguments = asArguments;
+		return true;
 	}
 }

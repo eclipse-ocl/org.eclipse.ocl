@@ -637,13 +637,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (explicitSourceType == null) {
 				explicitSourceType = invocations.getSourceType();
 			}
-			OperationMatcher matcher = new OperationMatcher(environmentFactory, explicitSourceType, csNameExp.getSourceTypeValue(), csRoundBracketedClause);
-			Operation asOperation = matcher.getBestOperation(invocations, false);
-			//
-			//	Try again with argument coercion.
-			//
-			if (asOperation == null) {
-				asOperation = matcher.getBestOperation(invocations, true);
+			Operation asOperation = null;
+			OperationMatcher matcher = new OperationMatcher(environmentFactory, explicitSourceType, csNameExp.getSourceTypeValue());
+			boolean isMatchable = matcher.init(csRoundBracketedClause);
+			if (isMatchable) {
+				asOperation = matcher.getBestOperation(invocations, false);
+				//
+				//	Try again with argument coercion.
+				//
+				if (asOperation == null) {
+					asOperation = matcher.getBestOperation(invocations, true);
+				}
 			}
 			//
 			//	Search for invocations with a coerced source.
@@ -657,10 +661,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							Type corcedSourceType = coercion.getType();
 							Invocations coercedInvocations = getInvocations(corcedSourceType, null, csRoundBracketedClause);
 							if (coercedInvocations != null) {
-								matcher = new OperationMatcher(environmentFactory, corcedSourceType, null, csRoundBracketedClause);
-								asOperation = matcher.getBestOperation(coercedInvocations, false);
-								if (asOperation == null) {
-									asOperation = matcher.getBestOperation(coercedInvocations, true);
+								matcher = new OperationMatcher(environmentFactory, corcedSourceType, null);
+								isMatchable = matcher.init(csRoundBracketedClause);
+								if (isMatchable) {
+									asOperation = matcher.getBestOperation(coercedInvocations, false);
+									if (asOperation == null) {
+										asOperation = matcher.getBestOperation(coercedInvocations, true);
+									}
 								}
 							}
 							if (asOperation != null) {
