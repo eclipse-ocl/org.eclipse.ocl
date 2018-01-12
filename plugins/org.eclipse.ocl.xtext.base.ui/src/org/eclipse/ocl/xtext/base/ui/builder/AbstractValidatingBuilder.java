@@ -46,6 +46,9 @@ import org.eclipse.osgi.util.NLS;
  */
 public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilder
 {
+	// FIXME it would be nice to use use a derived OCL_PROBLEM_MARKER
+	private static final @NonNull String EMF_PROBLEM_MARKER = "org.eclipse.emf.ecore.diagnostic";
+
 	protected static class BuildSelector implements IResourceVisitor, IResourceDeltaVisitor
 	{
 		protected final @NonNull String builderName;
@@ -179,8 +182,13 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 		}
 
 		public void deleteMarkers() {
-			// TODO Auto-generated method stub
-
+			for (@NonNull IFile selectedFile : selectedFiles) {
+				try {
+					selectedFile.deleteMarkers(EMF_PROBLEM_MARKER, true, IResource.DEPTH_ZERO);
+				} catch (CoreException e) {
+					// e.printStackTrace();  -- if deleteMarkers fails we probably don't want extra noise
+				}
+			}
 		}
 	}
 
