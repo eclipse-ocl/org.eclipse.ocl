@@ -14,7 +14,7 @@
 				</dictionary>
 				<dictionary>
 					<key>disabledPaths</key>
-					<value>target/**</value>
+					<value>bin/**,target/**</value>
 				</dictionary>
 				<dictionary>
 					<key>enabledExtensions</key>
@@ -22,7 +22,7 @@
 				</dictionary>
 				<dictionary>
 					<key>enabledPaths</key>
-					<value>model/**</value>
+					<value>**</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
