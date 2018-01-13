@@ -44,6 +44,8 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
+import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
+import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
@@ -139,12 +141,14 @@ extends TestCase {
 		return result;
 	}
 
-	public Object run(Object args)
-			throws Exception {
-
+	public Object run(Object args) throws Exception {
 		TestRunner.run(suite());
+		//		System.out.println("End of test");
+		BaseUIActivator.cancelMultiValidationJob();
+		//		System.out.println("MultiValidationJob cancelled");
+		TestUIUtil.wait(1000);
+		//		System.out.println("Closing test log");
 		PivotTestCase.closeTestLog();
-		return Arrays
-				.asList(new String[] {"Please see raw test suite output for details."});
+		return Arrays.asList(new String[] {"Please see raw test suite output for details."});
 	}
 }

@@ -20,6 +20,14 @@ public class BaseUIActivator extends BaseActivator
 {
 	private static @Nullable MultiValidationJob multiValidationJob = null;
 
+	public static synchronized void cancelMultiValidationJob() {
+		MultiValidationJob multiValidationJob2 = multiValidationJob;
+		if (multiValidationJob2 != null) {
+			multiValidationJob2.cancel();
+			multiValidationJob = null;
+		}
+	}
+
 	public static synchronized @NonNull MultiValidationJob getMultiValidationJob() {
 		MultiValidationJob multiValidationJob2 = multiValidationJob;
 		if (multiValidationJob2 == null) {
