@@ -728,7 +728,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		 *
 		 * This code is auto-generated
 		 * from: «projectName»/«sourceFile»
-		 «IF template != null»
+		 «IF template !== null»
 		 * template: «template»
 		 «ENDIF»
 		 *

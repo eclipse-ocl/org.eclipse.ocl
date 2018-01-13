@@ -64,7 +64,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def String emitAction(/*@NonNull*/ Action action) {
-		if (action.feature != null) {
+		if (action.feature !== null) {
 			return "\n{" + emitTypeRef(action.type) + action.feature + action.operator + "current}";
 		}
 		else {
@@ -73,7 +73,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def String emitAlternatives(/*@NonNull*/ Alternatives alternatives, boolean atRoot) {
-		if (atRoot && (alternatives.cardinality == null)) {
+		if (atRoot && (alternatives.cardinality === null)) {
 		'''«FOR element : alternatives.elements SEPARATOR '\n| '»«emitAbstractElement(element, false)»«ENDFOR»'''
 		}
 		else {
@@ -117,7 +117,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 
 	protected def emitCS2AS(/*@NonNull*/ Class asClass, /*@NonNull*/ Package cs2asPackage) {
 		var cs2asClass = NameUtil.getNameable(cs2asPackage.getOwnedClasses(), asClass.getName());
-		if (cs2asClass != null)  {
+		if (cs2asClass !== null)  {
 		'''
 
 		«emitHeading0a("Abstract Syntax Synthesis")»
@@ -125,7 +125,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 
 			«emitHeading0b(prettyPrint(asOperation, cs2asClass))»
 			«emitComment(asOperation, asClass)»
-			«IF asOperation.bodyExpression != null»
+			«IF asOperation.bodyExpression !== null»
 				«emitAllTT((asOperation.bodyExpression.getBody().trim()).replace("\n", "\n  "))»
 			«ENDIF»
 		«ENDFOR»
@@ -135,7 +135,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 
 	protected def emitCS2CS(/*@NonNull*/ Class asClass, /*@NonNull*/ Package cs2asPackage) {
 		var cs2csClass = NameUtil.getNameable(cs2asPackage.getOwnedClasses(), asClass.getName());
-		if (cs2csClass != null)  {
+		if (cs2csClass !== null)  {
 		'''
 
 		«emitHeading0a("Concrete Syntax Disambiguation")»
@@ -143,7 +143,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 
 			«emitHeading0b(prettyPrint(asOperation, cs2csClass))»
 			«emitComment(asOperation, asClass)»
-			«IF asOperation.bodyExpression != null»
+			«IF asOperation.bodyExpression !== null»
 				«emitAllTT((asOperation.bodyExpression.getBody().trim()).replace("\n", "\n  "))»
 			«ENDIF»
 		«ENDFOR»
@@ -152,7 +152,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def String emitCardinality(/*@NonNull*/ AbstractElement abstractElement) {
-		if (abstractElement.cardinality != null) {
+		if (abstractElement.cardinality !== null) {
 			return abstractElement.cardinality;
 		}
 		else {
@@ -161,7 +161,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def String emitCharacterRange(/*@NonNull*/ CharacterRange characterRange) {
-		if (characterRange.cardinality == null) {
+		if (characterRange.cardinality === null) {
 			return emitKeyword(characterRange.left) + '..' + emitKeyword(characterRange.right)
 		}
 		else {
@@ -183,10 +183,10 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 			«emitAssociations(asClass)»
 			«emitOperations(asClass)»
 			«emitParserRules(asClass, grammar)»
-			«IF cs2csPackage != null»
+			«IF cs2csPackage !== null»
 			«emitCS2CS(asClass, ClassUtil.nonNullState(cs2csPackage))»
 			«ENDIF»
-			«IF cs2asPackage != null»
+			«IF cs2asPackage !== null»
 			«emitCS2AS(asClass, ClassUtil.nonNullState(cs2asPackage))»
 			«ENDIF»
 		«ENDFOR»
@@ -209,7 +209,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def String emitGroup(/*@NonNull*/ Group group, boolean atRoot) {
-		if (atRoot && (group.cardinality == null)) {
+		if (atRoot && (group.cardinality === null)) {
 		'''«FOR element : group.elements SEPARATOR ' '»«emitAbstractElement(element, false)»«ENDFOR»'''
 		}
 		else {
@@ -235,7 +235,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 	}
 	
 	protected def emitMetamodelDeclaration(/*@NonNull*/ AbstractMetamodelDeclaration metamodelDeclaration) {
-		if (metamodelDeclaration.alias == null) {
+		if (metamodelDeclaration.alias === null) {
 			return metamodelDeclaration.EPackage.nsURI + " (default)";
 		}
 		else {
@@ -252,7 +252,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 		«FOR asOperation : asOperations»
 
 			«emitHeading0b(prettyPrint(asOperation, asClass) /*+ (asOperation.isInvalidating ? " invalidating" : "") + (asOperation.isValidating ? " validating" : "")*/)»
-			«IF asOperation.precedence != null»
+			«IF asOperation.precedence !== null»
 			
 				precedence: «emitHeading0b(asOperation.precedence.name)»
 			«ENDIF»
@@ -262,7 +262,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 				«prettyPrint(asConstraint, asClass)»
 				«emitEndDefinition»
 			«ENDFOR»
-			«IF asOperation.bodyExpression != null»
+			«IF asOperation.bodyExpression !== null»
 				«emitBeginDefinition»
 				body: «asOperation.bodyExpression.getBody()»
 				«emitEndDefinition»
@@ -354,7 +354,7 @@ public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 		else if ((typeRef.metamodel.alias == "ecore") && (typeRef.classifier.name == "EInt")) {
 			return "Integer";
 		}
-		else if (typeRef.metamodel.alias == null) {
+		else if (typeRef.metamodel.alias === null) {
 			return typeRef.classifier.name;
 		}
 		else {

@@ -113,7 +113,7 @@ public class GenerateLaTeXForLibraryXtend extends GenerateLaTeXForLibrary
 		«FOR asOperation : asOperations»
 
 			«emitHeading0b(prettyPrint(asOperation, asClass) /*+ (asOperation.isInvalidating ? " invalidating" : "") + (asOperation.isValidating ? " validating" : "")*/)»
-			«IF asOperation.precedence != null»
+			«IF asOperation.precedence !== null»
 			
 				precedence: «emitEmphasis(asOperation.precedence.name)»
 			«ENDIF»
@@ -123,7 +123,7 @@ public class GenerateLaTeXForLibraryXtend extends GenerateLaTeXForLibrary
 				«prettyPrint(asConstraint, asClass)»
 				«emitEndDefinition()»
 			«ENDFOR»
-			«IF asOperation.bodyExpression != null»
+			«IF asOperation.bodyExpression !== null»
 				«emitBeginDefinition()»
 				body: «asOperation.bodyExpression.getBody()»
 				«emitEndDefinition()»

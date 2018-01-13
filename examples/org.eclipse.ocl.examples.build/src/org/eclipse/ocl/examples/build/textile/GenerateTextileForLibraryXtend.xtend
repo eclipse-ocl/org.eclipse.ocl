@@ -124,7 +124,7 @@ public class GenerateTextileForLibraryXtend extends GenerateTextileForLibraryUti
 		«FOR asOperation : asOperations»
 
 			@«prettyPrint(asOperation, asClass)»«IF asOperation.isInvalidating» invalidating«ENDIF»«IF asOperation.isValidating» validating«ENDIF»@
-			«IF asOperation.precedence != null»
+			«IF asOperation.precedence !== null»
 				precedence: @«asOperation.precedence.name»@
 			«ENDIF»
 			«emitComment(asOperation, asClass)»
@@ -134,7 +134,7 @@ public class GenerateTextileForLibraryXtend extends GenerateTextileForLibraryUti
 				«prettyPrint(asConstraint, asClass)»
 				p. 
 			«ENDFOR»
-			«IF asOperation.bodyExpression != null»
+			«IF asOperation.bodyExpression !== null»
 
 				bc.. 
 				body: «asOperation.bodyExpression.getBody()»

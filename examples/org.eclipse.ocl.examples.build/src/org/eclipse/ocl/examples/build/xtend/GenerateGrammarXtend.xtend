@@ -379,7 +379,7 @@ public class GenerateGrammarXtend extends GenerateGrammar
 	
 	/*@NonNull*/ protected def String wrapCardinality(/*@NonNull*/ AbstractElement eObject, String generatedElement) {
 		var String cardinality = eObject.getCardinality();
-		if (cardinality == null) {
+		if (cardinality === null) {
 			return generatedElement;
 		}
 		else {

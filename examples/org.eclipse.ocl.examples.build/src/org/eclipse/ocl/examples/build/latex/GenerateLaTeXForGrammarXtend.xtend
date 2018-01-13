@@ -101,7 +101,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def String emitAction(/*@NonNull*/ Action action) {
-		if (action.feature != null) {
+		if (action.feature !== null) {
 			return "\n{" + emitTypeRef(action.type) + action.feature + action.operator + "current}";
 		}
 		else {
@@ -110,7 +110,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def String emitAlternatives(/*@NonNull*/ Alternatives alternatives, boolean atRoot) {
-		if (atRoot && (alternatives.cardinality == null)) {
+		if (atRoot && (alternatives.cardinality === null)) {
 		'''«FOR element : alternatives.elements SEPARATOR '\n| '»«emitAbstractElement(element, false)»«ENDFOR»'''
 		}
 		else {
@@ -123,7 +123,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def String emitCardinality(/*@NonNull*/ AbstractElement abstractElement) {
-		if (abstractElement.cardinality != null) {
+		if (abstractElement.cardinality !== null) {
 			return abstractElement.cardinality;
 		}
 		else {
@@ -132,7 +132,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def String emitCharacterRange(/*@NonNull*/ CharacterRange characterRange) {
-		if (characterRange.cardinality == null) {
+		if (characterRange.cardinality === null) {
 			return emitKeyword(characterRange.left) + '..' + emitKeyword(characterRange.right)
 		}
 		else {
@@ -145,7 +145,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def String emitGroup(/*@NonNull*/ Group group, boolean atRoot) {
-		if (atRoot && (group.cardinality == null)) {
+		if (atRoot && (group.cardinality === null)) {
 		'''«FOR element : group.elements SEPARATOR ' '»«emitAbstractElement(element, false)»«ENDFOR»'''
 		}
 		else {
@@ -158,7 +158,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 	}
 	
 	protected def emitMetamodelDeclaration(/*@NonNull*/ AbstractMetamodelDeclaration metamodelDeclaration) {
-		if (metamodelDeclaration.alias == null) {
+		if (metamodelDeclaration.alias === null) {
 			return metamodelDeclaration.EPackage.nsURI + " (default)";
 		}
 		else {
@@ -173,7 +173,7 @@ public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 		else if ((typeRef.metamodel.alias == "ecore") && (typeRef.classifier.name == "EInt")) {
 			return "Integer";
 		}
-		else if (typeRef.metamodel.alias == null) {
+		else if (typeRef.metamodel.alias === null) {
 			return typeRef.classifier.name;
 		}
 		else {
