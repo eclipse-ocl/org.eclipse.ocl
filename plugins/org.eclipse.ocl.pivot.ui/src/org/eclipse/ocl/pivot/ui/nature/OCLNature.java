@@ -45,8 +45,8 @@ public class OCLNature implements IProjectNature
 		Map<String, String> args = new HashMap<>();
 		args.put("disabledExtensions", "*,essentialocl");
 		args.put("enabledExtensions", "ecore,ocl,oclinecore,oclstdlib,uml");
-		args.put("disabledPaths", "target/**");
-		args.put("enabledPaths", "model/**");
+		args.put("disabledPaths", "bin/**,target/**");
+		args.put("enabledPaths", "**");
 		command.setArguments(args);
 		newCommands[0] = command;
 		desc.setBuildSpec(newCommands);

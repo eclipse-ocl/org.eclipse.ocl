@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jdt.core.compiler.CharOperation;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.osgi.util.NLS;
@@ -49,6 +50,48 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	// FIXME it would be nice to use use a derived OCL_PROBLEM_MARKER
 	private static final @NonNull String EMF_PROBLEM_MARKER = "org.eclipse.emf.ecore.diagnostic";
 
+	/**
+	 * This is a copy of org.eclipse.jdt.internal.compiler.util.Util.isExcluded
+	 *
+	 * FIXME BUG 529789 requests its availability in CharOperation.
+	 */
+	private final static boolean isExcluded(char[] path, char[][] inclusionPatterns, char[][] exclusionPatterns, boolean isFolderPath) {
+		if (inclusionPatterns == null && exclusionPatterns == null) return false;
+
+		inclusionCheck: if (inclusionPatterns != null) {
+			for (int i = 0, length = inclusionPatterns.length; i < length; i++) {
+				char[] pattern = inclusionPatterns[i];
+				char[] folderPattern = pattern;
+				if (isFolderPath) {
+					int lastSlash = CharOperation.lastIndexOf('/', pattern);
+					if (lastSlash != -1 && lastSlash != pattern.length-1){ // trailing slash -> adds '**' for free (see http://ant.apache.org/manual/dirtasks.html)
+						int star = CharOperation.indexOf('*', pattern, lastSlash);
+						if ((star == -1
+								|| star >= pattern.length-1
+								|| pattern[star+1] != '*')) {
+							folderPattern = CharOperation.subarray(pattern, 0, lastSlash);
+						}
+					}
+				}
+				if (CharOperation.pathMatch(folderPattern, path, true, '/')) {
+					break inclusionCheck;
+				}
+			}
+			return true; // never included
+		}
+		if (isFolderPath) {
+			path = CharOperation.concat(path, new char[] {'*'}, '/');
+		}
+		if (exclusionPatterns != null) {
+			for (int i = 0, length = exclusionPatterns.length; i < length; i++) {
+				if (CharOperation.pathMatch(exclusionPatterns[i], path, true, '/')) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static class BuildSelector implements IResourceVisitor, IResourceDeltaVisitor
 	{
 		protected final @NonNull String builderName;
@@ -56,6 +99,8 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 		protected final @NonNull BuildType buildType;
 		private SubMonitor progress;
 		private final @NonNull Map<@NonNull String, @Nullable Boolean> extension2included = new HashMap<>();
+		private final char[][] exclusionPatterns;
+		private final char[][] inclusionPatterns;
 
 		private final @NonNull Set<@NonNull IPath> removedPaths = new HashSet<>();
 		private final @NonNull Set<@NonNull IFile> selectedFiles = new HashSet<>();
@@ -66,6 +111,8 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			this.buildType = buildType;
 			String initializingMessage = NLS.bind(BaseUIMessages.MultiValidationJob_Initializing, builderName, project.getName());
 			this.progress = SubMonitor.convert(monitor, initializingMessage, 100);
+			String[] disabledPathArray = null;
+			String[] enabledPathArray = null;
 			if (args != null) {
 				String includedExtensions = args.get("enabledExtensions");
 				if (includedExtensions != null) {
@@ -81,6 +128,34 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 						// assert oldExcludes != null; double false / conflicting false is not really an issue
 					}
 				}
+				String enabledPaths = args.get("enabledPaths");
+				if (enabledPaths != null) {
+					enabledPathArray = enabledPaths.split(",");
+				}
+				String disabledPaths = args.get("disabledPaths");
+				if (disabledPaths != null) {
+					disabledPathArray = disabledPaths.split(",");
+				}
+			}
+			if (enabledPathArray != null) {
+				inclusionPatterns = new char[enabledPathArray.length][];
+				for (int i = 0; i < enabledPathArray.length; i++) {
+					String enabledPath = enabledPathArray[i];
+					inclusionPatterns[i] = (enabledPath.length() > 0 ? enabledPath : "**").toCharArray();
+				}
+			}
+			else {
+				inclusionPatterns = null;
+			}
+			if (disabledPathArray != null) {
+				exclusionPatterns = new char[disabledPathArray.length][];
+				for (int i = 0; i < disabledPathArray.length; i++) {
+					String disabledPath = disabledPathArray[i];
+					exclusionPatterns[i] = (disabledPath.length() > 0 ? disabledPath : "**").toCharArray();
+				}
+			}
+			else {
+				exclusionPatterns = null;
 			}
 			progress.worked(1);
 		}
@@ -94,15 +169,26 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 		}
 
 		public @Nullable Boolean isSelected(@NonNull IResource resource) {
-			if (resource instanceof IContainer) {
-				return null;		// FIXME includedPaths
+			if (resource instanceof IFile) {
+				String fileExtension = resource.getFileExtension();
+				if (extension2included.get(fileExtension) != Boolean.TRUE) {
+					return Boolean.FALSE;
+				}
+				String filePath = resource.getProjectRelativePath().toString();
+				char[] path = filePath.toCharArray();
+				boolean isExcluded = isExcluded(path, inclusionPatterns, exclusionPatterns, false);
+				//				System.out.println(filePath + " isExcluded " + isExcluded);
+				return isExcluded ? Boolean.FALSE : Boolean.TRUE;
 			}
-			else if (!(resource instanceof IFile)) {
-				return null;		// FIXME includedPaths
+			else if (resource instanceof IFolder) {
+				String filePath = resource.getProjectRelativePath().toString();
+				char[] path = filePath.toCharArray();
+				boolean isExcluded = isExcluded(path, inclusionPatterns, exclusionPatterns, true);
+				//				System.out.println(filePath + " isExcluded " + isExcluded);
+				return isExcluded ? Boolean.FALSE : null;
 			}
 			else {
-				String fileExtension = resource.getFileExtension();
-				return extension2included.get(fileExtension) == Boolean.TRUE ? Boolean.TRUE : Boolean.FALSE;
+				return null;
 			}
 		}
 
