@@ -150,6 +150,9 @@ public class MultiValidationJob extends Job
 		assert resourceSet != null;
 		Diagnostician instance = PivotDiagnostician.createDiagnostician(resourceSet, EValidator.Registry.INSTANCE, null/*adapterFactory*/, monitor);
 		for (EObject eObject : resource.getContents()) {
+			if (monitor.isCanceled()) {
+				return;
+			}
 			instance.validate(eObject, diagnostics, validationContext);
 		}
 		markerHelper.updateMarkers(diagnostics);
