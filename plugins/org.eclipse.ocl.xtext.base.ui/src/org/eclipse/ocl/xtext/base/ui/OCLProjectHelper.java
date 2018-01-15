@@ -14,13 +14,14 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  */
 public class OCLProjectHelper {
 
-	public static final String NATURE_ID = "org.eclipse.ocl.pivot.ui.oclnature"; //$NON-NLS-1$
-	public static final String BUILDER_ID = "org.eclipse.ocl.pivot.ui.oclbuilder"; //$NON-NLS-1$
+	public static final @NonNull String NATURE_ID = "org.eclipse.ocl.pivot.ui.oclnature"; //$NON-NLS-1$
+	public static final @NonNull String BUILDER_ID = "org.eclipse.ocl.pivot.ui.oclbuilder"; //$NON-NLS-1$
 
 	private static final Logger log = Logger.getLogger(OCLProjectHelper.class);
 

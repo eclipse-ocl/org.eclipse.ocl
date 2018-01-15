@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.utilities;
 
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -96,25 +97,25 @@ public class BaseUIUtil
 	public static @Nullable Object getSelectedObject(@Nullable ISelection sel, @Nullable IWorkbenchSite site) {
 		Object selectedObject = null;
 		if (sel instanceof ITextSelection) {
-	    	selectedObject = BaseUIUtil.getXtextTextSelection((ITextSelection)sel, site);
-	    }
-	    else {
-	    	if (sel instanceof IStructuredSelection) {
-	            IStructuredSelection ssel = (IStructuredSelection) sel;
-	            if (!ssel.isEmpty()) {
-	                selectedObject = ssel.getFirstElement();
-	            }
-		    }
-		    if (selectedObject instanceof IOutlineNode) {
-	    	    selectedObject = BaseUIUtil.getXtextOutlineSelection((IOutlineNode)selectedObject, site);
-		    }
-	    }
+			selectedObject = BaseUIUtil.getXtextTextSelection((ITextSelection)sel, site);
+		}
+		else {
+			if (sel instanceof IStructuredSelection) {
+				IStructuredSelection ssel = (IStructuredSelection) sel;
+				if (!ssel.isEmpty()) {
+					selectedObject = ssel.getFirstElement();
+				}
+			}
+			if (selectedObject instanceof IOutlineNode) {
+				selectedObject = BaseUIUtil.getXtextOutlineSelection((IOutlineNode)selectedObject, site);
+			}
+		}
 		return selectedObject;
 	}
 
 	public static @Nullable Object getXtextOutlineSelection(@NonNull IOutlineNode outlineNodeSelection, @Nullable IWorkbenchSite site) {
 		if (outlineNodeSelection instanceof EObjectNode) {
-		    final EObjectNode selectedObjectNode = (EObjectNode) outlineNodeSelection;
+			final EObjectNode selectedObjectNode = (EObjectNode) outlineNodeSelection;
 			IXtextDocument xtextDocument = getActiveDocument(site);
 			if (xtextDocument != null) {
 				final URI eObjectURI = selectedObjectNode.getEObjectURI();
@@ -137,11 +138,11 @@ public class BaseUIUtil
 			}
 		}
 		else if (outlineNodeSelection instanceof EStructuralFeatureNode) {
-//			return null;
+			//			return null;
 		}
 		return null;
 	}
-	
+
 	public static @Nullable Object getXtextTextSelection(final @NonNull ITextSelection textSelection, @Nullable IWorkbenchSite site) {
 		IXtextDocument xtextDocument = getActiveDocument(site);
 		if (xtextDocument == null) {
@@ -169,5 +170,24 @@ public class BaseUIUtil
 				return leafNode.getSemanticElement();
 			}
 		});
+	}
+
+	public static void toggleNature(@NonNull IProjectDescription description, @NonNull String natureId) {
+		String[] natures = description.getNatureIds();
+		for (int i = 0; i < natures.length; ++i) {
+			if (natureId.equals(natures[i])) {
+				// Remove the nature
+				String[] newNatures = new String[natures.length - 1];
+				System.arraycopy(natures, 0, newNatures, 0, i);
+				System.arraycopy(natures, i + 1, newNatures, i, natures.length - i - 1);
+				description.setNatureIds(newNatures);
+				return;
+			}
+		}
+		// Add the nature
+		String[] newNatures = new String[natures.length + 1];
+		System.arraycopy(natures, 0, newNatures, 0, natures.length);
+		newNatures[natures.length] = natureId;
+		description.setNatureIds(newNatures);
 	}
 }

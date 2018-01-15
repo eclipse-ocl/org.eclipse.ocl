@@ -37,7 +37,9 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
+import org.eclipse.ocl.xtext.base.ui.utilities.BaseUIUtil;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.completeocl.ui.messages.CompleteOCLUIMessages;
 import org.eclipse.ocl.xtext.completeocl.ui.wizards.CompleteOCLFileDialog;
@@ -168,6 +170,7 @@ public class FileNewWizardTest extends TestCase
 		final IWorkspaceRoot root = workspace.getRoot();
 		IProjectDescription description = workspace.newProjectDescription(TEST_PROJECT_NAME);
 		project = root.getProject(description.getName());
+		BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
 		if (project.exists()) {
 			project.delete(true, true, nullMonitor);
