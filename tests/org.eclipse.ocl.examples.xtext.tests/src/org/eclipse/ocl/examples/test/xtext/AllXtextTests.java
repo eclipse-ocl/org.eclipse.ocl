@@ -132,7 +132,7 @@ extends TestCase {
 			result.addTestSuite(EditorTests.class);
 			result.addTestSuite(FileNewWizardTest.class);
 			result.addTestSuite(PluginLabelTests.class);
-			//			result.addTestSuite(DebuggerTests.class);
+			// FIXME Bug 529886 result.addTestSuite(DebuggerTests.class);
 		}
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
