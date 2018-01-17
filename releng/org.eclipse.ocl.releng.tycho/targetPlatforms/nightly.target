@@ -18,8 +18,8 @@
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
-    <!--repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4-I-builds"/-->
-    <!--repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4milestones"/-->
+    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4-I-builds"/>
+    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4milestones"/>
     <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
