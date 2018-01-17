@@ -162,8 +162,11 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 
 		public void buildResources() {
 			progress.setWorkRemaining(1);
-			BaseUIActivator.getMultiValidationJob().addValidations(selectedFiles);
-			progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Queuing, builderName));
+			MultiValidationJob multiValidationJob = BaseUIActivator.getMultiValidationJob();
+			if (multiValidationJob != null) {
+				multiValidationJob.addValidations(selectedFiles);
+				progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Queuing, builderName));
+			}
 			progress.worked(1);
 			progress.done();
 		}
@@ -328,6 +331,6 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	protected abstract Logger getLog();
 
 	private void handleCanceled(Throwable t) {
-		BaseUIActivator.getMultiValidationJob().cancel();
+		BaseUIActivator.cancelMultiValidationJob();
 	}
 }

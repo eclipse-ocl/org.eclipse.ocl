@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.ui.builder.MultiValidationJob;
 import org.eclipse.ocl.xtext.base.ui.internal.BaseActivator;
@@ -20,6 +19,11 @@ public class BaseUIActivator extends BaseActivator
 {
 	private static @Nullable MultiValidationJob multiValidationJob = null;
 
+	/* For test purposes only */
+	public static @Nullable MultiValidationJob basicGetMultiValidationJob() {
+		return multiValidationJob;
+	}
+
 	public static synchronized void cancelMultiValidationJob() {
 		MultiValidationJob multiValidationJob2 = multiValidationJob;
 		if (multiValidationJob2 != null) {
@@ -28,26 +32,24 @@ public class BaseUIActivator extends BaseActivator
 		}
 	}
 
-	public static synchronized @NonNull MultiValidationJob getMultiValidationJob() {
-		MultiValidationJob multiValidationJob2 = multiValidationJob;
-		if (multiValidationJob2 == null) {
-			multiValidationJob = multiValidationJob2 = new MultiValidationJob();
+	/**
+	 * Return the MultiValidationJob, creating one if none curremtly exists.
+	 * Returns null if this plugin has been shutdown.
+	 */
+	public static synchronized @Nullable MultiValidationJob getMultiValidationJob() {
+		if ((multiValidationJob == null) && (getInstance() != null)) {
+			multiValidationJob = new MultiValidationJob();
 		}
-		return multiValidationJob2;
+		return multiValidationJob;
 	}
 
 	public BaseUIActivator() {
 		super();
 	}
 
-
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
-		MultiValidationJob multiValidationJob2 = multiValidationJob;
-		if (multiValidationJob2 != null) {
-			multiValidationJob = null;
-			multiValidationJob2.cancel();
-		}
+		cancelMultiValidationJob();
 	}
 }
