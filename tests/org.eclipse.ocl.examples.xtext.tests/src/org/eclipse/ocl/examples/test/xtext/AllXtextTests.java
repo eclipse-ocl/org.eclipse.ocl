@@ -138,6 +138,9 @@ extends TestCase {
 			result.addTestSuite(StandaloneLabelTests.class);
 		}
 		result.addTestSuite(GrammarTests.class);
+		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+		// 	result.addTestSuite(FinalTests.class);
+		// }
 		return result;
 	}
 
