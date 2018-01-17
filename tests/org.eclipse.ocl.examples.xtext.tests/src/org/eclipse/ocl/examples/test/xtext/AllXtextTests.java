@@ -18,6 +18,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -72,6 +73,8 @@ extends TestCase {
 		//		}
 
 		String testSuiteName = System.getProperty("testSuiteName", "Xtext Editor Support");
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		boolean isTycho = "tycho".equals(testNameSuffix);
 		String testLogFile = System.getProperty("testLogFile", null);
 		if (testLogFile != null) {
 			PivotTestCase.createTestLog(new File(testLogFile));
@@ -125,12 +128,12 @@ extends TestCase {
 		result.addTestSuite(StandaloneExecutionTests.class);
 		result.addTestSuite(StandaloneParserTests.class);
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			result.addTestSuite(CompletionProposalTests.class);
-			result.addTestSuite(ConsoleTests.class);
-			result.addTestSuite(EcoreConsoleTests.class);
-			result.addTestSuite(UMLConsoleTests.class);
-			result.addTestSuite(EditorTests.class);
-			result.addTestSuite(FileNewWizardTest.class);
+			checkNotTycho(isTycho, result, CompletionProposalTests.class);
+			checkNotTycho(isTycho, result, ConsoleTests.class);
+			checkNotTycho(isTycho, result, EcoreConsoleTests.class);
+			checkNotTycho(isTycho, result, UMLConsoleTests.class);
+			checkNotTycho(isTycho, result, EditorTests.class);
+			checkNotTycho(isTycho, result, FileNewWizardTest.class);
 			result.addTestSuite(PluginLabelTests.class);
 			// FIXME Bug 529886 result.addTestSuite(DebuggerTests.class);
 		}
@@ -142,6 +145,15 @@ extends TestCase {
 		// 	result.addTestSuite(FinalTests.class);
 		// }
 		return result;
+	}
+
+	private static void checkNotTycho(boolean isTycho, @NonNull TestSuite result, @NonNull Class<? extends TestCase> testClass) {
+		if (isTycho) {
+			System.err.println(testClass.getSimpleName() + " <tycho> has been disabled - see Bug 529797");
+		}
+		else {
+			result.addTestSuite(testClass);
+		}
 	}
 
 	public Object run(Object args) throws Exception {
