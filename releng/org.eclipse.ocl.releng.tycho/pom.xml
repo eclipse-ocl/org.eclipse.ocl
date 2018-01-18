@@ -36,9 +36,7 @@
 
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
-    <buildId>${buildType}${buildTimestamp}${buildStream}</buildId>
-    <buildStream>u</buildStream>
-    <buildStreamWithQuotes>'u'</buildStreamWithQuotes>
+    <buildId>${buildType}${buildTimestamp}</buildId>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
     <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
@@ -243,25 +241,15 @@
             <archive>
               <addMavenDescriptor>false</addMavenDescriptor>
             </archive>
-            <format>'v'yyyyMMdd'-'HHmm${buildStreamWithQuotes}</format>
+            <format>'v'yyyyMMdd'-'HHmm</format>
             <sourceReferences>
               <generate>true</generate>
             </sourceReferences>
-            <timestampProvider>jgit</timestampProvider>
-            <jgit.ignore>
-              pom.xml
-              .polyglot.build.properties
-            </jgit.ignore>
           </configuration>
           <dependencies>
             <dependency>
               <groupId>org.eclipse.tycho.extras</groupId>
               <artifactId>tycho-sourceref-jgit</artifactId>
-              <version>${tycho-extras-version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.eclipse.tycho.extras</groupId>
-              <artifactId>tycho-buildtimestamp-jgit</artifactId>
               <version>${tycho-extras-version}</version>
             </dependency>
           </dependencies>
@@ -536,10 +524,6 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <buildStream></buildStream>
-        <buildStreamWithQuotes></buildStreamWithQuotes>
-      </properties>
       <build>
         <plugins>
           <plugin>
