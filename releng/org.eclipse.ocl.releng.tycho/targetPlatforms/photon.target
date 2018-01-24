@@ -10,7 +10,7 @@
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.14milestones/core"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -20,7 +20,7 @@
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20171130170529/repository"/>
+    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20180119201206/repository"/>
   </location>
 </locations>
 </target>
