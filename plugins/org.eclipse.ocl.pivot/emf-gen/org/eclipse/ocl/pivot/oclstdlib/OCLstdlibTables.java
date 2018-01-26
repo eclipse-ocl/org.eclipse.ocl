@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 Willink Transformations and others.
+ * Copyright (c) 2010, 2018 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-@SuppressWarnings("nls")
 public class OCLstdlibTables
 {
 	static {
@@ -551,15 +550,15 @@ public class OCLstdlibTables
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excludingAll = new ExecutorOperation("excludingAll", Parameters._Collection__OclAny__, Types._Collection,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__0_exists = new ExecutorOperation("exists", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__flatten = new ExecutorOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			16, TypeUtil.createTemplateParameters(TypeParameters.__Collection__flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
+			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_Collection_T_Boolean, Types._Collection,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__includes = new ExecutorOperation("includes", Parameters._OclAny, Types._Collection,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
@@ -1124,215 +1123,215 @@ public class OCLstdlibTables
 		}
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Bag =
-		{
-			Fragments._Bag__OclAny /* 0 */,
-			Fragments._Bag__Collection /* 1 */,
-			Fragments._Bag__Bag /* 2 */
-		};
+			{
+				Fragments._Bag__OclAny /* 0 */,
+				Fragments._Bag__Collection /* 1 */,
+				Fragments._Bag__Bag /* 2 */
+			};
 		private static final int @NonNull [] __Bag = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Boolean =
-		{
-			Fragments._Boolean__OclAny /* 0 */,
-			Fragments._Boolean__Boolean /* 1 */
-		};
+			{
+				Fragments._Boolean__OclAny /* 0 */,
+				Fragments._Boolean__Boolean /* 1 */
+			};
 		private static final int @NonNull [] __Boolean = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Collection =
-		{
-			Fragments._Collection__OclAny /* 0 */,
-			Fragments._Collection__Collection /* 1 */
-		};
+			{
+				Fragments._Collection__OclAny /* 0 */,
+				Fragments._Collection__Collection /* 1 */
+			};
 		private static final int @NonNull [] __Collection = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Integer =
-		{
-			Fragments._Integer__OclAny /* 0 */,
-			Fragments._Integer__OclComparable /* 1 */,
-			Fragments._Integer__OclSummable /* 1 */,
-			Fragments._Integer__Real /* 2 */,
-			Fragments._Integer__Integer /* 3 */
-		};
+			{
+				Fragments._Integer__OclAny /* 0 */,
+				Fragments._Integer__OclComparable /* 1 */,
+				Fragments._Integer__OclSummable /* 1 */,
+				Fragments._Integer__Real /* 2 */,
+				Fragments._Integer__Integer /* 3 */
+			};
 		private static final int @NonNull [] __Integer = { 1,2,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Map =
-		{
-			Fragments._Map__OclAny /* 0 */,
-			Fragments._Map__Map /* 1 */
-		};
+			{
+				Fragments._Map__OclAny /* 0 */,
+				Fragments._Map__Map /* 1 */
+			};
 		private static final int @NonNull [] __Map = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclAny =
-		{
-			Fragments._OclAny__OclAny /* 0 */
-		};
+			{
+				Fragments._OclAny__OclAny /* 0 */
+			};
 		private static final int @NonNull [] __OclAny = { 1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclComparable =
-		{
-			Fragments._OclComparable__OclAny /* 0 */,
-			Fragments._OclComparable__OclComparable /* 1 */
-		};
+			{
+				Fragments._OclComparable__OclAny /* 0 */,
+				Fragments._OclComparable__OclComparable /* 1 */
+			};
 		private static final int @NonNull [] __OclComparable = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclElement =
-		{
-			Fragments._OclElement__OclAny /* 0 */,
-			Fragments._OclElement__OclElement /* 1 */
-		};
+			{
+				Fragments._OclElement__OclAny /* 0 */,
+				Fragments._OclElement__OclElement /* 1 */
+			};
 		private static final int @NonNull [] __OclElement = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclEnumeration =
-		{
-			Fragments._OclEnumeration__OclAny /* 0 */,
-			Fragments._OclEnumeration__OclElement /* 1 */,
-			Fragments._OclEnumeration__OclType /* 2 */,
-			Fragments._OclEnumeration__OclEnumeration /* 3 */
-		};
+			{
+				Fragments._OclEnumeration__OclAny /* 0 */,
+				Fragments._OclEnumeration__OclElement /* 1 */,
+				Fragments._OclEnumeration__OclType /* 2 */,
+				Fragments._OclEnumeration__OclEnumeration /* 3 */
+			};
 		private static final int @NonNull [] __OclEnumeration = { 1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclInvalid =
-		{
-			Fragments._OclInvalid__OclAny /* 0 */,
-			Fragments._OclInvalid__OclVoid /* 1 */,
-			Fragments._OclInvalid__OclInvalid /* 2 */
-		};
+			{
+				Fragments._OclInvalid__OclAny /* 0 */,
+				Fragments._OclInvalid__OclVoid /* 1 */,
+				Fragments._OclInvalid__OclInvalid /* 2 */
+			};
 		private static final int @NonNull [] __OclInvalid = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclLambda =
-		{
-			Fragments._OclLambda__OclAny /* 0 */,
-			Fragments._OclLambda__OclLambda /* 1 */
-		};
+			{
+				Fragments._OclLambda__OclAny /* 0 */,
+				Fragments._OclLambda__OclLambda /* 1 */
+			};
 		private static final int @NonNull [] __OclLambda = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclMessage =
-		{
-			Fragments._OclMessage__OclAny /* 0 */,
-			Fragments._OclMessage__OclMessage /* 1 */
-		};
+			{
+				Fragments._OclMessage__OclAny /* 0 */,
+				Fragments._OclMessage__OclMessage /* 1 */
+			};
 		private static final int @NonNull [] __OclMessage = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclSelf =
-		{
-			Fragments._OclSelf__OclAny /* 0 */,
-			Fragments._OclSelf__OclSelf /* 1 */
-		};
+			{
+				Fragments._OclSelf__OclAny /* 0 */,
+				Fragments._OclSelf__OclSelf /* 1 */
+			};
 		private static final int @NonNull [] __OclSelf = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclState =
-		{
-			Fragments._OclState__OclAny /* 0 */,
-			Fragments._OclState__OclState /* 1 */
-		};
+			{
+				Fragments._OclState__OclAny /* 0 */,
+				Fragments._OclState__OclState /* 1 */
+			};
 		private static final int @NonNull [] __OclState = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclStereotype =
-		{
-			Fragments._OclStereotype__OclAny /* 0 */,
-			Fragments._OclStereotype__OclElement /* 1 */,
-			Fragments._OclStereotype__OclType /* 2 */,
-			Fragments._OclStereotype__OclStereotype /* 3 */
-		};
+			{
+				Fragments._OclStereotype__OclAny /* 0 */,
+				Fragments._OclStereotype__OclElement /* 1 */,
+				Fragments._OclStereotype__OclType /* 2 */,
+				Fragments._OclStereotype__OclStereotype /* 3 */
+			};
 		private static final int @NonNull [] __OclStereotype = { 1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclSummable =
-		{
-			Fragments._OclSummable__OclAny /* 0 */,
-			Fragments._OclSummable__OclSummable /* 1 */
-		};
+			{
+				Fragments._OclSummable__OclAny /* 0 */,
+				Fragments._OclSummable__OclSummable /* 1 */
+			};
 		private static final int @NonNull [] __OclSummable = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclTuple =
-		{
-			Fragments._OclTuple__OclAny /* 0 */,
-			Fragments._OclTuple__OclTuple /* 1 */
-		};
+			{
+				Fragments._OclTuple__OclAny /* 0 */,
+				Fragments._OclTuple__OclTuple /* 1 */
+			};
 		private static final int @NonNull [] __OclTuple = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclType =
-		{
-			Fragments._OclType__OclAny /* 0 */,
-			Fragments._OclType__OclElement /* 1 */,
-			Fragments._OclType__OclType /* 2 */
-		};
+			{
+				Fragments._OclType__OclAny /* 0 */,
+				Fragments._OclType__OclElement /* 1 */,
+				Fragments._OclType__OclType /* 2 */
+			};
 		private static final int @NonNull [] __OclType = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclVoid =
-		{
-			Fragments._OclVoid__OclAny /* 0 */,
-			Fragments._OclVoid__OclVoid /* 1 */
-		};
+			{
+				Fragments._OclVoid__OclAny /* 0 */,
+				Fragments._OclVoid__OclVoid /* 1 */
+			};
 		private static final int @NonNull [] __OclVoid = { 1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OrderedCollection =
-		{
-			Fragments._OrderedCollection__OclAny /* 0 */,
-			Fragments._OrderedCollection__Collection /* 1 */,
-			Fragments._OrderedCollection__OrderedCollection /* 2 */
-		};
+			{
+				Fragments._OrderedCollection__OclAny /* 0 */,
+				Fragments._OrderedCollection__Collection /* 1 */,
+				Fragments._OrderedCollection__OrderedCollection /* 2 */
+			};
 		private static final int @NonNull [] __OrderedCollection = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OrderedSet =
-		{
-			Fragments._OrderedSet__OclAny /* 0 */,
-			Fragments._OrderedSet__Collection /* 1 */,
-			Fragments._OrderedSet__OrderedCollection /* 2 */,
-			Fragments._OrderedSet__UniqueCollection /* 2 */,
-			Fragments._OrderedSet__OrderedSet /* 3 */
-		};
+			{
+				Fragments._OrderedSet__OclAny /* 0 */,
+				Fragments._OrderedSet__Collection /* 1 */,
+				Fragments._OrderedSet__OrderedCollection /* 2 */,
+				Fragments._OrderedSet__UniqueCollection /* 2 */,
+				Fragments._OrderedSet__OrderedSet /* 3 */
+			};
 		private static final int @NonNull [] __OrderedSet = { 1,1,2,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Real =
-		{
-			Fragments._Real__OclAny /* 0 */,
-			Fragments._Real__OclComparable /* 1 */,
-			Fragments._Real__OclSummable /* 1 */,
-			Fragments._Real__Real /* 2 */
-		};
+			{
+				Fragments._Real__OclAny /* 0 */,
+				Fragments._Real__OclComparable /* 1 */,
+				Fragments._Real__OclSummable /* 1 */,
+				Fragments._Real__Real /* 2 */
+			};
 		private static final int @NonNull [] __Real = { 1,2,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Sequence =
-		{
-			Fragments._Sequence__OclAny /* 0 */,
-			Fragments._Sequence__Collection /* 1 */,
-			Fragments._Sequence__OrderedCollection /* 2 */,
-			Fragments._Sequence__Sequence /* 3 */
-		};
+			{
+				Fragments._Sequence__OclAny /* 0 */,
+				Fragments._Sequence__Collection /* 1 */,
+				Fragments._Sequence__OrderedCollection /* 2 */,
+				Fragments._Sequence__Sequence /* 3 */
+			};
 		private static final int @NonNull [] __Sequence = { 1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Set =
-		{
-			Fragments._Set__OclAny /* 0 */,
-			Fragments._Set__Collection /* 1 */,
-			Fragments._Set__UniqueCollection /* 2 */,
-			Fragments._Set__Set /* 3 */
-		};
+			{
+				Fragments._Set__OclAny /* 0 */,
+				Fragments._Set__Collection /* 1 */,
+				Fragments._Set__UniqueCollection /* 2 */,
+				Fragments._Set__Set /* 3 */
+			};
 		private static final int @NonNull [] __Set = { 1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _String =
-		{
-			Fragments._String__OclAny /* 0 */,
-			Fragments._String__OclComparable /* 1 */,
-			Fragments._String__OclSummable /* 1 */,
-			Fragments._String__String /* 2 */
-		};
+			{
+				Fragments._String__OclAny /* 0 */,
+				Fragments._String__OclComparable /* 1 */,
+				Fragments._String__OclSummable /* 1 */,
+				Fragments._String__String /* 2 */
+			};
 		private static final int @NonNull [] __String = { 1,2,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _UniqueCollection =
-		{
-			Fragments._UniqueCollection__OclAny /* 0 */,
-			Fragments._UniqueCollection__Collection /* 1 */,
-			Fragments._UniqueCollection__UniqueCollection /* 2 */
-		};
+			{
+				Fragments._UniqueCollection__OclAny /* 0 */,
+				Fragments._UniqueCollection__Collection /* 1 */,
+				Fragments._UniqueCollection__UniqueCollection /* 2 */
+			};
 		private static final int @NonNull [] __UniqueCollection = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _UnlimitedNatural =
-		{
-			Fragments._UnlimitedNatural__OclAny /* 0 */,
-			Fragments._UnlimitedNatural__OclComparable /* 1 */,
-			Fragments._UnlimitedNatural__UnlimitedNatural /* 2 */
-		};
+			{
+				Fragments._UnlimitedNatural__OclAny /* 0 */,
+				Fragments._UnlimitedNatural__OclComparable /* 1 */,
+				Fragments._UnlimitedNatural__UnlimitedNatural /* 2 */
+			};
 		private static final int @NonNull [] __UnlimitedNatural = { 1,1,1 };
 
 		/**
@@ -1417,11 +1416,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Bag__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Bag__including /* including(T[?]) */,
@@ -1512,11 +1511,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
@@ -2049,11 +2048,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
@@ -2134,11 +2133,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._OrderedSet__including /* including(T[?]) */,
@@ -2275,11 +2274,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Sequence__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Sequence__including /* including(T[?]) */,
@@ -2360,11 +2359,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Set__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Set__including /* including(T[?]) */,
@@ -2501,11 +2500,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(OclAny)) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,

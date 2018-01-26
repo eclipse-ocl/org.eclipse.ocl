@@ -1054,8 +1054,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		if (isInited) return (OCLstdlibPackage)EPackage.Registry.INSTANCE.getEPackage(OCLstdlibPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		OCLstdlibPackage theOCLstdlibPackage = (OCLstdlibPackage)(ePackage instanceof OCLstdlibPackage ? ePackage : new OCLstdlibPackage());
+		Object registeredOCLstdlibPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		OCLstdlibPackage theOCLstdlibPackage = registeredOCLstdlibPackage instanceof OCLstdlibPackage ? (OCLstdlibPackage)registeredOCLstdlibPackage : new OCLstdlibPackage();
 
 		isInited = true;
 
@@ -1067,7 +1067,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		// Mark meta-data to indicate it can't be changed
 		theOCLstdlibPackage.freeze();
-
 
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, theOCLstdlibPackage);
@@ -1778,10 +1777,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createASLibraryAnnotations() {
 		String source = "http://www.eclipse.org/OCL/ASLibrary"; //$NON-NLS-1$
 		addAnnotation
-		(this,
-			source,
-			new String[] {
-		});
+		  (this,
+		   source,
+		   new String[] {
+		   });
 	}
 
 	/**

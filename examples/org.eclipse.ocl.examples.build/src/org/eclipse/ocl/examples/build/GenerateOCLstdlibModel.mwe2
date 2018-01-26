@@ -46,7 +46,7 @@ Workflow {
     	excludedEClassifierName = "State"
     	excludedEClassifierName = "Type"
     }
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/oclstdlib.genmodel"
     }
     component = Model2tablesGenerator { resourceSet = resourceSet
