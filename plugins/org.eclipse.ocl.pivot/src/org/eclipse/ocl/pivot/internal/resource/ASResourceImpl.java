@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -64,7 +65,19 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected XMLSave createXMLSave() {
-		return new PivotSaveImpl(new XMIHelperImpl(this));
+		return new PivotSaveImpl(new XMIHelperImpl(this)
+		{
+			@Override
+			public String getHREF(EObject obj) {
+				if (obj instanceof Property) {			// Avoid generating a referemce to an EObject that might not exist
+					Property asProperty = (Property)obj;
+					if (asProperty.isIsImplicit() && (asProperty.getOpposite() != null)) {
+						return null;
+					}
+				}
+				return super.getHREF(obj);
+			}
+		});
 	}
 
 	@Override
