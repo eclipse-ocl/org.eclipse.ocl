@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -232,6 +233,9 @@ public class PivotLUSSIDs extends LUSSIDs
 			}
 		}
 		else if (eObject instanceof Constraint) {
+			return true;
+		}
+		else if (eObject instanceof EnumerationLiteral) {
 			return true;
 		}
 		else if (eObject instanceof Model) {
