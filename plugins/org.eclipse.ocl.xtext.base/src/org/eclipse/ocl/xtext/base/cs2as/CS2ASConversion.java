@@ -571,6 +571,18 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return (T) intermediateCache.get(key);
 	}
 
+	public <T extends Element> List<T> getNewPivotElements(@NonNull Class<T> pivotClass, /*@NonNull*/ Iterable<? extends ModelElementCS> csElements) {
+		assert csElements != null;
+		List<T> newPivotElements = new ArrayList<T>();
+		for (ModelElementCS csElement : csElements) {
+			@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
+			if (pivotElement != null) {
+				newPivotElements.add(pivotElement);
+			}
+		}
+		return newPivotElements;
+	}
+
 	public org.eclipse.ocl.pivot.@Nullable Package getOldPackageByQualifiedName(@NonNull PackageCS csElement) {
 		String qualifiedName = getQualifiedName(new StringBuilder(), csElement);
 		return oldPackagesByQualifiedName.get(qualifiedName);
@@ -1040,13 +1052,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (pivotElements.isEmpty() && Iterables.isEmpty(csElements)) {
 			return;
 		}
-		List<T> newPivotElements = new ArrayList<T>();
-		for (ModelElementCS csElement : csElements) {
-			@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
-			if (pivotElement != null) {
-				newPivotElements.add(pivotElement);
-			}
-		}
+		List<T> newPivotElements = getNewPivotElements(pivotClass, csElements);
 		PivotUtilInternal.refreshList(pivotElements, newPivotElements);
 	}
 
