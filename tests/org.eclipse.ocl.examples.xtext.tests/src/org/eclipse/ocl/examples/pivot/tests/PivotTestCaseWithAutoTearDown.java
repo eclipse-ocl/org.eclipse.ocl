@@ -127,7 +127,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	protected @NonNull TestProject getTestProject() {
 		TestProject testProject2 = testProject;
 		if (testProject2 == null) {
-			String testProjectName = getClass().getSimpleName() + "__" + getTestName();
+			String testProjectName = "_OCL_" + getClass().getSimpleName() + "__" + getTestName();
 			testProject = testProject2 = getTestFileSystem().getTestProject(testProjectName, true);
 		}
 		return testProject2;

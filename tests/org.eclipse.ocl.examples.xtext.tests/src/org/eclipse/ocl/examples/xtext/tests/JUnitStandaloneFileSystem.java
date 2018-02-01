@@ -187,7 +187,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		JUnitStandaloneTestProject testProject = projectName2testProject.get(projectName);
 		if (testProject == null) {
 			URI newUri = URI.createPlatformResourceURI(projectName, true);
-			File newFile = new File("_" + projectName).getAbsoluteFile();
+			File newFile = new File(projectName).getAbsoluteFile();
 			if (cleanProject) {
 				if (newFile.exists()) {
 					TestUtil.deleteDirectory(newFile);
