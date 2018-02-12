@@ -47,9 +47,9 @@
     <resource-encoding>UTF-8</resource-encoding>
     <os-jvm-flags/>
 
-    <!-- plugins versions -->
-    <!-- use 'mvn versions:display-plugin-updates' to check for the latest -->
-    <tycho-version>1.0.0</tycho-version>
+    <!-- plugin versions -->
+    <!-- cd to the releng/org.eclipse.ocl.releng.tycho folder then use 'mvn versions:display-plugin-updates' to check for the latest -->
+    <tycho-version>1.1.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <maven-resources-version>2.6</maven-resources-version>
     <maven-antrun-version>1.7</maven-antrun-version>
