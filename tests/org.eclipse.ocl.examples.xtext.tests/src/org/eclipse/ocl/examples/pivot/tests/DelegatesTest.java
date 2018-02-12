@@ -119,7 +119,6 @@ import noreflectioncompany.util.NoreflectioncompanyValidator;
 /**
  * Tests for the OCL delegate implementations.
  */
-@SuppressWarnings("nls")
 public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 {
 	protected static final @NonNull String COMPANY_XMI = "/model/Company.xmi";

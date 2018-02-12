@@ -18,22 +18,21 @@ import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 /**
  * Tests for error reports from the backtracking parser.
  */
-@SuppressWarnings("nls")
 public abstract class GenericParserBacktrackingTest
 extends PivotTestSuite {
 
-/*	private final class MyProblemHandler extends AbstractProblemHandler
+	/*	private final class MyProblemHandler extends AbstractProblemHandler
 	{
 		protected final String source;
 		protected final String failure;
 		private int errors = 0;
-		
+
 		private MyProblemHandler(AbstractParser parser, String source, String failure) {
 			super(parser);
 			this.source = source;
 			this.failure = failure;
 		}
-		
+
 		public int getErrors() {
 			return errors;
 		}
@@ -52,90 +51,90 @@ extends PivotTestSuite {
 	public void test_reservedKeywordAsIdentifier() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: package endpackage",
-			"\"<simpleName>\" expected instead of \"package\"");
-    }
+				"\"<simpleName>\" expected instead of \"package\"");
+	}
 
 	public void test_reservedKeywordAsPropertyName() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: self.endif endpackage",
-			"\"<simpleName>\" expected instead of \"endif\"");
-    }
+				"\"<simpleName>\" expected instead of \"endif\"");
+	}
 
 	public void test_reservedKeywordAsOperationName() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: self.else() endpackage",
-			"\"<simpleName>\" expected instead of \"else\"");
-    }
+				"\"<simpleName>\" expected instead of \"else\"");
+	}
 
 	public void test_reservedKeywordAsPathNamePrefix() {
 		checkDocumentWithParseFailure(
 			"package ecore context if::xx inv: true endpackage",
-			"\"<simpleName>\" expected instead of \"if\"");
-    }
+				"\"<simpleName>\" expected instead of \"if\"");
+	}
 
 	public void test_reservedKeywordAsPathNameMidfix() {
 		checkDocumentWithParseFailure(
 			"package ecore context xx::if::yy inv: true endpackage",
-			"\"<simpleName>\" expected instead of \"if\"");
-    }
+				"\"<simpleName>\" expected instead of \"if\"");
+	}
 
 	public void test_reservedKeywordAsPathNameSuffix() {
 		checkDocumentWithParseFailure(
 			"package ecore context xx::if inv: true endpackage",
-			"\"<simpleName>\" expected instead of \"if\"");
-    }
+				"\"<simpleName>\" expected instead of \"if\"");
+	}
 
 	public void test_punctuationAsOperationName() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: self. .. () endpackage",
-			"\"<simpleName>\" expected instead of \"..\"");
-    }
+				"\"<simpleName>\" expected instead of \"..\"");
+	}
 
 	public void test_missingEndPackage() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: true",
-			"\"endpackage\" expected after \"true\"");
-    }
+				"\"endpackage\" expected after \"true\"");
+	}
 
 	public void test_ifMissingCondition() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if then else false endif endpackage",
-			"\"then <expr> else <expr>\" expected instead of \"endif\"");
-    }
+				"\"then <expr> else <expr>\" expected instead of \"endif\"");
+	}
 
 	public void test_ifMissingThen() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if true true else false endif endpackage",
-			"\"then <expr> else <expr> endif\" expected instead of \"true else false endif\"");
-    }
+				"\"then <expr> else <expr> endif\" expected instead of \"true else false endif\"");
+	}
 
 	public void test_ifMissingThenExpression() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if true then else false endif endpackage",
-			"\"<simpleName>\" expected after \"then\"");
-    }
+				"\"<simpleName>\" expected after \"then\"");
+	}
 
 	public void test_ifMissingElse() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if true then true false endif endpackage",
-			"\"else <expr> endif\" expected instead of \"false endif\"");
-    }
+				"\"else <expr> endif\" expected instead of \"false endif\"");
+	}
 
 	public void test_ifMissingElseExpression() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if true then true else endif endpackage",
-			"\"<simpleName>\" expected after \"else\"");
-    }
+				"\"<simpleName>\" expected after \"else\"");
+	}
 
 	public void test_ifMissingEndif() {
 		checkDocumentWithParseFailure(
 			"package ecore context EClass inv: if true then true else false endpackage",
-			"\"endif\" expected after \"false\"");
-    }
+				"\"endif\" expected after \"false\"");
+	}
 
 	private void checkDocumentWithParseFailure(String oclText, String failure) {
 		throw new UnsupportedOperationException(getClass().getName() + ".checkDocumentWithParseFailure");
-/*		Environment environment = ocl.getEnvironment();
+		/*		Environment environment = ocl.getEnvironment();
 		AbstractBasicEnvironment abstractBasicEnvironment = (AbstractBasicEnvironment)environment;
 		OCLBacktrackingLexer lexer = new OCLBacktrackingLexer(environment, oclText.toCharArray());
 		OCLBacktrackingParser parser = new OCLBacktrackingParser(lexer);

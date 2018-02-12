@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  *
  * WARNING. These tests fail as plugin tests if an OCLinEcore tutorial project is open.
  */
-@SuppressWarnings({"nls","null"})
 public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
 	public void testOCLinEcoreTutorialUsingLPGForLPG() throws Exception {

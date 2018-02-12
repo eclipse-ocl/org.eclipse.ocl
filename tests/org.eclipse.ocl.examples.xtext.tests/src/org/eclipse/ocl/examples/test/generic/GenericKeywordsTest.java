@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  * @author Christian W. Damus (cdamus)
  */
-@SuppressWarnings({"nls","null"})
+@SuppressWarnings("null")
 public abstract class GenericKeywordsTest extends PivotTestSuite
 {
 	public static class MyOCL extends TestOCL

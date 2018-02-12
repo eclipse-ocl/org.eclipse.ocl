@@ -42,7 +42,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for Tuple operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 {

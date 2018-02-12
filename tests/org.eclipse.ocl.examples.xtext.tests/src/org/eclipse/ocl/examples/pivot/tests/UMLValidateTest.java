@@ -63,7 +63,6 @@ import org.junit.Before;
 /**
  * Tests for the OCL delegate implementations.
  */
-@SuppressWarnings("nls")
 public class UMLValidateTest extends AbstractValidateTests
 {
 	public static final class LoaderWithLog extends CompleteOCLLoader

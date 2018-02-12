@@ -31,7 +31,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for Boolean operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateConstructsTest4 extends PivotTestSuite
 {

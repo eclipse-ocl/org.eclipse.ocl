@@ -57,7 +57,6 @@ import company.CompanyPackage;
 /**
  * Tests for model access operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateModelOperationsTest4 extends PivotTestSuite
 {

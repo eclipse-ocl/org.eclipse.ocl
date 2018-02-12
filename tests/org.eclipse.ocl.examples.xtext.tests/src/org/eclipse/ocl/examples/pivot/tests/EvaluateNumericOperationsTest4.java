@@ -34,7 +34,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for numeric operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 {

@@ -53,7 +53,7 @@ import org.junit.Before;
 /**
  * Tests for stereotype expressions.
  */
-@SuppressWarnings({"nls","null"})
+@SuppressWarnings("null")
 public class StereotypesTest extends PivotTestSuite
 {
 	public class InternationalizedProfile

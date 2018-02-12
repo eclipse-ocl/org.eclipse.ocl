@@ -32,7 +32,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for String operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateStringOperationsTest4 extends PivotTestSuite
 {

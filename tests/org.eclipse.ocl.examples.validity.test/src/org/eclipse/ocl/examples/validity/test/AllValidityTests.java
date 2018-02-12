@@ -21,9 +21,8 @@ import junit.textui.TestRunner;
 /**
  * Tests for the Xtext editor support.
  */
-@SuppressWarnings("nls")
 public class AllValidityTests
-	extends TestCase {
+extends TestCase {
 
 	public AllValidityTests() {
 		super("");
@@ -38,7 +37,7 @@ public class AllValidityTests
 
 	public static Test suite() {
 		String testSuiteName = System.getProperty("testSuiteName", "Validity View Tests");
-		TestSuite result = new TestSuite(testSuiteName);			
+		TestSuite result = new TestSuite(testSuiteName);
 		buildSuite(result);
 		return result;
 	}

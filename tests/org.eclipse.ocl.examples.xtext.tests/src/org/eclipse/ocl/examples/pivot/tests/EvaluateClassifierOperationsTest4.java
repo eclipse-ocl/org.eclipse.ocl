@@ -41,7 +41,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for OclAny operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 {

@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * Default test framework.
  */
-@SuppressWarnings("nls")
 public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 {
 	public @Nullable TestFileSystem testFileSystem = null;

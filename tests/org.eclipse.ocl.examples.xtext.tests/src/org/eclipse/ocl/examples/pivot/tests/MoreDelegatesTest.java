@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *  C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  * 	E.D.Willink - Bug 306079, 322159
@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * Tests for the OCL delegate implementations.
  */
-@SuppressWarnings({"nls"})
 public class MoreDelegatesTest extends DelegatesTest
 {
 	// Passes in isolation; probably an adapter clean-up problem

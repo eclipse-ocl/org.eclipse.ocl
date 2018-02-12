@@ -15,29 +15,28 @@ import org.eclipse.ocl.examples.test.generic.GenericDebugTest;
 
 /**
  * The JUnit4 GUI does not support re-running individual tests in isolation.
- * 
+ *
  * This dummy test is therefore a debugging placeHolder for re-use while debugging.
  */
-@SuppressWarnings("nls")
 public class DebugTest extends GenericDebugTest {
-//	public org.eclipse.ocl.pivot.Package pkg1;
+	//	public org.eclipse.ocl.pivot.Package pkg1;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-//		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-//        Model root = metamodelManager.createModel(null);
-//        pkg1 = createPackage(root, "pkg1");
-//        helper.setContext(getMetaclass("Model"));
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		//		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		//        Model root = metamodelManager.createModel(null);
+		//        pkg1 = createPackage(root, "pkg1");
+		//        helper.setContext(getMetaclass("Model"));
+	}
 
 	/**
 	 * Tests that dot notation can be used successively to navigate multiple
 	 * collection-type references.
 	 */
 	public void testDebug() {
-//		assertQueryFalse(null, "Sequence{4, 5, 'test'} = OrderedSet{4, 5, 'test', 5}");
-/*		helper.setContext(EcorePackage.Literals.EPACKAGE);
+		//		assertQueryFalse(null, "Sequence{4, 5, 'test'} = OrderedSet{4, 5, 'test', 5}");
+		/*		helper.setContext(EcorePackage.Literals.EPACKAGE);
 
 		try {
 			OCLExpression<EClassifier> expr = helper

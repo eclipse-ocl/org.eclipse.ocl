@@ -32,7 +32,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for map operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateMapOperationsTest4 extends PivotTestSuite
 {

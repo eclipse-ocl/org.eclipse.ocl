@@ -31,7 +31,6 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for collection operations.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 {

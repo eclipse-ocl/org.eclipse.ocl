@@ -57,7 +57,6 @@ import junit.textui.TestRunner;
 /**
  * Tests for the Xtext editor support.
  */
-@SuppressWarnings("nls")
 public class AllXtextTests
 extends TestCase {
 

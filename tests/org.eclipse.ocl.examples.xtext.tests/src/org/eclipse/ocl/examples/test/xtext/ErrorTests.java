@@ -31,7 +31,6 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 /**
  * Tests for OclAny operations.
  */
-@SuppressWarnings("nls")
 public class ErrorTests extends XtextTestCase
 {
 	protected @NonNull OCLInternal createOCL() {

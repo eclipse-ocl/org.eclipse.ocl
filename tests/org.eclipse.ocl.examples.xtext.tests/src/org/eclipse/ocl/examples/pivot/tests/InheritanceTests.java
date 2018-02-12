@@ -28,7 +28,6 @@ import org.junit.Before;
 /**
  * Tests for OclAny operations.
  */
-@SuppressWarnings("nls")
 public class InheritanceTests extends PivotTestSuite
 {
 	public InheritanceTests() {

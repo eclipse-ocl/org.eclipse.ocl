@@ -40,7 +40,6 @@ import junit.framework.TestSuite;
 /**
  * Default test framework.
  */
-@SuppressWarnings("nls")
 public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 {
 	// set this variable true when testing for memory leaks

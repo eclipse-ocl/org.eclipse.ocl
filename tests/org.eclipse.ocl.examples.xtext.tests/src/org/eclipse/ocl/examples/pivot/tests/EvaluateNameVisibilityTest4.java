@@ -64,7 +64,7 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for Name access.
  */
-@SuppressWarnings({"nls","null"})
+@SuppressWarnings("null")
 @RunWith(value = Parameterized.class)
 public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 {
