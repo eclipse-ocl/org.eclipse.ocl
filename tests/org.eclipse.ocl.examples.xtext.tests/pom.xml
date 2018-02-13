@@ -45,7 +45,7 @@
           <testClass>org.eclipse.ocl.examples.test.xtext.AllXtextTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+          <argLine>-DtestNameSuffix="tycho" -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true</argLine>
           <systemProperties>
             <TYCHO_TEST>true</TYCHO_TEST>
           </systemProperties>
