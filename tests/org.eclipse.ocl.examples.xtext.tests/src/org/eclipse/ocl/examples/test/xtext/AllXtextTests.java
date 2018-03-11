@@ -123,7 +123,7 @@ extends TestCase {
 		result.addTestSuite(ValidateTests.class);
 		result.addTestSuite(PivotDocumentationExamples.class);
 		result.addTestSuite(OCLinEcoreTutorialExamples.class);
-		result.addTestSuite(UsageTests.class);
+		// FIXME BUG 532280, BUG 532232 // result.addTestSuite(UsageTests.class);
 		result.addTestSuite(StandaloneExecutionTests.class);
 		result.addTestSuite(StandaloneParserTests.class);
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
