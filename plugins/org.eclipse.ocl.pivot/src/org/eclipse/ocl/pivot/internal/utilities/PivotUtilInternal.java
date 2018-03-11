@@ -737,7 +737,7 @@ public class PivotUtilInternal //extends PivotUtil
 	 * @since 1.3
 	 */
 	public static boolean isOrphanProperty(@NonNull Property property) {
-		if (property.getOwningClass()instanceof TupleType) {
+		if (property.getOwningClass() instanceof TupleType) {
 			return true;
 		}
 		return false;

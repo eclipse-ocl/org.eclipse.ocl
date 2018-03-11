@@ -1436,6 +1436,13 @@ public class PivotUtil
 		return feature;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iteration getReferredIteration(@NonNull LoopExp loopExp) {
+		return ClassUtil.nonNullState(loopExp.getReferredIteration());
+	}
+
 	public static @NonNull Operation getReferredOperation(@NonNull CallExp callExp) {
 		if (callExp instanceof LoopExp) {
 			return ClassUtil.nonNullState(((LoopExp)callExp).getReferredIteration());
