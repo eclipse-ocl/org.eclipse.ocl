@@ -1,4 +1,4 @@
-import 'http://eclipse.org/ocl/debug/test/ecoreTest'
+import 'ecoreTest.ecore'
 
 package ecoreTest
 
