@@ -462,10 +462,10 @@ public class JavaStream
 	public void appendClassReference(Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor @NonNull ... typeDescriptors) {
 		appendClassReference(null, javaClass, useExtends, typeDescriptors);
 	}
-	public void appendClassReference(Boolean isRequired, Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor @NonNull ... typeDescriptors) {
+	public void appendClassReference(Boolean isRequired, Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
-			if (typeDescriptors.length > 0) {
+			if (typeDescriptors != null) {
 				append("<");
 				for (int i = 0; i < typeDescriptors.length; i++) {
 					if (i != 0) {

@@ -156,8 +156,8 @@ import com.google.common.collect.Iterables;
  * The individual visits contribute a complete construct, usually one or more statements to the output. However
  * inlineable expressions contribute just their expression value.
  *
- * Visits return true if the generated flow of control flows out of the gebnerated code,
- * false if an uncondituionl exception is thrown.
+ * Visits return true if the generated flow of control flows out of the generated code,
+ * false if an unconditional exception is thrown.
  */
 public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CG>
 {
