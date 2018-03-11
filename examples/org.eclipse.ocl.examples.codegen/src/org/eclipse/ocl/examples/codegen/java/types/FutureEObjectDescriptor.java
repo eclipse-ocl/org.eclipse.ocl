@@ -4,12 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -29,7 +30,7 @@ public class FutureEObjectDescriptor extends AbstractDescriptor implements Simpl
 {
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull String className;
-	
+
 	public FutureEObjectDescriptor(@NonNull ElementId elementId, @NonNull EClassifier eClassifier, @NonNull String className) {
 		super(elementId);
 		this.eClassifier = eClassifier;
@@ -74,6 +75,14 @@ public class FutureEObjectDescriptor extends AbstractDescriptor implements Simpl
 
 	@Override
 	public final boolean isAssignableFrom(@NonNull TypeDescriptor typeDescriptor) {
-		return typeDescriptor == this;
+		if (typeDescriptor == this) {
+			return true;
+		}
+		EClassifier thisEClassifier = this.getEClassifier();
+		EClassifier thatEClassifier = typeDescriptor.getEClassifier();
+		if ((thisEClassifier instanceof EClass) && (thatEClassifier instanceof EClass)) {
+			return ((EClass)thisEClassifier).isSuperTypeOf((EClass)thatEClassifier);
+		}
+		return false;
 	}
 }
