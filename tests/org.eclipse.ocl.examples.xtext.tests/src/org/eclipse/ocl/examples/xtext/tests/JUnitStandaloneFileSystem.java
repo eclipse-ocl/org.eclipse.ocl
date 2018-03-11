@@ -11,14 +11,10 @@
 package org.eclipse.ocl.examples.xtext.tests;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
@@ -158,28 +154,14 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		}
 	}
 
-	public static @NonNull JUnitStandaloneFileSystem create() {
-		return new JUnitStandaloneFileSystem();
+	public static @NonNull JUnitStandaloneFileSystem create(@NonNull TestFileSystemHelper helper) {
+		return new JUnitStandaloneFileSystem(helper);
 	}
 
 	protected final @NonNull Map<@NonNull String, @NonNull JUnitStandaloneTestProject> projectName2testProject = new HashMap<>();
 
-	public JUnitStandaloneFileSystem() {}
-
-	private @NonNull File createDotProjectFile(@NonNull File bundleFolder, @NonNull String projectName) {
-		File file = new File(bundleFolder, ".project");
-		Writer s;
-		try {
-			s = new FileWriter(file);
-			s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			s.append("<projectDescription>\n");
-			s.append("	<name>" + projectName + "</name>\n");
-			s.append("</projectDescription>\n");
-			s.close();
-		} catch (IOException e) {
-			throw new WrappedException(e);
-		}
-		return file;
+	public JUnitStandaloneFileSystem(@NonNull TestFileSystemHelper helper) {
+		super(helper);
 	}
 
 	@Override
@@ -195,7 +177,9 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 				newFile.mkdirs();
 				File dotProjectFile = new File(newFile, ".project");
 				if (!dotProjectFile.exists()) {
-					createDotProjectFile(newFile, projectName);
+					helper.createDotProjectFile(newFile, projectName);
+					helper.createDotClasspathFile(newFile, projectName);
+					helper.createManifestFile(newFile, projectName);
 				}
 				/*			URI location = projectMap.getLocation(projectName);
 				if (location == null) {

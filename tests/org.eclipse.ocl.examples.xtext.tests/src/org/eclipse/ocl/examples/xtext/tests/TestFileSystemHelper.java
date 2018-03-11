@@ -1,0 +1,57 @@
+/*******************************************************************************
+ * Copyright (c) 2018 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.examples.xtext.tests;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
+import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+/**
+ * A TestFileSystemHelper provides call-backs to assist in building a test file system.
+ * test harnesses.
+ */
+public class TestFileSystemHelper
+{
+	protected void appendBuildSpec(@NonNull Writer s) throws IOException {}
+
+	protected void appendNatures(@NonNull Writer s) throws IOException {}
+
+	public @Nullable File createDotClasspathFile(@NonNull File bundleFolder, @NonNull String projectName) {
+		return null;
+	}
+
+	public @NonNull File createDotProjectFile(@NonNull File bundleFolder, @NonNull String projectName) {
+		File file = new File(bundleFolder, ".project");
+		Writer s;
+		try {
+			s = new FileWriter(file);
+			s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			s.append("<projectDescription>\n");
+			s.append("	<name>" + projectName + "</name>\n");
+			appendBuildSpec(s);
+			appendNatures(s);
+			s.append("</projectDescription>\n");
+			s.close();
+		} catch (IOException e) {
+			throw new WrappedException(e);
+		}
+		return file;
+	}
+
+	public @Nullable File createManifestFile(@NonNull File bundleFolder, @NonNull String projectName) {
+		return null;
+	}
+}

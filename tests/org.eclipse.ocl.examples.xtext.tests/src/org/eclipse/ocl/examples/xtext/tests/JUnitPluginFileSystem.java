@@ -213,14 +213,16 @@ public class JUnitPluginFileSystem extends TestFileSystem
 		}
 	}
 
-	public static @NonNull JUnitPluginFileSystem create() {
+	public static @NonNull JUnitPluginFileSystem create(@NonNull TestFileSystemHelper helper) {
 		TestUIUtil.closeIntro();
-		return new JUnitPluginFileSystem();
+		return new JUnitPluginFileSystem(helper);
 	}
 
 	protected final @NonNull Map<@NonNull String, @NonNull JUnitPluginTestProject> projectName2testProject = new HashMap<>();
 
-	public JUnitPluginFileSystem() {}
+	public JUnitPluginFileSystem(@NonNull TestFileSystemHelper helper) {
+		super(helper);
+	}
 
 	@Override
 	public @NonNull TestProject getTestProject(@NonNull String projectName, boolean cleanProject) {
