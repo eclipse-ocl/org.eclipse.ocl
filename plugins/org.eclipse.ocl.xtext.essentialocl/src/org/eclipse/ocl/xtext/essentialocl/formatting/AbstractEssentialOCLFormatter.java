@@ -91,7 +91,7 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 
 	protected void configureCurlyBracketedClauseCS(FormattingConfig c, CurlyBracketedClauseCSElements a) {
 		c.setNoSpace().around(a.getLeftCurlyBracketKeyword_1());
-		c.setNoSpace().around(a.getRightCurlyBracketKeyword_3());
+		c.setNoSpace().before(a.getRightCurlyBracketKeyword_3());
 		c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
 	}
 
