@@ -66,7 +66,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="restVariableName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CollectionTypeCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//TypedRefCS ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Nameable">
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionTypeCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//TypedRefCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCollectionMultiplicity"
         eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//MultiplicityCS"
@@ -186,7 +186,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedValue" eType="#//ExpCS"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MapTypeCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//TypedRefCS ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Nameable">
+  <eClassifiers xsi:type="ecore:EClass" name="MapTypeCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//TypedRefCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedKeyType" eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//TypedRefCS"
         containment="true"/>
@@ -254,7 +254,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ShadowPartCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ModelElementCS ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Nameable">
+  <eClassifiers xsi:type="ecore:EClass" name="ShadowPartCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ModelElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInitExpression" lowerBound="1"
         eType="#//ExpCS" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCurlyBracketClause"

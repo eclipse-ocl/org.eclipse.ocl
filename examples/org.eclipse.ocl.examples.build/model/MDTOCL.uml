@@ -167,9 +167,7 @@
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Framework-Feature" name="Feature" isAbstract="true"/>
       <packagedElement xmi:type="uml:Interface" xmi:id="MDTOCL-MDT_OCL_Framework-MorePivotable" name="MorePivotable" isAbstract="true"/>
       <packagedElement xmi:type="uml:Interface" xmi:id="MDTOCL-MDT_OCL_Framework-Nameable" name="Nameable" isAbstract="true"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Framework-NamedElement" name="NamedElement" isAbstract="true">
-        <interfaceRealization xmi:id="_yvKQQN9WEd-5RuvZBdnt0A" name="" client="MDTOCL-MDT_OCL_Framework-NamedElement" supplier="MDTOCL-MDT_OCL_Framework-Nameable" contract="MDTOCL-MDT_OCL_Framework-Nameable"/>
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Framework-NamedElement" name="NamedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Framework-Package" name="Package">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Framework-Package-nsPrefix" name="nsPrefix" type="MDTOCL-MDT_OCL_Framework-String">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6OA37VEeOu79LxSz8Ylw"/>
@@ -434,9 +432,6 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="MDTOCL-MDT_OCL_Visiting" name="MDT_OCL_Visiting">
-      <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Visiting-Element" name="Element" isAbstract="true">
-        <interfaceRealization xmi:id="_lMyWQM-FEd-OX-Zde0V6vA" client="MDTOCL-MDT_OCL_Visiting-Element" supplier="MDTOCL-MDT_OCL_Visiting-Visitable" contract="MDTOCL-MDT_OCL_Visiting-Visitable"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="MDTOCL-MDT_OCL_Visiting-Visitable" name="Visitable" isAbstract="true"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_gYLjQMXHEeS34PyjCbzxBg" name="MDT_OCL_Xtra">
