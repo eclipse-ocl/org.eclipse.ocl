@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Named Element CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>

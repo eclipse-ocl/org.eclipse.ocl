@@ -20,6 +20,7 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Element CS</b></em>'.
+ * @extends org.eclipse.ocl.xtext.basecs.util.VisitableCS
  * <!-- end-user-doc -->
  *
  * <p>

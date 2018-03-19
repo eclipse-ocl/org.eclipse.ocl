@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Pivotable Element CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Pivotable
  * <!-- end-user-doc -->
  *
  * <p>

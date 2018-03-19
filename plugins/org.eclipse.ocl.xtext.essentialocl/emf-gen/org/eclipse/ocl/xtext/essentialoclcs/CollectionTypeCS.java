@@ -17,6 +17,7 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Collection Type CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>
@@ -33,7 +34,7 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  * @generated
  */
 public interface CollectionTypeCS
-		extends TypedRefCS, Nameable {
+extends TypedRefCS, Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

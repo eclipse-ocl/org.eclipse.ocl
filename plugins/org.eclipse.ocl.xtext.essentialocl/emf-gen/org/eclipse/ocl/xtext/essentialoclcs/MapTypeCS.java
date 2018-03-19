@@ -4,19 +4,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
 package org.eclipse.ocl.xtext.essentialoclcs;
 
 import org.eclipse.ocl.pivot.utilities.Nameable;
-
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Map Type CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>

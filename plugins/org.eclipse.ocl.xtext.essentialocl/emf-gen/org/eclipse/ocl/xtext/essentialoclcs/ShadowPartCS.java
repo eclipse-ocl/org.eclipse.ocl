@@ -17,6 +17,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Constructor Part CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>
@@ -33,7 +34,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  * @generated
  */
 public interface ShadowPartCS
-		extends ModelElementCS, Nameable {
+extends ModelElementCS, Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Owning Curly Bracket Clause</b></em>' container reference.

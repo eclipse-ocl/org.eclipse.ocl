@@ -17,6 +17,7 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Named Element Decl CS</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.MorePivotable
  * <!-- end-user-doc -->
  *
  * <p>
@@ -31,7 +32,7 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
  * @generated
  */
 public interface PathNameDeclCS
-		extends ModelElementCS, MorePivotable {
+extends ModelElementCS, MorePivotable {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Path Name</b></em>' containment reference.

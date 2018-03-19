@@ -16,6 +16,7 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Meta Type Name</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>
@@ -30,7 +31,7 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
  * @generated
  */
 public interface MetaclassNameCS
-		extends ElementCS, Nameable {
+extends ElementCS, Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

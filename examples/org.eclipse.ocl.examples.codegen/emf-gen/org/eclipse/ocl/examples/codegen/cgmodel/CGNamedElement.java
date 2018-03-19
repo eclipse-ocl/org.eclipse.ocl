@@ -4,19 +4,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>CG Named Element</b></em>'.
+ * @extends org.eclipse.ocl.pivot.utilities.Nameable
  * <!-- end-user-doc -->
  *
  * <p>
@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNamedElement()
  * @generated
  */
-public interface CGNamedElement extends CGElement, Nameable {
+public interface CGNamedElement extends CGElement, org.eclipse.ocl.pivot.utilities.Nameable {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
