@@ -600,16 +600,6 @@ extends EPackage
 	int PIVOTABLE = 77;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.util.Visitable
-	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVisitable()
-	 * @generated
-	 */
-	int VISITABLE = 126;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ElementImpl <em>Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -910,31 +900,13 @@ extends EPackage
 	int LIBRARY = 52;
 
 	/**
-	 * The number of structural features of the '<em>Visitable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VISITABLE_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Visitable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VISITABLE_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__ANNOTATING_COMMENTS = VISITABLE_FEATURE_COUNT + 0;
+	int ELEMENT__ANNOTATING_COMMENTS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
@@ -943,7 +915,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__OWNED_ANNOTATIONS = VISITABLE_FEATURE_COUNT + 1;
+	int ELEMENT__OWNED_ANNOTATIONS = 1;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comments</b></em>' containment reference list.
@@ -952,7 +924,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__OWNED_COMMENTS = VISITABLE_FEATURE_COUNT + 2;
+	int ELEMENT__OWNED_COMMENTS = 2;
 
 	/**
 	 * The feature id for the '<em><b>Owned Extensions</b></em>' containment reference list.
@@ -961,7 +933,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__OWNED_EXTENSIONS = VISITABLE_FEATURE_COUNT + 3;
+	int ELEMENT__OWNED_EXTENSIONS = 3;
 
 	/**
 	 * The number of structural features of the '<em>Element</em>' class.
@@ -970,7 +942,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_FEATURE_COUNT = VISITABLE_FEATURE_COUNT + 4;
+	int ELEMENT_FEATURE_COUNT = 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -979,7 +951,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT___ALL_OWNED_ELEMENTS = VISITABLE_OPERATION_COUNT + 0;
+	int ELEMENT___ALL_OWNED_ELEMENTS = 0;
 
 	/**
 	 * The operation id for the '<em>Get Value</em>' operation.
@@ -988,7 +960,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT___GET_VALUE__TYPE_STRING = VISITABLE_OPERATION_COUNT + 1;
+	int ELEMENT___GET_VALUE__TYPE_STRING = 1;
 
 	/**
 	 * The number of operations of the '<em>Element</em>' class.
@@ -997,7 +969,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_OPERATION_COUNT = VISITABLE_OPERATION_COUNT + 2;
+	int ELEMENT_OPERATION_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -24751,6 +24723,34 @@ extends EPackage
 	int VARIABLE_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.util.Visitable
+	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVisitable()
+	 * @generated
+	 */
+	int VISITABLE = 126;
+
+	/**
+	 * The number of structural features of the '<em>Visitable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VISITABLE_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Visitable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VISITABLE_OPERATION_COUNT = 0;
+
+	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -28699,6 +28699,16 @@ extends EPackage
 	EReference getVertex_OwningRegion();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Visitable</em>'.
+	 * @see org.eclipse.ocl.pivot.util.Visitable
+	 * @generated
+	 */
+	EClass getVisitable();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.VoidType <em>Void Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -28749,16 +28759,6 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getPivotable();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Visitable</em>'.
-	 * @see org.eclipse.ocl.pivot.util.Visitable
-	 * @generated
-	 */
-	EClass getVisitable();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Class <em>Class</em>}'.
@@ -33648,6 +33648,16 @@ extends EPackage
 		EReference VERTEX__OWNING_REGION = eINSTANCE.getVertex_OwningRegion();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.util.Visitable
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVisitable()
+		 * @generated
+		 */
+		EClass VISITABLE = eINSTANCE.getVisitable();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.VoidTypeImpl <em>Void Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -33692,16 +33702,6 @@ extends EPackage
 		 * @generated
 		 */
 		EClass PIVOTABLE = eINSTANCE.getPivotable();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.util.Visitable <em>Visitable</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.util.Visitable
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVisitable()
-		 * @generated
-		 */
-		EClass VISITABLE = eINSTANCE.getVisitable();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ClassImpl <em>Class</em>}' class.

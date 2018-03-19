@@ -14,12 +14,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Element</b></em>'.
+ * @extends org.eclipse.ocl.pivot.util.Visitable
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -39,7 +39,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * @see org.eclipse.ocl.pivot.PivotPackage#getElement()
  * @generated
  */
-public interface Element extends EObject, Visitable {
+public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 
 	/**
 	 * Returns the value of the '<em><b>Annotating Comments</b></em>' reference list.

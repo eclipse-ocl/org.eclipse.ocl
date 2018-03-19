@@ -2315,7 +2315,6 @@ implements EssentialOCLCSPackage {
 		collectionLiteralPartCSEClass.getESuperTypes().add(theBaseCSPackage.getModelElementCS());
 		collectionPatternCSEClass.getESuperTypes().add(theBaseCSPackage.getTypedRefCS());
 		collectionTypeCSEClass.getESuperTypes().add(theBaseCSPackage.getTypedRefCS());
-		collectionTypeCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		contextCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
 		contextCSEClass.getESuperTypes().add(theBaseCSPackage.getRootCS());
 		curlyBracketedClauseCSEClass.getESuperTypes().add(theBaseCSPackage.getContextLessElementCS());
@@ -2335,7 +2334,6 @@ implements EssentialOCLCSPackage {
 		mapLiteralExpCSEClass.getESuperTypes().add(this.getLiteralExpCS());
 		mapLiteralPartCSEClass.getESuperTypes().add(theBaseCSPackage.getModelElementCS());
 		mapTypeCSEClass.getESuperTypes().add(theBaseCSPackage.getTypedRefCS());
-		mapTypeCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		nameExpCSEClass.getESuperTypes().add(this.getAssociationClassCallExpCS());
 		nameExpCSEClass.getESuperTypes().add(this.getShadowExpCS());
 		nameExpCSEClass.getESuperTypes().add(this.getIterateCallExpCS());
@@ -2358,7 +2356,6 @@ implements EssentialOCLCSPackage {
 		selfExpCSEClass.getESuperTypes().add(this.getExpCS());
 		shadowExpCSEClass.getESuperTypes().add(this.getAbstractNameExpCS());
 		shadowPartCSEClass.getESuperTypes().add(theBaseCSPackage.getModelElementCS());
-		shadowPartCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		squareBracketedClauseCSEClass.getESuperTypes().add(theBaseCSPackage.getContextLessElementCS());
 		stringLiteralExpCSEClass.getESuperTypes().add(this.getPrimitiveLiteralExpCS());
 		tupleLiteralExpCSEClass.getESuperTypes().add(this.getLiteralExpCS());

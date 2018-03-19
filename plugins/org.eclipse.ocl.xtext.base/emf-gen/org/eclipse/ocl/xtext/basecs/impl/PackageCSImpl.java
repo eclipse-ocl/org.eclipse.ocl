@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
@@ -371,13 +370,6 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
 	{
-		if (baseClass == Nameable.class)
-		{
-			switch (derivedFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (derivedFeatureID)
@@ -404,13 +396,6 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
 	{
-		if (baseClass == Nameable.class)
-		{
-			switch (baseFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (baseFeatureID)

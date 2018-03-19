@@ -235,7 +235,7 @@
       <ownedProperties xmi:id="nCwoy" isComposite="true" name="ownedDynamicProperties" type="#2ZLUM"/>
     </ownedClasses>
     <ownedClasses xmi:id="iExtD" name="DynamicValueSpecification" superClasses="#DLUxI"/>
-    <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="#WyWDC">
+    <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR">
       <ownedComments body="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
       <ownedOperations xmi:id="J2A5u" name="allOwnedElements" type="#+7MeC">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;"/>
@@ -541,7 +541,7 @@
         name="MorePivotable" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
     <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"
         superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
-    <ownedClasses xmi:id="0kVqz" isAbstract="true" name="NamedElement" superClasses="#t5rpa #W4DIM">
+    <ownedClasses xmi:id="0kVqz" isAbstract="true" name="NamedElement" superClasses="#t5rpa">
       <ownedComments body="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
       <ownedProperties xmi:id="HeJg3" isRequired="false" name="name" type="#CPVxu">
         <ownedComments body="The name of the NamedElement."/>

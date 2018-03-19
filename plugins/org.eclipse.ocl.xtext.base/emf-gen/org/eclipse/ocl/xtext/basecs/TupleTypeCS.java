@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.basecs;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,10 +27,10 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTupleTypeCS()
- * @model superTypes="org.eclipse.ocl.xtext.basecs.TypedRefCS org.eclipse.ocl.pivot.Nameable"
+ * @model
  * @generated
  */
-public interface TupleTypeCS extends TypedRefCS, Nameable
+public interface TupleTypeCS extends TypedRefCS, org.eclipse.ocl.pivot.utilities.Nameable
 {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

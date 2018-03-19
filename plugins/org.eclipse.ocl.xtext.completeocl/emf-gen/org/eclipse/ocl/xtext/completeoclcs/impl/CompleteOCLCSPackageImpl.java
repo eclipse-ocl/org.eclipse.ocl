@@ -701,7 +701,6 @@ implements CompleteOCLCSPackage {
 		operationContextDeclCSEClass.getESuperTypes().add(theBaseCSPackage.getTemplateableElementCS());
 		packageDeclarationCSEClass.getESuperTypes().add(this.getPathNameDeclCS());
 		pathNameDeclCSEClass.getESuperTypes().add(theBaseCSPackage.getModelElementCS());
-		pathNameDeclCSEClass.getESuperTypes().add(thePivotPackage.getMorePivotable());
 		propertyContextDeclCSEClass.getESuperTypes().add(this.getFeatureContextDeclCS());
 
 		// Initialize classes and features; add operations and parameters

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.essentialoclcs;
 
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 
 /**
@@ -30,11 +29,11 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getShadowPartCS()
- * @model superTypes="org.eclipse.ocl.xtext.basecs.ModelElementCS org.eclipse.ocl.pivot.Nameable"
+ * @model
  * @generated
  */
 public interface ShadowPartCS
-extends ModelElementCS, Nameable {
+extends ModelElementCS, org.eclipse.ocl.pivot.utilities.Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Owning Curly Bracket Clause</b></em>' container reference.

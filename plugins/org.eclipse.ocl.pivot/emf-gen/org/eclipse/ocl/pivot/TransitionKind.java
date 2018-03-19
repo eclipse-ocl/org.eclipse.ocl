@@ -33,6 +33,9 @@ public enum TransitionKind implements Enumerator
 	 * The '<em><b>Internal</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State.
+	 * <!-- end-model-doc -->
 	 * @see #INTERNAL_VALUE
 	 * @generated
 	 * @ordered
@@ -43,6 +46,9 @@ public enum TransitionKind implements Enumerator
 	 * The '<em><b>Local</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration.
+	 * <!-- end-model-doc -->
 	 * @see #LOCAL_VALUE
 	 * @generated
 	 * @ordered
@@ -53,6 +59,9 @@ public enum TransitionKind implements Enumerator
 	 * The '<em><b>External</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Implies that the Transition, if triggered, will exit the composite (source) State.
+	 * <!-- end-model-doc -->
 	 * @see #EXTERNAL_VALUE
 	 * @generated
 	 * @ordered

@@ -3470,7 +3470,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgMapPartEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgModelEClass.getESuperTypes().add(this.getCGNamedElement());
 		cgNamedElementEClass.getESuperTypes().add(this.getCGElement());
-		cgNamedElementEClass.getESuperTypes().add(this.getNameable());
 		cgNativeOperationEClass.getESuperTypes().add(this.getCGOperation());
 		cgNativeOperationCallExpEClass.getESuperTypes().add(this.getCGOperationCallExp());
 		cgNativePropertyEClass.getESuperTypes().add(this.getCGProperty());
@@ -3826,11 +3825,11 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	protected void createImportAnnotations() {
 		String source = "http://www.eclipse.org/OCL/Import";
 		addAnnotation
-		(this,
-			source,
-			new String[] {
-				"ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
-		});
+		  (this,
+		   source,
+		   new String[] {
+			   "ecore", "http://www.eclipse.org/emf/2002/Ecore"
+		   });
 	}
 
 } //CGModelPackageImpl

@@ -426,7 +426,6 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TElement.PownedExtensions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TElement.PownedExtensions.uV" value="*"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TElement.interfaceRealization0" client="Ppivot.TElement" supplier="Ppivot.TVisitable" contract="Ppivot.TVisitable"/>
     <ownedOperation xmi:id="Ppivot.TElement.OallOwnedElements" name="allOwnedElements" visibility="public">
       <ownedParameter xmi:id="Ppivot.TElement.OallOwnedElements.Pnull" type="Ppivot.TElement" direction="return">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TElement.OallOwnedElements.Pnull.lV"/>
@@ -728,8 +727,6 @@
     <ownedAttribute xmi:id="Ppivot.TNamedElement.Pname" name="name" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TNamedElement.Pname.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TNamedElement.interfaceRealization0" client="Ppivot.TNamedElement" supplier="Ppivot.TNameable"
-        contract="Ppivot.TNameable"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNamespace" name="Namespace" isAbstract="true">
     <generalization xmi:id="Ppivot.TNamespace.g0" general="Ppivot.TNamedElement"/>

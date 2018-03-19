@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.basecs;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,10 +31,10 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
- * @model superTypes="org.eclipse.ocl.xtext.basecs.ElementCS org.eclipse.ocl.pivot.Pivotable"
+ * @model
  * @generated
  */
-public interface PathNameCS extends ElementCS, Pivotable
+public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.Pivotable
 {
 	/**
 	 * Returns the value of the '<em><b>Owned Path Elements</b></em>' containment reference list.

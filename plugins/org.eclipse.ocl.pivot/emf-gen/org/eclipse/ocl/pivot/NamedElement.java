@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import org.eclipse.ocl.pivot.utilities.Nameable;
-
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Named Element</b></em>'.
@@ -33,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  * @see org.eclipse.ocl.pivot.PivotPackage#getNamedElement()
  * @generated
  */
-public interface NamedElement extends Element, Nameable {
+public interface NamedElement extends Element, org.eclipse.ocl.pivot.utilities.Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

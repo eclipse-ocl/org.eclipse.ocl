@@ -15,8 +15,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
@@ -36,7 +34,6 @@ import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TypeCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.*;
 
 /**
@@ -106,11 +103,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				T result = caseJavaClassCS(javaClassCS);
 				if (result == null) result = caseNamedElementCS(javaClassCS);
 				if (result == null) result = caseModelElementCS(javaClassCS);
-				if (result == null) result = caseNameable(javaClassCS);
 				if (result == null) result = casePivotableElementCS(javaClassCS);
 				if (result == null) result = caseElementCS(javaClassCS);
-				if (result == null) result = casePivotable(javaClassCS);
-				if (result == null) result = caseVisitableCS(javaClassCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,7 +113,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				JavaImplementationCS javaImplementationCS = (JavaImplementationCS)theEObject;
 				T result = caseJavaImplementationCS(javaImplementationCS);
 				if (result == null) result = caseElementCS(javaImplementationCS);
-				if (result == null) result = caseVisitableCS(javaImplementationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -134,11 +127,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseTypeCS(libClassCS);
 				if (result == null) result = caseTemplateableElementCS(libClassCS);
 				if (result == null) result = caseModelElementCS(libClassCS);
-				if (result == null) result = caseNameable(libClassCS);
 				if (result == null) result = casePivotableElementCS(libClassCS);
 				if (result == null) result = caseElementCS(libClassCS);
-				if (result == null) result = casePivotable(libClassCS);
-				if (result == null) result = caseVisitableCS(libClassCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -153,11 +143,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(libCoercionCS);
 				if (result == null) result = caseNamedElementCS(libCoercionCS);
 				if (result == null) result = caseModelElementCS(libCoercionCS);
-				if (result == null) result = caseNameable(libCoercionCS);
 				if (result == null) result = casePivotableElementCS(libCoercionCS);
 				if (result == null) result = caseElementCS(libCoercionCS);
-				if (result == null) result = casePivotable(libCoercionCS);
-				if (result == null) result = caseVisitableCS(libCoercionCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -168,11 +155,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseConstraintCS(libConstraintCS);
 				if (result == null) result = caseNamedElementCS(libConstraintCS);
 				if (result == null) result = caseModelElementCS(libConstraintCS);
-				if (result == null) result = caseNameable(libConstraintCS);
 				if (result == null) result = casePivotableElementCS(libConstraintCS);
 				if (result == null) result = caseElementCS(libConstraintCS);
-				if (result == null) result = casePivotable(libConstraintCS);
-				if (result == null) result = caseVisitableCS(libConstraintCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -187,11 +171,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(libIterationCS);
 				if (result == null) result = caseNamedElementCS(libIterationCS);
 				if (result == null) result = caseModelElementCS(libIterationCS);
-				if (result == null) result = caseNameable(libIterationCS);
 				if (result == null) result = casePivotableElementCS(libIterationCS);
 				if (result == null) result = caseElementCS(libIterationCS);
-				if (result == null) result = casePivotable(libIterationCS);
-				if (result == null) result = caseVisitableCS(libIterationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -206,11 +187,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(libOperationCS);
 				if (result == null) result = caseNamedElementCS(libOperationCS);
 				if (result == null) result = caseModelElementCS(libOperationCS);
-				if (result == null) result = caseNameable(libOperationCS);
 				if (result == null) result = casePivotableElementCS(libOperationCS);
 				if (result == null) result = caseElementCS(libOperationCS);
-				if (result == null) result = casePivotable(libOperationCS);
-				if (result == null) result = caseVisitableCS(libOperationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -224,10 +202,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseNamedElementCS(libPackageCS);
 				if (result == null) result = caseModelElementCS(libPackageCS);
 				if (result == null) result = casePivotableElementCS(libPackageCS);
-				if (result == null) result = caseNameable(libPackageCS);
 				if (result == null) result = caseElementCS(libPackageCS);
-				if (result == null) result = casePivotable(libPackageCS);
-				if (result == null) result = caseVisitableCS(libPackageCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -242,11 +217,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(libPropertyCS);
 				if (result == null) result = caseNamedElementCS(libPropertyCS);
 				if (result == null) result = caseModelElementCS(libPropertyCS);
-				if (result == null) result = caseNameable(libPropertyCS);
 				if (result == null) result = casePivotableElementCS(libPropertyCS);
 				if (result == null) result = caseElementCS(libPropertyCS);
-				if (result == null) result = casePivotable(libPropertyCS);
-				if (result == null) result = caseVisitableCS(libPropertyCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -260,8 +232,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(libRootPackageCS);
 				if (result == null) result = casePivotableElementCS(libRootPackageCS);
 				if (result == null) result = caseElementCS(libRootPackageCS);
-				if (result == null) result = casePivotable(libRootPackageCS);
-				if (result == null) result = caseVisitableCS(libRootPackageCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -270,8 +240,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				MetaclassNameCS metaclassNameCS = (MetaclassNameCS)theEObject;
 				T result = caseMetaclassNameCS(metaclassNameCS);
 				if (result == null) result = caseElementCS(metaclassNameCS);
-				if (result == null) result = caseNameable(metaclassNameCS);
-				if (result == null) result = caseVisitableCS(metaclassNameCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -281,11 +249,8 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				T result = casePrecedenceCS(precedenceCS);
 				if (result == null) result = caseNamedElementCS(precedenceCS);
 				if (result == null) result = caseModelElementCS(precedenceCS);
-				if (result == null) result = caseNameable(precedenceCS);
 				if (result == null) result = casePivotableElementCS(precedenceCS);
 				if (result == null) result = caseElementCS(precedenceCS);
-				if (result == null) result = casePivotable(precedenceCS);
-				if (result == null) result = caseVisitableCS(precedenceCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -479,22 +444,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVisitableCS(VisitableCS object)
-	{
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -506,21 +455,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseElementCS(ElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePivotable(Pivotable object) {
 		return null;
 	}
 
@@ -551,22 +485,6 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseModelElementCS(ModelElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNameable(Nameable object)
-	{
 		return null;
 	}
 

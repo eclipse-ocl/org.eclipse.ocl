@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlibcs;
 
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 
 /**
@@ -27,11 +26,11 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getMetaclassNameCS()
- * @model superTypes="org.eclipse.ocl.xtext.basecs.ElementCS org.eclipse.ocl.pivot.Nameable"
+ * @model
  * @generated
  */
 public interface MetaclassNameCS
-extends ElementCS, Nameable {
+extends ElementCS, org.eclipse.ocl.pivot.utilities.Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

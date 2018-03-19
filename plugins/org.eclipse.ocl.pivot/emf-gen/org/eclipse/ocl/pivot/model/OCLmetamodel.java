@@ -647,7 +647,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _Element);
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_Visitable);
+			superClasses.add(_OclElement);
 			ownedClasses.add(type = _ElementExtension);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Class);
@@ -763,7 +763,6 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Element);
-			superClasses.add(_Nameable);
 			ownedClasses.add(type = _Namespace);
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();

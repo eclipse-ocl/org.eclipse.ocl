@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
@@ -265,13 +264,6 @@ public abstract class OperatorExpCSImpl
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Nameable.class)
-		{
-			switch (derivedFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (derivedFeatureID)
@@ -290,13 +282,6 @@ public abstract class OperatorExpCSImpl
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Nameable.class)
-		{
-			switch (baseFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (baseFeatureID)

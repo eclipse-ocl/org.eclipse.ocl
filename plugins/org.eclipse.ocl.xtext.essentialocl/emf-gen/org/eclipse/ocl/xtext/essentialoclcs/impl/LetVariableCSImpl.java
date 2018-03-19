@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
@@ -501,13 +500,6 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Nameable.class)
-		{
-			switch (derivedFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (derivedFeatureID)
@@ -535,13 +527,6 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Nameable.class)
-		{
-			switch (baseFeatureID)
-			{
-				default: return -1;
-			}
-		}
 		if (baseClass == NamedElementCS.class)
 		{
 			switch (baseFeatureID)

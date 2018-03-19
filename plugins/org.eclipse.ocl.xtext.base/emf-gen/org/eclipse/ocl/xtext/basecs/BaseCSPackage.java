@@ -76,15 +76,6 @@ public interface BaseCSPackage extends EPackage {
 	int VISITABLE_CS = 51;
 
 	/**
-	 * The number of structural features of the '<em>Visitable CS</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VISITABLE_CS_FEATURE_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl <em>Element CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +92,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_CS__CSI = VISITABLE_CS_FEATURE_COUNT + 0;
+	int ELEMENT_CS__CSI = 0;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -110,7 +101,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_CS__PARENT = VISITABLE_CS_FEATURE_COUNT + 1;
+	int ELEMENT_CS__PARENT = 1;
 
 	/**
 	 * The number of structural features of the '<em>Element CS</em>' class.
@@ -119,7 +110,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_CS_FEATURE_COUNT = VISITABLE_CS_FEATURE_COUNT + 2;
+	int ELEMENT_CS_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl <em>Pivotable Element CS</em>}' class.
@@ -4410,6 +4401,15 @@ public interface BaseCSPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPED_TYPE_REF_CS_FEATURE_COUNT = TYPED_REF_CS_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Visitable CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VISITABLE_CS_FEATURE_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialoclcs;
 
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 
@@ -30,11 +29,11 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getCollectionTypeCS()
- * @model superTypes="org.eclipse.ocl.xtext.basecs.TypedRefCS org.eclipse.ocl.pivot.Nameable"
+ * @model
  * @generated
  */
 public interface CollectionTypeCS
-extends TypedRefCS, Nameable {
+extends TypedRefCS, org.eclipse.ocl.pivot.utilities.Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

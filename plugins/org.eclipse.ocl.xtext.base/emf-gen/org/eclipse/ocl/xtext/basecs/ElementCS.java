@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,10 +31,10 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getElementCS()
- * @model abstract="true" superTypes="org.eclipse.ocl.xtext.basecs.VisitableCS"
+ * @model abstract="true"
  * @generated
  */
-public interface ElementCS extends EObject, VisitableCS {
+public interface ElementCS extends EObject, org.eclipse.ocl.xtext.basecs.util.VisitableCS {
 
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' reference.

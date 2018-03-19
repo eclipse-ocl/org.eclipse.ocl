@@ -15,9 +15,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.MorePivotable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
@@ -26,7 +23,6 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.completeoclcs.*;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 
@@ -152,19 +148,9 @@ public class CompleteOCLCSAdapterFactory
 				return createPropertyContextDeclCSAdapter();
 			}
 			@Override
-			public Adapter caseVisitableCS(VisitableCS object)
-			{
-				return createVisitableCSAdapter();
-			}
-			@Override
 			public Adapter caseElementCS(ElementCS object)
 			{
 				return createElementCSAdapter();
-			}
-			@Override
-			public Adapter casePivotable(Pivotable object)
-			{
-				return createPivotableAdapter();
 			}
 			@Override
 			public Adapter casePivotableElementCS(PivotableElementCS object)
@@ -177,19 +163,9 @@ public class CompleteOCLCSAdapterFactory
 				return createModelElementCSAdapter();
 			}
 			@Override
-			public Adapter caseMorePivotable(MorePivotable object)
-			{
-				return createMorePivotableAdapter();
-			}
-			@Override
 			public Adapter caseTemplateableElementCS(TemplateableElementCS object)
 			{
 				return createTemplateableElementCSAdapter();
-			}
-			@Override
-			public Adapter caseNameable(Nameable object)
-			{
-				return createNameableAdapter();
 			}
 			@Override
 			public Adapter caseNamedElementCS(NamedElementCS object)
@@ -261,20 +237,6 @@ public class CompleteOCLCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createCompleteOCLDocumentCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.MorePivotable <em>More Pivotable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.utilities.MorePivotable
-	 * @generated
-	 */
-	public Adapter createMorePivotableAdapter() {
 		return null;
 	}
 
@@ -434,20 +396,6 @@ public class CompleteOCLCSAdapterFactory
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.util.VisitableCS <em>Visitable CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.xtext.basecs.util.VisitableCS
-	 * @generated
-	 */
-	public Adapter createVisitableCSAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.ElementCS <em>Element CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -458,20 +406,6 @@ public class CompleteOCLCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createElementCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.Pivotable <em>Pivotable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.utilities.Pivotable
-	 * @generated
-	 */
-	public Adapter createPivotableAdapter() {
 		return null;
 	}
 
@@ -500,20 +434,6 @@ public class CompleteOCLCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createModelElementCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.Nameable <em>Nameable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.utilities.Nameable
-	 * @generated
-	 */
-	public Adapter createNameableAdapter() {
 		return null;
 	}
 

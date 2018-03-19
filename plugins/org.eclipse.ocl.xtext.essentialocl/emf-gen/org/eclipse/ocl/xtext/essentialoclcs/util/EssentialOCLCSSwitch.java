@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
@@ -26,7 +24,6 @@ import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.*;
 
 /**
@@ -98,8 +95,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(abstractNameExpCS);
 				if (result == null) result = casePivotableElementCS(abstractNameExpCS);
 				if (result == null) result = caseElementCS(abstractNameExpCS);
-				if (result == null) result = casePivotable(abstractNameExpCS);
-				if (result == null) result = caseVisitableCS(abstractNameExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -113,8 +108,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(associationClassCallExpCS);
 				if (result == null) result = casePivotableElementCS(associationClassCallExpCS);
 				if (result == null) result = caseElementCS(associationClassCallExpCS);
-				if (result == null) result = casePivotable(associationClassCallExpCS);
-				if (result == null) result = caseVisitableCS(associationClassCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -128,8 +121,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(booleanLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(booleanLiteralExpCS);
 				if (result == null) result = caseElementCS(booleanLiteralExpCS);
-				if (result == null) result = casePivotable(booleanLiteralExpCS);
-				if (result == null) result = caseVisitableCS(booleanLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -142,8 +133,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(callExpCS);
 				if (result == null) result = casePivotableElementCS(callExpCS);
 				if (result == null) result = caseElementCS(callExpCS);
-				if (result == null) result = casePivotable(callExpCS);
-				if (result == null) result = caseVisitableCS(callExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -156,8 +145,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(collectionLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(collectionLiteralExpCS);
 				if (result == null) result = caseElementCS(collectionLiteralExpCS);
-				if (result == null) result = casePivotable(collectionLiteralExpCS);
-				if (result == null) result = caseVisitableCS(collectionLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -168,8 +155,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(collectionLiteralPartCS);
 				if (result == null) result = casePivotableElementCS(collectionLiteralPartCS);
 				if (result == null) result = caseElementCS(collectionLiteralPartCS);
-				if (result == null) result = casePivotable(collectionLiteralPartCS);
-				if (result == null) result = caseVisitableCS(collectionLiteralPartCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -182,8 +167,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseElementRefCS(collectionPatternCS);
 				if (result == null) result = casePivotableElementCS(collectionPatternCS);
 				if (result == null) result = caseElementCS(collectionPatternCS);
-				if (result == null) result = casePivotable(collectionPatternCS);
-				if (result == null) result = caseVisitableCS(collectionPatternCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -192,13 +175,10 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				CollectionTypeCS collectionTypeCS = (CollectionTypeCS)theEObject;
 				T result = caseCollectionTypeCS(collectionTypeCS);
 				if (result == null) result = caseTypedRefCS(collectionTypeCS);
-				if (result == null) result = caseNameable(collectionTypeCS);
 				if (result == null) result = caseTypeRefCS(collectionTypeCS);
 				if (result == null) result = caseElementRefCS(collectionTypeCS);
 				if (result == null) result = casePivotableElementCS(collectionTypeCS);
 				if (result == null) result = caseElementCS(collectionTypeCS);
-				if (result == null) result = casePivotable(collectionTypeCS);
-				if (result == null) result = caseVisitableCS(collectionTypeCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -209,11 +189,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseNamedElementCS(contextCS);
 				if (result == null) result = caseRootCS(contextCS);
 				if (result == null) result = caseModelElementCS(contextCS);
-				if (result == null) result = caseNameable(contextCS);
 				if (result == null) result = casePivotableElementCS(contextCS);
 				if (result == null) result = caseElementCS(contextCS);
-				if (result == null) result = casePivotable(contextCS);
-				if (result == null) result = caseVisitableCS(contextCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -223,7 +200,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				T result = caseCurlyBracketedClauseCS(curlyBracketedClauseCS);
 				if (result == null) result = caseContextLessElementCS(curlyBracketedClauseCS);
 				if (result == null) result = caseElementCS(curlyBracketedClauseCS);
-				if (result == null) result = caseVisitableCS(curlyBracketedClauseCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -234,8 +210,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(expCS);
 				if (result == null) result = casePivotableElementCS(expCS);
 				if (result == null) result = caseElementCS(expCS);
-				if (result == null) result = casePivotable(expCS);
-				if (result == null) result = caseVisitableCS(expCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -247,8 +221,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(expSpecificationCS);
 				if (result == null) result = casePivotableElementCS(expSpecificationCS);
 				if (result == null) result = caseElementCS(expSpecificationCS);
-				if (result == null) result = casePivotable(expSpecificationCS);
-				if (result == null) result = caseVisitableCS(expSpecificationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -260,8 +232,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(ifExpCS);
 				if (result == null) result = casePivotableElementCS(ifExpCS);
 				if (result == null) result = caseElementCS(ifExpCS);
-				if (result == null) result = casePivotable(ifExpCS);
-				if (result == null) result = caseVisitableCS(ifExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -273,8 +243,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(ifThenExpCS);
 				if (result == null) result = casePivotableElementCS(ifThenExpCS);
 				if (result == null) result = caseElementCS(ifThenExpCS);
-				if (result == null) result = casePivotable(ifThenExpCS);
-				if (result == null) result = caseVisitableCS(ifThenExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -286,11 +254,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseExpCS(infixExpCS);
 				if (result == null) result = caseNamedElementCS(infixExpCS);
 				if (result == null) result = caseModelElementCS(infixExpCS);
-				if (result == null) result = caseNameable(infixExpCS);
 				if (result == null) result = casePivotableElementCS(infixExpCS);
 				if (result == null) result = caseElementCS(infixExpCS);
-				if (result == null) result = casePivotable(infixExpCS);
-				if (result == null) result = caseVisitableCS(infixExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -304,8 +269,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(invalidLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(invalidLiteralExpCS);
 				if (result == null) result = caseElementCS(invalidLiteralExpCS);
-				if (result == null) result = casePivotable(invalidLiteralExpCS);
-				if (result == null) result = caseVisitableCS(invalidLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -320,8 +283,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(iterateCallExpCS);
 				if (result == null) result = casePivotableElementCS(iterateCallExpCS);
 				if (result == null) result = caseElementCS(iterateCallExpCS);
-				if (result == null) result = casePivotable(iterateCallExpCS);
-				if (result == null) result = caseVisitableCS(iterateCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -335,8 +296,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(iterationCallExpCS);
 				if (result == null) result = casePivotableElementCS(iterationCallExpCS);
 				if (result == null) result = caseElementCS(iterationCallExpCS);
-				if (result == null) result = casePivotable(iterationCallExpCS);
-				if (result == null) result = caseVisitableCS(iterationCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -349,8 +308,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(lambdaLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(lambdaLiteralExpCS);
 				if (result == null) result = caseElementCS(lambdaLiteralExpCS);
-				if (result == null) result = casePivotable(lambdaLiteralExpCS);
-				if (result == null) result = caseVisitableCS(lambdaLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -362,8 +319,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(letExpCS);
 				if (result == null) result = casePivotableElementCS(letExpCS);
 				if (result == null) result = caseElementCS(letExpCS);
-				if (result == null) result = casePivotable(letExpCS);
-				if (result == null) result = caseVisitableCS(letExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -376,10 +331,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseNamedElementCS(letVariableCS);
 				if (result == null) result = caseModelElementCS(letVariableCS);
 				if (result == null) result = casePivotableElementCS(letVariableCS);
-				if (result == null) result = caseNameable(letVariableCS);
 				if (result == null) result = caseElementCS(letVariableCS);
-				if (result == null) result = casePivotable(letVariableCS);
-				if (result == null) result = caseVisitableCS(letVariableCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -391,8 +343,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(literalExpCS);
 				if (result == null) result = casePivotableElementCS(literalExpCS);
 				if (result == null) result = caseElementCS(literalExpCS);
-				if (result == null) result = casePivotable(literalExpCS);
-				if (result == null) result = caseVisitableCS(literalExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -405,8 +355,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(mapLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(mapLiteralExpCS);
 				if (result == null) result = caseElementCS(mapLiteralExpCS);
-				if (result == null) result = casePivotable(mapLiteralExpCS);
-				if (result == null) result = caseVisitableCS(mapLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -417,8 +365,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(mapLiteralPartCS);
 				if (result == null) result = casePivotableElementCS(mapLiteralPartCS);
 				if (result == null) result = caseElementCS(mapLiteralPartCS);
-				if (result == null) result = casePivotable(mapLiteralPartCS);
-				if (result == null) result = caseVisitableCS(mapLiteralPartCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -427,13 +373,10 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				MapTypeCS mapTypeCS = (MapTypeCS)theEObject;
 				T result = caseMapTypeCS(mapTypeCS);
 				if (result == null) result = caseTypedRefCS(mapTypeCS);
-				if (result == null) result = caseNameable(mapTypeCS);
 				if (result == null) result = caseTypeRefCS(mapTypeCS);
 				if (result == null) result = caseElementRefCS(mapTypeCS);
 				if (result == null) result = casePivotableElementCS(mapTypeCS);
 				if (result == null) result = caseElementCS(mapTypeCS);
-				if (result == null) result = casePivotable(mapTypeCS);
-				if (result == null) result = caseVisitableCS(mapTypeCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -454,8 +397,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(nameExpCS);
 				if (result == null) result = casePivotableElementCS(nameExpCS);
 				if (result == null) result = caseElementCS(nameExpCS);
-				if (result == null) result = casePivotable(nameExpCS);
-				if (result == null) result = caseVisitableCS(nameExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -466,8 +407,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(navigatingArgCS);
 				if (result == null) result = casePivotableElementCS(navigatingArgCS);
 				if (result == null) result = caseElementCS(navigatingArgCS);
-				if (result == null) result = casePivotable(navigatingArgCS);
-				if (result == null) result = caseVisitableCS(navigatingArgCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -479,8 +418,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(nestedExpCS);
 				if (result == null) result = casePivotableElementCS(nestedExpCS);
 				if (result == null) result = caseElementCS(nestedExpCS);
-				if (result == null) result = casePivotable(nestedExpCS);
-				if (result == null) result = caseVisitableCS(nestedExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -494,8 +431,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(nullLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(nullLiteralExpCS);
 				if (result == null) result = caseElementCS(nullLiteralExpCS);
-				if (result == null) result = casePivotable(nullLiteralExpCS);
-				if (result == null) result = caseVisitableCS(nullLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -509,8 +444,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(numberLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(numberLiteralExpCS);
 				if (result == null) result = caseElementCS(numberLiteralExpCS);
-				if (result == null) result = casePivotable(numberLiteralExpCS);
-				if (result == null) result = caseVisitableCS(numberLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -524,8 +457,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(operationCallExpCS);
 				if (result == null) result = casePivotableElementCS(operationCallExpCS);
 				if (result == null) result = caseElementCS(operationCallExpCS);
-				if (result == null) result = casePivotable(operationCallExpCS);
-				if (result == null) result = caseVisitableCS(operationCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -536,11 +467,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseExpCS(operatorExpCS);
 				if (result == null) result = caseNamedElementCS(operatorExpCS);
 				if (result == null) result = caseModelElementCS(operatorExpCS);
-				if (result == null) result = caseNameable(operatorExpCS);
 				if (result == null) result = casePivotableElementCS(operatorExpCS);
 				if (result == null) result = caseElementCS(operatorExpCS);
-				if (result == null) result = casePivotable(operatorExpCS);
-				if (result == null) result = caseVisitableCS(operatorExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -552,8 +480,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(patternExpCS);
 				if (result == null) result = casePivotableElementCS(patternExpCS);
 				if (result == null) result = caseElementCS(patternExpCS);
-				if (result == null) result = casePivotable(patternExpCS);
-				if (result == null) result = caseVisitableCS(patternExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -565,11 +491,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseExpCS(prefixExpCS);
 				if (result == null) result = caseNamedElementCS(prefixExpCS);
 				if (result == null) result = caseModelElementCS(prefixExpCS);
-				if (result == null) result = caseNameable(prefixExpCS);
 				if (result == null) result = casePivotableElementCS(prefixExpCS);
 				if (result == null) result = caseElementCS(prefixExpCS);
-				if (result == null) result = casePivotable(prefixExpCS);
-				if (result == null) result = caseVisitableCS(prefixExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -582,8 +505,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(primitiveLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(primitiveLiteralExpCS);
 				if (result == null) result = caseElementCS(primitiveLiteralExpCS);
-				if (result == null) result = casePivotable(primitiveLiteralExpCS);
-				if (result == null) result = caseVisitableCS(primitiveLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -597,8 +518,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(propertyCallExpCS);
 				if (result == null) result = casePivotableElementCS(propertyCallExpCS);
 				if (result == null) result = caseElementCS(propertyCallExpCS);
-				if (result == null) result = casePivotable(propertyCallExpCS);
-				if (result == null) result = caseVisitableCS(propertyCallExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -608,7 +527,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				T result = caseRoundBracketedClauseCS(roundBracketedClauseCS);
 				if (result == null) result = caseContextLessElementCS(roundBracketedClauseCS);
 				if (result == null) result = caseElementCS(roundBracketedClauseCS);
-				if (result == null) result = caseVisitableCS(roundBracketedClauseCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -620,8 +538,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(selfExpCS);
 				if (result == null) result = casePivotableElementCS(selfExpCS);
 				if (result == null) result = caseElementCS(selfExpCS);
-				if (result == null) result = casePivotable(selfExpCS);
-				if (result == null) result = caseVisitableCS(selfExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -634,8 +550,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(shadowExpCS);
 				if (result == null) result = casePivotableElementCS(shadowExpCS);
 				if (result == null) result = caseElementCS(shadowExpCS);
-				if (result == null) result = casePivotable(shadowExpCS);
-				if (result == null) result = caseVisitableCS(shadowExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -644,11 +558,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				ShadowPartCS shadowPartCS = (ShadowPartCS)theEObject;
 				T result = caseShadowPartCS(shadowPartCS);
 				if (result == null) result = caseModelElementCS(shadowPartCS);
-				if (result == null) result = caseNameable(shadowPartCS);
 				if (result == null) result = casePivotableElementCS(shadowPartCS);
 				if (result == null) result = caseElementCS(shadowPartCS);
-				if (result == null) result = casePivotable(shadowPartCS);
-				if (result == null) result = caseVisitableCS(shadowPartCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -658,7 +569,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				T result = caseSquareBracketedClauseCS(squareBracketedClauseCS);
 				if (result == null) result = caseContextLessElementCS(squareBracketedClauseCS);
 				if (result == null) result = caseElementCS(squareBracketedClauseCS);
-				if (result == null) result = caseVisitableCS(squareBracketedClauseCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -672,8 +582,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(stringLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(stringLiteralExpCS);
 				if (result == null) result = caseElementCS(stringLiteralExpCS);
-				if (result == null) result = casePivotable(stringLiteralExpCS);
-				if (result == null) result = caseVisitableCS(stringLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -686,8 +594,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(tupleLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(tupleLiteralExpCS);
 				if (result == null) result = caseElementCS(tupleLiteralExpCS);
-				if (result == null) result = casePivotable(tupleLiteralExpCS);
-				if (result == null) result = caseVisitableCS(tupleLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -698,11 +604,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseVariableCS(tupleLiteralPartCS);
 				if (result == null) result = caseNamedElementCS(tupleLiteralPartCS);
 				if (result == null) result = caseModelElementCS(tupleLiteralPartCS);
-				if (result == null) result = caseNameable(tupleLiteralPartCS);
 				if (result == null) result = casePivotableElementCS(tupleLiteralPartCS);
 				if (result == null) result = caseElementCS(tupleLiteralPartCS);
-				if (result == null) result = casePivotable(tupleLiteralPartCS);
-				if (result == null) result = caseVisitableCS(tupleLiteralPartCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -715,8 +618,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(typeLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(typeLiteralExpCS);
 				if (result == null) result = caseElementCS(typeLiteralExpCS);
-				if (result == null) result = casePivotable(typeLiteralExpCS);
-				if (result == null) result = caseVisitableCS(typeLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -729,8 +630,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseElementRefCS(typeNameExpCS);
 				if (result == null) result = casePivotableElementCS(typeNameExpCS);
 				if (result == null) result = caseElementCS(typeNameExpCS);
-				if (result == null) result = casePivotable(typeNameExpCS);
-				if (result == null) result = caseVisitableCS(typeNameExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -744,8 +643,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(unlimitedNaturalLiteralExpCS);
 				if (result == null) result = casePivotableElementCS(unlimitedNaturalLiteralExpCS);
 				if (result == null) result = caseElementCS(unlimitedNaturalLiteralExpCS);
-				if (result == null) result = casePivotable(unlimitedNaturalLiteralExpCS);
-				if (result == null) result = caseVisitableCS(unlimitedNaturalLiteralExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -755,11 +652,8 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				T result = caseVariableCS(variableCS);
 				if (result == null) result = caseNamedElementCS(variableCS);
 				if (result == null) result = caseModelElementCS(variableCS);
-				if (result == null) result = caseNameable(variableCS);
 				if (result == null) result = casePivotableElementCS(variableCS);
 				if (result == null) result = caseElementCS(variableCS);
-				if (result == null) result = casePivotable(variableCS);
-				if (result == null) result = caseVisitableCS(variableCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -772,8 +666,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(variableExpCS);
 				if (result == null) result = casePivotableElementCS(variableExpCS);
 				if (result == null) result = caseElementCS(variableExpCS);
-				if (result == null) result = casePivotable(variableExpCS);
-				if (result == null) result = caseVisitableCS(variableExpCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1539,22 +1431,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVisitableCS(VisitableCS object)
-	{
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1566,21 +1442,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseElementCS(ElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePivotable(Pivotable object) {
 		return null;
 	}
 
@@ -1611,21 +1472,6 @@ public class EssentialOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseModelElementCS(ModelElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNameable(Nameable object) {
 		return null;
 	}
 

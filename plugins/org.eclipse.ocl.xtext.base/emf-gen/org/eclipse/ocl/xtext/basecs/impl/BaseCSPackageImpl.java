@@ -2399,7 +2399,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		dataTypeCSEClass.getESuperTypes().add(this.getNamespaceCS());
 		detailCSEClass.getESuperTypes().add(this.getNamedElementCS());
 		documentationCSEClass.getESuperTypes().add(this.getAnnotationElementCS());
-		elementCSEClass.getESuperTypes().add(this.getVisitableCS());
 		elementRefCSEClass.getESuperTypes().add(this.getPivotableElementCS());
 		enumerationCSEClass.getESuperTypes().add(this.getClassCS());
 		enumerationCSEClass.getESuperTypes().add(this.getNamespaceCS());
@@ -2408,14 +2407,12 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		importCSEClass.getESuperTypes().add(this.getNamespaceCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTypedRefCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTemplateableElementCS());
-		lambdaTypeCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		modelElementCSEClass.getESuperTypes().add(this.getPivotableElementCS());
 		modelElementRefCSEClass.getESuperTypes().add(this.getElementRefCS());
 		multiplicityBoundsCSEClass.getESuperTypes().add(this.getMultiplicityCS());
 		multiplicityCSEClass.getESuperTypes().add(this.getElementCS());
 		multiplicityStringCSEClass.getESuperTypes().add(this.getMultiplicityCS());
 		namedElementCSEClass.getESuperTypes().add(this.getModelElementCS());
-		namedElementCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		namespaceCSEClass.getESuperTypes().add(this.getNamedElementCS());
 		operationCSEClass.getESuperTypes().add(this.getFeatureCS());
 		operationCSEClass.getESuperTypes().add(this.getTemplateableElementCS());
@@ -2424,14 +2421,10 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		packageOwnerCSEClass.getESuperTypes().add(this.getModelElementCS());
 		parameterCSEClass.getESuperTypes().add(this.getTypedElementCS());
 		pathElementCSEClass.getESuperTypes().add(this.getElementCS());
-		pathElementCSEClass.getESuperTypes().add(thePivotPackage.getPivotable());
 		pathElementWithURICSEClass.getESuperTypes().add(this.getPathElementCS());
 		pathNameCSEClass.getESuperTypes().add(this.getElementCS());
-		pathNameCSEClass.getESuperTypes().add(thePivotPackage.getPivotable());
 		pivotableElementCSEClass.getESuperTypes().add(this.getElementCS());
-		pivotableElementCSEClass.getESuperTypes().add(thePivotPackage.getPivotable());
 		primitiveTypeRefCSEClass.getESuperTypes().add(this.getTypedRefCS());
-		primitiveTypeRefCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		referenceCSEClass.getESuperTypes().add(this.getStructuralFeatureCS());
 		rootCSEClass.getESuperTypes().add(this.getModelElementCS());
 		rootPackageCSEClass.getESuperTypes().add(this.getPackageOwnerCS());
@@ -2447,7 +2440,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		templateableElementCSEClass.getESuperTypes().add(this.getElementCS());
 		tuplePartCSEClass.getESuperTypes().add(this.getTypedElementCS());
 		tupleTypeCSEClass.getESuperTypes().add(this.getTypedRefCS());
-		tupleTypeCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		typeCSEClass.getESuperTypes().add(this.getModelElementCS());
 		typeParameterCSEClass.getESuperTypes().add(this.getTemplateParameterCS());
 		typeParameterCSEClass.getESuperTypes().add(this.getTypeCS());

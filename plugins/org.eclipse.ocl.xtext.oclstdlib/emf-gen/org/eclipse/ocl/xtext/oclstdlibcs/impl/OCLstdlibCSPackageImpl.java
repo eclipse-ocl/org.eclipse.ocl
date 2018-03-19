@@ -585,7 +585,6 @@ implements OCLstdlibCSPackage {
 		libPropertyCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
 		libRootPackageCSEClass.getESuperTypes().add(theBaseCSPackage.getRootPackageCS());
 		metaclassNameCSEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
-		metaclassNameCSEClass.getESuperTypes().add(thePivotPackage.getNameable());
 		precedenceCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
 
 		// Initialize classes and features; add operations and parameters

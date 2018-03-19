@@ -14,9 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.MorePivotable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
@@ -25,7 +22,6 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.completeoclcs.*;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 
@@ -98,11 +94,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseTemplateableElementCS(classifierContextDeclCS);
 				if (result == null) result = casePathNameDeclCS(classifierContextDeclCS);
 				if (result == null) result = caseModelElementCS(classifierContextDeclCS);
-				if (result == null) result = caseMorePivotable(classifierContextDeclCS);
 				if (result == null) result = casePivotableElementCS(classifierContextDeclCS);
 				if (result == null) result = caseElementCS(classifierContextDeclCS);
-				if (result == null) result = casePivotable(classifierContextDeclCS);
-				if (result == null) result = caseVisitableCS(classifierContextDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -114,11 +107,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseRootCS(completeOCLDocumentCS);
 				if (result == null) result = caseNamedElementCS(completeOCLDocumentCS);
 				if (result == null) result = caseModelElementCS(completeOCLDocumentCS);
-				if (result == null) result = caseNameable(completeOCLDocumentCS);
 				if (result == null) result = casePivotableElementCS(completeOCLDocumentCS);
 				if (result == null) result = caseElementCS(completeOCLDocumentCS);
-				if (result == null) result = casePivotable(completeOCLDocumentCS);
-				if (result == null) result = caseVisitableCS(completeOCLDocumentCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -128,11 +118,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				T result = caseContextDeclCS(contextDeclCS);
 				if (result == null) result = casePathNameDeclCS(contextDeclCS);
 				if (result == null) result = caseModelElementCS(contextDeclCS);
-				if (result == null) result = caseMorePivotable(contextDeclCS);
 				if (result == null) result = casePivotableElementCS(contextDeclCS);
 				if (result == null) result = caseElementCS(contextDeclCS);
-				if (result == null) result = casePivotable(contextDeclCS);
-				if (result == null) result = caseVisitableCS(contextDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -143,11 +130,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(defCS);
 				if (result == null) result = caseNamedElementCS(defCS);
 				if (result == null) result = caseModelElementCS(defCS);
-				if (result == null) result = caseNameable(defCS);
 				if (result == null) result = casePivotableElementCS(defCS);
 				if (result == null) result = caseElementCS(defCS);
-				if (result == null) result = casePivotable(defCS);
-				if (result == null) result = caseVisitableCS(defCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -160,11 +144,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(defOperationCS);
 				if (result == null) result = caseNamedElementCS(defOperationCS);
 				if (result == null) result = caseModelElementCS(defOperationCS);
-				if (result == null) result = caseNameable(defOperationCS);
 				if (result == null) result = casePivotableElementCS(defOperationCS);
 				if (result == null) result = caseElementCS(defOperationCS);
-				if (result == null) result = casePivotable(defOperationCS);
-				if (result == null) result = caseVisitableCS(defOperationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -176,11 +157,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseTypedElementCS(defPropertyCS);
 				if (result == null) result = caseNamedElementCS(defPropertyCS);
 				if (result == null) result = caseModelElementCS(defPropertyCS);
-				if (result == null) result = caseNameable(defPropertyCS);
 				if (result == null) result = casePivotableElementCS(defPropertyCS);
 				if (result == null) result = caseElementCS(defPropertyCS);
-				if (result == null) result = casePivotable(defPropertyCS);
-				if (result == null) result = caseVisitableCS(defPropertyCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -191,11 +169,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseContextDeclCS(featureContextDeclCS);
 				if (result == null) result = casePathNameDeclCS(featureContextDeclCS);
 				if (result == null) result = caseModelElementCS(featureContextDeclCS);
-				if (result == null) result = caseMorePivotable(featureContextDeclCS);
 				if (result == null) result = casePivotableElementCS(featureContextDeclCS);
 				if (result == null) result = caseElementCS(featureContextDeclCS);
-				if (result == null) result = casePivotable(featureContextDeclCS);
-				if (result == null) result = caseVisitableCS(featureContextDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -207,8 +182,6 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseModelElementCS(oclMessageArgCS);
 				if (result == null) result = casePivotableElementCS(oclMessageArgCS);
 				if (result == null) result = caseElementCS(oclMessageArgCS);
-				if (result == null) result = casePivotable(oclMessageArgCS);
-				if (result == null) result = caseVisitableCS(oclMessageArgCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -221,11 +194,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseContextDeclCS(operationContextDeclCS);
 				if (result == null) result = casePathNameDeclCS(operationContextDeclCS);
 				if (result == null) result = caseModelElementCS(operationContextDeclCS);
-				if (result == null) result = caseMorePivotable(operationContextDeclCS);
 				if (result == null) result = casePivotableElementCS(operationContextDeclCS);
 				if (result == null) result = caseElementCS(operationContextDeclCS);
-				if (result == null) result = casePivotable(operationContextDeclCS);
-				if (result == null) result = caseVisitableCS(operationContextDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -235,11 +205,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				T result = casePackageDeclarationCS(packageDeclarationCS);
 				if (result == null) result = casePathNameDeclCS(packageDeclarationCS);
 				if (result == null) result = caseModelElementCS(packageDeclarationCS);
-				if (result == null) result = caseMorePivotable(packageDeclarationCS);
 				if (result == null) result = casePivotableElementCS(packageDeclarationCS);
 				if (result == null) result = caseElementCS(packageDeclarationCS);
-				if (result == null) result = casePivotable(packageDeclarationCS);
-				if (result == null) result = caseVisitableCS(packageDeclarationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -248,11 +215,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				PathNameDeclCS pathNameDeclCS = (PathNameDeclCS)theEObject;
 				T result = casePathNameDeclCS(pathNameDeclCS);
 				if (result == null) result = caseModelElementCS(pathNameDeclCS);
-				if (result == null) result = caseMorePivotable(pathNameDeclCS);
 				if (result == null) result = casePivotableElementCS(pathNameDeclCS);
 				if (result == null) result = caseElementCS(pathNameDeclCS);
-				if (result == null) result = casePivotable(pathNameDeclCS);
-				if (result == null) result = caseVisitableCS(pathNameDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -264,11 +228,8 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = caseContextDeclCS(propertyContextDeclCS);
 				if (result == null) result = casePathNameDeclCS(propertyContextDeclCS);
 				if (result == null) result = caseModelElementCS(propertyContextDeclCS);
-				if (result == null) result = caseMorePivotable(propertyContextDeclCS);
 				if (result == null) result = casePivotableElementCS(propertyContextDeclCS);
 				if (result == null) result = caseElementCS(propertyContextDeclCS);
-				if (result == null) result = casePivotable(propertyContextDeclCS);
-				if (result == null) result = caseVisitableCS(propertyContextDeclCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -303,21 +264,6 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseCompleteOCLDocumentCS(CompleteOCLDocumentCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>More Pivotable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>More Pivotable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMorePivotable(MorePivotable object) {
 		return null;
 	}
 
@@ -488,22 +434,6 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVisitableCS(VisitableCS object)
-	{
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -515,21 +445,6 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseElementCS(ElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePivotable(Pivotable object) {
 		return null;
 	}
 
@@ -560,21 +475,6 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseModelElementCS(ModelElementCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNameable(Nameable object) {
 		return null;
 	}
 

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeoclcs;
 
-import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 
@@ -28,11 +27,11 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage#getPathNameDeclCS()
- * @model abstract="true" superTypes="org.eclipse.ocl.xtext.basecs.ModelElementCS org.eclipse.ocl.pivot.MorePivotable"
+ * @model abstract="true"
  * @generated
  */
 public interface PathNameDeclCS
-extends ModelElementCS, MorePivotable {
+extends ModelElementCS, org.eclipse.ocl.pivot.utilities.MorePivotable {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Path Name</b></em>' containment reference.

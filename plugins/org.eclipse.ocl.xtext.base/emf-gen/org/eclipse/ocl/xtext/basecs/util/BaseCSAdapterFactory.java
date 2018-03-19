@@ -16,8 +16,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.*;
 
 /**
@@ -344,16 +342,6 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 			public Adapter caseWildcardTypeRefCS(WildcardTypeRefCS object)
 			{
 				return createWildcardTypeRefCSAdapter();
-			}
-			@Override
-			public Adapter casePivotable(Pivotable object)
-			{
-				return createPivotableAdapter();
-			}
-			@Override
-			public Adapter caseNameable(Nameable object)
-			{
-				return createNameableAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object)
@@ -1141,36 +1129,6 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWildcardTypeRefCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.Pivotable <em>Pivotable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.utilities.Pivotable
-	 * @generated
-	 */
-	public Adapter createPivotableAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.Nameable <em>Nameable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.utilities.Nameable
-	 * @generated
-	 */
-	public Adapter createNameableAdapter()
-	{
 		return null;
 	}
 

@@ -580,8 +580,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-DynamicValueSpecification"
       name="DynamicValueSpecification" eSuperTypes="#T-pivot-ValueSpecification"/>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Element" name="Element" abstract="true"
-      eSuperTypes="#T-pivot-Visitable">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Element" name="Element" abstract="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
     </eAnnotations>
@@ -1520,7 +1519,7 @@
       instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" abstract="true"
       interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NamedElement" name="NamedElement"
-      abstract="true" eSuperTypes="#T-pivot-Element #T-pivot-Nameable">
+      abstract="true" eSuperTypes="#T-pivot-Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
     </eAnnotations>

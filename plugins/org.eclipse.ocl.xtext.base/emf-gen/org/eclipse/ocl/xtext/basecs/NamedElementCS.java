@@ -11,8 +11,6 @@
 
 package org.eclipse.ocl.xtext.basecs;
 
-import org.eclipse.ocl.pivot.utilities.Nameable;
-
 
 
 /**
@@ -29,10 +27,10 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getNamedElementCS()
- * @model abstract="true" superTypes="org.eclipse.ocl.xtext.basecs.ModelElementCS org.eclipse.ocl.pivot.Nameable"
+ * @model abstract="true"
  * @generated
  */
-public interface NamedElementCS extends ModelElementCS, Nameable {
+public interface NamedElementCS extends ModelElementCS, org.eclipse.ocl.pivot.utilities.Nameable {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

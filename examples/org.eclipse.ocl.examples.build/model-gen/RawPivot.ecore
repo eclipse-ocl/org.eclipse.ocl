@@ -288,7 +288,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DynamicValueSpecification" eSuperTypes="#//ValueSpecification"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true" eSuperTypes="#//Visitable">
+  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
     </eAnnotations>
@@ -480,7 +480,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MorePivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" abstract="true"
       interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true" eSuperTypes="#//Element #//Nameable">
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true" eSuperTypes="#//Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
     </eAnnotations>

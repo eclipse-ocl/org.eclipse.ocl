@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.basecs;
 
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,10 +26,10 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPivotableElementCS()
- * @model abstract="true" superTypes="org.eclipse.ocl.xtext.basecs.ElementCS org.eclipse.ocl.pivot.Pivotable"
+ * @model abstract="true"
  * @generated
  */
-public interface PivotableElementCS extends ElementCS, Pivotable
+public interface PivotableElementCS extends ElementCS, org.eclipse.ocl.pivot.utilities.Pivotable
 {
 	/**
 	 * Returns the value of the '<em><b>Pivot</b></em>' reference.

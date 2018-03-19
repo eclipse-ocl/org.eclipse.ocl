@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -25,7 +23,6 @@ import org.eclipse.ocl.xtext.basecs.PackageOwnerCS;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.RootPackageCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.oclinecorecs.*;
 
 /**
@@ -98,11 +95,8 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = caseConstraintCS(ocLinEcoreConstraintCS);
 				if (result == null) result = caseNamedElementCS(ocLinEcoreConstraintCS);
 				if (result == null) result = caseModelElementCS(ocLinEcoreConstraintCS);
-				if (result == null) result = caseNameable(ocLinEcoreConstraintCS);
 				if (result == null) result = casePivotableElementCS(ocLinEcoreConstraintCS);
 				if (result == null) result = caseElementCS(ocLinEcoreConstraintCS);
-				if (result == null) result = casePivotable(ocLinEcoreConstraintCS);
-				if (result == null) result = caseVisitableCS(ocLinEcoreConstraintCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -113,11 +107,8 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = caseAnnotationElementCS(sysMLCS);
 				if (result == null) result = caseNamedElementCS(sysMLCS);
 				if (result == null) result = caseModelElementCS(sysMLCS);
-				if (result == null) result = caseNameable(sysMLCS);
 				if (result == null) result = casePivotableElementCS(sysMLCS);
 				if (result == null) result = caseElementCS(sysMLCS);
-				if (result == null) result = casePivotable(sysMLCS);
-				if (result == null) result = caseVisitableCS(sysMLCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -131,8 +122,6 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = caseModelElementCS(topLevelCS);
 				if (result == null) result = casePivotableElementCS(topLevelCS);
 				if (result == null) result = caseElementCS(topLevelCS);
-				if (result == null) result = casePivotable(topLevelCS);
-				if (result == null) result = caseVisitableCS(topLevelCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -189,22 +178,6 @@ protected T doSwitch(int classifierID, EObject theEObject)
 	}
 
 /**
-	 * Returns the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVisitableCS(VisitableCS object)
-	{
-		return null;
-	}
-
-/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element CS</em>'.
 	 * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -221,22 +194,6 @@ protected T doSwitch(int classifierID, EObject theEObject)
 	}
 
   /**
-	 * Returns the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Pivotable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePivotable(Pivotable object)
-	{
-		return null;
-	}
-
-/**
 	 * Returns the result of interpreting the object as an instance of '<em>Pivotable Element CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -269,22 +226,6 @@ protected T doSwitch(int classifierID, EObject theEObject)
 	}
 
   /**
-	 * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNameable(Nameable object)
-	{
-		return null;
-	}
-
-/**
 	 * Returns the result of interpreting the object as an instance of '<em>Named Element CS</em>'.
 	 * <!-- begin-user-doc -->
    * This implementation returns null;
