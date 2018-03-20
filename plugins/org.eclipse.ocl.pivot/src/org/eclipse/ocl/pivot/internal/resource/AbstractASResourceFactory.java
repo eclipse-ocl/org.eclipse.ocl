@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 
 /**
@@ -152,9 +153,19 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
-	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory,
-			@NonNull Class<T> pivotClass, @NonNull EObject eObject) throws ParserException {
-		throw new UnsupportedOperationException(getClass().getName() + ".getASElement");
+	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Class<T> requiredClass, @NonNull EObject eObject) throws ParserException {
+		if (eObject instanceof Pivotable) {
+			Element element = ((Pivotable)eObject).getPivot();
+			if (element != null) {
+				if (!requiredClass.isAssignableFrom(element.getClass())) {
+					throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
+				}
+				@SuppressWarnings("unchecked")
+				T castElement = (T) element;
+				return castElement;
+			}
+		}
+		return null;
 	}
 
 	@Override
