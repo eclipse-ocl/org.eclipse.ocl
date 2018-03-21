@@ -239,7 +239,9 @@ public class CompletionProposalTests extends XtextTestCase
 	}
 
 	public void testEditor_OCLstdlib_Completions() throws Exception {
-		if (Boolean.getBoolean("TYCHO_TEST")) {				// FIXME BUG 526252
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		boolean isTycho = "tycho".equals(testNameSuffix);
+		if (isTycho) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}
