@@ -11,11 +11,14 @@
 package org.eclipse.ocl.examples.xtext.tests;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
 public class JUnitStandaloneFileSystem extends TestFileSystem
@@ -89,7 +92,10 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 			super(platformURI, file);
 		}
 
-		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath) {
+		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath, @Nullable InputStream inputStream) {
+			if (inputStream != null) {
+				throw new UnsupportedOperationException();		// TODO
+			}
 			JUnitStandaloneTestFolder node = this;
 			@NonNull String[] testFileSegments = testFilePath.split("/");
 			if (testFilePath.endsWith("/")) {
@@ -137,18 +143,28 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		}
 
 		@Override
+		public @NonNull IProject getIProject() {
+			throw new IllegalStateException();
+		}
+
+		@Override
 		public @NonNull String getName() {
 			return platformURI.segment(1);
 		}
 
 		@Override
 		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath) {
-			return createFilePath(testFilePath);
+			return createFilePath(testFilePath, null);
+		}
+
+		@Override
+		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath, @Nullable InputStream inputStream) {
+			return createFilePath(testFilePath, inputStream);
 		}
 
 		@Override
 		public @NonNull JUnitStandaloneTestFile getOutputFolder(@NonNull String testFilePath) {
-			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath);
+			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath, null);
 			testFolder.mkdir();
 			return testFolder;
 		}

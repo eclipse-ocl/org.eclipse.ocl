@@ -128,7 +128,7 @@ public class JUnitPluginFileSystem extends TestFileSystem
 			this.javaProject = javaProject;
 		}
 
-		protected @NonNull JUnitPluginTestFile createFilePath(@NonNull String testFilePath) {
+		protected @NonNull JUnitPluginTestFile createFilePath(@NonNull String testFilePath, @Nullable InputStream inputStream) {
 			JUnitPluginTestFolder node = this;
 			@NonNull String[] testFileSegments = testFilePath.split("/");
 			if (testFilePath.endsWith("/")) {
@@ -144,7 +144,7 @@ public class JUnitPluginFileSystem extends TestFileSystem
 						node = node.createFolder(testFileSegments[i]);
 					}
 				}
-				JUnitPluginTestFile createFile = node.createFile(testFileSegments[testFileSegments.length-1], null);
+				JUnitPluginTestFile createFile = node.createFile(testFileSegments[testFileSegments.length-1], inputStream);
 				TestUIUtil.flushEvents();
 				return createFile;
 			}
@@ -193,13 +193,23 @@ public class JUnitPluginFileSystem extends TestFileSystem
 		}
 
 		@Override
+		public @NonNull IProject getIProject() {
+			return javaProject;
+		}
+
+		@Override
 		public @NonNull String getName() {
 			return platformURI.segment(1);
 		}
 
 		@Override
 		public @NonNull JUnitPluginTestFile getOutputFile(@NonNull String testFilePath) {
-			return createFilePath(testFilePath);
+			return createFilePath(testFilePath, null);
+		}
+
+		@Override
+		public @NonNull JUnitPluginTestFile getOutputFile(@NonNull String testFilePath, @Nullable InputStream inputStream) {
+			return createFilePath(testFilePath, inputStream);
 		}
 
 		@Override
