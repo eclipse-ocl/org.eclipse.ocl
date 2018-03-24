@@ -103,7 +103,7 @@ public class MultiValidationJob extends Job
 	private static final Logger log = Logger.getLogger(MultiValidationJob.class);
 	private static final @NonNull MarkerHelper markerHelper = new ValidationMarkerHelper();
 
-	private final @NonNull Set<@NonNull IFile> validationQueue = new HashSet<>();
+	private final @NonNull Set<@NonNull ValidationEntry> validationQueue = new HashSet<>();
 	private @Nullable ProjectManager projectManager = null;
 
 	public MultiValidationJob() {
@@ -114,10 +114,10 @@ public class MultiValidationJob extends Job
 	 * Add the files to the queue of validations. If the validation job is not
 	 * already running, it is scheduled to run.
 	 */
-	public synchronized void addValidations(@NonNull Iterable<@NonNull IFile> files) {
+	public synchronized void addValidations(@NonNull Iterable<@NonNull ValidationEntry> entries) {
 		boolean added = false;
-		for (@NonNull IFile file : files) {
-			if (validationQueue.add(file)) {
+		for (@NonNull ValidationEntry entry : entries) {
+			if (validationQueue.add(entry)) {
 				added = true;
 			}
 		}
@@ -158,7 +158,8 @@ public class MultiValidationJob extends Job
 		markerHelper.updateMarkers(diagnostics);
 	}
 
-	protected void doValidate(@NonNull IFile file, IProgressMonitor monitor) throws CoreException {
+	protected void doValidate(@NonNull ValidationEntry entry, IProgressMonitor monitor) throws CoreException {
+		IFile file = entry.getFile();
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		//		System.out.println("OCL:Validating " + uri.toString());
 		ProjectManager projectManager2 = projectManager;
@@ -183,30 +184,30 @@ public class MultiValidationJob extends Job
 		}
 	}
 
-	private synchronized @NonNull List<@NonNull IFile> getValidationList() {
+	private synchronized @NonNull List<@NonNull ValidationEntry> getValidationList() {
 		return new ArrayList<>(validationQueue);
 	}
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		List<@NonNull IFile> validationList;
+		List<@NonNull ValidationEntry> validationList;
 		while (!(validationList = getValidationList()).isEmpty()) {
 			SubMonitor progress = SubMonitor.convert(monitor, validationList.size());
 			Collections.sort(validationList, ToStringComparator.INSTANCE);
-			for (@NonNull IFile file : validationList) {
+			for (@NonNull ValidationEntry entry : validationList) {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
 				try {
-					progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Validating, file.getFullPath().toString()));
-					doValidate(file, monitor);
+					progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Validating, entry.getFile().getFullPath().toString()));
+					doValidate(entry, monitor);
 				} catch (OperationCanceledException canceled) {
 					return Status.CANCEL_STATUS;
 				} catch (Exception e) {
 					log.error("Error running " + getName(), e);
 					//					return Status.OK_STATUS;
 				}
-				validationQueue.remove(file);		// Remove so that failure does not repeat
+				validationQueue.remove(entry);		// Remove so that failure does not repeat
 				progress.worked(1);
 			}
 			progress.done();
