@@ -44,6 +44,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 {
 	protected final @NonNull IProject project;
 	protected final @NonNull BuildType buildType;
+	protected final @Nullable IProgressMonitor monitor;
 	private SubMonitor progress;
 	private final @NonNull Map<@NonNull String, @Nullable Boolean> extension2included = new HashMap<>();
 	private final char[][] exclusionPatterns;
@@ -55,6 +56,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	protected AbstractBuildSelector(@NonNull IProject project, @NonNull BuildType buildType, @Nullable Map<String, String> args, @Nullable IProgressMonitor monitor) {
 		this.project = project;
 		this.buildType = buildType;
+		this.monitor = monitor;
 		String initializingMessage = NLS.bind(BaseUIMessages.MultiValidationJob_Initializing, getBuilderName(), project.getName());
 		this.progress = SubMonitor.convert(monitor, initializingMessage, 100);
 		String[] disabledPathArray = null;
@@ -115,6 +117,9 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		}
 		progress.worked(1);
 		progress.done();
+		if (monitor != null) {
+			monitor.done();
+		}
 	}
 
 	protected @NonNull ValidationEntry createValidationEntry(@NonNull IFile iFile) {
