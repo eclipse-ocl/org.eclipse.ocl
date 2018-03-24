@@ -16,15 +16,15 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.ocl.xtext.base.ui.commands.ToggleNatureCommand;
+import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback;
 import org.eclipse.xtext.ui.util.DontAskAgainDialogs;
 
 import com.google.inject.Inject;
 
 /**
  */
-public class BaseEditorCallback extends ValidatingEditorCallback
+public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 {
 	@Inject
 	private ToggleNatureCommand toggleNature;
