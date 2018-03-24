@@ -34,6 +34,24 @@ import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
  */
 public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilder
 {
+	// FIXME delete after Photon M7 (once QVTd has caught up)
+	@Deprecated
+	public static class BuildSelector extends AbstractBuildSelector
+	{
+		protected final @NonNull String builderName;
+
+		public BuildSelector(@NonNull String builderName, @NonNull IProject project, @NonNull BuildType buildType,
+				Map<String, String> args, IProgressMonitor monitor) {
+			super(project, buildType, args, monitor);
+			this.builderName = builderName;
+		}
+
+		@Override
+		protected @NonNull String getBuilderName() {
+			return builderName;
+		}
+
+	}
 	/**
 	 * This is a copy of org.eclipse.jdt.internal.compiler.util.Util.isExcluded
 	 *
@@ -121,8 +139,17 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 		//		System.out.println(NameUtil.debugSimpleName(this) + " clean");
 	}
 
-	protected abstract @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
-			@Nullable Map<String, String> args, @Nullable IProgressMonitor monitor);
+	// FIXME change to abstract after Photon M7 (once QVTd has caught up)
+	protected /*abstract*/ @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
+			@Nullable Map<String, String> args, @Nullable IProgressMonitor monitor) {
+		return new BuildSelector(getBuilderName(), project, buildType, args, monitor);
+	}
+
+	// FIXME delete after Photon M7 (once QVTd has caught up)
+	@Deprecated
+	protected @NonNull String getBuilderName() {
+		return "FIXME";
+	}
 
 	protected abstract Logger getLog();
 
