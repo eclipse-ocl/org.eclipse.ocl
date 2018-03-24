@@ -14,11 +14,13 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
+import org.eclipse.xtext.validation.Issue;
 
 /**
  * A ValidationEntry identifies an IFile to be validated and the Marker id for its problems.
  */
-public class ValidationEntry
+public class ValidationEntry extends MarkerTypeProvider
 {
 	protected final @NonNull IFile file;
 	protected final @NonNull String markerId;
@@ -34,6 +36,11 @@ public class ValidationEntry
 
 	public @NonNull IFile getFile() {
 		return file;
+	}
+
+	@Override
+	public @NonNull String getMarkerType(Issue issue) {
+		return markerId;
 	}
 
 	public @NonNull String getMarkerId() {

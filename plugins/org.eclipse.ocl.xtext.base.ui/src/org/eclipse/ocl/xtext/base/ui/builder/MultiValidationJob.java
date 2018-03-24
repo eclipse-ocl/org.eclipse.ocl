@@ -19,17 +19,15 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.BasicDiagnostic;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
@@ -38,8 +36,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -51,7 +47,16 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil.ToStringComparator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
+import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.xtext.diagnostics.Severity;
+import org.eclipse.xtext.ui.editor.validation.IValidationIssueProcessor;
+import org.eclipse.xtext.ui.editor.validation.MarkerCreator;
+import org.eclipse.xtext.ui.editor.validation.MarkerIssueProcessor;
+import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
+import org.eclipse.xtext.util.IAcceptor;
+import org.eclipse.xtext.validation.IDiagnosticConverter;
+import org.eclipse.xtext.validation.Issue;
 
 /**
  * A MultiValidationJob maintains a queue of workspaceRelativeFileNames in need of validation.
@@ -62,46 +67,26 @@ import org.eclipse.osgi.util.NLS;
 public class MultiValidationJob extends Job
 {
 	/**
-	 * The ValidationMarkerHelper replicates those parts of org.eclipse.emf.edit.ui.actionValidateAction.EclipseResourcesUtil
-	 * that ensure that Problems View markers can navigate back to an EMF editor.
+	 * IssueListAcceptor provides a simple implementation of the Issue Acceptor protocol that accumulates all
+	 * issues in a list.
 	 */
-	protected static class ValidationMarkerHelper extends EditUIMarkerHelper
+	protected static class IssueListAcceptor implements IAcceptor<@NonNull Issue>
 	{
-		@Override
-		protected void adjustMarker(IMarker marker, Diagnostic diagnostic, Diagnostic parentDiagnostic) throws CoreException
-		{
-			List<?> data = diagnostic.getData();
-			StringBuilder relatedURIs = new StringBuilder();
-			boolean first = true;
-			for (Object object : data) {
-				if (object instanceof EObject) {
-					EObject eObject = (EObject)object;
-					if (first) {
-						first = false;
-						marker.setAttribute(EValidator.URI_ATTRIBUTE, EcoreUtil.getURI(eObject).toString());
-					}
-					else {
-						if (relatedURIs.length() != 0) {
-							relatedURIs.append(' ');
-						}
-						relatedURIs.append(URI.encodeFragment(EcoreUtil.getURI(eObject).toString(), false));
-					}
-				}
-			}
-			if (relatedURIs.length() > 0) {
-				marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIs.toString());
-			}
-			super.adjustMarker(marker, diagnostic, parentDiagnostic);
-		}
+		protected final @NonNull List<@NonNull Issue> issues = new ArrayList<>();
 
 		@Override
-		protected String getMarkerID() {
-			return EValidator.MARKER;
+		public void accept(@NonNull Issue issue) {
+			issues.add(issue);
+		}
+
+		public @NonNull List<@NonNull Issue> getIssues() {
+			return issues;
 		}
 	}
 
 	private static final Logger log = Logger.getLogger(MultiValidationJob.class);
-	private static final @NonNull MarkerHelper markerHelper = new ValidationMarkerHelper();
+	private static final @NonNull IDiagnosticConverter converter = new PivotDiagnosticConverter();
+	private static final @NonNull MarkerCreator markerCreator = new MarkerCreator();
 
 	private final @NonNull Set<@NonNull ValidationEntry> validationQueue = new HashSet<>();
 	private @Nullable ProjectManager projectManager = null;
@@ -136,14 +121,21 @@ public class MultiValidationJob extends Job
 		super.canceling();
 	}
 
-	protected void checkResourceErrors(@NonNull Resource resource) throws CoreException {
-		boolean wrap = true;
-		for (Diagnostic diagnostic : markerHelper.getInstrinciDiagnostics(resource, wrap)) {
-			markerHelper.updateMarkers(diagnostic);
+	protected boolean checkResourceErrors(@NonNull Resource resource, @NonNull IAcceptor<@NonNull Issue> acceptor, @NonNull IProgressMonitor monitor) throws CoreException {
+		for (int i = 0; i < resource.getErrors().size(); i++) {
+			if (monitor.isCanceled())
+				return false;
+			converter.convertResourceDiagnostic(resource.getErrors().get(i), Severity.ERROR, acceptor);
 		}
+		for (int i = 0; i < resource.getWarnings().size(); i++) {
+			if (monitor.isCanceled())
+				return false;
+			converter.convertResourceDiagnostic(resource.getWarnings().get(i), Severity.WARNING, acceptor);
+		}
+		return true;
 	}
 
-	protected void checkValidationErrors(@NonNull Resource resource, IProgressMonitor monitor) throws CoreException {
+	protected boolean checkValidationErrors(@NonNull Resource resource, @NonNull IAcceptor<@NonNull Issue> acceptor, @NonNull IProgressMonitor monitor) throws CoreException {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		BasicDiagnostic diagnostics = new BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { resource.getURI() }), new Object [] { resource });
 		ResourceSet resourceSet = resource.getResourceSet();
@@ -151,14 +143,14 @@ public class MultiValidationJob extends Job
 		Diagnostician instance = PivotDiagnostician.createDiagnostician(resourceSet, EValidator.Registry.INSTANCE, null/*adapterFactory*/, monitor);
 		for (EObject eObject : resource.getContents()) {
 			if (monitor.isCanceled()) {
-				return;
+				return false;
 			}
 			instance.validate(eObject, diagnostics, validationContext);
 		}
-		markerHelper.updateMarkers(diagnostics);
+		return true;
 	}
 
-	protected void doValidate(@NonNull ValidationEntry entry, IProgressMonitor monitor) throws CoreException {
+	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull IProgressMonitor monitor) throws CoreException {
 		IFile file = entry.getFile();
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		//		System.out.println("OCL:Validating " + uri.toString());
@@ -168,20 +160,30 @@ public class MultiValidationJob extends Job
 		}
 		OCL ocl = OCL.newInstance(projectManager2);
 		Resource resource = ocl.getResourceSet().getResource(uri, true);
-		markerHelper.deleteMarkers(resource);
+		MarkerTypeProvider markerTypeProvider = entry;	// ValidationEntry pragmatically extends MarkerTypeProvider
+		IValidationIssueProcessor validationIssueProcessor = new MarkerIssueProcessor(file, markerCreator, markerTypeProvider);
+		IssueListAcceptor acceptor = new IssueListAcceptor();
 		if (resource != null) {
-			checkResourceErrors(resource);
+			if (!checkResourceErrors(resource, acceptor, monitor)) {
+				return;
+			}
 			if (resource instanceof CSResource) {
 				Resource asResource = ((CSResource)resource).getASResource();
-				markerHelper.deleteMarkers(asResource);
-				checkResourceErrors(asResource);
-				checkValidationErrors(asResource, monitor);
+				if (!checkResourceErrors(asResource, acceptor, monitor)) {
+					return;
+				}
+				if (!checkValidationErrors(asResource, acceptor, monitor)) {
+					return;
+				}
 				// FIXME accumulate/cache dependencies
 			}
 			else {
-				checkValidationErrors(resource, monitor);
+				if (!checkValidationErrors(resource, acceptor, monitor)) {
+					return;
+				}
 			}
 		}
+		validationIssueProcessor.processIssues(acceptor.getIssues(), monitor);
 	}
 
 	private synchronized @NonNull List<@NonNull ValidationEntry> getValidationList() {
@@ -189,7 +191,10 @@ public class MultiValidationJob extends Job
 	}
 
 	@Override
-	protected IStatus run(final IProgressMonitor monitor) {
+	protected IStatus run(IProgressMonitor monitor) {
+		if (monitor == null) {
+			monitor = new NullProgressMonitor();
+		}
 		List<@NonNull ValidationEntry> validationList;
 		while (!(validationList = getValidationList()).isEmpty()) {
 			SubMonitor progress = SubMonitor.convert(monitor, validationList.size());
