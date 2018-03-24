@@ -13,14 +13,15 @@ package org.eclipse.ocl.pivot.ui.builder;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
-import org.eclipse.ocl.xtext.base.ui.builder.AbstractValidatingBuilder;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractBuildSelector;
+import org.eclipse.ocl.xtext.base.ui.builder.AbstractValidatingBuilder;
 
 /**
  * Builder for OCL contributions. Currently this involves identifying OCL files subject to
@@ -41,6 +42,21 @@ public class OCLBuilder extends AbstractValidatingBuilder
 		@Override
 		protected @NonNull String getBuilderName() {
 			return "OCL";
+		}
+
+		@Override
+		protected @NonNull String getMarkerId(@NonNull IFile iFile) {
+			String fileExtension = iFile.getFileExtension();
+			if ("ocl".equals(fileExtension)) {
+				return "org.eclipse.ocl.xtext.completeocl.ui.Marker"; //CompleteOCLUiModule.MARKER_ID;
+			}
+			else if ("oclinecore".equals(fileExtension)) {
+				return "org.eclipse.ocl.xtext.oclinecore.ui.Marker"; //OCLinEcoreUiModule.MARKER_ID;
+			}
+			else if ("oclstdlib".equals(fileExtension)) {
+				return "org.eclipse.ocl.xtext.oclstdlib.ui.Marker"; //OCLstdlibUiModule.MARKER_ID;
+			}
+			return super.getMarkerId(iFile);
 		}
 	}
 

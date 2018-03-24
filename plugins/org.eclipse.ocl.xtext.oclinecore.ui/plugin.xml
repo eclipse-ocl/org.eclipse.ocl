@@ -140,28 +140,11 @@
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.oclinecore.OCLinEcore -->
-    <extension
-            id="oclinecore.check.fast"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
+    <extension point="org.eclipse.core.resources.markers"
+      id="Marker" name="%MF_Problem">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
-    <extension
-            id="oclinecore.check.normal"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="oclinecore.check.expensive"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
-
 
 	<!-- Quick Outline -->
 	<extension
@@ -201,23 +184,7 @@
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclinecore.ui.oclinecore.check.fast">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclinecore.ui.oclinecore.check.normal">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclinecore.ui.oclinecore.check.expensive">
+            markerType="org.eclipse.ocl.xtext.oclinecore.ui.Marker">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">

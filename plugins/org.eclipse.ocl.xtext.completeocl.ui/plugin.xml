@@ -141,28 +141,11 @@
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.completeocl.CompleteOCL -->
-    <extension
-            id="completeocl.check.fast"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
+    <extension point="org.eclipse.core.resources.markers"
+      id="Marker" name="%MF_Problem">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
-    <extension
-            id="completeocl.check.normal"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="completeocl.check.expensive"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
-
 
 	<!-- Quick Outline -->
 	<extension
@@ -202,28 +185,12 @@
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.completeocl.ui.completeocl.check.fast">
+            markerType="org.eclipse.ocl.xtext.completeocl.ui.Marker">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.completeocl.ui.completeocl.check.normal">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.completeocl.ui.completeocl.check.expensive">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-      </markerResolutionGenerator>
    </extension>
    
 	<!-- Load Complete OCL Document -->

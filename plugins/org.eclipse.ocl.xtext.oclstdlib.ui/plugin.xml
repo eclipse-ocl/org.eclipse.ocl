@@ -151,28 +151,11 @@
 
 
     <!-- marker definitions for org.eclipse.ocl.xtext.oclstdlib.OCLstdlib -->
-    <extension
-            id="oclstdlib.check.fast"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
+    <extension point="org.eclipse.core.resources.markers"
+      id="Marker" name="%MF_Problem">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
-    <extension
-            id="oclstdlib.check.normal"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="oclstdlib.check.expensive"
-            name="%MF_Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
-
 
 	<!-- Quick Outline -->
 	<extension
@@ -212,23 +195,7 @@
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclstdlib.ui.oclstdlib.check.fast">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclstdlib.ui.oclstdlib.check.normal">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.ocl.xtext.oclstdlib.ui.oclstdlib.check.expensive">
+            markerType="org.eclipse.ocl.xtext.oclstdlib.ui.Marker">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
