@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractValidatingBuilder.BuildType;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
@@ -45,7 +46,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	protected final @NonNull IProject project;
 	protected final @NonNull BuildType buildType;
 	protected final @Nullable IProgressMonitor monitor;
-	private SubMonitor progress;
+	private final @NonNull SubMonitor progress;
 	private final @NonNull Map<@NonNull String, @Nullable Boolean> extension2included = new HashMap<>();
 	private final char[][] exclusionPatterns;
 	private final char[][] inclusionPatterns;
@@ -59,6 +60,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		this.monitor = monitor;
 		String initializingMessage = NLS.bind(BaseUIMessages.MultiValidationJob_Initializing, getBuilderName(), project.getName());
 		this.progress = SubMonitor.convert(monitor, initializingMessage, 100);
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " converted from: " + NameUtil.debugSimpleName(monitor));
 		String[] disabledPathArray = null;
 		String[] enabledPathArray = null;
 		if (args != null) {
@@ -105,20 +107,27 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		else {
 			exclusionPatterns = null;
 		}
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " worked 1");
 		progress.worked(1);
 	}
 
 	public void buildResources() {
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " setWorkRemaining 1");
 		progress.setWorkRemaining(1);
 		MultiValidationJob multiValidationJob = BaseUIActivator.getMultiValidationJob();
 		if (multiValidationJob != null) {
 			multiValidationJob.addValidations(selectedEntries);
-			progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Queuing, getBuilderName()));
+			String message = NLS.bind(BaseUIMessages.MultiValidationJob_Queuing, getBuilderName());
+			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " setTaskName: " + message);
+			progress.setTaskName(message);
 		}
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " worked: 1");
 		progress.worked(1);
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " done");
 		progress.done();
 		if (monitor != null) {
 			monitor.done();
+			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
 		}
 	}
 
@@ -164,6 +173,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	public void selectResources(@Nullable IResourceDelta delta) throws CoreException {
 		String selectingMessage = NLS.bind(BaseUIMessages.MultiValidationJob_Selecting, getBuilderName(), project.getName());
 		//			this.progress = SubMonitor.convert(monitor, selectingMessage, 10);
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " subTask: " + selectingMessage);
 		progress.subTask(selectingMessage);
 		//			progress.subTask(selectingResourcesMessage);
 		if (delta == null) {
@@ -172,6 +182,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		else {
 			delta.accept(this);
 		}
+		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " worked: 1");
 		progress.worked(1);
 	}
 

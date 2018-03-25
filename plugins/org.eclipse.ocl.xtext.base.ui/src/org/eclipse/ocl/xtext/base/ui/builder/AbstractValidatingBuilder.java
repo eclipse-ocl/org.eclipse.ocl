@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.compiler.CharOperation;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 
 /**
@@ -126,10 +127,13 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			getLog().error(e.getMessage(), e);
 			forgetLastBuiltState();
 		} finally {
-			if (monitor != null)
+			if (monitor != null) {
+				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done2");
 				monitor.done();
+			}
 			String message = "Build " + getProject().getName() + " in " + (System.currentTimeMillis() - startTime) + " ms";
 			getLog().info(message);
+			System.out.println(Thread.currentThread().getName() + " log " + message);
 		}
 		return null;
 	}

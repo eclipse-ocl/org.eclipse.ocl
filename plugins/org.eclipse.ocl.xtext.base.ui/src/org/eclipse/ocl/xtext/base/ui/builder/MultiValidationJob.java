@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.builder;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,6 +21,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,6 +32,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
@@ -36,6 +41,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -43,18 +50,18 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil.ToStringComparator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.xtext.diagnostics.Severity;
-import org.eclipse.xtext.ui.editor.validation.IValidationIssueProcessor;
-import org.eclipse.xtext.ui.editor.validation.MarkerCreator;
-import org.eclipse.xtext.ui.editor.validation.MarkerIssueProcessor;
-import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
 import org.eclipse.xtext.util.IAcceptor;
+import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.Issue;
 
@@ -67,28 +74,388 @@ import org.eclipse.xtext.validation.Issue;
 public class MultiValidationJob extends Job
 {
 	/**
-	 * IssueListAcceptor provides a simple implementation of the Issue Acceptor protocol that accumulates all
-	 * issues in a list.
+	 * An AddMarkersOperation accumulates the future markers for an IResource via the accept methods.
+	 * Old markers are deleted and the new markers are installed by a single execution per resource.
 	 */
-	protected static class IssueListAcceptor implements IAcceptor<@NonNull Issue>
+	protected static class AddMarkersOperation extends WorkspaceModifyOperation implements IAcceptor<@NonNull Issue>
 	{
-		protected final @NonNull List<@NonNull Issue> issues = new ArrayList<>();
+		protected final @NonNull IResource resource;
+		protected final @NonNull String issueMarkerType;
+		protected final @NonNull List<@NonNull MarkerData> markerDatas = new ArrayList<>();
+
+		public AddMarkersOperation(@NonNull IResource resource, @NonNull String issueMarkerType) {
+			this.resource = resource;
+			this.issueMarkerType = issueMarkerType;
+		}
+
+		public void accept(@NonNull Diagnostic diagnostic, @Nullable Diagnostic parentDiagnostic) {
+			if (diagnostic.getSeverity() != Diagnostic.OK) {
+				markerDatas.add(new DiagnosticMarkerData(diagnostic, parentDiagnostic));
+			}
+		}
+
+		public void accept(Resource.@NonNull Diagnostic diagnostic, int severity) {
+			markerDatas.add(new ResourceDiagnosticMarkerData(diagnostic, severity));
+		}
 
 		@Override
 		public void accept(@NonNull Issue issue) {
-			issues.add(issue);
+			markerDatas.add(new IssueMarkerData(resource, issueMarkerType, issue));
 		}
 
-		public @NonNull List<@NonNull Issue> getIssues() {
-			return issues;
+		@Override
+		protected void execute(final IProgressMonitor monitor) throws CoreException, InvocationTargetException, InterruptedException {
+			if (!resource.exists()) {
+				return;
+			}
+			resource.deleteMarkers(EValidator.MARKER, true, IResource.DEPTH_INFINITE);
+			for (@NonNull MarkerData markerData : markerDatas) {
+				if (monitor.isCanceled()) {
+					return;
+				}
+				markerData.createMarker(resource);
+			}
+		}
+
+		public boolean isEMF() {
+			return issueMarkerType == EValidator.MARKER;
+		}
+	}
+
+	protected interface MarkerData
+	{
+		@NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException;
+	}
+
+	/**
+	 * A DiagnosticMarkerData describes the future Marker created from a Diagnostic.
+	 */
+	//This class is based on org.eclipse.emf.edit.ui.action.ValidateAction.EclipseResourcesUtil
+	protected static class DiagnosticMarkerData /*extends ValidateAction.EclipseResourcesUtil*/ implements MarkerData
+	{
+		protected final @NonNull Object severity;
+		protected final /*@NonNull*/ String message;
+		protected @Nullable String location = null;
+		protected /*@NonNull*/ Integer lineNumber = null;
+		protected @Nullable String uriAttribute = null;
+		protected final @Nullable String relatedURIsAttribute;
+
+		public DiagnosticMarkerData(@NonNull Diagnostic diagnostic, @Nullable Diagnostic parentDiagnostic) {
+			//
+			//	MarkerHelper.createMarkers
+			//
+			int severity = diagnostic.getSeverity();
+			if (severity < Diagnostic.WARNING) {
+				this.severity = IMarker.SEVERITY_INFO;
+			}
+			else if (severity < Diagnostic.ERROR) {
+				this.severity = IMarker.SEVERITY_WARNING;
+			}
+			else {
+				this.severity = IMarker.SEVERITY_ERROR;
+			}
+			//			this.message = composeMessage(diagnostic, parentDiagnostic);
+			this.message = diagnostic.getMessage();
+			//
+			//	Logic from EditUIMarkerHelper.adjustMarker
+			//
+			List<?> data = diagnostic.getData();
+			if ((data == null) && (parentDiagnostic != null)) {
+				data = parentDiagnostic.getData();
+			}
+			StringBuilder relatedURIs = null;
+			if (data != null) {
+				boolean first = true;
+				for (Object element : data) {
+					if (element instanceof EObject)		// ValidateAction.adjustMarker
+					{
+						EObject eObject = (EObject)element;
+						if (first) {
+							first = false;
+							uriAttribute = EcoreUtil.getURI(eObject).toString();
+						}
+						else
+						{
+							if (relatedURIs == null) {
+								relatedURIs = new StringBuilder();
+							}
+							else {
+								relatedURIs.append(' ');
+							}
+							relatedURIs.append(URI.encodeFragment(EcoreUtil.getURI(eObject).toString(), false));
+						}
+					}
+					else if (element instanceof Resource.Diagnostic) {		// FIXME is this needed?
+						Resource.Diagnostic resourceDiagnostic = (Resource.Diagnostic)element;
+						if (resourceDiagnostic.getLocation() != null) {
+							String lineString = Integer.toString(resourceDiagnostic.getLine());
+							String columnString = Integer.toString(resourceDiagnostic.getColumn());
+							this.location = EMFEditUIPlugin.getPlugin().getString("_UI_MarkerLocation", new String[] { lineString, columnString });
+							this.lineNumber = resourceDiagnostic.getLine();
+							try {
+								Method getObjectMethod = resourceDiagnostic.getClass().getMethod("getObject");
+								Object object = getObjectMethod.invoke(resourceDiagnostic);
+								if (object instanceof EObject) {
+									this.uriAttribute = EcoreUtil.getURI((EObject)object).toString();
+									Method getFeatureMethod = resourceDiagnostic.getClass().getMethod("getFeature");
+									Object feature = getFeatureMethod.invoke(resourceDiagnostic);
+									if (feature instanceof EObject)
+									{
+										if (relatedURIs == null) {
+											relatedURIs = new StringBuilder();
+										}
+										else {
+											relatedURIs.append(' ');
+										}
+										relatedURIs.append(URI.encodeFragment(EcoreUtil.getURI((EObject)feature).toString(), false));
+									}
+								}
+							}
+							catch (Throwable throwable) {
+								// Ignore.
+							}
+							break;
+						}
+					}
+				}
+			}
+			this.relatedURIsAttribute = relatedURIs != null ? relatedURIs.toString() : null;
+		}
+
+		@Override
+		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
+			IMarker marker = resource.createMarker(EValidator.MARKER);
+			marker.setAttribute(IMarker.LOCATION, location);
+			marker.setAttribute(IMarker.SEVERITY, severity);
+			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+			marker.setAttribute(IMarker.MESSAGE, message);
+			if (uriAttribute != null) {
+				marker.setAttribute(EValidator.URI_ATTRIBUTE, uriAttribute);
+			}
+			if (relatedURIsAttribute != null) {
+				marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIsAttribute);
+			}
+			return marker;
+		}
+	}
+
+	/**
+	 * An IssueMarkerData describes the future Marker created from an Issue.
+	 */
+	//This class is based on org.eclipse.xtext.ui.editor.validation.MarkerCreator
+	protected static class IssueMarkerData implements MarkerData
+	{
+		//		private static final String FIXABLE_KEY = "FIXABLE_KEY";		// FIXME this is MarkerCreator.FIXABLE_KEY
+
+		protected final @NonNull String markerType;
+		protected final @NonNull String location;
+		protected final /*@NonNull*/ String codeKey;
+		protected final @NonNull Object severity;
+		protected final /*@NonNull*/ Integer charStart;
+		protected @Nullable Integer charEnd;
+		protected final /*@NonNull*/ Integer lineNumber;
+		protected final /*@NonNull*/ Integer columnKey;
+		protected final /*@NonNull*/ String message;
+		protected @Nullable String uriKey;
+		protected @Nullable String dataKey;
+		//		protected final @Nullable Boolean fixableKey;
+		protected final @Nullable String uriAttribute;
+		protected @Nullable String relatedURIsAttribute = null;
+
+		public IssueMarkerData(@NonNull IResource resource, @NonNull String markerType, @NonNull Issue issue) {
+			this.markerType = markerType;
+			String lineNR = "";
+			if (issue.getLineNumber() != null) {
+				lineNR = "line: " + issue.getLineNumber() + " ";
+			}
+			this.location = lineNR + resource.getFullPath().toString();
+			this.codeKey = issue.getCode();
+			switch (issue.getSeverity()) {
+				case ERROR : this.severity = IMarker.SEVERITY_ERROR; break;
+				case WARNING : this.severity = IMarker.SEVERITY_WARNING; break;
+				case INFO : this.severity = IMarker.SEVERITY_INFO; break;
+				default: throw new IllegalArgumentException(String.valueOf(issue.getSeverity()));
+			}
+			this.charStart = issue.getOffset();
+			if (issue.getOffset() != null && issue.getLength() != null) {
+				this.charEnd = issue.getOffset() + issue.getLength();
+			}
+			this.lineNumber = issue.getLineNumber();
+			this.columnKey = issue.getColumn();
+			this.message = issue.getMessage();
+			if (issue.getUriToProblem() != null) {
+				this.uriKey = issue.getUriToProblem().toString();
+			}
+			if (issue.getData() != null && issue.getData().length > 0) {
+				this.dataKey = Strings.pack(issue.getData());
+			}
+			//	if (resolutionProvider != null && resolutionProvider.hasResolutionFor(issue.getCode())) {
+			//		attributeKey2value.put(FIXABLE_KEY, true);
+			//	}
+			String[] data = issue.getData();
+			StringBuilder relatedURIs = null;
+			String uriAttribute = null;
+			boolean first = true;
+			if (data != null) {
+				for (String string : data) {
+					if (first) {
+						first = false;
+						uriAttribute = string;
+					}
+					else {
+						if (relatedURIs == null) {
+							relatedURIs = new StringBuilder();
+						}
+						else {
+							relatedURIs.append(' ');
+						}
+						relatedURIs.append(URI.encodeFragment(string, false));
+					}
+				}
+			}
+			this.uriAttribute = uriAttribute;
+			if (relatedURIs != null) {
+				this.relatedURIsAttribute = relatedURIs.toString();
+			}
+		}
+
+		@Override
+		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
+			IMarker marker = resource.createMarker(markerType);
+			marker.setAttribute(IMarker.LOCATION, location);
+			marker.setAttribute(Issue.CODE_KEY, codeKey);
+			marker.setAttribute(IMarker.SEVERITY, severity);
+			marker.setAttribute(IMarker.CHAR_START, charStart);
+			if (charEnd != null) {
+				marker.setAttribute(IMarker.CHAR_END, charEnd);
+			}
+			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+			marker.setAttribute(Issue.COLUMN_KEY, columnKey);
+			marker.setAttribute(IMarker.MESSAGE, message);
+			if (uriKey != null) {
+				marker.setAttribute(Issue.URI_KEY, uriKey);
+			}
+			if (dataKey != null) {
+				marker.setAttribute(Issue.DATA_KEY, dataKey);
+			}
+			//			if (fixableKey != null) {
+			//				marker.setAttribute(FIXABLE_KEY, fixableKey);
+			//			}
+			if (uriAttribute != null) {
+				marker.setAttribute(EValidator.URI_ATTRIBUTE, uriAttribute);
+			}
+			if (relatedURIsAttribute != null) {
+				marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIsAttribute);
+			}
+			return marker;
+		}
+	}
+
+	/**
+	 * A DiagnosticMarkerData describes the future Marker created from a Diagnostic.
+	 */
+	//This class is based on org.eclipse.emf.edit.ui.util.EditUIMarkerHelper
+	protected static class ResourceDiagnosticMarkerData implements MarkerData
+	{
+		protected final @NonNull Object severity;
+		protected final /*@NonNull*/ String message;
+		protected @Nullable String location = null;
+		protected /*@NonNull*/ Integer lineNumber = null;
+		protected @Nullable String uriAttribute = null;
+		protected final @Nullable String relatedURIsAttribute;
+
+		public ResourceDiagnosticMarkerData(Resource.@NonNull Diagnostic diagnostic, int severity) {
+			//
+			//	MarkerHelper.createMarkers
+			//
+			if (severity < Diagnostic.WARNING) {
+				this.severity = IMarker.SEVERITY_INFO;
+			}
+			else if (severity < Diagnostic.ERROR) {
+				this.severity = IMarker.SEVERITY_WARNING;
+			}
+			else {
+				this.severity = IMarker.SEVERITY_ERROR;
+			}
+			//			this.message = composeMessage(diagnostic, parentDiagnostic);
+			this.message = diagnostic.getMessage();
+			String relatedURIsAttribute = null;
+			if (diagnostic.getLocation() != null) {
+				String lineString = Integer.toString(diagnostic.getLine());
+				String columnString = Integer.toString(diagnostic.getColumn());
+				this.location = EMFEditUIPlugin.getPlugin().getString("_UI_MarkerLocation", new String[] { lineString, columnString });
+				this.lineNumber = diagnostic.getLine();
+				try {
+					Method getObjectMethod = diagnostic.getClass().getMethod("getObject");
+					Object object = getObjectMethod.invoke(diagnostic);
+					if (object instanceof EObject)
+					{
+						this.uriAttribute = EcoreUtil.getURI((EObject)object).toString();
+						Method getFeatureMethod = diagnostic.getClass().getMethod("getFeature");
+						Object feature = getFeatureMethod.invoke(diagnostic);
+						if (feature instanceof EObject) {
+							relatedURIsAttribute = EcoreUtil.getURI((EObject)feature).toString();
+						}
+					}
+				}
+				catch (Throwable throwable) {
+					// Ignore.
+				}
+			}
+			this.relatedURIsAttribute = relatedURIsAttribute;
+		}
+
+		@Override
+		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
+			IMarker marker = resource.createMarker(EValidator.MARKER);
+			marker.setAttribute(IMarker.LOCATION, location);
+			marker.setAttribute(IMarker.SEVERITY, severity);
+			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+			marker.setAttribute(IMarker.MESSAGE, message);
+			if (uriAttribute != null) {
+				marker.setAttribute(EValidator.URI_ATTRIBUTE, uriAttribute);
+			}
+			if (relatedURIsAttribute != null) {
+				marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIsAttribute);
+			}
+			return marker;
+		}
+	}
+
+	/**
+	 * ValidationQueue ensures that all accesses to the inter-thread queue are synchronized.
+	 */
+	private static final class ValidationQueue
+	{
+		private final @NonNull Set<@NonNull ValidationEntry> queue = new HashSet<>();
+
+		public synchronized boolean addAll(@NonNull Iterable<@NonNull ValidationEntry> entries) {
+			boolean added = false;
+			for (@NonNull ValidationEntry entry : entries) {
+				if (queue.add(entry)) {
+					added = true;
+				}
+			}
+			return added;
+		}
+
+		public synchronized void clear() {
+			queue.clear();
+		}
+
+		public synchronized @NonNull List<@NonNull ValidationEntry> getValidationList() {
+			return new ArrayList<>(queue);
+		}
+
+		public synchronized void remove(@NonNull ValidationEntry entry) {
+			queue.remove(entry);
 		}
 	}
 
 	private static final Logger log = Logger.getLogger(MultiValidationJob.class);
 	private static final @NonNull IDiagnosticConverter converter = new PivotDiagnosticConverter();
-	private static final @NonNull MarkerCreator markerCreator = new MarkerCreator();
 
-	private final @NonNull Set<@NonNull ValidationEntry> validationQueue = new HashSet<>();
+	private final @NonNull ValidationQueue validationQueue = new ValidationQueue();
 	private @Nullable ProjectManager projectManager = null;
 
 	public MultiValidationJob() {
@@ -99,14 +466,8 @@ public class MultiValidationJob extends Job
 	 * Add the files to the queue of validations. If the validation job is not
 	 * already running, it is scheduled to run.
 	 */
-	public synchronized void addValidations(@NonNull Iterable<@NonNull ValidationEntry> entries) {
-		boolean added = false;
-		for (@NonNull ValidationEntry entry : entries) {
-			if (validationQueue.add(entry)) {
-				added = true;
-			}
-		}
-		if (added) {
+	public void addValidations(@NonNull Iterable<@NonNull ValidationEntry> entries) {
+		if (validationQueue.addAll(entries)) {
 			int state = getState();
 			if (state == Job.NONE) {
 				schedule();
@@ -121,21 +482,37 @@ public class MultiValidationJob extends Job
 		super.canceling();
 	}
 
-	protected boolean checkResourceErrors(@NonNull Resource resource, @NonNull IAcceptor<@NonNull Issue> acceptor, @NonNull IProgressMonitor monitor) throws CoreException {
-		for (int i = 0; i < resource.getErrors().size(); i++) {
-			if (monitor.isCanceled())
-				return false;
-			converter.convertResourceDiagnostic(resource.getErrors().get(i), Severity.ERROR, acceptor);
+	protected boolean checkResourceErrors(@NonNull AddMarkersOperation operation, @NonNull Resource resource, @NonNull IProgressMonitor monitor) {
+		if (operation.isEMF()) {
+			for (Resource.@NonNull Diagnostic error : resource.getErrors()) {
+				if (monitor.isCanceled()) {
+					return false;
+				}
+				operation.accept(error, Diagnostic.ERROR);
+			}
+			for (Resource.@NonNull Diagnostic warning : resource.getWarnings()) {
+				if (monitor.isCanceled()) {
+					return false;
+				}
+				operation.accept(warning, Diagnostic.WARNING);
+			}
 		}
-		for (int i = 0; i < resource.getWarnings().size(); i++) {
-			if (monitor.isCanceled())
+		for (Resource.@NonNull Diagnostic error : resource.getErrors()) {
+			if (monitor.isCanceled()) {
 				return false;
-			converter.convertResourceDiagnostic(resource.getWarnings().get(i), Severity.WARNING, acceptor);
+			}
+			converter.convertResourceDiagnostic(error, Severity.ERROR, operation);
+		}
+		for (Resource.@NonNull Diagnostic warning : resource.getWarnings()) {
+			if (monitor.isCanceled()) {
+				return false;
+			}
+			converter.convertResourceDiagnostic(warning, Severity.WARNING, operation);
 		}
 		return true;
 	}
 
-	protected boolean checkValidationErrors(@NonNull Resource resource, @NonNull IAcceptor<@NonNull Issue> acceptor, @NonNull IProgressMonitor monitor) throws CoreException {
+	protected boolean checkValidatorDiagnostics(@NonNull AddMarkersOperation operation, @NonNull Resource resource, @NonNull IProgressMonitor monitor) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		BasicDiagnostic diagnostics = new BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { resource.getURI() }), new Object [] { resource });
 		ResourceSet resourceSet = resource.getResourceSet();
@@ -147,11 +524,35 @@ public class MultiValidationJob extends Job
 			}
 			instance.validate(eObject, diagnostics, validationContext);
 		}
+		convertValidatorDiagnostics(operation, diagnostics, null);
 		return true;
 	}
 
+	protected void convertValidatorDiagnostics(@NonNull AddMarkersOperation operation, @NonNull Diagnostic diagnostic, @Nullable Diagnostic parentDiagnostic) {
+		//
+		// The logic here replicates that in the Runnable body of MarkerHelper.createMarkers
+		//
+		if (diagnostic.getChildren().isEmpty()) {
+			operation.accept(diagnostic, null);
+		}
+		else {
+			List<@NonNull Diagnostic> childDiagnostics = ClassUtil.nullFree(diagnostic.getChildren());
+			if (diagnostic.getMessage() == null) {
+				for (Diagnostic childDiagnostic : childDiagnostics) {
+					convertValidatorDiagnostics(operation, childDiagnostic, null);
+				}
+			}
+			else {
+				for (Diagnostic childDiagnostic : childDiagnostics) {
+					operation.accept(childDiagnostic, diagnostic);
+				}
+			}
+		}
+	}
+
 	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull IProgressMonitor monitor) throws CoreException {
-		IFile file = entry.getFile();
+		final @NonNull IFile file = entry.getFile();
+		final @NonNull String markerType = entry.getMarkerId();
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		//		System.out.println("OCL:Validating " + uri.toString());
 		ProjectManager projectManager2 = projectManager;
@@ -160,34 +561,34 @@ public class MultiValidationJob extends Job
 		}
 		OCL ocl = OCL.newInstance(projectManager2);
 		Resource resource = ocl.getResourceSet().getResource(uri, true);
-		MarkerTypeProvider markerTypeProvider = entry;	// ValidationEntry pragmatically extends MarkerTypeProvider
-		IValidationIssueProcessor validationIssueProcessor = new MarkerIssueProcessor(file, markerCreator, markerTypeProvider);
-		IssueListAcceptor acceptor = new IssueListAcceptor();
+		AddMarkersOperation operation = new AddMarkersOperation(file, markerType);
 		if (resource != null) {
-			if (!checkResourceErrors(resource, acceptor, monitor)) {
+			if (!checkResourceErrors(operation, resource, monitor)) {
 				return;
 			}
 			if (resource instanceof CSResource) {
 				Resource asResource = ((CSResource)resource).getASResource();
-				if (!checkResourceErrors(asResource, acceptor, monitor)) {
+				if (!checkResourceErrors(operation, asResource, monitor)) {
 					return;
 				}
-				if (!checkValidationErrors(asResource, acceptor, monitor)) {
+				if (!checkValidatorDiagnostics(operation, asResource, monitor)) {
 					return;
 				}
 				// FIXME accumulate/cache dependencies
 			}
 			else {
-				if (!checkValidationErrors(resource, acceptor, monitor)) {
+				if (!checkValidatorDiagnostics(operation, resource, monitor)) {
 					return;
 				}
 			}
 		}
-		validationIssueProcessor.processIssues(acceptor.getIssues(), monitor);
-	}
-
-	private synchronized @NonNull List<@NonNull ValidationEntry> getValidationList() {
-		return new ArrayList<>(validationQueue);
+		try {
+			operation.run(monitor);
+		} catch (InvocationTargetException e) {
+			log.error("Could not create marker.", e);
+		} catch (InterruptedException e) {
+			// cancelled by user; ok
+		}
 	}
 
 	@Override
@@ -196,16 +597,19 @@ public class MultiValidationJob extends Job
 			monitor = new NullProgressMonitor();
 		}
 		List<@NonNull ValidationEntry> validationList;
-		while (!(validationList = getValidationList()).isEmpty()) {
+		while (!(validationList = validationQueue.getValidationList()).isEmpty()) {
 			SubMonitor progress = SubMonitor.convert(monitor, validationList.size());
+			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " converted from: " + NameUtil.debugSimpleName(monitor));
 			Collections.sort(validationList, ToStringComparator.INSTANCE);
 			for (@NonNull ValidationEntry entry : validationList) {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
 				try {
-					progress.setTaskName(NLS.bind(BaseUIMessages.MultiValidationJob_Validating, entry.getFile().getFullPath().toString()));
-					doValidate(entry, monitor);
+					String message = NLS.bind(BaseUIMessages.MultiValidationJob_Validating, entry.getFile().getFullPath().toString());
+					System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " setTaskName: " + message);
+					progress.setTaskName(message);
+					doValidate(entry, progress);
 				} catch (OperationCanceledException canceled) {
 					return Status.CANCEL_STATUS;
 				} catch (Exception e) {
@@ -213,9 +617,13 @@ public class MultiValidationJob extends Job
 					//					return Status.OK_STATUS;
 				}
 				validationQueue.remove(entry);		// Remove so that failure does not repeat
+				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " worked: " + 1);
 				progress.worked(1);
 			}
+			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " done");
 			progress.done();
+			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
+			monitor.done();
 		}
 		return Status.OK_STATUS;
 	}
