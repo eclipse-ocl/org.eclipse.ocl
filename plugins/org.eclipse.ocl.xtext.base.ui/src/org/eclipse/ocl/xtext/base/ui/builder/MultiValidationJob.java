@@ -22,12 +22,14 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -45,6 +47,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
@@ -64,6 +67,8 @@ import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.Issue;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * A MultiValidationJob maintains a queue of workspaceRelativeFileNames in need of validation.
@@ -101,6 +106,11 @@ public class MultiValidationJob extends Job
 		@Override
 		public void accept(@NonNull Issue issue) {
 			markerDatas.add(new IssueMarkerData(resource, issueMarkerType, issue));
+		}
+
+		public void addMessage(/*@NonNull*/ String markerType, int severity, @NonNull String message) {
+			assert markerType != null;
+			markerDatas.add(new SimpleMarkerData(markerType, severity, message));
 		}
 
 		@Override
@@ -423,6 +433,30 @@ public class MultiValidationJob extends Job
 	}
 
 	/**
+	 * A SimpleMarkerData describes the future Marker for a simple message.
+	 */
+	protected static class SimpleMarkerData implements MarkerData
+	{
+		protected final @NonNull String markerType;
+		protected final @NonNull Object severity;
+		protected final @NonNull String message;
+
+		public SimpleMarkerData(@NonNull String markerType, int severity, @NonNull String message) {
+			this.markerType = markerType;
+			this.severity = severity;
+			this.message = message;
+		}
+
+		@Override
+		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
+			IMarker marker = resource.createMarker(markerType);
+			marker.setAttribute(IMarker.SEVERITY, severity);
+			marker.setAttribute(IMarker.MESSAGE, message);
+			return marker;
+		}
+	}
+
+	/**
 	 * ValidationQueue ensures that all accesses to the inter-thread queue are synchronized.
 	 */
 	private static final class ValidationQueue
@@ -497,17 +531,19 @@ public class MultiValidationJob extends Job
 				operation.accept(warning, Diagnostic.WARNING);
 			}
 		}
-		for (Resource.@NonNull Diagnostic error : resource.getErrors()) {
-			if (monitor.isCanceled()) {
-				return false;
+		else {
+			for (Resource.@NonNull Diagnostic error : resource.getErrors()) {
+				if (monitor.isCanceled()) {
+					return false;
+				}
+				converter.convertResourceDiagnostic(error, Severity.ERROR, operation);
 			}
-			converter.convertResourceDiagnostic(error, Severity.ERROR, operation);
-		}
-		for (Resource.@NonNull Diagnostic warning : resource.getWarnings()) {
-			if (monitor.isCanceled()) {
-				return false;
+			for (Resource.@NonNull Diagnostic warning : resource.getWarnings()) {
+				if (monitor.isCanceled()) {
+					return false;
+				}
+				converter.convertResourceDiagnostic(warning, Severity.WARNING, operation);
 			}
-			converter.convertResourceDiagnostic(warning, Severity.WARNING, operation);
 		}
 		return true;
 	}
@@ -560,9 +596,24 @@ public class MultiValidationJob extends Job
 			projectManager = projectManager2 = new ProjectMap(false);
 		}
 		OCL ocl = OCL.newInstance(projectManager2);
-		Resource resource = ocl.getResourceSet().getResource(uri, true);
+		//
+		//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
+		//
+		IProject project = file.getProject();
+		if (project != null) {
+			Bundle bundle = Platform.getBundle(project.getName());
+			if (bundle != null) {
+				ClassLoader classLoader = bundle.adapt(BundleWiring.class).getClassLoader();
+				if (classLoader != null) {
+					((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
+				}
+			}
+		}
+		ResourceSet resourceSet = ocl.getResourceSet();
+		Resource resource = resourceSet.getResource(uri, true);
 		AddMarkersOperation operation = new AddMarkersOperation(file, markerType);
 		if (resource != null) {
+			EcoreUtil.resolveAll(resourceSet);
 			if (!checkResourceErrors(operation, resource, monitor)) {
 				return;
 			}
@@ -581,6 +632,8 @@ public class MultiValidationJob extends Job
 					return;
 				}
 			}
+		} else {
+			operation.addMessage(EValidator.MARKER, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource");
 		}
 		try {
 			operation.run(monitor);
@@ -625,6 +678,7 @@ public class MultiValidationJob extends Job
 			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
 			monitor.done();
 		}
+		projectManager = null;			// FIXME track changes to avoid reanalysis
 		return Status.OK_STATUS;
 	}
 }

@@ -125,10 +125,10 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		progress.worked(1);
 		System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " done");
 		progress.done();
-		if (monitor != null) {
-			monitor.done();
-			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
-		}
+		//		if (monitor != null) {
+		//			monitor.done();
+		//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
+		//		}
 	}
 
 	protected @NonNull ValidationEntry createValidationEntry(@NonNull IFile iFile) {
