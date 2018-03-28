@@ -19,11 +19,13 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.compiler.CharOperation;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
+import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 
 /**
  * Abstract Builder for OCL or QVTd contributions. Currently this involves identifying relevant files subject to
@@ -39,17 +41,9 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	@Deprecated
 	public static class BuildSelector extends AbstractBuildSelector
 	{
-		protected final @NonNull String builderName;
-
 		public BuildSelector(@NonNull String builderName, @NonNull IProject project, @NonNull BuildType buildType,
-				Map<String, String> args, IProgressMonitor monitor) {
+				Map<String, String> args, @NonNull IProgressMonitor monitor) {
 			super(project, buildType, args, monitor);
-			this.builderName = builderName;
-		}
-
-		@Override
-		protected @NonNull String getBuilderName() {
-			return builderName;
 		}
 
 	}
@@ -103,21 +97,52 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	@Override
 	protected IProject[] build(final int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException {
 		//		System.out.println(NameUtil.debugSimpleName(this) + " build " + getKindAsString(kind));
-		long startTime = System.currentTimeMillis();
+		//		long startTime = System.currentTimeMillis();
 		IProject project = getProject();
 		assert project != null;
 		try {
+			String builderName = getBuilderName();
+			String projectName = project.getName();
+			String initializingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Initializing, builderName, projectName);
+			SubMonitor subMonitor = SubMonitor.convert(monitor, initializingMessage, 3);
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " converted from: " + NameUtil.debugSimpleName(monitor));
+			//
+			//	Work item 1: MultiValidationJob_Initializing
+			//
 			AbstractBuildSelector buildSelector;
 			IResourceDelta delta;
 			if (kind == FULL_BUILD) {
-				buildSelector = createBuildSelector(project, BuildType.FULL, args, monitor);
+				buildSelector = createBuildSelector(project, BuildType.FULL, args, subMonitor);
 				delta = null;
 			} else {
 				delta = getDelta(getProject());
-				buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, monitor);
+				buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
 			}
-			buildSelector.selectResources(delta);
-			buildSelector.buildResources();
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked 1");
+			subMonitor.worked(1);
+			//
+			//	Work item 2: MultiValidationJob_Selecting
+			//
+			String selectingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Selecting, builderName, projectName);
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + selectingMessage);
+			subMonitor.subTask(selectingMessage);
+			int selectionSize = buildSelector.selectResources(delta);
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+			subMonitor.worked(1);
+			//
+			//	Work item 3: MultiValidationJob_Queuing
+			//
+			if (selectionSize > 0) {
+				String queueingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Queuing, builderName, selectionSize, projectName);
+				//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + queueingMessage);
+				subMonitor.subTask(queueingMessage);
+				buildSelector.buildResources();
+				//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+				subMonitor.worked(1);
+			}
+			//
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " done");
+			subMonitor.done();
 		} catch (CoreException e) {
 			getLog().error(e.getMessage(), e);
 			throw e;
@@ -128,12 +153,12 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			forgetLastBuiltState();
 		} finally {
 			if (monitor != null) {
-				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done2");
+				//				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done2");
 				monitor.done();
 			}
-			String message = "Build " + getProject().getName() + " in " + (System.currentTimeMillis() - startTime) + " ms";
-			getLog().info(message);
-			System.out.println(Thread.currentThread().getName() + " log " + message);
+			//			String message = "Pre-build " + getProject().getName() + " in " + (System.currentTimeMillis() - startTime) + " ms";
+			//			getLog().info(message);
+			//			System.out.println(Thread.currentThread().getName() + " log " + message);
 		}
 		return null;
 	}
@@ -145,15 +170,11 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 
 	// FIXME change to abstract after Photon M7 (once QVTd has caught up)
 	protected /*abstract*/ @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
-			@Nullable Map<String, String> args, @Nullable IProgressMonitor monitor) {
+			@Nullable Map<String, String> args, @NonNull IProgressMonitor monitor) {
 		return new BuildSelector(getBuilderName(), project, buildType, args, monitor);
 	}
 
-	// FIXME delete after Photon M7 (once QVTd has caught up)
-	@Deprecated
-	protected @NonNull String getBuilderName() {
-		return "FIXME";
-	}
+	protected abstract @NonNull String getBuilderName();
 
 	protected abstract Logger getLog();
 

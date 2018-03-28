@@ -27,7 +27,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -56,7 +55,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil.ToStringComparator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
@@ -586,7 +584,7 @@ public class MultiValidationJob extends Job
 		}
 	}
 
-	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull IProgressMonitor monitor) throws CoreException {
+	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull SubMonitor monitor) throws CoreException {
 		final @NonNull IFile file = entry.getFile();
 		final @NonNull String markerType = entry.getMarkerId();
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
@@ -603,17 +601,23 @@ public class MultiValidationJob extends Job
 		if (project != null) {
 			Bundle bundle = Platform.getBundle(project.getName());
 			if (bundle != null) {
-				ClassLoader classLoader = bundle.adapt(BundleWiring.class).getClassLoader();
-				if (classLoader != null) {
-					((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+				if (bundleWiring != null) {
+					ClassLoader classLoader = bundleWiring.getClassLoader();
+					if (classLoader != null) {
+						((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
+					}
 				}
 			}
 		}
+		monitor.worked(1);			// Work Item 1 - Initialize done
 		ResourceSet resourceSet = ocl.getResourceSet();
 		Resource resource = resourceSet.getResource(uri, true);
+		monitor.worked(1);			// Work Item 2 - Load done
 		AddMarkersOperation operation = new AddMarkersOperation(file, markerType);
 		if (resource != null) {
 			EcoreUtil.resolveAll(resourceSet);
+			monitor.worked(3);			// Work Item 3 - Resolve done
 			if (!checkResourceErrors(operation, resource, monitor)) {
 				return;
 			}
@@ -633,8 +637,10 @@ public class MultiValidationJob extends Job
 				}
 			}
 		} else {
+			monitor.worked(1);			// Work Item 3 - Resolve 'done'
 			operation.addMessage(EValidator.MARKER, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource");
 		}
+		monitor.worked(1);			// Work Item 4 - Validate 'done'
 		try {
 			operation.run(monitor);
 		} catch (InvocationTargetException e) {
@@ -642,40 +648,40 @@ public class MultiValidationJob extends Job
 		} catch (InterruptedException e) {
 			// cancelled by user; ok
 		}
+		monitor.worked(1);			// Work Item 5 - Add Markers 'done'
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-		if (monitor == null) {
-			monitor = new NullProgressMonitor();
-		}
 		List<@NonNull ValidationEntry> validationList;
 		while (!(validationList = validationQueue.getValidationList()).isEmpty()) {
-			SubMonitor progress = SubMonitor.convert(monitor, validationList.size());
-			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " converted from: " + NameUtil.debugSimpleName(monitor));
-			Collections.sort(validationList, ToStringComparator.INSTANCE);
+			SubMonitor subMonitor = SubMonitor.convert(monitor, 5 * validationList.size());
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " converted from: " + NameUtil.debugSimpleName(monitor));
+			Collections.sort(validationList, NameUtil.TO_STRING_COMPARATOR);
 			for (@NonNull ValidationEntry entry : validationList) {
-				if (monitor.isCanceled()) {
+				if (subMonitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
 				try {
 					String message = NLS.bind(BaseUIMessages.MultiValidationJob_Validating, entry.getFile().getFullPath().toString());
-					System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " setTaskName: " + message);
-					progress.setTaskName(message);
-					doValidate(entry, progress);
+					//					System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + message);
+					subMonitor.subTask(message);
+					doValidate(entry, subMonitor);
 				} catch (OperationCanceledException canceled) {
 					return Status.CANCEL_STATUS;
-				} catch (Exception e) {
+				} catch (Throwable e) {
 					log.error("Error running " + getName(), e);
 					//					return Status.OK_STATUS;
 				}
 				validationQueue.remove(entry);		// Remove so that failure does not repeat
-				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " worked: " + 1);
-				progress.worked(1);
+				//				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: " + 1);
+				subMonitor.worked(1);
 			}
-			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(progress) + " done");
-			progress.done();
-			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " done");
+			subMonitor.done();
+		}
+		if (monitor != null) {
+			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
 			monitor.done();
 		}
 		projectManager = null;			// FIXME track changes to avoid reanalysis
