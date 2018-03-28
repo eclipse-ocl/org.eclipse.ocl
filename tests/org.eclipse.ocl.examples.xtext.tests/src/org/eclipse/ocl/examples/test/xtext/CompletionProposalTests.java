@@ -13,8 +13,10 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -22,8 +24,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
-import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -164,6 +168,7 @@ public class CompletionProposalTests extends XtextTestCase
 		String trueContent = testContent.replace("$",  "");
 		IXtextDocument document = editor.getDocument();
 		document.set(trueContent);
+		TestUIUtil.flushEvents();
 		ITextViewer viewer = editor.getInternalSourceViewer();
 		ICompletionProposal[] actualProposals = contentAssistProcessor.computeCompletionProposals(viewer, cursorIndex);
 		//		for (ICompletionProposal actualProposal : actualProposals) {
@@ -193,33 +198,59 @@ public class CompletionProposalTests extends XtextTestCase
 		injector.getInstance(BaseEditorCallback.class).setDontAskForNatureAgain();
 		contentAssistProcessor = injector.getInstance(XtextContentAssistProcessor.class);
 		InputStream inputStream = new URIConverter.ReadableInputStream(initialContent, "UTF-8");
-		IProject project = TestUtil.createJavaProject("CompletionProposalTests");
-		TestUtil.createIFile(TestUtil.createFolder(project, "META-INF"), "MANIFEST.MF",
+		TestProject testProject = getTestProject();
+		createIFile(testProject, "META-INF/MANIFEST.MF",
 			"Manifest-Version: 1.0\n"+
 					"Bundle-ManifestVersion: 2\n"+
-					"Bundle-Name: CompletionProposalTests\n"+
-					"Bundle-SymbolicName: CompletionProposalTests\n"+
+					"Bundle-Name: " + testProject.getName() + "\n"+
+					"Bundle-SymbolicName: " + testProject.getName() + "\n"+
 					"Bundle-Version: 1.0.0.qualifier\n"+
-					"Require-Bundle: org.eclipse.ocl.pivot\n"+
+					"Require-Bundle: org.eclipse.emf.ecore.edit,\n"+
+					"  org.eclipse.ocl.pivot\n"+
 				"");
-		TestUtil.createIFile(project, ".classpath",
+		createIFile(testProject, ".classpath",
 			"<classpath>\n" +
-					"			<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER\"/>\n" +
-					"			<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n" +
-					"			<classpathentry kind=\"src\" path=\"src\"/>\n" +
-					"			<classpathentry kind=\"output\" path=\"bin\"/>\n" +
-					"		</classpath>\n"+
+					"  <classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER\"/>\n" +
+					"  <classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n" +
+					"  <classpathentry kind=\"src\" path=\"src\"/>\n" +
+					"  <classpathentry kind=\"output\" path=\"bin\"/>\n" +
+					"</classpath>\n"+
 				"");
-		TestUtil.createIFile(TestUtil.createFolder(project, "src"), "Test.java",
+		createIFile(testProject, "src/Test.java",
 			"import org.eclipse.emf.ecore.provider.*;\n"+
 					"public class Test {}\n"+
 				"");
+		IProject project = testProject.getIProject();
+		//		project.open(null);
+		assert project.isOpen();
+		TestUIUtil.flushEvents();;
 		project.build(IncrementalProjectBuilder.FULL_BUILD, null);
+		TestUIUtil.flushEvents();
 		FileEditorInput fileEditorInput = TestUIUtil.createFileEditorInput(project, fileName, inputStream);
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 		editor = (XtextEditor) IDE.openEditor(page, fileEditorInput, editorId, true);
+	}
+
+	private @NonNull TestFile createIFile(@NonNull TestProject testProject, @NonNull String testFilePath, @NonNull String fileContents) {
+		InputStream inputStream = new URIConverter.ReadableInputStream(fileContents, "UTF-8");
+		return testProject.getOutputFile(testFilePath, inputStream);
+	}
+
+	@Override
+	protected @NonNull TestFileSystemHelper getTestFileSystemHelper() {
+		return new TestFileSystemHelper()
+		{
+			@Override
+			public @Nullable IProjectDescription updateProjectDescription(@NonNull IProjectDescription projectDescription) {
+				projectDescription.setNatureIds(new String[]{"org.eclipse.jdt.core.javanature"});
+				ICommand javaCommand = projectDescription.newCommand();
+				javaCommand.setBuilderName("org.eclipse.jdt.core.javabuilder");
+				projectDescription.setBuildSpec(new ICommand[]{javaCommand});
+				return projectDescription;
+			}
+		};
 	}
 
 	public void testEditor_OCLinEcore_Completions() throws Exception {
@@ -251,13 +282,9 @@ public class CompletionProposalTests extends XtextTestCase
 					"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
 					"	type Complex : PrimitiveType {\n" +
 					"	}\n" +
-				"}';\n");
-		//		for (int i = 0; i < 100; i++) {
-		//			TestUIUtil.flushEvents();
-		//			Thread.sleep(100);
-		//		}
+				"}\n");
 		try {
-			IReferenceCompletionProposal proposal1a = new ReferenceConfigurableCompletionProposal("PrimitiveType");
+			/*			IReferenceCompletionProposal proposal1a = new ReferenceConfigurableCompletionProposal("PrimitiveType");
 			IReferenceCompletionProposal proposal1b = new ReferenceConfigurableCompletionProposal("{");
 			doTestEditor(
 				"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
@@ -266,7 +293,7 @@ public class CompletionProposalTests extends XtextTestCase
 						"	}\n" +
 						"}';\n",
 						new IReferenceCompletionProposal[]{proposal1a, proposal1b}, null);
-			//
+			// */
 			//	Completion proposal that probably resolves to a Jar entry.
 			//
 			IReferenceCompletionProposal proposal2a = new ReferenceConfigurableCompletionProposal("org.eclipse.emf.common.util.Reflect");

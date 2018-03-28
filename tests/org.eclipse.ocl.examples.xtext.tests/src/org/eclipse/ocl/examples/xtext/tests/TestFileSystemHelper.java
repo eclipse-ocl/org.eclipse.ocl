@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -52,6 +53,14 @@ public class TestFileSystemHelper
 	}
 
 	public @Nullable File createManifestFile(@NonNull File bundleFolder, @NonNull String projectName) {
+		return null;
+	}
+
+	/**
+	 * Update the almost empty current projectDescription to add natures/builders/....
+	 * Return null to suppress update.
+	 */
+	public @Nullable IProjectDescription updateProjectDescription(@NonNull IProjectDescription projectDescription) {
 		return null;
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -249,6 +250,13 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					}
 					if (!project.isOpen()) {
 						project.open(null);
+					}
+					IProjectDescription projectDescription = project.getDescription();
+					if (projectDescription != null) {
+						projectDescription = helper.updateProjectDescription(projectDescription);
+						if (projectDescription != null) {
+							project.setDescription(projectDescription, null);
+						}
 					}
 					project.refreshLocal(IResource.DEPTH_INFINITE, null);
 					TestUIUtil.flushEvents();

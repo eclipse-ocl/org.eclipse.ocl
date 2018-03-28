@@ -103,6 +103,7 @@ public class TestUtil
 		}
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull IFile copyIFile(@NonNull OCL ocl, @NonNull URI sourceURI, IProject project, String projectPath) throws CoreException, IOException {
 		URIHandler uriHandler = ocl.getResourceSet().getURIConverter().getURIHandler(sourceURI);
 		InputStream inputStream = uriHandler.createInputStream(sourceURI, new HashMap<Object,Object>());
@@ -112,6 +113,7 @@ public class TestUtil
 		return outFile;
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static void createClassPath(@NonNull IProject project, @NonNull String @Nullable [] srcPaths) throws IOException, CoreException {
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -128,12 +130,14 @@ public class TestUtil
 		TestUtil.createIFile(project, ".classpath", s.toString());
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static void createFile(@NonNull File file, @NonNull String fileContent) throws IOException {
 		Writer writer = new FileWriter(file);
 		writer.append(fileContent);
 		writer.close();
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull IFile createIFile(@NonNull IContainer container, @NonNull String fileName, @NonNull String fileContents) throws IOException, CoreException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(fileContents, "UTF-8");
 		IFile iFile = container.getFile(new Path(fileName));
@@ -144,6 +148,7 @@ public class TestUtil
 		return iFile;
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull IFolder createFolder(@NonNull IContainer container, @NonNull String folderName) throws CoreException {
 		IFolder folder = container.getFolder(new Path(folderName));
 		if (!folder.exists()) {
@@ -152,6 +157,7 @@ public class TestUtil
 		return folder;
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull IProject createJavaProject(@NonNull String projectName) throws CoreException {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
@@ -175,6 +181,7 @@ public class TestUtil
 		return project;
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static void createManifest(@NonNull IProject project, @NonNull String projectName,
 			@NonNull String @Nullable [] requireBundles, @NonNull String @Nullable [] additionalBundles, @NonNull String @Nullable [] exportPackages) throws CoreException {
 		IFolder folder = project.getFolder("META-INF");
@@ -298,12 +305,14 @@ public class TestUtil
 	/**
 	 * Return a File identifying the qualifiedName with respect to loadedClass' loader.
 	 */
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull File getFile(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
 		URL projectURL = getTestResource(loadedClass, classRelativeName);
 		TestCase.assertNotNull(projectURL);
 		return new File(projectURL.getFile());
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	public static @NonNull URI getFileURI(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
 		File file = getFile(loadedClass, classRelativeName);
 		@NonNull URI uri = URI.createFileURI(file.toString());
@@ -315,6 +324,7 @@ public class TestUtil
 		return name + " <" + testNameSuffix + ">";
 	}
 
+	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
 	private static URL getTestResource(@NonNull Class<?> loadedClass, String classRelativeName) {
 		String loaderRelativeName = loadedClass.getPackage().getName().replace(".",  "/") + "/" + classRelativeName;
 		URL projectURL = loadedClass.getClassLoader().getResource(loaderRelativeName);
