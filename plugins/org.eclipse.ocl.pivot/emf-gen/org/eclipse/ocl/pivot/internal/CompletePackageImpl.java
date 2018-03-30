@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -36,6 +33,8 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
@@ -299,6 +298,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("null")
 	@Override
 	public boolean eIsSet(int featureID)
 	{
@@ -462,8 +462,13 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		if (ownedCompleteClasses != null) {
-			ownedCompleteClasses.didRemoveClass(partialClass);
+		if ((partialClass instanceof PrimitiveType) && !(this instanceof PrimitiveCompletePackage)) {
+			getCompleteModel().getPrimitiveCompletePackage().didRemoveClass(partialClass);
+		}
+		else {
+			if (ownedCompleteClasses != null) {
+				ownedCompleteClasses.didRemoveClass(partialClass);
+			}
 		}
 	}
 

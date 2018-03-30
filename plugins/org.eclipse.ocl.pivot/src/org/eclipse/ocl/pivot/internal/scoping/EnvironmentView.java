@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -555,8 +556,8 @@ public class EnvironmentView
 				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
-				completePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
-				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
+				PrimitiveCompletePackage primitiveCompletePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+				for (CompleteClass completeClass : primitiveCompletePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
 			}

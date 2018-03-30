@@ -244,10 +244,14 @@ public class CompletionProposalTests extends XtextTestCase
 		{
 			@Override
 			public @Nullable IProjectDescription updateProjectDescription(@NonNull IProjectDescription projectDescription) {
-				projectDescription.setNatureIds(new String[]{"org.eclipse.jdt.core.javanature"});
-				ICommand javaCommand = projectDescription.newCommand();
-				javaCommand.setBuilderName("org.eclipse.jdt.core.javabuilder");
-				projectDescription.setBuildSpec(new ICommand[]{javaCommand});
+				projectDescription.setNatureIds(new String[]{"org.eclipse.jdt.core.javanature", "org.eclipse.pde.PluginNature"});
+				ICommand javaCommand1 = projectDescription.newCommand();
+				javaCommand1.setBuilderName("org.eclipse.jdt.core.javabuilder");
+				ICommand javaCommand2 = projectDescription.newCommand();
+				javaCommand2.setBuilderName("org.eclipse.pde.ManifestBuilder");
+				ICommand javaCommand3 = projectDescription.newCommand();
+				javaCommand3.setBuilderName("org.eclipse.pde.SchemaBuilder");
+				projectDescription.setBuildSpec(new ICommand[]{javaCommand1, javaCommand2, javaCommand3});
 				return projectDescription;
 			}
 		};
@@ -284,16 +288,16 @@ public class CompletionProposalTests extends XtextTestCase
 					"	}\n" +
 				"}\n");
 		try {
-			/*			IReferenceCompletionProposal proposal1a = new ReferenceConfigurableCompletionProposal("PrimitiveType");
+			IReferenceCompletionProposal proposal1a = new ReferenceConfigurableCompletionProposal("PrimitiveType");
 			IReferenceCompletionProposal proposal1b = new ReferenceConfigurableCompletionProposal("{");
 			doTestEditor(
 				"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
 						"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
 						"	type Complex : Primitive$ {\n" +
 						"	}\n" +
-						"}';\n",
+						"}\n",
 						new IReferenceCompletionProposal[]{proposal1a, proposal1b}, null);
-			// */
+			//
 			//	Completion proposal that probably resolves to a Jar entry.
 			//
 			IReferenceCompletionProposal proposal2a = new ReferenceConfigurableCompletionProposal("org.eclipse.emf.common.util.Reflect");
@@ -304,7 +308,7 @@ public class CompletionProposalTests extends XtextTestCase
 						"	type Complex : PrimitiveType {\n" +
 						"		operation testing() : String => 'org.eclipse.emf.common.util.R$';\n" +
 						"	}\n" +
-						"}';\n",
+						"}\n",
 						new IReferenceCompletionProposal[]{proposal2a, proposal2b}, null);
 			//
 			//	Completion proposal that probably resolves to a folder entry.
@@ -317,7 +321,7 @@ public class CompletionProposalTests extends XtextTestCase
 						"	type Complex : PrimitiveType {\n" +
 						"		operation testing() : String => 'org.eclipse.ocl.pivot.internal.ids.O$';\n" +
 						"	}\n" +
-						"}';\n",
+						"}\n",
 						new IReferenceCompletionProposal[]{proposal3a, proposal3b}, null);
 		}
 		finally {
