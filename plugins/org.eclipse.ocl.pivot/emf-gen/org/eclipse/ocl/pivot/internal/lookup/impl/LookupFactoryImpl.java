@@ -77,7 +77,7 @@ public class LookupFactoryImpl extends EFactoryImpl implements LookupFactory {
 	 * @generated
 	 */
 	@Override
-	public LookupEnvironment createLookupEnvironment() {
+	public @NonNull LookupEnvironment createLookupEnvironment() {
 		LookupEnvironmentImpl lookupEnvironment = new LookupEnvironmentImpl();
 		return lookupEnvironment;
 	}

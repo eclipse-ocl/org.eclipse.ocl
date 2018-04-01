@@ -75,7 +75,6 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 		this.baseLookupPackageName = baseLookupPackageName;
 	}
 	
-	@Override
 	protected override doSetup() {
 		CompleteOCLStandaloneSetup.doSetup();
 		OCLstdlib.install();

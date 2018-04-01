@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -41,6 +42,7 @@ public class Ecore2UMLConverter extends AbstractWorkflowComponent
 	/**
 	 * @see org.eclipse.emf.mwe.core.WorkflowComponent#checkConfiguration(org.eclipse.emf.mwe.core.issues.Issues)
 	 */
+	@Override
 	public void checkConfiguration(final Issues issues) {
 		if (ecoreSlot == null) {
 			issues.addError(this, "ecoreSlot not specified.");
@@ -56,12 +58,12 @@ public class Ecore2UMLConverter extends AbstractWorkflowComponent
 		URI ecoreURI = resource.getURI();
 		log.info("Converting '" + ecoreURI + "'");
 		ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
-		
+
 		EPackage ePackage = (EPackage) resource.getContents().get(0);
 		Map<String, String> options = new HashMap<String, String>();
-		Collection<Package> umlPackages = UMLUtil.convertFromEcore(ePackage, options);
+		List<Package> umlPackages = new ArrayList<>(UMLUtil.convertFromEcore(ePackage, options));
 		Resource umlResource = resourceSet.createResource(ecoreURI.trimFileExtension().appendFileExtension("uml"));
-		umlResource.getContents().addAll(umlPackages);
+		umlResource.getContents().addAll(ClassUtil.nullFree(umlPackages));
 		for (TreeIterator<EObject> tit = umlResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof Association) {
@@ -90,7 +92,7 @@ public class Ecore2UMLConverter extends AbstractWorkflowComponent
 
 	/**
 	 * Sets the name of the Ecore slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */
@@ -100,7 +102,7 @@ public class Ecore2UMLConverter extends AbstractWorkflowComponent
 
 	/**
 	 * Sets the name of the UML slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */

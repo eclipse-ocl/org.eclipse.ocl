@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.essentialocl.utilities;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.osgi.framework.BundleContext;
 
@@ -22,7 +23,7 @@ import org.osgi.framework.BundleContext;
  * @generated
  */
 public final class EssentialOCLPlugin extends EMFPlugin {
-	public static final String LANGUAGE_ID = "org.eclipse.ocl.xtext.essentialocl.EssentialOCL";
+	public static final @NonNull String LANGUAGE_ID = "org.eclipse.ocl.xtext.essentialocl.EssentialOCL";
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->

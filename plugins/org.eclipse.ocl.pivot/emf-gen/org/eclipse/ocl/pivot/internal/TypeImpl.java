@@ -38,8 +38,8 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  * @generated
  */
 public abstract class TypeImpl
-		extends NamedElementImpl
-		implements Type {
+extends NamedElementImpl
+implements Type {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -155,8 +155,8 @@ public abstract class TypeImpl
 		EObject eTarget = getESObject();
 		if (eTarget instanceof EClass) {
 			EClass eClass = (EClass) eTarget;
-			@SuppressWarnings("null")@NonNull EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
-//			TypeId typeId = IdManager.getTypeId(eClass);
+			@NonNull EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
+			//			TypeId typeId = IdManager.getTypeId(eClass);
 			return /*ValuesUtil.createObjectValue(typeId, */element;//);
 		}
 		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
@@ -167,9 +167,9 @@ public abstract class TypeImpl
 		if (eTarget instanceof EDataType) {
 			EDataType eDataType = (EDataType) eTarget;
 			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-//			TypeId typeId = IdManager.getTypeId(eDataType);
+			//			TypeId typeId = IdManager.getTypeId(eDataType);
 			return /*ValuesUtil.createObjectValue(typeId, */element;//);
-//			return ValuesUtil.valueOf(element);
+			//			return ValuesUtil.valueOf(element);
 		}
 		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
 	}
@@ -203,10 +203,10 @@ public abstract class TypeImpl
 		return false;
 	}
 
-//	@Override
-//	public boolean isInvalid() {
-//		return false;
-//	}
+	//	@Override
+	//	public boolean isInvalid() {
+	//		return false;
+	//	}
 
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
@@ -223,11 +223,11 @@ public abstract class TypeImpl
 		return getTypeId().hashCode();
 	}
 
-//	@Override
-//	@NonNull
-//	public List<? extends Constraint> getOwnedRule() {
-//		throw new UnsupportedOperationException();		// FIXME
-//	}
+	//	@Override
+	//	@NonNull
+	//	public List<? extends Constraint> getOwnedRule() {
+	//		throw new UnsupportedOperationException();		// FIXME
+	//	}
 
 	public org.eclipse.ocl.pivot.Package getPackage() {
 		throw new UnsupportedOperationException();		// FIXME

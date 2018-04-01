@@ -19,6 +19,7 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil.ExcludedEClassIdFilter;
 
@@ -36,7 +37,8 @@ public class EcoreIdAssigner extends WorkflowComponentWithModelSlot
 		Resource resource = (Resource) ctx.get(getModelSlot());
 		log.info("Ecore Id Assigning '" + resource.getURI() + "'");
 		XMIUtil.HierachicalENamedElementIdCreator idCreator = new XMIUtil.HierachicalENamedElementIdCreator();
-		ExcludedEClassIdFilter idFilter = new ExcludedEClassIdFilter(new EClass[] {
+		@SuppressWarnings("null")
+		ExcludedEClassIdFilter idFilter = new ExcludedEClassIdFilter(new @NonNull EClass[] {
 			XMLTypePackage.Literals.ANY_TYPE,
 			EcorePackage.Literals.EANNOTATION,
 			EcorePackage.Literals.EGENERIC_TYPE,

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,15 +62,15 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		try {
-			Class<?> txClass = Class.forName("org.eclipse.qvtd.cs2as.compiler.OCL2QVTiTransformationTechnology");
-			Field txField = txClass.getField("INSTANCE");
+			//			Class<?> txClass = Class.forName("org.eclipse.qvtd.cs2as.compiler.OCL2QVTiTransformationTechnology");
+			//			Field txField = txClass.getField("INSTANCE");
 			//			TransformationTechnology tx = (TransformationTechnology) txField.get(null);
 			/*
 			 * Cannot use this until we can guarantee that whatever OCL we build will use a QVTd
 			 * that already provides OCL2QVTiTransformationTechnology.
 			 */
 			// FIXME	TransformationTechnology tx = OCL2QVTiTransformationTechnology.INSTANCE;
-			Map<@NonNull String, Object> modelMap = new HashMap<@NonNull String, Object>();
+			//			Map<@NonNull String, Object> modelMap = new HashMap<@NonNull String, Object>();
 			Map<@NonNull String, Object> parametersMap = new HashMap<@NonNull String, Object>();
 			parametersMap.put("lookupSolverClassName", lookupSolverClassName);
 			parametersMap.put("lookupResultItfName", lookupResultItfName);

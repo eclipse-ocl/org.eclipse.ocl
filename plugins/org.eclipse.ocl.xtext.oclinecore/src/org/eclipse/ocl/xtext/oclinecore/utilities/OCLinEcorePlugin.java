@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.oclinecore.utilities;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.osgi.framework.BundleContext;
 
@@ -22,7 +23,7 @@ import org.osgi.framework.BundleContext;
  * @generated
  */
 public final class OCLinEcorePlugin extends EMFPlugin {
-	public static final String LANGUAGE_ID = "org.eclipse.ocl.xtext.oclinecore.OCLinEcore";
+	public static final @NonNull String LANGUAGE_ID = "org.eclipse.ocl.xtext.oclinecore.OCLinEcore";
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->

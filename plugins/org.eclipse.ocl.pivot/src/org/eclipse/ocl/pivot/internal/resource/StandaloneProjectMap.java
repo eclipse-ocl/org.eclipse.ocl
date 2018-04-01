@@ -2180,7 +2180,7 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 				Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor2 = nsURI2packageDescriptor;
 				EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
-				if ((nsURI2packageDescriptor2 != null) && (packageRegistry != null)) {
+				if (nsURI2packageDescriptor2 != null) {
 					for (@NonNull URI nsURI : nsURI2packageDescriptor2.keySet()) {
 						packageRegistry.remove(nsURI.toString());
 					}
@@ -2272,7 +2272,7 @@ public class StandaloneProjectMap implements ProjectManager
 			@SuppressWarnings("null") EPackage.@NonNull Registry globalRegistry = EPackage.Registry.INSTANCE;
 			return globalRegistry;
 		} else {
-			@SuppressWarnings("null") EPackage.@NonNull Registry packageRegistry = resourceSet.getPackageRegistry();
+			EPackage.@NonNull Registry packageRegistry = resourceSet.getPackageRegistry();
 			return packageRegistry;
 		}
 	}

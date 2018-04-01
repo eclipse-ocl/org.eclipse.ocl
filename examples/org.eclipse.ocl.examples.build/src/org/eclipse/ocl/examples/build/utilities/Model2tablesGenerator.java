@@ -41,9 +41,9 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class Model2tablesGenerator extends AbstractWorkflowComponent
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
-	private boolean genOCLstdlib = false;	
+	private Logger log = Logger.getLogger(getClass());
+	private ResourceSet resourceSet = null;
+	private boolean genOCLstdlib = false;
 	protected String genModelFile;
 
 	@Override
@@ -86,7 +86,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 			String modelDirectory = genModel.getModelDirectory();
 			String modelProjectDirectory = genModel.getModelProjectDirectory();
-			@SuppressWarnings("null")@NonNull String modelProject = modelProjectDirectory.substring(1);
+			@NonNull String modelProject = modelProjectDirectory.substring(1);
 			String folderPath = modelDirectory.substring(modelProjectDirectory.length());
 			URI locationURI = projectMap.getLocation(modelProject);
 			if (locationURI == null) {
@@ -97,8 +97,8 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 			java.net.URI uri = url.toURI();
 			File targetFolder = new File(uri.getRawPath() + folderPath);
 			log.info("Generating to '" + targetFolder + "'");
-   			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
-   			for (@SuppressWarnings("null")@NonNull GenPackage genPackage : genPackages) {
+			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
+			for (@SuppressWarnings("null")@NonNull GenPackage genPackage : genPackages) {
 				OCLinEcoreTables generateTables = new OCLinEcoreTables(genPackage);
 				String tablesClass = generateTables.getTablesClassName();
 				String dir = genPackage.getQualifiedPackageName().replace(".", "/");
@@ -107,7 +107,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 				FileWriter testFile = new FileWriter(new File(targetFolder, dir + "/" + tablesClass + ".java"));
 				testFile.append(str);
 				testFile.close();
-   			}
+			}
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		}
@@ -120,7 +120,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 	public void setGenOCLstdlib(boolean genOCLstdlib) {
 		this.genOCLstdlib = genOCLstdlib;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

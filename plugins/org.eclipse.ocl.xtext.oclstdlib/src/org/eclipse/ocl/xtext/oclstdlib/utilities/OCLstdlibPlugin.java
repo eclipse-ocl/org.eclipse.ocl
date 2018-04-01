@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
 import org.osgi.framework.BundleContext;
 
@@ -22,7 +23,7 @@ import org.osgi.framework.BundleContext;
  * @generated
  */
 public final class OCLstdlibPlugin extends EMFPlugin {
-	public static final String LANGUAGE_ID = "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib";
+	public static final @NonNull String LANGUAGE_ID = "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib";
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->

@@ -32,17 +32,17 @@ public abstract class MethodSpec
 	 * The declaration of the interface less prefixes: e.g. "boolean method(int arg)"
 	 */
 	protected final @NonNull String interfaceDecl;
-	
+
 	/**
 	 * Optional variable declaration to be made priovate in the implementation root.
 	 */
 	protected final @Nullable String variableDecl;
-	
+
 	/**
 	 * Comment to accompany the root interface declaration.
 	 */
 	protected final @Nullable String comment;
-	
+
 	public MethodSpec(@NonNull Class<?> rootClass, @NonNull String interfaceDecl, @Nullable String variableDecl, @Nullable String comment) {
 		this.rootClass = rootClass;
 		this.interfaceDecl = interfaceDecl;
@@ -67,38 +67,38 @@ public abstract class MethodSpec
 		s.append("\t * @generated\n");
 		s.append("\t */\n");
 	}
-	
+
 	public void generate(@NonNull StringBuilder s, @NonNull ModelSpec modelSpec, @NonNull GenModel genModel, boolean isImplementation) {
 		if (!rootClass.isAssignableFrom(modelSpec.cgClass)) {
 			return;
 		}
-	    boolean isRootSpec = modelSpec.cgClass == rootClass;
+		boolean isRootSpec = modelSpec.cgClass == rootClass;
 		if (!isImplementation) {
-		    if (isRootSpec) {
-	    		String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
+			if (isRootSpec) {
+				String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
 				appendHeader(s, comment);
 				s.append("\t// Generated from " + getClass().getName() + "\n");
-		    	s.append("\t" + resolvedDeclaration + ";\n");
-		    }
+				s.append("\t" + resolvedDeclaration + ";\n");
+			}
 		}
 		else {
-		    if (isRootSpec && (variableDecl != null)) {
+			if (isRootSpec && (variableDecl != null)) {
 				appendHeader(s, "");
-			    s.append("\tprotected " + variableDecl + ";\n");
-		    }
-		    String body = getBody(modelSpec, genModel);
-		    String superBody = getSuperBody(modelSpec, genModel);
-		    if ((body != null) && !body.equals(superBody)) {
-	    		String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
-	    		String resolvedBody = OCLBuildGenModelUtil.resolveImports(genModel, body);
-	    		appendHeader(s, null);
-	    	    if (genModel.useClassOverrideAnnotation() && (superBody != null)) {
-	    	    	s.append("\t@Override\n");
-	    	    }
+				s.append("\tprotected " + variableDecl + ";\n");
+			}
+			String body = getBody(modelSpec, genModel);
+			String superBody = getSuperBody(modelSpec, genModel);
+			if ((body != null) && !body.equals(superBody)) {
+				String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
+				String resolvedBody = OCLBuildGenModelUtil.resolveImports(genModel, body);
+				appendHeader(s, null);
+				if (genModel.useClassOverrideAnnotation() && (superBody != null)) {
+					s.append("\t@Override\n");
+				}
 				s.append("\tpublic " + resolvedDeclaration + " {\n");
 				s.append("\t\t" + resolvedBody + "\n");
-	    		s.append("\t}\n");
-		    }
+				s.append("\t}\n");
+			}
 		}
 	}
 
@@ -106,7 +106,7 @@ public abstract class MethodSpec
 	 * Return the text to appear as the body of cgModelSpec. If the return is null the definition is omitted.
 	 */
 	protected abstract @Nullable String getBody(@NonNull ModelSpec modelSpec, @NonNull GenModel genModel);
-	
+
 	/**
 	 * Return the non-null body implementation of of the primary inheritance if there is one,
 	 * or null if there is no inherited body.
@@ -142,24 +142,23 @@ public abstract class MethodSpec
 							return body;
 						}
 					}
-					}
+				}
 			}
 			cgClass = cgSuperclass;
 		}
 		return null;
 	}
 
-	@SuppressWarnings("null")
 	protected @NonNull String resolveJDTAnnotations(@NonNull GenModel genModel, @NonNull String text) {
-	    if (text.contains("@NonNull ")) {
-	    	String atNonNull = OCLBuildGenModelUtil.atNonNull(genModel);
-	    	text = text.replace("@NonNull ", atNonNull);
-	    }
-	    if (text.contains("@Nullable ")) {
-		    String atNullable = OCLBuildGenModelUtil.atNullable(genModel);
-	    	text = text.replace("@Nullable ", atNullable);
-	    }
-	    return text;
+		if (text.contains("@NonNull ")) {
+			String atNonNull = OCLBuildGenModelUtil.atNonNull(genModel);
+			text = text.replace("@NonNull ", atNonNull);
+		}
+		if (text.contains("@Nullable ")) {
+			String atNullable = OCLBuildGenModelUtil.atNullable(genModel);
+			text = text.replace("@Nullable ", atNullable);
+		}
+		return text;
 	}
 
 	@Override
