@@ -308,6 +308,9 @@
         <generalization xmi:id="_O6JJZtp9Eduf94aRL_gBBg" general="_O6JJbdp9Eduf94aRL_gBBg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJZ9p9Eduf94aRL_gBBg" name="OclExpression" isAbstract="true">
+        <eAnnotations xmi:id="_J1O7EBSeEd2GKu70W8rmzA" source="http://www.eclipse.org/emf/2002/Ecore">
+          <details xmi:id="_LqEVwBSeEd2GKu70W8rmzA" key="constraints" value="has_type"/>
+        </eAnnotations>
         <generalization xmi:id="_O6JJaNp9Eduf94aRL_gBBg">
           <general xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#TypedElement"/>
         </generalization>
