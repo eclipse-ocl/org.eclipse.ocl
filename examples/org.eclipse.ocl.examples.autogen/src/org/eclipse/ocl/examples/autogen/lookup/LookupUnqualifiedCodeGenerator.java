@@ -182,7 +182,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 			CallExp asInnerCallExp = (CallExp)asOperationCallExp.eContainer();
 			VariableExp asContextExp = helper.createVariableExp(asContextVariable);
 			asInnerCallExp.setOwnedSource(asContextExp);										// asOperationCallExp becomes an orphan
-			Variable asInnerEnv = PivotUtil.createVariable("inner", asOuterCallExp);
+			Variable asInnerEnv = helper.createLetVariable("inner", asOuterCallExp);
 			VariableExp asInnerEnvExp1 = helper.createVariableExp(asInnerEnv);
 			VariableExp asInnerEnvExp2 = helper.createVariableExp(asInnerEnv);
 			OperationCallExp asCondition = helper.createOperationCallExp(asInnerEnvExp1, asEnvironmentHasFinalResultOperation, Collections.emptyList());
@@ -276,12 +276,12 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = PivotUtil.createVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true, null);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asChildSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asChildAccess = PivotUtil.createPropertyCallExp(asChildSource, ClassUtil.nonNullState(asChildProperty));
-		Variable asChild = PivotUtil.createVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
+		Variable asChild = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asChild);
 		//
 		Operation asOperation = createVisitorOperation("visit" + asType.getName(), operation.getType());

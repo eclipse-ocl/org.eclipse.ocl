@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 
@@ -45,7 +44,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
 			superGenPackage, baseGenPackage, LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
 	}
-	
+
 	protected LookupQualifiedCodeGenerator(
 			@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
@@ -63,28 +62,28 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		return new LookupQualifiedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
-	
+
 	@Override
 	protected @NonNull String getLookupVisitorClassName(@NonNull String prefix) {
 		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
 		return prefix + "Qualified" + typeName + "LookupVisitor";
 	}
-	
+
 	@Override
 	protected boolean isRewrittenOperation(Operation operation) {
 		return envOperationName.equals(operation.getName())
 				&& operation.getOwnedParameters().size() == 0;
 	}
-	
+
 	/**
-	 * Convert  'Element'::_qualified_env() : Environment 
+	 * Convert  'Element'::_qualified_env() : Environment
 	 * to XXXXXQualifiedLookupVisitor::visit'Element'(element : 'Element') : Environment
-	 * 
+	 *
 	 * with
 	 *   - self accessed as element.
 	 *   - let env = LookupEnvironment{} in ... rewritten as let env = this.context in ...
-	 *   
-	 * @throws ParserException 
+	 *
+	 * @throws ParserException
 	 */
 	@Override
 	protected @NonNull Operation createVisitOperationDeclaration(
@@ -92,7 +91,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = PivotUtil.createVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true, null);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -64,6 +65,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final org.eclipse.ocl.pivot.@Nullable Package asSuperPackage;
+	protected final @NonNull PivotHelper helper;
 	protected final @NonNull GenModel genModel;
 	protected final @NonNull GenPackage genPackage;
 	protected final @Nullable GenPackage superGenPackage;
@@ -79,6 +81,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		super(environmentFactory);
+		this.helper = new PivotHelper(environmentFactory);
 		this.genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		cgAnalyzer = new CodeGenAnalyzer(this);

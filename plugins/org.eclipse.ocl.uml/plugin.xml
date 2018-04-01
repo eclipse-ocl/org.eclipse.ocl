@@ -41,6 +41,7 @@
 
   <extension
         point="org.eclipse.emf.ecore.content_parser">
+     <!-- Deprecated see Bug 297041 -->
      <parser
            contentTypeIdentifier="org.eclipse.ocl.uml"
            class="org.eclipse.uml2.uml.internal.resource.UMLResourceFactoryImpl" />

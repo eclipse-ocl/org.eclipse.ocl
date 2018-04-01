@@ -40,11 +40,11 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenerator{
-	
+
 	protected Property asImporterProperty;
-	
+
 	private @Nullable CGProperty cgImporterProperty = null;
-	
+
 	protected LookupExportedVisitorCodeGenerator(
 			@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
@@ -54,7 +54,7 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
 			superGenPackage, baseGenPackage, LookupVisitorsClassContext.EXPORTED_ENV_NAME);
 	}
-	
+
 	protected LookupExportedVisitorCodeGenerator(
 			@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
@@ -65,28 +65,28 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 		super(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
 			superGenPackage, baseGenPackage, envOpName);
 	}
-	
+
 	@Override
 	protected @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(
 			@NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		return new LookupExportedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
-	
+
 	@Override
 	protected @NonNull String getLookupVisitorClassName(@NonNull String prefix) {
 		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.EXPORTED_ENV_NAME);
 		return prefix + "Exported" + typeName + "LookupVisitor";
 	}
-	
+
 	@Override
 	protected List<Property> createAdditionalASProperties() {
-		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType(); 
+		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
 		this.asImporterProperty = createNativeProperty(LookupVisitorsClassContext.INMPORTER_NAME, asOclElement, true, true);
 		return Collections.singletonList(asImporterProperty);
 	}
 
-	
+
 	@Override
 	protected boolean isRewrittenOperation(Operation operation) {
 		return envOperationName.equals(operation.getName())
@@ -95,15 +95,15 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 	}
 
 	/**
-	 * Convert  'Element'::_exported_env(importer : Element) : Environment 
+	 * Convert  'Element'::_exported_env(importer : Element) : Environment
 	 * to XXXXXExportedLookupVisitor::visit'Element'(element : 'Element') : Environment
-	 * 
+	 *
 	 * with
 	 *   - self accessed as element.
 	 *   - importer parameter accessed as this.importer.
 	 *   - LookupEnvironment{} rewritten as this.context ...
-	 *   
-	 * @throws ParserException 
+	 *
+	 * @throws ParserException
 	 */
 	@Override
 	protected @NonNull Operation createVisitOperationDeclaration(
@@ -111,20 +111,20 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = PivotUtil.createVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true, null);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asImporterSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asImporterAccess = PivotUtil.createPropertyCallExp(asImporterSource, ClassUtil.nonNull(asImporterProperty));
-		Variable asImporter = PivotUtil.createVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
+		Variable asImporter = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asImporter);
-		
+
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)
 		VariableExp asContextAccess = createThisVariableExp(asContextVariable);
 		OCLExpression body = envExpressionInOCL.getOwnedBody();
 		OCLExpression rewrittenExp = body instanceof ShadowExp ? body : ((LetExp)body).getOwnedVariable().getOwnedInit() ;
 		reDefinitions.put(rewrittenExp, asContextAccess);
-		
+
 		//
 		Operation asOperation = createVisitorOperation("visit" + asType.getName(), operation.getType());
 		reDefinitions.put(operation, asOperation);
@@ -137,7 +137,7 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 			cgImporterProperty = cgProperty;
 		}
 	}
-	
+
 	public @NonNull CGProperty getImporterProperty() {
 		return ClassUtil.nonNullState(cgImporterProperty);
 	}
