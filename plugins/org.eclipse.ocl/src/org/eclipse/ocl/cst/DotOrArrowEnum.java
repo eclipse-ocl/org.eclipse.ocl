@@ -27,7 +27,8 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum DotOrArrowEnum
-		implements Enumerator {
+		implements
+		Enumerator {
 	/**
 	 * The '<em><b>None</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -125,6 +126,8 @@ public enum DotOrArrowEnum
 	 * Returns the '<em><b>Dot Or Arrow Enum</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static DotOrArrowEnum get(String literal) {
@@ -141,6 +144,8 @@ public enum DotOrArrowEnum
 	 * Returns the '<em><b>Dot Or Arrow Enum</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static DotOrArrowEnum getByName(String name) {
@@ -157,6 +162,8 @@ public enum DotOrArrowEnum
 	 * Returns the '<em><b>Dot Or Arrow Enum</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static DotOrArrowEnum get(int value) {

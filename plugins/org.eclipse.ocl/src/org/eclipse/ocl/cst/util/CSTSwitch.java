@@ -505,9 +505,11 @@ public class CSTSwitch<T>
 			}
 			case CSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS : {
 				UnlimitedNaturalLiteralExpCS unlimitedNaturalLiteralExpCS = (UnlimitedNaturalLiteralExpCS) theEObject;
-				T result = caseUnlimitedNaturalLiteralExpCS(unlimitedNaturalLiteralExpCS);
+				T result = caseUnlimitedNaturalLiteralExpCS(
+					unlimitedNaturalLiteralExpCS);
 				if (result == null)
-					result = casePrimitiveLiteralExpCS(unlimitedNaturalLiteralExpCS);
+					result = casePrimitiveLiteralExpCS(
+						unlimitedNaturalLiteralExpCS);
 				if (result == null)
 					result = caseLiteralExpCS(unlimitedNaturalLiteralExpCS);
 				if (result == null)

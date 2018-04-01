@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.InitValueCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Init Value CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

@@ -29,6 +29,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.TupleTypeCSImpl#getVariables <em>Variables</em>}</li>
  * </ul>
@@ -91,8 +92,8 @@ public class TupleTypeCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CSTPackage.TUPLE_TYPE_CS__VARIABLES :
-				return ((InternalEList<?>) getVariables()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getVariables()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -122,8 +123,8 @@ public class TupleTypeCSImpl
 		switch (featureID) {
 			case CSTPackage.TUPLE_TYPE_CS__VARIABLES :
 				getVariables().clear();
-				getVariables().addAll(
-					(Collection<? extends VariableCS>) newValue);
+				getVariables()
+					.addAll((Collection<? extends VariableCS>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

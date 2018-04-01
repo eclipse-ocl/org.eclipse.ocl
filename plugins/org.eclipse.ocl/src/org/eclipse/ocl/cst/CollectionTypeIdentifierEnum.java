@@ -27,7 +27,8 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum CollectionTypeIdentifierEnum
-		implements Enumerator {
+		implements
+		Enumerator {
 	/**
 	 * The '<em><b>Set</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -176,6 +177,8 @@ public enum CollectionTypeIdentifierEnum
 	 * Returns the '<em><b>Collection Type Identifier Enum</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static CollectionTypeIdentifierEnum get(String literal) {
@@ -192,6 +195,8 @@ public enum CollectionTypeIdentifierEnum
 	 * Returns the '<em><b>Collection Type Identifier Enum</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static CollectionTypeIdentifierEnum getByName(String name) {
@@ -208,6 +213,8 @@ public enum CollectionTypeIdentifierEnum
 	 * Returns the '<em><b>Collection Type Identifier Enum</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static CollectionTypeIdentifierEnum get(int value) {
@@ -253,7 +260,8 @@ public enum CollectionTypeIdentifierEnum
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private CollectionTypeIdentifierEnum(int value, String name, String literal) {
+	private CollectionTypeIdentifierEnum(int value, String name,
+			String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;

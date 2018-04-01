@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.LiteralExpCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Literal Exp CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

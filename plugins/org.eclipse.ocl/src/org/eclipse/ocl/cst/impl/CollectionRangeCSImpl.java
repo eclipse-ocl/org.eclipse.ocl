@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionRangeCSImpl#getLastExpressionCS <em>Last Expression CS</em>}</li>
  * </ul>
@@ -105,13 +106,13 @@ public class CollectionRangeCSImpl
 		if (newLastExpressionCS != lastExpressionCS) {
 			NotificationChain msgs = null;
 			if (lastExpressionCS != null)
-				msgs = ((InternalEObject) lastExpressionCS).eInverseRemove(
-					this, EOPPOSITE_FEATURE_BASE
+				msgs = ((InternalEObject) lastExpressionCS).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
 						- CSTPackage.COLLECTION_RANGE_CS__LAST_EXPRESSION_CS,
 					null, msgs);
 			if (newLastExpressionCS != null)
-				msgs = ((InternalEObject) newLastExpressionCS).eInverseAdd(
-					this, EOPPOSITE_FEATURE_BASE
+				msgs = ((InternalEObject) newLastExpressionCS).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
 						- CSTPackage.COLLECTION_RANGE_CS__LAST_EXPRESSION_CS,
 					null, msgs);
 			msgs = basicSetLastExpressionCS(newLastExpressionCS, msgs);

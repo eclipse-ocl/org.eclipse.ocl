@@ -28,6 +28,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefExpressionCSImpl#getOperationCS <em>Operation CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefExpressionCSImpl#getVariableCS <em>Variable CS</em>}</li>
@@ -130,13 +131,13 @@ public class DefExpressionCSImpl
 			if (operationCS != null)
 				msgs = ((InternalEObject) operationCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__OPERATION_CS, null,
-					msgs);
+						- CSTPackage.DEF_EXPRESSION_CS__OPERATION_CS,
+					null, msgs);
 			if (newOperationCS != null)
 				msgs = ((InternalEObject) newOperationCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__OPERATION_CS, null,
-					msgs);
+						- CSTPackage.DEF_EXPRESSION_CS__OPERATION_CS,
+					null, msgs);
 			msgs = basicSetOperationCS(newOperationCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -185,13 +186,15 @@ public class DefExpressionCSImpl
 		if (newVariableCS != variableCS) {
 			NotificationChain msgs = null;
 			if (variableCS != null)
-				msgs = ((InternalEObject) variableCS)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__VARIABLE_CS, null, msgs);
+				msgs = ((InternalEObject) variableCS).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.DEF_EXPRESSION_CS__VARIABLE_CS,
+					null, msgs);
 			if (newVariableCS != null)
-				msgs = ((InternalEObject) newVariableCS)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__VARIABLE_CS, null, msgs);
+				msgs = ((InternalEObject) newVariableCS).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.DEF_EXPRESSION_CS__VARIABLE_CS,
+					null, msgs);
 			msgs = basicSetVariableCS(newVariableCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -242,13 +245,13 @@ public class DefExpressionCSImpl
 			if (expressionCS != null)
 				msgs = ((InternalEObject) expressionCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__EXPRESSION_CS, null,
-					msgs);
+						- CSTPackage.DEF_EXPRESSION_CS__EXPRESSION_CS,
+					null, msgs);
 			if (newExpressionCS != null)
 				msgs = ((InternalEObject) newExpressionCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_EXPRESSION_CS__EXPRESSION_CS, null,
-					msgs);
+						- CSTPackage.DEF_EXPRESSION_CS__EXPRESSION_CS,
+					null, msgs);
 			msgs = basicSetExpressionCS(newExpressionCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();

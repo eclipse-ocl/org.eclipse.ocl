@@ -32,6 +32,7 @@ import org.eclipse.ocl.cst.CollectionTypeIdentifierEnum;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionLiteralExpCSImpl#getCollectionType <em>Collection Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionLiteralExpCSImpl#getCollectionLiteralParts <em>Collection Literal Parts</em>}</li>
@@ -106,7 +107,8 @@ public class CollectionLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCollectionType(CollectionTypeIdentifierEnum newCollectionType) {
+	public void setCollectionType(
+			CollectionTypeIdentifierEnum newCollectionType) {
 		CollectionTypeIdentifierEnum oldCollectionType = collectionType;
 		collectionType = newCollectionType == null
 			? COLLECTION_TYPE_EDEFAULT
@@ -229,7 +231,7 @@ public class CollectionLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (collectionType: "); //$NON-NLS-1$
 		result.append(collectionType);
 		result.append(')');

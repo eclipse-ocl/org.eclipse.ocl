@@ -27,6 +27,7 @@ import org.eclipse.ocl.cst.TypeCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionTypeCSImpl#getCollectionTypeIdentifier <em>Collection Type Identifier</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionTypeCSImpl#getTypeCS <em>Type CS</em>}</li>
@@ -152,13 +153,17 @@ public class CollectionTypeCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject) typeCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.COLLECTION_TYPE_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) typeCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.COLLECTION_TYPE_CS__TYPE_CS,
+						null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject) newTypeCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.COLLECTION_TYPE_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) newTypeCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.COLLECTION_TYPE_CS__TYPE_CS,
+						null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -207,7 +212,8 @@ public class CollectionTypeCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CSTPackage.COLLECTION_TYPE_CS__COLLECTION_TYPE_IDENTIFIER :
-				setCollectionTypeIdentifier((CollectionTypeIdentifierEnum) newValue);
+				setCollectionTypeIdentifier(
+					(CollectionTypeIdentifierEnum) newValue);
 				return;
 			case CSTPackage.COLLECTION_TYPE_CS__TYPE_CS :
 				setTypeCS((TypeCS) newValue);
@@ -225,7 +231,8 @@ public class CollectionTypeCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case CSTPackage.COLLECTION_TYPE_CS__COLLECTION_TYPE_IDENTIFIER :
-				setCollectionTypeIdentifier(COLLECTION_TYPE_IDENTIFIER_EDEFAULT);
+				setCollectionTypeIdentifier(
+					COLLECTION_TYPE_IDENTIFIER_EDEFAULT);
 				return;
 			case CSTPackage.COLLECTION_TYPE_CS__TYPE_CS :
 				setTypeCS((TypeCS) null);
@@ -260,7 +267,7 @@ public class CollectionTypeCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (collectionTypeIdentifier: "); //$NON-NLS-1$
 		result.append(collectionTypeIdentifier);
 		result.append(')');

@@ -34,6 +34,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
@@ -145,13 +146,17 @@ public class OperationCSImpl
 		if (newPathNameCS != pathNameCS) {
 			NotificationChain msgs = null;
 			if (pathNameCS != null)
-				msgs = ((InternalEObject) pathNameCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OPERATION_CS__PATH_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) pathNameCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OPERATION_CS__PATH_NAME_CS,
+						null, msgs);
 			if (newPathNameCS != null)
-				msgs = ((InternalEObject) newPathNameCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OPERATION_CS__PATH_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) newPathNameCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OPERATION_CS__PATH_NAME_CS,
+						null, msgs);
 			msgs = basicSetPathNameCS(newPathNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -200,13 +205,17 @@ public class OperationCSImpl
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OPERATION_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) simpleNameCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OPERATION_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OPERATION_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) newSimpleNameCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OPERATION_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -297,8 +306,8 @@ public class OperationCSImpl
 			case CSTPackage.OPERATION_CS__SIMPLE_NAME_CS :
 				return basicSetSimpleNameCS(null, msgs);
 			case CSTPackage.OPERATION_CS__PARAMETERS :
-				return ((InternalEList<?>) getParameters()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getParameters())
+					.basicRemove(otherEnd, msgs);
 			case CSTPackage.OPERATION_CS__TYPE_CS :
 				return basicSetTypeCS(null, msgs);
 		}
@@ -342,8 +351,8 @@ public class OperationCSImpl
 				return;
 			case CSTPackage.OPERATION_CS__PARAMETERS :
 				getParameters().clear();
-				getParameters().addAll(
-					(Collection<? extends VariableCS>) newValue);
+				getParameters()
+					.addAll((Collection<? extends VariableCS>) newValue);
 				return;
 			case CSTPackage.OPERATION_CS__TYPE_CS :
 				setTypeCS((TypeCS) newValue);

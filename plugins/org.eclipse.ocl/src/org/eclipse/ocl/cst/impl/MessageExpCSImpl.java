@@ -34,6 +34,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.MessageExpCSImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.MessageExpCSImpl#getKind <em>Kind</em>}</li>
@@ -233,13 +234,15 @@ public class MessageExpCSImpl
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject) simpleNameCS)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.MESSAGE_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.MESSAGE_EXP_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject) newSimpleNameCS)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.MESSAGE_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.MESSAGE_EXP_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -277,8 +280,8 @@ public class MessageExpCSImpl
 			case CSTPackage.MESSAGE_EXP_CS__SIMPLE_NAME_CS :
 				return basicSetSimpleNameCS(null, msgs);
 			case CSTPackage.MESSAGE_EXP_CS__ARGUMENTS :
-				return ((InternalEList<?>) getArguments()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getArguments()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -323,8 +326,8 @@ public class MessageExpCSImpl
 				return;
 			case CSTPackage.MESSAGE_EXP_CS__ARGUMENTS :
 				getArguments().clear();
-				getArguments().addAll(
-					(Collection<? extends OCLMessageArgCS>) newValue);
+				getArguments()
+					.addAll((Collection<? extends OCLMessageArgCS>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -384,7 +387,7 @@ public class MessageExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (kind: "); //$NON-NLS-1$
 		result.append(kind);
 		result.append(')');

@@ -32,6 +32,7 @@ import org.eclipse.ocl.cst.PrePostOrBodyDeclCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationContextDeclCSImpl#getOperationCS <em>Operation CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationContextDeclCSImpl#getPrePostOrBodyDecls <em>Pre Post Or Body Decls</em>}</li>

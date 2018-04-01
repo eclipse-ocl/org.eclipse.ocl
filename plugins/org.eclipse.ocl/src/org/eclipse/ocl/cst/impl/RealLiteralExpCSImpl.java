@@ -23,6 +23,7 @@ import org.eclipse.ocl.cst.RealLiteralExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.RealLiteralExpCSImpl#getRealSymbol <em>Real Symbol</em>}</li>
  * </ul>
@@ -165,7 +166,7 @@ public class RealLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (realSymbol: "); //$NON-NLS-1$
 		result.append(realSymbol);
 		result.append(')');

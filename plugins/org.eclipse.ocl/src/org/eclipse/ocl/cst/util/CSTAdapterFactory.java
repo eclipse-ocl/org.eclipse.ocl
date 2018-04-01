@@ -181,7 +181,8 @@ public class CSTAdapterFactory
 		}
 
 		@Override
-		public Adapter caseOperationContextDeclCS(OperationContextDeclCS object) {
+		public Adapter caseOperationContextDeclCS(
+				OperationContextDeclCS object) {
 			return createOperationContextDeclCSAdapter();
 		}
 
@@ -276,7 +277,8 @@ public class CSTAdapterFactory
 		}
 
 		@Override
-		public Adapter caseCollectionLiteralExpCS(CollectionLiteralExpCS object) {
+		public Adapter caseCollectionLiteralExpCS(
+				CollectionLiteralExpCS object) {
 			return createCollectionLiteralExpCSAdapter();
 		}
 

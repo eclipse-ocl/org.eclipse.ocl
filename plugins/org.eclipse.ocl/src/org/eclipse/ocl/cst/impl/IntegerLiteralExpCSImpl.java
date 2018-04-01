@@ -23,6 +23,7 @@ import org.eclipse.ocl.cst.IntegerLiteralExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.IntegerLiteralExpCSImpl#getIntegerSymbol <em>Integer Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.IntegerLiteralExpCSImpl#getExtendedIntegerSymbol <em>Extended Integer Symbol</em>}</li>
@@ -137,8 +138,8 @@ public class IntegerLiteralExpCSImpl
 					oldExtendedIntegerSymbol, extendedIntegerSymbol));
 			}
 		eNotify(new ENotificationImpl(this, Notification.SET,
-			CSTPackage.INTEGER_LITERAL_EXP_CS__INTEGER_SYMBOL,
-			oldIntegerSymbol, integerSymbol));
+			CSTPackage.INTEGER_LITERAL_EXP_CS__INTEGER_SYMBOL, oldIntegerSymbol,
+			integerSymbol));
 	}
 
 	/**
@@ -277,7 +278,7 @@ public class IntegerLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (integerSymbol: "); //$NON-NLS-1$
 		result.append(integerSymbol);
 		result.append(", extendedIntegerSymbol: "); //$NON-NLS-1$

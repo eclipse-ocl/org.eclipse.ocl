@@ -32,6 +32,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.LetExpCSImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.LetExpCSImpl#getInExpression <em>In Expression</em>}</li>
@@ -136,11 +137,13 @@ public class LetExpCSImpl
 			if (inExpression != null)
 				msgs = ((InternalEObject) inExpression).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.LET_EXP_CS__IN_EXPRESSION, null, msgs);
+						- CSTPackage.LET_EXP_CS__IN_EXPRESSION,
+					null, msgs);
 			if (newInExpression != null)
 				msgs = ((InternalEObject) newInExpression).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.LET_EXP_CS__IN_EXPRESSION, null, msgs);
+						- CSTPackage.LET_EXP_CS__IN_EXPRESSION,
+					null, msgs);
 			msgs = basicSetInExpression(newInExpression, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -160,8 +163,8 @@ public class LetExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CSTPackage.LET_EXP_CS__VARIABLES :
-				return ((InternalEList<?>) getVariables()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getVariables()).basicRemove(otherEnd,
+					msgs);
 			case CSTPackage.LET_EXP_CS__IN_EXPRESSION :
 				return basicSetInExpression(null, msgs);
 		}
@@ -195,8 +198,8 @@ public class LetExpCSImpl
 		switch (featureID) {
 			case CSTPackage.LET_EXP_CS__VARIABLES :
 				getVariables().clear();
-				getVariables().addAll(
-					(Collection<? extends VariableCS>) newValue);
+				getVariables()
+					.addAll((Collection<? extends VariableCS>) newValue);
 				return;
 			case CSTPackage.LET_EXP_CS__IN_EXPRESSION :
 				setInExpression((OCLExpressionCS) newValue);

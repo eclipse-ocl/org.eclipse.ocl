@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionLiteralPartCSImpl#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>

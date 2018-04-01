@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>OCL Expression CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

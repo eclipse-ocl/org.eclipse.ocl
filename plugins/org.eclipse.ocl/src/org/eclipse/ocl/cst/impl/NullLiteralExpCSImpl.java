@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.NullLiteralExpCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Null Literal Exp CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

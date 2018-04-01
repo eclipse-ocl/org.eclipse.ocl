@@ -29,6 +29,7 @@ import org.eclipse.ocl.cst.PackageDeclarationCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLDocumentCSImpl#getPackageDeclarations <em>Package Declarations</em>}</li>
  * </ul>

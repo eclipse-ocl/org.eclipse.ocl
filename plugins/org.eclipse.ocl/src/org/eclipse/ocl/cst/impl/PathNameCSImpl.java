@@ -30,6 +30,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PathNameCSImpl#getSimpleNames <em>Simple Names</em>}</li>
  * </ul>
@@ -79,7 +80,8 @@ public class PathNameCSImpl
 	public EList<SimpleNameCS> getSimpleNames() {
 		if (simpleNames == null) {
 			simpleNames = new EObjectContainmentEList<SimpleNameCS>(
-				SimpleNameCS.class, this, CSTPackage.PATH_NAME_CS__SIMPLE_NAMES);
+				SimpleNameCS.class, this,
+				CSTPackage.PATH_NAME_CS__SIMPLE_NAMES);
 		}
 		return simpleNames;
 	}
@@ -94,8 +96,8 @@ public class PathNameCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CSTPackage.PATH_NAME_CS__SIMPLE_NAMES :
-				return ((InternalEList<?>) getSimpleNames()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getSimpleNames())
+					.basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -125,8 +127,8 @@ public class PathNameCSImpl
 		switch (featureID) {
 			case CSTPackage.PATH_NAME_CS__SIMPLE_NAMES :
 				getSimpleNames().clear();
-				getSimpleNames().addAll(
-					(Collection<? extends SimpleNameCS>) newValue);
+				getSimpleNames()
+					.addAll((Collection<? extends SimpleNameCS>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

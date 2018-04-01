@@ -1489,16 +1489,16 @@ part->size() = type.oclAsType (TupleType).allProperties()->size()</body>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_unvTyNppEdu-d8Dv4wLx9Q" name="Visitable">
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT09ppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1NppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1dppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1tppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT19ppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2NppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2dppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2tppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT29ppEdu-d8Dv4wLx9Q" name="Wildcard"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT3NppEdu-d8Dv4wLx9Q" name="Visitor_T_Wildcard_Wildcard_Wildcard_Wildcard_Wildcard_Wildcard_Wildcard_Wildcard_Wildcard">
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT09ppEdu-d8Dv4wLx9Q" name="Wildcard1"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1NppEdu-d8Dv4wLx9Q" name="Wildcard2"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1dppEdu-d8Dv4wLx9Q" name="Wildcard3"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT1tppEdu-d8Dv4wLx9Q" name="Wildcard4"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT19ppEdu-d8Dv4wLx9Q" name="Wildcard5"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2NppEdu-d8Dv4wLx9Q" name="Wildcard6"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2dppEdu-d8Dv4wLx9Q" name="Wildcard7"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT2tppEdu-d8Dv4wLx9Q" name="Wildcard8"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT29ppEdu-d8Dv4wLx9Q" name="Wildcard9"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_unvT3NppEdu-d8Dv4wLx9Q" name="Visitor_T_Wildcard1_Wildcard2_Wildcard3_Wildcard4_Wildcard5_Wildcard6_Wildcard7_Wildcard8_Wildcard9">
           <templateBinding xmi:id="_unvT3dppEdu-d8Dv4wLx9Q" signature="_unvT6dppEdu-d8Dv4wLx9Q">
             <parameterSubstitution xmi:id="_unvT3tppEdu-d8Dv4wLx9Q" actual="_unvT0NppEdu-d8Dv4wLx9Q" formal="_unvT6tppEdu-d8Dv4wLx9Q"/>
             <parameterSubstitution xmi:id="_unvT39ppEdu-d8Dv4wLx9Q" actual="_unvT09ppEdu-d8Dv4wLx9Q" formal="_unvT7NppEdu-d8Dv4wLx9Q"/>

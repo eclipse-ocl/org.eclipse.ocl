@@ -33,6 +33,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.ClassifierContextDeclCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.ClassifierContextDeclCSImpl#getConstraints <em>Constraints</em>}</li>
@@ -212,19 +213,15 @@ public class ClassifierContextDeclCSImpl
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject) simpleNameCS)
-					.eInverseRemove(
-						this,
-						EOPPOSITE_FEATURE_BASE
-							- CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS,
-						null, msgs);
+				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject) newSimpleNameCS)
-					.eInverseAdd(
-						this,
-						EOPPOSITE_FEATURE_BASE
-							- CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS,
-						null, msgs);
+				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -246,8 +243,8 @@ public class ClassifierContextDeclCSImpl
 			case CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__PATH_NAME_CS :
 				return basicSetPathNameCS(null, msgs);
 			case CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__CONSTRAINTS :
-				return ((InternalEList<?>) getConstraints()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getConstraints())
+					.basicRemove(otherEnd, msgs);
 			case CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS :
 				return basicSetSimpleNameCS(null, msgs);
 		}
@@ -286,8 +283,8 @@ public class ClassifierContextDeclCSImpl
 				return;
 			case CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__CONSTRAINTS :
 				getConstraints().clear();
-				getConstraints().addAll(
-					(Collection<? extends InvOrDefCS>) newValue);
+				getConstraints()
+					.addAll((Collection<? extends InvOrDefCS>) newValue);
 				return;
 			case CSTPackage.CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS :
 				setSimpleNameCS((SimpleNameCS) newValue);

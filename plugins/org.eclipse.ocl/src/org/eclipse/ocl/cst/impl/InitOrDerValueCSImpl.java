@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.InitOrDerValueCSImpl#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
@@ -86,8 +87,8 @@ public abstract class InitOrDerValueCSImpl
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
 				Notification.SET,
-				CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS,
-				oldExpressionCS, newExpressionCS);
+				CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS, oldExpressionCS,
+				newExpressionCS);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -107,20 +108,20 @@ public abstract class InitOrDerValueCSImpl
 			if (expressionCS != null)
 				msgs = ((InternalEObject) expressionCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS, null,
-					msgs);
+						- CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS,
+					null, msgs);
 			if (newExpressionCS != null)
 				msgs = ((InternalEObject) newExpressionCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS, null,
-					msgs);
+						- CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS,
+					null, msgs);
 			msgs = basicSetExpressionCS(newExpressionCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS,
-				newExpressionCS, newExpressionCS));
+				CSTPackage.INIT_OR_DER_VALUE_CS__EXPRESSION_CS, newExpressionCS,
+				newExpressionCS));
 	}
 
 	/**

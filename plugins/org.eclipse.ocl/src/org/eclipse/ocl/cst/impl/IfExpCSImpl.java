@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.IfExpCSImpl#getThenExpression <em>Then Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.IfExpCSImpl#getElseExpression <em>Else Expression</em>}</li>
@@ -126,13 +127,17 @@ public class IfExpCSImpl
 		if (newThenExpression != thenExpression) {
 			NotificationChain msgs = null;
 			if (thenExpression != null)
-				msgs = ((InternalEObject) thenExpression).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.IF_EXP_CS__THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) thenExpression)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.IF_EXP_CS__THEN_EXPRESSION,
+						null, msgs);
 			if (newThenExpression != null)
-				msgs = ((InternalEObject) newThenExpression).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.IF_EXP_CS__THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) newThenExpression)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.IF_EXP_CS__THEN_EXPRESSION,
+						null, msgs);
 			msgs = basicSetThenExpression(newThenExpression, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -181,13 +186,17 @@ public class IfExpCSImpl
 		if (newElseExpression != elseExpression) {
 			NotificationChain msgs = null;
 			if (elseExpression != null)
-				msgs = ((InternalEObject) elseExpression).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.IF_EXP_CS__ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) elseExpression)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.IF_EXP_CS__ELSE_EXPRESSION,
+						null, msgs);
 			if (newElseExpression != null)
-				msgs = ((InternalEObject) newElseExpression).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.IF_EXP_CS__ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) newElseExpression)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.IF_EXP_CS__ELSE_EXPRESSION,
+						null, msgs);
 			msgs = basicSetElseExpression(newElseExpression, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -217,8 +226,8 @@ public class IfExpCSImpl
 		condition = newCondition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
-				Notification.SET, CSTPackage.IF_EXP_CS__CONDITION,
-				oldCondition, newCondition);
+				Notification.SET, CSTPackage.IF_EXP_CS__CONDITION, oldCondition,
+				newCondition);
 			if (msgs == null)
 				msgs = notification;
 			else

@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.IteratorExpCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Iterator Exp CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

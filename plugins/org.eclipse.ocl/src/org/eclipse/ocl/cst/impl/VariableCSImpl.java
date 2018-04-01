@@ -27,6 +27,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableCSImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableCSImpl#getTypeCS <em>Type CS</em>}</li>
@@ -213,13 +214,17 @@ public class VariableCSImpl
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;
 			if (initExpression != null)
-				msgs = ((InternalEObject) initExpression).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_CS__INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) initExpression)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.VARIABLE_CS__INIT_EXPRESSION,
+						null, msgs);
 			if (newInitExpression != null)
-				msgs = ((InternalEObject) newInitExpression).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_CS__INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) newInitExpression)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.VARIABLE_CS__INIT_EXPRESSION,
+						null, msgs);
 			msgs = basicSetInitExpression(newInitExpression, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -336,7 +341,7 @@ public class VariableCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');

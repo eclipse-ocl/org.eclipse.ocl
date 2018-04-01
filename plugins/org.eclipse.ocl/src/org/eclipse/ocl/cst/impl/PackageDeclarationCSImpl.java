@@ -32,6 +32,7 @@ import org.eclipse.ocl.cst.PathNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PackageDeclarationCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PackageDeclarationCSImpl#getContextDecls <em>Context Decls</em>}</li>
@@ -173,12 +174,11 @@ public class PackageDeclarationCSImpl
 	public PackageDeclarationCS getPackageDeclarationCS() {
 		if (packageDeclarationCS != null && packageDeclarationCS.eIsProxy()) {
 			InternalEObject oldPackageDeclarationCS = (InternalEObject) packageDeclarationCS;
-			packageDeclarationCS = (PackageDeclarationCS) eResolveProxy(oldPackageDeclarationCS);
+			packageDeclarationCS = (PackageDeclarationCS) eResolveProxy(
+				oldPackageDeclarationCS);
 			if (packageDeclarationCS != oldPackageDeclarationCS) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(
-						this,
-						Notification.RESOLVE,
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						CSTPackage.PACKAGE_DECLARATION_CS__PACKAGE_DECLARATION_CS,
 						oldPackageDeclarationCS, packageDeclarationCS));
 			}
@@ -222,8 +222,8 @@ public class PackageDeclarationCSImpl
 			case CSTPackage.PACKAGE_DECLARATION_CS__PATH_NAME_CS :
 				return basicSetPathNameCS(null, msgs);
 			case CSTPackage.PACKAGE_DECLARATION_CS__CONTEXT_DECLS :
-				return ((InternalEList<?>) getContextDecls()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getContextDecls())
+					.basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -262,8 +262,8 @@ public class PackageDeclarationCSImpl
 				return;
 			case CSTPackage.PACKAGE_DECLARATION_CS__CONTEXT_DECLS :
 				getContextDecls().clear();
-				getContextDecls().addAll(
-					(Collection<? extends ContextDeclCS>) newValue);
+				getContextDecls()
+					.addAll((Collection<? extends ContextDeclCS>) newValue);
 				return;
 			case CSTPackage.PACKAGE_DECLARATION_CS__PACKAGE_DECLARATION_CS :
 				setPackageDeclarationCS((PackageDeclarationCS) newValue);

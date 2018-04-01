@@ -28,6 +28,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CallExpCSImpl#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CallExpCSImpl#getAccessor <em>Accessor</em>}</li>
@@ -216,13 +217,17 @@ public class CallExpCSImpl
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.CALL_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) simpleNameCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.CALL_EXP_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.CALL_EXP_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) newSimpleNameCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.CALL_EXP_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -337,7 +342,7 @@ public class CallExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (accessor: "); //$NON-NLS-1$
 		result.append(accessor);
 		result.append(')');

@@ -27,7 +27,8 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum SimpleTypeEnum
-		implements Enumerator {
+		implements
+		Enumerator {
 	/**
 	 * The '<em><b>Identifier</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -355,6 +356,8 @@ public enum SimpleTypeEnum
 	 * Returns the '<em><b>Simple Type Enum</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static SimpleTypeEnum get(String literal) {
@@ -371,6 +374,8 @@ public enum SimpleTypeEnum
 	 * Returns the '<em><b>Simple Type Enum</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static SimpleTypeEnum getByName(String name) {
@@ -387,6 +392,8 @@ public enum SimpleTypeEnum
 	 * Returns the '<em><b>Simple Type Enum</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static SimpleTypeEnum get(int value) {

@@ -27,6 +27,7 @@ import org.eclipse.ocl.cst.TypeCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLMessageArgCSImpl#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLMessageArgCSImpl#getExpression <em>Expression</em>}</li>
@@ -116,13 +117,17 @@ public class OCLMessageArgCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject) typeCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OCL_MESSAGE_ARG_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) typeCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OCL_MESSAGE_ARG_CS__TYPE_CS,
+						null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject) newTypeCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OCL_MESSAGE_ARG_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) newTypeCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.OCL_MESSAGE_ARG_CS__TYPE_CS,
+						null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -170,13 +175,15 @@ public class OCLMessageArgCSImpl
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
-				msgs = ((InternalEObject) expression)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OCL_MESSAGE_ARG_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) expression).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.OCL_MESSAGE_ARG_CS__EXPRESSION,
+					null, msgs);
 			if (newExpression != null)
-				msgs = ((InternalEObject) newExpression)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-						- CSTPackage.OCL_MESSAGE_ARG_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject) newExpression).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
+						- CSTPackage.OCL_MESSAGE_ARG_CS__EXPRESSION,
+					null, msgs);
 			msgs = basicSetExpression(newExpression, msgs);
 			if (msgs != null)
 				msgs.dispatch();

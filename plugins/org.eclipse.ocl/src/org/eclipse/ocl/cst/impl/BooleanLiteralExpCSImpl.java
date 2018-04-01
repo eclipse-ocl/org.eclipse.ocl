@@ -25,6 +25,7 @@ import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.BooleanLiteralExpCSImpl#getSymbol <em>Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.BooleanLiteralExpCSImpl#getBooleanSymbol <em>Boolean Symbol</em>}</li>
@@ -220,7 +221,8 @@ public class BooleanLiteralExpCSImpl
 	 * @generated
 	 */
 	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+	public int eBaseStructuralFeatureID(int derivedFeatureID,
+			Class<?> baseClass) {
 		if (baseClass == LiteralExpCS.class) {
 			switch (derivedFeatureID) {
 				default :
@@ -244,7 +246,8 @@ public class BooleanLiteralExpCSImpl
 	 * @generated
 	 */
 	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+	public int eDerivedStructuralFeatureID(int baseFeatureID,
+			Class<?> baseClass) {
 		if (baseClass == LiteralExpCS.class) {
 			switch (baseFeatureID) {
 				default :
@@ -272,7 +275,7 @@ public class BooleanLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (symbol: "); //$NON-NLS-1$
 		result.append(symbol);
 		result.append(", booleanSymbol: "); //$NON-NLS-1$

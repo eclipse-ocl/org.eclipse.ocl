@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.CSTPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CSTNodeImpl#getStartOffset <em>Start Offset</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CSTNodeImpl#getEndOffset <em>End Offset</em>}</li>
@@ -184,7 +185,8 @@ public abstract class CSTNodeImpl
 		startOffset = newStartOffset;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				CSTPackage.CST_NODE__START_OFFSET, oldStartOffset, startOffset));
+				CSTPackage.CST_NODE__START_OFFSET, oldStartOffset,
+				startOffset));
 	}
 
 	/**
@@ -395,7 +397,7 @@ public abstract class CSTNodeImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (startOffset: "); //$NON-NLS-1$
 		result.append(startOffset);
 		result.append(", endOffset: "); //$NON-NLS-1$

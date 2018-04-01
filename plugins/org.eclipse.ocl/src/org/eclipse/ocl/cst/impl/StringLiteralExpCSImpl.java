@@ -24,6 +24,7 @@ import org.eclipse.ocl.cst.StringLiteralExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.StringLiteralExpCSImpl#getStringSymbol <em>String Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.StringLiteralExpCSImpl#getUnescapedStringSymbol <em>Unescaped String Symbol</em>}</li>
@@ -227,7 +228,7 @@ public class StringLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (stringSymbol: "); //$NON-NLS-1$
 		result.append(stringSymbol);
 		result.append(", unescapedStringSymbol: "); //$NON-NLS-1$

@@ -23,6 +23,7 @@ import org.eclipse.ocl.cst.OperationCallExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCallExpCSImpl#getIsAtomic <em>Is Atomic</em>}</li>
  * </ul>
@@ -169,7 +170,7 @@ public class OperationCallExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (isAtomic: "); //$NON-NLS-1$
 		result.append(isAtomic);
 		result.append(')');

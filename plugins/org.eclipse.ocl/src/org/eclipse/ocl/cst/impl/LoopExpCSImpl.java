@@ -27,6 +27,7 @@ import org.eclipse.ocl.cst.VariableCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.LoopExpCSImpl#getVariable1 <em>Variable1</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.LoopExpCSImpl#getVariable2 <em>Variable2</em>}</li>
@@ -236,12 +237,12 @@ public class LoopExpCSImpl
 			NotificationChain msgs = null;
 			if (body != null)
 				msgs = ((InternalEObject) body).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE - CSTPackage.LOOP_EXP_CS__BODY,
-					null, msgs);
+					EOPPOSITE_FEATURE_BASE - CSTPackage.LOOP_EXP_CS__BODY, null,
+					msgs);
 			if (newBody != null)
 				msgs = ((InternalEObject) newBody).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE - CSTPackage.LOOP_EXP_CS__BODY,
-					null, msgs);
+					EOPPOSITE_FEATURE_BASE - CSTPackage.LOOP_EXP_CS__BODY, null,
+					msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null)
 				msgs.dispatch();

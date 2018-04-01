@@ -33,6 +33,7 @@ import org.eclipse.ocl.cst.VariableExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableExpCSImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
@@ -149,13 +150,13 @@ public class VariableExpCSImpl
 			if (simpleNameCS != null)
 				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS, null,
-					msgs);
+						- CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			if (newSimpleNameCS != null)
 				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS, null,
-					msgs);
+						- CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -206,13 +207,13 @@ public class VariableExpCSImpl
 			if (isMarkedPreCS != null)
 				msgs = ((InternalEObject) isMarkedPreCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_EXP_CS__IS_MARKED_PRE_CS, null,
-					msgs);
+						- CSTPackage.VARIABLE_EXP_CS__IS_MARKED_PRE_CS,
+					null, msgs);
 			if (newIsMarkedPreCS != null)
 				msgs = ((InternalEObject) newIsMarkedPreCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.VARIABLE_EXP_CS__IS_MARKED_PRE_CS, null,
-					msgs);
+						- CSTPackage.VARIABLE_EXP_CS__IS_MARKED_PRE_CS,
+					null, msgs);
 			msgs = basicSetIsMarkedPreCS(newIsMarkedPreCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -232,8 +233,8 @@ public class VariableExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CSTPackage.VARIABLE_EXP_CS__ARGUMENTS :
-				return ((InternalEList<?>) getArguments()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getArguments()).basicRemove(otherEnd,
+					msgs);
 			case CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS :
 				return basicSetSimpleNameCS(null, msgs);
 			case CSTPackage.VARIABLE_EXP_CS__IS_MARKED_PRE_CS :
@@ -271,8 +272,8 @@ public class VariableExpCSImpl
 		switch (featureID) {
 			case CSTPackage.VARIABLE_EXP_CS__ARGUMENTS :
 				getArguments().clear();
-				getArguments().addAll(
-					(Collection<? extends OCLExpressionCS>) newValue);
+				getArguments()
+					.addAll((Collection<? extends OCLExpressionCS>) newValue);
 				return;
 			case CSTPackage.VARIABLE_EXP_CS__SIMPLE_NAME_CS :
 				setSimpleNameCS((SimpleNameCS) newValue);

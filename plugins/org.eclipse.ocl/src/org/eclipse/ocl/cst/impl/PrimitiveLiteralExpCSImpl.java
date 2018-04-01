@@ -23,6 +23,7 @@ import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PrimitiveLiteralExpCSImpl#getSymbol <em>Symbol</em>}</li>
  * </ul>
@@ -91,7 +92,8 @@ public class PrimitiveLiteralExpCSImpl
 		symbol = newSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				CSTPackage.PRIMITIVE_LITERAL_EXP_CS__SYMBOL, oldSymbol, symbol));
+				CSTPackage.PRIMITIVE_LITERAL_EXP_CS__SYMBOL, oldSymbol,
+				symbol));
 	}
 
 	/**
@@ -164,7 +166,7 @@ public class PrimitiveLiteralExpCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (symbol: "); //$NON-NLS-1$
 		result.append(symbol);
 		result.append(')');

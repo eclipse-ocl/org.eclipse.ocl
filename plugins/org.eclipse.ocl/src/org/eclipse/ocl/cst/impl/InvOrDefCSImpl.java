@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.InvOrDefCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
@@ -104,13 +105,17 @@ public abstract class InvOrDefCSImpl
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
 			if (simpleNameCS != null)
-				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.INV_OR_DEF_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) simpleNameCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.INV_OR_DEF_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			if (newSimpleNameCS != null)
-				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.INV_OR_DEF_CS__SIMPLE_NAME_CS, null, msgs);
+				msgs = ((InternalEObject) newSimpleNameCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.INV_OR_DEF_CS__SIMPLE_NAME_CS,
+						null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();

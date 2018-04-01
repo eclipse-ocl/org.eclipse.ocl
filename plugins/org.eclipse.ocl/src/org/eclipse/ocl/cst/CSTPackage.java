@@ -302,7 +302,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE_DECLARATION_CS__PACKAGE_DECLARATION_CS = CST_NODE_FEATURE_COUNT + 2;
+	int PACKAGE_DECLARATION_CS__PACKAGE_DECLARATION_CS = CST_NODE_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The number of structural features of the '<em>Package Declaration CS</em>' class.
@@ -979,7 +980,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_CONTEXT_DECL_CS__PATH_NAME_CS = CONTEXT_DECL_CS_FEATURE_COUNT + 0;
+	int CLASSIFIER_CONTEXT_DECL_CS__PATH_NAME_CS = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
@@ -990,7 +992,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_CONTEXT_DECL_CS__CONSTRAINTS = CONTEXT_DECL_CS_FEATURE_COUNT + 1;
+	int CLASSIFIER_CONTEXT_DECL_CS__CONSTRAINTS = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
@@ -1002,7 +1005,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS = CONTEXT_DECL_CS_FEATURE_COUNT + 2;
+	int CLASSIFIER_CONTEXT_DECL_CS__SIMPLE_NAME_CS = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The number of structural features of the '<em>Classifier Context Decl CS</em>' class.
@@ -1013,7 +1017,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_CONTEXT_DECL_CS_FEATURE_COUNT = CONTEXT_DECL_CS_FEATURE_COUNT + 3;
+	int CLASSIFIER_CONTEXT_DECL_CS_FEATURE_COUNT = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.InvOrDefCSImpl <em>Inv Or Def CS</em>}' class.
@@ -1180,7 +1185,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CONTEXT_DECL_CS__OPERATION_CS = CONTEXT_DECL_CS_FEATURE_COUNT + 0;
+	int OPERATION_CONTEXT_DECL_CS__OPERATION_CS = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Pre Post Or Body Decls</b></em>' containment reference list.
@@ -1191,7 +1197,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CONTEXT_DECL_CS__PRE_POST_OR_BODY_DECLS = CONTEXT_DECL_CS_FEATURE_COUNT + 1;
+	int OPERATION_CONTEXT_DECL_CS__PRE_POST_OR_BODY_DECLS = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>Operation Context Decl CS</em>' class.
@@ -1202,7 +1209,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CONTEXT_DECL_CS_FEATURE_COUNT = CONTEXT_DECL_CS_FEATURE_COUNT + 2;
+	int OPERATION_CONTEXT_DECL_CS_FEATURE_COUNT = CONTEXT_DECL_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.OperationCSImpl <em>Operation CS</em>}' class.
@@ -2503,7 +2511,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE_CS__COLLECTION_TYPE_IDENTIFIER = SIMPLE_NAME_CS_FEATURE_COUNT + 0;
+	int COLLECTION_TYPE_CS__COLLECTION_TYPE_IDENTIFIER = SIMPLE_NAME_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
@@ -3102,7 +3111,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_LITERAL_EXP_CS__COLLECTION_TYPE = LITERAL_EXP_CS_FEATURE_COUNT + 0;
+	int COLLECTION_LITERAL_EXP_CS__COLLECTION_TYPE = LITERAL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Collection Literal Parts</b></em>' containment reference list.
@@ -3113,7 +3123,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS = LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int COLLECTION_LITERAL_EXP_CS__COLLECTION_LITERAL_PARTS = LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>Collection Literal Exp CS</em>' class.
@@ -3124,7 +3135,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_LITERAL_EXP_CS_FEATURE_COUNT = LITERAL_EXP_CS_FEATURE_COUNT + 2;
+	int COLLECTION_LITERAL_EXP_CS_FEATURE_COUNT = LITERAL_EXP_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.CollectionLiteralPartCSImpl <em>Collection Literal Part CS</em>}' class.
@@ -3385,7 +3397,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT = LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT = LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.IntegerLiteralExpCSImpl <em>Integer Literal Exp CS</em>}' class.
@@ -3472,7 +3485,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INTEGER_LITERAL_EXP_CS__INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0;
+	int INTEGER_LITERAL_EXP_CS__INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Extended Integer Symbol</b></em>' attribute.
@@ -3482,7 +3496,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INTEGER_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int INTEGER_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The feature id for the '<em><b>Long Symbol</b></em>' attribute.
@@ -3492,7 +3507,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INTEGER_LITERAL_EXP_CS__LONG_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 2;
+	int INTEGER_LITERAL_EXP_CS__LONG_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The number of structural features of the '<em>Integer Literal Exp CS</em>' class.
@@ -3504,7 +3520,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INTEGER_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 3;
+	int INTEGER_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.UnlimitedNaturalLiteralExpCSImpl <em>Unlimited Natural Literal Exp CS</em>}' class.
@@ -3591,7 +3608,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP_CS__INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0;
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS__INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Extended Integer Symbol</b></em>' attribute.
@@ -3601,7 +3619,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The feature id for the '<em><b>Long Symbol</b></em>' attribute.
@@ -3611,7 +3630,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP_CS__LONG_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 2;
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS__LONG_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The number of structural features of the '<em>Unlimited Natural Literal Exp CS</em>' class.
@@ -3623,7 +3643,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 3;
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.RealLiteralExpCSImpl <em>Real Literal Exp CS</em>}' class.
@@ -3710,7 +3731,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int REAL_LITERAL_EXP_CS__REAL_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0;
+	int REAL_LITERAL_EXP_CS__REAL_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The number of structural features of the '<em>Real Literal Exp CS</em>' class.
@@ -3721,7 +3743,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int REAL_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int REAL_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.StringLiteralExpCSImpl <em>String Literal Exp CS</em>}' class.
@@ -3808,7 +3831,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int STRING_LITERAL_EXP_CS__STRING_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0;
+	int STRING_LITERAL_EXP_CS__STRING_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Unescaped String Symbol</b></em>' attribute.
@@ -3818,7 +3842,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int STRING_LITERAL_EXP_CS__UNESCAPED_STRING_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	int STRING_LITERAL_EXP_CS__UNESCAPED_STRING_SYMBOL = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>String Literal Exp CS</em>' class.
@@ -3829,7 +3854,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int STRING_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 2;
+	int STRING_LITERAL_EXP_CS_FEATURE_COUNT = PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.BooleanLiteralExpCSImpl <em>Boolean Literal Exp CS</em>}' class.
@@ -3938,7 +3964,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int BOOLEAN_LITERAL_EXP_CS__BOOLEAN_SYMBOL = SIMPLE_NAME_CS_FEATURE_COUNT + 1;
+	int BOOLEAN_LITERAL_EXP_CS__BOOLEAN_SYMBOL = SIMPLE_NAME_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>Boolean Literal Exp CS</em>' class.
@@ -4232,7 +4259,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_RANGE_CS__LAST_EXPRESSION_CS = COLLECTION_LITERAL_PART_CS_FEATURE_COUNT + 0;
+	int COLLECTION_RANGE_CS__LAST_EXPRESSION_CS = COLLECTION_LITERAL_PART_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The number of structural features of the '<em>Collection Range CS</em>' class.
@@ -4243,7 +4271,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_RANGE_CS_FEATURE_COUNT = COLLECTION_LITERAL_PART_CS_FEATURE_COUNT + 1;
+	int COLLECTION_RANGE_CS_FEATURE_COUNT = COLLECTION_LITERAL_PART_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.CallExpCSImpl <em>Call Exp CS</em>}' class.
@@ -5065,7 +5094,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP_CS__IS_ATOMIC = FEATURE_CALL_EXP_CS_FEATURE_COUNT + 0;
+	int OPERATION_CALL_EXP_CS__IS_ATOMIC = FEATURE_CALL_EXP_CS_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The number of structural features of the '<em>Operation Call Exp CS</em>' class.
@@ -5076,7 +5106,8 @@ public interface CSTPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP_CS_FEATURE_COUNT = FEATURE_CALL_EXP_CS_FEATURE_COUNT + 1;
+	int OPERATION_CALL_EXP_CS_FEATURE_COUNT = FEATURE_CALL_EXP_CS_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.cst.impl.OCLDocumentCSImpl <em>OCL Document CS</em>}' class.

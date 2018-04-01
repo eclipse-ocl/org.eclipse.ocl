@@ -88,7 +88,7 @@ public class CSTFactoryImpl
 	public static CSTFactory init() {
 		try {
 			CSTFactory theCSTFactory = (CSTFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://www.eclipse.org/ocl/1.1.0/OCL/CST"); //$NON-NLS-1$ 
+				.getEFactory(CSTPackage.eNS_URI);
 			if (theCSTFactory != null) {
 				return theCSTFactory;
 			}
@@ -201,8 +201,8 @@ public class CSTFactoryImpl
 			case CSTPackage.OCL_DOCUMENT_CS :
 				return createOCLDocumentCS();
 			default :
-				throw new IllegalArgumentException(
-					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IllegalArgumentException("The class '" //$NON-NLS-1$
+					+ eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$
 		}
 	}
 
@@ -229,8 +229,8 @@ public class CSTFactoryImpl
 			case CSTPackage.ITOKEN :
 				return createITokenFromString(eDataType, initialValue);
 			default :
-				throw new IllegalArgumentException(
-					"The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IllegalArgumentException("The datatype '" //$NON-NLS-1$
+					+ eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$
 		}
 	}
 
@@ -257,8 +257,8 @@ public class CSTFactoryImpl
 			case CSTPackage.ITOKEN :
 				return convertITokenToString(eDataType, instanceValue);
 			default :
-				throw new IllegalArgumentException(
-					"The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IllegalArgumentException("The datatype '" //$NON-NLS-1$
+					+ eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$
 		}
 	}
 
@@ -692,8 +692,9 @@ public class CSTFactoryImpl
 			EDataType eDataType, String initialValue) {
 		PrePostOrBodyEnum result = PrePostOrBodyEnum.get(initialValue);
 		if (result == null)
-			throw new IllegalArgumentException(
-				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			throw new IllegalArgumentException("The value '" + initialValue //$NON-NLS-1$
+				+ "' is not a valid enumerator of '" + eDataType.getName() //$NON-NLS-1$
+				+ "'"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -718,8 +719,9 @@ public class CSTFactoryImpl
 			String initialValue) {
 		SimpleTypeEnum result = SimpleTypeEnum.get(initialValue);
 		if (result == null)
-			throw new IllegalArgumentException(
-				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			throw new IllegalArgumentException("The value '" + initialValue //$NON-NLS-1$
+				+ "' is not a valid enumerator of '" + eDataType.getName() //$NON-NLS-1$
+				+ "'"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -745,8 +747,9 @@ public class CSTFactoryImpl
 		CollectionTypeIdentifierEnum result = CollectionTypeIdentifierEnum
 			.get(initialValue);
 		if (result == null)
-			throw new IllegalArgumentException(
-				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			throw new IllegalArgumentException("The value '" + initialValue //$NON-NLS-1$
+				+ "' is not a valid enumerator of '" + eDataType.getName() //$NON-NLS-1$
+				+ "'"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -771,8 +774,9 @@ public class CSTFactoryImpl
 			String initialValue) {
 		DotOrArrowEnum result = DotOrArrowEnum.get(initialValue);
 		if (result == null)
-			throw new IllegalArgumentException(
-				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			throw new IllegalArgumentException("The value '" + initialValue //$NON-NLS-1$
+				+ "' is not a valid enumerator of '" + eDataType.getName() //$NON-NLS-1$
+				+ "'"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -819,8 +823,9 @@ public class CSTFactoryImpl
 			String initialValue) {
 		MessageExpKind result = MessageExpKind.get(initialValue);
 		if (result == null)
-			throw new IllegalArgumentException(
-				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			throw new IllegalArgumentException("The value '" + initialValue //$NON-NLS-1$
+				+ "' is not a valid enumerator of '" + eDataType.getName() //$NON-NLS-1$
+				+ "'"); //$NON-NLS-1$
 		return result;
 	}
 

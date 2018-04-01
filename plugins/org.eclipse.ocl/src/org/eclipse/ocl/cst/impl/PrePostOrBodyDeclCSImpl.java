@@ -28,6 +28,7 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PrePostOrBodyDeclCSImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PrePostOrBodyDeclCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
@@ -344,7 +345,7 @@ public class PrePostOrBodyDeclCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (kind: "); //$NON-NLS-1$
 		result.append(kind);
 		result.append(')');

@@ -26,6 +26,7 @@ import org.eclipse.ocl.cst.DefExpressionCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefCSImpl#getDefExpressionCS <em>Def Expression CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefCSImpl#isStatic <em>Static</em>}</li>
@@ -129,11 +130,13 @@ public class DefCSImpl
 			if (defExpressionCS != null)
 				msgs = ((InternalEObject) defExpressionCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_CS__DEF_EXPRESSION_CS, null, msgs);
+						- CSTPackage.DEF_CS__DEF_EXPRESSION_CS,
+					null, msgs);
 			if (newDefExpressionCS != null)
 				msgs = ((InternalEObject) newDefExpressionCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.DEF_CS__DEF_EXPRESSION_CS, null, msgs);
+						- CSTPackage.DEF_CS__DEF_EXPRESSION_CS,
+					null, msgs);
 			msgs = basicSetDefExpressionCS(newDefExpressionCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -263,7 +266,7 @@ public class DefCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (static: "); //$NON-NLS-1$
 		result.append((eFlags & STATIC_EFLAG) != 0);
 		result.append(')');

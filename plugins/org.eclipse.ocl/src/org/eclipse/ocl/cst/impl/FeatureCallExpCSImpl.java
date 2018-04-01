@@ -33,6 +33,7 @@ import org.eclipse.ocl.cst.PathNameCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.FeatureCallExpCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.FeatureCallExpCSImpl#getArguments <em>Arguments</em>}</li>
@@ -139,13 +140,13 @@ public class FeatureCallExpCSImpl
 			if (pathNameCS != null)
 				msgs = ((InternalEObject) pathNameCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.FEATURE_CALL_EXP_CS__PATH_NAME_CS, null,
-					msgs);
+						- CSTPackage.FEATURE_CALL_EXP_CS__PATH_NAME_CS,
+					null, msgs);
 			if (newPathNameCS != null)
 				msgs = ((InternalEObject) newPathNameCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.FEATURE_CALL_EXP_CS__PATH_NAME_CS, null,
-					msgs);
+						- CSTPackage.FEATURE_CALL_EXP_CS__PATH_NAME_CS,
+					null, msgs);
 			msgs = basicSetPathNameCS(newPathNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -239,8 +240,8 @@ public class FeatureCallExpCSImpl
 			case CSTPackage.FEATURE_CALL_EXP_CS__PATH_NAME_CS :
 				return basicSetPathNameCS(null, msgs);
 			case CSTPackage.FEATURE_CALL_EXP_CS__ARGUMENTS :
-				return ((InternalEList<?>) getArguments()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getArguments()).basicRemove(otherEnd,
+					msgs);
 			case CSTPackage.FEATURE_CALL_EXP_CS__IS_MARKED_PRE_CS :
 				return basicSetIsMarkedPreCS(null, msgs);
 		}
@@ -279,8 +280,8 @@ public class FeatureCallExpCSImpl
 				return;
 			case CSTPackage.FEATURE_CALL_EXP_CS__ARGUMENTS :
 				getArguments().clear();
-				getArguments().addAll(
-					(Collection<? extends OCLExpressionCS>) newValue);
+				getArguments()
+					.addAll((Collection<? extends OCLExpressionCS>) newValue);
 				return;
 			case CSTPackage.FEATURE_CALL_EXP_CS__IS_MARKED_PRE_CS :
 				setIsMarkedPreCS((IsMarkedPreCS) newValue);

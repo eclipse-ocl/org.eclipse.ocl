@@ -24,6 +24,7 @@ import org.eclipse.ocl.cst.SimpleTypeEnum;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.SimpleNameCSImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.SimpleNameCSImpl#getType <em>Type</em>}</li>
@@ -220,7 +221,7 @@ public class SimpleNameCSImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
 		result.append(", type: "); //$NON-NLS-1$

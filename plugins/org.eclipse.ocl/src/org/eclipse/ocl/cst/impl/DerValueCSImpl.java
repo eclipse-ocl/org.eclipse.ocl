@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.DerValueCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Der Value CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

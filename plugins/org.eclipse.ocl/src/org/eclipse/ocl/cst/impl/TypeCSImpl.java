@@ -19,8 +19,6 @@ import org.eclipse.ocl.cst.TypeCS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Type CS</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

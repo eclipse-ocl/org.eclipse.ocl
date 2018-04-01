@@ -34,6 +34,7 @@ import org.eclipse.ocl.cst.TypeCS;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PropertyContextCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PropertyContextCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
@@ -148,13 +149,13 @@ public class PropertyContextCSImpl
 			if (pathNameCS != null)
 				msgs = ((InternalEObject) pathNameCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__PATH_NAME_CS, null,
-					msgs);
+						- CSTPackage.PROPERTY_CONTEXT_CS__PATH_NAME_CS,
+					null, msgs);
 			if (newPathNameCS != null)
 				msgs = ((InternalEObject) newPathNameCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__PATH_NAME_CS, null,
-					msgs);
+						- CSTPackage.PROPERTY_CONTEXT_CS__PATH_NAME_CS,
+					null, msgs);
 			msgs = basicSetPathNameCS(newPathNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -185,8 +186,8 @@ public class PropertyContextCSImpl
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
 				Notification.SET,
-				CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS,
-				oldSimpleNameCS, newSimpleNameCS);
+				CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS, oldSimpleNameCS,
+				newSimpleNameCS);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -206,20 +207,20 @@ public class PropertyContextCSImpl
 			if (simpleNameCS != null)
 				msgs = ((InternalEObject) simpleNameCS).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS, null,
-					msgs);
+						- CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			if (newSimpleNameCS != null)
 				msgs = ((InternalEObject) newSimpleNameCS).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS, null,
-					msgs);
+						- CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS,
+					null, msgs);
 			msgs = basicSetSimpleNameCS(newSimpleNameCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS,
-				newSimpleNameCS, newSimpleNameCS));
+				CSTPackage.PROPERTY_CONTEXT_CS__SIMPLE_NAME_CS, newSimpleNameCS,
+				newSimpleNameCS));
 	}
 
 	/**
@@ -261,13 +262,17 @@ public class PropertyContextCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject) typeCS).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) typeCS)
+					.eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.PROPERTY_CONTEXT_CS__TYPE_CS,
+						null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject) newTypeCS).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- CSTPackage.PROPERTY_CONTEXT_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject) newTypeCS)
+					.eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE
+							- CSTPackage.PROPERTY_CONTEXT_CS__TYPE_CS,
+						null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -307,8 +312,8 @@ public class PropertyContextCSImpl
 			case CSTPackage.PROPERTY_CONTEXT_CS__TYPE_CS :
 				return basicSetTypeCS(null, msgs);
 			case CSTPackage.PROPERTY_CONTEXT_CS__CONSTRAINTS :
-				return ((InternalEList<?>) getConstraints()).basicRemove(
-					otherEnd, msgs);
+				return ((InternalEList<?>) getConstraints())
+					.basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -353,8 +358,8 @@ public class PropertyContextCSImpl
 				return;
 			case CSTPackage.PROPERTY_CONTEXT_CS__CONSTRAINTS :
 				getConstraints().clear();
-				getConstraints().addAll(
-					(Collection<? extends InitOrDerValueCS>) newValue);
+				getConstraints()
+					.addAll((Collection<? extends InitOrDerValueCS>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
