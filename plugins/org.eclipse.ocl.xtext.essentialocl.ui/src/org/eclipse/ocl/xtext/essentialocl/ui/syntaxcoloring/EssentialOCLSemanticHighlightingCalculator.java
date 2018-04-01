@@ -13,17 +13,18 @@ package org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.util.CancelIndicator;
 
 public class EssentialOCLSemanticHighlightingCalculator implements ISemanticHighlightingCalculator
 {
 	@Override
-	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
+	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator) {
 		if (resource != null) {
 			IParseResult parseResult = resource.getParseResult();
 			if (parseResult != null) {

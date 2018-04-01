@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2010, 2014 itemis and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,9 @@ import org.eclipse.jface.text.ITextInputListener;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextPresentation;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.MergingHighlightedPositionAcceptor;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextSourceViewer;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -28,10 +31,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AttributedPosition;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.HighlightingPresenter;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ITextAttributeProvider;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.MergingHighlightedPositionAcceptor;
+import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Inject;
@@ -43,10 +44,10 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 
 	@Inject(optional=true)
 	private ISemanticHighlightingCalculator calculator;
-	
+
 	@Inject
 	private ITextAttributeProvider attributeProvider;
-	
+
 	/** The source viewer this highlighting reconciler is installed on */
 	private XtextSourceViewer sourceViewer;
 	/** The highlighting presenter */
@@ -78,7 +79,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 
 	/**
 	 * Reconcile positions based on the AST subtrees
-	 * 
+	 *
 	 * @param subtrees
 	 *            the AST subtrees
 	 */
@@ -86,8 +87,8 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 		//		for (int i= 0, n= subtrees.length; i < n; i++)
 		//			subtrees[i].accept(fCollector);
 		MergingHighlightedPositionAcceptor acceptor = new MergingHighlightedPositionAcceptor(calculator);
-		acceptor.provideHighlightingFor(resource, this);
-//		calculator.provideHighlightingFor(resource, this);
+		acceptor.provideHighlightingFor(resource, this, CancelIndicator.NullImpl);
+		//		calculator.provideHighlightingFor(resource, this);
 		List<AttributedPosition> oldPositions = removedPositions;
 		List<AttributedPosition> newPositions = new ArrayList<AttributedPosition>(removedPositionCount);
 		for (int i = 0, n = oldPositions.size(); i < n; i++) {
@@ -97,7 +98,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 		}
 		removedPositions = newPositions;
 	}
-	
+
 	/**
 	 * Add a position with the given range and highlighting if it does not exist already.
 	 * @param offset The range offset
@@ -105,32 +106,32 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 	 */
 	@Override
 	public void addPosition(int offset, int length, String... ids) {
-		TextAttribute highlighting = ids.length == 1 ? 
-				attributeProvider.getAttribute(ids[0])
+		TextAttribute highlighting = ids.length == 1 ?
+			attributeProvider.getAttribute(ids[0])
 			:	attributeProvider.getMergedAttributes(ids);
-		boolean isExisting= false;
-		// TODO: use binary search
-		for (int i= 0, n= removedPositions.size(); i < n; i++) {
-			AttributedPosition position= removedPositions.get(i);
-			if (position == null)
-				continue;
-			if (position.isEqual(offset, length, highlighting)) {
-				isExisting= true;
-				removedPositions.set(i, null);
-				removedPositionCount--;
-				break;
+			boolean isExisting= false;
+			// TODO: use binary search
+			for (int i= 0, n= removedPositions.size(); i < n; i++) {
+				AttributedPosition position= removedPositions.get(i);
+				if (position == null)
+					continue;
+				if (position.isEqual(offset, length, highlighting)) {
+					isExisting= true;
+					removedPositions.set(i, null);
+					removedPositionCount--;
+					break;
+				}
 			}
-		}
 
-		if (!isExisting) {
-			AttributedPosition position= presenter.createHighlightedPosition(offset, length, highlighting);
-			addedPositions.add(position);
-		}
+			if (!isExisting) {
+				AttributedPosition position= presenter.createHighlightedPosition(offset, length, highlighting);
+				addedPositions.add(position);
+			}
 	}
 
 	/**
 	 * Update the presentation.
-	 * 
+	 *
 	 * @param textPresentation
 	 *            the text presentation
 	 * @param addedPositions
@@ -147,7 +148,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 		Display display = getDisplay();
 		display.asyncExec(runnable);
 	}
-	
+
 	private Display getDisplay() {
 		return this.sourceViewer.getControl().getDisplay();
 	}
@@ -163,7 +164,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 
 	/**
 	 * Install this reconciler on the given editor and presenter.
-	 * 
+	 *
 	 * @param sourceViewer
 	 *            the source viewer
 	 * @param presenter
@@ -249,7 +250,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 				return;
 
 			highlightingPresenter.setCanceled(false);
-			
+
 			if (highlightingPresenter.isCanceled())
 				return;
 
