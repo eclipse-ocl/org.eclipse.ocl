@@ -23,9 +23,9 @@ import org.eclipse.ocl.xtext.base.services.BaseValueConverterService;
 import org.eclipse.ocl.xtext.base.services.PivotResourceServiceProvider;
 import org.eclipse.ocl.xtext.base.ui.autoedit.BaseAutoEditStrategyProvider;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
+import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.ui.model.BaseTerminalsTokenTypeToPartitionMapper;
 import org.eclipse.ocl.xtext.base.ui.model.BaseURIEditorOpener;
-import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineNodeElementOpener;
 import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineWithEditorLinker;
 import org.eclipse.ocl.xtext.base.ui.syntaxcoloring.BaseAntlrTokenToAttributeIdMapper;
@@ -73,7 +73,7 @@ import org.eclipse.xtext.validation.IResourceValidator;
 public class EssentialOCLFragment extends DefaultGeneratorFragment implements NamingAware
 {
 	public static String getQualifiedName(Grammar grammar, Naming n) {
-		return n.basePackageUi(grammar) + "." + GrammarUtil.getName(grammar) + "Editor";
+		return n.basePackageUi(grammar) + "." + GrammarUtil.getSimpleName(grammar) + "Editor";
 	}
 
 	private Naming naming;
