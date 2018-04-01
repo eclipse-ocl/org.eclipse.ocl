@@ -58,6 +58,7 @@ public class PivotEAnnotationValidator
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.OCL_ASMetamodel_AnnotationValidator");
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.OCL_Collection_AnnotationValidator");
 				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.OCL_Import_AnnotationValidator");
+				installAnnotationValidator(eAnnotationValidatorRegistry2, "org.eclipse.ocl.pivot.internal.validation.OCL_MetaAnnotation_AnnotationValidator");
 				return true;
 			}
 			catch (Exception e) {}

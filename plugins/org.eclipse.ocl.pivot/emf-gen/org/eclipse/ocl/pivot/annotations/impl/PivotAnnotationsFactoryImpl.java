@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature;
 import org.eclipse.ocl.pivot.annotations.Import_EPackage;
+import org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsFactory;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 
@@ -82,6 +83,7 @@ public class PivotAnnotationsFactoryImpl extends EFactoryImpl implements PivotAn
 			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION: return createEcore_OCL_EOperation();
 			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE: return createEcore_OCL_EStructuralFeature();
 			case PivotAnnotationsPackage.IMPORT_EPACKAGE: return createImport_EPackage();
+			case PivotAnnotationsPackage.META_ANNOTATION_EANNOTATION: return createMetaAnnotation_EAnnotation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -184,6 +186,17 @@ public class PivotAnnotationsFactoryImpl extends EFactoryImpl implements PivotAn
 	public @NonNull Import_EPackage createImport_EPackage() {
 		Import_EPackageImpl import_EPackage = new Import_EPackageImpl();
 		return import_EPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull MetaAnnotation_EAnnotation createMetaAnnotation_EAnnotation() {
+		MetaAnnotation_EAnnotationImpl metaAnnotation_EAnnotation = new MetaAnnotation_EAnnotationImpl();
+		return metaAnnotation_EAnnotation;
 	}
 
 	/**

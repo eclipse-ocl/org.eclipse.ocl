@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.BasicEAnnotationValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -42,6 +41,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -162,7 +162,7 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 		super(annotationSource, annotationName, diagnosticSource);
 		if (eAnnotationMetaClasses != null) {
 			for (EClass eAnnotationMetaClass : eAnnotationMetaClasses) {
-				EAnnotation eAnnotation = eAnnotationMetaClass.getEAnnotation(EcorePackage.eNS_URI);
+				EAnnotation eAnnotation = eAnnotationMetaClass.getEAnnotation(PivotConstants.META_ANNOTATION_ANNOTATION_SOURCE);
 				if (eAnnotation != null) {
 					for (EObject reference : eAnnotation.getReferences()) {
 						if (reference instanceof EClass) {

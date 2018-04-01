@@ -65,6 +65,10 @@ public interface PivotConstants
 	 * Each detail is an alias-name, import uri pair.
 	 */
 	static final @NonNull String IMPORT_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Import";
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String META_ANNOTATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/MetaAnnotation";
 	static final @NonNull String SYSML_ANNOTATION_SOURCE = "http://www.omg.org/spec/SysML";
 
 	/**

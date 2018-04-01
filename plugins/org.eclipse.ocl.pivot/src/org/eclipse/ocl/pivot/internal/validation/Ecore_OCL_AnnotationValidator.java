@@ -70,7 +70,7 @@ public class Ecore_OCL_AnnotationValidator extends BasicEAnnotationValidator2
 	}
 
 	/**
-	 * Creates an assistant that creates a map of properties corresponding tp the details.
+	 * Creates an assistant that creates a map of properties corresponding to the details.
 	 */
 	@Override
 	protected Assistant createAssistant()

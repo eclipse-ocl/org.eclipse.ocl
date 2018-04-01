@@ -127,6 +127,12 @@ public class PivotAnnotationsSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PivotAnnotationsPackage.META_ANNOTATION_EANNOTATION: {
+				MetaAnnotation_EAnnotation metaAnnotation_EAnnotation = (MetaAnnotation_EAnnotation)theEObject;
+				T result = caseMetaAnnotation_EAnnotation(metaAnnotation_EAnnotation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -263,6 +269,21 @@ public class PivotAnnotationsSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseImport_EPackage(Import_EPackage object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Meta Annotation EAnnotation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Meta Annotation EAnnotation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMetaAnnotation_EAnnotation(MetaAnnotation_EAnnotation object) {
 		return null;
 	}
 

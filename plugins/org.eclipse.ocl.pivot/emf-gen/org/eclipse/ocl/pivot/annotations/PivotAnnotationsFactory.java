@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.annotations;
 
 import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>AS Library EPackage</em>'.
 	 * @generated
 	 */
-	ASLibrary_EPackage createASLibrary_EPackage();
+	@NonNull ASLibrary_EPackage createASLibrary_EPackage();
 
 	/**
 	 * Returns a new object of class '<em>AS Metamodel EPackage</em>'.
@@ -45,7 +46,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>AS Metamodel EPackage</em>'.
 	 * @generated
 	 */
-	ASMetamodel_EPackage createASMetamodel_EPackage();
+	@NonNull ASMetamodel_EPackage createASMetamodel_EPackage();
 
 	/**
 	 * Returns a new object of class '<em>Collection EClass</em>'.
@@ -54,7 +55,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Collection EClass</em>'.
 	 * @generated
 	 */
-	Collection_EClass createCollection_EClass();
+	@NonNull Collection_EClass createCollection_EClass();
 
 	/**
 	 * Returns a new object of class '<em>Collection EPackage</em>'.
@@ -63,7 +64,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Collection EPackage</em>'.
 	 * @generated
 	 */
-	Collection_EPackage createCollection_EPackage();
+	@NonNull Collection_EPackage createCollection_EPackage();
 
 	/**
 	 * Returns a new object of class '<em>Collection ETyped Element</em>'.
@@ -72,7 +73,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Collection ETyped Element</em>'.
 	 * @generated
 	 */
-	Collection_ETypedElement createCollection_ETypedElement();
+	@NonNull Collection_ETypedElement createCollection_ETypedElement();
 
 	/**
 	 * Returns a new object of class '<em>Ecore OCL EClassifier</em>'.
@@ -81,7 +82,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Ecore OCL EClassifier</em>'.
 	 * @generated
 	 */
-	Ecore_OCL_EClassifier createEcore_OCL_EClassifier();
+	@NonNull Ecore_OCL_EClassifier createEcore_OCL_EClassifier();
 
 	/**
 	 * Returns a new object of class '<em>Ecore OCL EOperation</em>'.
@@ -90,7 +91,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Ecore OCL EOperation</em>'.
 	 * @generated
 	 */
-	Ecore_OCL_EOperation createEcore_OCL_EOperation();
+	@NonNull Ecore_OCL_EOperation createEcore_OCL_EOperation();
 
 	/**
 	 * Returns a new object of class '<em>Ecore OCL EStructural Feature</em>'.
@@ -99,7 +100,7 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Ecore OCL EStructural Feature</em>'.
 	 * @generated
 	 */
-	Ecore_OCL_EStructuralFeature createEcore_OCL_EStructuralFeature();
+	@NonNull Ecore_OCL_EStructuralFeature createEcore_OCL_EStructuralFeature();
 
 	/**
 	 * Returns a new object of class '<em>Import EPackage</em>'.
@@ -108,7 +109,16 @@ public interface PivotAnnotationsFactory extends EFactory {
 	 * @return a new object of class '<em>Import EPackage</em>'.
 	 * @generated
 	 */
-	Import_EPackage createImport_EPackage();
+	@NonNull Import_EPackage createImport_EPackage();
+
+	/**
+	 * Returns a new object of class '<em>Meta Annotation EAnnotation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Meta Annotation EAnnotation</em>'.
+	 * @generated
+	 */
+	@NonNull MetaAnnotation_EAnnotation createMetaAnnotation_EAnnotation();
 
 	/**
 	 * Returns the package supported by this factory.

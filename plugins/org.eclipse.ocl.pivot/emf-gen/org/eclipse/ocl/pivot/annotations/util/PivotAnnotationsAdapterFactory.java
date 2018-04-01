@@ -110,6 +110,10 @@ public class PivotAnnotationsAdapterFactory extends AdapterFactoryImpl {
 				return createImport_EPackageAdapter();
 			}
 			@Override
+			public Adapter caseMetaAnnotation_EAnnotation(MetaAnnotation_EAnnotation object) {
+				return createMetaAnnotation_EAnnotationAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -252,6 +256,20 @@ public class PivotAnnotationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createImport_EPackageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation <em>Meta Annotation EAnnotation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation
+	 * @generated
+	 */
+	public Adapter createMetaAnnotation_EAnnotationAdapter() {
 		return null;
 	}
 

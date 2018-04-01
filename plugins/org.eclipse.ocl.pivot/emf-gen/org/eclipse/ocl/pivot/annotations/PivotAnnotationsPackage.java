@@ -361,6 +361,34 @@ public interface PivotAnnotationsPackage extends EPackage {
 	int IMPORT_EPACKAGE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl <em>Meta Annotation EAnnotation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl
+	 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getMetaAnnotation_EAnnotation()
+	 * @generated
+	 */
+	int META_ANNOTATION_EANNOTATION = 9;
+
+	/**
+	 * The number of structural features of the '<em>Meta Annotation EAnnotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int META_ANNOTATION_EANNOTATION_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Meta Annotation EAnnotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int META_ANNOTATION_EANNOTATION_OPERATION_COUNT = 0;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage <em>AS Library EPackage</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -506,6 +534,16 @@ public interface PivotAnnotationsPackage extends EPackage {
 	EClass getImport_EPackage();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation <em>Meta Annotation EAnnotation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Meta Annotation EAnnotation</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation
+	 * @generated
+	 */
+	EClass getMetaAnnotation_EAnnotation();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -644,6 +682,15 @@ public interface PivotAnnotationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IMPORT_EPACKAGE = eINSTANCE.getImport_EPackage();
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl <em>Meta Annotation EAnnotation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl
+		 * @see org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl#getMetaAnnotation_EAnnotation()
+		 * @generated
+		 */
+		EClass META_ANNOTATION_EANNOTATION = eINSTANCE.getMetaAnnotation_EAnnotation();
 
 	}
 

@@ -15,21 +15,14 @@ import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -37,15 +30,15 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  *
  * @since 1.4
  */
-public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValidator2
+public final class OCL_MetaAnnotation_AnnotationValidator extends BasicEAnnotationValidator2
 {
 
-	public static final @NonNull OCL_Import_AnnotationValidator INSTANCE = new OCL_Import_AnnotationValidator();
-	public static final @NonNull String ANNOTATION_NAME = "OCL_Import";
-	public static final @NonNull String ANNOTATION_SOURCE = PivotConstants.IMPORT_ANNOTATION_SOURCE;
+	public static final @NonNull OCL_MetaAnnotation_AnnotationValidator INSTANCE = new OCL_MetaAnnotation_AnnotationValidator();
+	public static final @NonNull String ANNOTATION_NAME = "OCL_MetaAnnotation";
+	public static final @NonNull String ANNOTATION_SOURCE = PivotConstants.META_ANNOTATION_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
-	public OCL_Import_AnnotationValidator() {
+	public OCL_MetaAnnotation_AnnotationValidator() {
 		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE, PivotAnnotationsPackage.Literals.IMPORT_EPACKAGE);
 	}
 
@@ -78,43 +71,24 @@ public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValida
 	@Override
 	protected boolean validateDetail(EAnnotation eAnnotation, EModelElement eModelElement, Entry<String, String> entry,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		String importURI = entry.getValue();
-		ResourceSet resourceSet = null;
-		EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eModelElement);
-		if (environmentFactory != null) {
-			resourceSet = environmentFactory.getResourceSet();
-		}
-		EPackage.Registry packageRegistry = resourceSet != null ? resourceSet.getPackageRegistry() : EPackage.Registry.INSTANCE;
-		Object registeredPackage = packageRegistry.getEPackage(importURI);
-		if (registeredPackage != null) {
-			return true;
-		}
-		URIConverter uriConverter = resourceSet != null ? resourceSet.getURIConverter() : URIConverter.INSTANCE;
-		URI uri = URI.createURI(importURI);
-		if (eModelElement != null) {
-			Resource eResource = ((EObject)eModelElement).eResource();
-			if (eResource != null) {
-				URI uri2 = eResource.getURI();
-				if ((uri2 != null) && !uri2.isRelative()) {
-					uri = uri.resolve(uri2);
+		boolean allOk = true;
+		for (EObject eReference : eAnnotation.getReferences()) {
+			if (!(eReference instanceof EModelElement)) {
+				allOk = false;
+				if (diagnostics != null) {
+					diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+							//					DIAGNOSTIC_SOURCE,
+							0,
+								"MetaAnnotation reference must be an EModelElement"));//,
+					//					new Object[] { "ResolveableURI"  /*, EObjectValidator.getValueLabel(PivotAnnotationsPackage.Literals.IMPORT_URI, importURI, context)*/ },
+					//					new Object[] { importURI },
+					//					context));
 				}
 			}
 		}
-		if (uriConverter.exists(uri.trimFragment(), null)) {
-			return true;
-		}
-		if (diagnostics != null) {
-			diagnostics.add
-			(createDiagnostic
-				(Diagnostic.ERROR,
-					//					DIAGNOSTIC_SOURCE,
-					0,
-					getEcoreResourceLocator().getString("_UI_GenericConstraint_diagnostic", new Object[] {"ResolveableURI", importURI})));//,
-			//					new Object[] { "ResolveableURI"  /*, EObjectValidator.getValueLabel(PivotAnnotationsPackage.Literals.IMPORT_URI, importURI, context)*/ },
-			//					new Object[] { importURI },
-			//					context));
-		}
-		return false;
+		return allOk;
 	}
 
 	/**

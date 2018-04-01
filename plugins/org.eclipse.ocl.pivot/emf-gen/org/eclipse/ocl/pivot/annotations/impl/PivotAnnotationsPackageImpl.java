@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation;
 import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature;
 import org.eclipse.ocl.pivot.annotations.Import_EPackage;
+import org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsFactory;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 
@@ -89,6 +90,12 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 	 * @generated
 	 */
 	private EClass import_EPackageEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass metaAnnotation_EAnnotationEClass = null;
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
@@ -296,6 +303,16 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 	 * @generated
 	 */
 	@Override
+	public EClass getMetaAnnotation_EAnnotation() {
+		return metaAnnotation_EAnnotationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public PivotAnnotationsFactory getPivotAnnotationsFactory() {
 		return (PivotAnnotationsFactory)getEFactoryInstance();
 	}
@@ -341,6 +358,8 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		createEAttribute(ecore_OCL_EStructuralFeatureEClass, ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION);
 
 		import_EPackageEClass = createEClass(IMPORT_EPACKAGE);
+
+		metaAnnotation_EAnnotationEClass = createEClass(META_ANNOTATION_EANNOTATION);
 	}
 
 	/**
@@ -396,22 +415,24 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 
 		initEClass(import_EPackageEClass, Import_EPackage.class, "Import_EPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(metaAnnotation_EAnnotationEClass, MetaAnnotation_EAnnotation.class, "MetaAnnotation_EAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		// Create resource
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/emf/2002/Ecore
-		createEcoreAnnotations();
+		// http://www.eclipse.org/OCL/MetaAnnotation
+		createMetaAnnotationAnnotations();
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/MetaAnnotation</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";
+	protected void createMetaAnnotationAnnotations() {
+		String source = "http://www.eclipse.org/OCL/MetaAnnotation";
 		addAnnotation
 		(asLibrary_EPackageEClass,
 			source,
@@ -483,6 +504,14 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		},
 			new URI[] {
 				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
+		});
+		addAnnotation
+		(metaAnnotation_EAnnotationEClass,
+			source,
+			new String[] {
+		},
+			new URI[] {
+				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EAnnotation")
 		});
 	}
 

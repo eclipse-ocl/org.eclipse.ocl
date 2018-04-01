@@ -191,6 +191,8 @@
       	class="org.eclipse.ocl.pivot.internal.validation.OCL_Collection_AnnotationValidator"/>
       <validator uri="http://www.eclipse.org/OCL/Import"
       	class="org.eclipse.ocl.pivot.internal.validation.OCL_Import_AnnotationValidator"/>
+      <validator uri="http://www.eclipse.org/OCL/MetaAnnotation"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_MetaAnnotation_AnnotationValidator"/>
    </extension>
 
 </plugin>
