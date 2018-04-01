@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2017 Willink Transformations and others.
+ * Copyright (c) 2015, 2018 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -97,7 +97,7 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link CodegencompanyPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -111,8 +111,8 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		if (isInited) return (CodegencompanyPackage)EPackage.Registry.INSTANCE.getEPackage(CodegencompanyPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		CodegencompanyPackageImpl theCodegencompanyPackage = (CodegencompanyPackageImpl)(ePackage instanceof CodegencompanyPackageImpl ? ePackage : new CodegencompanyPackageImpl());
+		Object registeredCodegencompanyPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		CodegencompanyPackageImpl theCodegencompanyPackage = registeredCodegencompanyPackage instanceof CodegencompanyPackageImpl ? (CodegencompanyPackageImpl)registeredCodegencompanyPackage : new CodegencompanyPackageImpl();
 
 		isInited = true;
 
@@ -124,7 +124,7 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(theCodegencompanyPackage, 
+			(theCodegencompanyPackage,
 			 new EValidator.Descriptor() {
 				 public EValidator getEValidator() {
 					 return CodegencompanyValidator.INSTANCE;
@@ -134,7 +134,6 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		// Mark meta-data to indicate it can't be changed
 		theCodegencompanyPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CodegencompanyPackage.eNS_URI, theCodegencompanyPackage);
 		return theCodegencompanyPackage;
@@ -445,7 +444,7 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		initEReference(getEmployee_DirectReports(), this.getEmployee(), null, "directReports", null, 0, -1, Employee.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getEmployee_AllReports(), this.getEmployee(), null, "allReports", null, 0, -1, Employee.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getEmployee_ReportingChain(), this.getEmployee(), null, "reportingChain", null, 0, -1, Employee.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getEmployee_HasNameAsAttribute(), ecorePackage.getEBoolean(), "hasNameAsAttribute", null, 0, 1, Employee.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getEmployee_HasNameAsAttribute(), ecorePackage.getEBoolean(), "hasNameAsAttribute", null, 1, 1, Employee.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getEmployee__ReportsTo__Employee(), ecorePackage.getEBoolean(), "reportsTo", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getEmployee(), "manager", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -480,8 +479,8 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(bug418716EClass, Bug418716.class, "Bug418716", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getBug418716_AttributeWithInitital(), ecorePackage.getEInt(), "AttributeWithInitital", null, 0, 1, Bug418716.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getBug418716_AttributeWithoutInitital(), ecorePackage.getEInt(), "AttributeWithoutInitital", null, 0, 1, Bug418716.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getBug418716_AttributeWithInitital(), ecorePackage.getEInt(), "AttributeWithInitital", null, 1, 1, Bug418716.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getBug418716_AttributeWithoutInitital(), ecorePackage.getEInt(), "AttributeWithoutInitital", null, 1, 1, Bug418716.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(companySizeKindEEnum, CompanySizeKind.class, "CompanySizeKind"); //$NON-NLS-1$
@@ -495,8 +494,6 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		// Create annotations
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
-		// http://www.eclipse.org/OCL/Collection
-		createCollectionAnnotations();
 	}
 
 	/**
@@ -506,33 +503,17 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
+		  (this,
+		   source,
 		   new String[] {
-		   });	
-		addAnnotation
-		  (employeeEClass, 
-		   source, 
-		   new String[] {
-			 "constraints", "mustHaveName mustHaveNonEmptyName" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createCollectionAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$	
 		addAnnotation
-		  (getEmployee_AllReports(), 
-		   source, 
+		  (employeeEClass,
+		   source,
 		   new String[] {
-			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+			   "constraints", "mustHaveNonEmptyName" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

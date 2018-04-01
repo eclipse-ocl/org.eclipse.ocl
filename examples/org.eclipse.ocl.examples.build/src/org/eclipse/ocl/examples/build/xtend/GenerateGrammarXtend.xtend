@@ -96,7 +96,6 @@ public class GenerateGrammarXtend extends GenerateGrammar
 			 * <p>
 			 * The grammar is immutable and is available as static INSTANCE and GRAMMAR fields.
 			 */
-			@SuppressWarnings({"nls", "unused"})
 			public class «grammarFileStem»GrammarResource extends AbstractGrammarResource
 			{
 				«FOR grammar : grammarResource.getContents()»

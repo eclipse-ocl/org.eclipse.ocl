@@ -123,7 +123,7 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			 * to locate a library type when its default Standard Library URI is the same
 			 * as this Standard Library.
 			 */
-			@SuppressWarnings({"nls", "unused"})
+			@SuppressWarnings("unused")
 			public class «javaClassName» extends ASResourceImpl
 			{
 				/**

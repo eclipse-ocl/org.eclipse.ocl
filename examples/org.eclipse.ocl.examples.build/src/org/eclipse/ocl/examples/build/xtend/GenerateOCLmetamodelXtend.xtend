@@ -117,7 +117,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			 * auto-generated from «sourceFile».
 			 * It facilitates efficient model loading without the overheads of model reading.
 			 */
-			@SuppressWarnings({"nls", "unused"})
+			@SuppressWarnings("unused")
 			public class «javaClassName» extends ASResourceImpl
 			{
 				/**

@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
@@ -269,7 +270,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 									logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 									upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 								}
-								if (!upper.equals(ValueUtil.ONE_VALUE)) {
+								if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
 									String uniqueValue = details.get("unique");
 									boolean isUnique = uniqueValue != null ? Boolean.valueOf(uniqueValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE;
 									String orderedValue = details.get("ordered");
@@ -395,7 +396,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							Type pivotType;
 							if (type != null) {
 								pivotType = type;
-								if (upperValue.equals(ValueUtil.ONE_VALUE)) {
+								if (((NumberValue)upperValue).equals(ValueUtil.ONE_VALUE)) {
 									isRequired = lowerValue.equals(ValueUtil.ONE_VALUE);
 								}
 								else {

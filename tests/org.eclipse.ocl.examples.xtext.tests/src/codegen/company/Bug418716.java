@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2017 Willink Transformations and others.
+ * Copyright (c) 2015, 2018 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,7 +45,8 @@ public interface Bug418716 extends EObject {
 	 * @return the value of the '<em>Attribute With Initital</em>' attribute.
 	 * @see #setAttributeWithInitital(int)
 	 * @see codegen.company.CodegencompanyPackage#getBug418716_AttributeWithInitital()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='/**\n * 100\n \052/\nfinal int ECORE_INT_100 = &lt;%org.eclipse.ocl.pivot.utilities.ValueUtil%&gt;.intValueOf(&lt;%codegen.company.CodegencompanyTables%&gt;.INT_100);\nreturn ECORE_INT_100;'"
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='/**\n * 100\n \052/\nfinal int ECORE_INT_100 = &lt;%org.eclipse.ocl.pivot.utilities.ValueUtil%&gt;.intValueOf(&lt;%codegen.company.CodegencompanyTables%&gt;.INT_100);\nreturn ECORE_INT_100;'"
 	 * @generated
 	 */
 	int getAttributeWithInitital();
@@ -71,7 +72,8 @@ public interface Bug418716 extends EObject {
 	 * @return the value of the '<em>Attribute Without Initital</em>' attribute.
 	 * @see #setAttributeWithoutInitital(int)
 	 * @see codegen.company.CodegencompanyPackage#getBug418716_AttributeWithoutInitital()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/test/Pivot/Company.ecore!Bug418716!AttributeWithoutInitital'"
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/test/Pivot/Company.ecore!Bug418716!AttributeWithoutInitital'"
 	 * @generated
 	 */
 	int getAttributeWithoutInitital();

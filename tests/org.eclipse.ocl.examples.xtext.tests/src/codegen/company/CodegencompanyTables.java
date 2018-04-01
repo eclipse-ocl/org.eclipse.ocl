@@ -1,22 +1,22 @@
 /*******************************************************************************
  * <copyright>
- * 
- * Copyright (c) 2015, 2017 Willink Transformations and others.
+ *
+ * Copyright (c) 2015, 2018 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  *************************************************************************
  * This code is 100% auto-generated
  * from:
- *   /org.eclipse.ocl.examples.xtext.tests/model/Company.ecore
+ *   platform:/resource/org.eclipse.ocl.examples.xtext.tests/model/Company.ecore
  * using:
- *   /org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompany.genmodel
+ *   _OCL_UsageTests__testCodegenCompany/CodeGenCompany.genmodel
  *   org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables
  *
  * Do not edit it.
@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-@SuppressWarnings("nls")
 public class CodegencompanyTables
 {
 	static {
@@ -309,37 +308,37 @@ public class CodegencompanyTables
 		}
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Bug418716 =
-		{
-			Fragments._Bug418716__OclAny /* 0 */,
-			Fragments._Bug418716__OclElement /* 1 */,
-			Fragments._Bug418716__Bug418716 /* 2 */
-		};
+			{
+				Fragments._Bug418716__OclAny /* 0 */,
+				Fragments._Bug418716__OclElement /* 1 */,
+				Fragments._Bug418716__Bug418716 /* 2 */
+			};
 		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Company =
-		{
-			Fragments._Company__OclAny /* 0 */,
-			Fragments._Company__OclElement /* 1 */,
-			Fragments._Company__Company /* 2 */
-		};
+			{
+				Fragments._Company__OclAny /* 0 */,
+				Fragments._Company__OclElement /* 1 */,
+				Fragments._Company__Company /* 2 */
+			};
 		private static final int @NonNull [] __Company = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _CompanySizeKind =
-		{
-			Fragments._CompanySizeKind__OclAny /* 0 */,
-			Fragments._CompanySizeKind__OclElement /* 1 */,
-			Fragments._CompanySizeKind__OclType /* 2 */,
-			Fragments._CompanySizeKind__OclEnumeration /* 3 */,
-			Fragments._CompanySizeKind__CompanySizeKind /* 4 */
-		};
+			{
+				Fragments._CompanySizeKind__OclAny /* 0 */,
+				Fragments._CompanySizeKind__OclElement /* 1 */,
+				Fragments._CompanySizeKind__OclType /* 2 */,
+				Fragments._CompanySizeKind__OclEnumeration /* 3 */,
+				Fragments._CompanySizeKind__CompanySizeKind /* 4 */
+			};
 		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Employee =
-		{
-			Fragments._Employee__OclAny /* 0 */,
-			Fragments._Employee__OclElement /* 1 */,
-			Fragments._Employee__Employee /* 2 */
-		};
+			{
+				Fragments._Employee__OclAny /* 0 */,
+				Fragments._Employee__OclElement /* 1 */,
+				Fragments._Employee__Employee /* 2 */
+			};
 		private static final int @NonNull [] __Employee = { 1,1,1 };
 
 		/**

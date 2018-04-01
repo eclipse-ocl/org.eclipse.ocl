@@ -102,7 +102,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		GlobalEnvironmentFactory.disposeInstance();
 	}
 
-	protected void doTestOCLinEcoreTutorialUsingLPG(URI testModelURI, boolean isLPG) throws Exception {
+	protected void doTestOCLinEcoreTutorialUsingLPG(@NonNull URI testModelURI, boolean isLPG) throws Exception {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
 		//		resourceSet.getURIConverter().getURIMap().put(URI.createURI("http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore"), URI.createPlatformPluginURI("/org.eclipse.ocl.ecore/model/oclstdlib.ecore", true));
 		URIConverter.URI_MAP.put(URI.createURI(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI), URI.createPlatformPluginURI("/org.eclipse.ocl.ecore/model/oclstdlib.ecore", true));
@@ -110,7 +110,9 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		EObject xmiLibrary = xmiResource.getContents().get(0);
 		EClass ecoreLibrary = xmiLibrary.eClass();
 		if (isLPG) {
-			removeSafeNavigationOperatorsForLPG(ecoreLibrary.eResource());
+			Resource ecoreLibraryResource = ecoreLibrary.eResource();
+			assert ecoreLibraryResource != null;
+			removeSafeNavigationOperatorsForLPG(ecoreLibraryResource);
 		}
 		EStructuralFeature ecoreBooks = ecoreLibrary.getEStructuralFeature("books");
 		EClass ecoreBook = (EClass) ecoreBooks.getEType();
@@ -175,7 +177,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	}
 
-	protected void doTestOCLinEcoreTutorialUsingPivot(URI testModelURI) throws Exception {
+	protected void doTestOCLinEcoreTutorialUsingPivot(@NonNull URI testModelURI) throws Exception {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
 		Resource xmiResource = resourceSet.getResource(testModelURI, true);
 		EObject xmiLibrary = xmiResource.getContents().get(0);
@@ -200,8 +202,12 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		}
 		OCL ocl = OCL.newInstance(resourceSet.getPackageRegistry());
 		try {
-			Ecore2AS ecore2as = Ecore2AS.getAdapter(b2Book.eClass().eResource(), (EnvironmentFactoryInternal) ocl.getEnvironmentFactory());
-			org.eclipse.ocl.pivot.Class bookType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, b2Book.eClass());
+			EClass b2EClass = b2Book.eClass();
+			assert b2EClass != null;
+			Resource b2EClassResource = b2EClass.eResource();
+			assert b2EClassResource != null;
+			Ecore2AS ecore2as = Ecore2AS.getAdapter(b2EClassResource, (EnvironmentFactoryInternal) ocl.getEnvironmentFactory());
+			org.eclipse.ocl.pivot.Class bookType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, b2EClass);
 
 			Object b2Copies = b2Book.eGet(bookCopies);			// Static eGet
 			assertEquals(2, ((Number)b2Copies).intValue());
@@ -282,7 +288,9 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 
 	@Override
 	protected void tearDown() throws Exception {
-		unloadResourceSet(resourceSet);
+		if (resourceSet != null) {
+			unloadResourceSet(resourceSet);
+		}
 		resourceSet = null;
 		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
 		super.tearDown();

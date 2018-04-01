@@ -458,8 +458,9 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		if (association != null) {
 			List<org.eclipse.uml2.uml.Property> memberEnds = new ArrayList<org.eclipse.uml2.uml.Property>(association.getMemberEnds());
 			memberEnds.remove(umlProperty);
+			String umlPropertyName = umlProperty.getName();
 			for (org.eclipse.uml2.uml.Property aProperty : memberEnds) {
-				if (!aProperty.getName().equals(umlProperty)) {
+				if (!aProperty.getName().equals(umlPropertyName)) {
 					return aProperty;
 				}
 			}

@@ -1,64 +1,52 @@
 /**
  * <copyright>
- * 
- * Copyright (c) 2015, 2017 Willink Transformations and others.
+ *
+ * Copyright (c) 2015, 2018 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package codegen.company.impl;
 
-import codegen.company.CodegencompanyPackage;
-import codegen.company.CodegencompanyTables;
-import codegen.company.Company;
-import codegen.company.CompanySizeKind;
-import codegen.company.Employee;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-
-import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
-
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
+
+import codegen.company.CodegencompanyPackage;
+import codegen.company.CodegencompanyTables;
+import codegen.company.Company;
+import codegen.company.CompanySizeKind;
+import codegen.company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -140,6 +128,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -149,6 +138,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -161,6 +151,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Employee> getEmployees() {
 		if (employees == null) {
 			employees = new EObjectContainmentWithInverseEList<Employee>(Employee.class, this, CodegencompanyPackage.COMPANY__EMPLOYEES, CodegencompanyPackage.EMPLOYEE__COMPANY);
@@ -173,11 +164,12 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CompanySizeKind getSize() {
 		/**
 		 *
 		 * let
-		 *   table : Set(Tuple(range:Sequence(Integer)[*|?], size:company::CompanySizeKind[1])) = Set{
+		 *   table : Set(Tuple(range:Sequence(Integer[*|?]), size:company::CompanySizeKind[1])) = Set{
 		 *     Tuple{range = Sequence{0..49}, size = CompanySizeKind::small
 		 *     }
 		 *     , Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium
@@ -186,12 +178,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		 *     }
 		 *   }
 		 * in
-		 *   table?->any(range->includes(employees->size()))?.size
+		 *   table->any(range->includes(employees->size()))?.size
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_null_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(CodegencompanyTables.table, (Object)null);
-		@NonNull Iterator<Object> ITERATOR__1 = safe_null_sources.iterator();
+		@NonNull Iterator<Object> ITERATOR__1 = CodegencompanyTables.table.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable TupleValue any;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
@@ -202,12 +193,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			/**
 			 * range->includes(employees->size())
 			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = ClassUtil.nonNullState((SequenceValue)_1.getValue(0/*range*/));
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = (SequenceValue)_1.getValue(0/*range*/);
-			@SuppressWarnings("null")
-			final /*@Thrown*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
-			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
-			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
+			final /*@NonInvalid*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
 			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
 			//
 			if (includes != ValueUtil.FALSE_VALUE) {			// Carry on till something found
@@ -222,20 +212,21 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		catch (Exception e) {
 			CAUGHT_any = ValueUtil.createInvalidValue(e);
 		}
-		final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_any == null;
-		/*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@Nullable EnumerationLiteralId safe_size_source;
-		if (symbol_0 == Boolean.TRUE) {
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull Object size_0 = CAUGHT_any == null;
+		/*@Thrown*/ org.eclipse.ocl.pivot.ids.@Nullable EnumerationLiteralId safe_size_source;
+		if (size_0 == Boolean.TRUE) {
 			safe_size_source = null;
 		}
 		else {
 			assert any != null;
-			@SuppressWarnings("null")
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_0 = (EnumerationLiteralId)any.getValue(1/*size*/);
-			safe_size_source = size_0;
+			final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_1 = ClassUtil.nonNullState((EnumerationLiteralId)any.getValue(1/*size*/));
+			safe_size_source = size_1;
 		}
 		if (safe_size_source == null) {
 			throw new InvalidValueException("Null body for \'company::Company::size\'");
 		}
+		@SuppressWarnings("null")
 		final /*@Thrown*/ codegen.company.@NonNull CompanySizeKind ECORE_safe_size_source = (CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, safe_size_source);
 		return ECORE_safe_size_source;
 	}
@@ -245,6 +236,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean dummyInvariant(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
 		 * inv dummyInvariant: true
@@ -379,7 +371,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');

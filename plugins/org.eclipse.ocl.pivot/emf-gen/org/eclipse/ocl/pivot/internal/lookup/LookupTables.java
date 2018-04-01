@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
-import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
@@ -46,7 +45,6 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-@SuppressWarnings("nls")
 public class LookupTables
 {
 	static {
@@ -66,16 +64,16 @@ public class LookupTables
 	/**
 	 *	Constants used by auto-generated code.
 	 */
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId COL_PRIMid_OclAny = org.eclipse.ocl.pivot.ids.TypeId.COLLECTION.getSpecializedId(org.eclipse.ocl.pivot.ids.TypeId.OCL_ANY);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId COL_TMPLid_ = org.eclipse.ocl.pivot.ids.TypeId.COLLECTION.getSpecializedId(org.eclipse.ocl.pivot.ids.IdManager.getTemplateParameterId(0));
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull RootPackageId PACKid_$metamodel$ = org.eclipse.ocl.pivot.ids.IdManager.getRootPackageId("$metamodel$");
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup = org.eclipse.ocl.pivot.ids.IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/2015/Lookup", null, org.eclipse.ocl.pivot.internal.lookup.LookupPackage.eINSTANCE);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Executor = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("Executor", 0);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LookupEnvironment = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("LookupEnvironment", 0);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_NamedElement = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_$metamodel$.getClassId("NamedElement", 0);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId BAG_CLSSid_LookupEnvironment = org.eclipse.ocl.pivot.ids.TypeId.BAG.getSpecializedId(org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_LookupEnvironment);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId ORD_CLSSid_NamedElement = org.eclipse.ocl.pivot.ids.TypeId.ORDERED_SET.getSpecializedId(org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_NamedElement);
-    public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull PropertyId PROPid_namedElements = org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_LookupEnvironment.getPropertyId("namedElements");
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId COL_PRIMid_OclAny = org.eclipse.ocl.pivot.ids.TypeId.COLLECTION.getSpecializedId(org.eclipse.ocl.pivot.ids.TypeId.OCL_ANY);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId COL_TMPLid_ = org.eclipse.ocl.pivot.ids.TypeId.COLLECTION.getSpecializedId(org.eclipse.ocl.pivot.ids.IdManager.getTemplateParameterId(0));
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull RootPackageId PACKid_$metamodel$ = org.eclipse.ocl.pivot.ids.IdManager.getRootPackageId("$metamodel$");
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup = org.eclipse.ocl.pivot.ids.IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/2015/Lookup", null, org.eclipse.ocl.pivot.internal.lookup.LookupPackage.eINSTANCE);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Executor = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("Executor", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LookupEnvironment = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("LookupEnvironment", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_NamedElement = org.eclipse.ocl.pivot.internal.lookup.LookupTables.PACKid_$metamodel$.getClassId("NamedElement", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId BAG_CLSSid_LookupEnvironment = org.eclipse.ocl.pivot.ids.TypeId.BAG.getSpecializedId(org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_LookupEnvironment);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId ORD_CLSSid_NamedElement = org.eclipse.ocl.pivot.ids.TypeId.ORDERED_SET.getSpecializedId(org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_NamedElement);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull PropertyId PROPid_namedElements = org.eclipse.ocl.pivot.internal.lookup.LookupTables.CLSSid_LookupEnvironment.getPropertyId("namedElements");
 
 	/**
 	 *	The type parameters for templated types and operations.
@@ -238,19 +236,19 @@ public class LookupTables
 		}
 
 		private static final @NonNull ExecutorFragment @NonNull [] _Executor =
-		{
-			Fragments._Executor__OclAny /* 0 */,
-			Fragments._Executor__OclElement /* 1 */,
-			Fragments._Executor__Executor /* 2 */
-		};
+			{
+				Fragments._Executor__OclAny /* 0 */,
+				Fragments._Executor__OclElement /* 1 */,
+				Fragments._Executor__Executor /* 2 */
+			};
 		private static final int @NonNull [] __Executor = { 1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _LookupEnvironment =
-		{
-			Fragments._LookupEnvironment__OclAny /* 0 */,
-			Fragments._LookupEnvironment__OclElement /* 1 */,
-			Fragments._LookupEnvironment__LookupEnvironment /* 2 */
-		};
+			{
+				Fragments._LookupEnvironment__OclAny /* 0 */,
+				Fragments._LookupEnvironment__OclElement /* 1 */,
+				Fragments._LookupEnvironment__LookupEnvironment /* 2 */
+			};
 		private static final int @NonNull [] __LookupEnvironment = { 1,1,1 };
 
 		/**

@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2017 Willink Transformations and others.
+ * Copyright (c) 2015, 2018 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -217,7 +217,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (AttributeWithInitital: "); //$NON-NLS-1$
 		result.append(attributeWithInitital);
 		result.append(", AttributeWithoutInitital: "); //$NON-NLS-1$
