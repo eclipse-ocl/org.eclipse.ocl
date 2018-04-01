@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.CollectionRange;
@@ -38,9 +33,7 @@ import org.eclipse.ocl.expressions.ExpressionsPackage;
  * @generated
  */
 public class CollectionRangeItemProvider
-		extends CollectionLiteralPartItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CollectionLiteralPartItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -76,16 +69,16 @@ public class CollectionRangeItemProvider
 	 * @generated
 	 */
 	protected void addFirstPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CollectionRange_first_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CollectionRange_first_feature", "_UI_CollectionRange_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.COLLECTION_RANGE__FIRST, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CollectionRange_first_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CollectionRange_first_feature", //$NON-NLS-1$
+				"_UI_CollectionRange_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.COLLECTION_RANGE__FIRST, true, false,
+			false, null, null, null));
 	}
 
 	/**
@@ -95,16 +88,14 @@ public class CollectionRangeItemProvider
 	 * @generated
 	 */
 	protected void addLastPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CollectionRange_last_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CollectionRange_last_feature", "_UI_CollectionRange_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.COLLECTION_RANGE__LAST, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_CollectionRange_last_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CollectionRange_last_feature", "_UI_CollectionRange_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			ExpressionsPackage.Literals.COLLECTION_RANGE__LAST, true, false,
+			false, null, null, null));
 	}
 
 	/**
@@ -391,8 +382,8 @@ public class CollectionRangeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

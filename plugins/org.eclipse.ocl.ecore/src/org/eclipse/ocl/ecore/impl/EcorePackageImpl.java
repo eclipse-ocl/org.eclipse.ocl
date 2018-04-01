@@ -495,7 +495,7 @@ public class EcorePackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link EcorePackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -511,10 +511,10 @@ public class EcorePackageImpl
 				.getEPackage(EcorePackage.eNS_URI);
 
 		// Obtain or create and register package
-		EcorePackageImpl theEcorePackage = (EcorePackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof EcorePackageImpl
-				? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new EcorePackageImpl());
+		Object registeredEcorePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		EcorePackageImpl theEcorePackage = registeredEcorePackage instanceof EcorePackageImpl
+			? (EcorePackageImpl) registeredEcorePackage
+			: new EcorePackageImpl();
 
 		isInited = true;
 
@@ -1894,7 +1894,7 @@ public class EcorePackageImpl
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(anyTypeEClass, source, new String[]{"constraints", //$NON-NLS-1$
 			"WellFormedName WellFormedInstanceTypeName" //$NON-NLS-1$
 		});
@@ -1949,7 +1949,7 @@ public class EcorePackageImpl
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$	
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
 		addAnnotation(expressionInOCLEClass, source,
 			new String[]{"name", "ExpressionInOcl" //$NON-NLS-1$ //$NON-NLS-2$
 			});

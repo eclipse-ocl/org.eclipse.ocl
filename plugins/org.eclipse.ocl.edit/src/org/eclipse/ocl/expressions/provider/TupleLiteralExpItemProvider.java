@@ -18,12 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -37,9 +32,7 @@ import org.eclipse.ocl.expressions.TupleLiteralExp;
  * @generated
  */
 public class TupleLiteralExpItemProvider
-		extends LiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends LiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -129,7 +122,8 @@ public class TupleLiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		TupleLiteralExp<?, ?> tupleLiteralExp = (TupleLiteralExp<?, ?>) object;
-		return getString("_UI_TupleLiteralExp_type") + " " + tupleLiteralExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_TupleLiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ tupleLiteralExp.getStartPosition();
 	}
 
 	/**

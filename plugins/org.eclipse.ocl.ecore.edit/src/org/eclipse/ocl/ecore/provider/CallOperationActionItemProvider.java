@@ -75,16 +75,16 @@ public class CallOperationActionItemProvider
 	 * @generated
 	 */
 	protected void addOperationPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CallOperationAction_operation_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CallOperationAction_operation_feature", "_UI_CallOperationAction_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				EcorePackage.Literals.CALL_OPERATION_ACTION__OPERATION, true,
-				false, true, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CallOperationAction_operation_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CallOperationAction_operation_feature", //$NON-NLS-1$
+				"_UI_CallOperationAction_type"), //$NON-NLS-1$
+			EcorePackage.Literals.CALL_OPERATION_ACTION__OPERATION, true, false,
+			true, null, null, null));
 	}
 
 	/**

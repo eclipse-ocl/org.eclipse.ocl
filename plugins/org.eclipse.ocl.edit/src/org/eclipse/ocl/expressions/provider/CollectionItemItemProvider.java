@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.CollectionItem;
@@ -38,9 +33,7 @@ import org.eclipse.ocl.expressions.ExpressionsPackage;
  * @generated
  */
 public class CollectionItemItemProvider
-		extends CollectionLiteralPartItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CollectionLiteralPartItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -75,16 +68,14 @@ public class CollectionItemItemProvider
 	 * @generated
 	 */
 	protected void addItemPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CollectionItem_item_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CollectionItem_item_feature", "_UI_CollectionItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.COLLECTION_ITEM__ITEM, true, false,
-				false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_CollectionItem_item_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CollectionItem_item_feature", "_UI_CollectionItem_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			ExpressionsPackage.Literals.COLLECTION_ITEM__ITEM, true, false,
+			false, null, null, null));
 	}
 
 	/**

@@ -21,12 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -47,9 +42,7 @@ import org.eclipse.uml2.uml.edit.providers.ClassifierItemProvider;
  * @generated
  */
 public class TemplateParameterTypeItemProvider
-		extends ClassifierItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends ClassifierItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -84,17 +77,17 @@ public class TemplateParameterTypeItemProvider
 	 * @generated
 	 */
 	protected void addSpecificationPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TemplateParameterType_specification_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TemplateParameterType_specification_feature", "_UI_TemplateParameterType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.TEMPLATE_PARAMETER_TYPE__SPECIFICATION,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_TemplateParameterType_specification_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TemplateParameterType_specification_feature", //$NON-NLS-1$
+				"_UI_TemplateParameterType_type"), //$NON-NLS-1$
+			TypesPackage.Literals.TEMPLATE_PARAMETER_TYPE__SPECIFICATION, true,
+			false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -110,8 +103,8 @@ public class TemplateParameterTypeItemProvider
 			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures
-				.add(UMLPackage.Literals.TEMPLATE_PARAMETER_TYPE__OWNED_OPERATION);
+			childrenFeatures.add(
+				UMLPackage.Literals.TEMPLATE_PARAMETER_TYPE__OWNED_OPERATION);
 		}
 		return childrenFeatures;
 	}
@@ -161,8 +154,8 @@ public class TemplateParameterTypeItemProvider
 	public String getText(Object object) {
 		String label = ((TemplateParameterType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_TemplateParameterType_type") : //$NON-NLS-1$
-			getString("_UI_TemplateParameterType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_TemplateParameterType_type") //$NON-NLS-1$
+			: getString("_UI_TemplateParameterType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -213,8 +206,8 @@ public class TemplateParameterTypeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

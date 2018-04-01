@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.impl.ExpressionsPackageImpl;
@@ -464,7 +465,7 @@ public class UMLPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link UMLPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -480,10 +481,10 @@ public class UMLPackageImpl
 				.getEPackage(UMLPackage.eNS_URI);
 
 		// Obtain or create and register package
-		UMLPackageImpl theUMLPackage = (UMLPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof UMLPackageImpl
-				? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new UMLPackageImpl());
+		Object registeredUMLPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		UMLPackageImpl theUMLPackage = registeredUMLPackage instanceof UMLPackageImpl
+			? (UMLPackageImpl) registeredUMLPackage
+			: new UMLPackageImpl();
 
 		isInited = true;
 
@@ -492,6 +493,8 @@ public class UMLPackageImpl
 		UtilitiesPackage.eINSTANCE.eClass();
 		ExpressionsPackage.eINSTANCE.eClass();
 		org.eclipse.uml2.uml.UMLPackage.eINSTANCE.eClass();
+		EcorePackage.eINSTANCE.eClass();
+		org.eclipse.uml2.types.TypesPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theUMLPackage.createPackageContents();
@@ -1810,7 +1813,7 @@ public class UMLPackageImpl
 	 * @generated
 	 */
 	protected void createSubsetsAnnotations() {
-		String source = "subsets"; //$NON-NLS-1$	
+		String source = "subsets"; //$NON-NLS-1$
 		addAnnotation(getAnyType_OwnedOperation(), source, new String[]{},
 			new URI[]{URI.createURI(org.eclipse.uml2.uml.UMLPackage.eNS_URI)
 				.appendFragment("//Classifier/feature") //$NON-NLS-1$
@@ -1850,7 +1853,7 @@ public class UMLPackageImpl
 	 * @generated
 	 */
 	protected void createUMLAnnotations() {
-		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
 		addAnnotation(expressionInOCLEClass, source,
 			new String[]{"originalName", "ExpressionInOcl" //$NON-NLS-1$ //$NON-NLS-2$
 			});
@@ -1866,7 +1869,7 @@ public class UMLPackageImpl
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$	
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
 		addAnnotation(expressionInOCLEClass, source,
 			new String[]{"name", "ExpressionInOcl" //$NON-NLS-1$ //$NON-NLS-2$
 			});
@@ -1882,7 +1885,7 @@ public class UMLPackageImpl
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(oclExpressionEClass, source,
 			new String[]{"constraints", "has_type" //$NON-NLS-1$ //$NON-NLS-2$
 			});

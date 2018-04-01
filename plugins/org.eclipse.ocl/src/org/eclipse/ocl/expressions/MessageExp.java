@@ -66,7 +66,7 @@ public interface MessageExp<C, COA, SSA>
 
 	/**
 	 * Returns the value of the '<em><b>Argument</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;C>.
+	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}<code>&lt;C&gt;</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Argument</em>' containment reference list isn't clear,

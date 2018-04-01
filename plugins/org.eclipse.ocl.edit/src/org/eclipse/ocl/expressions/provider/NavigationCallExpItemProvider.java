@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -38,9 +33,7 @@ import org.eclipse.ocl.expressions.NavigationCallExp;
  * @generated
  */
 public class NavigationCallExpItemProvider
-		extends FeatureCallExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends FeatureCallExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -75,16 +68,16 @@ public class NavigationCallExpItemProvider
 	 * @generated
 	 */
 	protected void addNavigationSourcePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_NavigationCallExp_navigationSource_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_NavigationCallExp_navigationSource_feature", "_UI_NavigationCallExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE,
-				true, false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_NavigationCallExp_navigationSource_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_NavigationCallExp_navigationSource_feature", //$NON-NLS-1$
+				"_UI_NavigationCallExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE,
+			true, false, false, null, null, null));
 	}
 
 	/**
@@ -100,8 +93,8 @@ public class NavigationCallExpItemProvider
 			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures
-				.add(ExpressionsPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIER);
+			childrenFeatures.add(
+				ExpressionsPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIER);
 		}
 		return childrenFeatures;
 	}
@@ -150,7 +143,8 @@ public class NavigationCallExpItemProvider
 	@Override
 	public String getText(Object object) {
 		NavigationCallExp<?, ?> navigationCallExp = (NavigationCallExp<?, ?>) object;
-		return getString("_UI_NavigationCallExp_type") + " " + navigationCallExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_NavigationCallExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ navigationCallExp.getStartPosition();
 	}
 
 	/**
@@ -281,8 +275,8 @@ public class NavigationCallExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

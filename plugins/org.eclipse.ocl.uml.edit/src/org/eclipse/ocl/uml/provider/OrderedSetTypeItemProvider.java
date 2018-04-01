@@ -16,13 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.uml.OrderedSetType;
 
 import org.eclipse.uml2.uml.UMLPackage;
@@ -34,9 +28,7 @@ import org.eclipse.uml2.uml.UMLPackage;
  * @generated
  */
 public class OrderedSetTypeItemProvider
-		extends CollectionTypeItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CollectionTypeItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -95,8 +87,8 @@ public class OrderedSetTypeItemProvider
 	public String getText(Object object) {
 		String label = ((OrderedSetType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_OrderedSetType_type") : //$NON-NLS-1$
-			getString("_UI_OrderedSetType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_OrderedSetType_type") //$NON-NLS-1$
+			: getString("_UI_OrderedSetType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -132,8 +124,8 @@ public class OrderedSetTypeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

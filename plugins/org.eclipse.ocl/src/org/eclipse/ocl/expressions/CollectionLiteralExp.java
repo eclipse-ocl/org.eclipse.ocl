@@ -67,7 +67,7 @@ public interface CollectionLiteralExp<C>
 
 	/**
 	 * Returns the value of the '<em><b>Part</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.CollectionLiteralPart}&lt;C>.
+	 * The list contents are of type {@link org.eclipse.ocl.expressions.CollectionLiteralPart}<code>&lt;C&gt;</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Part</em>' containment reference list isn't clear,

@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -46,9 +41,7 @@ import org.eclipse.ocl.utilities.UtilitiesPackage;
  * @generated
  */
 public class MessageExpItemProvider
-		extends OCLExpressionItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends OCLExpressionItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -84,17 +77,17 @@ public class MessageExpItemProvider
 	 * @generated
 	 */
 	protected void addPropertyStartPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CallingASTNode_propertyStartPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CallingASTNode_propertyStartPosition_feature", "_UI_CallingASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.CALLING_AST_NODE__PROPERTY_START_POSITION,
-				true, false, false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CallingASTNode_propertyStartPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CallingASTNode_propertyStartPosition_feature", //$NON-NLS-1$
+				"_UI_CallingASTNode_type"), //$NON-NLS-1$
+			UtilitiesPackage.Literals.CALLING_AST_NODE__PROPERTY_START_POSITION,
+			true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -104,17 +97,17 @@ public class MessageExpItemProvider
 	 * @generated
 	 */
 	protected void addPropertyEndPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CallingASTNode_propertyEndPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CallingASTNode_propertyEndPosition_feature", "_UI_CallingASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.CALLING_AST_NODE__PROPERTY_END_POSITION,
-				true, false, false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CallingASTNode_propertyEndPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CallingASTNode_propertyEndPosition_feature", //$NON-NLS-1$
+				"_UI_CallingASTNode_type"), //$NON-NLS-1$
+			UtilitiesPackage.Literals.CALLING_AST_NODE__PROPERTY_END_POSITION,
+			true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -187,8 +180,8 @@ public class MessageExpItemProvider
 	public String getText(Object object) {
 		String label = ((MessageExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_MessageExp_type") : //$NON-NLS-1$
-			getString("_UI_MessageExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_MessageExp_type") //$NON-NLS-1$
+			: getString("_UI_MessageExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -819,21 +812,19 @@ public class MessageExpItemProvider
 			ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.create(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
+		newChildDescriptors.add(createChildParameter(
+			ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.create(
+				org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEGenericType()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.createETypeParameter()));
+		newChildDescriptors.add(createChildParameter(
+			ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
+				.createETypeParameter()));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.MESSAGE_EXP__CALLED_OPERATION,
@@ -1223,21 +1214,19 @@ public class MessageExpItemProvider
 			ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.create(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
+		newChildDescriptors.add(createChildParameter(
+			ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.create(
+				org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEGenericType()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.createETypeParameter()));
+		newChildDescriptors.add(createChildParameter(
+			ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
+				.createETypeParameter()));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.MESSAGE_EXP__SENT_SIGNAL,
@@ -1407,8 +1396,8 @@ public class MessageExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

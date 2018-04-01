@@ -18,12 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -40,9 +35,7 @@ import org.eclipse.ocl.uml.UMLPackage;
  * @generated
  */
 public class LoopExpItemProvider
-		extends CallExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CallExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -122,8 +115,8 @@ public class LoopExpItemProvider
 	public String getText(Object object) {
 		String label = ((LoopExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_LoopExp_type") : //$NON-NLS-1$
-			getString("_UI_LoopExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_LoopExp_type") //$NON-NLS-1$
+			: getString("_UI_LoopExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -159,189 +152,189 @@ public class LoopExpItemProvider
 			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createAssociationClassCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createAssociationClassCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createBooleanLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createBooleanLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createCollectionLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createCollectionLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createEnumLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createEnumLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createIfExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createIfExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createIntegerLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createIntegerLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createInvalidLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createInvalidLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createIterateExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createIterateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createIteratorExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createIteratorExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createLetExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createLetExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createMessageExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createMessageExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createNullLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createNullLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createOperationCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createOperationCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createPropertyCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createPropertyCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createRealLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createRealLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createStateExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createStateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createStringLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createStringLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createTupleLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createTupleLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createTypeExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createTypeExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createUnspecifiedValueExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createUnspecifiedValueExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			UMLFactory.eINSTANCE.createVariableExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				UMLFactory.eINSTANCE.createVariableExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createAssociationClassCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createAssociationClassCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createBooleanLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createBooleanLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createCollectionLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createCollectionLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createEnumLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createEnumLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createIfExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createIfExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createIntegerLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createIntegerLiteralExp()));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.LOOP_EXP__BODY,
 			ExpressionsFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createInvalidLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createInvalidLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createIterateExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createIterateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createIteratorExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createIteratorExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createLetExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createLetExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createMessageExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createMessageExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createNullLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createNullLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createOperationCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createOperationCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createPropertyCallExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createPropertyCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createRealLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createRealLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createStateExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createStateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createStringLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createStringLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createTupleLiteralExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createTupleLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createTypeExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createTypeExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createUnspecifiedValueExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createUnspecifiedValueExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__BODY,
-			ExpressionsFactory.eINSTANCE.createVariableExp()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				ExpressionsFactory.eINSTANCE.createVariableExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__ITERATOR,
-			UMLFactory.eINSTANCE.createVariable()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__ITERATOR,
+				UMLFactory.eINSTANCE.createVariable()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LOOP_EXP__ITERATOR,
-			ExpressionsFactory.eINSTANCE.createVariable()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LOOP_EXP__ITERATOR,
+				ExpressionsFactory.eINSTANCE.createVariable()));
 	}
 
 	/**
@@ -351,8 +344,8 @@ public class LoopExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

@@ -18,13 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.uml.TupleType;
 
 import org.eclipse.ocl.uml.edit.OCLUMLEditPlugin;
@@ -40,9 +34,7 @@ import org.eclipse.uml2.uml.edit.providers.DataTypeItemProvider;
  * @generated
  */
 public class TupleTypeItemProvider
-		extends DataTypeItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends DataTypeItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -101,8 +93,8 @@ public class TupleTypeItemProvider
 	public String getText(Object object) {
 		String label = ((TupleType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_TupleType_type") : //$NON-NLS-1$
-			getString("_UI_TupleType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_TupleType_type") //$NON-NLS-1$
+			: getString("_UI_TupleType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -138,8 +130,8 @@ public class TupleTypeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

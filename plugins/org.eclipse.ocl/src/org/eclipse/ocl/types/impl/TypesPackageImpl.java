@@ -178,7 +178,7 @@ public class TypesPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link TypesPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -194,26 +194,24 @@ public class TypesPackageImpl
 				.getEPackage(TypesPackage.eNS_URI);
 
 		// Obtain or create and register package
-		TypesPackageImpl theTypesPackage = (TypesPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof TypesPackageImpl
-				? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new TypesPackageImpl());
+		Object registeredTypesPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		TypesPackageImpl theTypesPackage = registeredTypesPackage instanceof TypesPackageImpl
+			? (TypesPackageImpl) registeredTypesPackage
+			: new TypesPackageImpl();
 
 		isInited = true;
 
 		// Obtain or create and register interdependencies
-		UtilitiesPackageImpl theUtilitiesPackage = (UtilitiesPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(
-				UtilitiesPackage.eNS_URI) instanceof UtilitiesPackageImpl
-					? EPackage.Registry.INSTANCE
-						.getEPackage(UtilitiesPackage.eNS_URI)
-					: UtilitiesPackage.eINSTANCE);
-		ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(
-				ExpressionsPackage.eNS_URI) instanceof ExpressionsPackageImpl
-					? EPackage.Registry.INSTANCE
-						.getEPackage(ExpressionsPackage.eNS_URI)
-					: ExpressionsPackage.eINSTANCE);
+		Object registeredPackage = EPackage.Registry.INSTANCE
+			.getEPackage(UtilitiesPackage.eNS_URI);
+		UtilitiesPackageImpl theUtilitiesPackage = (UtilitiesPackageImpl) (registeredPackage instanceof UtilitiesPackageImpl
+			? registeredPackage
+			: UtilitiesPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE
+			.getEPackage(ExpressionsPackage.eNS_URI);
+		ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl) (registeredPackage instanceof ExpressionsPackageImpl
+			? registeredPackage
+			: ExpressionsPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theTypesPackage.createPackageContents();
@@ -836,7 +834,7 @@ public class TypesPackageImpl
 	 * @generated
 	 */
 	protected void createDuplicatesAnnotations() {
-		String source = "duplicates"; //$NON-NLS-1$	
+		String source = "duplicates"; //$NON-NLS-1$
 		addAnnotation(bagTypeEClass, source, new String[]{});
 		addAnnotation(orderedSetTypeEClass, source, new String[]{});
 		addAnnotation(sequenceTypeEClass, source, new String[]{});

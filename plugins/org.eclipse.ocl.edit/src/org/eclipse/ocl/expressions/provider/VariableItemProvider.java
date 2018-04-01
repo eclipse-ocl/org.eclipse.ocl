@@ -87,17 +87,15 @@ public class VariableItemProvider
 	 * @generated
 	 */
 	protected void addStartPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_ASTNode_startPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ASTNode_startPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.AST_NODE__START_POSITION, true,
-				false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_ASTNode_startPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_ASTNode_startPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			UtilitiesPackage.Literals.AST_NODE__START_POSITION, true, false,
+			false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -107,16 +105,14 @@ public class VariableItemProvider
 	 * @generated
 	 */
 	protected void addEndPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_ASTNode_endPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ASTNode_endPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.AST_NODE__END_POSITION, true, false,
-				false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_ASTNode_endPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_ASTNode_endPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			UtilitiesPackage.Literals.AST_NODE__END_POSITION, true, false,
+			false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -126,17 +122,17 @@ public class VariableItemProvider
 	 * @generated
 	 */
 	protected void addTypeStartPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TypedASTNode_typeStartPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TypedASTNode_typeStartPosition_feature", "_UI_TypedASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.TYPED_AST_NODE__TYPE_START_POSITION,
-				true, false, false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_TypedASTNode_typeStartPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TypedASTNode_typeStartPosition_feature", //$NON-NLS-1$
+				"_UI_TypedASTNode_type"), //$NON-NLS-1$
+			UtilitiesPackage.Literals.TYPED_AST_NODE__TYPE_START_POSITION, true,
+			false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -146,17 +142,17 @@ public class VariableItemProvider
 	 * @generated
 	 */
 	protected void addTypeEndPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TypedASTNode_typeEndPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TypedASTNode_typeEndPosition_feature", "_UI_TypedASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.TYPED_AST_NODE__TYPE_END_POSITION,
-				true, false, false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_TypedASTNode_typeEndPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TypedASTNode_typeEndPosition_feature", //$NON-NLS-1$
+				"_UI_TypedASTNode_type"), //$NON-NLS-1$
+			UtilitiesPackage.Literals.TYPED_AST_NODE__TYPE_END_POSITION, true,
+			false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -166,16 +162,16 @@ public class VariableItemProvider
 	 * @generated
 	 */
 	protected void addRepresentedParameterPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Variable_representedParameter_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_Variable_representedParameter_feature", "_UI_Variable_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.VARIABLE__REPRESENTED_PARAMETER,
-				true, false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_Variable_representedParameter_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_Variable_representedParameter_feature", //$NON-NLS-1$
+				"_UI_Variable_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.VARIABLE__REPRESENTED_PARAMETER, true,
+			false, false, null, null, null));
 	}
 
 	/**
@@ -241,7 +237,8 @@ public class VariableItemProvider
 	@Override
 	public String getText(Object object) {
 		Variable<?, ?> variable = (Variable<?, ?>) object;
-		return getString("_UI_Variable_type") + " " + variable.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_Variable_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ variable.getStartPosition();
 	}
 
 	/**

@@ -21,12 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.types.TypesPackage;
@@ -47,9 +42,7 @@ import org.eclipse.uml2.uml.edit.providers.ClassifierItemProvider;
  * @generated
  */
 public class MessageTypeItemProvider
-		extends ClassifierItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends ClassifierItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -85,16 +78,16 @@ public class MessageTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredOperationPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_MessageType_referredOperation_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MessageType_referredOperation_feature", "_UI_MessageType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_MessageType_referredOperation_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_MessageType_referredOperation_feature", //$NON-NLS-1$
+				"_UI_MessageType_type"), //$NON-NLS-1$
+			TypesPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, true, false,
+			false, null, null, null));
 	}
 
 	/**
@@ -104,16 +97,16 @@ public class MessageTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredSignalPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_MessageType_referredSignal_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MessageType_referredSignal_feature", "_UI_MessageType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_MessageType_referredSignal_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_MessageType_referredSignal_feature", //$NON-NLS-1$
+				"_UI_MessageType_type"), //$NON-NLS-1$
+			TypesPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, true, false,
+			false, null, null, null));
 	}
 
 	/**
@@ -182,8 +175,8 @@ public class MessageTypeItemProvider
 	public String getText(Object object) {
 		String label = ((MessageType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_MessageType_type") : //$NON-NLS-1$
-			getString("_UI_MessageType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_MessageType_type") //$NON-NLS-1$
+			: getString("_UI_MessageType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -247,8 +240,8 @@ public class MessageTypeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

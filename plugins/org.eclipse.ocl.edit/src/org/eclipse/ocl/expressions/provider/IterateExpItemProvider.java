@@ -18,12 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -37,9 +32,7 @@ import org.eclipse.ocl.expressions.IterateExp;
  * @generated
  */
 public class IterateExpItemProvider
-		extends LoopExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends LoopExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -129,7 +122,8 @@ public class IterateExpItemProvider
 	@Override
 	public String getText(Object object) {
 		IterateExp<?, ?> iterateExp = (IterateExp<?, ?>) object;
-		return getString("_UI_IterateExp_type") + " " + iterateExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_IterateExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ iterateExp.getStartPosition();
 	}
 
 	/**
@@ -176,8 +170,8 @@ public class IterateExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

@@ -78,16 +78,16 @@ public class MessageTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredOperationPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_MessageType_referredOperation_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MessageType_referredOperation_feature", "_UI_MessageType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_MessageType_referredOperation_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_MessageType_referredOperation_feature", //$NON-NLS-1$
+				"_UI_MessageType_type"), //$NON-NLS-1$
+			TypesPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, true, false,
+			false, null, null, null));
 	}
 
 	/**
@@ -97,16 +97,16 @@ public class MessageTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredSignalPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_MessageType_referredSignal_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MessageType_referredSignal_feature", "_UI_MessageType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_MessageType_referredSignal_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_MessageType_referredSignal_feature", //$NON-NLS-1$
+				"_UI_MessageType_type"), //$NON-NLS-1$
+			TypesPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, true, false,
+			false, null, null, null));
 	}
 
 	/**

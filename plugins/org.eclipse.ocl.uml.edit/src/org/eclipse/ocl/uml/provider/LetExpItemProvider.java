@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.ocl.expressions.ExpressionsFactory;
@@ -41,9 +36,7 @@ import org.eclipse.ocl.uml.UMLPackage;
  * @generated
  */
 public class LetExpItemProvider
-		extends OCLExpressionItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends OCLExpressionItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -78,16 +71,14 @@ public class LetExpItemProvider
 	 * @generated
 	 */
 	protected void addInPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_LetExp_in_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_LetExp_in_feature", "_UI_LetExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.LET_EXP__IN, true, false, false,
-				null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_LetExp_in_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_LetExp_in_feature", "_UI_LetExp_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			ExpressionsPackage.Literals.LET_EXP__IN, true, false, false, null,
+			null, null));
 	}
 
 	/**
@@ -154,8 +145,8 @@ public class LetExpItemProvider
 	public String getText(Object object) {
 		String label = ((LetExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_LetExp_type") : //$NON-NLS-1$
-			getString("_UI_LetExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_LetExp_type") //$NON-NLS-1$
+			: getString("_UI_LetExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -191,189 +182,189 @@ public class LetExpItemProvider
 			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createAssociationClassCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createAssociationClassCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createBooleanLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createBooleanLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createCollectionLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createCollectionLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createEnumLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createEnumLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createIfExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createIfExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createIntegerLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createIntegerLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createInvalidLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createInvalidLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createIterateExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createIterateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createIteratorExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createIteratorExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createLetExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createLetExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createMessageExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createMessageExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createNullLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createNullLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createOperationCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createOperationCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createPropertyCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createPropertyCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createRealLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createRealLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createStateExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createStateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createStringLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createStringLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createTupleLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createTupleLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createTypeExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createTypeExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createUnspecifiedValueExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createUnspecifiedValueExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			UMLFactory.eINSTANCE.createVariableExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				UMLFactory.eINSTANCE.createVariableExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createAssociationClassCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createAssociationClassCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createBooleanLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createBooleanLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createCollectionLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createCollectionLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createEnumLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createEnumLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createIfExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createIfExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createIntegerLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createIntegerLiteralExp()));
 
 		newChildDescriptors.add(createChildParameter(
 			ExpressionsPackage.Literals.LET_EXP__IN,
 			ExpressionsFactory.eINSTANCE.createUnlimitedNaturalLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createInvalidLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createInvalidLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createIterateExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createIterateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createIteratorExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createIteratorExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createLetExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createLetExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createMessageExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createMessageExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createNullLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createNullLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createOperationCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createOperationCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createPropertyCallExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createPropertyCallExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createRealLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createRealLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createStateExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createStateExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createStringLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createStringLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createTupleLiteralExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createTupleLiteralExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createTypeExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createTypeExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createUnspecifiedValueExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createUnspecifiedValueExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__IN,
-			ExpressionsFactory.eINSTANCE.createVariableExp()));
+		newChildDescriptors
+			.add(createChildParameter(ExpressionsPackage.Literals.LET_EXP__IN,
+				ExpressionsFactory.eINSTANCE.createVariableExp()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__VARIABLE,
-			UMLFactory.eINSTANCE.createVariable()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LET_EXP__VARIABLE,
+				UMLFactory.eINSTANCE.createVariable()));
 
-		newChildDescriptors.add(createChildParameter(
-			ExpressionsPackage.Literals.LET_EXP__VARIABLE,
-			ExpressionsFactory.eINSTANCE.createVariable()));
+		newChildDescriptors.add(
+			createChildParameter(ExpressionsPackage.Literals.LET_EXP__VARIABLE,
+				ExpressionsFactory.eINSTANCE.createVariable()));
 	}
 
 }

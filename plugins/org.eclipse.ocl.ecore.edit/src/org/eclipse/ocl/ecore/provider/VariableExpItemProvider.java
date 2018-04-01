@@ -17,13 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.ecore.VariableExp;
 
 import org.eclipse.ocl.expressions.ExpressionsPackage;
@@ -35,9 +29,7 @@ import org.eclipse.ocl.expressions.ExpressionsPackage;
  * @generated
  */
 public class VariableExpItemProvider
-		extends OCLExpressionItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends OCLExpressionItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -72,16 +64,16 @@ public class VariableExpItemProvider
 	 * @generated
 	 */
 	protected void addReferredVariablePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_VariableExp_referredVariable_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_VariableExp_referredVariable_feature", "_UI_VariableExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE,
-				true, false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_VariableExp_referredVariable_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_VariableExp_referredVariable_feature", //$NON-NLS-1$
+				"_UI_VariableExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE, true,
+			false, false, null, null, null));
 	}
 
 	/**
@@ -116,8 +108,8 @@ public class VariableExpItemProvider
 	public String getText(Object object) {
 		String label = ((VariableExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_VariableExp_type") : //$NON-NLS-1$
-			getString("_UI_VariableExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_VariableExp_type") //$NON-NLS-1$
+			: getString("_UI_VariableExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

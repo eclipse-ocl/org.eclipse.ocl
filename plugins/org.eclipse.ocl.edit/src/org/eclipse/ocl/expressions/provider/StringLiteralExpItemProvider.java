@@ -17,12 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -36,9 +31,7 @@ import org.eclipse.ocl.expressions.StringLiteralExp;
  * @generated
  */
 public class StringLiteralExpItemProvider
-		extends PrimitiveLiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends PrimitiveLiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -73,17 +66,17 @@ public class StringLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addStringSymbolPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_StringLiteralExp_stringSymbol_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_StringLiteralExp_stringSymbol_feature", "_UI_StringLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.STRING_LITERAL_EXP__STRING_SYMBOL,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_StringLiteralExp_stringSymbol_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_StringLiteralExp_stringSymbol_feature", //$NON-NLS-1$
+				"_UI_StringLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.STRING_LITERAL_EXP__STRING_SYMBOL, true,
+			false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -117,7 +110,8 @@ public class StringLiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		StringLiteralExp<?> stringLiteralExp = (StringLiteralExp<?>) object;
-		return getString("_UI_StringLiteralExp_type") + " " + stringLiteralExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_StringLiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ stringLiteralExp.getStartPosition();
 	}
 
 	/**

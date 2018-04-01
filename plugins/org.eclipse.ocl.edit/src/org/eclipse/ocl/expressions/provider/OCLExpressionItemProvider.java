@@ -81,17 +81,15 @@ public class OCLExpressionItemProvider
 	 * @generated
 	 */
 	protected void addStartPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_ASTNode_startPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ASTNode_startPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.AST_NODE__START_POSITION, true,
-				false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_ASTNode_startPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_ASTNode_startPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			UtilitiesPackage.Literals.AST_NODE__START_POSITION, true, false,
+			false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -101,16 +99,14 @@ public class OCLExpressionItemProvider
 	 * @generated
 	 */
 	protected void addEndPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_ASTNode_endPosition_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ASTNode_endPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UtilitiesPackage.Literals.AST_NODE__END_POSITION, true, false,
-				false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_ASTNode_endPosition_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_ASTNode_endPosition_feature", "_UI_ASTNode_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			UtilitiesPackage.Literals.AST_NODE__END_POSITION, true, false,
+			false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -132,7 +128,8 @@ public class OCLExpressionItemProvider
 	@Override
 	public String getText(Object object) {
 		OCLExpression<?> oclExpression = (OCLExpression<?>) object;
-		return getString("_UI_OCLExpression_type") + " " + oclExpression.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_OCLExpression_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ oclExpression.getStartPosition();
 	}
 
 	/**

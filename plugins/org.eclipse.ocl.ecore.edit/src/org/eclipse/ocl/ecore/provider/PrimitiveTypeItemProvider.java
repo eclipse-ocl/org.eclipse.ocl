@@ -20,13 +20,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.provider.EDataTypeItemProvider;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.ecore.PrimitiveType;
 
 import org.eclipse.ocl.ecore.edit.OCLEcoreEditPlugin;
@@ -38,9 +32,7 @@ import org.eclipse.ocl.ecore.edit.OCLEcoreEditPlugin;
  * @generated
  */
 public class PrimitiveTypeItemProvider
-		extends EDataTypeItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends EDataTypeItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -99,8 +91,8 @@ public class PrimitiveTypeItemProvider
 	public String getText(Object object) {
 		String label = ((PrimitiveType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_PrimitiveType_type") : //$NON-NLS-1$
-			getString("_UI_PrimitiveType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_PrimitiveType_type") //$NON-NLS-1$
+			: getString("_UI_PrimitiveType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

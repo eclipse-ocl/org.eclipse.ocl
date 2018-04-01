@@ -16,13 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.types.OrderedSetType;
 
 /**
@@ -32,9 +26,7 @@ import org.eclipse.ocl.types.OrderedSetType;
  * @generated
  */
 public class OrderedSetTypeItemProvider
-		extends CollectionTypeItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CollectionTypeItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -92,7 +84,8 @@ public class OrderedSetTypeItemProvider
 	@Override
 	public String getText(Object object) {
 		OrderedSetType<?, ?> orderedSetType = (OrderedSetType<?, ?>) object;
-		return getString("_UI_OrderedSetType_type") + " " + orderedSetType.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_OrderedSetType_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ orderedSetType.getStartPosition();
 	}
 
 	/**

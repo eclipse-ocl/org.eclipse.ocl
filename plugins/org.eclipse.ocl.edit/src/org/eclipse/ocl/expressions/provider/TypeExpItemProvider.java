@@ -17,13 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.TypeExp;
 
@@ -34,9 +28,7 @@ import org.eclipse.ocl.expressions.TypeExp;
  * @generated
  */
 public class TypeExpItemProvider
-		extends OCLExpressionItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends OCLExpressionItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -71,16 +63,14 @@ public class TypeExpItemProvider
 	 * @generated
 	 */
 	protected void addReferredTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TypeExp_referredType_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TypeExp_referredType_feature", "_UI_TypeExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.TYPE_EXP__REFERRED_TYPE, true,
-				false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(), getString("_UI_TypeExp_referredType_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TypeExp_referredType_feature", "_UI_TypeExp_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			ExpressionsPackage.Literals.TYPE_EXP__REFERRED_TYPE, true, false,
+			false, null, null, null));
 	}
 
 	/**

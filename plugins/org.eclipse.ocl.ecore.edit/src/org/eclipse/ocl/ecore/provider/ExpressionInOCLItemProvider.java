@@ -89,16 +89,16 @@ public class ExpressionInOCLItemProvider
 			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures
-				.add(UtilitiesPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION);
-			childrenFeatures
-				.add(UtilitiesPackage.Literals.EXPRESSION_IN_OCL__CONTEXT_VARIABLE);
-			childrenFeatures
-				.add(UtilitiesPackage.Literals.EXPRESSION_IN_OCL__RESULT_VARIABLE);
-			childrenFeatures
-				.add(UtilitiesPackage.Literals.EXPRESSION_IN_OCL__PARAMETER_VARIABLE);
-			childrenFeatures
-				.add(UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE);
+			childrenFeatures.add(
+				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION);
+			childrenFeatures.add(
+				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__CONTEXT_VARIABLE);
+			childrenFeatures.add(
+				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__RESULT_VARIABLE);
+			childrenFeatures.add(
+				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__PARAMETER_VARIABLE);
+			childrenFeatures.add(
+				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE);
 		}
 		return childrenFeatures;
 	}
@@ -617,21 +617,19 @@ public class ExpressionInOCLItemProvider
 			UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEReference()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.create(org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
+		newChildDescriptors.add(createChildParameter(
+			UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.create(
+				org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY)));
 
 		newChildDescriptors.add(createChildParameter(
 			UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
 			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEGenericType()));
 
-		newChildDescriptors
-			.add(createChildParameter(
-				UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
-				org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
-					.createETypeParameter()));
+		newChildDescriptors.add(createChildParameter(
+			UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
+			org.eclipse.emf.ecore.EcoreFactory.eINSTANCE
+				.createETypeParameter()));
 
 		newChildDescriptors.add(createChildParameter(
 			UtilitiesPackage.Literals.EXPRESSION_IN_OCL__GENERATED_TYPE,
@@ -801,8 +799,8 @@ public class ExpressionInOCLItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

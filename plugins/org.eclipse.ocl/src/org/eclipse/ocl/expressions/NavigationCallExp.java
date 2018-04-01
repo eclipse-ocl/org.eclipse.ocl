@@ -35,7 +35,7 @@ public interface NavigationCallExp<C, P>
 
 	/**
 	 * Returns the value of the '<em><b>Qualifier</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}&lt;C>.
+	 * The list contents are of type {@link org.eclipse.ocl.expressions.OCLExpression}<code>&lt;C&gt;</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Qualifier</em>' containment reference list isn't clear,

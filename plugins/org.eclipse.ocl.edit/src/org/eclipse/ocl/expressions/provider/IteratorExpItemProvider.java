@@ -16,13 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.IteratorExp;
 
@@ -33,9 +27,7 @@ import org.eclipse.ocl.expressions.IteratorExp;
  * @generated
  */
 public class IteratorExpItemProvider
-		extends LoopExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends LoopExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -93,7 +85,8 @@ public class IteratorExpItemProvider
 	@Override
 	public String getText(Object object) {
 		IteratorExp<?, ?> iteratorExp = (IteratorExp<?, ?>) object;
-		return getString("_UI_IteratorExp_type") + " " + iteratorExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_IteratorExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ iteratorExp.getStartPosition();
 	}
 
 	/**
@@ -129,8 +122,8 @@ public class IteratorExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

@@ -17,13 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 
 import org.eclipse.ocl.uml.PropertyCallExp;
@@ -35,9 +29,7 @@ import org.eclipse.ocl.uml.PropertyCallExp;
  * @generated
  */
 public class PropertyCallExpItemProvider
-		extends NavigationCallExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends NavigationCallExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -72,16 +64,16 @@ public class PropertyCallExpItemProvider
 	 * @generated
 	 */
 	protected void addReferredPropertyPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_PropertyCallExp_referredProperty_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_PropertyCallExp_referredProperty_feature", "_UI_PropertyCallExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY,
-				true, false, false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_PropertyCallExp_referredProperty_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_PropertyCallExp_referredProperty_feature", //$NON-NLS-1$
+				"_UI_PropertyCallExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY,
+			true, false, false, null, null, null));
 	}
 
 	/**
@@ -116,8 +108,8 @@ public class PropertyCallExpItemProvider
 	public String getText(Object object) {
 		String label = ((PropertyCallExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_PropertyCallExp_type") : //$NON-NLS-1$
-			getString("_UI_PropertyCallExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_PropertyCallExp_type") //$NON-NLS-1$
+			: getString("_UI_PropertyCallExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -153,8 +145,8 @@ public class PropertyCallExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

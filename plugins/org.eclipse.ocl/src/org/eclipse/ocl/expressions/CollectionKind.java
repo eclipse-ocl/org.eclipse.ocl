@@ -27,7 +27,8 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum CollectionKind
-		implements Enumerator {
+		implements
+		Enumerator {
 	//$NON-NLS-1$ //$NON-NLS-2$
 
 	/**

@@ -17,12 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -36,9 +31,7 @@ import org.eclipse.ocl.expressions.ExpressionsPackage;
  * @generated
  */
 public class BooleanLiteralExpItemProvider
-		extends PrimitiveLiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends PrimitiveLiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -73,17 +66,17 @@ public class BooleanLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addBooleanSymbolPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_BooleanLiteralExp_booleanSymbol_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_BooleanLiteralExp_booleanSymbol_feature", "_UI_BooleanLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_BooleanLiteralExp_booleanSymbol_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_BooleanLiteralExp_booleanSymbol_feature", //$NON-NLS-1$
+				"_UI_BooleanLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL,
+			true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -117,7 +110,8 @@ public class BooleanLiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		BooleanLiteralExp<?> booleanLiteralExp = (BooleanLiteralExp<?>) object;
-		return getString("_UI_BooleanLiteralExp_type") + " " + booleanLiteralExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_BooleanLiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ booleanLiteralExp.getStartPosition();
 	}
 
 	/**

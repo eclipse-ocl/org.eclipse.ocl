@@ -63,7 +63,7 @@ public interface LoopExp<C, PM>
 
 	/**
 	 * Returns the value of the '<em><b>Iterator</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.expressions.Variable}&lt;C, PM>.
+	 * The list contents are of type {@link org.eclipse.ocl.expressions.Variable}<code>&lt;C, PM&gt;</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Iterator</em>' containment reference list isn't clear,

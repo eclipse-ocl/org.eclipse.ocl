@@ -75,16 +75,16 @@ public class SendSignalActionItemProvider
 	 * @generated
 	 */
 	protected void addSignalPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SendSignalAction_signal_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_SendSignalAction_signal_feature", "_UI_SendSignalAction_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				EcorePackage.Literals.SEND_SIGNAL_ACTION__SIGNAL, true, false,
-				true, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_SendSignalAction_signal_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_SendSignalAction_signal_feature", //$NON-NLS-1$
+				"_UI_SendSignalAction_type"), //$NON-NLS-1$
+			EcorePackage.Literals.SEND_SIGNAL_ACTION__SIGNAL, true, false, true,
+			null, null, null));
 	}
 
 	/**

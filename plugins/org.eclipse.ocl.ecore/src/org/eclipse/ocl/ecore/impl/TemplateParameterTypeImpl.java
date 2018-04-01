@@ -234,7 +234,7 @@ public class TemplateParameterTypeImpl
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (specification: "); //$NON-NLS-1$
 		result.append(specification);
 		result.append(')');

@@ -16,13 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.expressions.LiteralExp;
 
 /**
@@ -32,9 +26,7 @@ import org.eclipse.ocl.expressions.LiteralExp;
  * @generated
  */
 public class LiteralExpItemProvider
-		extends OCLExpressionItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends OCLExpressionItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -92,7 +84,8 @@ public class LiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		LiteralExp<?> literalExp = (LiteralExp<?>) object;
-		return getString("_UI_LiteralExp_type") + " " + literalExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_LiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ literalExp.getStartPosition();
 	}
 
 	/**

@@ -17,13 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 
 import org.eclipse.ocl.uml.AssociationClassCallExp;
@@ -35,9 +29,7 @@ import org.eclipse.ocl.uml.AssociationClassCallExp;
  * @generated
  */
 public class AssociationClassCallExpItemProvider
-		extends NavigationCallExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends NavigationCallExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -71,17 +63,19 @@ public class AssociationClassCallExpItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addReferredAssociationClassPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_AssociationClassCallExp_referredAssociationClass_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_AssociationClassCallExp_referredAssociationClass_feature", "_UI_AssociationClassCallExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS,
-				true, false, false, null, null, null));
+	protected void addReferredAssociationClassPropertyDescriptor(
+			Object object) {
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString(
+				"_UI_AssociationClassCallExp_referredAssociationClass_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_AssociationClassCallExp_referredAssociationClass_feature", //$NON-NLS-1$
+				"_UI_AssociationClassCallExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS,
+			true, false, false, null, null, null));
 	}
 
 	/**
@@ -92,8 +86,8 @@ public class AssociationClassCallExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object,
-			getResourceLocator().getImage("full/obj16/AssociationClassCallExp")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator()
+			.getImage("full/obj16/AssociationClassCallExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -116,8 +110,8 @@ public class AssociationClassCallExpItemProvider
 	public String getText(Object object) {
 		String label = ((AssociationClassCallExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_AssociationClassCallExp_type") : //$NON-NLS-1$
-			getString("_UI_AssociationClassCallExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_AssociationClassCallExp_type") //$NON-NLS-1$
+			: getString("_UI_AssociationClassCallExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -153,8 +147,8 @@ public class AssociationClassCallExpItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection<?> selection) {
+	public String getCreateChildText(Object owner, Object feature, Object child,
+			Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 

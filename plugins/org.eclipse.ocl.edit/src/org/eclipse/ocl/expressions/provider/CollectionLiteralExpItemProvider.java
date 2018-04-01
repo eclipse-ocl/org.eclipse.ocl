@@ -19,12 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -39,9 +34,7 @@ import org.eclipse.ocl.expressions.ExpressionsPackage;
  * @generated
  */
 public class CollectionLiteralExpItemProvider
-		extends LiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends LiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -77,17 +70,17 @@ public class CollectionLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addKindPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CollectionLiteralExp_kind_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CollectionLiteralExp_kind_feature", "_UI_CollectionLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.COLLECTION_LITERAL_EXP__KIND, true,
-				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-				null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CollectionLiteralExp_kind_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CollectionLiteralExp_kind_feature", //$NON-NLS-1$
+				"_UI_CollectionLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.COLLECTION_LITERAL_EXP__KIND, true,
+			false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -97,17 +90,17 @@ public class CollectionLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addSimpleRangePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CollectionLiteralExp_simpleRange_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CollectionLiteralExp_simpleRange_feature", "_UI_CollectionLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.COLLECTION_LITERAL_EXP__SIMPLE_RANGE,
-				true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_CollectionLiteralExp_simpleRange_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_CollectionLiteralExp_simpleRange_feature", //$NON-NLS-1$
+				"_UI_CollectionLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.COLLECTION_LITERAL_EXP__SIMPLE_RANGE,
+			true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -173,7 +166,8 @@ public class CollectionLiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		CollectionLiteralExp<?> collectionLiteralExp = (CollectionLiteralExp<?>) object;
-		return getString("_UI_CollectionLiteralExp_type") + " " + collectionLiteralExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_CollectionLiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ collectionLiteralExp.getStartPosition();
 	}
 
 	/**

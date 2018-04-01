@@ -75,16 +75,15 @@ public class TypeTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TypeType_referredType_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TypeType_referredType_feature", "_UI_TypeType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.TYPE_TYPE__REFERRED_TYPE, false, false,
-				false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_TypeType_referredType_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TypeType_referredType_feature", "_UI_TypeType_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			TypesPackage.Literals.TYPE_TYPE__REFERRED_TYPE, false, false, false,
+			null, null, null));
 	}
 
 	/**

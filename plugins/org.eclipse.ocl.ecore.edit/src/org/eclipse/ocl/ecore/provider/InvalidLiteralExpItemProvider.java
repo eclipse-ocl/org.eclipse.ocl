@@ -16,13 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.ecore.InvalidLiteralExp;
 
 /**
@@ -32,9 +26,7 @@ import org.eclipse.ocl.ecore.InvalidLiteralExp;
  * @generated
  */
 public class InvalidLiteralExpItemProvider
-		extends LiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends LiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -93,8 +85,8 @@ public class InvalidLiteralExpItemProvider
 	public String getText(Object object) {
 		String label = ((InvalidLiteralExp) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_InvalidLiteralExp_type") : //$NON-NLS-1$
-			getString("_UI_InvalidLiteralExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_InvalidLiteralExp_type") //$NON-NLS-1$
+			: getString("_UI_InvalidLiteralExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

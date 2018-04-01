@@ -17,12 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -36,9 +31,7 @@ import org.eclipse.ocl.expressions.IntegerLiteralExp;
  * @generated
  */
 public class IntegerLiteralExpItemProvider
-		extends NumericLiteralExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends NumericLiteralExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -75,17 +68,17 @@ public class IntegerLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addIntegerSymbolPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_IntegerLiteralExp_integerSymbol_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_IntegerLiteralExp_integerSymbol_feature", "_UI_IntegerLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_IntegerLiteralExp_integerSymbol_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_integerSymbol_feature", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL,
+			true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -96,17 +89,17 @@ public class IntegerLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addExtendedIntegerSymbolPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_IntegerLiteralExp_extendedIntegerSymbol_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_IntegerLiteralExp_extendedIntegerSymbol_feature", "_UI_IntegerLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__EXTENDED_INTEGER_SYMBOL,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_IntegerLiteralExp_extendedIntegerSymbol_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_extendedIntegerSymbol_feature", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__EXTENDED_INTEGER_SYMBOL,
+			true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+			null, null));
 	}
 
 	/**
@@ -117,17 +110,17 @@ public class IntegerLiteralExpItemProvider
 	 * @generated
 	 */
 	protected void addLongSymbolPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_IntegerLiteralExp_longSymbol_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_IntegerLiteralExp_longSymbol_feature", "_UI_IntegerLiteralExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__LONG_SYMBOL,
-				true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_IntegerLiteralExp_longSymbol_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_longSymbol_feature", //$NON-NLS-1$
+				"_UI_IntegerLiteralExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.INTEGER_LITERAL_EXP__LONG_SYMBOL, true,
+			false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -161,7 +154,8 @@ public class IntegerLiteralExpItemProvider
 	@Override
 	public String getText(Object object) {
 		IntegerLiteralExp<?> integerLiteralExp = (IntegerLiteralExp<?>) object;
-		return getString("_UI_IntegerLiteralExp_type") + " " + integerLiteralExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_IntegerLiteralExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ integerLiteralExp.getStartPosition();
 	}
 
 	/**

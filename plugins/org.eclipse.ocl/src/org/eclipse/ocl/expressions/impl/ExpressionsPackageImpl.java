@@ -384,7 +384,7 @@ public class ExpressionsPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link ExpressionsPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -400,24 +400,25 @@ public class ExpressionsPackageImpl
 				.getEPackage(ExpressionsPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof ExpressionsPackageImpl
-				? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new ExpressionsPackageImpl());
+		Object registeredExpressionsPackage = EPackage.Registry.INSTANCE
+			.get(eNS_URI);
+		ExpressionsPackageImpl theExpressionsPackage = registeredExpressionsPackage instanceof ExpressionsPackageImpl
+			? (ExpressionsPackageImpl) registeredExpressionsPackage
+			: new ExpressionsPackageImpl();
 
 		isInited = true;
 
 		// Obtain or create and register interdependencies
-		TypesPackageImpl theTypesPackage = (TypesPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(TypesPackage.eNS_URI) instanceof TypesPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI)
-				: TypesPackage.eINSTANCE);
-		UtilitiesPackageImpl theUtilitiesPackage = (UtilitiesPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(
-				UtilitiesPackage.eNS_URI) instanceof UtilitiesPackageImpl
-					? EPackage.Registry.INSTANCE
-						.getEPackage(UtilitiesPackage.eNS_URI)
-					: UtilitiesPackage.eINSTANCE);
+		Object registeredPackage = EPackage.Registry.INSTANCE
+			.getEPackage(TypesPackage.eNS_URI);
+		TypesPackageImpl theTypesPackage = (TypesPackageImpl) (registeredPackage instanceof TypesPackageImpl
+			? registeredPackage
+			: TypesPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE
+			.getEPackage(UtilitiesPackage.eNS_URI);
+		UtilitiesPackageImpl theUtilitiesPackage = (UtilitiesPackageImpl) (registeredPackage instanceof UtilitiesPackageImpl
+			? registeredPackage
+			: UtilitiesPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theExpressionsPackage.createPackageContents();
@@ -2565,7 +2566,7 @@ public class ExpressionsPackageImpl
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$	
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
 		addAnnotation(oclExpressionEClass, source,
 			new String[]{"name", "OclExpression" //$NON-NLS-1$ //$NON-NLS-2$
 			});

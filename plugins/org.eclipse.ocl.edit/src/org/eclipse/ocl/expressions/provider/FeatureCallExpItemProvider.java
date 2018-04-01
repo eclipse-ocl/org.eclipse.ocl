@@ -17,12 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -36,9 +31,7 @@ import org.eclipse.ocl.expressions.FeatureCallExp;
  * @generated
  */
 public class FeatureCallExpItemProvider
-		extends CallExpItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends CallExpItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -73,17 +66,17 @@ public class FeatureCallExpItemProvider
 	 * @generated
 	 */
 	protected void addMarkedPrePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_FeatureCallExp_markedPre_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FeatureCallExp_markedPre_feature", "_UI_FeatureCallExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ExpressionsPackage.Literals.FEATURE_CALL_EXP__MARKED_PRE, true,
-				false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null,
-				null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_FeatureCallExp_markedPre_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_FeatureCallExp_markedPre_feature", //$NON-NLS-1$
+				"_UI_FeatureCallExp_type"), //$NON-NLS-1$
+			ExpressionsPackage.Literals.FEATURE_CALL_EXP__MARKED_PRE, true,
+			false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null,
+			null));
 	}
 
 	/**
@@ -105,7 +98,8 @@ public class FeatureCallExpItemProvider
 	@Override
 	public String getText(Object object) {
 		FeatureCallExp<?> featureCallExp = (FeatureCallExp<?>) object;
-		return getString("_UI_FeatureCallExp_type") + " " + featureCallExp.getStartPosition(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_FeatureCallExp_type") + " " //$NON-NLS-1$//$NON-NLS-2$
+			+ featureCallExp.getStartPosition();
 	}
 
 	/**

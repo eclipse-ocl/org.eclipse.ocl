@@ -18,13 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.uml.CollectionLiteralPart;
 
 import org.eclipse.ocl.uml.edit.OCLUMLEditPlugin;
@@ -38,9 +32,7 @@ import org.eclipse.uml2.uml.edit.providers.TypedElementItemProvider;
  * @generated
  */
 public class CollectionLiteralPartItemProvider
-		extends TypedElementItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends TypedElementItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -87,8 +79,8 @@ public class CollectionLiteralPartItemProvider
 	public String getText(Object object) {
 		String label = ((CollectionLiteralPart) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_CollectionLiteralPart_type") : //$NON-NLS-1$
-			getString("_UI_CollectionLiteralPart_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_CollectionLiteralPart_type") //$NON-NLS-1$
+			: getString("_UI_CollectionLiteralPart_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

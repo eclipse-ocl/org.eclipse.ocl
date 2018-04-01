@@ -21,13 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EClassifierItemProvider;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.ocl.ecore.TypeType;
 
 import org.eclipse.ocl.ecore.edit.OCLEcoreEditPlugin;
@@ -41,9 +35,7 @@ import org.eclipse.ocl.types.TypesPackage;
  * @generated
  */
 public class TypeTypeItemProvider
-		extends EClassifierItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+		extends EClassifierItemProvider {
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -78,16 +70,15 @@ public class TypeTypeItemProvider
 	 * @generated
 	 */
 	protected void addReferredTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory)
-					.getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_TypeType_referredType_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TypeType_referredType_feature", "_UI_TypeType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				TypesPackage.Literals.TYPE_TYPE__REFERRED_TYPE, false, false,
-				false, null, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory)
+				.getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_TypeType_referredType_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_TypeType_referredType_feature", "_UI_TypeType_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			TypesPackage.Literals.TYPE_TYPE__REFERRED_TYPE, false, false, false,
+			null, null, null));
 	}
 
 	/**
@@ -122,8 +113,8 @@ public class TypeTypeItemProvider
 	public String getText(Object object) {
 		String label = ((TypeType) object).getName();
 		return label == null || label.length() == 0
-			? getString("_UI_TypeType_type") : //$NON-NLS-1$
-			getString("_UI_TypeType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			? getString("_UI_TypeType_type") //$NON-NLS-1$
+			: getString("_UI_TypeType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
