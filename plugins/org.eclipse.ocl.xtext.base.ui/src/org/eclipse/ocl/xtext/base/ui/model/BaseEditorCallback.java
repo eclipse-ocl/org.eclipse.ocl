@@ -41,8 +41,6 @@ public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 		if (resource != null) {
 			IProject project = resource.getProject();
 			if (project != null && !toggleNature.hasNature(project) && project.isAccessible() && !project.isHidden()) {
-				String title = toggleNature.getAddNatureDialogTitle();
-				String message = toggleNature.getAddNatureDialogText(project.getName());
 				boolean addNature = false;
 				String addNatureKey = toggleNature.getAddNatureKey();
 				if (MessageDialogWithToggle.PROMPT.equals(dialogs.getUserDecision(addNatureKey))) {
@@ -50,6 +48,8 @@ public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 					if (testNameSuffix != null) {
 						throw new UnsupportedOperationException("Asking for a nature is not supported by testing");
 					}
+					String title = toggleNature.getAddNatureDialogTitle();
+					String message = toggleNature.getAddNatureDialogText(project.getName());
 					int userAnswer = dialogs.askUser(message, title, addNatureKey, editor.getEditorSite().getShell());
 					if (userAnswer == IDialogConstants.YES_ID) {
 						addNature = true;
