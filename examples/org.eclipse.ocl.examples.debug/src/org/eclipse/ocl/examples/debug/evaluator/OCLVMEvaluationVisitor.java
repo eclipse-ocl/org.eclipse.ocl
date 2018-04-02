@@ -46,24 +46,24 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 		this.vmEvaluationStepper = vmEvaluationStepper;
 		nestedEvaluationVisitor.setUndecoratedVisitor(this);
 	}
-	
+
 	/** @deprecated Evaluator no longer nests */
 	@Deprecated
-	@Override	
+	@Override
 	public @NonNull EvaluationVisitor createNestedEvaluator() {
 		return evaluationVisitor.createNestedEvaluator();
 	}
-	
+
 	/** @deprecated Evaluator no longer nests */
 	@Deprecated
-	@Override	
+	@Override
 	public void dispose() {
 		evaluationVisitor.dispose();
 	}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
-		return context.evaluate(body);
+		return evaluationVisitor.evaluate(body);
 	}
 
 	/** @deprecated moved to Evaluator */
@@ -77,13 +77,15 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	@Deprecated
 	@Override
 	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
-        return context.getDiagnosticSeverity(severityPreference, resultValue);
+		return context.getDiagnosticSeverity(severityPreference, resultValue);
 	}
 
+	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return context.getEnvironmentFactory();
 	}
 
+	@Override
 	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
 		return context.getEvaluationEnvironment();
 	}
@@ -102,48 +104,49 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull IdResolver getIdResolver() {
 		return context.getIdResolver();
 	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
-    @Override
+	@Override
 	public @Nullable EvaluationLogger getLogger() {
 		return context.getLogger();
 	}
 
-    /** @deprecated moved to Executor */
-    @Override
+	/** @deprecated moved to Executor */
 	@Deprecated
+	@Override
 	public @NonNull MetamodelManager getMetamodelManager() {
 		return context.getMetamodelManager();
 	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull ModelManager getModelManager() {
-        return context.getModelManager();
-    }
+		return context.getModelManager();
+	}
 
+	@Override
 	public @Nullable Monitor getMonitor() {
 		return evaluationVisitor.getMonitor();
 	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull Pattern getRegexPattern(@NonNull String regex) {
-        return context.getRegexPattern(regex);
+		return context.getRegexPattern(regex);
 	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
-        return context.getSeverity(validationKey);
+		return context.getSeverity(validationKey);
 	}
 
 	/** @deprecated moved to Evaluator */
@@ -156,7 +159,7 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {	
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
 		return context.getStaticTypeOf(value);
 	}
 
@@ -178,6 +181,7 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 		return (OCLVMEvaluationEnvironment) context.getEvaluationEnvironment();
 	}
 
+	@Override
 	public @NonNull VMEvaluationStepper getVMEvaluationStepper() {
 		return vmEvaluationStepper;
 	}
@@ -199,13 +203,14 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 		context.setLogger(logger);
 	}
 
+	@Override
 	public void setMonitor(@Nullable Monitor monitor) {
 		evaluationVisitor.setMonitor(monitor);
 	}
 
 	@Override
 	public void setUndecoratedVisitor(@NonNull EvaluationVisitor evaluationVisitor) {
-		evaluationVisitor.setUndecoratedVisitor(evaluationVisitor);
+		this.evaluationVisitor.setUndecoratedVisitor(evaluationVisitor);
 	}
 
 	@Override
@@ -217,10 +222,10 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	public Object visitVariable(@NonNull Variable vd) {
 		Object result = super.visitVariable(vd);
 		Type declaredType = vd.getType();
-//		String name = vd.getName();
+		//		String name = vd.getName();
 		EvaluationEnvironment env = getEvaluationEnvironment();
 		env.replace(vd, declaredType);
-//		env.replace(name, env.getValueOf(name), declaredType);
+		//		env.replace(name, env.getValueOf(name), declaredType);
 
 		return result;
 	}

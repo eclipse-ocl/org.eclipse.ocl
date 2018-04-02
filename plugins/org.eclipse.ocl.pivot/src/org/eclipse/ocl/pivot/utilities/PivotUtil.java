@@ -1149,6 +1149,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull VariableDeclaration getOwnedContext(@NonNull ExpressionInOCL asExpression) {
+		return ClassUtil.nonNullState(asExpression.getOwnedContext());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedElse(@NonNull IfExp ifExp) {
