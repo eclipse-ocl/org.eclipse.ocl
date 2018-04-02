@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/4" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/4 pathmap://UML_PROFILES/Ecore.profile.uml#_B7dOIMEREduRdatXodjBjA">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:Ecore_1="http://www.eclipse.org/uml2/schemas/Ecore/4" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA http://www.eclipse.org/uml2/schemas/Ecore/4 pathmap://UML_PROFILES/Ecore.profile.uml#_B7dOIMEREduRdatXodjBjA">
   <uml:Model xmi:id="_qdx8sQ8fEduhWtVvKtiQ7w" name="ocl" URI="http://www.eclipse.org/ocl/1.1.0/OCLCST">
     <packagedElement xmi:type="uml:Package" xmi:id="_qdx8sP8fEduhWtVvKtiQ7w" name="cst" URI="http://www.eclipse.org/ocl/1.1.0/OCL/CST">
-      <elementImport xmi:id="_5DyD0LD5Ed6LkdYdYK9_JA"/>
       <packageImport xmi:id="_CSYeEI2GEd2mlKUM3HGxZg">
         <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#_0"/>
       </packageImport>
@@ -143,9 +142,6 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qdx9BP8fEduhWtVvKtiQ7w"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Association" xmi:id="_qdx9Bf8fEduhWtVvKtiQ7w" memberEnd="_qdx9Bv8fEduhWtVvKtiQ7w">
-        <ownedEnd xmi:id="_qdx9Bv8fEduhWtVvKtiQ7w" type="_qdx8__8fEduhWtVvKtiQ7w" association="_qdx9Bf8fEduhWtVvKtiQ7w"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_qdx9B_8fEduhWtVvKtiQ7w" memberEnd="_qdx9A_8fEduhWtVvKtiQ7w _qdx9CP8fEduhWtVvKtiQ7w">
         <ownedEnd xmi:id="_qdx9CP8fEduhWtVvKtiQ7w" type="_qdx8__8fEduhWtVvKtiQ7w" association="_qdx9B_8fEduhWtVvKtiQ7w"/>
       </packagedElement>
@@ -173,9 +169,6 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_qdx9Gf8fEduhWtVvKtiQ7w" memberEnd="_qdx9Ff8fEduhWtVvKtiQ7w _qdx9Gv8fEduhWtVvKtiQ7w">
         <ownedEnd xmi:id="_qdx9Gv8fEduhWtVvKtiQ7w" type="_qdx9E_8fEduhWtVvKtiQ7w" association="_qdx9Gf8fEduhWtVvKtiQ7w"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Association" xmi:id="_qdx9G_8fEduhWtVvKtiQ7w" memberEnd="_qdx9HP8fEduhWtVvKtiQ7w">
-        <ownedEnd xmi:id="_qdx9HP8fEduhWtVvKtiQ7w" type="_qdx9E_8fEduhWtVvKtiQ7w" association="_qdx9G_8fEduhWtVvKtiQ7w"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_qdx9H_8fEduhWtVvKtiQ7w" name="OperationContextDeclCS">
         <generalization xmi:id="_qdx9IP8fEduhWtVvKtiQ7w" general="_qdx8yv8fEduhWtVvKtiQ7w"/>
@@ -708,7 +701,7 @@
     </packagedElement>
     <profileApplication xmi:id="_qdx-XP8fEduhWtVvKtiQ7w">
       <eAnnotations xmi:id="_qdx-Xf8fEduhWtVvKtiQ7w" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_B7dOIMEREduRdatXodjBjA"/>
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
       </eAnnotations>
       <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
     </profileApplication>
@@ -723,7 +716,7 @@
   <Ecore:EReference xmi:id="_qdx-ZP8fEduhWtVvKtiQ7w" base_Property="_qdx8uv8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-Zf8fEduhWtVvKtiQ7w" base_Property="_qdx8vf8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-Zv8fEduhWtVvKtiQ7w" base_Class="_qdx8v_8fEduhWtVvKtiQ7w"/>
-  <Ecore:EAttribute xmi:id="_qdx-Z_8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EAttribute xmi:id="_qdx-Z_8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-aP8fEduhWtVvKtiQ7w" base_Class="_qdx8xP8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-af8fEduhWtVvKtiQ7w" xmlName="OclExpressionCS" base_Class="_qdx8xv8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-av8fEduhWtVvKtiQ7w" base_Class="_qdx8yv8fEduhWtVvKtiQ7w"/>
@@ -749,14 +742,14 @@
   <Ecore:EEnumLiteral xmi:id="_qdx-fv8fEduhWtVvKtiQ7w" base_EnumerationLiteral="_qdx89_8fEduhWtVvKtiQ7w"/>
   <Ecore:EEnumLiteral xmi:id="_qdx-f_8fEduhWtVvKtiQ7w" base_EnumerationLiteral="_qdx8-f8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-gP8fEduhWtVvKtiQ7w" base_Class="_qdx8__8fEduhWtVvKtiQ7w"/>
-  <Ecore:EReference xmi:id="_qdx-gf8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EReference xmi:id="_qdx-gf8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-gv8fEduhWtVvKtiQ7w" xmlName="oclExpressionCS" base_Property="_qdx9A_8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-g_8fEduhWtVvKtiQ7w" base_Class="_qdx9C_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-hP8fEduhWtVvKtiQ7w" base_Property="_qdx9Df8fEduhWtVvKtiQ7w"/>
-  <Ecore:EReference xmi:id="_qdx-hf8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EReference xmi:id="_qdx-hf8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-hv8fEduhWtVvKtiQ7w" base_Class="_qdx9E_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-h_8fEduhWtVvKtiQ7w" base_Property="_qdx9Ff8fEduhWtVvKtiQ7w"/>
-  <Ecore:EReference xmi:id="_qdx-iP8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EReference xmi:id="_qdx-iP8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qdx-if8fEduhWtVvKtiQ7w" base_Class="_qdx9H_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-iv8fEduhWtVvKtiQ7w" base_Property="_qdx9If8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qdx-i_8fEduhWtVvKtiQ7w" base_Property="_qdx9I_8fEduhWtVvKtiQ7w"/>
@@ -792,7 +785,7 @@
   <Ecore:EReference xmi:id="_qfsoSf8fEduhWtVvKtiQ7w" base_Property="_qdx9fv8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qfsoSv8fEduhWtVvKtiQ7w" base_Property="_qdx9gP8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsoS_8fEduhWtVvKtiQ7w" base_Class="_qdx9hv8fEduhWtVvKtiQ7w"/>
-  <Ecore:EAttribute xmi:id="_qfsoTP8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EAttribute xmi:id="_qfsoTP8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsoTf8fEduhWtVvKtiQ7w" base_Class="_qdx9jP8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsoTv8fEduhWtVvKtiQ7w" base_Class="_qdx9j_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qfsoT_8fEduhWtVvKtiQ7w" base_Property="_qdx9kf8fEduhWtVvKtiQ7w"/>
@@ -824,9 +817,9 @@
   <Ecore:EReference xmi:id="_qfsoaf8fEduhWtVvKtiQ7w" base_Property="_qdx90_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qfsoav8fEduhWtVvKtiQ7w" xmlName="oclExpression" base_Property="_qdx91f8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsoa_8fEduhWtVvKtiQ7w" base_Class="_qdx93f8fEduhWtVvKtiQ7w"/>
-  <Ecore:EClass xmi:id="_qfsobP8fEduhWtVvKtiQ7w"/>
-  <Ecore:EReference xmi:id="_qfsobf8fEduhWtVvKtiQ7w"/>
-  <Ecore:EReference xmi:id="_qfsobv8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EClass xmi:id="_qfsobP8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EReference xmi:id="_qfsobf8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EReference xmi:id="_qfsobv8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsob_8fEduhWtVvKtiQ7w" base_Class="_qdx96f8fEduhWtVvKtiQ7w"/>
   <Ecore:EAttribute xmi:id="_qfsocP8fEduhWtVvKtiQ7w" base_Property="_qdx96_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qfsocf8fEduhWtVvKtiQ7w" base_Property="_qdx97f8fEduhWtVvKtiQ7w"/>
@@ -847,9 +840,9 @@
   <Ecore:EClass xmi:id="_qfsogP8fEduhWtVvKtiQ7w" base_Class="_qdx-E_8fEduhWtVvKtiQ7w"/>
   <Ecore:EAttribute xmi:id="_qfsogf8fEduhWtVvKtiQ7w" base_Property="_qdx-Ff8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsogv8fEduhWtVvKtiQ7w" base_Class="_qdx-F_8fEduhWtVvKtiQ7w"/>
-  <Ecore:EAttribute xmi:id="_qfsog_8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EAttribute xmi:id="_qfsog_8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsohP8fEduhWtVvKtiQ7w" base_Class="_qdx-G_8fEduhWtVvKtiQ7w"/>
-  <Ecore:EAttribute xmi:id="_qfsohf8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EAttribute xmi:id="_qfsohf8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsohv8fEduhWtVvKtiQ7w" base_Class="_qdx-H_8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qfsoh_8fEduhWtVvKtiQ7w" xmlName="lastOclExpressionCS" base_Property="_qdx-If8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qfsoiP8fEduhWtVvKtiQ7w" base_Class="_qdx-Jf8fEduhWtVvKtiQ7w"/>
@@ -870,8 +863,8 @@
   <Ecore:EReference xmi:id="_qf-8Jf8fEduhWtVvKtiQ7w" base_Property="_qdx-TP8fEduhWtVvKtiQ7w"/>
   <Ecore:EReference xmi:id="_qf-8Jv8fEduhWtVvKtiQ7w" base_Property="_qdx-T_8fEduhWtVvKtiQ7w"/>
   <Ecore:EClass xmi:id="_qf-8J_8fEduhWtVvKtiQ7w" base_Class="_qdx-Vf8fEduhWtVvKtiQ7w"/>
-  <Ecore:EClass xmi:id="_qf-8KP8fEduhWtVvKtiQ7w"/>
-  <Ecore:EAttribute xmi:id="_qf-8Kf8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EClass xmi:id="_qf-8KP8fEduhWtVvKtiQ7w"/>
+  <Ecore_1:EAttribute xmi:id="_qf-8Kf8fEduhWtVvKtiQ7w"/>
   <Ecore:EDataType xmi:id="_wn-44I2FEd2mlKUM3HGxZg" instanceClassName="lpg.runtime.IToken" base_PrimitiveType="_tvVQwI2FEd2mlKUM3HGxZg"/>
   <Ecore:EAttribute xmi:id="_qkehgI2JEd2mlKUM3HGxZg" isTransient="true" base_Property="_PkTnII2GEd2mlKUM3HGxZg"/>
   <Ecore:EAttribute xmi:id="_na5BwI2GEd2mlKUM3HGxZg" isTransient="true" base_Property="_kTt1cI2GEd2mlKUM3HGxZg"/>
