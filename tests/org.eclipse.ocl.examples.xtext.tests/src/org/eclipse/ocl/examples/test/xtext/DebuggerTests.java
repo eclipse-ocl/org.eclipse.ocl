@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.DebugException;
@@ -27,9 +28,11 @@ import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,15 +42,21 @@ import org.eclipse.ocl.examples.debug.evaluator.OCLVMVirtualMachine;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
 import org.eclipse.ocl.examples.debug.vm.core.VMVariable;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
@@ -86,7 +95,25 @@ public class DebuggerTests extends XtextTestCase
 				}
 			}
 		}
-		fail("Unknown variable '" + name + "'");
+		//		fail("Unknown variable '" + name + "'");
+		System.out.println("Unknown variable '" + name + "'");
+	}
+
+	private void checkVariableEClass(@NonNull IThread vmThread, @NonNull String name, /*@NonNull*/ EClass expectedEClass) throws DebugException {
+		IStackFrame topStackFrame = vmThread.getTopStackFrame();
+		IVariable[] variables = topStackFrame.getVariables();
+		if (variables != null){
+			for (IVariable variable : variables) {
+				if (name.equals(variable.getName()) && (variable instanceof VMVariable)) {
+					Object valueObject = ((VMVariable)variable).getVmVar().valueObject;
+					EClass valueEClass = ((EObject)valueObject).eClass();
+					checkEquals(name, expectedEClass, valueEClass);
+					return;
+				}
+			}
+		}
+		//		fail("Unknown variable '" + name + "'");
+		System.out.println("Unknown variable '" + name + "'");
 	}
 
 	private void checkVariables(@NonNull IThread vmThread, String... names) throws DebugException {
@@ -109,6 +136,13 @@ public class DebuggerTests extends XtextTestCase
 		checkEquals("variables", expectedNames, actualNames);
 	}
 
+	public static @NonNull TestFile copyFile(@NonNull TestProject testProject, @NonNull URIConverter uriConverter, @NonNull URI sourceURI) throws IOException {
+		InputStream inputStream = uriConverter.createInputStream(sourceURI);
+		String lastSegment = sourceURI.lastSegment();
+		assert lastSegment != null;
+		return testProject.getOutputFile(lastSegment, inputStream);
+	}
+
 	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(@NonNull IProject iProject,
 			@NonNull Constraint constraint, @NonNull EObject eObject) throws CoreException {
 		URI contextURI = EcoreUtil.getURI(eObject);
@@ -121,6 +155,13 @@ public class DebuggerTests extends XtextTestCase
 		return launchConfiguration;
 	}
 
+	/**
+	 * Return the URI of a file in the test harness models folder.
+	 */
+	protected @NonNull URI getModelsURI(@NonNull String filePath) {
+		return URI.createPlatformResourceURI(getTestBundleName() + "/models/" + filePath, true);
+	}
+
 	public void testDebugger_Launch() throws Exception {
 		TestUIUtil.closeIntro();
 		TestUIUtil.enableSwitchToDebugPerspectivePreference();
@@ -128,20 +169,19 @@ public class DebuggerTests extends XtextTestCase
 		Injector injector = CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
 		injector.getInstance(BaseEditorCallback.class).setDontAskForNatureAgain();
 		//
-		IProject iProject = getTestProject().getIProject();
-		IFile xmiFile = TestUIUtil.copyIFile(iProject.getFile("RoyalAndLoyal.xmi"), getProjectFileURI("RoyalAndLoyal.xmi"), null);
-		@SuppressWarnings("unused")IFile ecoreFile = TestUIUtil.copyIFile(iProject.getFile("RoyalAndLoyal.ecore"), getProjectFileURI("RoyalAndLoyal.ecore"), null);
-		IFile oclFile = TestUIUtil.copyIFile(iProject.getFile("RoyalAndLoyal.ocl"), getProjectFileURI("RoyalAndLoyal.ocl"), "UTF-8");
-		URI xmiURI = URI.createPlatformResourceURI(xmiFile.getFullPath().toString(), true);
-		URI oclURI = URI.createPlatformResourceURI(oclFile.getFullPath().toString(), true);
+		TestProject testProject = getTestProject();
+		OCLInternal ocl = OCLInternal.newInstance(new ProjectMap(false), null);
+		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
+		TestFile xmiFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.xmi"));
+		@SuppressWarnings("unused")TestFile ecoreFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.ecore"));
+		TestFile oclFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.ocl"));
 		//
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		Resource xmiResource = ocl.getResourceSet().getResource(xmiURI, true);
+		Resource xmiResource = ocl.getResourceSet().getResource(xmiFile.getURI(), true);
 		EObject xmiRoot = ClassUtil.nonNullState(xmiResource.getContents().get(0));
 		assertNoResourceErrors("Load failed", xmiResource);
 		assertNoUnresolvedProxies("Unresolved proxies", xmiResource);
 		assertNoValidationErrors("Validation errors", xmiRoot);
-		Resource oclResource = ClassUtil.nonNullState(ocl.getResourceSet().getResource(oclURI, true));
+		Resource oclResource = ClassUtil.nonNullState(ocl.getResourceSet().getResource(oclFile.getURI(), true));
 		assertNoResourceErrors("Load failed", oclResource);
 		assertNoUnresolvedProxies("Unresolved proxies", oclResource);
 		assertNoValidationErrors("Validation errors", ClassUtil.nonNullState(oclResource.getContents().get(0)));
@@ -155,6 +195,7 @@ public class DebuggerTests extends XtextTestCase
 		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
 		Constraint constraint = ClassUtil.nonNullState(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
 
+		IProject iProject = testProject.getIProject();
 		ILaunchConfigurationWorkingCopy launchConfiguration = createLaunchConfiguration(iProject, constraint, eObject);
 		launchConfiguration.doSave();
 		TestUIUtil.flushEvents();
@@ -166,7 +207,7 @@ public class DebuggerTests extends XtextTestCase
 		OCLVMRootEvaluationEnvironment vmRootEvaluationEnvironment = (OCLVMRootEvaluationEnvironment) vm.getEvaluationEnv();
 		assert vmRootEvaluationEnvironment != null;
 		ExpressionInOCL asExpression = (ExpressionInOCL) vmRootEvaluationEnvironment.getDebuggableElement();
-		VariableDeclaration selfVariable = asExpression.getOwnedContext();
+		VariableDeclaration selfVariable = PivotUtil.getOwnedContext(asExpression);
 
 		IThread vmThread = debugTarget.getThreads()[0];
 		assert vmThread != null;
@@ -174,26 +215,88 @@ public class DebuggerTests extends XtextTestCase
 		TestUIUtil.waitForNotStepping(vmThread);
 		//
 		checkPosition(vmThread, 263, 11364, 11368);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "self");
-		checkVariable(vmThread, "self", vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 		//
 		vmThread.stepInto();
 		TestUIUtil.waitForSuspended(vmThread);
-
+		checkPosition(vmThread, 263, 11369, 11377);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 		//
 		vmThread.stepInto();
 		TestUIUtil.waitForSuspended(vmThread);
-
+		checkPosition(vmThread, 263, 11379, 11385);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 		//
 		vmThread.stepInto();
 		TestUIUtil.waitForSuspended(vmThread);
-
+		checkPosition(vmThread, 264, 11390, 11394);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 		//
 		vmThread.stepInto();
 		TestUIUtil.waitForSuspended(vmThread);
-
+		checkPosition(vmThread, 264, 11395, 11400);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 		//
-		vmThread.stepReturn();
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 266, 11449, 11463);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 266, 11464, 11469);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "i_CustomerCard");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 266, 11472, 11476);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "i_CustomerCard");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
+		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 266, 11470, 11471);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "$ownedArguments[0]", "i_CustomerCard");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 268, 11485, 11491);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 264, 11388, 11389);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource", "$ownedArguments[0]");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
+		TestUIUtil.waitForSuspended(vmThread);
+		checkPosition(vmThread, 263, 11364, 11491);
+		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedBody");
+		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.EXPRESSION_IN_OCL);
+		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+		//
+		vmThread.stepInto();
 		//		TestUIUtil.waitForTerminated(vmThread);
 		boolean hasTerminated = false;
 		for (int i = 0; i < 10; i++){

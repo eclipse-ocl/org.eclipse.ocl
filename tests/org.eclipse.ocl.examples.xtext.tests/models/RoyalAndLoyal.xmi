@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<RandL:Container_RandL
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:RandL="http://de.tuhh.sts.octopus/octopus2emfatic/2006/RandL"
+    xsi:schemaLocation="http://de.tuhh.sts.octopus/octopus2emfatic/2006/RandL RoyalAndLoyal.ecore">
+  <ref_RandL_Customer
+      isMale="true"
+      name="FirstCustomer"
+      title="Mr"
+      age="19"
+      cards="//@ref_RandL_CustomerCard.0"/>
+  <ref_RandL_CustomerCard
+      valid="true"
+      owner="//@ref_RandL_Customer.0"/>
+</RandL:Container_RandL>
