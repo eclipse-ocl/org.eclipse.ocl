@@ -66,7 +66,7 @@ public interface Executor extends Evaluator
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 	void popEvaluationEnvironment();
 	/**
-	 * @deprecated use TypedElement argument in ExecutorInternalExtension
+	 * @deprecated use Object argument in ExecutorInternalExtension
 	 */
 	@Deprecated
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);

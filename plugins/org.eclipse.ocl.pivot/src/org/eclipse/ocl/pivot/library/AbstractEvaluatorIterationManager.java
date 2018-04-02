@@ -38,7 +38,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		public ValueIterator(@NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this(ValueUtil.getExecutor(evaluator), collectionValue, variable);
 		}
-		
+
 		/**
 		 * @since 1.1
 		 */
@@ -48,7 +48,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 			this.variable = variable;
 			reset();
 		}
-		
+
 		public @Nullable Object get() {
 			return value;
 		}
@@ -56,7 +56,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		public boolean hasCurrent() {
 			return value != this;
 		}
-		
+
 		public @Nullable Object next() {
 			if (!javaIter.hasNext()) {
 				value = this;
@@ -64,7 +64,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 			else {
 				value = javaIter.next();
 				evaluationEnvironment.replace(variable, value);
-//				System.out.println(name + " = " + value);
+				//				System.out.println(name + " = " + value);
 			}
 			return value;
 		}
@@ -85,7 +85,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue) {
 		return createIterators(referredIterators, ValueUtil.getExecutor(evaluator), collectionValue);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -133,7 +133,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		if (accumulatorVariable != null) {
 			getEvaluationEnvironment().add(accumulatorVariable, accumulatorValue);
 		}
-		this.executor.pushEvaluationEnvironment(body, callExp);
+		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
 	public AbstractEvaluatorIterationManager(@NonNull AbstractEvaluatorIterationManager iterationManager, @NonNull CollectionValue collectionValue) {
@@ -143,7 +143,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		this.collectionValue = collectionValue;
 		this.accumulatorValue = iterationManager.accumulatorValue;
 		this.accumulatorVariable = iterationManager.accumulatorVariable;
-		this.executor.pushEvaluationEnvironment(body, callExp);
+		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
 	@Override
@@ -155,12 +155,12 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	public @Nullable Object evaluateBody() {
 		return executor.evaluate(body);
 	}
-	
+
 	@Override
 	public @Nullable Object getAccumulatorValue() {
 		return accumulatorValue;
 	}
-	
+
 	public @NonNull CollectionValue getCollectionValue() {
 		return collectionValue;
 	}
@@ -176,7 +176,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 
 	@Override
 	public String toString() {
-//		return body.eContainer().toString();
+		//		return body.eContainer().toString();
 		return body.toString();
 	}
 
