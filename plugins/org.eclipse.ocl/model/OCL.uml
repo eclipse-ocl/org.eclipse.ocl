@@ -308,11 +308,7 @@ s.concat (
           </ownedParameter>
         </ownedTemplateSignature>
         <generalization xmi:id="_unvTp9ppEdu-d8Dv4wLx9Q" general="_unvTqdppEdu-d8Dv4wLx9Q"/>
-        <ownedAttribute xmi:id="_unvTqNppEdu-d8Dv4wLx9Q" name="referredType" type="_unvTpNppEdu-d8Dv4wLx9Q" isOrdered="true" association="_unvTrNppEdu-d8Dv4wLx9Q">
-          <eAnnotations xmi:id="_fPg-UP17EduIT4IRhWIERQ" source="http://www.eclipse.org/emf/2002/GenModel">
-            <details xmi:id="_gYSkQP17EduIT4IRhWIERQ" key="suppressedSetVisibility" value="true"/>
-          </eAnnotations>
-        </ownedAttribute>
+        <ownedAttribute xmi:id="_unvTqNppEdu-d8Dv4wLx9Q" name="referredType" type="_unvTpNppEdu-d8Dv4wLx9Q" isOrdered="true" association="_unvTrNppEdu-d8Dv4wLx9Q"/>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_unvTqdppEdu-d8Dv4wLx9Q" name="PredefinedType_O">
           <templateBinding xmi:id="_unvTqtppEdu-d8Dv4wLx9Q" signature="_unvU9tppEdu-d8Dv4wLx9Q">
             <parameterSubstitution xmi:id="_unvTq9ppEdu-d8Dv4wLx9Q" actual="_unvTptppEdu-d8Dv4wLx9Q" formal="_unvU99ppEdu-d8Dv4wLx9Q"/>
@@ -733,10 +729,6 @@ s.concat (
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_unvVytppEdu-d8Dv4wLx9Q"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="__Xe6AJNZEeGIv5gP20E_FQ" name="extendedIntegerSymbol" visibility="public" isOrdered="true">
-          <eAnnotations xmi:id="_QSJh4JT7EeGpNZre7dx65Q" source="http://www.eclipse.org/emf/2002/GenModel">
-            <details xmi:id="_TXbQwJT7EeGpNZre7dx65Q" key="suppressedGetVisibility" value="true"/>
-            <details xmi:id="_1ypUkNoHEeWbQuQkcunuFQ" key="suppressedSetVisibility" value="true"/>
-          </eAnnotations>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELongObject"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__Xe6AZNZEeGIv5gP20E_FQ"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_BkOeYJNaEeGIv5gP20E_FQ" value="0"/>
@@ -785,10 +777,6 @@ s.concat (
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="_zGudkJNaEeGIv5gP20E_FQ" name="extendedIntegerSymbol" visibility="public" isOrdered="true">
-          <eAnnotations xmi:id="_ygedUJUEEeGpNZre7dx65Q" source="http://www.eclipse.org/emf/2002/GenModel">
-            <details xmi:id="_ygedUZUEEeGpNZre7dx65Q" key="suppressedGetVisibility" value="true"/>
-            <details xmi:id="_6Qzh8NoHEeWbQuQkcunuFQ" key="suppressedSetVisibility" value="true"/>
-          </eAnnotations>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELongObject"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zGudkZNaEeGIv5gP20E_FQ"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_zGudkpNaEeGIv5gP20E_FQ" value="0"/>
@@ -2034,7 +2022,7 @@ part->size() = type.oclAsType (TupleType).allProperties()->size()</body>
   <Ecore:EClass xmi:id="_upEv4NppEdu-d8Dv4wLx9Q" base_Class="_unvTodppEdu-d8Dv4wLx9Q"/>
   <Ecore:ETypeParameter xmi:id="_upEv4dppEdu-d8Dv4wLx9Q" base_TemplateParameter="_unvTo9ppEdu-d8Dv4wLx9Q"/>
   <Ecore:ETypeParameter xmi:id="_upEv4tppEdu-d8Dv4wLx9Q" base_TemplateParameter="_unvTpdppEdu-d8Dv4wLx9Q"/>
-  <Ecore:EReference xmi:id="_upEv49ppEdu-d8Dv4wLx9Q" base_Property="_unvTqNppEdu-d8Dv4wLx9Q"/>
+  <Ecore:EReference xmi:id="_upEv49ppEdu-d8Dv4wLx9Q" visibility="ReadOnlyUnsettable" base_Property="_unvTqNppEdu-d8Dv4wLx9Q"/>
   <Ecore:EGenericType xmi:id="_upEv5NppEdu-d8Dv4wLx9Q" base_Class="_unvTqdppEdu-d8Dv4wLx9Q"/>
   <Ecore:EClass xmi:id="_upEv5dppEdu-d8Dv4wLx9Q" base_Class="_unvTrtppEdu-d8Dv4wLx9Q"/>
   <Ecore:ETypeParameter xmi:id="_upEv5tppEdu-d8Dv4wLx9Q" base_TemplateParameter="_unvTsNppEdu-d8Dv4wLx9Q"/>
@@ -2366,8 +2354,8 @@ part->size() = type.oclAsType (TupleType).allProperties()->size()</body>
   <Ecore:EReference xmi:id="_82aXYNXZEd6ci-srLwOkAQ" base_Property="_ykFGANLmEd6hmvYFRJXZTA"/>
   <Ecore:EAttribute xmi:id="_TnP_sOaXEeC9lsdnxAr52A" base_Property="_HXbOkNLmEd6hmvYFRJXZTA"/>
   <Ecore:EParameter xmi:id="_qz7hsOaXEeC9lsdnxAr52A" base_Parameter="_unvU09ppEdu-d8Dv4wLx9Q"/>
-  <Ecore:EAttribute xmi:id="_D6oVEJNaEeGIv5gP20E_FQ" base_Property="__Xe6AJNZEeGIv5gP20E_FQ"/>
+  <Ecore:EAttribute xmi:id="_D6oVEJNaEeGIv5gP20E_FQ" visibility="None" base_Property="__Xe6AJNZEeGIv5gP20E_FQ"/>
   <Ecore:EAttribute xmi:id="_X_cHMJNaEeGIv5gP20E_FQ" isTransient="true" isVolatile="true" base_Property="_UEAzcJNaEeGIv5gP20E_FQ"/>
-  <Ecore:EAttribute xmi:id="_17C_UJNaEeGIv5gP20E_FQ" base_Property="_zGudkJNaEeGIv5gP20E_FQ"/>
+  <Ecore:EAttribute xmi:id="_17C_UJNaEeGIv5gP20E_FQ" visibility="None" base_Property="_zGudkJNaEeGIv5gP20E_FQ"/>
   <Ecore:EAttribute xmi:id="_3OXBUJNaEeGIv5gP20E_FQ" isTransient="true" isVolatile="true" base_Property="_0KkgMJNaEeGIv5gP20E_FQ"/>
 </xmi:XMI>

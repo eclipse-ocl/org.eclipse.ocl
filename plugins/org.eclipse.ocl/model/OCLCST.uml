@@ -506,9 +506,6 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qdx-Bv8fEduhWtVvKtiQ7w"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="_gjEpQJNnEeGIv5gP20E_FQ" name="extendedIntegerSymbol" visibility="public" isOrdered="true" isReadOnly="true">
-          <eAnnotations xmi:id="_SXARYJUCEeGpNZre7dx65Q" source="http://www.eclipse.org/emf/2002/GenModel">
-            <details xmi:id="_VkmOwJUCEeGpNZre7dx65Q" key="suppressedGetVisibility" value="true"/>
-          </eAnnotations>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELongObject"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_gjEpQZNnEeGIv5gP20E_FQ"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_gjEpQpNnEeGIv5gP20E_FQ" value="0"/>
@@ -525,9 +522,6 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qdx-Cv8fEduhWtVvKtiQ7w"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="_kP6ucJNnEeGIv5gP20E_FQ" name="extendedIntegerSymbol" visibility="public" isOrdered="true" isReadOnly="true">
-          <eAnnotations xmi:id="_8RDmkJUEEeGpNZre7dx65Q" source="http://www.eclipse.org/emf/2002/GenModel">
-            <details xmi:id="_8RDmkZUEEeGpNZre7dx65Q" key="suppressedGetVisibility" value="true"/>
-          </eAnnotations>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELongObject"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kP6ucZNnEeGIv5gP20E_FQ"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_kP6ucpNnEeGIv5gP20E_FQ" value="0"/>
@@ -873,8 +867,8 @@
   <Ecore:EClass xmi:id="_u2txsL8sEd2tbsirxV4pLA" base_Class="_WuZt4L8sEd2tbsirxV4pLA"/>
   <Ecore:EReference xmi:id="_xEai4L8tEd2tbsirxV4pLA" base_Property="_woRO4L8sEd2tbsirxV4pLA"/>
   <Ecore:EAttribute xmi:id="_K42H8AKSEd6O0MANVU0HEw" base_Property="_HPVqoAKSEd6O0MANVU0HEw"/>
-  <Ecore:EAttribute xmi:id="_m05zsJNnEeGIv5gP20E_FQ" base_Property="_kP6ucJNnEeGIv5gP20E_FQ"/>
+  <Ecore:EAttribute xmi:id="_m05zsJNnEeGIv5gP20E_FQ" visibility="None" base_Property="_kP6ucJNnEeGIv5gP20E_FQ"/>
   <Ecore:EAttribute xmi:id="_oXscIJNnEeGIv5gP20E_FQ" isTransient="true" isVolatile="true" base_Property="_kP6uc5NnEeGIv5gP20E_FQ"/>
   <Ecore:EAttribute xmi:id="_prwFAJNnEeGIv5gP20E_FQ" isTransient="true" isVolatile="true" base_Property="_gjEpQ5NnEeGIv5gP20E_FQ"/>
-  <Ecore:EAttribute xmi:id="_q7o_kJNnEeGIv5gP20E_FQ" base_Property="_gjEpQJNnEeGIv5gP20E_FQ"/>
+  <Ecore:EAttribute xmi:id="_q7o_kJNnEeGIv5gP20E_FQ" visibility="None" base_Property="_gjEpQJNnEeGIv5gP20E_FQ"/>
 </xmi:XMI>
