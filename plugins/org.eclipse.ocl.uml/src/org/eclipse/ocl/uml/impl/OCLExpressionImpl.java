@@ -11,11 +11,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.uml.impl;
 
+import java.util.Map;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.uml.OCLExpression;
 import org.eclipse.ocl.uml.UMLPackage;
+import org.eclipse.ocl.uml.internal.operations.OCLExpressionOperations;
 import org.eclipse.ocl.util.ToStringVisitor;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -335,6 +338,16 @@ public abstract class OCLExpressionImpl
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		// subclasses must override
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean has_type(DiagnosticChain diagnostics,
+			Map<Object, Object> context) {
+		return OCLExpressionOperations.has_type(this, diagnostics, context);
 	}
 
 } //OCLExpressionImpl

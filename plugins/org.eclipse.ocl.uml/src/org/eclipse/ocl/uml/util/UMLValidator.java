@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
@@ -102,16 +102,26 @@ public class UMLValidator
 	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.uml"; //$NON-NLS-1$
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Has type' of 'OCL Expression'.
+	 * <!-- begin-user-doc -->
+	 * @since 5.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int OCL_EXPRESSION__HAS_TYPE = 1;
+
+	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 0;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 1;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
 	 * <!-- begin-user-doc -->
+	 * @since 5.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

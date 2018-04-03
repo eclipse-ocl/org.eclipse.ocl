@@ -76,7 +76,12 @@
       <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/NavigationCallExp"/>
       <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/FeatureCallExp"/>
       <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/CallExp"/>
-      <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/OCLExpression"/>
+      <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/OCLExpression">
+        <genOperations xsi:type="genmodel:GenOperation" ecoreOperation="OCLUML.ecore#//uml/OCLExpression/has_type">
+          <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="OCLUML.ecore#//uml/OCLExpression/has_type/diagnostics"/>
+          <genParameters xsi:type="genmodel:GenParameter" ecoreParameter="OCLUML.ecore#//uml/OCLExpression/has_type/context"/>
+        </genOperations>
+      </genClasses>
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="OCLUML.ecore#//uml/BooleanLiteralExp"/>
       <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/PrimitiveLiteralExp"/>
       <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="OCLUML.ecore#//uml/LiteralExp"/>

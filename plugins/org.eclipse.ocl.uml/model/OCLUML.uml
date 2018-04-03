@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
   <uml:Model xmi:id="_O6JI4Np9Eduf94aRL_gBBg" name="ocl">
     <packagedElement xmi:type="uml:Package" xmi:id="_O6JI4dp9Eduf94aRL_gBBg" name="uml">
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JI4tp9Eduf94aRL_gBBg" name="AnyType">
@@ -9,18 +9,18 @@
         <generalization xmi:id="_O6JI5Np9Eduf94aRL_gBBg" general="_O6JI6Np9Eduf94aRL_gBBg"/>
         <ownedAttribute xmi:id="_O6JI5dp9Eduf94aRL_gBBg" name="ownedOperation" isOrdered="true" aggregation="composite" association="_O6JI69p9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI5tp9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JI59p9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI5tp9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JI6Np9Eduf94aRL_gBBg" name="AnyType_Operation">
         <templateBinding xmi:id="_O6JI6dp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTI9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JI6tp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTJNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTJNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTI9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_O6JI69p9Eduf94aRL_gBBg" memberEnd="_O6JI5dp9Eduf94aRL_gBBg _O6JI7Np9Eduf94aRL_gBBg">
@@ -33,18 +33,18 @@
         <generalization xmi:id="_O6JI79p9Eduf94aRL_gBBg" general="_O6JI89p9Eduf94aRL_gBBg"/>
         <ownedAttribute xmi:id="_O6JI8Np9Eduf94aRL_gBBg" name="ownedOperation" isOrdered="true" aggregation="composite" association="_O6JI9tp9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI8dp9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JI8tp9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI8dp9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JI89p9Eduf94aRL_gBBg" name="VoidType_Operation">
         <templateBinding xmi:id="_O6JI9Np9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTr9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JI9dp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTsNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTsNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTr9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_O6JI9tp9Eduf94aRL_gBBg" memberEnd="_O6JI8Np9Eduf94aRL_gBBg _O6JI99p9Eduf94aRL_gBBg">
@@ -57,18 +57,18 @@
         <generalization xmi:id="_O6JI-tp9Eduf94aRL_gBBg" general="_O6JI_tp9Eduf94aRL_gBBg"/>
         <ownedAttribute xmi:id="_O6JI-9p9Eduf94aRL_gBBg" name="ownedOperation" isOrdered="true" aggregation="composite" association="_O6JJAdp9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI_Np9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JI_dp9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JI_Np9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JI_tp9Eduf94aRL_gBBg" name="InvalidType_Operation">
         <templateBinding xmi:id="_O6JI_9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTS9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJANp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTTNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTTNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTS9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_O6JJAdp9Eduf94aRL_gBBg" memberEnd="_O6JI-9p9Eduf94aRL_gBBg _O6JJAtp9Eduf94aRL_gBBg">
@@ -89,22 +89,22 @@
         <generalization xmi:id="_O6JJCNp9Eduf94aRL_gBBg" general="_O6JJDNp9Eduf94aRL_gBBg"/>
         <ownedAttribute xmi:id="_O6JJCdp9Eduf94aRL_gBBg" name="ownedOperation" isOrdered="true" aggregation="composite" association="_O6JJENp9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJCtp9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JJC9p9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJCtp9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJDNp9Eduf94aRL_gBBg" name="TypeType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJDdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTotppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJDtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTo9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTo9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJD9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTpdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTpdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTotppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_O6JJENp9Eduf94aRL_gBBg" memberEnd="_O6JJCdp9Eduf94aRL_gBBg _O6JJEdp9Eduf94aRL_gBBg">
@@ -117,32 +117,32 @@
         <generalization xmi:id="_O6JJFNp9Eduf94aRL_gBBg" general="_O6JJG9p9Eduf94aRL_gBBg"/>
         <ownedAttribute xmi:id="_O6JJFdp9Eduf94aRL_gBBg" name="ownedOperation" isOrdered="true" aggregation="composite" association="_O6JJINp9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJFtp9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JJF9p9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJFtp9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="_O6JJGNp9Eduf94aRL_gBBg" name="ownedAttribute" isOrdered="true" aggregation="composite" association="_O6JJItp9Eduf94aRL_gBBg">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJGdp9Eduf94aRL_gBBg" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O6JJGtp9Eduf94aRL_gBBg"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_O6JJGdp9Eduf94aRL_gBBg" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-attribute"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJG9p9Eduf94aRL_gBBg" name="MessageType_Classifier_Operation_Property">
         <templateBinding xmi:id="_O6JJHNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTU9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJHdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTVNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTVNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJHtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTVtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTVtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJH9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTWNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTWNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTU9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_O6JJINp9Eduf94aRL_gBBg" memberEnd="_O6JJFdp9Eduf94aRL_gBBg _O6JJIdp9Eduf94aRL_gBBg">
@@ -159,11 +159,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJJ9p9Eduf94aRL_gBBg" name="PrimitiveType_Operation">
         <templateBinding xmi:id="_O6JJKNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTdtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJKdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTd9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTd9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTdtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJKtp9Eduf94aRL_gBBg" name="CollectionType">
@@ -174,15 +174,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJLdp9Eduf94aRL_gBBg" name="CollectionType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJLtp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTNtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJL9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTN9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTN9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJMNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTOdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTOdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTNtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJMdp9Eduf94aRL_gBBg" name="TupleType">
@@ -193,15 +193,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJNNp9Eduf94aRL_gBBg" name="TupleType_Operation_Property">
         <templateBinding xmi:id="_O6JJNdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTlNppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJNtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTldppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTldppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJN9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTl9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTl9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTlNppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJONp9Eduf94aRL_gBBg" name="BagType">
@@ -210,15 +210,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJO9p9Eduf94aRL_gBBg" name="BagType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJPNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTK9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJPdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTLNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTLNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJPtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTLtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTLtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTK9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJP9p9Eduf94aRL_gBBg" name="SetType">
@@ -227,15 +227,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJQtp9Eduf94aRL_gBBg" name="SetType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJQ9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTidppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJRNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTitppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTitppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJRdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTjNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTjNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTidppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJRtp9Eduf94aRL_gBBg" name="OrderedSetType">
@@ -244,15 +244,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJSdp9Eduf94aRL_gBBg" name="OrderedSetType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJStp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTa9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJS9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTbNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTbNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJTNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTbtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTbtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTa9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJTdp9Eduf94aRL_gBBg" name="SequenceType">
@@ -261,15 +261,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJUNp9Eduf94aRL_gBBg" name="SequenceType_Classifier_Operation">
         <templateBinding xmi:id="_O6JJUdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTftppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJUtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTf9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTf9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJU9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTgdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvTgdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvTftppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJVNp9Eduf94aRL_gBBg" name="ExpressionInOcl">
@@ -280,15 +280,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJV9p9Eduf94aRL_gBBg" name="ExpressionInOcl_Classifier_Parameter">
         <templateBinding xmi:id="_O6JJWNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvU2dppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJWdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvU2tppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvU2tppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJWtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvU3NppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvU3NppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvU2dppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJW9p9Eduf94aRL_gBBg" name="AssociationClassCallExp">
@@ -308,9 +308,9 @@
         <generalization xmi:id="_O6JJZtp9Eduf94aRL_gBBg" general="_O6JJbdp9Eduf94aRL_gBBg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJZ9p9Eduf94aRL_gBBg" name="OclExpression" isAbstract="true">
-        <eAnnotations xmi:id="_J1O7EBSeEd2GKu70W8rmzA" source="http://www.eclipse.org/emf/2002/Ecore">
-          <details xmi:id="_LqEVwBSeEd2GKu70W8rmzA" key="constraints" value="has_type"/>
-        </eAnnotations>
+        <ownedRule xmi:id="_x1Y8ADdXEeilfszJmwQO8A" name="has_type">
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_5WkOcDdXEeilfszJmwQO8A"/>
+        </ownedRule>
         <generalization xmi:id="_O6JJaNp9Eduf94aRL_gBBg">
           <general xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#TypedElement"/>
         </generalization>
@@ -318,55 +318,55 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJatp9Eduf94aRL_gBBg" name="OclExpression_Classifier">
         <templateBinding xmi:id="_O6JJa9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVNdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJbNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVNtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVNtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVNdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJbdp9Eduf94aRL_gBBg" name="CallExp_Classifier">
         <templateBinding xmi:id="_O6JJbtp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVKtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJb9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVK9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVK9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVKtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJcNp9Eduf94aRL_gBBg" name="FeatureCallExp_Classifier">
         <templateBinding xmi:id="_O6JJcdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVINppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJctp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVIdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVIdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVINppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJc9p9Eduf94aRL_gBBg" name="NavigationCallExp_Classifier_Property">
         <templateBinding xmi:id="_O6JJdNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVDtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJddp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVD9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVD9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJdtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVEdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVEdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVDtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJd9p9Eduf94aRL_gBBg" name="AssociationClassCallExp_Classifier_Property">
         <templateBinding xmi:id="_O6JJeNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVAdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJedp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVAtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVAtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJetp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVBNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVBNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVAdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJe9p9Eduf94aRL_gBBg" name="BooleanLiteralExp">
@@ -383,29 +383,29 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJhNp9Eduf94aRL_gBBg" name="LiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJhdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVWdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJhtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVWtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVWtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVWdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJh9p9Eduf94aRL_gBBg" name="PrimitiveLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJiNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVUdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJidp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVUtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVUtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVUdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJitp9Eduf94aRL_gBBg" name="BooleanLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJi9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVR9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJjNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVSNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVSNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVR9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJjdp9Eduf94aRL_gBBg" name="CollectionItem">
@@ -420,20 +420,20 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJk9p9Eduf94aRL_gBBg" name="CollectionLiteralPart_Classifier">
         <templateBinding xmi:id="_O6JJlNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVbdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJldp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVbtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVbtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVbdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJltp9Eduf94aRL_gBBg" name="CollectionItem_Classifier">
         <templateBinding xmi:id="_O6JJl9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVYdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJmNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVYtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVYtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVYdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJmdp9Eduf94aRL_gBBg" name="CollectionLiteralExp">
@@ -442,11 +442,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJnNp9Eduf94aRL_gBBg" name="CollectionLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJndp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVftppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJntp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVf9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVf9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVftppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJn9p9Eduf94aRL_gBBg" name="CollectionRange">
@@ -455,11 +455,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJotp9Eduf94aRL_gBBg" name="CollectionRange_Classifier">
         <templateBinding xmi:id="_O6JJo9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVktppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJpNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVk9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVk9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVktppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJpdp9Eduf94aRL_gBBg" name="EnumLiteralExp">
@@ -468,15 +468,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJqNp9Eduf94aRL_gBBg" name="EnumLiteralExp_Classifier_EnumerationLiteral">
         <templateBinding xmi:id="_O6JJqdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVo9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJqtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVpNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVpNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJq9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVptppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#EnumerationLiteral"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVptppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVo9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJrNp9Eduf94aRL_gBBg" name="IfExp">
@@ -485,11 +485,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJr9p9Eduf94aRL_gBBg" name="IfExp_Classifier">
         <templateBinding xmi:id="_O6JJsNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVsdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJsdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVstppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVstppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVsdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJstp9Eduf94aRL_gBBg" name="IntegerLiteralExp">
@@ -502,20 +502,20 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJuNp9Eduf94aRL_gBBg" name="NumericLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJudp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVz9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJutp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV0NppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV0NppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVz9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJu9p9Eduf94aRL_gBBg" name="IntegerLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJvNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVxdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJvdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVxtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvVxtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvVxdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJvtp9Eduf94aRL_gBBg" name="UnlimitedNaturalLiteralExp">
@@ -524,11 +524,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJwdp9Eduf94aRL_gBBg" name="UnlimitedNaturalLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJwtp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV19ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJw9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV2NppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV2NppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV19ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJxNp9Eduf94aRL_gBBg" name="InvalidLiteralExp">
@@ -537,11 +537,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJx9p9Eduf94aRL_gBBg" name="InvalidLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJyNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV4tppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJydp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV49ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV49ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV4tppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJytp9Eduf94aRL_gBBg" name="IterateExp">
@@ -554,28 +554,28 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ0Np9Eduf94aRL_gBBg" name="LoopExp_Classifier_Parameter">
         <templateBinding xmi:id="_O6JJ0dp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV-9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ0tp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV_NppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV_NppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ09p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV_tppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV_tppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV-9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ1Np9Eduf94aRL_gBBg" name="IterateExp_Classifier_Parameter">
         <templateBinding xmi:id="_O6JJ1dp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV6tppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ1tp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV69ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV69ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ19p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV7dppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_unvV7dppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_unvV6tppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ2Np9Eduf94aRL_gBBg" name="IteratorExp">
@@ -584,15 +584,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ29p9Eduf94aRL_gBBg" name="IteratorExp_Classifier_Parameter">
         <templateBinding xmi:id="_O6JJ3Np9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z79ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ3dp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z8NppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z8NppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ3tp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z8tppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z8tppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z79ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ39p9Eduf94aRL_gBBg" name="LetExp">
@@ -601,15 +601,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ4tp9Eduf94aRL_gBBg" name="LetExp_Classifier_Parameter">
         <templateBinding xmi:id="_O6JJ49p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z-tppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ5Np9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z-9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z-9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ5dp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z_dppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z_dppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z-tppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ5tp9Eduf94aRL_gBBg" name="MessageExp">
@@ -618,19 +618,19 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ6dp9Eduf94aRL_gBBg" name="MessageExp_Classifier_CallOperationAction_SendSignalAction">
         <templateBinding xmi:id="_O6JJ6tp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aENppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ69p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aEdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aEdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ7Np9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aE9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#CallOperationAction"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aE9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ7dp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aFdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#SendSignalAction"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aFdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aENppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ7tp9Eduf94aRL_gBBg" name="NullLiteralExp">
@@ -639,11 +639,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ8dp9Eduf94aRL_gBBg" name="NullLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JJ8tp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aLtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ89p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aL9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aL9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aLtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ9Np9Eduf94aRL_gBBg" name="OperationCallExp">
@@ -652,15 +652,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ99p9Eduf94aRL_gBBg" name="OperationCallExp_Classifier_Operation">
         <templateBinding xmi:id="_O6JJ-Np9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aNtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JJ-dp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aN9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aN9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JJ-tp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aOdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aOdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aNtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ-9p9Eduf94aRL_gBBg" name="PropertyCallExp">
@@ -669,15 +669,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JJ_tp9Eduf94aRL_gBBg" name="PropertyCallExp_Classifier_Property">
         <templateBinding xmi:id="_O6JJ_9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aTtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKANp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aT9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aT9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JKAdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aUdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aUdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aTtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKAtp9Eduf94aRL_gBBg" name="RealLiteralExp">
@@ -686,11 +686,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKBdp9Eduf94aRL_gBBg" name="RealLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JKBtp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aXdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKB9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aXtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aXtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aXdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKCNp9Eduf94aRL_gBBg" name="StateExp">
@@ -699,15 +699,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_yZ4eUNqFEdupgOgeqS0_oQ" name="StateExp_Classifier_State">
         <templateBinding xmi:id="_yZ4eUdqFEdupgOgeqS0_oQ">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aZ9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_yZ4eUtqFEdupgOgeqS0_oQ">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aaNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aaNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_A_QMQNqGEdupgOgeqS0_oQ">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aatppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#State"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aatppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aZ9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKE9p9Eduf94aRL_gBBg" name="StringLiteralExp">
@@ -716,11 +716,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKFtp9Eduf94aRL_gBBg" name="StringLiteralExp_Classifier">
         <templateBinding xmi:id="_O6JKF9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1addppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKGNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1adtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1adtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1addppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKGdp9Eduf94aRL_gBBg" name="TupleLiteralExp">
@@ -729,15 +729,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKHNp9Eduf94aRL_gBBg" name="TupleLiteralExp_Classifier_Property">
         <templateBinding xmi:id="_O6JKHdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1af9ppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKHtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1agNppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1agNppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JKH9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1agtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1agtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1af9ppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKINp9Eduf94aRL_gBBg" name="TupleLiteralPart">
@@ -748,15 +748,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKI9p9Eduf94aRL_gBBg" name="TupleLiteralPart_Classifier_Property">
         <templateBinding xmi:id="_O6JKJNp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1akNppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKJdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1akdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1akdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JKJtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1ak9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1ak9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1akNppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKJ9p9Eduf94aRL_gBBg" name="TypeExp">
@@ -765,11 +765,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKKtp9Eduf94aRL_gBBg" name="TypeExp_Classifier">
         <templateBinding xmi:id="_O6JKK9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aqdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKLNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aqtppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1aqtppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1aqdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKLdp9Eduf94aRL_gBBg" name="UnspecifiedValueExp">
@@ -778,11 +778,11 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKMNp9Eduf94aRL_gBBg" name="UnspecifiedValueExp_Classifier">
         <templateBinding xmi:id="_O6JKMdp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1atdppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKMtp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1attppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1attppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1atdppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKM9p9Eduf94aRL_gBBg" name="Variable">
@@ -793,15 +793,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKNtp9Eduf94aRL_gBBg" name="Variable_Classifier_Parameter">
         <templateBinding xmi:id="_O6JKN9p9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z1NppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKONp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z1dppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z1dppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JKOdp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z19ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z19ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1Z1NppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKOtp9Eduf94aRL_gBBg" name="VariableExp">
@@ -810,24 +810,24 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_O6JKPdp9Eduf94aRL_gBBg" name="VariableExp_Classifier_Parameter">
         <templateBinding xmi:id="_O6JKPtp9Eduf94aRL_gBBg">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1avtppEdu-d8Dv4wLx9Q"/>
           <parameterSubstitution xmi:id="_O6JKP9p9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1av9ppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1av9ppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
           <parameterSubstitution xmi:id="_O6JKQNp9Eduf94aRL_gBBg">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1awdppEdu-d8Dv4wLx9Q"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Parameter"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_un1awdppEdu-d8Dv4wLx9Q"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_un1avtppEdu-d8Dv4wLx9Q"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_Pb7h0NM5Ed6CZJF8dnsuvw" name="TemplateParameterType_Operation">
         <templateBinding xmi:id="_Pb7h0dM5Ed6CZJF8dnsuvw">
-          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_buUkUNLoEd6hmvYFRJXZTA"/>
           <parameterSubstitution xmi:id="_Pb7h0tM5Ed6CZJF8dnsuvw">
-            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_buUkU9LoEd6hmvYFRJXZTA"/>
             <actual xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <formal xmi:type="uml:ClassifierTemplateParameter" href="../../org.eclipse.ocl/model/OCL.uml#_buUkU9LoEd6hmvYFRJXZTA"/>
           </parameterSubstitution>
+          <signature xmi:type="uml:RedefinableTemplateSignature" href="../../org.eclipse.ocl/model/OCL.uml#_buUkUNLoEd6hmvYFRJXZTA"/>
         </templateBinding>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_bUUFENM5Ed6CZJF8dnsuvw" name="TemplateParameterType">
@@ -837,8 +837,8 @@
         <generalization xmi:id="_bUUFEtM5Ed6CZJF8dnsuvw" general="_Pb7h0NM5Ed6CZJF8dnsuvw"/>
         <ownedAttribute xmi:id="_bUUFE9M5Ed6CZJF8dnsuvw" name="ownedOperation" isOrdered="true" aggregation="composite">
           <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bUUFFNM5Ed6CZJF8dnsuvw" value="*"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bUUFFdM5Ed6CZJF8dnsuvw"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bUUFFNM5Ed6CZJF8dnsuvw" value="*"/>
           <subsettedProperty href="pathmap://UML_METAMODELS/UML.metamodel.uml#Classifier-feature"/>
         </ownedAttribute>
       </packagedElement>

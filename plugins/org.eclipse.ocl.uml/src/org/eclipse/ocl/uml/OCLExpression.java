@@ -4,13 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
  *******************************************************************************/
 package org.eclipse.ocl.uml;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.TypedElement;
 
@@ -24,10 +27,22 @@ import org.eclipse.uml2.uml.TypedElement;
  * @model abstract="true"
  *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='OclExpression'"
  *        extendedMetaData="name='OclExpression'"
- *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='has_type'"
  * @generated
  */
 public interface OCLExpression
 		extends TypedElement,
 		org.eclipse.ocl.expressions.OCLExpression<Classifier> {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 5.4
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean has_type(DiagnosticChain diagnostics, Map<Object, Object> context);
 } // OCLExpression

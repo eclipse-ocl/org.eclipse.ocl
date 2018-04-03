@@ -4,18 +4,18 @@
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
  *  http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  *  Contributors:
  *    Zeligsoft - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.uml.internal.operations;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.ocl.uml.OCLExpression;
-
 import org.eclipse.ocl.utilities.Visitor;
-
 import org.eclipse.uml2.uml.Classifier;
-
 import org.eclipse.uml2.uml.internal.operations.NamedElementOperations;
 
 /**
@@ -33,6 +33,7 @@ import org.eclipse.uml2.uml.internal.operations.NamedElementOperations;
  *   <li>{@link org.eclipse.ocl.utilities.TypedElement#setName(java.lang.String) <em>Set Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.utilities.TypedElement#setType(java.lang.Object) <em>Set Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.utilities.Visitable#accept(org.eclipse.ocl.utilities.Visitor) <em>Accept</em>}</li>
+ *   <li>{@link org.eclipse.ocl.uml.OCLExpression#has_type(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Has type</em>}</li>
  * </ul>
  *
  * @generated
@@ -94,6 +95,19 @@ public class OCLExpressionOperations
 	public static <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(
 			OCLExpression oclExpression, U v) {
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * This dummy operation is a corollary of declaring has_type as a Constraint rather than
+	 * an Ecore constraints EAnnotation in the UML model. It is not used. The manual implementation
+	 * is in UMLValidator. See Bug 533128.
+	 *
+	 * @since 5.4
+	 * @generated NOT
+	 */
+	public static boolean has_type(OCLExpression oclExpression,
+			DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
 	}
 
 } // OCLExpressionOperations

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
@@ -14,6 +14,7 @@ package org.eclipse.ocl.uml.impl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
@@ -1678,6 +1679,18 @@ public class UMLPackageImpl
 		initEClass(oclExpressionEClass, OCLExpression.class, "OCLExpression", //$NON-NLS-1$
 			IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		EOperation op = addEOperation(oclExpressionEClass,
+			ecorePackage.getEBoolean(), "has_type", 0, 1, IS_UNIQUE, //$NON-NLS-1$
+			IS_ORDERED);
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, //$NON-NLS-1$
+			1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(booleanLiteralExpEClass, BooleanLiteralExp.class,
 			"BooleanLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
@@ -1802,8 +1815,6 @@ public class UMLPackageImpl
 		createUMLAnnotations();
 		// http:///org/eclipse/emf/ecore/util/ExtendedMetaData
 		createExtendedMetaDataAnnotations();
-		// http://www.eclipse.org/emf/2002/Ecore
-		createEcoreAnnotations();
 	}
 
 	/**
@@ -1879,16 +1890,11 @@ public class UMLPackageImpl
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * This no longer used operation preserves API compatibility. See Bug 533128.
+	 *
+	 * @generated NOT
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
-		addAnnotation(oclExpressionEClass, source,
-			new String[]{"constraints", "has_type" //$NON-NLS-1$ //$NON-NLS-2$
-			});
 	}
 
 } //UMLPackageImpl
