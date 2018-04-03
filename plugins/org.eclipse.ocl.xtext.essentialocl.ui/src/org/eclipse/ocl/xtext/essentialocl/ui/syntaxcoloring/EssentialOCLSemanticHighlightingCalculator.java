@@ -21,7 +21,8 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.CancelIndicator;
 
-public class EssentialOCLSemanticHighlightingCalculator implements ISemanticHighlightingCalculator
+@SuppressWarnings("deprecation")
+public class EssentialOCLSemanticHighlightingCalculator implements ISemanticHighlightingCalculator,org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator
 {
 	@Override
 	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator) {
@@ -40,5 +41,16 @@ public class EssentialOCLSemanticHighlightingCalculator implements ISemanticHigh
 				}
 			}
 		}
+	}
+
+	/**
+	 * This method preserves the pre Xtext 2.9 API. It will be removed when the Xtext deprecation is enforced.
+	 *
+	 * @deprecated use Xtext's ide rather than ui classes.
+	 */
+	@Deprecated
+	@Override
+	public void provideHighlightingFor(XtextResource resource, org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor acceptor) {
+		provideHighlightingFor(resource, acceptor, CancelIndicator.NullImpl);
 	}
 }
