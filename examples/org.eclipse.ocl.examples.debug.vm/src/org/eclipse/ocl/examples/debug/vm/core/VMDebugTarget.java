@@ -82,6 +82,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 	private final List<VMEventListener> fEventListener = new LinkedList<VMEventListener>();
 
 	private final Object fVMStartMonitor = new Object();
+	private Thread eventDispatcherThread;
 
 	public VMDebugTarget(IProcess process, IVMVirtualMachineShell vm) {
 		super(null);
@@ -93,9 +94,9 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		fEventListener.add(createVMEventListener());
 
 		EventDispatchJob dispatcher = new EventDispatchJob();
-		Thread eventDispatherThread = new Thread(dispatcher, getDebugCore().getDebugThreadName());
-		eventDispatherThread.setDaemon(true);
-		eventDispatherThread.start();
+		eventDispatcherThread = new Thread(dispatcher, getDebugCore().getDebugThreadName());
+		eventDispatcherThread.setDaemon(true);
+		eventDispatcherThread.start();
 
 		try {
 			// start transformation execution
@@ -263,6 +264,28 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 	@Override
 	public boolean isTerminated() {
 		return fVM.isTerminated();
+	}
+
+	/**
+	 * This very brute force methhod is solely to clean up at the end of a test.
+	 *
+	 * It does not seem necessary when using JUnit plugin testing. But it helps for Tycho.
+	 */
+	@SuppressWarnings("deprecation")
+	public void killAfterTest() {
+		if ((fMainThread != null) && !fMainThread.isTerminated()) {
+			try {
+				fMainThread.terminate();
+			} catch (DebugException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			fMainThread = null;
+		}
+		if ((eventDispatcherThread != null) && eventDispatcherThread.isAlive()) {
+			eventDispatcherThread.stop();
+			eventDispatcherThread = null;
+		}
 	}
 
 	@Override

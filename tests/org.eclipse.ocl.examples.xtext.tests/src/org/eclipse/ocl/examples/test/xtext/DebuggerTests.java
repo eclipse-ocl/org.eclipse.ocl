@@ -203,127 +203,130 @@ public class DebuggerTests extends XtextTestCase
 		assert launch != null;
 
 		OCLDebugTarget debugTarget = (OCLDebugTarget) launch.getDebugTarget();
-		OCLVMVirtualMachine vm = (OCLVMVirtualMachine) debugTarget.getVM();
-		OCLVMRootEvaluationEnvironment vmRootEvaluationEnvironment = (OCLVMRootEvaluationEnvironment) vm.getEvaluationEnv();
-		assert vmRootEvaluationEnvironment != null;
-		ExpressionInOCL asExpression = (ExpressionInOCL) vmRootEvaluationEnvironment.getDebuggableElement();
-		VariableDeclaration selfVariable = PivotUtil.getOwnedContext(asExpression);
+		try {
+			OCLVMVirtualMachine vm = (OCLVMVirtualMachine) debugTarget.getVM();
+			OCLVMRootEvaluationEnvironment vmRootEvaluationEnvironment = (OCLVMRootEvaluationEnvironment) vm.getEvaluationEnv();
+			assert vmRootEvaluationEnvironment != null;
+			ExpressionInOCL asExpression = (ExpressionInOCL) vmRootEvaluationEnvironment.getDebuggableElement();
+			VariableDeclaration selfVariable = PivotUtil.getOwnedContext(asExpression);
 
-		IThread vmThread = debugTarget.getThreads()[0];
-		assert vmThread != null;
-		TestUIUtil.waitForSuspended(vmThread);
-		TestUIUtil.waitForNotStepping(vmThread);
-		//
-		checkPosition(vmThread, 263, 11364, 11368);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 263, 11369, 11377);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 263, 11379, 11385);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 264, 11390, 11394);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 264, 11395, 11400);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 266, 11449, 11463);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 266, 11464, 11469);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "i_CustomerCard");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
-		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 266, 11472, 11476);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "i_CustomerCard");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
-		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 266, 11470, 11471);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "$ownedArguments[0]", "i_CustomerCard");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
-		//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 268, 11485, 11491);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 264, 11388, 11389);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource", "$ownedArguments[0]");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		TestUIUtil.waitForSuspended(vmThread);
-		checkPosition(vmThread, 263, 11364, 11491);
-		checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedBody");
-		checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.EXPRESSION_IN_OCL);
-		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
-		//
-		vmThread.stepInto();
-		//		TestUIUtil.waitForTerminated(vmThread);
-		boolean hasTerminated = false;
-		for (int i = 0; i < 10; i++){
-			TestUIUtil.flushEvents();
-			Thread.sleep(100);
-			if (vmThread.isTerminated()) {
-				hasTerminated = true;
-				break;
-			}
-		}
-		if (!hasTerminated) {
-			IStackFrame topStackFrame = vmThread.getTopStackFrame();
-			IVariable[] variables = topStackFrame.getVariables();
-			if (variables != null){
-				for (IVariable variable : variables) {
-					if (VMVirtualMachine.EXCEPTION_NAME.equals(variable.getName()) && (variable instanceof VMVariable)) {
-						Object valueObject = ((VMVariable)variable).getVmVar().valueObject;
-						throw (Exception)valueObject;
-					}
+			IThread vmThread = debugTarget.getThreads()[0];
+			assert vmThread != null;
+			TestUIUtil.waitForSuspended(vmThread);
+			TestUIUtil.waitForNotStepping(vmThread);
+			//
+			checkPosition(vmThread, 263, 11364, 11368);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 263, 11369, 11377);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 263, 11379, 11385);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 264, 11390, 11394);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 264, 11395, 11400);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 266, 11449, 11463);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME);
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.VARIABLE_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 266, 11464, 11469);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "i_CustomerCard");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.PROPERTY_CALL_EXP);
+			//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 266, 11472, 11476);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "i_CustomerCard");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
+			//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 266, 11470, 11471);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, "$ownedSource", "$ownedArguments[0]", "i_CustomerCard");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+			//		checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 268, 11485, 11491);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 264, 11388, 11389);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource", "$ownedArguments[0]");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			TestUIUtil.waitForSuspended(vmThread);
+			checkPosition(vmThread, 263, 11364, 11491);
+			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedBody");
+			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.EXPRESSION_IN_OCL);
+			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
+			//
+			vmThread.stepInto();
+			//		TestUIUtil.waitForTerminated(vmThread);
+			boolean hasTerminated = false;
+			for (int i = 0; i < 10; i++){
+				TestUIUtil.flushEvents();
+				Thread.sleep(100);
+				if (vmThread.isTerminated()) {
+					hasTerminated = true;
+					break;
 				}
 			}
-			TestCase.fail("Failed to terminate");
+			if (!hasTerminated) {
+				IStackFrame topStackFrame = vmThread.getTopStackFrame();
+				IVariable[] variables = topStackFrame.getVariables();
+				if (variables != null){
+					for (IVariable variable : variables) {
+						if (VMVirtualMachine.EXCEPTION_NAME.equals(variable.getName()) && (variable instanceof VMVariable)) {
+							Object valueObject = ((VMVariable)variable).getVmVar().valueObject;
+							throw (Exception)valueObject;
+						}
+					}
+				}
+				TestCase.fail("Failed to terminate");
+			}
+			assertEquals(0, vm.getExitCode());
+			//		TestUIUtil.waitForLaunchToTerminate(launch);
+			ocl.dispose();
 		}
-		assertEquals(0, vm.getExitCode());
-
-
-		//		TestUIUtil.waitForLaunchToTerminate(launch);
-		ocl.dispose();
+		finally {
+			debugTarget.killAfterTest();
+		}
 	}
 }
