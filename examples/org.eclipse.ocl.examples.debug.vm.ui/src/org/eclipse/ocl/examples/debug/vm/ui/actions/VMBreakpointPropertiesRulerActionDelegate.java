@@ -16,6 +16,7 @@ import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.ui.texteditor.AbstractRulerActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+@Deprecated /* @deprecated Use VMBreakpointPropertiesHandler */
 public abstract class VMBreakpointPropertiesRulerActionDelegate  extends AbstractRulerActionDelegate {
 
 	/**

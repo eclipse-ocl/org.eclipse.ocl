@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
@@ -23,14 +22,10 @@ public class OCLinEcoreEditor extends BaseEditor
 	}
 
 	@Override
-	public void doSaveAs() {
-		// TODO Auto-generated method stub
-		super.doSaveAs();
-	}
-
-	@Override
-	public void doSave(IProgressMonitor progressMonitor) {
-		// TODO Auto-generated method stub
-		super.doSave(progressMonitor);
+	protected void initializeEditor() {
+		super.initializeEditor();
+		setEditorContextMenuId("#OCLinEcoreEditorContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#OCLinEcoreRulerContext"); //$NON-NLS-1$
+		//		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 	}
 }

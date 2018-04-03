@@ -15,9 +15,64 @@
         </factory>    
     </extension>
     
-	 <extension point="org.eclipse.ui.popupMenus">	
+	<extension point="org.eclipse.ui.commands">
+	  <command id="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	    name="%EnableBreakpoint.label" description="%EnableBreakpoint.description"/>
+	  <command id="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	    name="%AddBreakpoint.label" description="%AddBreakpoint.description"/>
+	  <command id="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	    name="%OCLBreakpointProperties.label" description="%OCLBreakpointProperties.description"/>
+	  <!--command id="org.eclipse.ocl.examples.debug.ui.RunToLineCommand"
+	    name="%RunToLine.label" description="%RunToLine.description"/-->
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	  <handler commandId="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	    class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMEnableDisableBreakpointHandler"/>
+	  <handler commandId="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	    class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMToggleBreakpointHandler"/>
+	  <handler commandId="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	    class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMBreakpointPropertiesHandler"/>
+	  <!--handler commandId="org.eclipse.ocl.examples.debug.ui.RunToLineCommand"
+	    Since I have never used this for JDT, I cannot justofy spending time making it work for OCL
+	    class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMRunToLineHandler"/-->
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+	  <menuContribution locationURI="popup:#CompleteOCLRulerContext?after=additions">
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	      label="%EnableBreakpoint.label"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	      label="%AddBreakpoint.label" icon="icons/brkp_obj.gif"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	      label="%OCLBreakpointProperties.label"/>
+	  </menuContribution>
+	  <menuContribution locationURI="popup:#EssentialOCLRulerContext?after=additions">
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	      label="%EnableBreakpoint.label"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	      label="%AddBreakpoint.label" icon="icons/brkp_obj.gif"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	      label="%OCLBreakpointProperties.label"/>
+	  </menuContribution>
+	  <menuContribution locationURI="popup:#OCLinEcoreRulerContext?after=additions">
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	      label="%EnableBreakpoint.label"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	      label="%AddBreakpoint.label" icon="icons/brkp_obj.gif"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	      label="%OCLBreakpointProperties.label"/>
+	  </menuContribution>
+	  <menuContribution locationURI="popup:#OCLstdlibRulerContext?after=additions">
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.EnableDisableBreakpointCommand"
+	      label="%EnableBreakpoint.label"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.AddRemoveBreakpointCommand"
+	      label="%AddBreakpoint.label" icon="icons/brkp_obj.gif"/>
+	    <command commandId="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesCommand"
+	      label="%OCLBreakpointProperties.label"/>
+	  </menuContribution>
+	</extension>
+	 <!--extension point="org.eclipse.ui.popupMenus">	
 		 <viewerContribution id="org.eclipse.ocl.examples.debug.ui.OCLEditorRulerPopupActions"
-				targetID="#TextRulerContext">
+				targetID="#OCLRulerContext">
 	         <action id="org.eclipse.ocl.examples.debug.ui.RulerEnableDisableBreakpointActionDelegate"
 	               label="%EnableBreakpoint.label"
 	               class="org.eclipse.debug.ui.actions.RulerEnableDisableBreakpointActionDelegate"
@@ -27,14 +82,10 @@
 	               class="org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
 	               menubarPath="debug"
 	               icon="icons/brkp_obj.gif"/>
-	         <action id="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesRulerAction"
-	               class="org.eclipse.ocl.examples.debug.ui.actions.OCLBreakpointPropertiesRulerActionDelegate"	               
-	               label="%OCLBreakpointProperties.label"
-	               menubarPath="group.properties"/>	         
 	      </viewerContribution>    
 	      
 		<viewerContribution id="org.eclipse.ocl.examples.debug.ui.OCLEditorRunToLine"
-			targetID="#TextEditorContext">
+			targetID="#OCLEditorContext">
 		 <action id="org.eclipse.ocl.examples.debug.ui.actions.RunToLineAction"
                class="org.eclipse.debug.ui.actions.RunToLineActionDelegate"
                label="%RunToLine.label"
@@ -47,7 +98,7 @@
          </visibility>
 		</viewerContribution>
 		
-       <!--viewerContribution
+       <viewerContribution
             id="org.eclipse.ocl.examples.debug.ui.OCLEditorWatch"
             targetID="#TextEditorContext">
          <action
@@ -74,7 +125,7 @@
                <objectClass name="org.eclipse.jface.text.ITextSelection"/>
             </and>
          </visibility>
-      </viewerContribution-->
+      </viewerContribution>
  
       <objectContribution id="org.eclipse.ocl.examples.debug.ui.OCLBreakpointObjectActions"
 			objectClass="org.eclipse.ocl.examples.debug.OCLBreakpoint">
@@ -85,7 +136,7 @@
                menubarPath="additions"/>
       </objectContribution>
 		
-    </extension>
+    </extension-->
 
   <extension point = "org.eclipse.emf.ecore.validation_delegate">
     <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL/Debug"
@@ -107,6 +158,7 @@
        class = "org.eclipse.ocl.examples.debug.ui.delegate.OCLDebugQueryDelegateFactory$Global" />
   </extension>
     
+   <!-- See Bug 455985 requesting replacements for actionID="RulerDoubleClick"-->
    <extension point="org.eclipse.ui.editorActions">
       <editorContribution id="org.eclipse.debug.ui.CompleteOCLBreakpointRulerActions"
             targetID="org.eclipse.ocl.xtext.completeocl.CompleteOCL">
@@ -125,18 +177,13 @@
     </extension>
           
    <extension point="org.eclipse.ui.propertyPages">
-      <page
+      <page id="org.eclipse.ocl.examples.debug.ui.propertypages.LineBreakpoints"
             name="%OCLBreakpointPropertiesPage.name"
-            class="org.eclipse.ocl.examples.debug.ui.pages.OCLLineBreakpointPage"
-            id="org.eclipse.ocl.examples.debug.ui.propertypages.LineBreakpoints">
+            class="org.eclipse.ocl.examples.debug.ui.pages.OCLLineBreakpointPage">
          <enabledWhen>
             <or>
-               <instanceof
-                     value="org.eclipse.ocl.examples.debug.core.OCLLineBreakpoint">
-               </instanceof>
-               <adapt
-                     type="org.eclipse.ocl.examples.debug.core.OCLLineBreakpoint">
-               </adapt>
+               <instanceof value="org.eclipse.ocl.examples.debug.core.OCLLineBreakpoint"/>
+               <adapt type="org.eclipse.ocl.examples.debug.core.OCLLineBreakpoint"/>
             </or>
          </enabledWhen>
       </page>

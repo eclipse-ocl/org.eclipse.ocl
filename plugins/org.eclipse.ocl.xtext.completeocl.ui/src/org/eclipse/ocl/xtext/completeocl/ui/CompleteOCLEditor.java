@@ -20,4 +20,12 @@ public class CompleteOCLEditor extends BaseEditor
 	public CompleteOCLEditor() {
 		super();
 	}
+
+	@Override
+	protected void initializeEditor() {
+		super.initializeEditor();
+		setEditorContextMenuId("#CompleteOCLEditorContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#CompleteOCLRulerContext"); //$NON-NLS-1$
+		//		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
+	}
 }

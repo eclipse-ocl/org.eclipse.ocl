@@ -24,43 +24,49 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.IUpdate;
 
-
+@Deprecated /* @deprecated Use VMBreakpointPropertiesHandler */
 public class VMBreakpointPropertiesRulerAction extends RulerBreakpointAction implements IUpdate {
-    
-    private IBreakpoint fBreakpoint;
 
-    public VMBreakpointPropertiesRulerAction(ITextEditor editor, IVerticalRulerInfo info) {
-        super(editor, info); 
-        setText(DebugVMUIMessages.BreakpointProperties_RulerActionLabel);
-    }
+	private IBreakpoint fBreakpoint;
 
-    public void run() {
-        if (getBreakpoint() != null) {
-            PropertyDialogAction action= 
-                new PropertyDialogAction(getEditor().getEditorSite(), new ISelectionProvider() {
-                    public void addSelectionChangedListener(ISelectionChangedListener listener) {
-                    }
-                    public ISelection getSelection() {
-                        return new StructuredSelection(getBreakpoint());
-                    }
-                    public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-                    }
-                    public void setSelection(ISelection selection) {
-                    }
-                });
-            action.run();   
-        }
-    }
-    
-    /**
-     * @see IUpdate#update()
-     */
-    public void update() {
-        fBreakpoint = null;
-        IBreakpoint breakpoint = getBreakpoint();
-        if (breakpoint != null && (breakpoint instanceof VMLineBreakpoint)) {
-            fBreakpoint = breakpoint;
-        }
-        setEnabled(fBreakpoint != null);
-    }
+	public VMBreakpointPropertiesRulerAction(ITextEditor editor, IVerticalRulerInfo info) {
+		super(editor, info);
+		setText(DebugVMUIMessages.BreakpointProperties_RulerActionLabel);
+	}
+
+	@Override
+	public void run() {
+		if (getBreakpoint() != null) {
+			PropertyDialogAction action=
+					new PropertyDialogAction(getEditor().getEditorSite(), new ISelectionProvider() {
+						@Override
+						public void addSelectionChangedListener(ISelectionChangedListener listener) {
+						}
+						@Override
+						public ISelection getSelection() {
+							return new StructuredSelection(getBreakpoint());
+						}
+						@Override
+						public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+						}
+						@Override
+						public void setSelection(ISelection selection) {
+						}
+					});
+			action.run();
+		}
+	}
+
+	/**
+	 * @see IUpdate#update()
+	 */
+	@Override
+	public void update() {
+		fBreakpoint = null;
+		IBreakpoint breakpoint = getBreakpoint();
+		if (breakpoint != null && (breakpoint instanceof VMLineBreakpoint)) {
+			fBreakpoint = breakpoint;
+		}
+		setEnabled(fBreakpoint != null);
+	}
 }

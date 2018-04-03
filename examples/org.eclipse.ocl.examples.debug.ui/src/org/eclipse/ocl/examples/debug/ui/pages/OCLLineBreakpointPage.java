@@ -13,6 +13,6 @@ package org.eclipse.ocl.examples.debug.ui.pages;
 
 import org.eclipse.ocl.examples.debug.vm.ui.pages.VMLineBreakpointPage;
 
-public abstract class OCLLineBreakpointPage extends VMLineBreakpointPage
+public /*abstract*/ class OCLLineBreakpointPage extends VMLineBreakpointPage
 {
 }

@@ -30,6 +30,7 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
  * Presents the standard properties dialog to configure the attributes of an OCL
  * Breakpoint.
  */
+@Deprecated /* @deprecated Use VMBreakpointPropertiesHandler */
 public abstract class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 
 	private IWorkbenchPart fPart;

@@ -17,6 +17,7 @@ import org.eclipse.ocl.examples.debug.vm.ui.actions.VMBreakpointPropertiesAction
  * Presents the standard properties dialog to configure the attributes of an OCL
  * Breakpoint.
  */
+@Deprecated /* @deprecated Use VMBreakpointPropertiesHandler */
 public class OCLBreakpointPropertiesAction extends VMBreakpointPropertiesAction
 {
 }

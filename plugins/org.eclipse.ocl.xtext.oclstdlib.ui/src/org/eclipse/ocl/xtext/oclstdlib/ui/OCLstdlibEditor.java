@@ -20,4 +20,12 @@ public class OCLstdlibEditor extends BaseEditor
 	public OCLstdlibEditor() {
 		super();
 	}
+
+	@Override
+	protected void initializeEditor() {
+		super.initializeEditor();
+		setEditorContextMenuId("#OCLstdlibEditorContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#OCLstdlibRulerContext"); //$NON-NLS-1$
+		//		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
+	}
 }

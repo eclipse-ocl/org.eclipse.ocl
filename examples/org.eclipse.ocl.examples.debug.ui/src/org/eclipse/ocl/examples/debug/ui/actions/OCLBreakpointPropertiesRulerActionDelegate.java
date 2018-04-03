@@ -13,5 +13,6 @@ package org.eclipse.ocl.examples.debug.ui.actions;
 
 import org.eclipse.ocl.examples.debug.vm.ui.actions.VMBreakpointPropertiesRulerActionDelegate;
 
+@Deprecated /* @deprecated Use VMBreakpointPropertiesHandler */
 public class OCLBreakpointPropertiesRulerActionDelegate extends VMBreakpointPropertiesRulerActionDelegate {
 }

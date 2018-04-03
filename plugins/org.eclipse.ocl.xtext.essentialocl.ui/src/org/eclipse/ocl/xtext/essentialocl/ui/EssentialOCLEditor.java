@@ -20,4 +20,12 @@ public class EssentialOCLEditor extends BaseEditor
 	public EssentialOCLEditor() {
 		super();
 	}
+
+	@Override
+	protected void initializeEditor() {
+		super.initializeEditor();
+		setEditorContextMenuId("#EssentialOCLEditorContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#EssentialOCLRulerContext"); //$NON-NLS-1$
+		//		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
+	}
 }

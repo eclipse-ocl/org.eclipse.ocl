@@ -225,6 +225,22 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	}
 
 	/**
+	 * Utility method with conventions
+	 * @param shell the shell to open the dialog on
+	 * @param title the title of the dialog
+	 * @param message the message to display in the dialog
+	 * @param s the underlying {@link IStatus} to display
+	 */
+	public static void errorDialog(Shell shell, String title, String message, IStatus s) {
+		// if the 'message' resource string and the IStatus' message are the same,
+		// don't show both in the dialog
+		if (s != null && message.equals(s.getMessage())) {
+			message= null;
+		}
+		ErrorDialog.openError(shell, title, message, s);
+	}
+
+	/**
 	 * Returns the active workbench shell or <code>null</code> if none
 	 *
 	 * @return the active workbench shell or <code>null</code> if none
