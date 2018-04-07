@@ -647,7 +647,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return Collections.singletonList(csElement);
 	}
 
-	public @NonNull <T extends ElementCS, V extends EObject> List<T> visitDeclarations(@NonNull Class<T> csClass, /*@NonNull*/ List<V> eObjects, AS2CS.@Nullable Predicate<V> predicate) {
+	public @NonNull <T extends ElementCS, V extends EObject> List<T> visitDeclarations(@NonNull Class<T> csClass, /*@NonNull*/ Iterable<V> eObjects, AS2CS.@Nullable Predicate<V> predicate) {
 		assert eObjects != null;
 		List<T> csElements = new ArrayList<>();
 		for (V eObject : eObjects) {
@@ -685,7 +685,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return castElement;
 	}
 
-	public @NonNull <T extends ElementCS, V extends EObject> List<T> visitReferences(@NonNull Class<T> csClass, /*@NonNull*/ List<? extends V> eObjects, AS2CS.@Nullable Predicate<V> predicate) {
+	public @NonNull <T extends ElementCS, V extends EObject> List<T> visitReferences(@NonNull Class<T> csClass, /*@NonNull*/ Iterable<? extends V> eObjects, AS2CS.@Nullable Predicate<V> predicate) {
 		assert eObjects != null;
 		List<T> csElements = new ArrayList<>();
 		for (V eObject : eObjects) {
