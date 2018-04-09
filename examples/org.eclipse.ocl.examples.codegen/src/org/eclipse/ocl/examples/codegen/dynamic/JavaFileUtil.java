@@ -46,7 +46,7 @@ public abstract class JavaFileUtil
 	public static final @NonNull TracingOption CLASS_PATH = new TracingOption(CodeGenConstants.PLUGIN_ID, "classPath");
 
 	/**
-	 * When running maven/tycho tests locally a bin folder may heave helpful content hiding what will fail
+	 * When running maven/tycho tests locally a bin folder may leave helpful content hiding what will fail
 	 * in a clean workspace. Using test-bin reduces the likelihood of delayed bug discovery.
 	 */
 	public static final @NonNull String TEST_BIN_FOLDER_NAME = "test-bin";

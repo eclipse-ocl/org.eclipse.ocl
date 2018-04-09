@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
@@ -145,6 +146,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			this.externalResourceSetWasNull = true;
 			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
 			projectManager.initializeResourceSet(externalResourceSet);
+			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
 			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(externalResourceSet);
 		}
