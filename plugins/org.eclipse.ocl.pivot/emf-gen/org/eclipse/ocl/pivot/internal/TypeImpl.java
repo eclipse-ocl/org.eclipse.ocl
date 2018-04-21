@@ -151,27 +151,45 @@ implements Type {
 		return visitor.visitType(this);
 	}
 
+	/**
+	 * Create and return an instance of this type.
+	 *
+	 * Beware: this functionality is invalid if this type is in a dynamically loaded Ecore metamodel and has a supertype
+	 * from a generated Ecore metamodel. See Bug 532561. Direct creation of a DynamicEObjectImpl may be much better.
+	 *
+	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
+	 * to perform a lazy AS2Ecore. The caller probably can.
+	 *
+	 * @deprecated caller can do better without this bad helper method.
+	 */
+	@Deprecated
 	public @NonNull EObject createInstance() {
 		EObject eTarget = getESObject();
 		if (eTarget instanceof EClass) {
 			EClass eClass = (EClass) eTarget;
-			@NonNull EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
-			//			TypeId typeId = IdManager.getTypeId(eClass);
-			return /*ValuesUtil.createObjectValue(typeId, */element;//);
+			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
+			assert element != null;
+			return element;
 		}
-		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Create and return an instance of this data type from iytds string representation.
+	 *
+	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
+	 * to perform a lazy AS2Ecore. The caller probably can.
+	 *
+	 * @deprecated caller can do better without this bad helper method.
+	 */
+	@Deprecated
 	public @Nullable Object createInstance(@NonNull String value) {
 		EObject eTarget = getESObject();
 		if (eTarget instanceof EDataType) {
 			EDataType eDataType = (EDataType) eTarget;
-			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-			//			TypeId typeId = IdManager.getTypeId(eDataType);
-			return /*ValuesUtil.createObjectValue(typeId, */element;//);
-			//			return ValuesUtil.valueOf(element);
+			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
 		}
-		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
