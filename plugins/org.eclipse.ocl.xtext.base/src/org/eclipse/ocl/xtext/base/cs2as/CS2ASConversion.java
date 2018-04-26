@@ -1078,14 +1078,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			pivotType = metamodelManager.getStandardLibrary().getOclVoidType();
 			isRequired = false;
 		}
-		setType(pivotElement, pivotType, isRequired);
+		getHelper().setType(pivotElement, pivotType, isRequired);
 		return pivotType;
 	}
 
 	public void refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedRefCS csTypeRef) {
 		org.eclipse.ocl.pivot.Class type = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
 		Boolean isRequired = converter.isRequired(csTypeRef);
-		setType(pivotElement, type, isRequired == Boolean.TRUE);
+		getHelper().setType(pivotElement, type, isRequired == Boolean.TRUE);
 	}
 
 	public void refreshTemplateSignature(@NonNull TemplateableElementCS csTemplateableElement, @NonNull TemplateableElement pivotTemplateableElement) {
