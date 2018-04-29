@@ -74,13 +74,6 @@ public class PivotIdResolver extends AbstractIdResolver
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context) {
-		Element type = typeId.accept(this);
-		assert type != null;
-		return (org.eclipse.ocl.pivot.Class)type;
-	}
-
-	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
 		return metamodelManager.getInheritance(getType(eClassifier));
 	}
