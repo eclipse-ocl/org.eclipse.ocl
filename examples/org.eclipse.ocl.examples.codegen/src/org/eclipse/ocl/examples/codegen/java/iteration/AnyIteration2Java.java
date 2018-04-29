@@ -53,7 +53,7 @@ public class AnyIteration2Java extends AbstractIteration2Java
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		js.append("throw new ");
 		js.appendClassReference(InvalidValueException.class);
-		js.append("(\"No matching content for 'any'\");\n");
+		js.append("(\"Nothing to return for ''any''\");\n");
 		return false;
 	}
 }
