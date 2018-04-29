@@ -127,10 +127,18 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		@NonNull EPackage getEPackage();
 	}
 
-	private static @NonNull Map<EPackage, Factory> factoryMap = new HashMap<EPackage, Factory>();
+	private static @NonNull Map<@NonNull EPackage, @NonNull Factory> factoryMap = new HashMap<>();
 
 	public static synchronized void addFactory(@NonNull Factory factory) {
 		factoryMap.put(factory.getEPackage(), factory);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static synchronized void addFactory(/*@NonNull*/ EPackage ePackage, @NonNull Factory factory) {
+		assert ePackage != null;
+		factoryMap.put(ePackage, factory);
 	}
 
 	public static @Nullable Factory getFactory(@NonNull EObject eObject) {
