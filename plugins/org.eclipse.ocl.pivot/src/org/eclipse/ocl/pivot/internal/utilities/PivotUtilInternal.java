@@ -56,6 +56,8 @@ import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -541,6 +543,13 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<@NonNull ShadowPart> getOwnedPartsList(@NonNull ShadowExp shadowExp) {
 		return ClassUtil.nullFree(shadowExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull List<@NonNull TupleLiteralPart> getOwnedPartsList(@NonNull TupleLiteralExp tupleLiteralExp) {
+		return ClassUtil.nullFree(tupleLiteralExp.getOwnedParts());
 	}
 
 	/**

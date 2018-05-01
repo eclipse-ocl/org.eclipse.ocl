@@ -1261,6 +1261,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Parameter getOwnedParameter(@NonNull Operation operation, int index) {
+		return ClassUtil.nonNullState(operation.getOwnedParameters().get(index));
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Parameter> getOwnedParameters(@NonNull Operation operation) {
