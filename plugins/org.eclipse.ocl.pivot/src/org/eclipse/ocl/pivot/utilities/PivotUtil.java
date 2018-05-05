@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -1373,6 +1374,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Enumeration getOwningEnumeration(@NonNull EnumerationLiteral enumerationLiteral) {
+		return ClassUtil.nonNullState(enumerationLiteral.getOwningEnumeration());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package getOwningPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -1455,6 +1463,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Iteration getReferredIteration(@NonNull LoopExp loopExp) {
 		return ClassUtil.nonNullState(loopExp.getReferredIteration());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull EnumerationLiteral getReferredLiteral(@NonNull EnumLiteralExp enumLiteralExp) {
+		return ClassUtil.nonNullState(enumLiteralExp.getReferredLiteral());
 	}
 
 	public static @NonNull Operation getReferredOperation(@NonNull CallExp callExp) {
