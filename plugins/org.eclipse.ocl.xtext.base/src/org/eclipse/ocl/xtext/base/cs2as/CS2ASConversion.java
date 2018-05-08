@@ -169,7 +169,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
 	}
 
-	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, @NonNull String boundMessage) {
+	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
+		String boundMessage = NLS.bind(message, bindings);
 		INode node = NodeModelUtils.getNode(csElement);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
 		csElement.eResource().getErrors().add(resourceDiagnostic);
@@ -178,13 +179,18 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return invalidLiteralExp;
 	}
 
+	@Deprecated /* @deprecated use addError */
 	public void addDiagnostic(@NonNull ModelElementCS csElement, @NonNull Diagnostic diagnostic) {
-		INode node = NodeModelUtils.getNode(csElement);
-		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, diagnostic.getMessage());
-		csElement.eResource().getErrors().add(resourceDiagnostic);
+		addError(csElement, diagnostic.getMessage());
 	}
 
+	@Deprecated /* @deprecated use addError */
 	public void addDiagnostic(@NonNull ElementCS csElement, @NonNull String boundMessage) {
+		addError(csElement, boundMessage);
+	}
+
+	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
+		String boundMessage = NLS.bind(message, bindings);
 		INode node = NodeModelUtils.getNode(csElement);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
 		csElement.eResource().getErrors().add(resourceDiagnostic);
@@ -197,7 +203,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		String boundMessage = NLS.bind(message, bindings);
 		INode node = NodeModelUtils.getNode(csElement);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
-		csElement.eResource().getErrors().add(resourceDiagnostic);
+		csElement.eResource().getWarnings().add(resourceDiagnostic);
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {
@@ -952,7 +958,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		EObject eContainer = pivotSpecification.eContainer();
 		EStructuralFeature eContainingFeature = pivotSpecification.eContainingFeature();
 		if ((eContainer == null) || (eContainingFeature == null)) {
-			addDiagnostic(csElement, "No context container for: " + pivotSpecification);
+			addError(csElement, "No context container for: " + pivotSpecification);
 		}
 		else if (eContainingFeature == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION) {
 			Constraint contextConstraint = (Constraint)eContainer;
@@ -986,7 +992,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 			else {
-				addDiagnostic(csElement, "Unsupported refreshContextVariable for a constraint: " + eContainingFeature);
+				addError(csElement, "Unsupported refreshContextVariable for a constraint: " + eContainingFeature);
 			}
 		}
 		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
@@ -1000,7 +1006,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			setOperationContext(pivotSpecification, contextOperation, null);
 		}
 		else {
-			addDiagnostic(csElement, "Unsupported refreshContextVariable for a specification: " + eContainingFeature);
+			addError(csElement, "Unsupported refreshContextVariable for a specification: " + eContainingFeature);
 		}
 	}
 
@@ -1283,7 +1289,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//		logger.trace("Specializing " + moniker); //$NON-NLS-1$
 		if ((unspecializedPivotElement == null) || unspecializedPivotElement.eIsProxy()) {
 			String moniker = csElement.toString();
-			addDiagnostic(csElement, "Nothing to specialize as " + moniker); //$NON-NLS-1$
+			addError(csElement, "Nothing to specialize as " + moniker); //$NON-NLS-1$
 			return null;
 		}
 		//
@@ -1481,18 +1487,18 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 		} catch (IllegalLibraryException e) {
 			@SuppressWarnings("null")@NonNull String message = e.getMessage();
-			addDiagnostic(csElement, message);
+			addError(csElement, message);
 		} catch (Throwable e) {
 			if (!hasFailed) {
 				hasFailed = true;
 				e.fillInStackTrace();
 				logger.error("Conversion failed for '" + csElement.eClass().getName() + "'\n" + csElement, e);
 				@NonNull String message = String.valueOf(e) + " - see error log for details";
-				addDiagnostic(csElement, message);
+				addError(csElement, message);
 			}
 			else {
 				@NonNull String message = String.valueOf(e);
-				addDiagnostic(csElement, message);
+				addError(csElement, message);
 			}
 		}
 	}
@@ -1510,7 +1516,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 		} catch (Throwable e) {
 			@NonNull String message = String.valueOf(e);
-			addDiagnostic(csElement, message);
+			addError(csElement, message);
 		}
 	}
 
@@ -1522,7 +1528,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 		} catch (Throwable e) {
 			@NonNull String message = String.valueOf(e);
-			addDiagnostic(csElement, message);
+			addError(csElement, message);
 		}
 		for (EObject eContent : csElement.eContents()) {
 			if (eContent instanceof ElementCS) {
@@ -1537,7 +1543,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			element = csElement.accept(left2RightVisitor);
 		} catch (Throwable e) {
 			@NonNull String message = String.valueOf(e);
-			addDiagnostic(csElement, message);
+			addError(csElement, message);
 		}
 		if (element == null) {
 			return null;

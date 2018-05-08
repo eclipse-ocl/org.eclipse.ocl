@@ -202,9 +202,19 @@ public class PivotUtil
 	}
 
 	public static void checkResourceErrors(@NonNull String message, @NonNull Resource resource) throws ParserException {
-		List<Resource.Diagnostic> errors = resource.getErrors();
+		List<Resource.Diagnostic> errors = ClassUtil.nonNullEMF(resource.getErrors());
 		if (errors.size() > 0) {
-			throw new SemanticException(formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), message, "\n"));
+			throw new SemanticException(formatResourceDiagnostics(errors, message, "\n"));
+		}
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static void checkResourceWarnings(@NonNull String message, @NonNull Resource resource) throws ParserException {
+		List<Resource.Diagnostic> warnings = ClassUtil.nonNullEMF(resource.getWarnings());
+		if (warnings.size() > 0) {
+			throw new SemanticException(PivotUtil.formatResourceDiagnostics(warnings, message, "\n"));
 		}
 	}
 

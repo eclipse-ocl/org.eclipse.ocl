@@ -390,7 +390,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			CS2AS.setElementType(pathName, PivotPackage.Literals.NAMESPACE, csElement, null);
 		}
 		if (csElement.isIsAll() && (csElement.getName() != null)) {
-			context.addDiagnostic(csElement, "An all-package import cannot have an associated alias name");
+			context.addError(csElement, "An all-package import cannot have an associated alias name");
 		}
 		Namespace namespace = csElement.getReferredNamespace();
 		if ((namespace != null) && !namespace.eIsProxy()) {

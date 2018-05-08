@@ -136,7 +136,7 @@ public class TestOCL extends OCLInternal
 		} catch (ParserException e) {
 			TestCase.assertEquals("Exception for \"" + expression + "\"", exception, e.getClass());
 			if (resource != null) {
-				Resource.Diagnostic diagnostic = getDiagnostic(resource);
+				Resource.Diagnostic diagnostic = getError(resource);
 				assertNoException(diagnostic, ClassCastException.class);
 				assertNoException(diagnostic, NullPointerException.class);
 				//            	assertEquals("Severity for \"" + expression + "\"", severity, diagnostic.getSeverity());
@@ -173,7 +173,7 @@ public class TestOCL extends OCLInternal
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
 		} catch (ParserException e) {
 			TestCase.assertEquals("Exception for \"" + expression + "\"", exception, e.getClass());
-			Resource.Diagnostic diagnostic = getDiagnostic(csResource);
+			Resource.Diagnostic diagnostic = getError(csResource);
 			String expectedMessage = StringUtil.bind(messageTemplate, bindings);
 			TestCase.assertEquals("Message for \"" + expression + "\"", expectedMessage, diagnostic.getMessage());
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
@@ -637,6 +637,35 @@ public class TestOCL extends OCLInternal
 		assertBadQuery(SemanticException.class, Diagnostic.ERROR, contextType, expression, messageTemplate, bindings);
 	}
 
+	public void assertSemanticWarningQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, String messageTemplate, Object... bindings) {
+		BaseCSResource csResource = null;
+		try {
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
+				classContext.setSelfName("SELF");
+			}
+			csResource = (BaseCSResource) classContext.createBaseResource(expression);
+			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
+			PivotUtil.checkResourceWarnings(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
+			Resource asResource = csResource.getASResource();
+			PivotTestSuite.assertNoValidationErrors("Validating", asResource);
+			TestCase.fail("Should not have parsed \"" + expression + "\"");
+		} catch (ParserException e) {
+			TestCase.assertEquals("Exception for \"" + expression + "\"", SemanticException.class, e.getClass());
+			assert csResource != null;
+			Resource.Diagnostic diagnostic = getWarning(csResource);
+			String expectedMessage = StringUtil.bind(messageTemplate, bindings);
+			TestCase.assertEquals("Message for \"" + expression + "\"", expectedMessage, diagnostic.getMessage());
+			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
+		} catch (IOException e) {
+			TestCase.fail(e.getMessage());
+		} finally {
+			if (csResource != null) {
+				EnvironmentFactoryAdapter.disposeAll(csResource);
+			}
+		}
+	}
+
 	/**
 	 * Assert that the expression is free of syntactic and semantic errors when parsed
 	 * for evaluation on an object of contextType. No evaluation is performed since no
@@ -852,15 +881,9 @@ public class TestOCL extends OCLInternal
 		return collectionType;
 	}
 
-	/**
-	 * Obtains the diagnostic describing the problem in the last failed parse,
-	 * asserting that it is not <code>null</code>.
-	 *
-	 * @return the diagnostic
-	 */
+	@Deprecated /* @deprecated use getError */
 	public Resource.Diagnostic getDiagnostic(@NonNull Resource resource) {
-		org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic = resource.getErrors().get(0);
-		return diagnostic;
+		return getError(resource);
 	}
 
 	public @NonNull Value getEmptyBagValue() {
@@ -879,9 +902,32 @@ public class TestOCL extends OCLInternal
 		return getIdResolver().createSetOfEach(TypeId.SET.getSpecializedId(TypeId.OCL_VOID));
 	}
 
+	/**
+	 * Obtains the error diagnostic describing the problem in the last failed parse,
+	 * asserting that it is not <code>null</code>.
+	 *
+	 * @return the diagnostic
+	 */
+	public Resource.Diagnostic getError(@NonNull Resource resource) {
+		org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic = resource.getErrors().get(0);
+		return diagnostic;
+	}
+
 	public org.eclipse.ocl.pivot.@NonNull Package getUMLMetamodel() {
 		MetamodelManagerInternal metamodelManager = getMetamodelManager();
 		return ClassUtil.nonNullState(metamodelManager.getASmetamodel());
+	}
+
+	/**
+	 * Obtains the warning diagnostic describing the problem in the last failed parse,
+	 * asserting that it is not <code>null</code>.
+	 *
+	 * @return the diagnostic
+	 */
+	public Resource.Diagnostic getWarning(@NonNull Resource resource) {
+		TestCase.assertTrue(resource.getErrors().isEmpty());
+		org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic = resource.getWarnings().get(0);
+		return diagnostic;
 	}
 
 	@SuppressWarnings("null")

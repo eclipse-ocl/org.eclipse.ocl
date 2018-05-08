@@ -93,7 +93,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SingletonIterator;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.AmbiguitiesAdapter;
@@ -842,7 +841,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return operationCallExp;
 	}
 
-	protected void resolveIterationAccumulators(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
+	protected boolean resolveIterationAccumulators(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		Iteration iteration = expression.getReferredIteration();
 		List<@NonNull Variable> pivotAccumulators = new ArrayList<>();
@@ -872,11 +871,19 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					}
 					helper.setType(acc, accType, false, null);
 				}
+				if (pivotAccumulators.size() >= iteration.getOwnedAccumulators().size()) {
+					context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, csNameExp.getOwnedPathName());
+					return false;
+				}
 				acc.setRepresentedParameter(iteration.getOwnedAccumulators().get(pivotAccumulators.size()));
 				pivotAccumulators.add(acc);
 			}
+			if (!csArgument.getPrefix().equals(";")) {
+				context.addWarning(csArgument, EssentialOCLCS2ASMessages.IterateExp_BadAccumulatorSeparator, csArgument.getPrefix());
+			}
 			if (csArgument.getOwnedInitExpression() == null) {
-				context.addDiagnostic(csArgument, "Missing initializer for accumulator");
+				context.addError(csArgument, EssentialOCLCS2ASMessages.IterateExp_MissingInitializer);
+				return false;
 			}
 			//			if (csArgument.getOwnedType() != null) {
 			//				context.addError(csArgument, "Unexpected type for parameter");
@@ -885,18 +892,25 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//
 		//	Implicit Accumulator
 		//
+		int accumulatorCount = pivotAccumulators.size();
 		if (expression instanceof IterateExp) {
 			IterateExp iterateExp = (IterateExp)expression;
-			if (pivotAccumulators.size() > 1) {
-				context.addDiagnostic(csNameExp, "Iterate '" + csNameExp.getOwnedPathName() + "' cannot have more than one accumulator");
+			if (accumulatorCount > 1) {
+				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, csNameExp.getOwnedPathName());
+				return false;
+			}
+			else if (accumulatorCount < 1) {
+				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooFewAccumulators, csNameExp.getOwnedPathName());
+				return false;
 			}
 			else {
 				iterateExp.setOwnedResult(pivotAccumulators.get(0));
 			}
 		}
-		else if (pivotAccumulators.size() > 0) {
-			context.addDiagnostic(csNameExp, "Iteration '" + csNameExp.getOwnedPathName() + "' cannot have an accumulator");
+		else if (accumulatorCount > 0) {
+			context.addError(csNameExp, EssentialOCLCS2ASMessages.IteratorExp_TooManyAccumulators, csNameExp.getOwnedPathName());
 		}
+		return true;
 	}
 
 	protected void resolveIterationBody(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
@@ -912,10 +926,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			else if (csArgument.getRole() == NavigationRole.EXPRESSION) {
 				if (csArgument.getOwnedInitExpression() != null) {
-					context.addDiagnostic(csArgument, "Unexpected initializer for expression");
+					context.addError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedInitializer);
 				}
 				if (csArgument.getOwnedType() != null) {
-					context.addDiagnostic(csArgument, "Unexpected type for expression");
+					context.addError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedType);
 				}
 				ExpCS name = csArgument.getOwnedNameExpression();
 				assert name != null;
@@ -927,12 +941,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					pivotBodies.add(exp);
 				}
 				else {
-					pivotBodies.add(context.addBadExpressionError(csArgument, "Invalid '" + csNameExp.getOwnedPathName() + "' iteration body"));
+					pivotBodies.add(context.addBadExpressionError(csArgument, "Invalid ''{0}'' iteration body", csNameExp.getOwnedPathName()));
 				}
 			}
 		}
 		if (pivotBodies.size() != 1) {
-			expression.setOwnedBody(context.addBadExpressionError(csNameExp, "Iteration '" + csNameExp.getOwnedPathName() + "' must have exactly one body"));
+			expression.setOwnedBody(context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly one body", csNameExp.getOwnedPathName()));
 		}
 		else {
 			expression.setOwnedBody(pivotBodies.get(0));
@@ -953,12 +967,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected void resolveIterationContent(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
+		boolean allOk = true;
 		OCLExpression source = ClassUtil.nonNullState(expression.getOwnedSource());
-		resolveIterationIterators(csRoundBracketedClause, source, expression);
-		resolveIterationAccumulators(csRoundBracketedClause, expression);
-		resolveOperationArgumentTypes(null, csRoundBracketedClause);
-		resolveIterationBody(csRoundBracketedClause, expression);
-		if (expression instanceof IterateExp) {
+		if (allOk) {
+			resolveIterationIterators(csRoundBracketedClause, source, expression);
+		}
+		if (allOk) {
+			allOk = resolveIterationAccumulators(csRoundBracketedClause, expression);
+		}
+		if (allOk) {
+			resolveOperationArgumentTypes(null, csRoundBracketedClause);
+		}
+		if (allOk) {
+			resolveIterationBody(csRoundBracketedClause, expression);
+		}
+		if (allOk && (expression instanceof IterateExp)) {
 			IterateExp iterateExp = (IterateExp)expression;
 			OCLExpression ownedBody = iterateExp.getOwnedBody();
 			if ((ownedBody != null) && ownedBody.isIsRequired()) {
@@ -971,7 +994,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
-		resolveOperationReturnType(expression);
+		if (allOk) {
+			resolveOperationReturnType(expression);
+		}
 	}
 
 	protected void resolveIterationIterators(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull OCLExpression source, @NonNull LoopExp expression) {
@@ -1007,7 +1032,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				continue;
 			}
 			if (csArgument.getOwnedInitExpression() != null) {
-				context.addDiagnostic(csArgument, "Unexpected initializer for iterator");
+				context.addError(csArgument, "Unexpected initializer for iterator");
 			}
 			//			if (csArgument.getOwnedType() == null) {
 			//				context.addError(csArgument, "Missing type for iterator");
@@ -1108,15 +1133,15 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		int csArgumentCount = csArguments.size();
 		if (csArgumentCount > 0) {
 			if (csArguments.get(0).getRole() != NavigationRole.EXPRESSION) {
-				context.addDiagnostic(csNameExp, "Operation calls can only specify expressions");
+				context.addError(csNameExp, "Operation calls can only specify expressions");
 			}
 			for (int argIndex = 0; argIndex < csArgumentCount; argIndex++) {
 				NavigatingArgCS csArgument = csArguments.get(argIndex);
 				if (csArgument.getOwnedInitExpression() != null) {
-					context.addDiagnostic(csArgument, "Unexpected initializer for expression");
+					context.addError(csArgument, "Unexpected initializer for expression");
 				}
 				if (csArgument.getOwnedType() != null) {
-					context.addDiagnostic(csArgument, "Unexpected type for expression");
+					context.addError(csArgument, "Unexpected type for expression");
 				}
 				OCLExpression arg = PivotUtil.getPivot(OCLExpression.class, csArgument);
 				if (arg != null) {
@@ -1138,8 +1163,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 		}
 		if ((csArgumentCount != parametersCount) && (operation != standardLibrary.basicGetOclInvalidOperation())) {
-			String boundMessage = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentCount_ERROR_, csArgumentCount, parametersCount);
-			context.addDiagnostic(csNameExp, boundMessage);
+			context.addError(csNameExp, PivotMessagesInternal.MismatchedArgumentCount_ERROR_, csArgumentCount, parametersCount);
 		}
 		helper.refreshList(expression.getOwnedArguments(), pivotArguments);
 	}
@@ -1201,15 +1225,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					s.append(argumentType.toString());
 				}
 			}
-			String boundMessage;
 			if (s.length() > 0) {
-				boundMessage = StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, sourceType, csOperator.getName(), s.toString());
+				context.addError(csOperator, PivotMessagesInternal.UnresolvedOperationCall_ERROR_, sourceType, csOperator.getName(), s.toString());
 			}
 			else {
-				boundMessage = StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, sourceType, csOperator.getName());
+				context.addError(csOperator, PivotMessagesInternal.UnresolvedOperation_ERROR_, sourceType, csOperator.getName());
 			}
 			//			context.addBadExpressionError(csOperator, boundMessage);
-			context.addDiagnostic(csOperator, boundMessage);
 			Operation oclInvalidOperation = standardLibrary.getOclInvalidOperation();
 			context.setReferredOperation(expression, oclInvalidOperation);
 			//			ElementUtil.setLastPathElement(csPathName, oclInvalidOperation);
@@ -2060,7 +2082,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (parent != null) {
 				VariableDeclaration variableDeclaration = context.getConverter().lookupSelf(parent);
 				if (variableDeclaration == null) {
-					return context.addBadExpressionError(csSelfExp, StringUtil.bind(PivotMessages.UnspecifiedSelfContext));
+					return context.addBadExpressionError(csSelfExp, PivotMessages.UnspecifiedSelfContext);
 				}
 				expression.setReferredVariable(variableDeclaration);
 				expression.setName(variableDeclaration.getName());

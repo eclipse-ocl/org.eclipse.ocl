@@ -96,7 +96,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 						coercions.add(PivotUtil.getPivot(Operation.class, csOperation));
 					}
 					else {
-						context.addDiagnostic(csOperation, "Only PrimitiveTypes may have coercions");
+						context.addError(csOperation, "Only PrimitiveTypes may have coercions");
 					}
 				}
 			}
@@ -132,7 +132,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 
 	@Override
 	public Continuation<?> visitLibPackageCS(@NonNull LibPackageCS csElement) {
-		Library pivotElement = refreshPackage(Library.class, PivotPackage.Literals.LIBRARY, csElement);		
+		Library pivotElement = refreshPackage(Library.class, PivotPackage.Literals.LIBRARY, csElement);
 		context.refreshPivotList(Precedence.class, pivotElement.getOwnedPrecedences(), csElement.getOwnedPrecedences());
 		return null;
 	}
@@ -141,7 +141,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	public Continuation<?> visitLibRootPackageCS(@NonNull LibRootPackageCS csElement) {
 		Resource eResource = csElement.eResource();
 		if (eResource instanceof BaseCSResource) {
-			@NonNull Model pivotElement = refreshRootPackage(Model.class, PivotPackage.Literals.MODEL, csElement);		
+			@NonNull Model pivotElement = refreshRootPackage(Model.class, PivotPackage.Literals.MODEL, csElement);
 			context.refreshPivotList(Import.class, pivotElement.getOwnedImports(), csElement.getOwnedImports());
 			context.installRootElement((BaseCSResource) eResource, pivotElement);		// Ensure containment viable for imported library type references
 			importPackages(csElement);			// FIXME This has to be after refreshPackage which is irregular and prevents local realization of ImportCS etc
