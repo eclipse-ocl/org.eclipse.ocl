@@ -1131,8 +1131,23 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated this is a crazy typo */
 	public static @NonNull Iterable<@NonNull Operation> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull CompleteClass> getOwnedCompleteClasses(@NonNull CompletePackage completePackage) {
+		return ClassUtil.nullFree(completePackage.getOwnedCompleteClasses());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull CompletePackage> getOwnedCompletePackages(@NonNull CompletePackage completePackage) {
+		return ClassUtil.nullFree(completePackage.getOwnedCompletePackages());
 	}
 
 	/**
