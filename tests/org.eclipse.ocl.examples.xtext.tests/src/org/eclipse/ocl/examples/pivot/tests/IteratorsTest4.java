@@ -161,36 +161,35 @@ public class IteratorsTest4 extends PivotTestSuite
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
 
-		// shorter form
+		// shorter forms
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s = Set(String){} | s->including(p.name))");
 
-		// shortest form
+		// shortest forms
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(s : Set(String) = Set{} | s->including(name))");
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(s = Set(String){} | s->including(name))");
 
 		ocl.assertQueryEquals(ocl.pkg1, "pfx_a_b_c", "Sequence{'a','b','c'}->iterate(e : String; s : String = 'pfx' | s + '_' + e)");
 		ocl.dispose();
 	}
 
 	/**
-	 * Tests the bad separators in iterate() expressions.
+	 * Tests some bad separators in iterate() expressions.
 	 */
 	@Test public void test_iterate_534626() {
 		MyOCL ocl = createOCL();
-		//		ocl.assertSemanticErrorQuery(null, "Sequence{'a','b','c'}->iterate(ch; acc1:String =''; acc2:String ='' | acc1+ch)",
-		//			EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, "iterate");
-
-
-
-
-
-
 		ocl.assertSemanticErrorQuery(null, "Sequence{'a','b','c'}->iterate(ch, acc:String ='' , acc+ch)",
 			EssentialOCLCS2ASMessages.IterateExp_TooFewAccumulators, "iterate");
+		ocl.assertSemanticErrorQuery(null, "Sequence{'a','b','c'}->iterate(ch | acc1+ch)",
+			EssentialOCLCS2ASMessages.IterateExp_TooFewAccumulators, "iterate");
 		ocl.assertSemanticErrorQuery(null, "Sequence{'a','b','c'}->iterate(ch; acc1:String ='', acc2:String ='' | acc1+ch)",
+			EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, "iterate");
+		ocl.assertSemanticErrorQuery(null, "Sequence{'a','b','c'}->iterate(ch; acc1:String =''; acc2:String ='' | acc1+ch)",
 			EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, "iterate");
 		ocl.assertSemanticWarningQuery(null, "Sequence{'a','b','c'}->iterate(ch, acc:String ='' | acc+ch)",
 			EssentialOCLCS2ASMessages.IterateExp_BadAccumulatorSeparator, ",");
 		ocl.assertQueryEquals(null, "abc", "Sequence{'a','b','c'}->iterate(ch; acc:String ='' | acc+ch)");
+		ocl.assertQueryEquals(null, "abc", "Sequence{'a','b','c'}->iterate(ch; acc ='' | acc+ch)");
 		ocl.dispose();
 	}
 

@@ -134,9 +134,9 @@ public class EvaluateNumericOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3e-1, "( 3e-1 )");
 		ocl.assertSemanticErrorQuery(null, "3 .1", "bad navigation argument");
 		ocl.assertSemanticErrorQuery(null, "3. 1", "bad navigation argument");
-		ocl.assertSemanticErrorQuery(null, "3.1 e1", "extraneous input ''{0}'' expecting EOF", "e1");
-		ocl.assertSemanticErrorQuery(null, "3.1e 1", "no viable alternative at ''{0}''", "e");
-		ocl.assertSemanticErrorQuery(null, "3.1e+ 1", "no viable alternative at ''{0}''", "e");
+		ocl.assertSemanticErrorQuery(null, "3.1 e1", "no viable alternative at input ''{0}''", "e1");
+		ocl.assertSemanticErrorQuery(null, "3.1e 1", "no viable alternative at input ''{0}''", "e");
+		ocl.assertSemanticErrorQuery(null, "3.1e+ 1", "no viable alternative at input ''{0}''", "e");
 		ocl.dispose();
 	}
 
