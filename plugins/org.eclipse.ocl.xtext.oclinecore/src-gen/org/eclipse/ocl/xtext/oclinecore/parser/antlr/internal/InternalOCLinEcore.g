@@ -8021,97 +8021,58 @@ ruleRoundBracketedClauseCS returns [EObject current=null]
 )
 )(
 (
+(
 		{
-	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0());
+	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0_0());
 	    }
-		lv_ownedArguments_3_0=ruleNavigatingCommaArgCS		{
+		lv_ownedArguments_3_1=ruleNavigatingCommaArgCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRoundBracketedClauseCSRule());
 	        }
        		add(
        			$current,
        			"ownedArguments",
-        		lv_ownedArguments_3_0,
+        		lv_ownedArguments_3_1,
         		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.NavigatingCommaArgCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
-)
-)*((
-(
-		{
-	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_2_0_0());
+    |		{
+	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_1_0_1());
 	    }
-		lv_ownedArguments_4_0=ruleNavigatingSemiArgCS		{
+		lv_ownedArguments_3_2=ruleNavigatingSemiArgCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRoundBracketedClauseCSRule());
 	        }
        		add(
        			$current,
        			"ownedArguments",
-        		lv_ownedArguments_4_0,
+        		lv_ownedArguments_3_2,
         		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.NavigatingSemiArgCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
-)
-)(
-(
-		{
-	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_2_1_0());
+    |		{
+	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_1_0_2());
 	    }
-		lv_ownedArguments_5_0=ruleNavigatingCommaArgCS		{
+		lv_ownedArguments_3_3=ruleNavigatingBarArgCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRoundBracketedClauseCSRule());
 	        }
        		add(
        			$current,
        			"ownedArguments",
-        		lv_ownedArguments_5_0,
-        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.NavigatingCommaArgCS");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)*)?((
-(
-		{
-	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_3_0_0());
-	    }
-		lv_ownedArguments_6_0=ruleNavigatingBarArgCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRoundBracketedClauseCSRule());
-	        }
-       		add(
-       			$current,
-       			"ownedArguments",
-        		lv_ownedArguments_6_0,
+        		lv_ownedArguments_3_3,
         		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.NavigatingBarArgCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
-(
-		{
-	        newCompositeNode(grammarAccess.getRoundBracketedClauseCSAccess().getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_3_1_0());
-	    }
-		lv_ownedArguments_7_0=ruleNavigatingCommaArgCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRoundBracketedClauseCSRule());
-	        }
-       		add(
-       			$current,
-       			"ownedArguments",
-        		lv_ownedArguments_7_0,
-        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.NavigatingCommaArgCS");
-	        afterParserOrEnumRuleCall();
-	    }
 
 )
-)*)*)?	otherlv_8=')'
+)*)?	otherlv_4=')'
     {
-    	newLeafNode(otherlv_8, grammarAccess.getRoundBracketedClauseCSAccess().getRightParenthesisKeyword_3());
+    	newLeafNode(otherlv_4, grammarAccess.getRoundBracketedClauseCSAccess().getRightParenthesisKeyword_3());
     }
 )
 ;
@@ -8606,14 +8567,14 @@ ruleNavigatingSemiArgCS returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_4='='
+))?(	otherlv_4='='
     {
-    	newLeafNode(otherlv_4, grammarAccess.getNavigatingSemiArgCSAccess().getEqualsSignKeyword_2_2_0());
+    	newLeafNode(otherlv_4, grammarAccess.getNavigatingSemiArgCSAccess().getEqualsSignKeyword_3_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_2_2_1_0());
+	        newCompositeNode(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_3_1_0());
 	    }
 		lv_ownedInitExpression_5_0=ruleExpCS		{
 	        if ($current==null) {
@@ -8628,7 +8589,7 @@ ruleNavigatingSemiArgCS returns [EObject current=null]
 	    }
 
 )
-))?)?)
+))?)
 ;
 
 

@@ -1881,29 +1881,20 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedArgumentsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
 		private final RuleCall cOwnedArgumentsNavigatingArgCSParserRuleCall_2_0_0 = (RuleCall)cOwnedArgumentsAssignment_2_0.eContents().get(0);
 		private final Assignment cOwnedArgumentsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0 = (RuleCall)cOwnedArgumentsAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Assignment cOwnedArgumentsAssignment_2_2_0 = (Assignment)cGroup_2_2.eContents().get(0);
-		private final RuleCall cOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_2_0_0 = (RuleCall)cOwnedArgumentsAssignment_2_2_0.eContents().get(0);
-		private final Assignment cOwnedArgumentsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_2_1_0 = (RuleCall)cOwnedArgumentsAssignment_2_2_1.eContents().get(0);
-		private final Group cGroup_2_3 = (Group)cGroup_2.eContents().get(3);
-		private final Assignment cOwnedArgumentsAssignment_2_3_0 = (Assignment)cGroup_2_3.eContents().get(0);
-		private final RuleCall cOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_3_0_0 = (RuleCall)cOwnedArgumentsAssignment_2_3_0.eContents().get(0);
-		private final Assignment cOwnedArgumentsAssignment_2_3_1 = (Assignment)cGroup_2_3.eContents().get(1);
-		private final RuleCall cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_3_1_0 = (RuleCall)cOwnedArgumentsAssignment_2_3_1.eContents().get(0);
+		private final Alternatives cOwnedArgumentsAlternatives_2_1_0 = (Alternatives)cOwnedArgumentsAssignment_2_1.eContents().get(0);
+		private final RuleCall cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0_0 = (RuleCall)cOwnedArgumentsAlternatives_2_1_0.eContents().get(0);
+		private final RuleCall cOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_1_0_1 = (RuleCall)cOwnedArgumentsAlternatives_2_1_0.eContents().get(1);
+		private final RuleCall cOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_1_0_2 = (RuleCall)cOwnedArgumentsAlternatives_2_1_0.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		///* A curly bracket clause is a generalized rule for template specialisations and operations arguments.*/
 		//RoundBracketedClauseCS:
-		//	{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=NavigatingCommaArgCS*
-		//	(ownedArguments+=NavigatingSemiArgCS ownedArguments+=NavigatingCommaArgCS*)? (ownedArguments+=NavigatingBarArgCS
-		//	ownedArguments+=NavigatingCommaArgCS*)*)? ')';
+		//	{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS |
+		//	NavigatingSemiArgCS | NavigatingBarArgCS)*)? ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=NavigatingCommaArgCS*
-		//(ownedArguments+=NavigatingSemiArgCS ownedArguments+=NavigatingCommaArgCS*)? (ownedArguments+=NavigatingBarArgCS
-		//ownedArguments+=NavigatingCommaArgCS*)*)? ')'
+		//{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS |
+		//NavigatingSemiArgCS | NavigatingBarArgCS)*)? ')'
 		public Group getGroup() { return cGroup; }
 
 		//{RoundBracketedClauseCS}
@@ -1912,8 +1903,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//(ownedArguments+=NavigatingArgCS ownedArguments+=NavigatingCommaArgCS* (ownedArguments+=NavigatingSemiArgCS
-		//ownedArguments+=NavigatingCommaArgCS*)? (ownedArguments+=NavigatingBarArgCS ownedArguments+=NavigatingCommaArgCS*)*)?
+		//(ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS | NavigatingSemiArgCS | NavigatingBarArgCS)*)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//ownedArguments+=NavigatingArgCS
@@ -1922,41 +1912,20 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgCS
 		public RuleCall getOwnedArgumentsNavigatingArgCSParserRuleCall_2_0_0() { return cOwnedArgumentsNavigatingArgCSParserRuleCall_2_0_0; }
 
-		//ownedArguments+=NavigatingCommaArgCS*
+		//ownedArguments+=(NavigatingCommaArgCS | NavigatingSemiArgCS | NavigatingBarArgCS)*
 		public Assignment getOwnedArgumentsAssignment_2_1() { return cOwnedArgumentsAssignment_2_1; }
 
+		//(NavigatingCommaArgCS | NavigatingSemiArgCS | NavigatingBarArgCS)
+		public Alternatives getOwnedArgumentsAlternatives_2_1_0() { return cOwnedArgumentsAlternatives_2_1_0; }
+
 		//NavigatingCommaArgCS
-		public RuleCall getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0() { return cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0; }
-
-		//(ownedArguments+=NavigatingSemiArgCS ownedArguments+=NavigatingCommaArgCS*)?
-		public Group getGroup_2_2() { return cGroup_2_2; }
-
-		//ownedArguments+=NavigatingSemiArgCS
-		public Assignment getOwnedArgumentsAssignment_2_2_0() { return cOwnedArgumentsAssignment_2_2_0; }
+		public RuleCall getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0_0() { return cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_1_0_0; }
 
 		//NavigatingSemiArgCS
-		public RuleCall getOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_2_0_0() { return cOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_2_0_0; }
-
-		//ownedArguments+=NavigatingCommaArgCS*
-		public Assignment getOwnedArgumentsAssignment_2_2_1() { return cOwnedArgumentsAssignment_2_2_1; }
-
-		//NavigatingCommaArgCS
-		public RuleCall getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_2_1_0() { return cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_2_1_0; }
-
-		//(ownedArguments+=NavigatingBarArgCS ownedArguments+=NavigatingCommaArgCS*)*
-		public Group getGroup_2_3() { return cGroup_2_3; }
-
-		//ownedArguments+=NavigatingBarArgCS
-		public Assignment getOwnedArgumentsAssignment_2_3_0() { return cOwnedArgumentsAssignment_2_3_0; }
+		public RuleCall getOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_1_0_1() { return cOwnedArgumentsNavigatingSemiArgCSParserRuleCall_2_1_0_1; }
 
 		//NavigatingBarArgCS
-		public RuleCall getOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_3_0_0() { return cOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_3_0_0; }
-
-		//ownedArguments+=NavigatingCommaArgCS*
-		public Assignment getOwnedArgumentsAssignment_2_3_1() { return cOwnedArgumentsAssignment_2_3_1; }
-
-		//NavigatingCommaArgCS
-		public RuleCall getOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_3_1_0() { return cOwnedArgumentsNavigatingCommaArgCSParserRuleCall_2_3_1_0; }
+		public RuleCall getOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_1_0_2() { return cOwnedArgumentsNavigatingBarArgCSParserRuleCall_2_1_0_2; }
 
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
@@ -2263,19 +2232,19 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cOwnedTypeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_1_0 = (RuleCall)cOwnedTypeAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cOwnedInitExpressionAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_2_2_1_0 = (RuleCall)cOwnedInitExpressionAssignment_2_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cOwnedInitExpressionAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_3_1_0 = (RuleCall)cOwnedInitExpressionAssignment_3_1.eContents().get(0);
 
 		//// Type-less init is an illegal infix expression
 		//
 		///* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 		//NavigatingSemiArgCS NavigatingArgCS:
-		//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
+		//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?
+		//prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?
 		public Group getGroup() { return cGroup; }
 
 		//prefix=';'
@@ -2290,7 +2259,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0; }
 
-		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?
+		//(':' ownedType=TypeExpCS)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//':'
@@ -2303,16 +2272,16 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_1_0; }
 
 		//('=' ownedInitExpression=ExpCS)?
-		public Group getGroup_2_2() { return cGroup_2_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//'='
-		public Keyword getEqualsSignKeyword_2_2_0() { return cEqualsSignKeyword_2_2_0; }
+		public Keyword getEqualsSignKeyword_3_0() { return cEqualsSignKeyword_3_0; }
 
 		//ownedInitExpression=ExpCS
-		public Assignment getOwnedInitExpressionAssignment_2_2_1() { return cOwnedInitExpressionAssignment_2_2_1; }
+		public Assignment getOwnedInitExpressionAssignment_3_1() { return cOwnedInitExpressionAssignment_3_1; }
 
 		//ExpCS
-		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_2_1_0; }
+		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_3_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_3_1_0; }
 	}
 
 	public class NavigatingArgExpCSElements extends AbstractParserRuleElementFinder {
@@ -3332,9 +3301,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///* A curly bracket clause is a generalized rule for template specialisations and operations arguments.*/
 	//RoundBracketedClauseCS:
-	//	{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=NavigatingCommaArgCS*
-	//	(ownedArguments+=NavigatingSemiArgCS ownedArguments+=NavigatingCommaArgCS*)? (ownedArguments+=NavigatingBarArgCS
-	//	ownedArguments+=NavigatingCommaArgCS*)*)? ')';
+	//	{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS |
+	//	NavigatingSemiArgCS | NavigatingBarArgCS)*)? ')';
 	public RoundBracketedClauseCSElements getRoundBracketedClauseCSAccess() {
 		return pRoundBracketedClauseCS;
 	}
@@ -3398,7 +3366,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	///* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 	//NavigatingSemiArgCS NavigatingArgCS:
-	//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
+	//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;
 	public NavigatingSemiArgCSElements getNavigatingSemiArgCSAccess() {
 		return pNavigatingSemiArgCS;
 	}

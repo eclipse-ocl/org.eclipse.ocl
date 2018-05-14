@@ -114,6 +114,22 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 		super(context);
 	}
 
+	private boolean canBeAccumulator(@NonNull NavigatingArgCS csArgument) {
+		if (csArgument.getOwnedInitExpression() != null) {
+			return true;
+		}
+		ExpCS csNameExpression = csArgument.getOwnedNameExpression();
+		if (!(csNameExpression instanceof InfixExpCS)) {
+			return false;
+		}
+		InfixExpCS csInfixExp = (InfixExpCS)csNameExpression;
+		ExpCS csLeftExpression = csInfixExp.getOwnedLeft();
+		if (!(csLeftExpression instanceof NameExpCS)) {
+			return false;
+		}
+		return "=".equals(csInfixExp.getName());
+	}
+
 	private void setParameterRole(@NonNull NavigatingArgCS csArgument, @NonNull NavigationRole aRole) {
 		csArgument.setRole(aRole);
 		/*		if ((csArgument.getOwnedType() == null) && (csArgument.getInit() == null)) {
@@ -124,6 +140,13 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			}
 		} */
 		ExpCS csName = csArgument.getOwnedNameExpression();
+		if ((aRole == NavigationRole.ACCUMULATOR) && (csName instanceof InfixExpCS)) {
+			InfixExpCS csInfixExp = (InfixExpCS)csName;
+			ExpCS csLeftExpression = csInfixExp.getOwnedLeft();
+			if ( "=".equals(csInfixExp.getName()) && (csLeftExpression instanceof NameExpCS)) {
+				csName = csLeftExpression;
+			}
+		}
 		if (csName instanceof NameExpCS) {
 			PathNameCS csPathName = ((NameExpCS)csName).getOwnedPathName();
 			Variable parameter;
@@ -456,7 +479,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 						break;
 					}
 					case ACCUMULATOR: {
-						if (csArgument.getOwnedInitExpression() != null) {
+						if (canBeAccumulator(csArgument)) {
 							setParameterRole(csArgument, NavigationRole.ACCUMULATOR);
 							if (";".equals(csArgument.getPrefix())) {
 								role = NavigationRole.ITERATOR;
@@ -469,7 +492,12 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 						break;
 					}
 					case ITERATOR: {
-						setParameterRole(csArgument, NavigationRole.ITERATOR);
+						if (";".equals(csArgument.getPrefix())) {
+							setParameterRole(csArgument, NavigationRole.ACCUMULATOR);
+						}
+						else {
+							setParameterRole(csArgument, NavigationRole.ITERATOR);
+						}
 						break;
 					}
 				}

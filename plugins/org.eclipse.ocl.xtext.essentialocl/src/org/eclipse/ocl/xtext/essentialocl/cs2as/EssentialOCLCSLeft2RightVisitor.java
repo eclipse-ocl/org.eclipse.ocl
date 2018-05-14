@@ -853,10 +853,19 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				continue;
 			}
 			ExpCS csName = csArgument.getOwnedNameExpression();
+			ExpCS csInit;
+			if (csName instanceof InfixExpCS) {
+				InfixExpCS csInfixExp = (InfixExpCS)csName;
+				assert "=".equals(csInfixExp.getName());		// assured by EssentialOCLCSContainmentVisitor.canBeAccumulator
+				csInit = csInfixExp.getOwnedRight();
+				csName = csInfixExp.getOwnedLeft();
+			}
+			else {
+				csInit = csArgument.getOwnedInitExpression();
+			}
 			Variable acc = PivotUtil.getPivot(Variable.class, csName);
 			if (acc != null) {
 				context.installPivotUsage(csArgument, acc);
-				ExpCS csInit = csArgument.getOwnedInitExpression();
 				if (csInit != null) {
 					OCLExpression initExpression = context.visitLeft2Right(OCLExpression.class, csInit);
 					acc.setOwnedInit(initExpression);
@@ -878,10 +887,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				acc.setRepresentedParameter(iteration.getOwnedAccumulators().get(pivotAccumulators.size()));
 				pivotAccumulators.add(acc);
 			}
-			if (!csArgument.getPrefix().equals(";")) {
-				context.addWarning(csArgument, EssentialOCLCS2ASMessages.IterateExp_BadAccumulatorSeparator, csArgument.getPrefix());
+			String prefix = csArgument.getPrefix();
+			if ((prefix != null) && !prefix.equals(";")) {
+				context.addWarning(csArgument, EssentialOCLCS2ASMessages.IterateExp_BadAccumulatorSeparator, prefix);
 			}
-			if (csArgument.getOwnedInitExpression() == null) {
+			if (csInit == null) {
 				context.addError(csArgument, EssentialOCLCS2ASMessages.IterateExp_MissingInitializer);
 				return false;
 			}

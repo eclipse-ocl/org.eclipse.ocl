@@ -2686,8 +2686,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_UNQUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:9987:22: ( '\\u00A3$%^\\u00A3$%^' )
-            // InternalOCLinEcore.g:9987:24: '\\u00A3$%^\\u00A3$%^'
+            // InternalOCLinEcore.g:9948:22: ( '\\u00A3$%^\\u00A3$%^' )
+            // InternalOCLinEcore.g:9948:24: '\\u00A3$%^\\u00A3$%^'
             {
             match("\u00A3$%^\u00A3$%^");
 
@@ -2705,8 +2705,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
     // $ANTLR start "RULE_ESCAPED_CHARACTER"
     public final void mRULE_ESCAPED_CHARACTER() throws RecognitionException {
         try {
-            // InternalOCLinEcore.g:9989:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
-            // InternalOCLinEcore.g:9989:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+            // InternalOCLinEcore.g:9950:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
+            // InternalOCLinEcore.g:9950:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
             match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2730,8 +2730,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
     // $ANTLR start "RULE_LETTER_CHARACTER"
     public final void mRULE_LETTER_CHARACTER() throws RecognitionException {
         try {
-            // InternalOCLinEcore.g:9991:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
-            // InternalOCLinEcore.g:9991:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // InternalOCLinEcore.g:9952:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
+            // InternalOCLinEcore.g:9952:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -2756,11 +2756,11 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_DOUBLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:9993:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalOCLinEcore.g:9993:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalOCLinEcore.g:9954:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalOCLinEcore.g:9954:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"');
-            // InternalOCLinEcore.g:9993:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalOCLinEcore.g:9954:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -2776,14 +2776,14 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalOCLinEcore.g:9993:34: RULE_ESCAPED_CHARACTER
+            	    // InternalOCLinEcore.g:9954:34: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalOCLinEcore.g:9993:57: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalOCLinEcore.g:9954:57: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2820,11 +2820,11 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:9995:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // InternalOCLinEcore.g:9995:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalOCLinEcore.g:9956:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalOCLinEcore.g:9956:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\'');
-            // InternalOCLinEcore.g:9995:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalOCLinEcore.g:9956:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop2:
             do {
                 int alt2=3;
@@ -2840,14 +2840,14 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalOCLinEcore.g:9995:35: RULE_ESCAPED_CHARACTER
+            	    // InternalOCLinEcore.g:9956:35: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalOCLinEcore.g:9995:58: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalOCLinEcore.g:9956:58: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2884,12 +2884,12 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_ML_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:9997:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
-            // InternalOCLinEcore.g:9997:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
+            // InternalOCLinEcore.g:9958:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
+            // InternalOCLinEcore.g:9958:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
             match("/'");
 
-            // InternalOCLinEcore.g:9997:38: ( options {greedy=false; } : . )*
+            // InternalOCLinEcore.g:9958:38: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -2914,7 +2914,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalOCLinEcore.g:9997:66: .
+            	    // InternalOCLinEcore.g:9958:66: .
             	    {
             	    matchAny();
 
@@ -2944,11 +2944,11 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_SIMPLE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:9999:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
-            // InternalOCLinEcore.g:9999:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalOCLinEcore.g:9960:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
+            // InternalOCLinEcore.g:9960:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
             mRULE_LETTER_CHARACTER();
-            // InternalOCLinEcore.g:9999:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalOCLinEcore.g:9960:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -2997,8 +2997,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_ESCAPED_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10001:17: ( '_' RULE_SINGLE_QUOTED_STRING )
-            // InternalOCLinEcore.g:10001:19: '_' RULE_SINGLE_QUOTED_STRING
+            // InternalOCLinEcore.g:9962:17: ( '_' RULE_SINGLE_QUOTED_STRING )
+            // InternalOCLinEcore.g:9962:19: '_' RULE_SINGLE_QUOTED_STRING
             {
             match('_');
             mRULE_SINGLE_QUOTED_STRING();
@@ -3018,10 +3018,10 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10003:10: ( ( '0' .. '9' )+ )
-            // InternalOCLinEcore.g:10003:12: ( '0' .. '9' )+
+            // InternalOCLinEcore.g:9964:10: ( ( '0' .. '9' )+ )
+            // InternalOCLinEcore.g:9964:12: ( '0' .. '9' )+
             {
-            // InternalOCLinEcore.g:10003:12: ( '0' .. '9' )+
+            // InternalOCLinEcore.g:9964:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -3035,7 +3035,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalOCLinEcore.g:10003:13: '0' .. '9'
+            	    // InternalOCLinEcore.g:9964:13: '0' .. '9'
             	    {
             	    matchRange('0','9');
 
@@ -3067,12 +3067,12 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10005:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalOCLinEcore.g:10005:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalOCLinEcore.g:9966:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalOCLinEcore.g:9966:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*");
 
-            // InternalOCLinEcore.g:10005:24: ( options {greedy=false; } : . )*
+            // InternalOCLinEcore.g:9966:24: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -3097,7 +3097,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalOCLinEcore.g:10005:52: .
+            	    // InternalOCLinEcore.g:9966:52: .
             	    {
             	    matchAny();
 
@@ -3127,12 +3127,12 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10007:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalOCLinEcore.g:10007:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalOCLinEcore.g:9968:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalOCLinEcore.g:9968:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--");
 
-            // InternalOCLinEcore.g:10007:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalOCLinEcore.g:9968:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -3145,7 +3145,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalOCLinEcore.g:10007:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalOCLinEcore.g:9968:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -3165,7 +3165,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalOCLinEcore.g:10007:40: ( ( '\\r' )? '\\n' )?
+            // InternalOCLinEcore.g:9968:40: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -3174,9 +3174,9 @@ public class InternalOCLinEcoreLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalOCLinEcore.g:10007:41: ( '\\r' )? '\\n'
+                    // InternalOCLinEcore.g:9968:41: ( '\\r' )? '\\n'
                     {
-                    // InternalOCLinEcore.g:10007:41: ( '\\r' )?
+                    // InternalOCLinEcore.g:9968:41: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -3185,7 +3185,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalOCLinEcore.g:10007:41: '\\r'
+                            // InternalOCLinEcore.g:9968:41: '\\r'
                             {
                             match('\r');
 
@@ -3217,10 +3217,10 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10009:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalOCLinEcore.g:10009:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalOCLinEcore.g:9970:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalOCLinEcore.g:9970:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalOCLinEcore.g:10009:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalOCLinEcore.g:9970:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt10=0;
             loop10:
             do {
@@ -3274,8 +3274,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalOCLinEcore.g:10011:16: ( . )
-            // InternalOCLinEcore.g:10011:18: .
+            // InternalOCLinEcore.g:9972:16: ( . )
+            // InternalOCLinEcore.g:9972:18: .
             {
             matchAny();
 

@@ -284,7 +284,7 @@ NavigatingCommaArgCS returns NavigatingArgCS:
 
 /* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 NavigatingSemiArgCS returns NavigatingArgCS:
-	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;	// Type-less init is an illegal infix expression
+	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;	// Type-less init is an illegal infix expression
 
 NavigatingArgExpCS returns ExpCS: // Intended to be overridden
 	ExpCS

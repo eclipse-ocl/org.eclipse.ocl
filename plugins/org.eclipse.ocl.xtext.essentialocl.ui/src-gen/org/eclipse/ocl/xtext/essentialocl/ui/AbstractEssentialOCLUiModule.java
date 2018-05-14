@@ -55,13 +55,11 @@ public abstract class AbstractEssentialOCLUiModule extends org.eclipse.xtext.ui.
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
-	@Override
 	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
 		return org.eclipse.ocl.xtext.essentialocl.ui.labeling.EssentialOCLLabelProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
-	@Override
 	public void configureResourceUIServiceLabelProvider(com.google.inject.Binder binder) {
 		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class).annotatedWith(org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider.class).to(org.eclipse.ocl.xtext.essentialocl.ui.labeling.EssentialOCLDescriptionLabelProvider.class);
 	}
@@ -122,7 +120,6 @@ public abstract class AbstractEssentialOCLUiModule extends org.eclipse.xtext.ui.
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.quickfix.QuickfixProviderFragment
-	@Override
 	public Class<? extends org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
 		return org.eclipse.ocl.xtext.essentialocl.ui.quickfix.EssentialOCLQuickfixProvider.class;
 	}
@@ -138,7 +135,6 @@ public abstract class AbstractEssentialOCLUiModule extends org.eclipse.xtext.ui.
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
 		return org.eclipse.ocl.xtext.base.ui.autoedit.BaseAutoEditStrategyProvider.class;
 	}
@@ -194,7 +190,6 @@ public abstract class AbstractEssentialOCLUiModule extends org.eclipse.xtext.ui.
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	@Override
 	public Class<? extends org.eclipse.xtext.ui.editor.hover.IEObjectHover> bindIEObjectHover() {
 		return org.eclipse.ocl.xtext.markup.ui.hover.MarkupHover.class;
 	}
@@ -210,7 +205,6 @@ public abstract class AbstractEssentialOCLUiModule extends org.eclipse.xtext.ui.
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	@Override
 	public Class<? extends org.eclipse.jface.text.ITextHover> bindITextHover() {
 		return org.eclipse.ocl.xtext.markup.ui.hover.MarkupCompositeHover.class;
 	}
