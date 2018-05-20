@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -53,15 +53,15 @@ import org.eclipse.xtext.util.Strings;
 
 public abstract class GenerateGrammar extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());	
-	protected ResourceSet resourceSet = null;	
+	protected Logger log = Logger.getLogger(getClass());
+	protected ResourceSet resourceSet = null;
 	protected String languageName;
 	protected String javaFolder;
 	protected String javaPackageName;
 	protected String grammarFileStem;
 
 	protected String sourceFile;
-	
+
 	protected AbstractGenModelHelper genModelHelper;
 	private Map<EClassifier, Map<Notifier, String>> nameMaps = new HashMap<EClassifier, Map<Notifier, String>>();
 	private Map<String, Grammar> name2grammar = new HashMap<String, Grammar>();
@@ -81,7 +81,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			languageName = javaPackageName + "." + grammarFileStem;
 		}
 	}
-	
+
 	protected @NonNull String emitEClassifierLiteral(@NonNull EClassifier eClassifier) {
 		EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
 		GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
@@ -89,8 +89,8 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			return "<<" + ePackage.getNsURI() + ">>";
 		}
 		return genPackage.getQualifiedPackageInterfaceName() + ".Literals" + "." + genModelHelper.getLiteralName(eClassifier);
-	}	
-	
+	}
+
 	protected @NonNull String emitEPackageLiteral(@NonNull EPackage ePackage) {
 		GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
 		if (genPackage == null) {
@@ -98,7 +98,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		return genPackage.getQualifiedPackageInterfaceName() + ".eINSTANCE";
 	}
-	
+
 	protected @NonNull String emitEEnumLiteral(@NonNull EEnumLiteral enumLiteral) {
 		EClassifier eClassifier = enumLiteral.getEEnum();
 		EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
@@ -108,7 +108,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		return genPackage.getQualifiedPackageInterfaceName() + ".Literals" + "." + genModelHelper.getLiteralName(eClassifier)+".getEEnumLiteral(\""+ enumLiteral.getName() + "\")";
 	}
-	
+
 	protected @NonNull String emitParserRuleLiteral(@NonNull Grammar grammar, @NonNull ParserRule parserRule) {
 		Grammar referencedGrammar = (Grammar)parserRule.eContainer();
 		if ((referencedGrammar == null) || (referencedGrammar == grammar)) {
@@ -118,7 +118,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			return getGrammarPackageName(referencedGrammar)+ ".PR_" + parserRule.getName();
 		}
 	}
-	
+
 	protected @NonNull String emitEnumRuleLiteral(@NonNull Grammar grammar, @NonNull EnumRule enumRule) {
 		Grammar referencedGrammar = (Grammar)enumRule.eContainer();
 		if ((referencedGrammar == null) || (referencedGrammar == grammar)) {
@@ -128,7 +128,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			return getGrammarPackageName(referencedGrammar)+ ".ER_" + enumRule.getName();
 		}
 	}
-	
+
 	protected @NonNull String emitReferencedMetamodelName(@NonNull Grammar grammar, @NonNull ReferencedMetamodel referencedMetamodel) {
 		String alias = referencedMetamodel.getAlias();
 		if (alias == null) {
@@ -138,7 +138,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			return "MM_" + alias;
 		}
 	}
-	
+
 	protected @NonNull String emitSymbol(EClassifier eClass, @NonNull Notifier eObject) {
 		Map<Notifier, String> names = nameMaps.get(eClass);
 		if (names == null) {
@@ -152,7 +152,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		return name;
 	}
-	
+
 	protected @NonNull String emitTerminalRuleLiteral(@NonNull Grammar grammar, @NonNull TerminalRule terminalRule) {
 		Grammar referencedGrammar = (Grammar)terminalRule.eContainer();
 		if ((referencedGrammar == null) || (referencedGrammar == grammar)) {
@@ -179,7 +179,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected String getGetAccessorName(@NonNull EStructuralFeature eStructuralFeature) {
 		return genModelHelper.getGetAccessor(eStructuralFeature);
 	}
-	
+
 	protected @NonNull String getGrammarPackageName(@NonNull Grammar grammar) {
 		String name = grammar.getName();
 		int index = name.lastIndexOf(".");
@@ -199,7 +199,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		return "_" + grammar.getName().replaceAll("\\.", "_");
 	}
-	
+
 	protected ResourceSet getResourceSet() {
 		if (resourceSet == null) {
 			resourceSet = new ResourceSetImpl();
@@ -210,7 +210,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected String getSetAccessorName(@NonNull EStructuralFeature eStructuralFeature) {
 		return genModelHelper.getSetAccessor(eStructuralFeature);
 	}
-	
+
 	protected <AR extends AbstractRule> List<AR> getSortedAbstractRules(@NonNull Grammar grammar, Class<AR> type) {
 		List<AR> abstractRules = new ArrayList<AR>();
 		for (TreeIterator<EObject> tit = grammar.eAllContents(); tit.hasNext(); ) {
@@ -221,13 +221,14 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		Collections.sort(abstractRules, new Comparator<@NonNull AR>()
 		{
+			@Override
 			public int compare(@NonNull AR o1, @NonNull AR o2) {
 				return ClassUtil.safeCompareTo(o1.getName(), o2.getName());
 			}
 		});
 		return abstractRules;
 	}
-	
+
 	protected List<ReferencedMetamodel> getSortedReferencedMetamodels(@NonNull Grammar grammar) {
 		List<ReferencedMetamodel> referencedMetamodels = new ArrayList<ReferencedMetamodel>();
 		for (TreeIterator<EObject> tit = grammar.eAllContents(); tit.hasNext(); ) {
@@ -238,6 +239,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		}
 		Collections.sort(referencedMetamodels, new Comparator<ReferencedMetamodel>()
 		{
+			@Override
 			public int compare(ReferencedMetamodel o1, ReferencedMetamodel o2) {
 				String n1 = o1.getAlias();
 				String n2 = o2.getAlias();
@@ -248,7 +250,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		});
 		return referencedMetamodels;
 	}
-	
+
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		OCL ocl = OCL.newInstance();
@@ -269,7 +271,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 				return;
 			}
 			String fileName = folder + "/" + grammarFileStem + "GrammarResource.java";
-//			log.info("Generating '" + fileName + "'");
+			//			log.info("Generating '" + fileName + "'");
 			@SuppressWarnings("null")@NonNull String metamodel = generate(grammarResource);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
@@ -310,9 +312,9 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	public void setLanguageName(String languageName) {
 		this.languageName = languageName;
 	}
-	
+
 	/**
-	 * An optional ResourceSet that MWE components may share to reduce model loading. 
+	 * An optional ResourceSet that MWE components may share to reduce model loading.
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;

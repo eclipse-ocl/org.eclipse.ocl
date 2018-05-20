@@ -45,6 +45,7 @@ import org.eclipse.xtext.EnumRule
 import org.eclipse.xtext.EnumLiteralDeclaration
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.xtext.UnorderedGroup
+import java.util.GregorianCalendar
 
 /*
  * Serialize a YYY.xtextbin grammar as an YYYGrammarResource.java class.
@@ -52,9 +53,10 @@ import org.eclipse.xtext.UnorderedGroup
 public class GenerateGrammarXtend extends GenerateGrammar
 {
 	/*@NonNull*/ protected override String generate(/*@NonNull*/ Resource grammarResource) {
+		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
 		'''
 			/*******************************************************************************
-			 * Copyright (c) 2015, 2017 Willink Transformations and others.
+			 * Copyright (c) 2015, «year» Willink Transformations and others.
 			 * All rights reserved. This program and the accompanying materials
 			 * are made available under the terms of the Eclipse Public License v1.0
 			 * which accompanies this distribution, and is available at
