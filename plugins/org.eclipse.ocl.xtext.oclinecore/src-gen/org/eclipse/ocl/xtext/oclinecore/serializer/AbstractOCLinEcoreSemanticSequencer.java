@@ -715,18 +715,18 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!unique'?
+	 *         qualifiers+='transient'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
-	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
-	 *                 qualifiers+='unique'
+	 *                 qualifiers+='unique' |
+	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!unique'?
+	 *             qualifiers+='transient'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -825,13 +825,12 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='!volatile'?
+	 *         qualifiers+='!derived'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
 	 *                 qualifiers+='derived' |
-	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='readonly' |
@@ -844,9 +843,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!unique' |
 	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
-	 *                 qualifiers+='volatile'
+	 *                 qualifiers+='volatile' |
+	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='!volatile'?
+	 *             qualifiers+='!derived'?
 	 *         )*
 	 *         (
 	 *             (ownedAnnotations+=AnnotationElementCS | ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)?
