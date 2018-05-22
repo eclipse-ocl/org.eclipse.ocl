@@ -406,12 +406,14 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_OrderedSet_flatten_T2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OrderedSet_selectByKind_TT = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OrderedSet_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_T_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OrderedSet_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_collectNested_V = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_collect_V = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_flatten_T2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_selectByKind_TT = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_T_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Sequence_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Set_collectNested_V = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Set_collect_V = createCollectionType(_Collection_Collection_T);
@@ -800,6 +802,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Collection_OrderedSet_selectByType_TT);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_OrderedSet_T_NullFree);
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_OrderedSet_T);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
@@ -816,6 +822,10 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Sequence_selectByType_TT);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_Sequence_T_NullFree);
+			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Sequence_T);
@@ -1518,6 +1528,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OrderedSet_excludingAll = createOperation("excludingAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_flatten = createOperation("flatten", _OrderedSet_OrderedSet_flatten_T2_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_OrderedSet_flatten_T2);
 		private final @NonNull Operation op_OrderedSet_including = createOperation("including", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_includingAll = createOperation("includingAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_insertAt = createOperation("insertAt", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_prepend = createOperation("prepend", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_prependAll = createOperation("prependAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
@@ -1533,6 +1544,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Sequence_excludingAll = createOperation("excludingAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_flatten = createOperation("flatten", _Sequence_Sequence_flatten_T2_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Sequence_flatten_T2);
 		private final @NonNull Operation op_Sequence_including = createOperation("including", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_includingAll = createOperation("includingAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_insertAt = createOperation("insertAt", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_prepend = createOperation("prepend", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_prependAll = createOperation("prependAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
@@ -2201,6 +2213,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OrderedSet_including);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", tp_OrderedSet_T, false));
+			ownedOperations.add(operation = op_OrderedSet_includingAll);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("objects", _Collection_OrderedSet_T_NullFree, true));
 			ownedOperations.add(operation = op_OrderedSet_insertAt);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
@@ -2250,6 +2265,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Sequence_including);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", tp_Sequence_T, false));
+			ownedOperations.add(operation = op_Sequence_includingAll);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("objects", _Collection_Sequence_T_NullFree, true));
 			ownedOperations.add(operation = op_Sequence_insertAt);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
@@ -2758,12 +2776,14 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_OclSelf, _OclSelf);
 			addBinding(_Collection_OrderedCollection_T_NullFree, tp_OrderedCollection_T);
 			addBinding(_Collection_OrderedSet_T, tp_OrderedSet_T);
+			addBinding(_Collection_OrderedSet_T_NullFree, tp_OrderedSet_T);
 			addBinding(_Collection_OrderedSet_collectNested_V, tp_OrderedSet_collectNested_V);
 			addBinding(_Collection_OrderedSet_collect_V, tp_OrderedSet_collect_V);
 			addBinding(_Collection_OrderedSet_flatten_T2, tp_OrderedSet_flatten_T2);
 			addBinding(_Collection_OrderedSet_selectByKind_TT, tp_OrderedSet_selectByKind_TT);
 			addBinding(_Collection_OrderedSet_selectByType_TT, tp_OrderedSet_selectByType_TT);
 			addBinding(_Collection_Sequence_T, tp_Sequence_T);
+			addBinding(_Collection_Sequence_T_NullFree, tp_Sequence_T);
 			addBinding(_Collection_Sequence_collectNested_V, tp_Sequence_collectNested_V);
 			addBinding(_Collection_Sequence_collect_V, tp_Sequence_collect_V);
 			addBinding(_Collection_Sequence_flatten_T2, tp_Sequence_flatten_T2);
@@ -3177,6 +3197,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OrderedSet_excluding, "The ordered set  containing all elements of oclText[self] apart from object.\n\nThe order of the remaining elements is not changed.");
 			installComment(op_OrderedSet_excludingAll, "The ordered set containing all elements of oclText[self] apart from all occurrences of all objects.");
 			installComment(op_OrderedSet_including, "The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.");
+			installComment(op_OrderedSet_includingAll, "The ordered set containing all elements of oclText[self] plus objects added as the last elements.");
 			installComment(op_OrderedSet_insertAt, "The ordered set consisting of oclText[self] with object present at position index.");
 			installComment(op_OrderedSet_prepend, "The sequence consisting of object, followed by all elements in oclText[self].");
 			installComment(op_OrderedSet_prependAll, "The sequence consisting of objects, followed by all elements in oclText[self].");
@@ -3194,6 +3215,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Sequence_excludingAll, "The sequence containing all elements of oclText[self] apart from all occurrences of all objects.");
 			installComment(op_Sequence_flatten, "Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].\nIf the element type is a collection type, the result is the sequence containing all the elements\nof all the recursively flattened elements of oclText[self]. The order of the elements is partial.");
 			installComment(op_Sequence_including, "The sequence containing all elements of oclText[self] plus object added as the last element.");
+			installComment(op_Sequence_includingAll, "The sequence containing all elements of oclText[self] plus objects added as the last elements.");
 			installComment(op_Sequence_insertAt, "The sequence consisting of oclText[self] with object inserted at position index.");
 			installComment(op_Sequence_prepend, "The sequence consisting of object, followed by all elements in oclText[self].");
 			installComment(op_Sequence_prependAll, "The sequence consisting of objects, followed by all elements in oclText[self].");

@@ -1255,6 +1255,10 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	**/
 	operation including(object : T[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation';
 	/**
+	The ordered set containing all elements of oclText[self] plus objects added as the last elements.
+	**/
+	operation includingAll(objects : Collection(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation';
+	/**
 	The ordered set consisting of oclText[self] with object present at position index.
 	**/
 	operation insertAt(index : Integer, object : T[?]) : OrderedSet(T) invalidating => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation';
@@ -1416,6 +1420,10 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {
 	The sequence containing all elements of oclText[self] plus object added as the last element.
 	**/
 	operation including(object : T[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation';
+	/**
+	The sequence containing all elements of oclText[self] plus objects added as the last elements.
+	**/
+	operation includingAll(objects : Collection(T)) : Sequence(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation';
 	/**
 	The sequence consisting of oclText[self] with object inserted at position index.
 	**/

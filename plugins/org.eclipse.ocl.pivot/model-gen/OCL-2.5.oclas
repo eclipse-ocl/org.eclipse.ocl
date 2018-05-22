@@ -1554,6 +1554,11 @@
         <ownedComments body="The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.&#xA;"/>
         <ownedParameters isRequired="false" name="object" type="#53+C2"/>
       </ownedOperations>
+      <ownedOperations xmi:id="jsbWz" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" name="includingAll"
+          type="#fIXUp">
+        <ownedComments body="The ordered set containing all elements of oclText[self] plus objects added as the last elements.&#xA;"/>
+        <ownedParameters name="objects" type="#m0JrX"/>
+      </ownedOperations>
       <ownedOperations xmi:id="9XmwW" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"
           isInvalidating="true" name="insertAt" type="#fIXUp">
         <ownedComments body="The ordered set consisting of oclText[self] with object present at position index.&#xA;"/>
@@ -1814,6 +1819,11 @@
           type="#rk5ZZ">
         <ownedComments body="The sequence containing all elements of oclText[self] plus object added as the last element.&#xA;"/>
         <ownedParameters isRequired="false" name="object" type="#l1i6D"/>
+      </ownedOperations>
+      <ownedOperations xmi:id=",X3s7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" name="includingAll"
+          type="#rk5ZZ">
+        <ownedComments body="The sequence containing all elements of oclText[self] plus objects added as the last elements.&#xA;"/>
+        <ownedParameters name="objects" type="#ymK8p"/>
       </ownedOperations>
       <ownedOperations xmi:id="ZDCHf" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"
           isInvalidating="true" name="insertAt" type="#rk5ZZ">
@@ -2393,6 +2403,16 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="cfVYj" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#feFHs" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="m0JrX" isNullFree="true" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#53+C2" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ymK8p" isNullFree="true" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#l1i6D" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zk+UU" isNullFree="true" name="Collection" superClasses="#jbMkR">
