@@ -1776,7 +1776,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							}
 							else {
 								((CallExp) callExp).setIsSafe(isSafe);
-								if (isSafe) {
+								if (isSafe && !isAggregate) {
 									callExp.setIsRequired(isAggregate);
 								}
 								navigatingExp = callExp;
