@@ -20,11 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public abstract class TestFileSystem
 {
-	@Deprecated /* @deprecated - preserving API - delete at Photon M7. */
-	public static @NonNull TestFileSystem create() {
-		return create(new TestFileSystemHelper());
-	}
-
 	public static @NonNull TestFileSystem create(@NonNull TestFileSystemHelper helper) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			return JUnitStandaloneFileSystem.create(helper);

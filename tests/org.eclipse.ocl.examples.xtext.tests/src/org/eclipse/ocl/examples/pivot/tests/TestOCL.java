@@ -815,7 +815,7 @@ public class TestOCL extends OCLInternal
 			String packagePath = testPackageName + "/" + testName;
 			String packageName = testPackageName + "." + testName;
 			if (testProject == null) {
-				testProject = testFileSystem.getTestProject("OCLtests", false);
+				testProject = testFileSystem.getTestProject("_OCLtests", false);
 				testProject.getOutputFile("test-src/" + packagePath).getFile().mkdirs();
 				testProject.getOutputFile("test-bin/" + packagePath).getFile().mkdirs();
 			}
