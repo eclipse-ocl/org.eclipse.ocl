@@ -754,7 +754,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 			//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
-			String testProjectName = "codegen/company";
+			String testProjectName = "org/eclipse/ocl/examples/xtext/tests/codegen/company";
 			//
 			URI sourceGenModelURI = URI.createPlatformResourceURI(getTestBundleName() + "/model/CodeGenCompany.genmodel", true);
 			URI targetGenModelURI = getTestURI("CodeGenCompany.genmodel");

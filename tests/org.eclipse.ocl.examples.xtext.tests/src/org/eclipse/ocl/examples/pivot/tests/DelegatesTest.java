@@ -59,6 +59,16 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextVersionUtil;
+import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyFactory;
+import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
+import org.eclipse.ocl.examples.xtext.tests.codegen.company.util.CodegencompanyValidator;
+import org.eclipse.ocl.examples.xtext.tests.company.Bug418716;
+import org.eclipse.ocl.examples.xtext.tests.company.CompanyFactory;
+import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
+import org.eclipse.ocl.examples.xtext.tests.company.util.CompanyValidator;
+import org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.NoreflectioncompanyFactory;
+import org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.NoreflectioncompanyPackage;
+import org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.util.NoreflectioncompanyValidator;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -104,17 +114,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.junit.AfterClass;
 
-import codegen.company.CodegencompanyFactory;
-import codegen.company.CodegencompanyPackage;
-import codegen.company.util.CodegencompanyValidator;
-import company.Bug418716;
-import company.CompanyFactory;
-import company.CompanyPackage;
-import company.util.CompanyValidator;
 import junit.framework.TestCase;
-import noreflectioncompany.NoreflectioncompanyFactory;
-import noreflectioncompany.NoreflectioncompanyPackage;
-import noreflectioncompany.util.NoreflectioncompanyValidator;
 
 /**
  * Tests for the OCL delegate implementations.
@@ -162,6 +162,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 	protected @NonNull ResourceSet createResourceSet() {
 		ResourceSet resourceSet = new ResourceSetImpl();
+		getProjectMap().initializeResourceSet(resourceSet);
 		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
 		extensionToFactoryMap.put("xmi", new EcoreResourceFactoryImpl());
 		extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
@@ -216,6 +217,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				};
 			}
 		});
+		//		EcorePlugin.ExtensionProcessor.process(null);
+		//		resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
 		return resourceSet;
 	}
 
@@ -976,6 +979,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_operationEvaluatingToNull() throws InvocationTargetException {
+		TestUtil.doEssentialOCLSetup();
 		ResourceSet resourceSet = createResourceSet();
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);

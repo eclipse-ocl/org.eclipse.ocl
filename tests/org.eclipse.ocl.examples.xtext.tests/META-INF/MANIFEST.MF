@@ -37,16 +37,10 @@ Require-Bundle: org.junit;visibility:=reexport,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %providerName
-Export-Package: codegen.company,
- codegen.company.impl,
- codegen.company.util,
- org.eclipse.ocl.examples.pivot.tests,
+Export-Package: org.eclipse.ocl.examples.pivot.tests,
  org.eclipse.ocl.examples.test.ecore,
  org.eclipse.ocl.examples.test.xtext,
- org.eclipse.ocl.examples.xtext.tests,
- company,
- company.impl,
- company.util
+ org.eclipse.ocl.examples.xtext.tests
 Import-Package: com.google.common.collect,
  org.apache.commons.lang,
  org.apache.log4j;version="[1.2.15,2.0.0)",

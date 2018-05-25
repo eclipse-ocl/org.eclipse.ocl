@@ -10,8 +10,8 @@
     <details key="Use Null Annotations" value="true"/>
   </genAnnotations>
   <foreignModel>Company.ecore</foreignModel>
-  <genPackages prefix="Codegencompany" basePackage="codegen" disposableProviderFactory="true"
-      ecorePackage="Company.ecore#/">
+  <genPackages prefix="Codegencompany" basePackage="org.eclipse.ocl.examples.xtext.tests.codegen"
+      disposableProviderFactory="true" ecorePackage="Company.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Company.ecore#//CompanySizeKind">
       <genEnumLiterals ecoreEnumLiteral="Company.ecore#//CompanySizeKind/small"/>
       <genEnumLiterals ecoreEnumLiteral="Company.ecore#//CompanySizeKind/medium"/>
