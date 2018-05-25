@@ -18,7 +18,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -31,6 +30,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -46,7 +46,6 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.Choice;
 import org.eclipse.ocl.helper.ChoiceKind;
 import org.eclipse.ocl.helper.OCLHelper;
-import org.eclipse.ocl.internal.helper.PluginFinder;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.parser.OCLProblemHandler;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -835,27 +834,10 @@ extends TestCase {
 	abstract protected TestReflection.Static<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, PR, EL, S, COA, SSA, CT> getStaticReflection();
 
 	public URI getTestModelURI(String localFileName) {
-		String testPlugInId = staticReflection.getTestPlugInId();
-		try {
-			java.lang.Class<?> platformClass = java.lang.Class.forName("org.eclipse.core.runtime.Platform");
-			Method getBundle = platformClass.getDeclaredMethod("getBundle", new java.lang.Class[] {String.class});
-			Object bundle = getBundle.invoke(null, new Object[] {testPlugInId});
-
-			if (bundle != null) {
-				Method getEntry = bundle.getClass().getMethod("getEntry", new java.lang.Class[] {String.class});
-				URL url = (URL) getEntry.invoke(bundle, new Object[] {localFileName});
-				return URI.createURI(url.toString());
-			}
-		} catch (Throwable e) {
-			// not running in Eclipse
-		}
-		PluginFinder pluginFinder = new PluginFinder(testPlugInId);
-		pluginFinder.resolve();
-		String urlString = pluginFinder.get(testPlugInId);
-		if (urlString == null) {
-			TestCase.fail("'" + testPlugInId + "' property not defined; use the launch configuration to define it"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		return URI.createFileURI(urlString + "/" + localFileName);
+		String testPlugInPrefix = staticReflection.getTestPlugInId() + "/";
+		URI testPlugURI = EcorePlugin.IS_ECLIPSE_RUNNING ? URI.createPlatformPluginURI(testPlugInPrefix, true) : URI.createPlatformResourceURI(testPlugInPrefix, true);
+		URI localURI = URI.createURI(localFileName.startsWith("/") ? localFileName.substring(1) : localFileName);
+		return localURI.resolve(testPlugURI);
 	}
 
 	protected PT getUMLBoolean() {
