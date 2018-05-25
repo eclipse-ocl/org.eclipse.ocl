@@ -68,70 +68,70 @@ import org.eclipse.ocl.utilities.UtilitiesPackage;
  * Ecore models.  The <code>EcoreEnvironment</code> uses a client-supplied
  * package registry (or the global registry) to look up {@link EPackage}s
  * by qualified name.
- * 
+ *
  * @author Edith Schonberg (edith)
  * @author Christian W. Damus (cdamus)
  */
 public class EcoreEnvironment
-	extends AbstractEnvironment<
-		EPackage, EClassifier, EOperation, EStructuralFeature,
-		EEnumLiteral, EParameter,
-		EObject, CallOperationAction, SendSignalAction, Constraint,
-		EClass, EObject>
-    implements EnvironmentWithHiddenOpposites {
-	
+extends AbstractEnvironment<
+EPackage, EClassifier, EOperation, EStructuralFeature,
+EEnumLiteral, EParameter,
+EObject, CallOperationAction, SendSignalAction, Constraint,
+EClass, EObject>
+implements EnvironmentWithHiddenOpposites {
+
 	/**
 	 * The namespace URI of the Ecore representation of the OCL Standard Library.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	public static final String OCL_STANDARD_LIBRARY_NS_URI = "http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore"; //$NON-NLS-1$
 
-    private static final Map<List<String>, EPackage> OCL_PACKAGES =
-        new java.util.HashMap<List<String>, EPackage>();
-    
-    
-    static {
-        List<String> names = new java.util.ArrayList<String>();
-        names.add(ExpressionsPackageImpl.OCL_ROOT_PACKAGE.getName());
-        OCL_PACKAGES.put(names, ExpressionsPackageImpl.OCL_ROOT_PACKAGE);
-        
-        names = new java.util.ArrayList<String>(names);
-        names.add(ExpressionsPackage.eINSTANCE.getName());
-        OCL_PACKAGES.put(names, ExpressionsPackage.eINSTANCE);
-        
-        names = new java.util.ArrayList<String>(names);
-        names.set(1, TypesPackage.eINSTANCE.getName());
-        OCL_PACKAGES.put(names, TypesPackage.eINSTANCE);
-        
-        names = new java.util.ArrayList<String>(names);
-        names.set(1, UtilitiesPackage.eINSTANCE.getName());
-        OCL_PACKAGES.put(names, UtilitiesPackage.eINSTANCE);
-        
-        names = new java.util.ArrayList<String>(names);
-        names.set(1, EcorePackage.eINSTANCE.getName());
-        OCL_PACKAGES.put(names, EcorePackage.eINSTANCE);
-    }
-    
+	private static final Map<List<String>, EPackage> OCL_PACKAGES =
+			new java.util.HashMap<List<String>, EPackage>();
+
+
+	static {
+		List<String> names = new java.util.ArrayList<String>();
+		names.add(ExpressionsPackageImpl.OCL_ROOT_PACKAGE.getName());
+		OCL_PACKAGES.put(names, ExpressionsPackageImpl.OCL_ROOT_PACKAGE);
+
+		names = new java.util.ArrayList<String>(names);
+		names.add(ExpressionsPackage.eINSTANCE.getName());
+		OCL_PACKAGES.put(names, ExpressionsPackage.eINSTANCE);
+
+		names = new java.util.ArrayList<String>(names);
+		names.set(1, TypesPackage.eINSTANCE.getName());
+		OCL_PACKAGES.put(names, TypesPackage.eINSTANCE);
+
+		names = new java.util.ArrayList<String>(names);
+		names.set(1, UtilitiesPackage.eINSTANCE.getName());
+		OCL_PACKAGES.put(names, UtilitiesPackage.eINSTANCE);
+
+		names = new java.util.ArrayList<String>(names);
+		names.set(1, EcorePackage.eINSTANCE.getName());
+		OCL_PACKAGES.put(names, EcorePackage.eINSTANCE);
+	}
+
 	/**
 	 * The registry for package lookups.
 	 */
 	private EPackage.Registry registry;
-	
+
 	private EnvironmentFactory<
-			EPackage, EClassifier, EOperation, EStructuralFeature,
-			EEnumLiteral, EParameter,
-			EObject, CallOperationAction, SendSignalAction, Constraint,
-			EClass, EObject>
+	EPackage, EClassifier, EOperation, EStructuralFeature,
+	EEnumLiteral, EParameter,
+	EObject, CallOperationAction, SendSignalAction, Constraint,
+	EClass, EObject>
 	factory;
-	
+
 	private TypeResolver<EClassifier, EOperation, EStructuralFeature> typeResolver;
-	
+
 	private OppositeEndFinder oppositeEndFinder;
 
 	/**
 	 * Initializes me with a package registry for package look-ups.
-	 * 
+	 *
 	 * @param reg a package registry
 	 * @deprecated Use {@link #EcoreEnvironment(EcoreEnvironmentFactory, Resource)} instead
 	 */
@@ -146,7 +146,7 @@ public class EcoreEnvironment
 	 * and opposite end finder (if any) are obtained consistently, and from a
 	 * resource in which I am persisted (and from which I load myself if it
 	 * already has content).
-	 * 
+	 *
 	 * @param fac
 	 *            a package registry
 	 * @param resource
@@ -159,34 +159,34 @@ public class EcoreEnvironment
 		oppositeEndFinder = fac.getOppositeEndFinder();
 		typeResolver = createTypeResolver(resource);
 	}
-	
-    /**
-     * Initializes me with a package registry and a resource in which I am
-     * persisted (and from which I load myself if it already has content).
-     * 
-     * @param reg a package registry
-     * @param resource a resource, which may or may not already have content
+
+	/**
+	 * Initializes me with a package registry and a resource in which I am
+	 * persisted (and from which I load myself if it already has content).
+	 *
+	 * @param reg a package registry
+	 * @param resource a resource, which may or may not already have content
 	 * @deprecated Use {@link #EcoreEnvironment(EcoreEnvironmentFactory, Resource)} instead
-     */
+	 */
 	@Deprecated
 	protected EcoreEnvironment(EPackage.Registry reg, Resource resource) {
 		registry = reg;
 		typeResolver = createTypeResolver(resource);
 	}
 
-    /**
-     * Initializes me with a parent environment, from which I inherit such things
-     * as a package registry and a resource.
-     * 
-     * @param parent my parent environment
-     */
+	/**
+	 * Initializes me with a parent environment, from which I inherit such things
+	 * as a package registry and a resource.
+	 *
+	 * @param parent my parent environment
+	 */
 	protected EcoreEnvironment(
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
-		
+
 		super((EcoreEnvironment) parent);
-		
+
 		EcoreEnvironment eparent = (EcoreEnvironment) parent;
-		
+
 		if (eparent != null) {
 			factory = eparent.factory;
 			registry = eparent.registry;
@@ -198,41 +198,41 @@ public class EcoreEnvironment
 		}
 	}
 
-    // implements the inherited specification
+	// implements the inherited specification
 	public EnvironmentFactory<
-			EPackage, EClassifier, EOperation, EStructuralFeature,
-			EEnumLiteral, EParameter,
-			EObject, CallOperationAction, SendSignalAction, Constraint,
-			EClass, EObject>
+	EPackage, EClassifier, EOperation, EStructuralFeature,
+	EEnumLiteral, EParameter,
+	EObject, CallOperationAction, SendSignalAction, Constraint,
+	EClass, EObject>
 	getFactory() {
 		if (factory != null) {
 			return factory;
 		}
-		
+
 		if (getInternalParent() != null) {
 			factory = getInternalParent().getFactory();
 			if (factory != null) {
 				return factory;
 			}
 		}
-		
+
 		// obtain a reasonable default factory
 		if (registry == EPackage.Registry.INSTANCE) {
 			factory = EcoreEnvironmentFactory.INSTANCE;
 		} else {
 			factory = new EcoreEnvironmentFactory(registry);
 		}
-		
+
 		return factory;
 	}
-	
+
 	/**
 	 * Sets the factory that created me. This method should only be invoked by
 	 * that factory. If the factory is an {@link EcoreEnvironmentFactory}, its
 	 * {@link EcoreEnvironmentFactory#getOppositeEndFinder() opposite end
 	 * finder} will be used as this environment's {@link #oppositeEndFinder
 	 * opposite end finder}.
-	 * 
+	 *
 	 * @param factory
 	 *            my originating factory
 	 * @deprecated {@link #factory} will become final in future releases; use
@@ -250,8 +250,8 @@ public class EcoreEnvironment
 			oppositeEndFinder = ((EcoreEnvironmentFactory)factory).getOppositeEndFinder();
 		}
 	}
-	
-    // implements the inherited specification
+
+	// implements the inherited specification
 	public void setParent(Environment<
 			EPackage, EClassifier, EOperation, EStructuralFeature,
 			EEnumLiteral, EParameter,
@@ -259,52 +259,52 @@ public class EcoreEnvironment
 			EClass, EObject> env) {
 		super.setParent((EcoreEnvironment) env);
 	}
-	
-    // implements the inherited specification
+
+	// implements the inherited specification
 	public OCLStandardLibrary<EClassifier> getOCLStandardLibrary() {
 		return OCLStandardLibraryImpl.INSTANCE;
 	}
 
-    // implements the inherited specification
+	// implements the inherited specification
 	public TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
 		return typeResolver;
 	}
 
-    // implements the inherited specification
-    public OCLFactory getOCLFactory() {
-        return OCLFactoryImpl.INSTANCE;
-    }
-    
-    // implements the inherited specification
-    public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-        return UMLReflectionImpl.INSTANCE;
-    }
+	// implements the inherited specification
+	public OCLFactory getOCLFactory() {
+		return OCLFactoryImpl.INSTANCE;
+	}
+
+	// implements the inherited specification
+	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+		return UMLReflectionImpl.INSTANCE;
+	}
 
 	/**
 	 * Creates a new type resolver for use with this environment, persisted
 	 * in a default resource.
-	 * 
+	 *
 	 * @return a new type resolver
-	 * 
+	 *
 	 * @deprecated Override the {@link #createTypeResolver(Resource)} method,
 	 *     instead, handling the case where the resource is <code>null</code>
 	 */
 	@Deprecated
-    protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createTypeResolver() {
+	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createTypeResolver() {
 		return createTypeResolver(null);
 	}
-		
-    /**
-     * <p>
-     * Creates a new type resolver for use with this environment.
-     * </p><p>
-     * Subclasses may override.
-     * </p>
-     * 
+
+	/**
+	 * <p>
+	 * Creates a new type resolver for use with this environment.
+	 * </p><p>
+	 * Subclasses may override.
+	 * </p>
+	 *
 	 * @param resource the resource for the type resolver's persistence
 	 * @return a new type resolver
-     * 
-     * @since 1.2
+	 *
+	 * @since 1.2
 	 */
 	protected TypeResolver<EClassifier, EOperation, EStructuralFeature> createTypeResolver(Resource resource) {
 		return new TypeResolverImpl(this, resource);
@@ -312,63 +312,63 @@ public class EcoreEnvironment
 
 
 	/**
-     * {@inheritDoc}
-     * <p>
-     * Implements the inherited specification by looking up the qualified name
-     * in my package registry.
-     * </p>
-     */
+	 * {@inheritDoc}
+	 * <p>
+	 * Implements the inherited specification by looking up the qualified name
+	 * in my package registry.
+	 * </p>
+	 */
 	public EPackage lookupPackage(List<String> path) {
-        if (!path.isEmpty() && OCL_PACKAGES.containsKey(path)) {
-            return OCL_PACKAGES.get(path);
-        }
-        
+		if (!path.isEmpty() && OCL_PACKAGES.containsKey(path)) {
+			return OCL_PACKAGES.get(path);
+		}
+
 		EPackage pkg = null;
 		EPackage currPkg = getContextPackage();
 
 		// Check whether this package is in the default package
 		if (currPkg != null) {
-            List<String> lookup = path;
-            
+			List<String> lookup = path;
+
 			while (currPkg != null) {
 				pkg = currPkg;
-				
+
 				for (int i = 0; i < lookup.size(); i++) {
 					String name = lookup.get(i);
 					pkg = EcoreForeignMethods.getESubpackage(pkg, name);
-					
+
 					if (pkg == null) {
 						break;
 					}
 				}
-				
+
 				if (pkg != null) {
 					return pkg;
 				}
 
-                if ((currPkg == getContextPackage()) && (lookup.size() > 0)
-                    && EcoreForeignMethods.isNamed(lookup.get(0), currPkg)) {
-                    // handle the case where the first part of the qualified
-                    // name matches the context package name
-                    lookup = lookup.subList(1, lookup.size());
-                } else {
-                    lookup = path;
-                    currPkg = currPkg.getESuperPackage();
-                }
+				if ((currPkg == getContextPackage()) && (lookup.size() > 0)
+						&& EcoreForeignMethods.isNamed(lookup.get(0), currPkg)) {
+					// handle the case where the first part of the qualified
+					// name matches the context package name
+					lookup = lookup.subList(1, lookup.size());
+				} else {
+					lookup = path;
+					currPkg = currPkg.getESuperPackage();
+				}
 			}
 		}
-		
+
 		// Check whether this package exists in the global package registry
 		return findPackageWithStrategy(path, registry);
 	}
 
-    // implements the inherited specification
+	// implements the inherited specification
 	public EClassifier lookupClassifier(List<String> names) {
 		EPackage pkg = null;
 		EPackage currPkg = getContextPackage();
 
 		if (names.size() > 1) {
-            List<String> lookup = names;
+			List<String> lookup = names;
 
 			// Check whether this package is in the default package
 			if (currPkg != null) {
@@ -378,51 +378,51 @@ public class EcoreEnvironment
 					for (int i = 0; i < lookup.size() - 1; i++) {
 						String name = lookup.get(i);
 						pkg = EcoreForeignMethods.getESubpackage(pkg, name);
-						
+
 						if (pkg == null) {
 							break;
 						}
 					}
-					
+
 					if (pkg != null) {
 						return EcoreForeignMethods.getEClassifier(pkg, lookup
-                            .get(lookup.size() - 1));
+							.get(lookup.size() - 1));
 					}
 
-                    if ((currPkg == getContextPackage()) && (lookup.size() > 1)
-                        && EcoreForeignMethods.isNamed(lookup.get(0), currPkg)) {
-                        // handle the case where the first part of the qualified
-                        // name matches the context package name
-                        lookup = lookup.subList(1, lookup.size());
-                    } else {
-                        lookup = names;
-                        currPkg = currPkg.getESuperPackage();
-                    }
+					if ((currPkg == getContextPackage()) && (lookup.size() > 1)
+							&& EcoreForeignMethods.isNamed(lookup.get(0), currPkg)) {
+						// handle the case where the first part of the qualified
+						// name matches the context package name
+						lookup = lookup.subList(1, lookup.size());
+					} else {
+						lookup = names;
+						currPkg = currPkg.getESuperPackage();
+					}
 				}
 			}
-			
+
 			// Check whether this package exists
 			List<String> newNames = names.subList(0, names.size() - 1);
 			pkg = findPackageWithStrategy(newNames, registry);
 			if (pkg == null) {
 				return null;
 			}
-			
+
 			return EcoreForeignMethods.getEClassifier(pkg, names.get(names.size() - 1));
 		} else if (getContextPackage() != null) {
 			String name = names.get(0);
 			EClassifier result = null;
 			while (currPkg != null) {
 				result = EcoreForeignMethods.getEClassifier(currPkg, name);
-				
+
 				if (result != null) {
 					return result;
 				}
-				
+
 				currPkg = currPkg.getESuperPackage();
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -443,11 +443,11 @@ public class EcoreEnvironment
 				break;
 			default:
 				throw new RuntimeException("Unknown PACKAGE_LOOKUP_STRATEGY value "+ //$NON-NLS-1$
-					ParsingOptions.getValue(this, ParsingOptions.PACKAGE_LOOKUP_STRATEGY));
+						ParsingOptions.getValue(this, ParsingOptions.PACKAGE_LOOKUP_STRATEGY));
 		}
 		return pkg;
 	}
-	
+
 	/**
 	 * Obtains the states matching the specified path prefix in the owner type
 	 * by trying the {@link #collectStates} method on it and, recursively, its
@@ -461,19 +461,19 @@ public class EcoreEnvironment
 	 */
 	public List<EObject> getStates(EClassifier owner, List<String> pathPrefix) {
 		EList<EObject> result = new BasicEList<EObject>();
-		
+
 		collectStates(owner, pathPrefix, result);
-		
+
 		if (owner instanceof EClass) {
 			// search supertypes
 			for (EClass superclass : ((EClass) owner).getEAllSuperTypes()) {
 				collectStates(superclass, pathPrefix, result);
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Implemented by subclasses to find all states in the specified owner type
 	 * that match the given path name prefix and add them to the accumulator
@@ -483,40 +483,40 @@ public class EcoreEnvironment
 	 * Implementors must only provide the states defined directly in the
 	 * namespace indicated by the path prefix (i.e., only one level).
 	 * </p>
-	 * 
+	 *
 	 * @param owner the owner type
 	 * @param pathPrefix partial qualified name, specifying the parent of the
-     *     states to be collection
+	 *     states to be collection
 	 * @param states a list of states directly owned by the namespace indicated
 	 *     by path prefix, within the owner type
-     *     
-     * @see #getStates(EClassifier, List)
+	 *
+	 * @see #getStates(EClassifier, List)
 	 */
 	protected void collectStates(EClassifier owner, List<String> pathPrefix, List<EObject> states) {
 		// do nothing
 	}
 
-    // implements the inherited specification
+	// implements the inherited specification
 	public EStructuralFeature defineAttribute(
 			EClassifier owner,
 			org.eclipse.ocl.expressions.Variable<
-				EClassifier, EParameter> variable,
+			EClassifier, EParameter> variable,
 			Constraint constraint) {
-		resetTypeCaches();		
+		resetTypeCaches();
 		EStructuralFeature result;
-		
+
 		String name = variable.getName();
 		EClassifier type = variable.getType();
-		
+
 		if (type instanceof EClass) {
 			result = EcoreFactory.eINSTANCE.createEReference();
 		} else {
 			result = EcoreFactory.eINSTANCE.createEAttribute();
 		}
-		
+
 		result.setName(name);
 		result.setEType(type);
-		
+
 		Constraint existing = getDefinition(result);
 		if (existing != null) {
 			// replace existing definition
@@ -531,34 +531,34 @@ public class EcoreEnvironment
 
 			ann.getContents().add(constraint);
 		}
-		
+
 		addHelperProperty(owner, result);
-		
+
 		return result;
 	}
-	
-    // implements the inherited specification
+
+	// implements the inherited specification
 	public EOperation defineOperation(EClassifier owner, String name,
 			EClassifier type,
 			List<org.eclipse.ocl.expressions.Variable<
-				EClassifier, EParameter>> params,
+			EClassifier, EParameter>> params,
 			Constraint constraint) {
 		resetTypeCaches();
 		EOperation result = EcoreFactory.eINSTANCE.createEOperation();
-		
+
 		result.setName(name);
 		result.setEType((type == null) ? getOCLStandardLibrary().getOclVoid() :
-            type);
-		
+			type);
+
 		for (Variable<EClassifier, EParameter> next : params) {
 			EParameter param = EcoreFactory.eINSTANCE.createEParameter();
 			param.setName(next.getName());
 			param.setEType((next.getType() == null)?
-                getOCLStandardLibrary().getOclVoid() : next.getType());
-			
+				getOCLStandardLibrary().getOclVoid() : next.getType());
+
 			result.getEParameters().add(param);
 		}
-		
+
 		Constraint existing = getDefinition(result);
 		if (existing != null) {
 			// replace existing definition
@@ -573,53 +573,53 @@ public class EcoreEnvironment
 
 			ann.getContents().add(constraint);
 		}
-		
+
 		addHelperOperation(owner, result);
-		
+
 		return result;
 	}
-	
-    // implements the inherited specification
+
+	// implements the inherited specification
 	public void undefine(Object feature) {
 		Constraint definition = getDefinition(feature);
-		
+
 		if (definition == null) {
 			throw new IllegalArgumentException(
-                "not an additional feature: " + feature); //$NON-NLS-1$
+				"not an additional feature: " + feature); //$NON-NLS-1$
 		}
-		
+
 		EcoreUtil.remove((EObject) feature);
 		EcoreUtil.remove(definition);
-		
+
 		definition.getConstrainedElements().clear();
-		resetTypeCaches();		
+		resetTypeCaches();
 	}
-	
+
 	public Constraint getDefinition(Object feature) {
-    	Constraint result = null;
+		Constraint result = null;
 		ETypedElement typedFeature = (ETypedElement) feature;
-    	
-    	EAnnotation ann = typedFeature.getEAnnotation(
-    			Environment.OCL_NAMESPACE_URI);
-    	
-    	if ((ann != null) && !ann.getContents().isEmpty()) {
-    		for (EObject o : ann.getContents()) {
-    			if ((o instanceof Constraint)
-    					&& UMLReflection.DEFINITION.equals(((Constraint) o).getStereotype())) {
-    				
-    				result = (Constraint) o;
-    				break;
-    			}
-    		}
-    	}
-    	
-    	return result;
+
+		EAnnotation ann = typedFeature.getEAnnotation(
+			Environment.OCL_NAMESPACE_URI);
+
+		if ((ann != null) && !ann.getContents().isEmpty()) {
+			for (EObject o : ann.getContents()) {
+				if ((o instanceof Constraint)
+						&& UMLReflection.DEFINITION.equals(((Constraint) o).getStereotype())) {
+
+					result = (Constraint) o;
+					break;
+				}
+			}
+		}
+
+		return result;
 	}
-	
+
 	/**
 	 * Looks in the EMF registry for a package with the specified qualified
 	 * package name. Uses the global package registry.
-	 * 
+	 *
 	 * @param packageNames
 	 *            the qualified package name
 	 * @return the matching EPackage, or <code>null</code> if not found
@@ -631,7 +631,7 @@ public class EcoreEnvironment
 	/**
 	 * Looks in the given registry for a package with the specified qualified
 	 * package name.
-	 * 
+	 *
 	 * @param packageNames
 	 *            the qualified package name
 	 * @param registry the EPackage.Registry to look in
@@ -641,24 +641,27 @@ public class EcoreEnvironment
 		if (packageNames.isEmpty()) {
 			return null;
 		}
-		
-        if (OCL_PACKAGES.containsKey(packageNames)) {
-            return OCL_PACKAGES.get(packageNames);
-        }
-        
+
+		if (OCL_PACKAGES.containsKey(packageNames)) {
+			return OCL_PACKAGES.get(packageNames);
+		}
+
 		String name = packageNames.get(0);
 		for (Object next : registry.values()) {
+			if (next instanceof EPackage.Descriptor) {
+				next = ((EPackage.Descriptor)next).getEPackage();
+			}
 			if (next instanceof EPackage) {
 				EPackage ePackage = (EPackage) next;
-				
+
 				// only consider root-level packages when searching by name
 				if ((ePackage.getESuperPackage() == null)
 						&& EcoreForeignMethods.isNamed(name, ePackage)) {
-					
+
 					EPackage tentativeResult = findNestedPackage(
-							packageNames.subList(1, packageNames.size()),
-							ePackage);
-					
+						packageNames.subList(1, packageNames.size()),
+						ePackage);
+
 					if (tentativeResult != null) {
 						return tentativeResult;
 					}
@@ -674,7 +677,7 @@ public class EcoreEnvironment
 	 * If found, further elements of <tt>packageNames</tt> identify nested packages.
 	 * <t>
 	 * This search supports the {@link ParsingOptions.LOOKUP_PACKAGE_BY_ALIAS} strategy.
-	 * 
+	 *
 	 * @param packageNames
 	 *            the qualified package name
 	 * @param registry
@@ -684,7 +687,7 @@ public class EcoreEnvironment
 	static private EPackage findPackageByAlias(List<String> packageNames, EPackage.Registry registry) {
 		if (packageNames.isEmpty()) {
 			return null;
-		}       
+		}
 		String name = packageNames.get(0);
 		EPackage ePackage = registry.getEPackage(name);
 		if (ePackage != null) {
@@ -697,7 +700,7 @@ public class EcoreEnvironment
 	/**
 	 * Looks in the given package for a nested package with the specified relative
 	 * package name.
-	 * 
+	 *
 	 * @param packageNames
 	 *            the relativ package name
 	 * @param epackage the starting package to look in
@@ -706,17 +709,17 @@ public class EcoreEnvironment
 	private static EPackage findNestedPackage(
 			List<String> packageNames,
 			EPackage epackage) {
-		
-	    EPackage result = epackage;
-	    
+
+		EPackage result = epackage;
+
 		for (String name : packageNames) {
-		    result = EcoreForeignMethods.getESubpackage(result, name);
-		    
-		    if (result == null) {
-		        break;
-		    }
+			result = EcoreForeignMethods.getESubpackage(result, name);
+
+			if (result == null) {
+				break;
+			}
 		}
-		
+
 		return result;
 	}
 
@@ -724,7 +727,7 @@ public class EcoreEnvironment
 	 * Looks in the given registry for a package with the specified qualified
 	 * package name, matching the name against the namespace prefixes of the
 	 * packages in the registry.
-	 * 
+	 *
 	 * @param packageNames
 	 *            the qualified package name
 	 * @param registry the EPackage.Registry to look in
@@ -757,10 +760,10 @@ public class EcoreEnvironment
 		return null;
 	}
 
-    // implements the inherited specification
+	// implements the inherited specification
 	public boolean isInPostcondition(
 			org.eclipse.ocl.expressions.OCLExpression<EClassifier> exp) {
-		
+
 		Constraint constraint = null;
 		EObject parent = exp;
 		while (parent != null) {
@@ -768,26 +771,26 @@ public class EcoreEnvironment
 				constraint = (Constraint) parent;
 				break;
 			}
-			
+
 			parent = parent.eContainer();
 		}
-		
+
 		return (constraint != null)
-			    && UMLReflection.POSTCONDITION.equals(constraint.getStereotype());
+				&& UMLReflection.POSTCONDITION.equals(constraint.getStereotype());
 	}
 
-    // implements the interface method
+	// implements the interface method
 	/**
 	 * @since 3.1
 	 */
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOppositeProperty(String name) {
 		Variable<EClassifier, EParameter> vdcl;
-		
+
 		for (int i = getElementsSize() - 1; i >= 0; i--) {
 			VariableEntry element = getElement(i);
 			vdcl = element.getVariable();
 			EClassifier owner = vdcl.getType();
-			
+
 			if (!element.isExplicit() && (owner != null)) {
 				EReference property = safeTryLookupOppositeProperty(owner, name);
 				if (property != null) {
@@ -796,7 +799,7 @@ public class EcoreEnvironment
 			}
 
 		}
-		
+
 		// try the "self" variable, last
 		vdcl = getSelfVariable();
 		if (vdcl != null) {
@@ -808,93 +811,94 @@ public class EcoreEnvironment
 				}
 			}
 		}
-		
+
 		return null;
 
 	}
-    
-    /**
-     * Looks up a non-navigable association end on behalf of
-     * the specified <code>owner</code> classifier (which is at that end).
-     * 
-     * @param owner
-     *            a classifier in the context of which the property is used
-     * @param name
-     *            the end name to look up
-     * 
-     * @return the non-navigable end, or <code>null</code> if it cannot
-     *         be found
-     *         
-     * @throws LookupException in case that multiple non-navigable properties
-     *     are found that have the same name and the problem option is ERROR
-     *     or worse
-     * @since 3.1
-     */
-    public EReference lookupOppositeProperty(EClassifier owner, String name) throws LookupException {
-        if (owner == null) {
-            Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOppositeProperty(name);
 
-            if (vdcl == null) {
-                return null;
-            }
+	/**
+	 * Looks up a non-navigable association end on behalf of
+	 * the specified <code>owner</code> classifier (which is at that end).
+	 *
+	 * @param owner
+	 *            a classifier in the context of which the property is used
+	 * @param name
+	 *            the end name to look up
+	 *
+	 * @return the non-navigable end, or <code>null</code> if it cannot
+	 *         be found
+	 *
+	 * @throws LookupException in case that multiple non-navigable properties
+	 *     are found that have the same name and the problem option is ERROR
+	 *     or worse
+	 * @since 3.1
+	 */
+	public EReference lookupOppositeProperty(EClassifier owner, String name) throws LookupException {
+		if (owner == null) {
+			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOppositeProperty(name);
 
-            owner = vdcl.getType();
-        }
+			if (vdcl == null) {
+				return null;
+			}
 
-        List<EReference> matches = new java.util.ArrayList<EReference>(2);
-        findOppositeEnds(owner, name, matches);
+			owner = vdcl.getType();
+		}
 
-        if (matches.isEmpty()) {
-            return null;
-        } else if (matches.size() > 1) {
-            // ambiguous matches.  What to do?
-            if (notOK(ProblemOption.AMBIGUOUS_ASSOCIATION_ENDS)) {
-                ProblemHandler.Severity sev = getValue(ProblemOption.AMBIGUOUS_ASSOCIATION_ENDS);
+		List<EReference> matches = new java.util.ArrayList<EReference>(2);
+		findOppositeEnds(owner, name, matches);
 
-                // will have to report the problem
-                String message = OCLMessages.bind(OCLMessages.Ambig_AssocEnd_,
-                    name, getUMLReflection().getName(owner));
+		if (matches.isEmpty()) {
+			return null;
+		} else if (matches.size() > 1) {
+			// ambiguous matches.  What to do?
+			if (notOK(ProblemOption.AMBIGUOUS_ASSOCIATION_ENDS)) {
+				ProblemHandler.Severity sev = getValue(ProblemOption.AMBIGUOUS_ASSOCIATION_ENDS);
 
-                if (sev.getDiagnosticSeverity() >= Diagnostic.ERROR) {
-                    throw new AmbiguousLookupException(message, matches);
-                } else {
-                    getProblemHandler().analyzerProblem(sev, message,
-                        "lookupNonNavigableProperty", -1, -1); //$NON-NLS-1$
-                }
-            }
-        }
-        
-        return matches.get(0);
-    }
-    
-    /**
-     * This default implementation simply delegates to the
-     * {@link #lookupOppositeProperty(EClassifier, String)} method.
-     * 
-     * @since 3.1
-     */
-    public EReference tryLookupOppositeProperty(EClassifier owner, String name)
-        throws LookupException {
-    	EReference result = lookupOppositeProperty(owner, name);
-        if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
-            result = lookupOppositeProperty(owner, AbstractOCLAnalyzer.unescape(name));
-        }
-        return result;
-    }
-	
-    /**
-     * This default implementation simply delegates to the
-     * {@link Environment#lookupProperty(Object, String)} method.
-     * @since 3.1
-     */
-    public EStructuralFeature tryLookupProperty(EClassifier owner, String name)
-        throws LookupException {
-        
-    	EStructuralFeature result = lookupProperty(owner, name);
-        // look up non-navigable/unnamed ends in any case because they may be located in
+				// will have to report the problem
+				String message = OCLMessages.bind(OCLMessages.Ambig_AssocEnd_,
+					name, getUMLReflection().getName(owner));
+
+				if (sev.getDiagnosticSeverity() >= Diagnostic.ERROR) {
+					throw new AmbiguousLookupException(message, matches);
+				} else {
+					getProblemHandler().analyzerProblem(sev, message,
+						"lookupNonNavigableProperty", -1, -1); //$NON-NLS-1$
+				}
+			}
+		}
+
+		return matches.get(0);
+	}
+
+	/**
+	 * This default implementation simply delegates to the
+	 * {@link #lookupOppositeProperty(EClassifier, String)} method.
+	 *
+	 * @since 3.1
+	 */
+	public EReference tryLookupOppositeProperty(EClassifier owner, String name)
+			throws LookupException {
+		EReference result = lookupOppositeProperty(owner, name);
+		if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
+			result = lookupOppositeProperty(owner, AbstractOCLAnalyzer.unescape(name));
+		}
+		return result;
+	}
+
+	/**
+	 * This default implementation simply delegates to the
+	 * {@link Environment#lookupProperty(Object, String)} method.
+	 * @since 3.1
+	 */
+	@Override
+	public EStructuralFeature tryLookupProperty(EClassifier owner, String name)
+			throws LookupException {
+
+		EStructuralFeature result = lookupProperty(owner, name);
+		// look up non-navigable/unnamed ends in any case because they may be located in
 		// a specialization of result's owner, hence take precedence over
 		// result:
-    	EReference nonNavigableEnd = (EReference) lookupNonNavigableEnd(owner, name);
+		EReference nonNavigableEnd = (EReference) lookupNonNavigableEnd(owner, name);
 		if ((nonNavigableEnd == null) && AbstractOCLAnalyzer.isEscaped(name)) {
 			nonNavigableEnd = (EReference) lookupNonNavigableEnd(owner,
 				AbstractOCLAnalyzer.unescape(name));
@@ -912,16 +916,16 @@ public class EcoreEnvironment
 				EClassifier nonNavigableEndOwner = TypeUtil.getPropertyType(this, null,
 					nonNavigableEndOpposite);
 				if (getUMLReflection().getAllSupertypes(nonNavigableEndOwner)
-					.contains(getUMLReflection().getOwningClassifier(result))) {
+						.contains(getUMLReflection().getOwningClassifier(result))) {
 					result = nonNavigableEnd;
 				} else if (!getUMLReflection().getAllSupertypes(
 					getUMLReflection().getOwningClassifier(result)).contains(
-					TypeUtil.getPropertyType(this, null, nonNavigableEnd.getEOpposite()))) {
+						TypeUtil.getPropertyType(this, null, nonNavigableEnd.getEOpposite()))) {
 					ProblemHandler.Severity sev = getValue(ProblemOption.AMBIGUOUS_ASSOCIATION_ENDS);
 					// will have to report the problem
 					String message = OCLMessages.bind(
 						OCLMessages.Ambig_AssocEnd_, name, getUMLReflection()
-							.getName(owner));
+						.getName(owner));
 					if (sev.getDiagnosticSeverity() >= Diagnostic.ERROR) {
 						List<EStructuralFeature> ambiguousMatches = new ArrayList<EStructuralFeature>();
 						ambiguousMatches.add(result);
@@ -938,41 +942,41 @@ public class EcoreEnvironment
 		if (result == null) {
 			result = nonNavigableEnd;
 		}
-        
-        return result;
-    }
+
+		return result;
+	}
 
 	/**
 	 * Wrapper for the "try" operation that doesn't throw, but just returns the
 	 * first ambiguous match in case of ambiguity.
 	 */
-    private EReference safeTryLookupOppositeProperty(EClassifier owner, String name) {
+	private EReference safeTryLookupOppositeProperty(EClassifier owner, String name) {
 		EReference result = null;
-	    try {
-	        result = lookupOppositeProperty(owner, name);
+		try {
+			result = lookupOppositeProperty(owner, name);
 			if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
-			    result = lookupOppositeProperty(owner, AbstractOCLAnalyzer.unescape(name));
+				result = lookupOppositeProperty(owner, AbstractOCLAnalyzer.unescape(name));
 			}
-        } catch (LookupException e) {
-            if (!e.getAmbiguousMatches().isEmpty()) {
-                result = (EReference) e.getAmbiguousMatches().get(0);
-            }
-	    }
-        
-        return result;
+		} catch (LookupException e) {
+			if (!e.getAmbiguousMatches().isEmpty()) {
+				result = (EReference) e.getAmbiguousMatches().get(0);
+			}
+		}
+
+		return result;
 	}
 
 	/**
-     * Searches for non-navigable association ends with the specified
-     * <tt>name</tt> at the given <tt>classifier</tt>'s end of an association.
-     * Subclasses should reimplement this method if they support non-navigable
-     * association ends.
-     * 
-     * @param classifier a classifier at an association end
-     * @param name the non-navigable end name to look for
-     * @param ends collects the ends found by the subclass implementation
-     * @since 3.1
-     */
+	 * Searches for non-navigable association ends with the specified
+	 * <tt>name</tt> at the given <tt>classifier</tt>'s end of an association.
+	 * Subclasses should reimplement this method if they support non-navigable
+	 * association ends.
+	 *
+	 * @param classifier a classifier at an association end
+	 * @param name the non-navigable end name to look for
+	 * @param ends collects the ends found by the subclass implementation
+	 * @since 3.1
+	 */
 	protected void findOppositeEnds(EClassifier classifier, String name,
 			List<EReference> ends) {
 		if (oppositeEndFinder != null) {
@@ -987,7 +991,7 @@ public class EcoreEnvironment
 	 * opposite uses the forward reference. The name of this temporary reference is set to
 	 * <code>name</code> which equals the value of the "Property.oppositeRoleName" annotation
 	 * on the forward reference.<p>
-	 * 
+	 *
 	 * The temporary reference is not a valid reference for at least two reasons: its container
 	 * is not set and its opposite does not name it as its opposite.
 	 * @since 3.1
