@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated DummyRegistration -->
+      <package
+            uri="http://www.eclipse.org/ocl/test/2018/DummyRegistration.ecore"
+            class="org.eclipse.ocl.uml.tests.dummyRegistration.DummyRegistrationPackage"
+            genModel="model/DummyRegistration.genmodel"/>
+   </extension>
+
+</plugin>
