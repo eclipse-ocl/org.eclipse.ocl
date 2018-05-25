@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -68,7 +69,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 			newInstance.setParserRepairCount(Integer.parseInt(repairs));
 		return newInstance;
 	}
-	
+
 	/**
 	 * Map of %Key to value for denormalizing OCL test code.
 	 */
@@ -200,20 +201,20 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		}
 		return normalizers.get(key);
 	}
-	
+
 	public void disposeResourceSet(ResourceSet resourceSet) {
-        if (resourceSet != null) {
-        
-            // unload and remove all resources but the UML Metamodel.
-            // Don't clear the resource set's adapter-list
-            
-            for (Resource res : resourceSet.getResources()) {
-                    res.unload();
-                    res.eAdapters().clear();
-            }
-        }
-        
-//        fruitPackage = null;
+		if (resourceSet != null) {
+
+			// unload and remove all resources but the UML Metamodel.
+			// Don't clear the resource set's adapter-list
+
+			for (Resource res : resourceSet.getResources()) {
+				res.unload();
+				res.eAdapters().clear();
+			}
+		}
+
+		//        fruitPackage = null;
 	}
 
 	public EStructuralFeature getAttribute(EClassifier classifier, String name, EClassifier type) {
@@ -233,7 +234,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public EClassifier getBigInteger() {
 		return EcorePackage.Literals.EBIG_INTEGER;
 	}
-	
+
 	public OCLExpression<EClassifier> getBodyExpression(Constraint constraint) {
 		return constraint.getSpecification().getBodyExpression();
 	}
@@ -253,7 +254,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public EClassifier getCommentTypeContext() {
 		return EcorePackage.Literals.EANNOTATION;
 	}
-	
+
 	public java.lang.Class<Constraint> getConstraintClass() {
 		return Constraint.class;
 	}
@@ -267,15 +268,15 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public EPackage getEPackage(EPackage pkg) {
 		return pkg;
 	}
-	
+
 	public EClassifier getEcoreBigDecimal() {
 		return EcorePackage.Literals.EBIG_DECIMAL;
 	}
-	
+
 	public EClassifier getEcoreBigInteger() {
 		return EcorePackage.Literals.EBIG_INTEGER;
 	}
-	
+
 	public EClassifier getEcoreLong() {
 		return EcorePackage.Literals.ELONG;
 	}
@@ -287,15 +288,15 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public String getFruitModelPath() {
 		return "/model/OCLTest.ecore";
 	}
-    
+
 	public EClassifier getMetaclass(String name) {
-	    return EcorePackage.eINSTANCE.getEClassifier(name);
-    }
-    
+		return EcorePackage.eINSTANCE.getEClassifier(name);
+	}
+
 	public EClassifier getMetametaclass(String name) {
-	    return EcorePackage.eINSTANCE.getEClassifier(name);
-    }
-	
+		return EcorePackage.eINSTANCE.getEClassifier(name);
+	}
+
 	public String getNsURI(EPackage aPackage) {
 		return aPackage.getNsURI();
 	}
@@ -313,7 +314,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	}
 
 	public EPackage getResourcePackage(ResourceSet resourceSet, URI uri) {
-		Resource res = resourceSet.getResource(uri, true);		
+		Resource res = resourceSet.getResource(uri, true);
 		return (EPackage) res.getContents().get(0);
 	}
 
@@ -324,7 +325,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public String getTestPlugInId() {
 		return PLUGIN_ID;
 	}
-	
+
 	public EDataType getUMLBoolean() {
 		return EcorePackage.Literals.EBOOLEAN;
 	}
@@ -344,7 +345,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	public EPackage getUMLPrimitiveTypes() {	// FIXME UOE
 		throw new UnsupportedOperationException(getClass().getName() + ".getUMLPrimitiveTypes");
 	}
-	
+
 	public EDataType getUMLString() {
 		return EcorePackage.Literals.ESTRING;
 	}
@@ -357,10 +358,10 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return -1;			// FIXME find symbolic value
 	}
 
-/*	public Map<URI, URI> initRegistries() {
+	/*	public Map<URI, URI> initRegistries() {
 		if (uriMap != null)
 			return uriMap;
-		uriMap = URIMappingRegistryImpl.INSTANCE.map();		
+		uriMap = URIMappingRegistryImpl.INSTANCE.map();
 		URI oclStandardLibraryURI = URI.createURI(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI);
 		if (uriMap.get(oclStandardLibraryURI) == null) {			// If no mapping registered then must set up standalone context
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
@@ -375,12 +376,16 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		}
 		return uriMap;
 	} */
-	
+
 	public ResourceSet createResourceSet() {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 			"ecore", new EcoreResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(EcorePackage.eINSTANCE.getNsURI(), EcorePackage.eINSTANCE);
+		EcorePlugin.ExtensionProcessor.process(null);
+		Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
+		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+		uriMap.putAll(computePlatformURIMap);
 		return resourceSet;
 	}
 
@@ -397,7 +402,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		}
 		return false;
 	}
-	
+
 	public void setAbstract(EClass aClass, boolean isAbstract) {
 		aClass.setAbstract(isAbstract);
 	}
@@ -407,7 +412,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	}
 
 	public void setIsQuery(EOperation anOperation, boolean isQuery) {
-//		anOperation.setIsQuery(isQuery);
+		//		anOperation.setIsQuery(isQuery);
 	}
 
 	public void setIsUnique(EStructuralFeature aProperty, boolean isUnique) {

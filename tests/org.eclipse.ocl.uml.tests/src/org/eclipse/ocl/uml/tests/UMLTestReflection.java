@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -52,7 +53,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.util.UMLUtil;
 
 @SuppressWarnings("nls")
-public class UMLTestReflection 
+public class UMLTestReflection
 extends UMLReflectionImpl
 implements TestReflection<EObject, Package,
 Type, Classifier, Class, DataType, PrimitiveType, Enumeration,
@@ -65,7 +66,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	{
 		public static final Static INSTANCE = new Static();
-		
+
 		public Static() {
 			org.eclipse.uml2.uml.UMLPackage.eINSTANCE.getClass();
 			org.eclipse.ocl.uml.UMLPackage.eINSTANCE.getClass();
@@ -76,27 +77,31 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		}
 
 		public TestReflection<EObject, Package, Type, Classifier, Class, DataType, PrimitiveType, Enumeration, Operation, Parameter, Property, Property, Property, EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint> createReflection(
-			Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> environment) {
+				Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> environment) {
 			return new UMLTestReflection((UMLEnvironment) environment);
 		}
-		
+
 		public ResourceSet createResourceSet() {
 			Environment.Registry.INSTANCE.registerEnvironment(
 				new UMLEnvironmentFactory().createEnvironment());
 			ResourceSet resourceSet = new ResourceSetImpl();
-		    OCL.initialize(resourceSet);
+			OCL.initialize(resourceSet);
 			// Make sure that the UML metamodel and primitive types
 			//   libraries are loaded
 			umlMetamodel = (Package) resourceSet.getResource(
-					URI.createURI(UMLResource.UML_METAMODEL_URI),
-					true).getContents().get(0);
+				URI.createURI(UMLResource.UML_METAMODEL_URI),
+				true).getContents().get(0);
 			umlPrimitiveTypes = (Package) resourceSet.getResource(
-					URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI),
-					true).getContents().get(0);
+				URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI),
+				true).getContents().get(0);
 			ecorePrimitiveTypes = (Package) resourceSet.getResource(
-					URI.createURI(UMLResource.ECORE_PRIMITIVE_TYPES_LIBRARY_URI),
-					true).getContents().get(0);
-		    return resourceSet;
+				URI.createURI(UMLResource.ECORE_PRIMITIVE_TYPES_LIBRARY_URI),
+				true).getContents().get(0);
+			EcorePlugin.ExtensionProcessor.process(null);
+			Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
+			Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+			uriMap.putAll(computePlatformURIMap);
+			return resourceSet;
 		}
 
 		public String getTestPlugInId() {
@@ -113,7 +118,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 			newInstance.setParserRepairCount(Integer.parseInt(repairs));
 		return newInstance;
 	}
-	
+
 	/**
 	 * Map of %Key to value for denormalizing OCL test code.
 	 */
@@ -193,8 +198,8 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		uPackage.setName(name);
 		return uPackage;
 	}
-	
-/*	public void disposeResourceSet(ResourceSet resourceSet) {
+
+	/*	public void disposeResourceSet(ResourceSet resourceSet) {
         if (resourceSet != null) {
             if (DISPOSE_UML_METAMODEL) {
                 for (Resource res : resourceSet.getResources()) {
@@ -204,7 +209,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
                 resourceSet.getResources().clear();
                 resourceSet.eAdapters().clear();
                 resourceSet = null;
-                
+
                 umlMetamodel = null;
                 umlPrimitiveTypes = null;
                 ecorePrimitiveTypes = null;
@@ -212,24 +217,24 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
             } else {
                 // unload and remove all resources but the UML Metamodel.
                 // Don't clear the resource set's adapter-list
-                
+
                 Set<Resource> toPreserve = new java.util.HashSet<Resource>();
                 toPreserve.add(umlMetamodel.eResource());
                 toPreserve.add(umlPrimitiveTypes.eResource());
                 toPreserve.add(ecorePrimitiveTypes.eResource());
 //                toPreserve.add(oclExpressionTypes.eResource());
-                
+
                 for (Resource res : resourceSet.getResources()) {
                     if (!toPreserve.contains(res)) {
                         res.unload();
                         res.eAdapters().clear();
                     }
                 }
-                
+
                 resourceSet.getResources().retainAll(toPreserve);
             }
         }
-        
+
 //        fruitPackage = null;
 	} */
 
@@ -254,8 +259,8 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	public Classifier getBigInteger() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigInteger");
 	}
-	
-	public OCLExpression<Classifier> getBodyExpression(Constraint constraint) {	
+
+	public OCLExpression<Classifier> getBodyExpression(Constraint constraint) {
 		return ((ExpressionInOCL) constraint.getSpecification()).getBodyExpression();
 	}
 
@@ -267,7 +272,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return (Classifier) umlMetamodel.getOwnedType("Classifier");
 	}
 
-	public Classifier getCollectionKindTypeContext() {		
+	public Classifier getCollectionKindTypeContext() {
 		Package expressionsPackage = oclMetamodel.getNestedPackage("expressions");
 		return (Classifier) expressionsPackage.getOwnedType("CollectionKind");
 	}
@@ -275,27 +280,27 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	public Classifier getCommentTypeContext() {
 		return (Classifier) umlMetamodel.getOwnedType("Comment");
 	}
-	
+
 	public java.lang.Class<Constraint> getConstraintClass() {
 		return Constraint.class;
 	}
 
-//	public Classifier getDefaultSetType(Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> environment) {
-//		return environment.getOCLStandardLibrary().getInvalid();
-//	}
+	//	public Classifier getDefaultSetType(Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> environment) {
+	//		return environment.getOCLStandardLibrary().getInvalid();
+	//	}
 
 	public EPackage getEPackage(Package pkg) {
 		return UMLUtil.convertToEcore(pkg, null).iterator().next();
 	}
-	
+
 	public PrimitiveType getEcoreBigDecimal() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigDecimal");
 	}
-	
+
 	public PrimitiveType getEcoreBigInteger() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigInteger");
 	}
-	
+
 	public PrimitiveType getEcoreLong() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("ELong");
 	}
@@ -307,14 +312,14 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	public String getFruitModelPath() {
 		return "/model/OCLTest.uml";
 	}
-    
+
 	public Classifier getMetaclass(String name) {
-        return (Classifier) umlMetamodel.getOwnedType(name);
-    }
-    
+		return (Classifier) umlMetamodel.getOwnedType(name);
+	}
+
 	public Classifier getMetametaclass(String name) {
-        return (Classifier) umlMetamodel.getOwnedType(name);
-    }
+		return (Classifier) umlMetamodel.getOwnedType(name);
+	}
 
 	public Package getOCLMetaModel() {
 		return oclMetamodel;
@@ -333,14 +338,14 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	}
 
 	public Package getResourcePackage(ResourceSet resourceSet, URI uri) {
-		Resource res = resourceSet.getResource(uri, true);		
+		Resource res = resourceSet.getResource(uri, true);
 		return (Package) res.getContents().get(0);
 	}
 
 	public Classifier getStringTypeContext() {
 		return OCLStandardLibraryImpl.INSTANCE.getString();
 	}
-	
+
 	public PrimitiveType getUMLBoolean() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("Boolean");
 	}
@@ -360,7 +365,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	public Package getUMLPrimitiveTypes() {
 		return umlPrimitiveTypes;
 	}
-	
+
 	public PrimitiveType getUMLString() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("String");
 	}
@@ -373,10 +378,10 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return LiteralUnlimitedNatural.UNLIMITED;
 	}
 
-/*	public Map<URI, URI> initRegistries() {
+	/*	public Map<URI, URI> initRegistries() {
 		if (uriMap != null)
 			return uriMap;
-		uriMap = URIMappingRegistryImpl.INSTANCE.map();		
+		uriMap = URIMappingRegistryImpl.INSTANCE.map();
 		URI oclStandardLibraryURI = URI.createURI(UMLEnvironment.OCL_STANDARD_LIBRARY_NS_URI);
 		if (uriMap.get(oclStandardLibraryURI) == null) {			// If no mapping registered then must set up standalone context
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
@@ -407,7 +412,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return uriMap;
 	} */
 
-/*	public void initResourceSet(ResourceSet resourceSet) {
+	/*	public void initResourceSet(ResourceSet resourceSet) {
 		// also make sure that the UML metamodel and primitive types
 		//   libraries are loaded
 		if (umlMetamodel == null) {
@@ -442,7 +447,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		}
 		return false;
 	}
-	
+
 	public void setAbstract(Class aClass, boolean isAbstract) {
 		aClass.setIsAbstract(isAbstract);
 	}
@@ -464,11 +469,11 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	}
 
 	public void setNsPrefix(Package aPackage, String name) {
-//		aPackage.setNsPrefix(name);
+		//		aPackage.setNsPrefix(name);
 	}
 
 	public void setNsURI(Package aPackage, String name) {
-//		aPackage.setNsPrefix(name);
+		//		aPackage.setNsPrefix(name);
 	}
 
 	public void setOperationUpper(Operation anOperation, int value) {
