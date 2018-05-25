@@ -13,7 +13,6 @@ package org.eclipse.ocl.ecore.tests;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +54,7 @@ public class DocumentationExamples extends AbstractTestSuite
 {
 	public InputStream getInputStream(String fileName) throws MalformedURLException, IOException {
 		URI uri = getTestModelURI(fileName);
-		URL url = new URL(uri.toString());
-		return url.openStream();
+		return resourceSet.getURIConverter().createInputStream(uri);
 	}
 
 	private List<Library> getLibraries() {

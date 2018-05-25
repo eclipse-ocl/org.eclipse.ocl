@@ -12,7 +12,6 @@
 package org.eclipse.ocl.ecore.tests;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -300,8 +299,7 @@ public class OCLDocumentTest extends AbstractTestSuite {
 		constraints = new java.util.HashMap<String, Constraint>();
 		URI uri = getTestModelURI("/model/test_constraints.ocl");
 		try {
-			URL url = new URL(uri.toString());
-			InputStream is = url.openStream();
+			InputStream is = resourceSet.getURIConverter().createInputStream(uri);
 			List<Constraint> parsed = ocl.parse(new OCLInput(is));
 			is.close();
 
