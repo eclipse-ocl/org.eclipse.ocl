@@ -725,11 +725,10 @@ public class PivotTestCase extends TestCase
 	}
 
 	public @NonNull URI getTestModelURI(@NonNull String localFileName) {
-		StandaloneProjectMap projectMap = getProjectMap();
-		URI location = projectMap.getLocation(PLUGIN_ID);
-		TestCase.assertNotNull(location);
-		@SuppressWarnings("null")@NonNull String urlString = location.toString();
-		return ClassUtil.nonNullEMF(URI.createURI(urlString + localFileName));
+		String testPlugInPrefix = PLUGIN_ID + "/";
+		URI testPlugURI = EcorePlugin.IS_ECLIPSE_RUNNING ? URI.createPlatformPluginURI(testPlugInPrefix, true) : URI.createPlatformResourceURI(testPlugInPrefix, true);
+		URI localURI = URI.createURI(localFileName.startsWith("/") ? localFileName.substring(1) : localFileName);
+		return localURI.resolve(testPlugURI);
 	}
 
 	protected @NonNull URL getTestResource(@NonNull String resourceName) {
