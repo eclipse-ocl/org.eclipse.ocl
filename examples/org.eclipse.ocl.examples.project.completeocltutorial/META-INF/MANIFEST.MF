@@ -4,3 +4,5 @@ Bundle-Name: Completeocltutorial
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.completeocltutorial;singleton:=true
 Bundle-Version: 1.0.300.qualifier
 Require-Bundle: org.eclipse.ocl.pivot
+Automatic-Module-Name: org.eclipse.ocl.examples.project.completeocltutorial
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
