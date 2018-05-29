@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -29,7 +28,6 @@ import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry.Registration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.xtext.testing.GlobalRegistries;
-import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -70,14 +68,17 @@ public class RegistryTests extends TestCase
 			resourceSet.getResource(URI.createPlatformPluginURI("/org.eclipse.emf.ecore/model/Ecore.ecore", true), true);
 			CompleteOCLRegistry registry = CompleteOCLRegistry.INSTANCE;
 			Set<URI> registeredResourceURIs = registry.getResourceURIs(resourceSet);
-			int expectedSize = 1;
-			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-				Bundle bundle = Platform.getBundle("org.eclipse.ocl.examples.project.completeocltutorial");
-				if (bundle != null) {
-					expectedSize++;
-				}
-			}
-			assertEquals(expectedSize, registeredResourceURIs.size());
+			// org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl
+			// org.eclipse.ocl.examples.xtext.tests/model/ModelWithErrors.ocl
+			int expectedSize = 2;
+			//	int expectedSize = 1;
+			//	if (EMFPlugin.IS_ECLIPSE_RUNNING) {`		// BUG 535144 at EMF 2.14 RC3 fixed the need to conditionalize standalone
+			//		Bundle bundle = Platform.getBundle("org.eclipse.ocl.examples.project.completeocltutorial");
+			//		if (bundle != null) {
+			//			expectedSize++;
+			//		}
+			//	}
+			assertEquals(registeredResourceURIs.toString(), expectedSize, registeredResourceURIs.size());
 			// platform:/plugin/org.eclipse.ocl.examples.xtext.tests/model/ModelWithErrors.ocl
 			// (running only) platform:/plugin/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl
 		}
