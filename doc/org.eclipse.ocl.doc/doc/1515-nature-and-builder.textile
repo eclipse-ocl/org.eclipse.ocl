@@ -1,0 +1,78 @@
+
+h2(#NatureAndBuilder). OCL Nature and Builder Auto-Validation
+
+The build of an OCL or OCL-containing source file validates the ource file and updates markers in the Problems View to identify issues that the user may care to address. Double-clicking on the Problems View Marker opens an
+editor to faciltate fixing the problem.
+
+The build validation occurs whenever a source file changes or is 'cleaned' and when the containing project
+has the OCL nature configured.
+
+If the Eclipse Workspace is configured to auto-build, the OCL builder runs automatically and so auto-validation occurs.
+
+h3(#OCLbuilderConfiguration). Configuring the OCL Nature and Builder
+
+The OCL Nature may be added or removed from a Project by selecting the project in an Explorer View and
+invoking *Configure->Convert to OCL Project* or *Configure->Unconfigure OCL* from the context menu. Alternatively
+the new Project Natures page may be used from the Project Properties page.
+
+Configuing the OCL nature modifies the *.project* file to add the *org.eclipse.ocl.pivot.ui.oclnature* nature
+and *org.eclipse.ocl.pivot.ui.oclbuilder*. The builder has an argument dictionaries to select file extensions
+and file paths that are included or excluded by the builder.
+
+bc.. 
+<arguments>
+	<dictionary>
+		<key>disabledExtensions</key>
+		<value>*,essentialocl</value>
+	</dictionary>
+	<dictionary>
+		<key>disabledPaths</key>
+		<value>bin/**,target/**</value>
+	</dictionary>
+	<dictionary>
+		<key>enabledExtensions</key>
+		<value>ecore,ocl,oclinecore,oclstdlib,uml</value>
+	</dictionary>
+	<dictionary>
+		<key>enabledPaths</key>
+		<value>**</value>
+	</dictionary>
+</arguments>
+p. 
+
+The default configuration enables validation of *ecore,ocl,oclinecore,oclstdlib,uml* extensions and disables all other extensions, redundantly adding an explicit *essentialocl* exclusion to make the syntax more obvious to a
+casual reader. (*.essentialocl files may contain a single OCL expression, but since they lack any embedding within a model, they are not generally useful.)
+
+The default configuration enables all paths except the *bin* and *target* paths where the Java builder or Maven builders may place copies of files that are not usually worth revalidating as distinct files.
+
+The configuration in the *.project* file may be edited with a text editor; there is currently no dedicated user interface.
+
+h3(#EcoreAndUMLautoValidation). Ecore and UML Auto-Validation
+
+The EMF and UML projects provide no nature or builder and so Problems View markers for *.ecore and *.uml files
+are dependent on the problems in the prevailing selection at the time of the preceding manual validation.
+
+Since OCL may be embedded with *.ecore or *.uml files, the OCL nature and builder provide the option to auto-validate these files.
+
+By default, your project has no OCL nature so no Ecore or UML auto-validation occurs.
+
+If you choose to add the OCL nature, the default settings that enable *.ecore and *.uml auto-validation apply. The Problems View markers resulting from auto-validation are updated after a file is saved; any markers that the Ecore or UML editors created are replaced.
+
+If you find that the auto-validation of some *.ecore and *.uml causes problems, perhaps because the reported
+errors are not a concern for your usage, you may edit the *.project* file configuration.
+
+You may remove *ecore* and/or *uml* from the *enabledExtensions* to suppress Ecore and/or UML auto-validation completely.
+
+You may add individual files or file patterns to the *disabledPaths* to be more selective about disabling
+auto-validation.
+
+h3(#NoNature). Building on pre-Photon / 2018 releases
+
+The OCL builder and nature are new in the Eclipse OCL 2018 release (Photon). They comply with the standard Eclipse idiom.
+
+In earlier releases, the EMF idiom was followed whereby Problems View markers were created by ther save action
+of an appropriate editor. Problems in files that had not been saved were often not visible and so diagnosis
+onlyoccurred when some consuming application complained..
+
+
+
