@@ -89,8 +89,8 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	}
 
 	@Override
-	public @NonNull CSResource createBaseResource(@NonNull String expression) throws IOException, ParserException {
-		InputStream inputStream = new URIConverter.ReadableInputStream(expression, "UTF-8");
+	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
+		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
 		try {
 			ResourceSetImpl resourceSet = new ResourceSetImpl();
 			Resource resource = resourceSet.createResource(uri);
@@ -103,11 +103,18 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 			CSResource baseResource = (CSResource)resource;
 			getEnvironmentFactory().adapt(resource);
 			baseResource.setParserContext(this);
-			baseResource.load(inputStream, null);
+			if (inputStream != null) {
+				baseResource.load(inputStream, null);
+			}
+			else {
+				baseResource.load(null);
+			}
 			return baseResource;
 		}
 		finally {
-			inputStream.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		}
 	}
 
