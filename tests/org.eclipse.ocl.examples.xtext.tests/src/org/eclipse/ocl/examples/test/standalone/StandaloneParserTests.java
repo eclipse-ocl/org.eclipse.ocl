@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Appender;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.TextExporter;
@@ -77,7 +76,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_help() throws CoreException {
+	public void test_help() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"help"};
 		HelpCommand command = parseCommand(HelpCommand.class, arguments);
 		Map<CommandToken, List<String>> token2strings = parseValidArguments(command, arguments);
@@ -85,7 +84,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_help_extraText() throws CoreException {
+	public void test_help_extraText() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"help", "yy"};
@@ -99,7 +98,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_mandatoryArguments() throws CoreException {
+	public void test_mandatoryArguments() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI)};
@@ -116,7 +115,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingOutputArgument() throws CoreException {
+	public void test_missingOutputArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -135,7 +134,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingExporterArgument() throws CoreException {
+	public void test_missingExporterArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -154,7 +153,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingUsingArgument() throws CoreException {
+	public void test_missingUsingArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -173,7 +172,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_textExportedFile() throws CoreException {
+	public void test_textExportedFile() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -192,7 +191,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_htmlExportedFile() throws CoreException {
+	public void test_htmlExportedFile() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -211,7 +210,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_unknownExporter() throws CoreException {
+	public void test_unknownExporter() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -223,7 +222,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_nonExistentModel() throws CoreException {
+	public void test_nonExistentModel() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -242,7 +241,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_nonExistentOclFile() throws CoreException {
+	public void test_nonExistentOclFile() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -262,7 +261,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_nonExistentOutputFolder() throws CoreException {
+	public void test_nonExistentOutputFolder() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -281,7 +280,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_textOCLFiles() throws CoreException {
+	public void test_textOCLFiles() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(textInputOCLURI),
@@ -300,7 +299,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingAllLocators() throws CoreException {
+	public void test_usingAllLocators() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -316,7 +315,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingOCLLocator() throws CoreException {
+	public void test_usingOCLLocator() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -332,7 +331,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingJavaLocator() throws CoreException {
+	public void test_usingJavaLocator() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -348,7 +347,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingUMLLocator() throws CoreException {
+	public void test_usingUMLLocator() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -364,7 +363,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingOCLUMLLocators() throws CoreException {
+	public void test_usingOCLUMLLocators() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -380,7 +379,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingOCLJavaLocators() throws CoreException {
+	public void test_usingOCLJavaLocators() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -396,7 +395,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingJavaUmlLocators() throws CoreException {
+	public void test_usingJavaUmlLocators() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -412,7 +411,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_usingOCLJavaUmlLocators() throws CoreException {
+	public void test_usingOCLJavaUmlLocators() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),

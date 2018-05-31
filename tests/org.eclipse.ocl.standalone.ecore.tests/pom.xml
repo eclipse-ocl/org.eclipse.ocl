@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2018 Willink Transformations and others.
+
+   All rights reserved. This program and the accompanying materials
+   are made available under the terms of the Eclipse Public License v2.0
+   which accompanies this distribution, and is available at
+   http://www.eclipse.org/legal/epl-v20.html
+-->
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <!--prerequisites>
+    <maven>3.0</maven>
+  </prerequisites-->
+  <groupId>org.eclipse.ocl</groupId>
+  <artifactId>org.eclipse.ocl.standalone.ecore.tests</artifactId>
+  <version>6.4.0-SNAPSHOT</version>
+  <packaging>eclipse-test-plugin</packaging>
+  <licenses>
+    <license>
+      <name>Eclipse Public License v2.0</name>
+      <comments>
+        All rights reserved.
+
+        This program and the accompanying materials are made
+        available under the terms of the Eclipse Public License v2.0
+        which accompanies this distribution, and is available at
+        http://www.eclipse.org/legal/epl-v10.htm
+      </comments>
+    </license>
+  </licenses>
+  <properties>
+    <project.buildId>org.eclipse.ocl</project.buildId>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+    <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+    <buildId>${buildType}${buildTimestamp}</buildId>
+    <targetRelease>unspecified</targetRelease>
+    <targetPlatform>targetPlatforms/unspecified</targetPlatform>
+
+    <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
+    <executionEnvironment>J2SE-1.5</executionEnvironment>
+    <source-java-version>1.5</source-java-version>
+    <target-java-version>${source-java-version}</target-java-version>
+    <java-source-encoding>UTF-8</java-source-encoding>
+    <resource-encoding>UTF-8</resource-encoding>
+    <os-jvm-flags/>
+
+    <!-- plugin versions -->
+    <!-- cd to the releng/org.eclipse.ocl.releng.tycho folder then use 'mvn versions:display-plugin-updates' to check for the latest -->
+    <tycho-version>1.1.0</tycho-version>
+    <tycho-extras-version>${tycho-version}</tycho-extras-version>
+    <maven-resources-version>2.6</maven-resources-version>
+    <maven-compiler-version>3.1</maven-compiler-version>
+    <maven-clean-version>2.5</maven-clean-version>
+    <maven-surefire-version>2.17</maven-surefire-version>
+  </properties>
+
+  <build>
+    <!-- See Bug 526404 This enables maven-surefire-plugin to do standalone tests AND tycho-surefire-plugin to do plugin tests -->
+    <testOutputDirectory>${project.build.directory}/classes</testOutputDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <!--version>${tycho-version}</version-->
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <configuration>
+          <includePackedArtifacts>true</includePackedArtifacts>
+          <resolver>p2</resolver>
+          <executionEnvironment>J2SE-1.5</executionEnvironment>
+          <target>
+            <artifact>
+              <groupId>org.eclipse.ocl</groupId>
+              <artifactId>org.eclipse.ocl.standalone.ecore.tests</artifactId>
+              <version>6.4.0-SNAPSHOT</version>
+              <classifier>targetPlatforms/${targetRelease}</classifier>
+            </artifact>
+          </target>
+          <environments>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ecore</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/StandaloneEcoreTests.java</include>
+              </includes>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ecore-backtracking</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/StandaloneEcoreBacktrackingTests.java</include>
+              </includes>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone-backtracking</reportsDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-maven-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>target-platform-configuration</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-version}</version>
+          <configuration>
+            <encoding>${resource-encoding}</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven-clean-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.surefire</groupId>
+              <artifactId>surefire-junit4</artifactId>
+              <version>${maven-surefire-version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <profiles>
+    <profile>
+      <id>ecore</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>ecore</targetRelease>
+      </properties>
+    </profile>
+  </profiles>
+</project>

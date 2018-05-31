@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.ocl.compatibility.tests;singleton:=true
+Bundle-Version: 6.4.0.qualifier
+Automatic-Module-Name: org.eclipse.ocl.compatibility.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ocl.ecore.tests,
+ org.eclipse.ocl.uml.tests,
+ org.eclipse.ocl.examples.xtext.tests,
+ org.eclipse.ocl.examples.project.royalandloyal,
+ org.eclipse.ocl.examples.project.completeocltutorial,
+ org.eclipse.ocl.examples.tests,
+ org.eclipse.ocl.examples.impactanalyzer.tests
+Export-Package: org.eclipse.ocl.compatibility.tests
+Bundle-Vendor: %providerName

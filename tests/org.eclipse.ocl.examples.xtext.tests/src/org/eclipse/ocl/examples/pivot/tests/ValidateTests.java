@@ -124,9 +124,9 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Bug418551_ecore() throws IOException, InterruptedException {
-		String targetPlatform = System.getProperty("targetPlatform");
-		if (targetPlatform != null) { //"targetPlatforms/oxygen".equals(targetPlatform))
-			System.err.println(getTestName() + " skipped for " + targetPlatform + " - message text changes");
+		String targetRelease = System.getProperty("targetRelease");
+		if (targetRelease != null) {
+			System.err.println(getTestName() + " skipped for " + targetRelease + " - message text changes");
 			return;
 		}
 		//

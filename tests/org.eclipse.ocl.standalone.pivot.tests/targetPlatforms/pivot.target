@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
+<locations>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="com.google.guava" version="0.0.0"/>
+    <unit id="com.google.inject" version="0.0.0"/>
+    <unit id="com.ibm.icu" version="0.0.0"/>
+    <unit id="javax.inject" version="0.0.0"/>
+    <unit id="org.apache.commons.lang" version="0.0.0"/>
+    <unit id="org.apache.log4j" version="0.0.0"/>
+    <unit id="org.objectweb.asm" version="0.0.0"/>
+    <unit id="org.sat4j.core" version="0.0.0"/>
+    <unit id="org.sat4j.pb" version="0.0.0"/>
+    <unit id="org.tukaani.xz" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20180504181223/repository"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.ant.core" version="0.0.0"/>
+    <unit id="org.eclipse.compare" version="0.0.0"/>
+    <unit id="org.eclipse.compare.core" version="0.0.0"/>
+    <unit id="org.eclipse.core.commands" version="0.0.0"/>
+    <unit id="org.eclipse.core.contenttype" version="0.0.0"/>
+    <unit id="org.eclipse.core.expressions" version="0.0.0"/>
+    <unit id="org.eclipse.core.filebuffers" version="0.0.0"/>
+    <unit id="org.eclipse.core.filesystem" version="0.0.0"/>
+    <unit id="org.eclipse.core.jobs" version="0.0.0"/>
+    <unit id="org.eclipse.core.resources" version="0.0.0"/>
+    <unit id="org.eclipse.core.runtime" version="0.0.0"/>
+    <unit id="org.eclipse.core.variables" version="0.0.0"/>
+    <unit id="org.eclipse.debug.core" version="0.0.0"/>
+    <unit id="org.eclipse.debug.ui" version="0.0.0"/>
+    <unit id="org.eclipse.e4.ui.css.core" version="0.0.0"/>
+    <unit id="org.eclipse.e4.ui.css.core" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.app" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.common" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.frameworkadmin" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.frameworkadmin.equinox" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.artifact.repository" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.core" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.director" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.director.app" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.engine" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.garbagecollector" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.jarprocessor" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.metadata" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.metadata.repository" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.publisher" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.publisher.eclipse" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.repository" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.repository.tools" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.touchpoint.eclipse" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.p2.updatesite" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.preferences" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.registry" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.security" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.simpleconfigurator" version="0.0.0"/>
+    <unit id="org.eclipse.equinox.simpleconfigurator.manipulator" version="0.0.0"/>
+    <unit id="org.eclipse.help" version="0.0.0"/>
+    <unit id="org.eclipse.jdt.annotation" version="0.0.0"/>
+    <unit id="org.eclipse.jdt.core" version="3.14.0.v20180516-0801"/>   <!-- Bug 535509 -->
+    <unit id="org.eclipse.jdt.debug" version="0.0.0"/>
+    <unit id="org.eclipse.jdt.launching" version="0.0.0"/>
+    <unit id="org.eclipse.jface" version="0.0.0"/>
+    <unit id="org.eclipse.jface.text" version="0.0.0"/>
+    <unit id="org.eclipse.osgi" version="0.0.0"/>
+    <unit id="org.eclipse.pde.build" version="0.0.0"/>
+    <unit id="org.eclipse.pde.core" version="0.0.0"/>
+    <unit id="org.eclipse.swt" version="0.0.0"/>
+    <unit id="org.eclipse.team.core" version="0.0.0"/>
+    <unit id="org.eclipse.text" version="0.0.0"/>
+    <unit id="org.eclipse.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ui.console" version="0.0.0"/>
+    <unit id="org.eclipse.ui.editors" version="0.0.0"/>
+    <unit id="org.eclipse.ui.ide" version="0.0.0"/>
+    <unit id="org.eclipse.ui.forms" version="0.0.0"/>
+    <unit id="org.eclipse.ui.navigator" version="0.0.0"/>
+    <unit id="org.eclipse.update.configurator" version="0.0.0"/>
+    <unit id="org.eclipse.ui.views" version="0.0.0"/>
+    <unit id="org.eclipse.ui.workbench" version="0.0.0"/>
+    <unit id="org.eclipse.ui.workbench.texteditor" version="0.0.0"/>
+    
+    <unit id="org.eclipse.emf.codegen" version="0.0.0"/>
+    <unit id="org.eclipse.emf.codegen.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.emf.common" version="0.0.0"/>
+    <unit id="org.eclipse.emf.common.ui" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore.edit" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore.editor" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore.xmi" version="0.0.0"/>
+    <unit id="org.eclipse.emf.edit" version="0.0.0"/>
+    <unit id="org.eclipse.emf.edit.ui" version="0.0.0"/>
+    <unit id="org.eclipse.emf.mapping.ecore2xml" version="0.0.0"/>
+    
+    <unit id="org.eclipse.uml2.codegen.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.common" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.types" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.uml" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.uml.editor" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.uml.profile.standard" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.uml.resources" version="0.0.0"/>
+
+    <unit id="org.eclipse.xtext" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.builder" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.common.types" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.ui" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.ui.shared" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.util" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.xbase.lib" version="0.0.0"/>
+
+    <unit id="org.hamcrest.core" version="0.0.0"/>
+    <unit id="org.junit" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/releases/photon/201805251000"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="lpg.runtime.java" version="0.0.0"/>
+    <unit id="org.eclipse.ocl" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.common" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.common.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.codegen" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.debug" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.debug.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.debug.vm" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.debug.vm.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.emf.validation.validity" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.emf.validation.validity.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.standalone" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.uml25" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.validity" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.xtext.console" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.xtext.tests" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.pivot" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.pivot.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.pivot.uml" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.base" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.base.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.completeocl" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.completeocl.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.essentialocl" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.essentialocl.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.markup" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.markup.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.oclinecore" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.oclinecore.ui" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.oclstdlib" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.xtext.oclstdlib.ui" version="0.0.0"/>
+    <!--unit id="org.eclipse.ocl.examples.tests.feature.group" version="0.0.0"/-->
+    <repository location="https://hudson.eclipse.org/ocl/job/ocl-branch-tests/lastSuccessfulBuild/artifact/targetPlatform/"/>
+    <!--repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases/6.3.0"/-->
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/builds/release/2.13"/>
+  </location>
+</locations>
+</target>

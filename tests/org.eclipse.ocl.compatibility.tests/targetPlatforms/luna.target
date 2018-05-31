@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Luna Build Target Platform" sequenceNumber="16">
+<locations>
+<!-- Testing Luna fails since the Code Generator needs the JDT Java 8 support. -->
+<!-- Also needs an Xtext upgrade to 2.9.* -->
+</locations>
+</target>

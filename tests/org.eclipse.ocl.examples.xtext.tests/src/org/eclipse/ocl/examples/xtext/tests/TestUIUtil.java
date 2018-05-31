@@ -58,6 +58,8 @@ import junit.framework.TestCase;
 @SuppressWarnings("restriction")
 public class TestUIUtil
 {
+	private static boolean testedEgitUiBundle = false;
+
 	public static void closeIntro() {
 		IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
 		introManager.closeIntro(introManager.getIntro());
@@ -142,8 +144,6 @@ public class TestUIUtil
 			}
 		} */
 	}
-
-	private static boolean testedEgitUiBundle = false;
 
 	public static void removeTerminatedLaunches(ILaunch[] elements) {
 		List<ILaunch> removed = new ArrayList<ILaunch>();

@@ -51,6 +51,7 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-surefire-plugin</artifactId>
         <configuration>
+          <!--debugPort>5005</debugPort-->
           <testClass>org.eclipse.ocl.uml.tests.AllTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>

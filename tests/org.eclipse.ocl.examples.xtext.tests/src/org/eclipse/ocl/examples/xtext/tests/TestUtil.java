@@ -10,19 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.ICommand;
+/*import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -34,7 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Platform; */
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -53,13 +47,10 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
@@ -100,137 +91,6 @@ public class TestUtil
 		}
 		for (Normalizer normalizer : actualNormalizations) {
 			normalizer.denormalize();
-		}
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull IFile copyIFile(@NonNull OCL ocl, @NonNull URI sourceURI, IProject project, String projectPath) throws CoreException, IOException {
-		URIHandler uriHandler = ocl.getResourceSet().getURIConverter().getURIHandler(sourceURI);
-		InputStream inputStream = uriHandler.createInputStream(sourceURI, new HashMap<Object,Object>());
-		IFile outFile = project.getFile(projectPath);
-		mkdirs(outFile.getParent());
-		outFile.create(inputStream, true, null);
-		return outFile;
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static void createClassPath(@NonNull IProject project, @NonNull String @Nullable [] srcPaths) throws IOException, CoreException {
-		StringBuilder s = new StringBuilder();
-		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		s.append("<classpath>\n");
-		s.append("	<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER\"/>\n");
-		s.append("	<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n");
-		if (srcPaths != null) {
-			for (String srcPath : srcPaths) {
-				s.append("	<classpathentry kind=\"src\" path=\"" + srcPath+ "\"/>\n");
-			}
-		}
-		s.append("	<classpathentry kind=\"output\" path=\"bin\"/>\n");
-		s.append("</classpath>\n");
-		TestUtil.createIFile(project, ".classpath", s.toString());
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static void createFile(@NonNull File file, @NonNull String fileContent) throws IOException {
-		Writer writer = new FileWriter(file);
-		writer.append(fileContent);
-		writer.close();
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull IFile createIFile(@NonNull IContainer container, @NonNull String fileName, @NonNull String fileContents) throws IOException, CoreException {
-		InputStream inputStream = new URIConverter.ReadableInputStream(fileContents, "UTF-8");
-		IFile iFile = container.getFile(new Path(fileName));
-		if (iFile.exists()) {
-			iFile.delete(true, null);
-		}
-		iFile.create(inputStream, true, null);
-		return iFile;
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull IFolder createFolder(@NonNull IContainer container, @NonNull String folderName) throws CoreException {
-		IFolder folder = container.getFolder(new Path(folderName));
-		if (!folder.exists()) {
-			folder.create(true,  false,  null);
-		}
-		return folder;
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull IProject createJavaProject(@NonNull String projectName) throws CoreException {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject project = root.getProject(projectName);
-		if (!project.exists()) {
-			project.create(null);
-		}
-		if (!project.isOpen()) {
-			project.open(null);
-		}
-		IProjectDescription description = project.getDescription();
-		ICommand command1 = description.newCommand();
-		command1.setBuilderName("org.eclipse.jdt.core.javabuilder");
-		ICommand command2 = description.newCommand();
-		command2.setBuilderName("org.eclipse.pde.ManifestBuilder");
-		ICommand command3 = description.newCommand();
-		command3.setBuilderName("org.eclipse.pde.SchemaBuilder");
-		description.setBuildSpec(new ICommand[]{command1, command2, command3});
-		description.setNatureIds(new String[]{"org.eclipse.pde.PluginNature", "org.eclipse.jdt.core.javanature"});
-		project.setDescription(description, null);
-		return project;
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static void createManifest(@NonNull IProject project, @NonNull String projectName,
-			@NonNull String @Nullable [] requireBundles, @NonNull String @Nullable [] additionalBundles, @NonNull String @Nullable [] exportPackages) throws CoreException {
-		IFolder folder = project.getFolder("META-INF");
-		folder.create(true, false, null);
-		IFile file = folder.getFile("MANIFEST.MF");
-		StringBuilder s = new StringBuilder();
-		s.append("Manifest-Version: 1.0\n");
-		s.append("Bundle-ManifestVersion: 2\n");
-		s.append("Bundle-Name: " + projectName + "\n");
-		s.append("Bundle-SymbolicName: " + projectName + ";singleton:=true\n");
-		s.append("Bundle-Version: 0.0.0.qualifier\n");
-		s.append("Bundle-Localization: plugin\n");
-		if (requireBundles != null) {
-			s.append("Require-Bundle:");
-			String prefix = " ";
-			for (String requireBundle : requireBundles) {
-				s.append(prefix);
-				s.append(requireBundle);
-				prefix = ",\n ";
-			}
-			s.append("\n");
-		}
-		if (exportPackages != null) {
-			s.append("Export-Package:");
-			String prefix = " ";
-			for (String exportPackage : exportPackages) {
-				s.append(prefix);
-				s.append(exportPackage);
-				prefix = ",\n ";
-			}
-			s.append("\n");
-		}
-		String manifestContents = s.toString();
-		file.create(new ByteArrayInputStream(manifestContents.getBytes()), true, null);
-		if (additionalBundles != null) {
-			file = project.getFile("build.properties");
-			s = new StringBuilder();
-			//			if (additionalBundles != null) {
-			s.append("additional.bundles =");
-			String prefix = " ";
-			for (String additionalBundle : additionalBundles) {
-				s.append(prefix);
-				s.append(additionalBundle);
-				prefix = ",\\\n\t";
-			}
-			s.append("\n");
-			//			}
-			String buildPropertiesContents = s.toString();
-			file.create(new ByteArrayInputStream(buildPropertiesContents.getBytes()), true, null);
 		}
 	}
 
@@ -302,41 +162,9 @@ public class TestUtil
 		}
 	}
 
-	/**
-	 * Return a File identifying the qualifiedName with respect to loadedClass' loader.
-	 */
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull File getFile(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
-		URL projectURL = getTestResource(loadedClass, classRelativeName);
-		TestCase.assertNotNull(projectURL);
-		return new File(projectURL.getFile());
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	public static @NonNull URI getFileURI(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
-		File file = getFile(loadedClass, classRelativeName);
-		@NonNull URI uri = URI.createFileURI(file.toString());
-		return uri;
-	}
-
 	public static @NonNull String getName(@NonNull String name) {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
 		return name + " <" + testNameSuffix + ">";
-	}
-
-	@Deprecated /* @deprecated Use the TestFileSystem to avoid Tycho failures */
-	private static URL getTestResource(@NonNull Class<?> loadedClass, String classRelativeName) {
-		String loaderRelativeName = loadedClass.getPackage().getName().replace(".",  "/") + "/" + classRelativeName;
-		URL projectURL = loadedClass.getClassLoader().getResource(loaderRelativeName);
-		if ((projectURL != null) && Platform.isRunning()) {
-			try {
-				projectURL = FileLocator.resolve(projectURL);
-			} catch (IOException e) {
-				TestCase.fail(e.getMessage());
-				return null;
-			}
-		}
-		return projectURL;
 	}
 
 	public static boolean initializeEcoreEAnnotationValidators() {
@@ -384,22 +212,6 @@ public class TestUtil
 			catch (Exception e) {}
 		}
 		return false;
-	}
-
-	public static void mkdirs(IContainer parent) throws CoreException {
-		if (parent instanceof IProject) {
-			IProject iProject = (IProject) parent;
-			if (!iProject.exists()) {
-				iProject.create(null);
-			}
-		}
-		else if (parent instanceof IFolder) {
-			IFolder iFolder = (IFolder) parent;
-			if (!iFolder.exists()) {
-				mkdirs(iFolder.getParent());
-				iFolder.create(true, false, null);
-			}
-		}
 	}
 
 	public static List<Normalizer> normalize(Resource resource) {

@@ -137,8 +137,8 @@ extends TestCase {
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
 		}
-		String targetPlatform = System.getProperty("targetPlatform");
-		if (targetPlatform == null) { // See Bug 527458 - GrammarTests are expected to fail when Xtext.ecore changes
+		String targetRelease = System.getProperty("targetRelease");
+		if (targetRelease == null) { // See Bug 527458 - GrammarTests are expected to fail when Xtext.ecore changes
 			result.addTestSuite(GrammarTests.class);
 		}
 		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {

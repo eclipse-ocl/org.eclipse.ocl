@@ -18,12 +18,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.tests.GenericTestSuite;
 import org.eclipse.ocl.tests.TestReflection;
 import org.eclipse.ocl.uml.ExpressionInOCL;
 import org.eclipse.ocl.uml.OCL;
@@ -97,10 +97,13 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 			ecorePrimitiveTypes = (Package) resourceSet.getResource(
 				URI.createURI(UMLResource.ECORE_PRIMITIVE_TYPES_LIBRARY_URI),
 				true).getContents().get(0);
-			EcorePlugin.ExtensionProcessor.process(null);
-			Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
-			Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-			uriMap.putAll(computePlatformURIMap);
+			GenericTestSuite.initializeTestResourceSet(resourceSet,
+				"org.eclipse.emf.ecore",
+				"org.eclipse.ocl",
+				"org.eclipse.ocl.uml",
+				"org.eclipse.ocl.uml.tests",
+				"org.eclipse.uml2.uml"
+					);
 			return resourceSet;
 		}
 
