@@ -137,7 +137,10 @@ extends TestCase {
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
 		}
-		result.addTestSuite(GrammarTests.class);
+		String targetPlatform = System.getProperty("targetPlatform");
+		if (targetPlatform == null) { // See Bug 527458 - GrammarTests are expected to fail when Xtext.ecore changes
+			result.addTestSuite(GrammarTests.class);
+		}
 		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 		// 	result.addTestSuite(FinalTests.class);
 		// }
