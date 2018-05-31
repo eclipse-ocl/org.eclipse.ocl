@@ -185,13 +185,14 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable TupleValue any;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
-				throw new InvalidValueException("No matching content for 'any'");
+				throw new InvalidValueException("Nothing to return for ''any''");
 			}
 			@SuppressWarnings("null")
 			/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue _1 = (TupleValue)ITERATOR__1.next();
 			/**
 			 * range->includes(employees->size())
 			 */
+			@SuppressWarnings("null")
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = ClassUtil.nonNullState((SequenceValue)_1.getValue(0/*range*/));
 			@SuppressWarnings("null")
 			final /*@NonInvalid*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
@@ -211,7 +212,6 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		catch (Exception e) {
 			CAUGHT_any = ValueUtil.createInvalidValue(e);
 		}
-		@SuppressWarnings("null")
 		final /*@NonInvalid*/ @NonNull Object size_0 = CAUGHT_any == null;
 		/*@Thrown*/ org.eclipse.ocl.pivot.ids.@Nullable EnumerationLiteralId safe_size_source;
 		if (size_0 == Boolean.TRUE) {
@@ -219,13 +219,13 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		}
 		else {
 			assert any != null;
+			@SuppressWarnings("null")
 			final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_1 = ClassUtil.nonNullState((EnumerationLiteralId)any.getValue(1/*size*/));
 			safe_size_source = size_1;
 		}
 		if (safe_size_source == null) {
 			throw new InvalidValueException("Null body for \'company::Company::size\'");
 		}
-		@SuppressWarnings("null")
 		final /*@Thrown*/ org.eclipse.ocl.examples.xtext.tests.codegen.company.@NonNull CompanySizeKind ECORE_safe_size_source = (CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, safe_size_source);
 		return ECORE_safe_size_source;
 	}

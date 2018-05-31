@@ -48,7 +48,7 @@ public class CodegencompanyValidator extends EObjectValidator {
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
 	 */
-	public static final String DIAGNOSTIC_SOURCE = "codegen.company"; //$NON-NLS-1$
+	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.examples.xtext.tests.codegen.company"; //$NON-NLS-1$
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Dummy Invariant' of 'Company'.

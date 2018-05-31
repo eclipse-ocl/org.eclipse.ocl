@@ -202,7 +202,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (AttributeWithoutInitital: "); //$NON-NLS-1$
 		result.append(attributeWithoutInitital);
 		result.append(')');

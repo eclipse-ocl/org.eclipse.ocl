@@ -41,7 +41,7 @@ public class NoreflectioncompanyValidator extends EObjectValidator {
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
 	 */
-	public static final String DIAGNOSTIC_SOURCE = "noreflectioncompany"; //$NON-NLS-1$
+	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.examples.xtext.tests.noreflectioncompany"; //$NON-NLS-1$
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Dummy Invariant' of 'Company'.

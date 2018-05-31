@@ -182,7 +182,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link ValidityPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -196,8 +196,8 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		if (isInited) return (ValidityPackage)EPackage.Registry.INSTANCE.getEPackage(ValidityPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		ValidityPackageImpl theValidityPackage = (ValidityPackageImpl)(ePackage instanceof ValidityPackageImpl ? ePackage : new ValidityPackageImpl());
+		Object registeredValidityPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		ValidityPackageImpl theValidityPackage = registeredValidityPackage instanceof ValidityPackageImpl ? (ValidityPackageImpl)registeredValidityPackage : new ValidityPackageImpl();
 
 		isInited = true;
 
@@ -213,7 +213,6 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		// Mark meta-data to indicate it can't be changed
 		theValidityPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ValidityPackage.eNS_URI, theValidityPackage);
 		return theValidityPackage;

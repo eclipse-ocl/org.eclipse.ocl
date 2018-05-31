@@ -76,18 +76,18 @@ public class ValidityFactoryImpl extends EFactoryImpl implements ValidityFactory
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case ValidityPackage.CONSTRAINING_NODE: return createConstrainingNode();
-		case ValidityPackage.LEAF_CONSTRAINING_NODE: return createLeafConstrainingNode();
-		case ValidityPackage.RESULT: return createResult();
-		case ValidityPackage.RESULT_CONSTRAINING_NODE: return createResultConstrainingNode();
-		case ValidityPackage.RESULT_SET: return createResultSet();
-		case ValidityPackage.RESULT_VALIDATABLE_NODE: return createResultValidatableNode();
-		case ValidityPackage.ROOT_NODE: return createRootNode();
-		case ValidityPackage.ROOT_CONSTRAINING_NODE: return createRootConstrainingNode();
-		case ValidityPackage.ROOT_VALIDATABLE_NODE: return createRootValidatableNode();
-		case ValidityPackage.VALIDATABLE_NODE: return createValidatableNode();
-		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			case ValidityPackage.CONSTRAINING_NODE: return createConstrainingNode();
+			case ValidityPackage.LEAF_CONSTRAINING_NODE: return createLeafConstrainingNode();
+			case ValidityPackage.RESULT: return createResult();
+			case ValidityPackage.RESULT_CONSTRAINING_NODE: return createResultConstrainingNode();
+			case ValidityPackage.RESULT_SET: return createResultSet();
+			case ValidityPackage.RESULT_VALIDATABLE_NODE: return createResultValidatableNode();
+			case ValidityPackage.ROOT_NODE: return createRootNode();
+			case ValidityPackage.ROOT_CONSTRAINING_NODE: return createRootConstrainingNode();
+			case ValidityPackage.ROOT_VALIDATABLE_NODE: return createRootValidatableNode();
+			case ValidityPackage.VALIDATABLE_NODE: return createValidatableNode();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -99,12 +99,12 @@ public class ValidityFactoryImpl extends EFactoryImpl implements ValidityFactory
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-		case ValidityPackage.SEVERITY:
-			return createSeverityFromString(eDataType, initialValue);
-		case ValidityPackage.THROWABLE:
-			return createThrowableFromString(eDataType, initialValue);
-		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			case ValidityPackage.SEVERITY:
+				return createSeverityFromString(eDataType, initialValue);
+			case ValidityPackage.THROWABLE:
+				return createThrowableFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -116,12 +116,12 @@ public class ValidityFactoryImpl extends EFactoryImpl implements ValidityFactory
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-		case ValidityPackage.SEVERITY:
-			return convertSeverityToString(eDataType, instanceValue);
-		case ValidityPackage.THROWABLE:
-			return convertThrowableToString(eDataType, instanceValue);
-		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			case ValidityPackage.SEVERITY:
+				return convertSeverityToString(eDataType, instanceValue);
+			case ValidityPackage.THROWABLE:
+				return convertThrowableToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 

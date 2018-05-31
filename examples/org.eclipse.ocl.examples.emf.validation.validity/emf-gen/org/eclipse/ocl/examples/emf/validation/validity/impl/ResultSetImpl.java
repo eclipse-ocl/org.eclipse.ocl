@@ -176,12 +176,12 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			return basicSetRoot((RootNode)otherEnd, msgs);
-		case ValidityPackage.RESULT_SET__RESULTS:
-			return ((InternalEList<InternalEObject>)(InternalEList<?>)getResults()).basicAdd(otherEnd, msgs);
+			case ValidityPackage.RESULT_SET__ROOT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetRoot((RootNode)otherEnd, msgs);
+			case ValidityPackage.RESULT_SET__RESULTS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getResults()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -194,10 +194,10 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			return basicSetRoot(null, msgs);
-		case ValidityPackage.RESULT_SET__RESULTS:
-			return ((InternalEList<?>)getResults()).basicRemove(otherEnd, msgs);
+			case ValidityPackage.RESULT_SET__ROOT:
+				return basicSetRoot(null, msgs);
+			case ValidityPackage.RESULT_SET__RESULTS:
+				return ((InternalEList<?>)getResults()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -210,8 +210,8 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			return eInternalContainer().eInverseRemove(this, ValidityPackage.ROOT_NODE__RESULT_SETS, RootNode.class, msgs);
+			case ValidityPackage.RESULT_SET__ROOT:
+				return eInternalContainer().eInverseRemove(this, ValidityPackage.ROOT_NODE__RESULT_SETS, RootNode.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -224,12 +224,12 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			return getRoot();
-		case ValidityPackage.RESULT_SET__RESULTS:
-			return getResults();
-		case ValidityPackage.RESULT_SET__TIMESTAMP:
-			return getTimestamp();
+			case ValidityPackage.RESULT_SET__ROOT:
+				return getRoot();
+			case ValidityPackage.RESULT_SET__RESULTS:
+				return getResults();
+			case ValidityPackage.RESULT_SET__TIMESTAMP:
+				return getTimestamp();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -243,16 +243,16 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			setRoot((RootNode)newValue);
-			return;
-		case ValidityPackage.RESULT_SET__RESULTS:
-			getResults().clear();
-			getResults().addAll((Collection<? extends Result>)newValue);
-			return;
-		case ValidityPackage.RESULT_SET__TIMESTAMP:
-			setTimestamp((String)newValue);
-			return;
+			case ValidityPackage.RESULT_SET__ROOT:
+				setRoot((RootNode)newValue);
+				return;
+			case ValidityPackage.RESULT_SET__RESULTS:
+				getResults().clear();
+				getResults().addAll((Collection<? extends Result>)newValue);
+				return;
+			case ValidityPackage.RESULT_SET__TIMESTAMP:
+				setTimestamp((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -265,15 +265,15 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			setRoot((RootNode)null);
-			return;
-		case ValidityPackage.RESULT_SET__RESULTS:
-			getResults().clear();
-			return;
-		case ValidityPackage.RESULT_SET__TIMESTAMP:
-			setTimestamp(TIMESTAMP_EDEFAULT);
-			return;
+			case ValidityPackage.RESULT_SET__ROOT:
+				setRoot((RootNode)null);
+				return;
+			case ValidityPackage.RESULT_SET__RESULTS:
+				getResults().clear();
+				return;
+			case ValidityPackage.RESULT_SET__TIMESTAMP:
+				setTimestamp(TIMESTAMP_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -286,12 +286,12 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ValidityPackage.RESULT_SET__ROOT:
-			return getRoot() != null;
-		case ValidityPackage.RESULT_SET__RESULTS:
-			return results != null && !results.isEmpty();
-		case ValidityPackage.RESULT_SET__TIMESTAMP:
-			return TIMESTAMP_EDEFAULT == null ? timestamp != null : !TIMESTAMP_EDEFAULT.equals(timestamp);
+			case ValidityPackage.RESULT_SET__ROOT:
+				return getRoot() != null;
+			case ValidityPackage.RESULT_SET__RESULTS:
+				return results != null && !results.isEmpty();
+			case ValidityPackage.RESULT_SET__TIMESTAMP:
+				return TIMESTAMP_EDEFAULT == null ? timestamp != null : !TIMESTAMP_EDEFAULT.equals(timestamp);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -305,7 +305,7 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (timestamp: ");
 		result.append(timestamp);
 		result.append(')');

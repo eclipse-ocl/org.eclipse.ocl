@@ -43,7 +43,8 @@ public interface Bug418716 extends EObject {
 	 * @return the value of the '<em>Attribute With Initital</em>' attribute.
 	 * @see #setAttributeWithInitital(int)
 	 * @see org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage#getBug418716_AttributeWithInitital()
-	 * @model annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='100'"
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='100'"
 	 * @generated
 	 */
 	int getAttributeWithInitital();
@@ -69,7 +70,7 @@ public interface Bug418716 extends EObject {
 	 * @return the value of the '<em>Attribute Without Initital</em>' attribute.
 	 * @see #setAttributeWithoutInitital(int)
 	 * @see org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage#getBug418716_AttributeWithoutInitital()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	int getAttributeWithoutInitital();

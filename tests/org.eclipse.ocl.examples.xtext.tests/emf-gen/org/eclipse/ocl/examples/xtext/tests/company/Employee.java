@@ -126,7 +126,7 @@ public interface Employee extends EObject {
 	 * @return the value of the '<em>Direct Reports</em>' reference list.
 	 * @see org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage#getEmployee_DirectReports()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='company.employees?-&gt;select(manager = self)'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='company.employees-&gt;select(manager = self)'"
 	 * @generated
 	 */
 	EList<Employee> getDirectReports();
@@ -144,7 +144,6 @@ public interface Employee extends EObject {
 	 * @see org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage#getEmployee_AllReports()
 	 * @model transient="true" changeable="false" volatile="true" derived="true" ordered="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='Employee.allInstances()-&gt;select(reportsTo(self))'"
-	 *        annotation="http://www.eclipse.org/OCL/Collection nullFree='true'"
 	 * @generated
 	 */
 	EList<Employee> getAllReports();
@@ -176,7 +175,7 @@ public interface Employee extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Has Name As Attribute</em>' attribute.
 	 * @see org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage#getEmployee_HasNameAsAttribute()
-	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='name &lt;&gt; null'"
 	 * @generated
 	 */

@@ -80,23 +80,23 @@ public class CodegencompanyAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected CodegencompanySwitch<@Nullable Adapter> modelSwitch =
 			new CodegencompanySwitch<@Nullable Adapter>() {
-		@Override
-		public Adapter caseCompany(Company object) {
-			return createCompanyAdapter();
-		}
-		@Override
-		public Adapter caseEmployee(Employee object) {
-			return createEmployeeAdapter();
-		}
-		@Override
-		public Adapter caseBug418716(Bug418716 object) {
-			return createBug418716Adapter();
-		}
-		@Override
-		public Adapter defaultCase(EObject object) {
-			return createEObjectAdapter();
-		}
-	};
+			@Override
+			public Adapter caseCompany(Company object) {
+				return createCompanyAdapter();
+			}
+			@Override
+			public Adapter caseEmployee(Employee object) {
+				return createEmployeeAdapter();
+			}
+			@Override
+			public Adapter caseBug418716(Bug418716 object) {
+				return createBug418716Adapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object) {
+				return createEObjectAdapter();
+			}
+		};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
