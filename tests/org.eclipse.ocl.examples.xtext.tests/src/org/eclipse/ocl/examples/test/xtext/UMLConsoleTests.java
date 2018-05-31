@@ -39,7 +39,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug400090() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug400090.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug400090.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class bookClass = (org.eclipse.uml2.uml.Class)model.getOwnedType("Book");
@@ -66,7 +66,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug419556() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug419556.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug419556.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class class1 = (org.eclipse.uml2.uml.Class)model.getOwnedType("Class1");
@@ -83,7 +83,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug437715() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug437715.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug437715.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class class1 = (org.eclipse.uml2.uml.Class)model.getOwnedType("Class1");
@@ -102,7 +102,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug474085() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug474085.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug474085.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.StateMachine sm = (org.eclipse.uml2.uml.StateMachine)model.getOwnedType("StateMachine0");
@@ -131,7 +131,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug507406() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug507406.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug507406.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Interaction interaction1 = (org.eclipse.uml2.uml.Interaction)model.getOwnedType("Interaction1");
@@ -148,7 +148,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug512553() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug512553.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug512553.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class person = (org.eclipse.uml2.uml.Class)model.getOwnedType("Person");
@@ -168,7 +168,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_Bug516285() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
-		URI testModelURI = getProjectFileURI("Bug516285.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug516285.uml");
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		//
@@ -184,8 +184,8 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = ocl.getResourceSet();
 
-		Resource umlResource = resourceSet.getResource(getTestModelURI("model/InternationalizedClasses.uml"), true);
-		Resource umlProfileResource = resourceSet.getResource(getTestModelURI("model/Internationalized.profile.uml"), true);
+		Resource umlResource = resourceSet.getResource(getTestModelURI("models/uml/InternationalizedClasses.uml"), true);
+		Resource umlProfileResource = resourceSet.getResource(getTestModelURI("models/uml/Internationalized.profile.uml"), true);
 		//        ASResource asResource = ocl.uml2as(umlResource);
 		//        Root root = (Root) asResource.getContents().get(0);
 		//        org.eclipse.ocl.pivot.Package modelPackage = ClassUtil.getNamedElement(root.getNestedPackage(), "Model");

@@ -62,6 +62,11 @@ public class JUnitPluginFileSystem extends TestFileSystem
 			return String.valueOf(file);
 		}
 
+		@Override
+		public @NonNull URI getFileURI() {
+			return URI.createFileURI(file.toString());
+		}
+
 		@SuppressWarnings("null")
 		@Override
 		public @NonNull String getName() {

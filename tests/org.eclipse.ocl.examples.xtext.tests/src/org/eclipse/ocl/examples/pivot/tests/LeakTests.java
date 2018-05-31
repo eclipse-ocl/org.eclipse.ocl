@@ -148,7 +148,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 		UMLStandaloneSetup.init();
 		ResourceSet resourceSet = new ResourceSetImpl();
 		UMLResourcesUtil.init(resourceSet);
-		URI testModelURI = getProjectFileURI("Bug459276.uml");
+		URI testModelURI = getTestModelURI("models/uml/Bug459276.uml");
 		EClass package1 = UMLPackage.Literals.PACKAGE;
 		Package umlModel = UML2Util.load(resourceSet, testModelURI, package1);
 		EcoreUtil.resolveAll(resourceSet);

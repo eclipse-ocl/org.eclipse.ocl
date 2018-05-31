@@ -121,10 +121,10 @@ import junit.framework.TestCase;
  */
 public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 {
-	protected static final @NonNull String COMPANY_XMI = "/model/Company.xmi";
-	protected static final @NonNull String NO_REFLECTION_COMPANY_XMI = "/model/NoReflectionCompany.xmi";
-	protected static final @NonNull String MODEL_WITH_ERRORS_XMI = "/model/ModelWithErrors.xmi";
-	protected static final @NonNull String MODEL_WITH_ERRORS_OCL = "/model/ModelWithErrors.ocl";
+	protected static final @NonNull String COMPANY_XMI = "/models/genmodel/Company.xmi";
+	protected static final @NonNull String NO_REFLECTION_COMPANY_XMI = "/models/genmodel/NoReflectionCompany.xmi";
+	protected static final @NonNull String MODEL_WITH_ERRORS_XMI = "/models/ecore/ModelWithErrors.xmi";
+	protected static final @NonNull String MODEL_WITH_ERRORS_OCL = "/models/ecore/ModelWithErrors.ocl";
 
 	public Resource testResource;
 	public EPackage companyPackage;
@@ -1284,11 +1284,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 	public void test_tutorialValidationMessage() {
 		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("model/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
+		validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
 		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("model/Tutorial2.ecore", "There are 3 loans for the 2 copies of ''b2''");		// Doubled quotes for NLS.bind
+		validateTutorial("models/documentation/Tutorial2.ecore", "There are 3 loans for the 2 copies of ''b2''");		// Doubled quotes for NLS.bind
 		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("model/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
+		validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
 		GlobalEnvironmentFactory.disposeInstance();
 	}
 
@@ -1309,7 +1309,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			//	Projects not on classpath should not be accessible as platform:/plugin or platform:/project
 			//
 			try {
-				URI uri8 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.oclinecoretutorial/model/Tutorial.ecore", true);
+				URI uri8 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
 				ocl.getResourceSet().getResource(uri8, true);
 				TestCase.fail("Should have thrown a MalformedURLException");	// unknown protocol: platform
 			}
@@ -1317,9 +1317,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				assertTrue(e.getCause() instanceof MalformedURLException);
 			}
 			try {
-				URI uri9 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.oclinecoretutorial/model/Tutorial.ecore", true);
+				URI uri9 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
 				ocl.getResourceSet().getResource(uri9, true);
-				TestCase.fail("Should have thrown an IOException");				// The path '/org.eclipse.ocl.examples.project.oclinecoretutorial/model/Tutorial.ecore' is unmapped
+				TestCase.fail("Should have thrown an IOException");				// The path '/org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore' is unmapped
 			}
 			catch (WrappedException e) {
 				assertTrue(e.getCause() instanceof IOException);
@@ -1332,7 +1332,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
 		try {
 			ocl.getEnvironmentFactory().adapt(resourceSet);
-			URI xmiURI = getTestModelURI("model/Tutorial.xmi");
+			URI xmiURI = getTestModelURI("models/documentation/Tutorial.xmi");
 			Resource ecoreResource = resourceSet.getResource(getTestModelURI(ecoreURI), true);
 			EPackage ePackage = (EPackage) ecoreResource.getContents().get(0);
 			resourceSet.getPackageRegistry().put(ePackage.getNsURI(), ePackage);

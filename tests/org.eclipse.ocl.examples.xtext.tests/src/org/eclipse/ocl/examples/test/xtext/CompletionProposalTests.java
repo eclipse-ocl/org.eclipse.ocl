@@ -233,7 +233,7 @@ public class CompletionProposalTests extends XtextTestCase
 		editor = (XtextEditor) IDE.openEditor(page, fileEditorInput, editorId, true);
 	}
 
-	private @NonNull TestFile createIFile(@NonNull TestProject testProject, @NonNull String testFilePath, @NonNull String fileContents) {
+	private @NonNull TestFile createIFile(@NonNull TestProject testProject, @NonNull String testFilePath, @NonNull String fileContents) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(fileContents, "UTF-8");
 		return testProject.getOutputFile(testFilePath, inputStream);
 	}

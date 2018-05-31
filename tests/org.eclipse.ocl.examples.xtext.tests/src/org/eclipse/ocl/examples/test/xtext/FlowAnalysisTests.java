@@ -106,8 +106,8 @@ public class FlowAnalysisTests extends XtextTestCase
 		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {
 			String inputName = stem + "." + extension;
 			String pivotName = inputName + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			URI inputURI = getProjectFileURI(inputName);
-			URI pivotURI = getProjectFileURI(pivotName);
+			URI inputURI = getTestFileURI(inputName);
+			URI pivotURI = getTestFileURI(pivotName);
 			BaseCSResource xtextResource = (BaseCSResource) getResourceSet().createResource(inputURI);
 			xtextResource.setProjectManager(getProjectMap());
 			JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());

@@ -47,7 +47,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
@@ -57,7 +56,6 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
-import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -82,8 +80,6 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
-import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
@@ -657,41 +653,7 @@ public class PivotTestCase extends TestCase
 		resourceSet.eAdapters().clear();
 	}
 
-	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent) throws IOException {
-		return createEcoreFile(ocl, fileName, fileContent, false);
-	}
-
-	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
-		String inputName = fileName + ".oclinecore";
-		createOCLinEcoreFile(inputName, fileContent);
-		URI inputURI = getProjectFileURI(inputName);
-		URI ecoreURI = getProjectFileURI(fileName + ".ecore");
-		ResourceSet resourceSet2 = ocl.getResourceSet();
-		BaseCSResource xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
-		assertNoResourceErrors("Load failed", xtextResource);
-		CS2AS cs2as = xtextResource.getCS2AS();
-		ASResource asResource = cs2as.getASResource();
-		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-		assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(asResource.getContents().get(0)));
-		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
-		assertNoResourceErrors("To Ecore errors", ecoreResource);
-		if (assignIds) {
-			for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				ecoreResource.setID(eObject,  EcoreUtil.generateUUID());
-			}
-		}
-		ecoreResource.save(XMIUtil.createSaveOptions());
-		return ecoreURI;
-	}
-
-	public void createOCLinEcoreFile(String fileName, String fileContent) throws IOException {
-		File file = new File(getProjectFile(), fileName);
-		Writer writer = new FileWriter(file);
-		writer.append(fileContent);
-		writer.close();
-	}
-
+	@Deprecated /* @deprecated not used */
 	protected @NonNull File getProjectFile() {
 		String projectName = getProjectName();
 		URL projectURL = getTestResource(projectName);
@@ -699,9 +661,11 @@ public class PivotTestCase extends TestCase
 		return new File(projectURL.getFile());
 	}
 
+	@Deprecated /* @deprecated use getTestModelURI to facilitate legacy inherited testing */
 	protected @NonNull URI getProjectFileURI(@NonNull String referenceName) {
-		File projectFile = getProjectFile();
-		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
+		throw new UnsupportedOperationException();
+		//		File projectFile = getProjectFile();
+		//		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
 
 	protected @NonNull String getProjectName() {
@@ -724,13 +688,14 @@ public class PivotTestCase extends TestCase
 		return methodName != null ? methodName : "<unnamed>";
 	}
 
-	public @NonNull URI getTestModelURI(@NonNull String localFileName) {
+	public static @NonNull URI getTestModelURI(@NonNull String localFileName) {
 		String testPlugInPrefix = PLUGIN_ID + "/";
 		URI testPlugURI = EcorePlugin.IS_ECLIPSE_RUNNING ? URI.createPlatformPluginURI(testPlugInPrefix, true) : URI.createPlatformResourceURI(testPlugInPrefix, true);
 		URI localURI = URI.createURI(localFileName.startsWith("/") ? localFileName.substring(1) : localFileName);
 		return localURI.resolve(testPlugURI);
 	}
 
+	@Deprecated /* @deprecated not used */
 	protected @NonNull URL getTestResource(@NonNull String resourceName) {
 		URL projectURL = getClass().getClassLoader().getResource(resourceName);
 		try {

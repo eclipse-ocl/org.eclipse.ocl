@@ -304,15 +304,15 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		TestUtil.assertSameModel(expectedResource, actualResource);
 	}
 
-	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testFile, @NonNull Bag<String> expectedErrorMessages) throws Exception {
+	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testContents, @NonNull Bag<String> expectedErrorMessages) throws Exception {
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		metamodelManager.addClassLoader(ClassUtil.nonNullState(getClass().getClassLoader()));
-		URI libraryURI = getProjectFileURI(fileName);
+		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
+		URI libraryURI = getTestFileURI(fileName, inputStream);
 		@SuppressWarnings("null")@NonNull BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(libraryURI);
 		@SuppressWarnings("null")@NonNull ClassLoader classLoader = getClass().getClassLoader();
 		JavaClassScope.getAdapter(xtextResource, classLoader);
-		InputStream inputStream = new URIConverter.ReadableInputStream(testFile, "UTF-8");
-		xtextResource.load(inputStream, null);
+		xtextResource.load(null);
 		Bag<String> actualErrorMessages = new BagImpl<String>();
 		for (Resource.Diagnostic actualError : xtextResource.getErrors()) {
 			actualErrorMessages.add(actualError.getMessage());
@@ -323,12 +323,12 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	protected void doLoadFromString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String testFile) throws Exception {
-		URI libraryURI = getProjectFileURI(fileName);
+	protected void doLoadFromString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String testContents) throws Exception {
+		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
+		URI libraryURI = getTestFileURI(fileName, inputStream);
 		ResourceSet resourceSet = ocl.getResourceSet();
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
-		InputStream inputStream = new URIConverter.ReadableInputStream(testFile, "UTF-8");
-		xtextResource.load(inputStream, null);
+		xtextResource.load(null);
 		assertNoResourceErrors("Load failed", xtextResource);
 		Resource asResource = xtextResource.getASResource();
 		assert asResource != null;
@@ -337,11 +337,12 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		assertNoValidationErrors("File Model", asResource);
 	}
 
-	protected ASResource doLoadASResourceFromString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String testFile) throws Exception {
-		URI libraryURI = getProjectFileURI(fileName);
+	protected ASResource doLoadASResourceFromString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String testContents) throws Exception {
+		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
+		URI libraryURI = getTestFileURI(fileName, inputStream);
 		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
 		ModelContext modelContext = new ModelContext(environmentFactory, libraryURI);
-		BaseCSResource xtextResource = (BaseCSResource) modelContext.createBaseResource(testFile);
+		BaseCSResource xtextResource = (BaseCSResource) modelContext.createBaseResource(null);
 		assertNoResourceErrors("Load failed", xtextResource);
 		ASResource asResource = xtextResource.getASResource();
 		assert asResource != null;
@@ -493,8 +494,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 	public @NonNull String createEcoreString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
 		createOCLinEcoreFile(inputName, fileContent);
-		URI inputURI = getProjectFileURI(inputName);
-		URI ecoreURI = getProjectFileURI(fileName + ".ecore");
+		URI inputURI = getTestFileURI(inputName);
+		URI ecoreURI = getTestFileURI(fileName + ".ecore");
 		BaseCSResource xtextResource = null;
 		try {
 			ResourceSet resourceSet2 = ocl.getResourceSet();

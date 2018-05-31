@@ -109,7 +109,7 @@ public class StereotypesTest extends PivotTestSuite
 			//	        asResource = ocl.uml2as(umlResource);
 			//	        umlMMM = metamodelManager.getPivotOf(Element.class, umlPackage.eClass());
 			//	        Root root = (Root) asResource.getContents().get(0);
-			//	        assertNoResourceErrors("Loading model/InternationalizedClasses.uml", asResource);
+			//	        assertNoResourceErrors("Loading models/uml/InternationalizedClasses.uml", asResource);
 			//	        org.eclipse.ocl.pivot.Package modelPackage = ClassUtil.getNamedElement(root.getNestedPackage(), "Model");
 			umlEnglishClass = umlPackage.getOwnedType("EnglishClass");
 			umlFrenchClass = umlPackage.getOwnedType("FrenchClass");
@@ -176,10 +176,10 @@ public class StereotypesTest extends PivotTestSuite
 			ProjectMap.getAdapter(resourceSet);
 			String problem = UML2AS.initialize(resourceSet);
 			assertNull(problem);
-			URI testModelURI = getTestModelURI("model/InternationalizedClasses.uml");
+			URI testModelURI = getTestModelURI("models/uml/InternationalizedClasses.uml");
 			Resource umlResource = resourceSet.getResource(testModelURI, true);
 			org.eclipse.uml2.uml.Package umlPackage = (org.eclipse.uml2.uml.Package) umlResource.getContents().get(0);
-			URI testProfileURI = getTestModelURI("model/Internationalized.profile.uml");
+			URI testProfileURI = getTestModelURI("models/uml/Internationalized.profile.uml");
 			org.eclipse.uml2.uml.Profile umlProfile = (org.eclipse.uml2.uml.Profile) resourceSet.getResource(testProfileURI, true).getContents().get(0);
 			uml2as(umlResource);				// FIXME BUG 437826 must do full model conversion
 			mmm = new InternationalizedProfile(this, umlProfile);

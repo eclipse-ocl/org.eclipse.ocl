@@ -21,7 +21,7 @@ public class MoreSerializeTests extends SerializeTests
 	// Fails due to bad specialisation templates
 	public void testEcoreSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, "Ecore");
+		doSerialize(ocl, getTestModelURI("models/ecore/Ecore.ecore"));
 		ocl.dispose();
 	}
 
@@ -37,35 +37,35 @@ public class MoreSerializeTests extends SerializeTests
 	// Fails because no support for redefines
 	public void test_Fruit_uml_Serialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerializeUML(ocl, "Fruit", SUPPRESS_VALIDATION);
+		doSerializeUML(ocl, getTestModelURI("models/uml/Fruit.uml"), SUPPRESS_VALIDATION);
 		ocl.dispose();
 	}
 
 	// Fails ?? due to missing specialized features
 	public void testOCLSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, "OCL");
+		doSerialize(ocl, getTestModelURI("models/ecore/OCL.ecore"));
 		ocl.dispose();
 	}
 
 	// Fails due to conflicting ecore package
 	public void testOCLEcoreSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, "OCLEcore");
+		doSerialize(ocl, getTestModelURI("models/ecore/OCLEcore.ecore"));
 		ocl.dispose();
 	}
 
 	// Fails because no support for -2 multiplicity
 	public void testXMLTypeSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, "XMLType");
+		doSerialize(ocl, getTestModelURI("models/ecore/XMLType.ecore"));
 		ocl.dispose();
 	}
 
 	// Fails due to FIXME in BaseDeclarationVisitor.visitProperty; no CS syntax for implicit opposite
 	public void testOCLTestSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, "OCLTest");
+		doSerialize(ocl, getTestModelURI("models/ecore/OCLTest.ecore"));
 		ocl.dispose();
 	}
 }

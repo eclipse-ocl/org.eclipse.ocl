@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -28,6 +30,15 @@ public abstract class StandaloneCommand
 {
 	private static final Logger logger = Logger.getLogger(StandaloneCommand.class);
 	protected static @NonNull Appendable DEFAULT_OUTPUT_STREAM = System.out;
+
+	public static @NonNull URIConverter getURIConverter() {
+		URIConverter uriConverter = URIConverter.INSTANCE;
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING && uriConverter.getURIMap().isEmpty()) {
+			EcorePlugin.ExtensionProcessor.process(null);
+			uriConverter.getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
+		}
+		return uriConverter;
+	}
 
 	/**
 	 * Redirect the default stdout clutter for test purposes.

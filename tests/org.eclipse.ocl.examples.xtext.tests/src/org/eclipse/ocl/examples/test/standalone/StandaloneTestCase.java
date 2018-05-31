@@ -10,45 +10,33 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.standalone;
 
-import java.net.URL;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.export.IValidityExporter;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class StandaloneTestCase extends PivotTestCaseWithAutoTearDown
 {
-	protected final @NonNull String inputModelName = getProjectFileName("models/EcoreTestFile.ecore"); //$NON-NLS-1$
-	protected final @NonNull String inputOCLFileName = getProjectFileName("models/eclipse_ocl_rule.ocl"); //$NON-NLS-1$
-	protected final @NonNull String inputOCLFileName2 = getProjectFileName("models/eclipse_ocl_rule_2.ocl"); //$NON-NLS-1$
-	protected final @NonNull String textInputOCLFileName = getProjectFileName("models/ocl_rules.txt");//$NON-NLS-1$
-
-	protected @NonNull String getProjectFileName(String referenceName) {
-		@SuppressWarnings("null")@NonNull String projectName = getClass().getPackage().getName().replace('.', '/');
-		URL projectURL = getTestResource(projectName);
-		assertNotNull(projectURL);
-		URI uri = URI.createURI(projectURL.toString());
-		String projectPath = uri.isFile() ? uri.toFileString() : uri.toString();
-		assert projectPath != null;
-		projectPath = projectPath.replace("\\", "/");
-		if (!projectPath.endsWith("/")) {
-			projectPath = projectPath + "/";
-		}
-		return projectPath + referenceName;
-	}
+	protected final @NonNull URI inputModelURI = getTestModelURI("models/standalone/EcoreTestFile.ecore"); //$NON-NLS-1$
+	protected final @NonNull URI inputOCLURI = getTestModelURI("models/standalone/eclipse_ocl_rule.ocl"); //$NON-NLS-1$
+	protected final @NonNull URI inputOCLURI2 = getTestModelURI("models/standalone/eclipse_ocl_rule_2.ocl"); //$NON-NLS-1$
+	protected final @NonNull URI textInputOCLURI = getTestModelURI("models/standalone/ocl_rules.txt");//$NON-NLS-1$
 
 	protected @NonNull String getHTMLLogFileName() {
-		return getProjectFileName("models/log_" + getTestName() + ".html");
+		String logFileName = "log_" + getTestName() + ".html";
+		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	protected @NonNull String getTextLogFileName() {
-		return getProjectFileName("models/log_" + getTestName() + ".txt");
+		String logFileName = "log_" + getTestName() + ".txt";
+		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	protected @NonNull String getLogFileName(@NonNull IValidityExporter exporter) {
-		return getProjectFileName("models/log_" + getTestName() + "." + exporter.getPreferredExtension());
+		String logFileName = "log_" + getTestName() + "." + exporter.getPreferredExtension();
+		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	@Override

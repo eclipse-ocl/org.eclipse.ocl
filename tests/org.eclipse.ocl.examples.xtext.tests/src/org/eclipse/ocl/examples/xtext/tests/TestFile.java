@@ -26,9 +26,14 @@ public interface TestFile
 	@NonNull File getFile();
 
 	/**
-	 * Return the nonnull absolute file string that may be used by non-Eclipse tools such as the Java compiler.
+	 * Return the non-null absolute file string that may be used by non-Eclipse tools such as the Java compiler.
 	 */
 	@NonNull String getFileString();
+
+	/**
+	 * Return a file:: schem URI that accesses the underlying file.
+	 */
+	@NonNull URI getFileURI();
 
 	/**
 	 * Return the logical name of the file or project. Note that the physical name of

@@ -120,7 +120,7 @@ public abstract class PivotFruitTestSuite extends PivotTestSuite
 	}
 
 	protected void initFruitPackage(@NonNull OCL ocl) {
-		URI uri = getTestModelURI("model/Fruit.ecore");
+		URI uri = getTestModelURI("models/ecore/Fruit.ecore");
 		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
 		fruitEPackage = (EPackage)ecoreResource.getContents().get(0);
 		fruitEFactory = fruitEPackage.getEFactoryInstance();

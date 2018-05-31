@@ -603,7 +603,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ResourceSet resourceSet = ocl.getResourceSet();
 		UML2AS.initialize(resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
-		URI uri = getTestModelURI("model/Fruit.uml");
+		URI uri = getTestModelURI("models/uml/Fruit.uml");
 		Element element = metamodelManager.loadResource(uri, null, resourceSet);
 		org.eclipse.ocl.pivot.Package fruitPackage = ((Model)element).getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class treeClass = NameUtil.getNameable(fruitPackage.getOwnedClasses(), "Tree");

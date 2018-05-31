@@ -16,13 +16,23 @@
 package org.eclipse.ocl.examples.pivot.tests;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
@@ -30,8 +40,15 @@ import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestProjectManager;
+import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 /**
  * Default test framework.
@@ -83,6 +100,44 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		}
 	}
 
+	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent) throws IOException {
+		return createEcoreFile(ocl, fileName, fileContent, false);
+	}
+
+	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
+		String inputName = fileName + ".oclinecore";
+		TestFile oclInEcoreFile = createOCLinEcoreFile(inputName, fileContent);
+		URI inputURI = oclInEcoreFile.getFileURI();
+		URI ecoreURI = getTestFileURI(fileName + ".ecore");
+		ResourceSet resourceSet2 = ocl.getResourceSet();
+		BaseCSResource xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
+		assertNoResourceErrors("Load failed", xtextResource);
+		CS2AS cs2as = xtextResource.getCS2AS();
+		ASResource asResource = cs2as.getASResource();
+		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
+		assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(asResource.getContents().get(0)));
+		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
+		assertNoResourceErrors("To Ecore errors", ecoreResource);
+		if (assignIds) {
+			for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				ecoreResource.setID(eObject,  EcoreUtil.generateUUID());
+			}
+		}
+		ecoreResource.save(XMIUtil.createSaveOptions());
+		return ecoreURI;
+	}
+
+	public @NonNull TestFile createOCLinEcoreFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
+		TestProject testProject = getTestProject();
+		TestFile outFile = testProject.getOutputFile(filePath);
+		File file = outFile.getFile();
+		Writer writer = new FileWriter(file);
+		writer.append(fileContent);
+		writer.close();
+		return outFile;
+	}
+
 	/**
 	 * Return the name of the test bundle. The default implementation assumes that the package name is
 	 * the same as the bundle name. Override when this assumption is unjustified.
@@ -102,10 +157,45 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	/**
 	 * Return the URI of the file within the testProject.
 	 */
+	protected @NonNull TestFile getTestFile(@NonNull String filePath) {
+		TestProject testProject = getTestProject();
+		return testProject.getOutputFile(filePath);
+	}
+
+	/**
+	 * Return the URI of the file within the testProject created with content from inputStream.
+	 */
+	protected @NonNull TestFile getTestFile(@NonNull String filePath, @NonNull OCL ocl, @NonNull URI sourceURI) throws IOException {
+		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
+		InputStream inputStream = ClassUtil.nonNullState(uriConverter.createInputStream(sourceURI));
+		return getTestProject().getOutputFile(filePath, inputStream);
+	}
+
+	/**
+	 * Return the URI of the file within the testProject.
+	 */
 	protected @NonNull URI getTestFileURI(@NonNull String filePath) {
 		TestProject testProject = getTestProject();
 		TestFile outFile = testProject.getOutputFile(filePath);
 		return URI.createFileURI(outFile.getFile().toString());
+	}
+
+	/**
+	 * Return the URI of the file within the testProject created with content from inputStream.
+	 */
+	protected @NonNull URI getTestFileURI(@NonNull String filePath, @NonNull InputStream inputStream) throws IOException {
+		TestProject testProject = getTestProject();
+		TestFile outFile = testProject.getOutputFile(filePath, inputStream);
+		return URI.createFileURI(outFile.getFile().toString());
+	}
+
+	/**
+	 * Return the URI of the file within the testProject created with content from sourceURI using the URIConvert provided by ocl.
+	 */
+	protected @NonNull URI getTestFileURI(@NonNull String outputPath, @NonNull OCL ocl, @NonNull URI sourceURI) throws IOException {
+		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
+		InputStream inputStream = ClassUtil.nonNullState(uriConverter.createInputStream(sourceURI));
+		return getTestFileURI(outputPath, inputStream);
 	}
 
 	protected @NonNull TestFileSystem getTestFileSystem() {

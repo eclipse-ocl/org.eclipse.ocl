@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -88,9 +89,7 @@ public class ValidateTests extends AbstractValidateTests
 		return assertDiagnostics(prefix, diagnostics, messages);
 	}
 
-	public Resource doLoadEcore(OCL ocl, String stem) throws IOException {
-		String ecoreName = stem + ".ecore";
-		URI ecoreURI = getProjectFileURI(ecoreName);
+	public Resource doLoadEcore(@NonNull OCL ocl, @NonNull URI ecoreURI) throws IOException {
 		Resource ecoreResource = ocl.getResourceSet().getResource(ecoreURI, true);
 		return ecoreResource;
 	}
@@ -111,7 +110,7 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		OCL ocl1 = createOCL();
 		OCL ocl2 = createOCL();
-		Resource ecoreResource = doLoadOCLinEcore(ocl1, "Bug366229");
+		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Bug366229.oclinecore"));
 		ocl2.getResourceSet().getResources().add(ecoreResource);
 		ocl1.dispose();
 		EPackage overloadsPackage = (EPackage) ecoreResource.getContents().get(0);
@@ -129,7 +128,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl = createOCL();
-		Resource ecoreResource = doLoadEcore(ocl, "Bug418551");
+		Resource ecoreResource = doLoadEcore(ocl, getTestModelURI("models/ecore/Bug418551.ecore"));
 		EPackage temp = (EPackage) ecoreResource.getContents().get(0);
 		EClass tester = (EClass) temp.getEClassifier("Tester");
 		EOperation badOp = NameUtil.getENamedElement(tester.getEOperations(), "badOp");
@@ -239,13 +238,15 @@ public class ValidateTests extends AbstractValidateTests
 		//	2 - the stable complemented type system under test
 		//
 		OCL ocl0 = createOCL();
+		URI inputURI = getTestFile("Validate.oclinecore", ocl0, getTestModelURI("models/oclinecore/Validate.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Validate.ecore").getFileURI();
+		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		OCL ocl1 = createOCL();
 		OCL ocl2 = createOCL();
-		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, "Validate");
-		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, "Validate");
+		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
+		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI);
 		EPackage validatePackage1 = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
 		EPackage validatePackage2 = ClassUtil.nonNullState((EPackage) ecoreResource2.getContents().get(0));
-		URI oclURI = getProjectFileURI("Validate.ocl");
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI, ocl0.getEnvironmentFactory());
 		EValidator.Registry.INSTANCE.put(validatePackage1, completeOCLEObjectValidator);
 		try {
@@ -324,16 +325,16 @@ public class ValidateTests extends AbstractValidateTests
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		//
-		URI ecoreURI = getTestModelURI("model/OCLinEcoreTutorial.ecore");
-		URI xmiURI = getTestModelURI("model/OCLinEcoreTutorial.xmi");
-		URI oclURI = getProjectFileURI("ExtraOCLinEcoreTutorial.ocl");
+		URI ecoreURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.ecore");
+		URI xmiURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi");
+		//		URI oclURI = getTestModelURI("ExtraOCLinEcoreTutorial.ocl");
 		String testDocument =
 				"import '" + ecoreURI.toString() + "'\n" +
 						"package tutorial\n" +
 						"context Book\n" +
 						"inv ExactlyOneCopy: copies=1\n" +
 						"endpackage\n";
-		createOCLinEcoreFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
+		TestFile testFile = createOCLinEcoreFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
 		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
@@ -349,7 +350,7 @@ public class ValidateTests extends AbstractValidateTests
 			}
 		};
 		assertTrue(helper.loadMetamodels());
-		assertTrue(helper.loadDocument(oclURI));
+		assertTrue(helper.loadDocument(testFile.getFileURI()));
 		helper.installPackages();
 
 		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(//validationContext,
@@ -380,8 +381,7 @@ public class ValidateTests extends AbstractValidateTests
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		//		MetamodelManagerResourceSetAdapter adapter = MetamodelManagerResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
 		//
-		URI umlURI = getProjectFileURI("Names.uml");
-		URI oclURI = getProjectFileURI("Bug422583.ocl");
+		URI umlURI = getTestModelURI("models/uml/Names.uml");
 		String testDocument =
 				//				"import uml : '" + UMLResource.UML_METAMODEL_URI + "#/'\n" +
 				//				"import uml : '" + XMI2UMLResource.UML_METAMODEL_NS_URI + "'\n" +
@@ -402,7 +402,7 @@ public class ValidateTests extends AbstractValidateTests
 				"  inv IsClassWrtRoot: self.rootFalse()\n" +
 				"  inv IsClassWrtLeaf: self.leafFalse()\n" +
 				"endpackage\n";
-		createOCLinEcoreFile("Bug422583.ocl", testDocument);
+		TestFile testFile = createOCLinEcoreFile("Bug422583.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(umlURI, true));
 		org.eclipse.uml2.uml.Class uNamed = null;
@@ -426,7 +426,7 @@ public class ValidateTests extends AbstractValidateTests
 			}
 		};
 		assertTrue(helper.loadMetamodels());
-		assertTrue(helper.loadDocument(oclURI));
+		assertTrue(helper.loadDocument(testFile.getFileURI()));
 		helper.installPackages();
 		String objectLabel1 = LabelUtil.getLabel(uNamed);
 		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
@@ -448,7 +448,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl1 = createOCL();
-		Resource ecoreResource = doLoadOCLinEcore(ocl1, "Validate");
+		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore"));
 		ocl1.getEnvironmentFactory().adapt(ecoreResource.getResourceSet());
 		EPackage validatePackage = (EPackage) ecoreResource.getContents().get(0);
 		EObject testInstance = eCreate(validatePackage, "Level3");

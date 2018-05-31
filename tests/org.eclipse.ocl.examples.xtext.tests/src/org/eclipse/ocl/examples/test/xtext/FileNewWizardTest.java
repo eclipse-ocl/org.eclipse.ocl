@@ -10,29 +10,35 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.ocl.examples.test.xtext.models.ParserModels;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
+import org.eclipse.ocl.examples.standalone.StandaloneCommand;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
+import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
@@ -56,7 +62,9 @@ import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import junit.framework.TestCase;
 
@@ -65,22 +73,22 @@ import junit.framework.TestCase;
  */
 public class FileNewWizardTest extends TestCase
 {
-	private static final String PAGE_NAME = BaseUIMessages.NewWizardPage_pageName;
+	private static final /*@NonNull*/ String PAGE_NAME = BaseUIMessages.NewWizardPage_pageName;
 
-	private static final String TEST_ECORE_NAME = "Test.ecore";
-	private static final String TEST_PROJECT_NAME = "test-project";
-	private static final String TEST_ECORE_PATH = "/" + TEST_PROJECT_NAME + "/" + TEST_ECORE_NAME;
+	private static final @NonNull String TEST_ECORE_NAME = "Test.ecore";
+	private static final @NonNull String EXPECTED_OCL_NAME = "Test.ocl";
+	private static final @NonNull String EXPECTED_OCLINECORE_NAME = "Test.oclinecore";
+	private static final @NonNull String EXPECTED_OCLSTDLIB_NAME = "Test.oclstdlib";
+	private static final @NonNull String EXPECTED_PACKAGE_NAME = "test_package";
+	private static final @NonNull String EXPECTED_CLASS_NAME = "TestClass";
+	private static final @NonNull String EXPECTED_FEATURE_NAME = "testFeature";
 
-	private static final String EXPECTED_OCL_NAME = "Test.ocl";
-	private static final String EXPECTED_OCLINECORE_NAME = "Test.oclinecore";
-	private static final String EXPECTED_OCLSTDLIB_NAME = "Test.oclstdlib";
-	private static final String EXPECTED_PACKAGE_NAME = "test_package";
-	private static final String EXPECTED_CLASS_NAME = "TestClass";
-	private static final String EXPECTED_FEATURE_NAME = "testFeature";
-
-	private IProject project = null;
-
-	private IFile modelFile = null;
+	@Rule public @NonNull TestName testName = new TestName();
+	public @Nullable TestFileSystem testFileSystem = null;
+	public @Nullable TestProject testProject = null;
+	public @Nullable TestFile testFile = null;
+	private IProject testIProject = null;
+	private IFile testIFile = null;
 
 	public static String getExpectedContents() {
 		StringBuilder s = new StringBuilder();
@@ -142,8 +150,48 @@ public class FileNewWizardTest extends TestCase
 		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
+	protected @NonNull TestFileSystem getTestFileSystem() {
+		TestFileSystem testFileSystem2 = testFileSystem;
+		if (testFileSystem2 == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				File testBundleFile = new File(".project");
+				assert !testBundleFile.exists() : "Default working directory should be the workspace rather than a project: " + testBundleFile.getAbsolutePath();
+			}
+			testFileSystem = testFileSystem2 = TestFileSystem.create(getTestFileSystemHelper());
+		}
+		return testFileSystem2;
+	}
+
+	protected @NonNull TestFileSystemHelper getTestFileSystemHelper() {
+		return new TestFileSystemHelper();
+	}
+
+	protected @NonNull TestFile getTestFile(@NonNull String filePath, @NonNull InputStream inputStream) throws IOException {
+		TestProject testProject = getTestProject();
+		return testProject.getOutputFile(filePath, inputStream);
+		//		return URI.createFileURI(outFile.getFile().toString());
+	}
+
+	public @NonNull String getTestName() {
+		String name = super.getName();
+		if (name != null) {
+			return name;
+		}
+		String methodName = testName.getMethodName();
+		return methodName != null ? methodName : "<unnamed>";
+	}
+
+	protected @NonNull TestProject getTestProject() {
+		TestProject testProject2 = testProject;
+		if (testProject2 == null) {
+			String testProjectName = "_OCL_" + getClass().getSimpleName() + "__" + getTestName();
+			testProject = testProject2 = getTestFileSystem().getTestProject(testProjectName, true);
+		}
+		return testProject2;
+	}
+
 	protected @NonNull String readNewFile(String fileName) throws CoreException, IOException {
-		IFile oclFile = project.getFile(fileName);
+		IFile oclFile = getTestProject().getIProject().getFile(fileName);
 		assertTrue(oclFile.exists());
 		InputStream inputStream = oclFile.getContents();
 		Reader reader = new InputStreamReader(inputStream);
@@ -162,27 +210,25 @@ public class FileNewWizardTest extends TestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-
+		TestProject testProject = getTestProject();
+		//
 		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(ResourcesPlugin.PI_RESOURCES);
 		prefs.putBoolean(ResourcesPlugin.PREF_LIGHTWEIGHT_AUTO_REFRESH, true);
-
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		final IWorkspaceRoot root = workspace.getRoot();
-		IProjectDescription description = workspace.newProjectDescription(TEST_PROJECT_NAME);
-		project = root.getProject(description.getName());
-		BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
+		//
+		testIProject = testProject.getIProject();
+		assertTrue(testIProject.exists());
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
-		if (project.exists()) {
-			project.delete(true, true, nullMonitor);
-		}
-		project.create(description, nullMonitor);
-		assertTrue(project.exists());
-		project.open(nullMonitor);
-		URL url = ParserModels.class.getResource(TEST_ECORE_NAME);
-		assertNotNull(url);
-		project.getFile(TEST_ECORE_NAME).create(url.openStream(), true,nullMonitor);
-		modelFile = project.getFile(TEST_ECORE_NAME);
-		assertTrue(modelFile.exists());
+		IProjectDescription description = ClassUtil.nonNullState(testIProject.getDescription());
+		BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
+		testIProject.setDescription(description, IResource.FORCE | IResource.KEEP_HISTORY, nullMonitor);
+		//
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/wizard/" + TEST_ECORE_NAME, true);
+		InputStream inputStream = StandaloneCommand.getURIConverter().createInputStream(inputURI);
+		assert inputStream != null;
+		testFile = getTestFile(TEST_ECORE_NAME, inputStream);
+		//
+		testIFile = testIProject.getFile(TEST_ECORE_NAME);
+		assertTrue(testIFile.exists());
 	}
 
 	/**
@@ -191,22 +237,22 @@ public class FileNewWizardTest extends TestCase
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		if (project.exists()) {
-			project.delete(true, true, new NullProgressMonitor());
-		}
+		//		if (project.exists()) {
+		//			project.delete(true, true, new NullProgressMonitor());
+		//		}
 	}
 
 	@Test
 	public void test_CompleteOCLFile_Dialog() {
 		CompleteOCLFileNewWizard wizard = new CompleteOCLFileNewWizard();
-		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(modelFile);
-		CompleteOCLFileDialog dialog = new CompleteOCLFileDialog(wizard, wizardPage, modelFile);
+		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(testIFile);
+		CompleteOCLFileDialog dialog = new CompleteOCLFileDialog(wizard, wizardPage, testIFile);
 		dialog.createDialogArea(new Shell());
 		assertEquals("ocl", wizard.getNewFileExtension());
 		assertEquals(CompleteOCLUIMessages.NewWizardPage_fileNameLabel, wizard.getNewFileLabel());
-		assertEquals("/" + TEST_PROJECT_NAME + "/" + EXPECTED_OCL_NAME, dialog.getNewFilePath().toString());
+		assertEquals("/" + getTestProject().getName() + "/" + EXPECTED_OCL_NAME, dialog.getNewFilePath().toString());
 		List<URI> uris = new ArrayList<URI>();
-		uris.add(URI.createPlatformResourceURI(TEST_ECORE_PATH, true));
+		uris.add(URI.createPlatformResourceURI(getTestProject().getName() + "/" + TEST_ECORE_NAME, true));
 		assertEquals(uris, dialog.getURIs());
 		wizard.dispose();
 	}
@@ -214,7 +260,7 @@ public class FileNewWizardTest extends TestCase
 	@Test
 	public void test_CompleteOCLFile_NewWizardPage() {
 		CompleteOCLFileNewWizard wizard = new CompleteOCLFileNewWizard();
-		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(modelFile);
+		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(testIFile);
 		assertEquals(PAGE_NAME, wizardPage.getName());
 		assertEquals(CompleteOCLUIMessages.NewWizardPage_pageSummary, wizardPage.getTitle());
 		assertEquals(CompleteOCLUIMessages.NewWizardPage_pageDescription, wizardPage.getDescription());
@@ -225,18 +271,18 @@ public class FileNewWizardTest extends TestCase
 	/*	@Test
 	public void test_CompleteOCLFile_NewWizardPage_FileContent() {
 		CompleteOCLFileNewWizard wizard = new CompleteOCLFileNewWizard();
-		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(modelFile);
-		AbstractFileDialog dialog = wizardPage.initDialog(modelFile);
-//		dialog.fillContentsFromWorkspacePath(modelFile.getFullPath().toString());
+		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(testIFile);
+		AbstractFileDialog dialog = wizardPage.initDialog(testIFile);
+//		dialog.fillContentsFromWorkspacePath(testIFile.getFullPath().toString());
 		String expectedContents = getExpectedContents();
-		String actualContents = wizard.getInitialContentsAsString(modelFile, dialog);
+		String actualContents = wizard.getInitialContentsAsString(testIFile, dialog);
 		assertEquals(expectedContents, actualContents);
 	} */
 
 	@Test
 	public void test_CompleteOCL_NewFileCreation() throws Exception {
 		IWorkbenchWizard wizard = new CompleteOCLFileNewWizard();
-		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(modelFile));
+		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(testIFile));
 		createAndFinishWizardDialog(wizard);
 		String actualContents = readNewFile(EXPECTED_OCL_NAME);
 		StringBuilder s = new StringBuilder();
@@ -260,7 +306,7 @@ public class FileNewWizardTest extends TestCase
 	@Test
 	public void test_OCLinEcore_NewFileCreation() throws Exception {
 		IWorkbenchWizard wizard = new OCLinEcoreFileNewWizard();
-		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(modelFile));
+		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(testIFile));
 		createAndFinishWizardDialog(wizard);
 		String actualContents = readNewFile(EXPECTED_OCLINECORE_NAME);
 		StringBuilder s = new StringBuilder();
@@ -290,9 +336,9 @@ public class FileNewWizardTest extends TestCase
 
 	@Test
 	public void test_EcoreWithOCL_NewFileCreation() throws Exception {
-		IFile modelFile = project.getFile("Testing.xxx");
+		IFile testIFile = getTestProject().getIProject().getFile("Testing.xxx");
 		IWorkbenchWizard wizard = new EcoreWithOCLFileNewWizard();
-		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(modelFile));
+		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(testIFile));
 		createAndFinishWizardDialog(wizard);
 		TestUIUtil.wait(1000);		// Wait for "Please wait" to go away
 		XtextEditor activeEditor = getActiveEditor();
@@ -323,7 +369,7 @@ public class FileNewWizardTest extends TestCase
 	@Test
 	public void test_OCLstdlib_NewFileCreation() throws Exception {
 		IWorkbenchWizard wizard = new OCLstdlibFileNewWizard();
-		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(modelFile));
+		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(testIFile));
 		createAndFinishWizardDialog(wizard);
 		String actualContents = readNewFile(EXPECTED_OCLSTDLIB_NAME);
 		StringBuilder s = new StringBuilder();

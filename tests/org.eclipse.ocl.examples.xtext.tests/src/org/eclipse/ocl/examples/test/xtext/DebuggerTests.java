@@ -172,9 +172,9 @@ public class DebuggerTests extends XtextTestCase
 		TestProject testProject = getTestProject();
 		OCLInternal ocl = OCLInternal.newInstance(new ProjectMap(false), null);
 		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
-		TestFile xmiFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.xmi"));
-		@SuppressWarnings("unused")TestFile ecoreFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.ecore"));
-		TestFile oclFile = copyFile(testProject, uriConverter, getModelsURI("RoyalAndLoyal.ocl"));
+		TestFile xmiFile = copyFile(testProject, uriConverter, getTestModelURI("models/ecore/RoyalAndLoyal.xmi"));
+		@SuppressWarnings("unused")TestFile ecoreFile = copyFile(testProject, uriConverter, getTestModelURI("models/ecore/RoyalAndLoyal.ecore"));
+		TestFile oclFile = copyFile(testProject, uriConverter, getTestModelURI("models/ecore/RoyalAndLoyal.ocl"));
 		//
 		Resource xmiResource = ocl.getResourceSet().getResource(xmiFile.getURI(), true);
 		EObject xmiRoot = ClassUtil.nonNullState(xmiResource.getContents().get(0));

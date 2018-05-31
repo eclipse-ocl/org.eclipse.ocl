@@ -109,6 +109,7 @@ extends TestCase {
 			result.addTestSuite(LoadTests.class);
 		}
 		result.addTestSuite(PrettyPrinterTest.class);
+		result.addTestSuite(TestPrettyPrinter.class);
 		result.addTestSuite(ProjectMapTest.class);
 		result.addTestSuite(RegistryTests.class);
 		result.addTestSuite(SerializeTests.class);

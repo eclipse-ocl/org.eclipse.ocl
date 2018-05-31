@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -70,7 +71,7 @@ public class OCLstdlibTests extends XtextTestCase
 		}
 	}
 
-//	protected MetamodelManager metamodelManager = null;
+	//	protected MetamodelManager metamodelManager = null;
 
 	public Map<String, Element> computeMoniker2ASMap(Collection<? extends Resource> pivotResources) {
 		Map<String, Element> map = new HashMap<String, Element>();
@@ -100,7 +101,7 @@ public class OCLstdlibTests extends XtextTestCase
 		assertNoResourceErrors("Load failed", asResource);
 		assertNoUnresolvedProxies("File Model", asResource);
 		assertNoValidationErrors("File Model", asResource);
-//		PivotAliasCreator.refreshPackageAliases(javaResource);
+		//		PivotAliasCreator.refreshPackageAliases(javaResource);
 		assertNoResourceErrors("Java Model", javaResource);
 		assertNoUnresolvedProxies("Java Model", javaResource);
 		assertNoValidationErrors("Java Model", javaResource);
@@ -111,14 +112,14 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Check similar content
 		//
 		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(asResource));
-//		for (String moniker : fileMoniker2asMap.keySet()) {
-//			System.out.println("File : " + moniker);
-//		}
+		//		for (String moniker : fileMoniker2asMap.keySet()) {
+		//			System.out.println("File : " + moniker);
+		//		}
 		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaResource));
-//		for (String moniker : javaMoniker2asMap.keySet()) {
-//			System.out.println("Java : " + moniker);
-//		}
-//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
+		//		for (String moniker : javaMoniker2asMap.keySet()) {
+		//			System.out.println("Java : " + moniker);
+		//		}
+		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
 		for (String moniker : fileMoniker2asMap.keySet()) {
 			Element fileElement = fileMoniker2asMap.get(moniker);
 			Element javaElement = javaMoniker2asMap.get(moniker);
@@ -135,7 +136,7 @@ public class OCLstdlibTests extends XtextTestCase
 				}
 			}
 			assertNotNull("Missing java element for '" + moniker + "'", javaElement);
-//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
+			//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
 			Class<? extends Element> javaElementClass = javaElement.getClass();
 			assertEquals(fileElement.getClass(), javaElementClass);
 			if (fileElement instanceof TypedElement) {
@@ -184,69 +185,70 @@ public class OCLstdlibTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		metamodelManager = OCL.createEnvironmentFactory(getProjectMap()).getMetamodelManager();
+		//		metamodelManager = OCL.createEnvironmentFactory(getProjectMap()).getMetamodelManager();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-//		EnvironmentFactoryResourceSetAdapter adapter = EnvironmentFactoryResourceSetAdapter.findAdapter(resourceSet);
-//		if (adapter != null) {
-//			MetamodelManager metamodelManager = adapter.getMetamodelManager();
-//			if (metamodelManager != null) {
-//				metamodelManager.dispose();
-//			}
-//		}
-//		metamodelManager.dispose();
-//		metamodelManager = null;
+		//		EnvironmentFactoryResourceSetAdapter adapter = EnvironmentFactoryResourceSetAdapter.findAdapter(resourceSet);
+		//		if (adapter != null) {
+		//			MetamodelManager metamodelManager = adapter.getMetamodelManager();
+		//			if (metamodelManager != null) {
+		//				metamodelManager.dispose();
+		//			}
+		//		}
+		//		metamodelManager.dispose();
+		//		metamodelManager = null;
 		super.tearDown();
 	}
-	
+
 	public void testLoadAsString() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String testFile =
-			"library lib : lib = 'http://mylib'{\n"+
-			"    type OclAny : AnyType {\n"+
-			"    	operation a(elem : Boolean) : Integer {\n"+
-			"           post a: elem;\n"+
-			"       }\n"+
-			"    }\n"+
-			"    type Bag(T) : BagType conformsTo Collection(T) {}\n"+
-			"    type Class conformsTo OclAny {}\n"+	
-			"    type Boolean : PrimitiveType conformsTo OclAny {}\n"+
-			"    type Collection(T) : CollectionType conformsTo OclAny {}\n"+
-			"    type Enumeration conformsTo OclAny {}\n"+
-			"    type Integer : PrimitiveType conformsTo Real {}\n"+
-			"    type OclComparable conformsTo OclAny {\n"+
-			"        operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';\n"+
-			"    }\n"+
-			"    type OclElement conformsTo OclAny {}\n"+
-			"    type OclInvalid : InvalidType {}\n"+
-			"    type OclSelf : SelfType conformsTo OclAny {}\n"+
-			"    type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
-			"    type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"+
-			"    type Real : PrimitiveType conformsTo OclComparable {}\n"+
-			"    type Sequence(T) : SequenceType conformsTo Collection(T) {}\n"+
-			"    type Set(T) : SetType conformsTo Collection(T) {}\n"+
-			"    type String : PrimitiveType conformsTo OclAny {}\n"+
-			"    type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
-			"    type UnlimitedNatural : PrimitiveType conformsTo Integer {}\n"+
-			"}\n";		
+				"library lib : lib = 'http://mylib'{\n"+
+						"    type OclAny : AnyType {\n"+
+						"    	operation a(elem : Boolean) : Integer {\n"+
+						"           post a: elem;\n"+
+						"       }\n"+
+						"    }\n"+
+						"    type Bag(T) : BagType conformsTo Collection(T) {}\n"+
+						"    type Class conformsTo OclAny {}\n"+
+						"    type Boolean : PrimitiveType conformsTo OclAny {}\n"+
+						"    type Collection(T) : CollectionType conformsTo OclAny {}\n"+
+						"    type Enumeration conformsTo OclAny {}\n"+
+						"    type Integer : PrimitiveType conformsTo Real {}\n"+
+						"    type OclComparable conformsTo OclAny {\n"+
+						"        operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';\n"+
+						"    }\n"+
+						"    type OclElement conformsTo OclAny {}\n"+
+						"    type OclInvalid : InvalidType {}\n"+
+						"    type OclSelf : SelfType conformsTo OclAny {}\n"+
+						"    type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
+						"    type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"+
+						"    type Real : PrimitiveType conformsTo OclComparable {}\n"+
+						"    type Sequence(T) : SequenceType conformsTo Collection(T) {}\n"+
+						"    type Set(T) : SetType conformsTo Collection(T) {}\n"+
+						"    type String : PrimitiveType conformsTo OclAny {}\n"+
+						"    type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
+						"    type UnlimitedNatural : PrimitiveType conformsTo Integer {}\n"+
+						"}\n";
 		doLoadFromString(ocl, "string.oclstdlib", testFile);
 		ocl.dispose();
 	}
-	
+
 	public void testImport() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
+		getTestFileURI("minimal.oclstdlib", ocl, getTestModelURI("models/oclstdlib/minimal.oclstdlib"));
 		String testFile =
-			"import 'minimal.oclstdlib';\n"+
-			"import 'minimal.oclstdlib';\n"+
-			"library lib : lib = 'http://minimal.oclstdlib'{\n"+
-			"    type OclAny : AnyType {\n"+
-			"    	operation a(elem : Boolean) : Boolean {\n"+
-			"           post a: result = elem;\n"+
-			"       }\n"+
-			"    }\n"+
-			"}\n";		
+				"import 'minimal.oclstdlib';\n"+
+						"import 'minimal.oclstdlib';\n"+
+						"library lib : lib = 'http://minimal.oclstdlib'{\n"+
+						"    type OclAny : AnyType {\n"+
+						"    	operation a(elem : Boolean) : Boolean {\n"+
+						"           post a: result = elem;\n"+
+						"       }\n"+
+						"    }\n"+
+						"}\n";
 		Resource asResource = doLoadASResourceFromString(ocl, "string.oclstdlib", testFile);
 		PivotMetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResource.getResourceSet());
 		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
@@ -254,11 +256,11 @@ public class OCLstdlibTests extends XtextTestCase
 		assertEquals(2, Iterables.size(ownedOperations));		// one from OclAny::=
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Checks that the local oclstdlib.oclstdlib is the same as the pre-compiled
 	 * Java implementation.
-	 * 
+	 *
 	 * FIXME check the library/model version instead.
 	 */
 	public void testOCLstdlib() throws Exception {
@@ -272,7 +274,8 @@ public class OCLstdlibTests extends XtextTestCase
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
 		ocl.getEnvironmentFactory().adapt(xtextResource);
-		xtextResource.load(null);
+		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(libraryURI);
+		xtextResource.load(inputStream, null);
 		CS2AS cs2as = xtextResource.findCS2AS();
 		assertNoResourceErrors("Load failed", xtextResource);
 		Resource fileResource = cs2as.getASResource();
@@ -283,7 +286,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Load 'oclstdlib.oclstdlib' as pre-code-generated Java.
 		//
 		Resource javaResource = OCLstdlib.getDefault();
-//		PivotAliasCreator.refreshPackageAliases(javaResource);
+		//		PivotAliasCreator.refreshPackageAliases(javaResource);
 		assertNoResourceErrors("Java Model", javaResource);
 		assertNoUnresolvedProxies("Java Model", javaResource);
 		assertNoValidationErrors("Java Model", javaResource);
@@ -291,14 +294,14 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Check similar content
 		//
 		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(fileResource));
-//		for (String moniker : fileMoniker2asMap.keySet()) {
-//			System.out.println("File : " + moniker);
-//		}
+		//		for (String moniker : fileMoniker2asMap.keySet()) {
+		//			System.out.println("File : " + moniker);
+		//		}
 		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaResource));
-//		for (String moniker : javaMoniker2asMap.keySet()) {
-//			System.out.println("Java : " + moniker);
-//		}
-//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
+		//		for (String moniker : javaMoniker2asMap.keySet()) {
+		//			System.out.println("Java : " + moniker);
+		//		}
+		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
 		for (String moniker : fileMoniker2asMap.keySet()) {
 			Element fileElement = fileMoniker2asMap.get(moniker);
 			Element javaElement = javaMoniker2asMap.get(moniker);
@@ -315,7 +318,7 @@ public class OCLstdlibTests extends XtextTestCase
 				}
 			}
 			assertNotNull("Missing java element for '" + moniker + "'", javaElement);
-//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
+			//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
 			Class<? extends Element> javaElementClass = javaElement.getClass();
 			assertEquals(fileElement.getClass(), javaElementClass);
 			if (fileElement instanceof TypedElement) {
@@ -360,7 +363,7 @@ public class OCLstdlibTests extends XtextTestCase
 		}
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Checks that the OCL 2.5 AS model is the same as the pre-compiled
 	 * Java implementation.
@@ -370,10 +373,10 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCL stdlib as an AS file.
 		//
-//		ResourceSet resourceSet = ocl.getResourceSet();
-//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			
-//			getProjectMap().initializeResourceSet(resourceSet);
-//		}
+		//		ResourceSet resourceSet = ocl.getResourceSet();
+		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+		//			getProjectMap().initializeResourceSet(resourceSet);
+		//		}
 		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true);
 		//
 		//	Load 'oclstdlib.oclstdlib' as pre-code-generated Java.
@@ -382,7 +385,7 @@ public class OCLstdlibTests extends XtextTestCase
 		@SuppressWarnings("unused")Resource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), libraryURI, javaResource, true);
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Checks that the OCL 2.5 AS model is the same as the pre-compiled
 	 * Java implementation.
@@ -392,9 +395,9 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCL stdlib as an AS file.
 		//
-//		ResourceSet resourceSet = new ResourceSetImpl();
-//		getProjectMap().initializeResourceSet(resourceSet);
-//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
+		//		ResourceSet resourceSet = new ResourceSetImpl();
+		//		getProjectMap().initializeResourceSet(resourceSet);
+		//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
 		URI pivotURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.

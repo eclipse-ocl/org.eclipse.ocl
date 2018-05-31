@@ -101,15 +101,15 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_mandatoryArguments() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName};
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI)};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
 			Map<CommandToken, List<String>> token2strings = parseValidArguments(command, arguments);
 			assertCommandValid(command, token2strings);
 			assertEquals(null, command.exporterToken.getExporter(token2strings));
-			assertEquals(inputModelName, command.modelToken.getModelFileName(token2strings));
+			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
 			assertEquals(null, command.outputToken.getOutputFile(token2strings));
-			assertEquals(Lists.newArrayList(inputOCLFileName), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -120,8 +120,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", inputModelName,
-				"-rules", inputOCLFileName,
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
 				"-output"
 			};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -139,8 +139,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", inputModelName,
-				"-rules", inputOCLFileName,
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
 				"-exporter"
 			};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -158,8 +158,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", inputModelName,
-				"-rules", inputOCLFileName,
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
 				"-using"
 			};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -175,17 +175,17 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_textExportedFile() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
 			Map<CommandToken, List<String>> token2strings = parseValidArguments(command, arguments);
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof TextExporter);
-			assertEquals(inputModelName, command.modelToken.getModelFileName(token2strings));
+			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
 			assertEquals(getTextLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(inputOCLFileName), Lists.newArrayList(normalize(command.rulesToken.getOCLFileNames(token2strings).get(0))));
+			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), Lists.newArrayList(normalize(command.rulesToken.getOCLFileNames(token2strings).get(0))));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -194,17 +194,17 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_htmlExportedFile() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getHTMLLogFileName(),
 			"-exporter", HTMLExporter.EXPORTER_TYPE};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
 			Map<CommandToken, List<String>> token2strings = parseValidArguments(command, arguments);
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof HTMLExporter);
-			assertEquals(inputModelName, command.modelToken.getModelFileName(token2strings));
+			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
 			assertEquals(getHTMLLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(inputOCLFileName), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -213,8 +213,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_unknownExporter() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", "anotherExporterAttribute"};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -227,8 +227,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", String.valueOf(getProjectFileURI("models/nonExistent.ecore")),
-				"-rules", inputOCLFileName,
+				"-model", String.valueOf(getTestModelURI("models/nonExistent.ecore")),
+				"-rules", String.valueOf(inputOCLURI),
 				"-output", getTextLogFileName(),
 				"-exporter", TextExporter.EXPORTER_TYPE};
 				ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -246,8 +246,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", inputModelName,
-				"-rules", String.valueOf(getProjectFileURI("models/nonExistent.ocl")),
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(getTestModelURI("models/nonExistent.ocl")),
 				"-output", getTextLogFileName(),
 				"-exporter", TextExporter.EXPORTER_TYPE};
 				ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -266,8 +266,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-				"-model", inputModelName,
-				"-rules", inputOCLFileName,
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
 				"-output", "nonExistentFolder/log.file",
 				"-exporter", TextExporter.EXPORTER_TYPE};
 				ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
@@ -283,17 +283,17 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_textOCLFiles() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", textInputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(textInputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE};
 			ValidateCommand command = parseCommand(ValidateCommand.class, arguments);
 			Map<CommandToken, List<String>> token2strings = parseValidArguments(command, arguments);
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof TextExporter);
-			assertEquals(inputModelName, command.modelToken.getModelFileName(token2strings));
+			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
 			assertEquals(getTextLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(inputOCLFileName, inputOCLFileName2), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI), String.valueOf(inputOCLURI2)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -302,8 +302,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingAllLocators() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "all"};
@@ -318,8 +318,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingOCLLocator() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "ocl"};
@@ -334,8 +334,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingJavaLocator() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "java"};
@@ -350,8 +350,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingUMLLocator() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "uml"};
@@ -366,8 +366,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingOCLUMLLocators() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "ocl,uml"};
@@ -382,8 +382,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingOCLJavaLocators() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "ocl,java"};
@@ -398,8 +398,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingJavaUmlLocators() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "uml,java"};
@@ -414,8 +414,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 	@Test
 	public void test_usingOCLJavaUmlLocators() throws CoreException {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", inputModelName,
-			"-rules", inputOCLFileName,
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
 			"-output", getTextLogFileName(),
 			"-exporter", TextExporter.EXPORTER_TYPE,
 			"-using", "ocl,uml,java"};

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.pivot.tests;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	}
 
 	protected @NonNull OCL createOCL() {
-		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
+		OCL ocl = OCL.newInstance(getProjectMap());
 		//		ResourceSet resourceSet = ocl.getResourceSet();
 		//		ProjectMap.initializeURIResourceMap(resourceSet);
 		//		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
@@ -94,11 +95,12 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		return ocl;
 	}
 
-	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull String stem) throws IOException {
-		String inputName = stem + ".oclinecore";
-		String ecoreName = stem + ".ecore";
-		URI inputURI = getProjectFileURI(inputName);
-		URI ecoreURI = getProjectFileURI(ecoreName);
+	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
+		URI ecoreURI = getTestFileURI(inputURI.trimFileExtension().appendFileExtension("ecore").lastSegment());
+		return doLoadOCLinEcore(ocl, inputURI, ecoreURI);
+	}
+
+	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull URI ecoreURI) throws IOException {
 		CSResource xtextResource = ocl.getCSResource(inputURI);
 		assertNoResourceErrors("Load failed", xtextResource);
 		ASResource asResource = ocl.cs2as(xtextResource);
@@ -108,19 +110,18 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		return ecoreResource;
 	}
 
-	public Resource doLoadUML(OCL ocl, String stem) throws IOException {
-		String umlName = stem + ".uml";
-		URI umlURI = getProjectFileURI(umlName);
+	public Resource doLoadUML(@NonNull OCL ocl, @NonNull URI umlURI) throws IOException {
 		return ocl.getResourceSet().getResource(umlURI, true);
 	}
 
 	public @NonNull List<Diagnostic> doValidateOCLinEcore(OCL ocl, String stem, @NonNull String @NonNull [] validationDiagnostics) throws IOException {
 		String inputName = stem + ".oclinecore";
-		URI inputURI = getProjectFileURI(inputName);
+		URI inputURI = getTestFileURI(inputName);
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		assert xtextResource != null;
 		ocl.getEnvironmentFactory().adapt(xtextResource);
-		xtextResource.load(null);
+		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
+		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);
 		ASResource asResource = ocl.cs2as(xtextResource);
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);

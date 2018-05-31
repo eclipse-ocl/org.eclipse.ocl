@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
  * A derived class with a singleton INSTANCE, may provide the URI of
  * a model within its folder using getURI().
  */
+@Deprecated /* @deprecated src folder models no longer used */
 public class AbstractModels extends XtextTestCase
 {
 	public URI getURI(@NonNull String modelName) {

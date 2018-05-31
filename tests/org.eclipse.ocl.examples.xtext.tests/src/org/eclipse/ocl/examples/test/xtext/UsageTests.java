@@ -708,13 +708,16 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 			String testProjectName = "SysML_ValueTypes_QUDV";
 			//
-			URI sourceGenModelURI = URI.createPlatformResourceURI(getTestBundleName() + "/model/SysML_ValueTypes_QUDV.genmodel", true);
+			URI sourceGenModelURI = getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.genmodel");
 			URI targetGenModelURI = getTestURI("SysML_ValueTypes_QUDV.genmodel");
 			Resource genModelResource = ocl.getResourceSet().getResource(sourceGenModelURI, true);
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 			genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 			genModelResource.setURI(targetGenModelURI);
 			genModelResource.save(XMIUtil.createSaveOptions());
+
+			//			getTestFileURI("SysML_ValueTypes_QUDV.ecore", ocl, getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.ecore"));
+			//			URI targetGenModelURI = getTestFileURI("SysML_ValueTypes_QUDV.genmodel", ocl, getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.genmodel"));
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
@@ -756,7 +759,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 			String testProjectName = "org/eclipse/ocl/examples/xtext/tests/codegen/company";
 			//
-			URI sourceGenModelURI = URI.createPlatformResourceURI(getTestBundleName() + "/model/CodeGenCompany.genmodel", true);
+			URI sourceGenModelURI = getTestModelURI("models/genmodel/CodeGenCompany.genmodel");
 			URI targetGenModelURI = getTestURI("CodeGenCompany.genmodel");
 			Resource genModelResource = ocl.getResourceSet().getResource(sourceGenModelURI, true);
 			GenModel genModel = (GenModel) genModelResource.getContents().get(0);
@@ -839,19 +842,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			TestUIUtil.closeIntro();
 			TestUIUtil.flushEvents();
 			//
-			URI sourceProfileURI = getModelsURI("Bug469251.profile.uml");
-			URI sourceModelURI = getModelsURI("Bug469251.uml");
-			URI targetProfileURI = getTestURI("Bug469251.profile.uml");
-			URI targetModelURI = getTestURI("Bug469251.uml");
-			ResourceSet resourceSet2 = ocl.getResourceSet();
-			Resource profileResource = resourceSet2.getResource(sourceProfileURI, true);
-			Resource modelResource = resourceSet2.getResource(sourceModelURI, true);
-			profileResource.setURI(targetProfileURI);
-			modelResource.setURI(targetModelURI);
-			profileResource.save(XMIUtil.createSaveOptions());
-			modelResource.save(XMIUtil.createSaveOptions());
+			getTestFile("Bug469251.profile.uml", ocl, getTestModelURI("models/uml/Bug469251.profile.uml"));
+			getTestFile("Bug469251.uml", ocl, getTestModelURI("models/uml/Bug469251.uml"));
 			//
-			IProject iProject = TestUIUtil.createIProject(getTestProject().getName());
+			IProject iProject = getTestProject().getIProject();
 			IFile modelFile = iProject.getFile("Bug469251.uml");
 			IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
 			UMLEditor umlEditor = (UMLEditor) IDE.openEditor(activePage, modelFile, "org.eclipse.uml2.uml.editor.presentation.UMLEditorID", true);

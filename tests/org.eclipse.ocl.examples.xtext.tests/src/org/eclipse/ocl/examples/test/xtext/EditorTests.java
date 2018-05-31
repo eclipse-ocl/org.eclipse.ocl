@@ -268,7 +268,7 @@ public class EditorTests extends XtextTestCase
 	}
 
 	public void testEditor_OpenCompleteOCLEditor4Fruit_OCL() throws Exception {
-		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.examples.xtext.tests/src/org/eclipse/ocl/examples/test/xtext/models/Fruit.ocl", true);
+		URI uri = getTestModelURI("models/uml/Fruit.ocl");
 		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("body: Color::red"));
 	}

@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
 public class JUnitStandaloneFileSystem extends TestFileSystem
@@ -41,6 +45,11 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		@Override
 		public @NonNull String getFileString() {
 			return String.valueOf(file);
+		}
+
+		@Override
+		public @NonNull URI getFileURI() {
+			return URI.createFileURI(file.toString());
 		}
 
 		@SuppressWarnings("null")
@@ -92,10 +101,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 			super(platformURI, file);
 		}
 
-		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath, @Nullable InputStream inputStream) {
-			if (inputStream != null) {
-				throw new UnsupportedOperationException();		// TODO
-			}
+		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath) {
 			JUnitStandaloneTestFolder node = this;
 			@NonNull String[] testFileSegments = testFilePath.split("/");
 			if (testFilePath.endsWith("/")) {
@@ -154,17 +160,28 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 
 		@Override
 		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath) {
-			return createFilePath(testFilePath, null);
+			return createFilePath(testFilePath);
 		}
 
 		@Override
-		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath, @Nullable InputStream inputStream) {
-			return createFilePath(testFilePath, inputStream);
+		public @NonNull JUnitStandaloneTestFile getOutputFile(@NonNull String testFilePath, @NonNull InputStream inputStream) throws IOException {
+			JUnitStandaloneTestFile node = createFilePath(testFilePath);
+			if (inputStream != null) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+				Writer writer = new FileWriter(node.getFile());
+				for (String line; (line = reader.readLine()) != null; ) {
+					writer.write(line);
+					writer.write("\n");
+				}
+				writer.close();
+				reader.close();
+			}
+			return node;
 		}
 
 		@Override
 		public @NonNull JUnitStandaloneTestFile getOutputFolder(@NonNull String testFilePath) {
-			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath, null);
+			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath);
 			testFolder.mkdir();
 			return testFolder;
 		}

@@ -169,7 +169,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	@Test public void test_oclIsInState() throws InvocationTargetException, ParserException {
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCL();
-		ocl.initStateMachinePackage(getTestModelURI("model/StateMachines.uml"),
+		ocl.initStateMachinePackage(getTestModelURI("models/uml/StateMachines.uml"),
 			new @NonNull String[] {
 			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[1]'",
 			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»[1]'"
@@ -183,9 +183,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	public EObject doLoadUML(OCL ocl, String stem, String fragment) throws IOException {
-		String umlName = stem + ".uml";
-		URI umlURI = getProjectFileURI(umlName).appendFragment(fragment);
+	public EObject doLoadUML(@NonNull OCL ocl, @NonNull URI uri, String fragment) throws IOException {
+		URI umlURI = uri.appendFragment(fragment);
 		return ocl.getResourceSet().getEObject(umlURI, true);
 	}
 
@@ -202,7 +201,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		//		AbstractTypeServer.ADD_BASE_PROPERTY.setState(true);
 		//		AbstractTypeServer.ADD_EXTENSION_PROPERTY.setState(true);
 		IdResolver idResolver = ocl.getIdResolver();
-		EObject context = doLoadUML(ocl, "Bug431638", "Bug431638Model.Class1.Attribute1");
+		EObject context = doLoadUML(ocl, getTestModelURI("models/uml/Bug431638.uml"), "Bug431638Model.Class1.Attribute1");
 		assertNotNull(context);
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOf(context);
 		org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
@@ -238,13 +237,13 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-		EObject context = doLoadUML(ocl, "Bug455394", "Model.Class1.class2");
+		EObject context = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.Class1.class2");
 		assertNotNull(context);
 		assert context != null;
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOf(context);
 		ocl.assertQueryTrue(context, "self.aggregation=UML::AggregationKind::composite");
 		ocl.assertQueryResults(context, "UML::AggregationKind::composite", "self.aggregation");
-		EObject associationContext = doLoadUML(ocl, "Bug455394", "Model.A_class2_class1");
+		EObject associationContext = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.A_class2_class1");
 		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedId(contextType.getTypeId());
 		ocl.assertQueryEquals(associationContext, idResolver.createOrderedSetOfEach(collectionTypeId, context), "self.memberEnd?->select(e|e.aggregation=AggregationKind::composite)");
 		ocl.dispose();
@@ -257,10 +256,10 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-		EObject train1 = doLoadUML(ocl, "Bug485225", "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
+		EObject train1 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOf(train1);
-		EObject application1 = doLoadUML(ocl, "Bug485225", "_zLFE8LUyEeWSV7DXeOPrdA");
-		EObject application2 = doLoadUML(ocl, "Bug485225", "_8MmIwLUyEeWSV7DXeOPrdA");
+		EObject application1 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zLFE8LUyEeWSV7DXeOPrdA");
+		EObject application2 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_8MmIwLUyEeWSV7DXeOPrdA");
 		assert train1 != null;
 		assert application1 != null;
 		assert application2 != null;
@@ -277,7 +276,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	@Test public void test_signal_allinstances_Bug496210() throws Exception {
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCL();
-		URI umlURI = getProjectFileURI("Bug496210.uml");
+		URI umlURI = getTestModelURI("models/uml/Bug496210.uml");
 		Resource umlResource = ocl.getResourceSet().getResource(umlURI, true);
 		EObject umlClass1 = ClassUtil.nonNullState(umlResource.getEObject("Class1"));
 		ExpressionInOCL expr1 = ocl.createInvariant(umlClass1, "Class1.allInstances()->size()");

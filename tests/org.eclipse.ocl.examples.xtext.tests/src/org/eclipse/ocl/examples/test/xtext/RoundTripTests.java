@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -136,6 +137,7 @@ public class RoundTripTests extends XtextTestCase
 		try {
 			projectMap.initializeResourceSet(resourceSet);
 			if (!resourceSet.getURIConverter().exists(inputURI, null)) {
+				;				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
 				return;
 			}
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -176,19 +178,10 @@ public class RoundTripTests extends XtextTestCase
 		}
 	}
 
-	public void doRoundTripFromEcore(String stem) throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore(stem, stem, null);
+	public void doRoundTripFromEcore(@NonNull URI inputURI) throws IOException, InterruptedException, ParserException {
+		doRoundTripFromEcore(inputURI, inputURI, null);
 	}
-	public void doRoundTripFromEcore(String stem, String reference, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
-		String inputName = stem + ".ecore";
-		URI inputURI = getProjectFileURI(inputName);
-		String referenceName = reference + ".ecore";
-		URI referenceURI = getProjectFileURI(referenceName);
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
-		ocl.dispose();
-	}
-	public void doRoundTripFromEcore(URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
+	public void doRoundTripFromEcore(@NonNull URI inputURI, @NonNull URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			TestUtil.initializeEcoreEAnnotationValidators();
 		}
@@ -200,8 +193,8 @@ public class RoundTripTests extends XtextTestCase
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String pivotName = stem + ".ecore.oclas";
 		String outputName = stem + ".regenerated.ecore";
-		URI pivotURI = getProjectFileURI(pivotName);
-		URI outputURI = getProjectFileURI(outputName);
+		URI pivotURI = getTestFileURI(pivotName);
+		URI outputURI = getTestFileURI(outputName);
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("Ecore load", inputResource);
@@ -255,13 +248,16 @@ public class RoundTripTests extends XtextTestCase
 		}
 	}
 
-	public void doRoundTripFromOCLinEcore(@NonNull OCL ocl1, String stem) throws IOException, InterruptedException {
-		String inputName = stem + ".oclinecore";
+	public void doRoundTripFromOCLinEcore(@NonNull OCL ocl1, @NonNull TestFile testFile) throws IOException, InterruptedException {
+		doRoundTripFromOCLinEcore(ocl1, testFile.getFileURI());
+	}
+
+	public void doRoundTripFromOCLinEcore(@NonNull OCL ocl1, @NonNull URI inputURI) throws IOException, InterruptedException {
+		String stem = inputURI.trimFileExtension().lastSegment();
 		String ecoreName = stem + ".ecore";
 		String outputName = stem + ".regenerated.oclinecore";
-		URI inputURI = getProjectFileURI(inputName);
-		URI ecoreURI = getProjectFileURI(ecoreName);
-		URI outputURI = getProjectFileURI(outputName);
+		URI ecoreURI = getTestFileURI(ecoreName);
+		URI outputURI = getTestFileURI(outputName);
 		EnvironmentFactoryInternal environmentFactory1 = (EnvironmentFactoryInternal) ocl1.getEnvironmentFactory();
 		//		environmentFactory1.adapt(resourceSet);
 		BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
@@ -289,6 +285,7 @@ public class RoundTripTests extends XtextTestCase
 		ocl3.dispose();
 	}
 
+	@Deprecated /* @deprecated - not used */
 	public void doRoundTripFromUml(String stem) throws IOException, InterruptedException, ParserException {
 		//		Environment.Registry.INSTANCE.registerEnvironment(
 		//			OCL.createEnvironmentFactory().createEnvironment());
@@ -308,8 +305,8 @@ public class RoundTripTests extends XtextTestCase
 		String pivotName = stem + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 		String outputName = stem + ".regenerated.uml";
 		URI inputURI = getProjectFileURI(inputName);
-		URI pivotURI = getProjectFileURI(pivotName);
-		URI outputURI = getProjectFileURI(outputName);
+		URI pivotURI = getTestFileURI(pivotName);
+		URI outputURI = getTestFileURI(outputName);
 		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("UML load", inputResource);
 		assertNoValidationErrors("UML load", inputResource);
@@ -351,15 +348,15 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testBug350894RoundTrip() throws IOException, InterruptedException {
-		String testFileA =
+		String testFileContentsA =
 				"package a : aa = 'aaa'\n" +
 						"{\n" +
 						"class A;\n" +
 						"}\n";
 		OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
-		createEcoreFile(ocl1, "Bug350894A", testFileA);
+		createEcoreFile(ocl1, "Bug350894A", testFileContentsA);
 		ocl1.dispose();
-		String testFileB =
+		String testFileContentsB =
 				"import aa : 'Bug350894A.ecore#/';\n" +
 						"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -370,14 +367,14 @@ public class RoundTripTests extends XtextTestCase
 						"invariant file: not oclIsKindOf(_'Bug350894A.ecore#/'::A);\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug350894B.oclinecore", testFileB);
+		TestFile testFile = createOCLinEcoreFile("Bug350894B.oclinecore", testFileContentsB);
 		OCLInternal ocl2 = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl2, "Bug350894B");
+		doRoundTripFromOCLinEcore(ocl2, testFile);
 		ocl2.dispose();
 	}
 
 	public void testBug356243_oclinecore() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package any : any = 'http:/any'\n" +
 						"{\n" +
 						"	class Bug356243\n" +
@@ -385,14 +382,14 @@ public class RoundTripTests extends XtextTestCase
 						"		property is_always_typed : OclAny { ordered };\n" +
 						"	}\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug356243.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug356243.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug356243");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testBug426927_oclinecore() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package any : any = 'http:/any'\n" +
 						"{\n" +
 						"	enum Enums\n" +
@@ -407,14 +404,14 @@ public class RoundTripTests extends XtextTestCase
 						"		}\n" +
 						"	}\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug426927.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug426927.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug426927");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testAggregatesRoundTrip() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"class B\n" +
@@ -436,14 +433,14 @@ public class RoundTripTests extends XtextTestCase
 						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("Aggregates.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Aggregates.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Aggregates");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testAnnotationsRoundTrip_480635() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"enum Parameter_kind { serializable }\n" +
@@ -456,14 +453,14 @@ public class RoundTripTests extends XtextTestCase
 						"   literal INT16 = 3;\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("Annotations.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Annotations.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Annotations");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testCardinalityRoundTrip_402767() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"class B\n" +
@@ -479,14 +476,14 @@ public class RoundTripTests extends XtextTestCase
 						"property vThree2Star : Real[3..*];\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("Cardinality.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Cardinality.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Cardinality");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testCommentsRoundTrip_405145() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"/* a simple comment */\n" +
@@ -506,14 +503,14 @@ public class RoundTripTests extends XtextTestCase
 						"property c3 : Real;\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("Comments.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Comments.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Comments");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testGenericsRoundTrip_468846() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package basket : basket = 'http://www.example.org/basket'\n" +
 						"{\n" +
 						"	abstract class Fruit;\n" +
@@ -522,14 +519,14 @@ public class RoundTripTests extends XtextTestCase
 						"		property fruit : T[*] { ordered };\n" +
 						"	}\n" +
 						"}";
-		createOCLinEcoreFile("Bug468846.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug468846.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug468846");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testGenericsRoundTrip_492800() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package example : example = 'http://www.example.org/generics/opposite'\n" +
 						"{\n" +
 						"	abstract class Interface(T extends Event)\n" +
@@ -547,14 +544,14 @@ public class RoundTripTests extends XtextTestCase
 						"	abstract class CallEvent extends Event;\n" +
 						"	class ReplyEvent extends Event;\n" +
 						"}";
-		createOCLinEcoreFile("Bug492800.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug492800.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug492800");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testInvariantCommentsRoundTrip_410682() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"class B\n" +
@@ -578,77 +575,79 @@ public class RoundTripTests extends XtextTestCase
 						"}\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("InvariantComments.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("InvariantComments.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "InvariantComments");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testCompanyRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Company", "Company.reference", null);
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), null);
 	}
 
 	public void testEcoreRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Ecore");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Ecore.ecore"));
 	}
 
 	public void testEmptyRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Empty");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Empty.ecore"));
 	}
 
 	public void testImportsRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Imports");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Imports.ecore"));
 	}
 
 	public void testKeysRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Keys");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Keys.ecore"));
 	}
 
 	public void testBug492960RoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Bug492960");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Bug492960.ecore"));
 	}
 
 	public void testBug510729_oclinecore() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package bug510729 : pfx = 'http:/org/eclipse/ocl/examples/test/xtext/models/Bug510729.oclinecore' {\n" +
 						"	class Artefact {\n" +
 						"		operation paths(types : ocl::OclType) : ocl::Sequence(Artefact)[*];\n" +
 						"	}\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug510729.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug510729.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug510729");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testBug516274_oclinecore() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package bug516274 : my = 'http:/org/eclipse/ocl/examples/test/xtext/models/Bug516274.oclinecore'\n" +
 						"{\n" +
 						"  abstract class Generic(T extends Generic(T));\n" +
 						"  class Concrete extends Generic(Concrete);\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug516274.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug516274.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug516274");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testBug521094_oclinecore() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
 						"import 'http://www.eclipse.org/emf/2003/XMLType';\n" +
 						"\n" +
 						"package stk : stk = 'http://stk' {}";
-		createOCLinEcoreFile("Bug521094.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug521094.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug521094");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Bug496768.ocl"));
+		getTestFileURI("Bug496768.ecore", ocl, getTestModelURI("models/ecore/Bug496768.ecore"));
+		URI inputURI = getTestFileURI("Fruit.ocl", ocl, getTestModelURI("models/ecore/Bug496768.ocl"));
+		doRoundTripFromCompleteOCL(ocl, inputURI);
 		ocl.dispose();
 	}
 
@@ -658,17 +657,23 @@ public class RoundTripTests extends XtextTestCase
 		Map<URI, URI> uriMap = ocl.getResourceSet().getURIConverter().getURIMap();
 		uriMap.putAll(UML402UMLExtendedMetaData.getURIMap());
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Fruit.ocl"));
+		getTestFileURI("Fruit.uml", ocl, getTestModelURI("models/uml/Fruit.uml"));
+		URI inputURI = getTestFileURI("Fruit.ocl", ocl, getTestModelURI("models/uml/Fruit.ocl"));
+		doRoundTripFromCompleteOCL(ocl, inputURI);
 		ocl.dispose();
 	}
 
 	//	public void testCompleteOCLRoundTrip_Infrastructure() throws IOException, InterruptedException {
-	//		doRoundTripFromCompleteOCL("Infrastructure");
+	//		OCL ocl = OCL.newInstance(getProjectMap());
+	//		doRoundTripFromCompleteOCL("models/uml/Infrastructure.ocl");
+	//		ocl.dispose();
 	//	}
 
 	public void testCompleteOCLRoundTrip_Names() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Names.ocl"));
+		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
+		URI inputURI = getTestFileURI("Names.ocl", ocl, getTestModelURI("models/ecore/Names.ocl"));
+		doRoundTripFromCompleteOCL(ocl, inputURI);
 		ocl.dispose();
 	}
 
@@ -706,26 +711,26 @@ public class RoundTripTests extends XtextTestCase
 	//	}
 
 	public void testOCLstdlibRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("OCLstdlib");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/OCLstdlib.ecore"));
 	}
 
 	public void testOCLRoundTrip() throws IOException, InterruptedException, ParserException {
 		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
-		doRoundTripFromEcore("OCL", "OCL", options); // "OCL.reference");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/OCL.ecore"), getTestModelURI("models/ecore/OCL.ecore"), options); // "OCL.reference");
 	}
 
 	public void testOCLCSTRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("OCLCST");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/OCLCST.ecore"));
 	}
 
 	public void testOCLEcoreRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("OCLEcore");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/OCLEcore.ecore"));
 	}
 
-	/* BUG 377626
-	public void testQVTRoundTrip() throws IOException, InterruptedException {
-		doRoundTripFromEcore("QVT");
+	/** FIXME
+	public void testQVTRoundTrip() throws IOException, InterruptedException, ParserException {
+		doRoundTripFromEcore(getTestModelURI("models/ecore/QVT.ecore"));
 	} */
 
 	/* BUG 528359
@@ -781,7 +786,7 @@ public class RoundTripTests extends XtextTestCase
 	} */
 
 	public void testSysMLRoundTrip() throws IOException, InterruptedException {
-		String testFile =
+		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"class B\n" +
@@ -789,15 +794,15 @@ public class RoundTripTests extends XtextTestCase
 						"sysml { stereotype = 'SysML::Block'; }\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("SysML.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("SysML.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "SysML");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testTuplesRoundTrip_509533a() throws IOException, InterruptedException {
 		BaseLinkingService.DEBUG_RETRY.setState(true);
-		String testFile =
+		String testFileContents =
 				"package bug509533 : bug509533 = 'http://www.example.org/bug509533'\n" +
 						"{\n" +
 						"	datatype HSV : 'java.lang.String';\n" +
@@ -830,34 +835,35 @@ public class RoundTripTests extends XtextTestCase
 						"\n" +
 						"	}\n" +
 						"}";
-		createOCLinEcoreFile("Bug509533a.oclinecore", testFile);
+		TestFile testFile = createOCLinEcoreFile("Bug509533a.oclinecore", testFileContents);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Bug509533a");
+		doRoundTripFromOCLinEcore(ocl, testFile);
 		ocl.dispose();
 	}
 
 	public void testTuplesRoundTrip_509533b() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Bug509533b");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Bug509533b.ecore"));
 	}
 
 	public void testTypes_ecore() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("Types");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/Types.ecore"));
 	}
 
 	public void testTypes_oclinecore() throws IOException, InterruptedException {
 		//		BaseScopeProvider.LOOKUP.setState(true);
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		doRoundTripFromOCLinEcore(ocl, "Types");
+		TestFile testFile = getTestFile("Types.oclinecore", ocl, getTestModelURI("models/oclinecore/Types.oclinecore"));
+		doRoundTripFromOCLinEcore(ocl, testFile.getFileURI());
 		ocl.dispose();
 	}
 
 	public void testXMLNamespaceRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("XMLNamespace");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/XMLNamespace.ecore"));
 	}
 
 	public void testXMLTypeRoundTrip() throws IOException, InterruptedException, ParserException {
-		doRoundTripFromEcore("XMLType");
+		doRoundTripFromEcore(getTestModelURI("models/ecore/XMLType.ecore"));
 	}
 
 	//	public void testMy_uml() throws IOException, InterruptedException {

@@ -39,14 +39,14 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 
 	public void testConsole_Ecore() throws Exception {
 		assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.name", "'EClass'\n");
-//		assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.instanceType.eAttributes.name", "");
-//		assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.ownedAttribute.name->iterate(s : String ; acc : String = '' | acc + ' ' + s)", "' abstract interface'");
+		//		assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.instanceType.eAttributes.name", "");
+		//		assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.ownedAttribute.name->iterate(s : String ; acc : String = '' | acc + ' ' + s)", "' abstract interface'");
 	}
 
 	public void testConsole_OCLinEcoreTutorial() throws Exception {
 		doDelete(PLUGIN_ID);
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate Ecore Editor's AdapterFactoryEditingDomainResourceSet
-		URI testModelURI = getTestModelURI("model/OCLinEcoreTutorialForPivot.xmi");
+		URI testModelURI = getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi");
 		Resource xmiResource = resourceSet.getResource(testModelURI, true);
 		EObject xmiLibrary = xmiResource.getContents().get(0);
 		EClass ecoreLibrary = xmiLibrary.eClass();
@@ -90,24 +90,24 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		assertConsoleResult(consolePage, ecoreBook, "name", "'Book'\n");
 		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Property '::copies'\n</error>");
 		assertConsoleResult(consolePage, ecoreBook, "oclType().ownedProperties->sortedBy(name)",
-			"ecore::EClass::EClass\n" + 
-			"ecore::EClass::EClass\n" + 
-			"ecore::EClass::EReference\n" + 
-			"ecore::EClass::abstract\n" + 
-			"ecore::EClass::eAllAttributes\n" + 
-			"ecore::EClass::eAllContainments\n" + 
-			"ecore::EClass::eAllGenericSuperTypes\n" + 
-			"ecore::EClass::eAllOperations\n" + 
-			"ecore::EClass::eAllReferences\n" + 
-			"ecore::EClass::eAllStructuralFeatures\n" + 
-			"ecore::EClass::eAllSuperTypes\n" + 
-			"ecore::EClass::eAttributes\n" + 
-			"ecore::EClass::eGenericSuperTypes\n" + 
-			"ecore::EClass::eIDAttribute\n" + 
-			"ecore::EClass::eOperations\n" + 
-			"ecore::EClass::eReferences\n" + 
-			"ecore::EClass::eStructuralFeatures\n" + 
-			"ecore::EClass::eSuperTypes\n" + 
-			"ecore::EClass::interface\n");
+			"ecore::EClass::EClass\n" +
+					"ecore::EClass::EClass\n" +
+					"ecore::EClass::EReference\n" +
+					"ecore::EClass::abstract\n" +
+					"ecore::EClass::eAllAttributes\n" +
+					"ecore::EClass::eAllContainments\n" +
+					"ecore::EClass::eAllGenericSuperTypes\n" +
+					"ecore::EClass::eAllOperations\n" +
+					"ecore::EClass::eAllReferences\n" +
+					"ecore::EClass::eAllStructuralFeatures\n" +
+					"ecore::EClass::eAllSuperTypes\n" +
+					"ecore::EClass::eAttributes\n" +
+					"ecore::EClass::eGenericSuperTypes\n" +
+					"ecore::EClass::eIDAttribute\n" +
+					"ecore::EClass::eOperations\n" +
+					"ecore::EClass::eReferences\n" +
+					"ecore::EClass::eStructuralFeatures\n" +
+					"ecore::EClass::eSuperTypes\n" +
+				"ecore::EClass::interface\n");
 	}
 }

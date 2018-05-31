@@ -174,17 +174,17 @@ public class PivotTests extends XtextTestCase
 	} */
 
 	@SuppressWarnings("null")
-	public BaseCSResource doLoadOCLstdlib(@NonNull OCL ocl, @NonNull String stem, @NonNull String extension) throws IOException {
+	public BaseCSResource doLoadOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		ResourceSet resourceSet = ocl.getResourceSet();
 		//		CS2ASResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
-		String inputName = stem + "." + extension;
+		String extension = inputURI.fileExtension();
+		String stem = inputURI.trimFileExtension().lastSegment();
 		String outputName = stem + "." + extension + ".xmi";
 		String output2Name = stem + ".saved." + extension;
-		URI inputURI = getProjectFileURI(inputName);
-		URI outputURI = getProjectFileURI(outputName);
-		URI output2URI = getProjectFileURI(output2Name);
+		URI outputURI = getTestFileURI(outputName);
+		URI output2URI = getTestFileURI(output2Name);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(inputURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
@@ -217,10 +217,9 @@ public class PivotTests extends XtextTestCase
 	}
 
 	@SuppressWarnings("null")
-	protected void doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull String stem) throws IOException {
-		String pivotName = stem + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-		URI pivotURI = getProjectFileURI(pivotName);
-		BaseCSResource csResource = doLoadOCLstdlib(ocl, stem, "oclstdlib");
+	protected void doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
+		URI pivotURI = getTestFileURI(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment());
+		BaseCSResource csResource = doLoadOCLstdlib(ocl, inputURI);
 		//
 		//	Create Pivot model from CS
 		//
@@ -262,7 +261,7 @@ public class PivotTests extends XtextTestCase
 	}
 
 	@SuppressWarnings("null")
-	public void doPivotTestEcore(@NonNull String stem) throws IOException {
+	public void doPivotTestEcore(@NonNull URI inputURI) throws IOException {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
@@ -275,10 +274,8 @@ public class PivotTests extends XtextTestCase
 		//		CS2ASResourceAdapter adapter = CS2ASResourceAdapter.refreshPivotMappings(xtextLibraryResource, null);
 		//		Resource asResource = adapter.getPivotResource(xtextLibraryResource);
 		//		asResourceSet.getResource(libraryURI, true);
-		String inputName = stem + ".ecore";
-		String csName = stem + ".ecore.cs";
-		URI inputURI = getProjectFileURI(inputName);
-		URI csURI = getProjectFileURI(csName);
+		String csName = inputURI.trimFileExtension().lastSegment() + ".ecore.cs";
+		URI csURI = getTestFileURI(csName);
 		//		URI output2URI = getProjectFileURI(output2Name);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		Resource ecoreResource = ocl.getResourceSet().getResource(inputURI, true);
@@ -359,7 +356,7 @@ public class PivotTests extends XtextTestCase
 	public void testPivot_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		BaseLinkingService.DEBUG_RETRY.setState(true);
-		doPivotTestOCLstdlib(ocl, "oclstdlib");
+		doPivotTestOCLstdlib(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		ocl.dispose();
 	}
 
@@ -373,12 +370,12 @@ public class PivotTests extends XtextTestCase
 
 	public void testPivot_Ecore_ecore() throws IOException, InterruptedException {
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doPivotTestEcore("Ecore");
+		doPivotTestEcore(getTestModelURI("models/ecore/Ecore.ecore"));
 	}
 
 	public void testPivot_Names_ecore() throws IOException, InterruptedException {
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doPivotTestEcore("Names");
+		doPivotTestEcore(getTestModelURI("models/ecore/Names.ecore"));
 	}
 
 	//	public void testPivot_Temp_ecore() throws IOException, InterruptedException {

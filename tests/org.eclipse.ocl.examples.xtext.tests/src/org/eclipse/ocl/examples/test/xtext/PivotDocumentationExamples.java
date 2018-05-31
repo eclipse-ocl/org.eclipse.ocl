@@ -77,7 +77,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	}
 
 	private @NonNull List<Library> getLibraries(ResourceSet resourceSet) {
-		URI uri = getProjectFileURI("PivotDocumentationExamples.extlibrary");
+		URI uri = getTestModelURI("models/documentation/PivotDocumentationExamples.extlibrary");
 		resourceSet.getPackageRegistry().put(EXTLibraryPackage.eNS_URI, EXTLibraryPackage.eINSTANCE);
 		Resource resource = resourceSet.getResource(uri, true);
 		@SuppressWarnings("unchecked") List<Library> libraries = (List<Library>)(List<?>)resource.getContents();
@@ -221,7 +221,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		ResourceSet resourceSet = ocl.getResourceSet();
 
 		// get an OCL text file via some hypothetical API
-		URI uri = getInputURI("/model/parsingDocumentsExample.ocl");
+		URI uri = getInputURI("/models/documentation/parsingDocumentsExample.ocl");
 
 		// parse the contents as an OCL document
 		Resource asResource = ocl.parse(uri);

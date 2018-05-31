@@ -13,9 +13,10 @@ package org.eclipse.ocl.examples.standalone.validity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
@@ -291,51 +293,28 @@ public class ValidateCommand extends StandaloneCommand
 			URI uri = URI.createURI(argument);
 			argument = uri.isFile() ? uri.toFileString() : argument;
 			boolean ignored = false;
-			try {
-				File file = new File(argument).getCanonicalFile();
-				IPath path = new Path(file.getCanonicalPath());
-				// a txt file may contain relative or absolute path to a set of OCL
-				// files.
-				if (TEXT_FILE_EXTENSION.equals(path.getFileExtension().toLowerCase())) {
-					extractOCLUris(strings, file);
-				} else if (OCL_FILE_EXTENSION.equals(path.getFileExtension().toLowerCase())) {
-					if (!file.exists()) {
-						logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource
-								+ file.getAbsolutePath()
-								+ StandaloneMessages.OCLArgumentAnalyzer_NotExist);
-						ignored = true;
-					} else if (!file.isFile()) {
-						logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource
-								+ file.getAbsolutePath()
-								+ StandaloneMessages.OCLArgumentAnalyzer_NotFile);
-						ignored = true;
-					} else if (!file.canRead()) {
-						logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource
-								+ file.getAbsolutePath()
-								+ StandaloneMessages.OCLArgumentAnalyzer_CannotBeRead);
-						ignored = true;
-					} else {
-						strings.add(file.getAbsolutePath());
-					}
-				} else {
-					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_FileExt
-							+ path.lastSegment()
-							+ StandaloneMessages.OCLArgumentAnalyzer_ExtensionPb);
+			URIConverter uriConverter = getURIConverter();
+			boolean exists = uriConverter.exists(uri, null);
+			// a txt file may contain relative or absolute path to a set of OCL files.
+			String fileExtension = uri.fileExtension(); //path.getFileExtension();
+			if (TEXT_FILE_EXTENSION.equals(fileExtension.toLowerCase())) {
+				extractOCLUris(strings, uri);
+			} else if (OCL_FILE_EXTENSION.equals(fileExtension.toLowerCase())) {
+				if (!exists) {
+					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
 					ignored = true;
+				} else {
+					strings.add(uri.toString());
 				}
+			} else {
+				logger.warn(StandaloneMessages.OCLArgumentAnalyzer_FileExt
+						+ uri.lastSegment()
+						+ StandaloneMessages.OCLArgumentAnalyzer_ExtensionPb);
+				ignored = true;
+			}
 
-				if (ignored) {
-					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLFile
-							+ file.getAbsolutePath()
-							+ StandaloneMessages.OCLArgumentAnalyzer_ignored);
-
-					//				} else {
-					//					logger.info(StandaloneMessages.OCLArgumentAnalyzer_OCLFile
-					//							+ file.getAbsolutePath()
-					//							+ StandaloneMessages.OCLArgumentAnalyzer_found);
-				}
-			} catch (IOException e) {
-				logger.warn(e.getMessage());
+			if (ignored) {
+				logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLFile + uri + StandaloneMessages.OCLArgumentAnalyzer_ignored);
 			}
 		}
 
@@ -345,21 +324,19 @@ public class ValidateCommand extends StandaloneCommand
 		 * @param txtFile
 		 *            The file containing relative path to OCL files.
 		 */
-		private void extractOCLUris(@NonNull List<String> strings, File txtFile) {
-			BufferedReader reader;
+		private void extractOCLUris(@NonNull List<@NonNull String> strings, @NonNull URI txtURI) {
 			try {
-				reader = new BufferedReader(new FileReader(txtFile));
+				InputStream inputStream = getURIConverter().createInputStream(txtURI);
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 				String line = reader.readLine();
 				while (line != null) {
-					File child = new File(txtFile.getParentFile(), line);
-					checkOclFile(strings, child.toString());
+					URI childURI = URI.createURI(line).resolve(txtURI);
+					checkOclFile(strings, childURI.toString());
 					line = reader.readLine();
 				}
 				reader.close();
 			} catch (FileNotFoundException e) {
-				logger.error(MessageFormat
-						.format(StandaloneMessages.OCLArgumentAnalyzer_OCLFileNotFound,
-								txtFile.getAbsolutePath()));
+				logger.error(MessageFormat.format(StandaloneMessages.OCLArgumentAnalyzer_OCLFileNotFound, txtURI));
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -468,26 +445,13 @@ public class ValidateCommand extends StandaloneCommand
 	protected static String getCheckedFileName(@NonNull String string) {
 		URI uri = URI.createURI(string);
 		string = uri.isFile() ? uri.toFileString() : string;
-		try {
-			File file = new File(string).getCanonicalFile();
-			if (!file.exists()) {
-				logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
-						+ file.getAbsolutePath()
-						+ StandaloneMessages.OCLArgumentAnalyzer_NotExist);
-			} else if (!file.isFile()) {
-				logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
-						+ file.getAbsolutePath()
-						+ StandaloneMessages.OCLArgumentAnalyzer_NotFile);
-			} else {
-				@SuppressWarnings("unused")
-				IPath modelPath = new Path(file.getAbsolutePath());
-				//				logger.info(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
-				//						+ file.getAbsolutePath()
-				//						+ StandaloneMessages.OCLArgumentAnalyzer_found);
-				return string;//modelPath;
-			}
-		} catch (IOException e) {
-			logger.error(e.getMessage());
+		boolean exists = getURIConverter().exists(uri, null);
+		if (!exists) {
+			logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
+					+ uri
+					+ StandaloneMessages.OCLArgumentAnalyzer_NotExist);
+		} else {
+			return string;
 		}
 		return null;
 	}
@@ -505,7 +469,6 @@ public class ValidateCommand extends StandaloneCommand
 		try {
 			file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
 			IPath filePath = new Path(file.getAbsolutePath());
-			//			IPath filePath = new Path(fileName);
 			if (isRelativePath(filePath)) {
 				fileUri = URI.createPlatformResourceURI(filePath.toString(), true);
 			} else {
@@ -563,7 +526,10 @@ public class ValidateCommand extends StandaloneCommand
 		standaloneApplication.doCompleteOCLSetup();
 		String modelFileName = modelToken.getModelFileName(token2strings);
 		List<String> oclFileNames = rulesToken.getOCLFileNames(token2strings);
-		URI modelURI = getFileUri(modelFileName);
+		URI modelURI = URI.createURI(modelFileName, true);
+		if (!modelURI.isPlatform()) {
+			modelURI = getFileUri(modelFileName);
+		}
 		// Load model resource
 		Resource modelResource = standaloneApplication.loadModelFile(modelURI);
 		if (modelResource == null) {
@@ -664,8 +630,10 @@ public class ValidateCommand extends StandaloneCommand
 		};
 
 		for (String oclFileName : oclFileNames) {
-			URI oclURI = getFileUri(oclFileName);
-
+			URI oclURI = URI.createURI(oclFileName, true);
+			if (!oclURI.isPlatform()) {
+				oclURI = getFileUri(oclFileName);
+			}
 			if (allOk && oclURI == null) {
 				logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_OclUriProblem, oclFileName));
 				allOk = false;

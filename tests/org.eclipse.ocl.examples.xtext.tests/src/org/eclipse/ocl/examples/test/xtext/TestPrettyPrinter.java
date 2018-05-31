@@ -25,7 +25,7 @@ public class TestPrettyPrinter extends XtextTestCase
 {
 	public void testDeclarations() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		URI libraryURI = getProjectFileURI("OCL-2.3.oclstdlib");
+		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
 		Resource asResource = xtextResource.getASResource();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
@@ -37,10 +37,10 @@ public class TestPrettyPrinter extends XtextTestCase
 		}
 		ocl.dispose();
 	}
-	
+
 	public void testSignatures() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		URI libraryURI = getProjectFileURI("OCL-2.3.oclstdlib");
+		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
 		Resource asResource = xtextResource.getASResource();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {

@@ -69,7 +69,7 @@ public class RegistryTests extends TestCase
 			CompleteOCLRegistry registry = CompleteOCLRegistry.INSTANCE;
 			Set<URI> registeredResourceURIs = registry.getResourceURIs(resourceSet);
 			// org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl
-			// org.eclipse.ocl.examples.xtext.tests/model/ModelWithErrors.ocl
+			// org.eclipse.ocl.examples.xtext.tests/models/ecore/ModelWithErrors.ocl
 			int expectedSize = 2;
 			//	int expectedSize = 1;
 			//	if (EMFPlugin.IS_ECLIPSE_RUNNING) {`		// BUG 535144 at EMF 2.14 RC3 fixed the need to conditionalize standalone
@@ -79,7 +79,7 @@ public class RegistryTests extends TestCase
 			//		}
 			//	}
 			assertEquals(registeredResourceURIs.toString(), expectedSize, registeredResourceURIs.size());
-			// platform:/plugin/org.eclipse.ocl.examples.xtext.tests/model/ModelWithErrors.ocl
+			// platform:/plugin/org.eclipse.ocl.examples.xtext.tests/models/ecore/ModelWithErrors.ocl
 			// (running only) platform:/plugin/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl
 		}
 		finally {		// Remove the bad Xtext ResourceFactories that EcorePlugin.ExtensionProcessor finds

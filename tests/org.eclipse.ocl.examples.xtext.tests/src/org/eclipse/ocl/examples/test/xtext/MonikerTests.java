@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -130,13 +131,11 @@ public class MonikerTests extends XtextTestCase
 	} */
 
 	@SuppressWarnings("null")
-	public void doMonikerTestEcore(String stem) throws IOException {
+	public void doMonikerTestEcore(@NonNull URI inputURI) throws IOException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//
 		//	Load the Ecore resource and check for load failures and proxy resolution
 		//
-		String inputName = stem + ".ecore";
-		URI inputURI = getProjectFileURI(inputName);
 		Resource ecoreResource = ocl.getResourceSet().getResource(inputURI, true);
 		assertNoResourceErrors("Load failed", ecoreResource);
 		assertNoUnresolvedProxies("Unresolved proxies", ecoreResource);
@@ -163,15 +162,13 @@ public class MonikerTests extends XtextTestCase
 	}
 
 	@SuppressWarnings("null")
-	public void doMonikerTestOCLstdlib(String stem) throws IOException {
+	public void doMonikerTestOCLstdlib(@NonNull URI inputURI) throws IOException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//
 		//	Load the CS resource and check for load failures
 		//
-		String inputName = stem + ".oclstdlib";
-		String pivotName = stem + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-		URI inputURI = getProjectFileURI(inputName);
-		URI pivotURI = getProjectFileURI(pivotName);
+		String pivotName = inputURI.trimFileExtension().lastSegment() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+		URI pivotURI = getTestFileURI(pivotName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		csResource.setProjectManager(getProjectMap());
 		JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
@@ -233,15 +230,15 @@ public class MonikerTests extends XtextTestCase
 	}
 
 	public void testMoniker_Ecore_ecore() throws IOException, InterruptedException {
-		doMonikerTestEcore("Ecore");			// Diverse declarations
+		doMonikerTestEcore(getTestModelURI("models/ecore/Ecore.ecore"));			// Diverse declarations
 	}
 
 	public void testMoniker_OCL_ecore() throws IOException, InterruptedException {
-		doMonikerTestEcore("OCL");				// Diverse generics
+		doMonikerTestEcore(getTestModelURI("models/ecore/OCL.ecore"));				// Diverse generics
 	}
 
 	public void testMoniker_OCLEcore_ecore() throws IOException, InterruptedException {
-		doMonikerTestEcore("OCLEcore");
+		doMonikerTestEcore(getTestModelURI("models/ecore/OCLEcore.ecore"));
 	}
 
 	//	public void testMoniker_midi_oclstdlib() throws IOException, InterruptedException {
@@ -258,7 +255,7 @@ public class MonikerTests extends XtextTestCase
 	public void testMoniker_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		//		BaseScopeProvider.LOOKUP.setState(true);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doMonikerTestOCLstdlib("oclstdlib");
+		doMonikerTestOCLstdlib(getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 	}
 
 	//	public void testMoniker_OCL_2_3_oclstdlib() throws IOException, InterruptedException {
