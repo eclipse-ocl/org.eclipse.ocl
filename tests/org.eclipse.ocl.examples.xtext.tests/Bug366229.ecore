@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="overloads" nsURI="http:/overloads" nsPrefix="ov">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="SuperClass">
+    <eOperations name="notOverloaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="'SuperClass'"/>
+      </eAnnotations>
+      <eParameters name="par" eType="#//SubClass"/>
+    </eOperations>
+    <eOperations name="overloaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="'SuperClass'"/>
+      </eAnnotations>
+      <eParameters name="par" eType="#//SuperClass"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubClass" eSuperTypes="#//SuperClass">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NotOverloadedIsSuper OverloadedIsSub CastSourceNotOverloadedIsSuper CastSourceOverloadedIsSub CastParameterNotOverloadedIsSub CastParameterOverloadedIsSub CastSourceAndParameterOverloadedIsSub"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NotOverloadedIsSuper" value="self.notOverloaded(self) = 'SuperClass'"/>
+      <details key="OverloadedIsSub" value="self.overloaded(self) = 'SubClass'"/>
+      <details key="CastSourceNotOverloadedIsSuper" value="self.oclAsType(SuperClass).notOverloaded(self) = 'SuperClass'"/>
+      <details key="CastSourceOverloadedIsSub" value="self.oclAsType(SuperClass).overloaded(self) = 'SubClass'"/>
+      <details key="CastParameterNotOverloadedIsSub" value="self.notOverloaded(self.oclAsType(SuperClass)) = 'SubClass'"/>
+      <details key="CastParameterOverloadedIsSub" value="self.overloaded(self.oclAsType(SuperClass)) = 'SubClass'"/>
+      <details key="CastSourceAndParameterOverloadedIsSub" value="self.oclAsType(SuperClass).overloaded(self.oclAsType(SuperClass)) = 'SubClass'"/>
+    </eAnnotations>
+    <eOperations name="notOverloaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="'SubClass'"/>
+      </eAnnotations>
+      <eParameters name="par" eType="#//SuperClass"/>
+    </eOperations>
+    <eOperations name="overloaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="'SubClass'"/>
+      </eAnnotations>
+      <eParameters name="par" eType="#//SuperClass"/>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

@@ -20,7 +20,7 @@ Placeholder for the actual constraints in Internationalized.profile.uml.
 
 The actual constraints are lazily loaded by the first validation run that uses them.</description>
                <message>No message</message>
-               <!--param name="path" value="model/Internationalized.profile.uml"/-->
+               <!--param name="path" value="models/uml/Internationalized.profile.uml"/-->
             </constraint>
          </constraints>
       </constraintProvider>
@@ -34,7 +34,7 @@ Placeholder for the actual constraints in Internationalized.profile.uml.
 
 The actual constraints are lazily loaded by the first validation run that uses them.</description>
                <message>No message</message>
-               <param name="path" value="model/Internationalized.profile.uml"/>
+               <param name="path" value="models/uml/Internationalized.profile.uml"/>
             </constraint>
          </constraints>
       </constraintProvider>
@@ -48,8 +48,9 @@ The actual constraints are lazily loaded by the first validation run that uses t
    </extension>
    
    <extension point="org.eclipse.ocl.pivot.complete_ocl_registry">
-      <document resource="model/ModelWithErrors.ocl">
+      <document resource="models/ecore/ModelWithErrors.ocl">
          <for uri="http://www.eclipse.org/emf/2002/Ecore"/>
       </document>
    </extension>
+
 </plugin>
