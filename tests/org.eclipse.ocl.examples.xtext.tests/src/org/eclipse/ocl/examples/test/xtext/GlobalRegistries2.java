@@ -10,13 +10,13 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EAnnotationValidator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.xtext.XtextPackage;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.validation.CompositeEValidator;
@@ -56,7 +56,12 @@ public class GlobalRegistries2 {
 			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToServiceProviderMap);
 			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToServiceProviderMap);
 
-			EAnnotationValidator.Registry.INSTANCE.putAll(annotationSourceToAnnotationValidatorMap);
+			if (annotationSourceToAnnotationValidatorMap != null) {
+				Map<String, Object> eAnnotationValidatorRegistry = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+				if (eAnnotationValidatorRegistry != null) {
+					eAnnotationValidatorRegistry.putAll(annotationSourceToAnnotationValidatorMap);
+				}
+			}
 		}
 	}
 
@@ -70,16 +75,19 @@ public class GlobalRegistries2 {
 				validatorEntry.setValue(((CompositeEValidator) existingValue).getCopyAndClearContents());
 			}
 		}
-		memento.epackageReg = new HashMap<String, Object>(EPackage.Registry.INSTANCE);
-		memento.protocolToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-		memento.extensionToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-		memento.contentTypeIdentifierToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
+		memento.epackageReg = new HashMap<>(EPackage.Registry.INSTANCE);
+		memento.protocolToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
+		memento.extensionToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
+		memento.contentTypeIdentifierToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
 
-		memento.protocolToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
-		memento.extensionToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
-		memento.contentTypeIdentifierToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
+		memento.protocolToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
+		memento.extensionToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
+		memento.contentTypeIdentifierToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
 
-		memento.annotationSourceToAnnotationValidatorMap = new HashMap<String, Object>(EAnnotationValidator.Registry.INSTANCE);
+		Map<String, Object> eAnnotationValidatorRegistry = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+		if (eAnnotationValidatorRegistry != null) {
+			memento.annotationSourceToAnnotationValidatorMap = new HashMap<>(eAnnotationValidatorRegistry);
+		}
 		return memento;
 	}
 
@@ -93,7 +101,11 @@ public class GlobalRegistries2 {
 		IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().clear();
 		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().clear();
 		IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-		EAnnotationValidator.Registry.INSTANCE.clear();
+
+		Map<String, Object> eAnnotationValidatorRegistry = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+		if (eAnnotationValidatorRegistry != null) {
+			eAnnotationValidatorRegistry.clear();
+		}
 		initializeDefaults();
 	}
 
