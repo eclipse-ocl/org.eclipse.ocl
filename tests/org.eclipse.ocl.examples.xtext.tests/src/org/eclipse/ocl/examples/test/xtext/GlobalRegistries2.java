@@ -28,6 +28,7 @@ import org.eclipse.xtext.validation.CompositeEValidator;
  * @author Sven Efftinge - Initial contribution and API
  *
  * This copy of org.eclipse.xtext.testing.GlobalRegistries adds EAnnotationValidator.Registry.INSTANCE support
+ * and may be used before/after the Xtext re-packaging.
  */
 public class GlobalRegistries2 {
 

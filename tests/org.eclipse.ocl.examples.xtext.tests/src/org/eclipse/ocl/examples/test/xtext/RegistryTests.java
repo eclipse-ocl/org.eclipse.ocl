@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry.Registration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.xtext.testing.GlobalRegistries;
+//import org.eclipse.xtext.testing.GlobalRegistries;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -51,15 +51,15 @@ public class RegistryTests extends TestCase
 	}
 
 	public void testCompleteOCLRegistry_Access() {
-		GlobalRegistries.GlobalStateMemento copyOfGlobalState1 = null;
+		//		GlobalRegistries.GlobalStateMemento copyOfGlobalState1 = null;
 		GlobalRegistries2.GlobalStateMemento copyOfGlobalState2 = null;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			try {
-				copyOfGlobalState2 = GlobalRegistries2.makeCopyOfGlobalState();
-			}
-			catch (Throwable e) {
-				copyOfGlobalState1 = GlobalRegistries.makeCopyOfGlobalState();
-			}
+			//			try {
+			copyOfGlobalState2 = GlobalRegistries2.makeCopyOfGlobalState();
+			//			}
+			//			catch (Throwable e) {
+			//				copyOfGlobalState1 = GlobalRegistries.makeCopyOfGlobalState();
+			//			}
 		}
 		try {
 			EcorePlugin.ExtensionProcessor.process(null);
@@ -86,9 +86,9 @@ public class RegistryTests extends TestCase
 			if (copyOfGlobalState2 != null) {
 				copyOfGlobalState2.restoreGlobalState();
 			}
-			else if (copyOfGlobalState1 != null) {
-				copyOfGlobalState1.restoreGlobalState();
-			}
+			//			else if (copyOfGlobalState1 != null) {
+			//				copyOfGlobalState1.restoreGlobalState();
+			//			}
 		}
 	}
 
