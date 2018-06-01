@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.osgi.framework.Bundle;
@@ -356,7 +357,7 @@ public abstract class JavaFileUtil
 	 */
 	public static @Nullable File getProjectBinFolder(@NonNull URIConverter uriConverter, @NonNull String projectName) {
 		String path = null;
-		String binDir = (System.getProperty("MAVEN_TEST") != null) || (System.getProperty("TYCHO_TEST") != null) ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
+		String binDir = CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire() ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
 		URI platformURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
 		URI pathURI = uriConverter.normalize(platformURI);
 		String location = null;

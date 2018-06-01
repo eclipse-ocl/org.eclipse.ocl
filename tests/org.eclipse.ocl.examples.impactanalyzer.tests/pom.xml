@@ -31,9 +31,6 @@
               <useUIHarness>false</useUIHarness>
               <useUIThread>true</useUIThread>
               <argLine>-DtestNameSuffix="tycho" -ea</argLine>
-              <systemProperties>
-                <TYCHO_TEST>true</TYCHO_TEST>
-              </systemProperties>
               <reportsDirectory>${project.build.directory}/surefire-reports/with TracebackSteps</reportsDirectory>
             </configuration>
           </execution>

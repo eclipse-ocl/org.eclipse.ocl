@@ -22,9 +22,6 @@
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
           <argLine>-DtestNameSuffix="tycho" -ea</argLine>
-          <systemProperties>
-            <TYCHO_TEST>true</TYCHO_TEST>
-          </systemProperties>
        </configuration>
       </plugin>
     </plugins>

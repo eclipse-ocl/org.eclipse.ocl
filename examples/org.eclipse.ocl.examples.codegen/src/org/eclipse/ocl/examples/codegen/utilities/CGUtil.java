@@ -211,6 +211,23 @@ public class CGUtil
 		return referenceTypeId == actualTypeId ? Boolean.TRUE : null;			// FIXME support conformance somehow
 	}
 
+	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the maven-surefire-plugin..
+	 */
+	public static boolean isMavenSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("maven");
+	}
+
+	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the tycho-surefire-plugin..
+	 */
+	public static boolean isTychoSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("tycho");
+	}
 
 	/**
 	 * Replace oldElement by newElement and return oldElement which is orphaned by the replacement.

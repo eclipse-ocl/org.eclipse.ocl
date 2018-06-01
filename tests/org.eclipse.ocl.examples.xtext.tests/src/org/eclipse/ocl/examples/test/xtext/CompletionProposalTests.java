@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
@@ -274,8 +275,7 @@ public class CompletionProposalTests extends XtextTestCase
 	}
 
 	public void testEditor_OCLstdlib_Completions() throws Exception {
-		String testNameSuffix = System.getProperty("testNameSuffix", "");
-		boolean isTycho = "tycho".equals(testNameSuffix);
+		boolean isTycho = CGUtil.isTychoSurefire();
 		if (isTycho) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;

@@ -24,6 +24,7 @@ import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.debug.core.OCLDebugTarget;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
@@ -48,7 +49,7 @@ public class ConsoleTests extends AbstractConsoleTests
 	}
 
 	public void testConsole_debugger() throws Exception {
-		if (Boolean.getBoolean("TYCHO_TEST")) {				// FIXME BUG 526252
+		if (CGUtil.isTychoSurefire()) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}
