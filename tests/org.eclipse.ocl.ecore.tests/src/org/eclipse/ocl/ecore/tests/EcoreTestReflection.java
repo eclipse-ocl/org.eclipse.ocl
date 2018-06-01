@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.ecore.internal.UMLReflectionImpl;
 import org.eclipse.ocl.ecore.opposites.EcoreEnvironmentFactoryWithHiddenOpposites;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.tests.GenericTestSuite;
 import org.eclipse.ocl.tests.TestReflection;
 
 @SuppressWarnings("nls")
@@ -382,10 +382,12 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 			"ecore", new EcoreResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(EcorePackage.eINSTANCE.getNsURI(), EcorePackage.eINSTANCE);
-		EcorePlugin.ExtensionProcessor.process(null);
-		Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
-		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-		uriMap.putAll(computePlatformURIMap);
+		GenericTestSuite.initializeTestResourceSet(resourceSet,
+			"org.eclipse.emf.ecore",
+			"org.eclipse.ocl",
+			"org.eclipse.ocl.ecore",
+			"org.eclipse.ocl.ecore.tests"
+				);
 		return resourceSet;
 	}
 

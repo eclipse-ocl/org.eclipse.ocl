@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -46,6 +47,7 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.Choice;
 import org.eclipse.ocl.helper.ChoiceKind;
 import org.eclipse.ocl.helper.OCLHelper;
+import org.eclipse.ocl.internal.helper.PluginFinder;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.parser.OCLProblemHandler;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -148,6 +150,38 @@ extends TestCase {
 		if (initialized)
 			return;
 		initialized = true;
+	}
+
+	/**
+	 * Ensure that resourceSet can be used to resolve resources from bundleNames.
+	 *
+	 * If Eclipse is running all registered bundles are made available.
+	 *
+	 * If standalone only those explicitly named bundleNames are resolved on the classPath.
+	 */
+	public static void initializeTestResourceSet(ResourceSet resourceSet, String... bundleNames) {
+		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
+			EcorePlugin.ExtensionProcessor.process(null);;
+			Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
+			uriMap.putAll(computePlatformURIMap);
+		}
+		else {
+			PluginFinder finder = new PluginFinder(bundleNames);
+			finder.resolve();
+			for (String bundleName : bundleNames) {
+				URI pluginURI = URI.createPlatformPluginURI(bundleName + "/", true);
+				URI resourceURI = URI.createPlatformResourceURI(bundleName + "/", true);
+				URI locationURI = finder.getURI(bundleName);
+				if (locationURI != null) {
+					uriMap.put(resourceURI, pluginURI);
+					uriMap.put(pluginURI, locationURI);
+				}
+				else {
+					System.err.println("initializeTestResourceSet failed to resolve '" + bundleName + "'");
+				}
+			}
+		}
 	}
 
 	protected TestReflection.Static<E, PK, T, C, CLS, DT, PT, ET, O, PM, P, PA, PR, EL, S, COA, SSA, CT> staticReflection;
