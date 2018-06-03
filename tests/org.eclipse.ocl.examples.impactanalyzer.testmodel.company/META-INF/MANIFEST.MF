@@ -12,7 +12,7 @@ Export-Package: company,
  company.util,
  primitivetypes,
  primitivetypes.impl
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;resolution:=optional,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.ocl.examples.impactanalyzer.testmodel.company

@@ -7,10 +7,10 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.ocl.examples.xtext.tests.Activator
 Require-Bundle: org.junit;visibility:=reexport,
- org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.jface.text;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.debug.ui;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.jface.text;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.ui;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.debug.ui;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.codegen.ecore;bundle-version="[2.5.0,3.0.0)",
  org.eclipse.emf.examples.library;bundle-version="[2.5.0,3.0.0)",
