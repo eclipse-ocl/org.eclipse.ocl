@@ -23,6 +23,7 @@ import java.util.jar.Manifest;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.emf.common.util.URI;
 import org.w3c.dom.Document;
 
 /**
@@ -30,11 +31,12 @@ import org.w3c.dom.Document;
  * It should be replaced by StandaloneProjectMap once promoted to ocl.common.
  *
  * @since 3.2
+ *
  */
 public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 {
 	private final Set<String> requiredMappings;
-	private final Map<String, String> resolvedMappings = new HashMap<String, String>();
+	private final Map<String, URI> resolvedMappings = new HashMap<String, URI>();
 
 	public PluginFinder(String... requiredProjects) {
 		this.requiredMappings = new HashSet<String>();
@@ -51,6 +53,11 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 	}
 
 	public String get(String pluginId) {
+		URI uri = getURI(pluginId);
+		return uri == null ? null : uri.isFile() ? uri.toFileString() : uri.toString();
+	}
+
+	public URI getURI(String pluginId) {
 		return resolvedMappings.get(pluginId);
 	}
 
@@ -66,7 +73,7 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 						project = project.substring(0, indexOf);
 					}
 					if (requiredMappings.contains(project)) {
-						resolvedMappings.put(project, "archive:" + f.toURI() + "!/"); //$NON-NLS-1$ //$NON-NLS-2$
+						resolvedMappings.put(project, URI.createURI("archive:" + f.toURI() + "!/")); //$NON-NLS-1$ //$NON-NLS-2$
 						return true;
 					}
 				}
@@ -85,7 +92,7 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
 			String project = document.getDocumentElement().getElementsByTagName("name").item(0).getTextContent(); //$NON-NLS-1$
 			if (requiredMappings.contains(project)) {
-				resolvedMappings.put(project, file.getParentFile().getCanonicalPath() + File.separator);
+				resolvedMappings.put(project, URI.createFileURI(file.getParentFile().getCanonicalPath() + File.separator));
 				return true;
 			}
 		}
