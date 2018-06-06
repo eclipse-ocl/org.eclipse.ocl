@@ -19,7 +19,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="Neon"
+      defaultValue="Photon"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -85,11 +85,31 @@
             name="lpg.runtime.java"/>
         <requirement
             name="org.objectweb.asm"
-            versionRange="[5.0.0,6.0.0)"/>
+            versionRange="[5.0.0,7.0.0)"/>
+        <repositoryList
+            name="Photon">
+          <repository
+              url="http://download.eclipse.org/releases/photon"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180531190352/repository/"/>
+          <repository
+              url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/photon"/>
+        </repositoryList>
+        <repositoryList
+            name="Oxygen">
+          <repository
+              url="http://download.eclipse.org/releases/oxygen"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
+          <repository
+              url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/oxygen"/>
+        </repositoryList>
         <repositoryList
             name="Neon">
           <repository
               url="http://download.eclipse.org/releases/neon"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/R-builds/R20170307180635/repository/"/>
           <repository
               url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/neon"/>
         </repositoryList>
@@ -98,6 +118,8 @@
           <repository
               url="http://download.eclipse.org/releases/mars"/>
           <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
+          <repository
               url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/mars"/>
         </repositoryList>
         <repositoryList
@@ -105,7 +127,7 @@
           <repository
               url="http://download.eclipse.org/releases/luna"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
           <repository
               url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/luna"/>
         </repositoryList>
@@ -133,7 +155,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
-      name="Mylin IDE">
+      name="Mylyn IDE">
     <setupTask
         xsi:type="setup.p2:P2Task"
         label="Mylyn Tools">
@@ -197,11 +219,11 @@
         userID="${bugzilla.id}"
         password="${eclipse.user.password}">
       <buildPlan
-          name="ocl-neon-master"/>
+          name="ocl-photon-master"/>
       <buildPlan
-          name="ocl-mars-maintenance"/>
+          name="ocl-oxygen-maintenance"/>
       <buildPlan
-          name="buckminster-ocl-branch-tests"/>
+          name="ocl-branch-tests"/>
     </setupTask>
   </setupTask>
   <setupTask
@@ -392,6 +414,11 @@
         <requirement
             name="org.eclipse.ocl.examples.feature.group"/>
         <repositoryList
+            name="Photon">
+          <repository
+              url="http://download.eclipse.org/releases/oxygen"/>
+        </repositoryList>
+        <repositoryList
             name="Oxygen">
           <repository
               url="http://download.eclipse.org/releases/neon"/>
@@ -405,19 +432,19 @@
     </setupTask>
     <stream
         name="master"
-        label="Master (Neon)">
+        label="Master (Photon)">
       <setupTask
           xsi:type="setup:VariableTask"
           name="emf.branch"
           value="master"/>
     </stream>
     <stream
-        name="maintenance/R6_0"
-        label="Maintenance (Mars)">
+        name="maintenance/R6_3"
+        label="Maintenance (Oxygen)">
       <setupTask
           xsi:type="setup:VariableTask"
           name="emf.branch"
-          value="R2_10_maintenance"/>
+          value="R2_13_maintenance"/>
     </stream>
     <description>The development environment for the OCL</description>
   </project>
@@ -486,19 +513,19 @@
     </setupTask>
     <stream
         name="master"
-        label="Master (Neon)">
+        label="Master (Photon)">
       <setupTask
           xsi:type="setup:VariableTask"
           name="simrel.branch"
           value="master"/>
     </stream>
     <stream
-        name="maintenance/R5_0"
-        label="Maintenance (Mars)">
+        name="maintenance/R6_3"
+        label="Maintenance (Oxygen)">
       <setupTask
           xsi:type="setup:VariableTask"
           name="simrel.branch"
-          value="Luna_maintenance"/>
+          value="Oxygen_maintenance"/>
     </stream>
   </project>
   <logicalProjectContainer
