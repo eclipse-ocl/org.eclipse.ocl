@@ -149,6 +149,11 @@
 <topic href="help/Editors.html#CodeTemplates" label="Code Templates"></topic>
 <topic href="help/Editors.html#OpenDeclaration" label="Open Declaration"></topic>
 </topic>
+<topic href="help/NatureAndBuilder.html" label="OCL Nature and Builder Auto-Validation">
+<topic href="help/NatureAndBuilder.html#OCLbuilderConfiguration" label="Configuring the OCL Nature and Builder"></topic>
+<topic href="help/NatureAndBuilder.html#EcoreAndUMLautoValidation" label="Ecore and UML Auto-Validation"></topic>
+<topic href="help/NatureAndBuilder.html#NoNature" label="Building on pre-Photon / 2018 releases"></topic>
+</topic>
 <topic href="help/InteractiveOCL.html" label="Console">
 <topic href="help/InteractiveOCL.html#ContextObjectSelection" label="Context Object Selection"></topic>
 <topic href="help/InteractiveOCL.html#Editing2" label="Editing"></topic>

@@ -44,17 +44,17 @@
 </p>
 <p>
 				
-<code class="code">OclElement : Bag(OclElement)</code>
+<code class="code">OclElement : Bag(OclElement[*|?])</code>
 			
 </p>
 <p>
 				
-<code class="code">OclElement : Bag(OclElement)</code>
+<code class="code">OclElement : Bag(OclElement[*|?])</code>
 			
 </p>
 <p>
 				
-<code class="code">oclContents : Set(OclElement)[*|1]</code>
+<code class="code">oclContents : Set(OclElement)</code>
 			
 </p>
 <p>The composed contents of self.</p>
@@ -76,7 +76,7 @@
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Return a set of all instances of the type and derived types of self.</p>
@@ -125,7 +125,7 @@
 <p>Returns the object for which self is a composed content or null if there is no such object.</p>
 <p>
 				
-<code class="code">oclContents() : Set(OclElement)[*|1]</code>
+<code class="code">oclContents() : Set(OclElement)</code>
 			
 </p>
 <p>Returns the composed contents of self.</p>
@@ -165,7 +165,7 @@
 			</p>
 <p>
 				
-<code class="code">oclModelTypes() : Set(OclSelf)</code>
+<code class="code">oclModelTypes() : Set(OclSelf[*|?])</code>
 			
 </p>
 <p>Evaluates to all of the most derived model types of which 

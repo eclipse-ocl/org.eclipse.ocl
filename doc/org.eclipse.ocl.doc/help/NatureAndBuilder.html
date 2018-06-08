@@ -1,0 +1,132 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>OCL Nature and Builder Auto-Validation</title>
+<link href="book.css" rel="stylesheet" type="text/css">
+<meta content="DocBook XSL Stylesheets V1.75.1" name="generator">
+<link rel="home" href="index.html" title="OCL Documentation">
+<link rel="up" href="UsersGuide.html" title="Users Guide">
+<link rel="prev" href="Editors.html" title="Editors">
+<link rel="next" href="InteractiveOCL.html" title="Console">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<h1 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">OCL Nature and Builder Auto-Validation</h1>
+<div class="section" title="OCL Nature and Builder Auto-Validation">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="NatureAndBuilder"></a>OCL Nature and Builder Auto-Validation</h2>
+</div>
+</div>
+</div>
+<p>The build of an OCL or OCL-containing source file validates the ource file and updates markers in the Problems View to identify issues that the user may care to address. Double-clicking on the Problems View Marker opens an
+				editor to faciltate fixing the problem.</p>
+<p>The build validation occurs whenever a source file changes or is &lsquo;cleaned&rsquo; and when the containing project
+				has the OCL nature configured.</p>
+<p>If the Eclipse Workspace is configured to auto-build, the OCL builder runs automatically and so auto-validation occurs.</p>
+<div class="section" title="Configuring the OCL Nature and Builder">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLbuilderConfiguration"></a>Configuring the OCL Nature and Builder</h3>
+</div>
+</div>
+</div>
+<p>The OCL Nature may be added or removed from a Project by selecting the project in an Explorer View and
+					invoking 
+					<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span> or 
+					<span class="bold"><strong>Configure-&gt;Unconfigure OCL</strong></span> from the context menu. Alternatively
+					the new Project Natures page may be used from the Project Properties page.
+				</p>
+<p>Configuing the OCL nature modifies the 
+					<span class="bold"><strong>.project</strong></span> file to add the 
+					<span class="bold"><strong>org.eclipse.ocl.pivot.ui.oclnature</strong></span> nature
+					and 
+					<span class="bold"><strong>org.eclipse.ocl.pivot.ui.oclbuilder</strong></span>. The builder has an argument dictionaries to select file extensions
+					and file paths that are included or excluded by the builder.
+				</p>
+<div class="literallayout">
+<p>
+<code class="code">&lt;arguments&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;disabledExtensions&lt;/key&gt;<br>
+		&lt;value&gt;*,essentialocl&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;disabledPaths&lt;/key&gt;<br>
+		&lt;value&gt;bin/**,target/**&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;enabledExtensions&lt;/key&gt;<br>
+		&lt;value&gt;ecore,ocl,oclinecore,oclstdlib,uml&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;enabledPaths&lt;/key&gt;<br>
+		&lt;value&gt;**&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+&lt;/arguments&gt;<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>The default configuration enables validation of 
+					<span class="bold"><strong>ecore,ocl,oclinecore,oclstdlib,uml</strong></span> extensions and disables all other extensions, redundantly adding an explicit 
+					<span class="bold"><strong>essentialocl</strong></span> exclusion to make the syntax more obvious to a
+					casual reader. (*.essentialocl files may contain a single OCL expression, but since they lack any embedding within a model, they are not generally useful.)
+				</p>
+<p>The default configuration enables all paths except the 
+					<span class="bold"><strong>bin</strong></span> and 
+					<span class="bold"><strong>target</strong></span> paths where the Java builder or Maven builders may place copies of files that are not usually worth revalidating as distinct files.
+				</p>
+<p>The configuration in the 
+					<span class="bold"><strong>.project</strong></span> file may be edited with a text editor; there is currently no dedicated user interface.
+				</p>
+</div>
+<div class="section" title="Ecore and UML Auto-Validation">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="EcoreAndUMLautoValidation"></a>Ecore and UML Auto-Validation</h3>
+</div>
+</div>
+</div>
+<p>The EMF and UML projects provide no nature or builder and so Problems View markers for *.ecore and *.uml files
+					are dependent on the problems in the prevailing selection at the time of the preceding manual validation.</p>
+<p>Since OCL may be embedded with *.ecore or *.uml files, the OCL nature and builder provide the option to auto-validate these files.</p>
+<p>By default, your project has no OCL nature so no Ecore or UML auto-validation occurs.</p>
+<p>If you choose to add the OCL nature, the default settings that enable *.ecore and *.uml auto-validation apply. The Problems View markers resulting from auto-validation are updated after a file is saved; any markers that the Ecore or UML editors created are replaced.</p>
+<p>If you find that the auto-validation of some *.ecore and *.uml causes problems, perhaps because the reported
+					errors are not a concern for your usage, you may edit the 
+					<span class="bold"><strong>.project</strong></span> file configuration.
+				</p>
+<p>You may remove 
+					<span class="bold"><strong>ecore</strong></span> and/or 
+					<span class="bold"><strong>uml</strong></span> from the 
+					<span class="bold"><strong>enabledExtensions</strong></span> to suppress Ecore and/or UML auto-validation completely.
+				</p>
+<p>You may add individual files or file patterns to the 
+					<span class="bold"><strong>disabledPaths</strong></span> to be more selective about disabling
+					auto-validation.
+				</p>
+</div>
+<div class="section" title="Building on pre-Photon / 2018 releases">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="NoNature"></a>Building on pre-Photon / 2018 releases</h3>
+</div>
+</div>
+</div>
+<p>The OCL builder and nature are new in the Eclipse OCL 2018 release (Photon). They comply with the standard Eclipse idiom.</p>
+<p>In earlier releases, the EMF idiom was followed whereby Problems View markers were created by their save action
+					of an appropriate editor. Problems in files that had not been saved were often not visible and so diagnosis
+					only occurred when some consuming application complained..</p>
+</div>
+</div>
+</body>
+</html>

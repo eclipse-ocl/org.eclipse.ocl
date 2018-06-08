@@ -41,6 +41,16 @@
 <p>Operations of OclAny, where the instance of OclAny is called object.</p>
 <p>
 				
+<span class="bold"><strong>Attributes</strong></span>
+			
+</p>
+<p>
+				
+<code class="code">OclInvalid : Bag(OclInvalid[*|?])</code>
+			
+</p>
+<p>
+				
 <span class="bold"><strong>Operations</strong></span>
 			
 </p>
@@ -82,7 +92,7 @@
 <p></p>
 <p>
 				
-<code class="code">oclAsSet() : Set(OclSelf)[*|1]</code>
+<code class="code">oclAsSet() : Set(OclSelf)</code>
 			
 </p>
 <p>Returns a Set with 
@@ -215,7 +225,7 @@
 			</p>
 <p>
 				
-<code class="code">oclTypes() : Set(OclSelf)</code>
+<code class="code">oclTypes() : Set(OclSelf[*|?])</code>
 			
 </p>
 <p>Evaluates to all of the most derived type of which 

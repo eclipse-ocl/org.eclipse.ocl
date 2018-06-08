@@ -70,6 +70,9 @@
 <span class="section"><a href="#Editors">Editors</a></span>
 </dt>
 <dt>
+<span class="section"><a href="#NatureAndBuilder">OCL Nature and Builder Auto-Validation</a></span>
+</dt>
+<dt>
 <span class="section"><a href="#InteractiveOCL">Console</a></span>
 </dt>
 <dt>
@@ -499,7 +502,7 @@
 			<a class="link" href="#GettingStarted" title="Getting Started">Getting Started</a>.
 		</p>
 <p>A PDF version of this documentation is available at 
-			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.3.0/ocl.pdf" target="_new">OCL 6.3.0 Documentation</a>.
+			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.4.0/ocl.pdf" target="_new">OCL 6.4.0 Documentation</a>.
 		</p>
 <div class="section" title="What is OCL?">
 <div class="titlepage">
@@ -769,9 +772,9 @@ assertQueryResults(null,&nbsp;"Set{'b'}",&nbsp;"Set{'a',&nbsp;'b',&nbsp;'c'}&nbs
 </div>
 </div>
 <p>The Classic Eclipse OCL is used as a component in a variety of other Eclipse projects such as Acceleo, BIRT, GMF, Modisco, QVTo. Ecore models are used directly, which leads to some internal difficulties.</p>
-<p>The new Unified Eclipse OCL exploits Xtext and uses Ecore models indirectly via a UML-aligned Pivot models. This provides a choice between the classic APIs that offer limited forward functionality, and the new APIs that some of which are promoted to non-experimental form in the Mars release. Many remain experimental and intrernal.</p>
+<p>The new Unified Eclipse OCL exploits Xtext and uses Ecore models indirectly via a UML-aligned Pivot models. This provides a choice between the classic APIs that offer limited forward functionality, and the new APIs that some of which are promoted to non-experimental form in the Mars release. Many remain experimental and internal.</p>
 <p>The new code already offers a fully modeled Standard Library that can be extended or replaced. The new OCL grammars are extended internally from Essential OCL to OCLinEcore or Complete OCL, and externally to QVT Core and QVT Relational. The associated Concrete Syntax to Abstract Syntax mapping is not yet model-driven and so harder to extend.</p>
-<p>Full model-driven extensibility is planned for the Photon release.</p>
+<p>Full model-driven extensibility is planned for a future release.</p>
 </div>
 <div class="section" title="Who Uses OCL and Eclipse OCL?">
 <div class="titlepage">
@@ -812,7 +815,7 @@ assertQueryResults(null,&nbsp;"Set{'b'}",&nbsp;"Set{'a',&nbsp;'b',&nbsp;'c'}&nbs
 				<em class="glossterm">RTF</em> and so Eclipse OCL is pioneering solutions to many of the under-specification problems in the OCL specification.
 			</p>
 <p>You can expect future changes in OMG OCL to have an implementation in Eclipse OCL to demonstrate their viability. It is likely that the next version of the OCL specification will use Eclipse OCL and M2T(Model to Text) tooling to eliminate inconsistencies. Eclipse OCL is currently in use to check that the OCL used in the UML 2.5 specification is syntactically and semantically correct.</p>
-<p>Direct tooling of the UML 2.5 and OCL 2.5 specifications for the Photon Eclipse release may demonstrate that the OCL aspects of the specifications is also functionally consistent.</p>
+<p>Direct tooling of the UML 2.5 and OCL 2.5 specifications for a future Eclipse release may demonstrate that the OCL aspects of the specifications is also functionally consistent.</p>
 </div>
 <div class="section" title="Getting Started">
 <div class="titlepage">
@@ -1231,8 +1234,8 @@ assertQueryResults(null,&nbsp;"Set{'b'}",&nbsp;"Set{'a',&nbsp;'b',&nbsp;'c'}&nbs
 <p>In the Kepler (3.3/4.1) release, the code generator was substantially improved and a number of internal APIs have evolved accordingly. UML support was improved to facilitate usage within Papyrus, and extensibility was improved for use by QVTd.</p>
 <p>In the Luna (3.4/5.0) release, further code generation improvements have been made and major new User Interface capabilities added. There is at last an OCL debugger and a Constraint Validity View.</p>
 <p>In the Mars (1.0/6.0) release, the transition is nominally complete and the main org.eclipse.ocl.examples.* plugins have been renamed to org.eclipse.ocl.*. All functionality should use the new Pivot metamodel by default. However the classic Ecore and UML support will remain for compatibility. Unfortunately time ran out and so review and revision hads to be truncated. Documentation is sadly deficient.</p>
-<p>The Neon (1.1/6.1), Neon++(1.2/6.2) and Oxygen (1.3/6.3) resolve a variety of extensibility issues highlted by Eclipse QVTd. (The double Neon release was necessiated by SSPI breakage in Xtext 2.9. The Neon release continuing with pre-Xtext 2.9 API, Neon++ migrating.)</p>
-<p>Hopefully the Photon (2.0/7.0) release will track the actual OCL 2.5 submission. </p>
+<p>The Neon (1.1/6.1), Neon++(1.2/6.2), Oxygen (1.3/6.3) and Photon (1.4/6.4) resolve a variety of extensibility issues highlighted by Eclipse QVTd. (The double Neon release was necessiated by SSPI breakage in Xtext 2.9. The Neon release continuing with pre-Xtext 2.9 API, Neon++ migrating.)</p>
+<p>Hopefully the future (2.0/7.0) release will track the actual OCL 2.5 submission. </p>
 </div>
 <div class="section" title="Migration">
 <div class="titlepage">
@@ -5417,6 +5420,123 @@ in&nbsp;test.substring(start,finish)<br>
 <p>It is possible to navigate to a definition provided an editor is already open for the definition. </p>
 </div>
 </div>
+<div class="section" title="OCL Nature and Builder Auto-Validation">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="NatureAndBuilder"></a>OCL Nature and Builder Auto-Validation</h2>
+</div>
+</div>
+</div>
+<p>The build of an OCL or OCL-containing source file validates the ource file and updates markers in the Problems View to identify issues that the user may care to address. Double-clicking on the Problems View Marker opens an
+				editor to faciltate fixing the problem.</p>
+<p>The build validation occurs whenever a source file changes or is &lsquo;cleaned&rsquo; and when the containing project
+				has the OCL nature configured.</p>
+<p>If the Eclipse Workspace is configured to auto-build, the OCL builder runs automatically and so auto-validation occurs.</p>
+<div class="section" title="Configuring the OCL Nature and Builder">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLbuilderConfiguration"></a>Configuring the OCL Nature and Builder</h3>
+</div>
+</div>
+</div>
+<p>The OCL Nature may be added or removed from a Project by selecting the project in an Explorer View and
+					invoking 
+					<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span> or 
+					<span class="bold"><strong>Configure-&gt;Unconfigure OCL</strong></span> from the context menu. Alternatively
+					the new Project Natures page may be used from the Project Properties page.
+				</p>
+<p>Configuing the OCL nature modifies the 
+					<span class="bold"><strong>.project</strong></span> file to add the 
+					<span class="bold"><strong>org.eclipse.ocl.pivot.ui.oclnature</strong></span> nature
+					and 
+					<span class="bold"><strong>org.eclipse.ocl.pivot.ui.oclbuilder</strong></span>. The builder has an argument dictionaries to select file extensions
+					and file paths that are included or excluded by the builder.
+				</p>
+<div class="literallayout">
+<p>
+<code class="code">&lt;arguments&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;disabledExtensions&lt;/key&gt;<br>
+		&lt;value&gt;*,essentialocl&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;disabledPaths&lt;/key&gt;<br>
+		&lt;value&gt;bin/**,target/**&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;enabledExtensions&lt;/key&gt;<br>
+		&lt;value&gt;ecore,ocl,oclinecore,oclstdlib,uml&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+	&lt;dictionary&gt;<br>
+		&lt;key&gt;enabledPaths&lt;/key&gt;<br>
+		&lt;value&gt;**&lt;/value&gt;<br>
+	&lt;/dictionary&gt;<br>
+&lt;/arguments&gt;<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>The default configuration enables validation of 
+					<span class="bold"><strong>ecore,ocl,oclinecore,oclstdlib,uml</strong></span> extensions and disables all other extensions, redundantly adding an explicit 
+					<span class="bold"><strong>essentialocl</strong></span> exclusion to make the syntax more obvious to a
+					casual reader. (*.essentialocl files may contain a single OCL expression, but since they lack any embedding within a model, they are not generally useful.)
+				</p>
+<p>The default configuration enables all paths except the 
+					<span class="bold"><strong>bin</strong></span> and 
+					<span class="bold"><strong>target</strong></span> paths where the Java builder or Maven builders may place copies of files that are not usually worth revalidating as distinct files.
+				</p>
+<p>The configuration in the 
+					<span class="bold"><strong>.project</strong></span> file may be edited with a text editor; there is currently no dedicated user interface.
+				</p>
+</div>
+<div class="section" title="Ecore and UML Auto-Validation">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="EcoreAndUMLautoValidation"></a>Ecore and UML Auto-Validation</h3>
+</div>
+</div>
+</div>
+<p>The EMF and UML projects provide no nature or builder and so Problems View markers for *.ecore and *.uml files
+					are dependent on the problems in the prevailing selection at the time of the preceding manual validation.</p>
+<p>Since OCL may be embedded with *.ecore or *.uml files, the OCL nature and builder provide the option to auto-validate these files.</p>
+<p>By default, your project has no OCL nature so no Ecore or UML auto-validation occurs.</p>
+<p>If you choose to add the OCL nature, the default settings that enable *.ecore and *.uml auto-validation apply. The Problems View markers resulting from auto-validation are updated after a file is saved; any markers that the Ecore or UML editors created are replaced.</p>
+<p>If you find that the auto-validation of some *.ecore and *.uml causes problems, perhaps because the reported
+					errors are not a concern for your usage, you may edit the 
+					<span class="bold"><strong>.project</strong></span> file configuration.
+				</p>
+<p>You may remove 
+					<span class="bold"><strong>ecore</strong></span> and/or 
+					<span class="bold"><strong>uml</strong></span> from the 
+					<span class="bold"><strong>enabledExtensions</strong></span> to suppress Ecore and/or UML auto-validation completely.
+				</p>
+<p>You may add individual files or file patterns to the 
+					<span class="bold"><strong>disabledPaths</strong></span> to be more selective about disabling
+					auto-validation.
+				</p>
+</div>
+<div class="section" title="Building on pre-Photon / 2018 releases">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="NoNature"></a>Building on pre-Photon / 2018 releases</h3>
+</div>
+</div>
+</div>
+<p>The OCL builder and nature are new in the Eclipse OCL 2018 release (Photon). They comply with the standard Eclipse idiom.</p>
+<p>In earlier releases, the EMF idiom was followed whereby Problems View markers were created by their save action
+					of an appropriate editor. Problems in files that had not been saved were often not visible and so diagnosis
+					only occurred when some consuming application complained..</p>
+</div>
+</div>
 <div class="section" title="Console">
 <div class="titlepage">
 <div>
@@ -6632,7 +6752,7 @@ in&nbsp;test.substring(start,finish)<br>
 </p>
 </div>
 <p></p>
-<p>Unfortunately, in the Oxygen release, EMF does not support this customization. This must be activated explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the 
+<p>Unfortunately, in the Photon release, EMF does not support this customization. This must be activated explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the 
 						<a class="link" href="#OCLinEcoreEObjectValidator" title="OCLinEcoreEObjectValidator">OCLinEcoreEObjectValidator</a>.
 					</p>
 </div>
@@ -8373,7 +8493,7 @@ self.base_Class.extension_Gender.oclIsKindOf(Male)<br>
 <p>Juno introduced an experimental ability to replace the delegated interpreted execution of OCL by direct execution of compiled Java code. This facility has been substantially improved and tested for the Kepler release.</p>
 <p>Optimisations for Luna included inlining the bodies directly into the EMF Impl classes. </p>
 <p>Mars has useful fixes and benefits from safe navigation analyses.</p>
-<p>Further optimisations are scheduled for Photon.</p>
+<p>Further optimisations are scheduled for future releases.</p>
 <p>
 						
 </p>
@@ -8662,12 +8782,12 @@ self.base_Class.extension_Gender.oclIsKindOf(Male)<br>
 			</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : Bag(TT)[*|1]</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : Bag(TT)</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : Bag(TT)[*|1]</code>
+<code class="code">selectByType(TT)(type : TT[?]) : Bag(TT)</code>
 			
 </p>
 <p>
@@ -8792,7 +8912,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Returns 
@@ -8828,16 +8948,41 @@ endif)<br>
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">and2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">false</code> if either 
+				<code class="code">self</code> or 
+				<code class="code">b</code> is 
+				<code class="code">false</code>.
+				Otherwise 
+				<code class="code">true</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -8874,16 +9019,16 @@ endif)<br>
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;b<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -8891,7 +9036,33 @@ endif)<br>
 <p></p>
 <p>
 				
-<code class="code">not() : Boolean[?]</code>
+<code class="code">implies2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> is 
+				<code class="code">false</code>, or if 
+				<code class="code">b</code> is 
+				<code class="code">true</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">not() : Boolean[?] validating</code>
 				precedence: 
 				<code class="code">UNARY</code>
 			
@@ -8915,9 +9086,30 @@ endif)<br>
 <div class="literallayout">
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self&nbsp;=&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">not2() : Boolean[1]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> is 
+				<code class="code">false</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;then&nbsp;false&nbsp;else&nbsp;true&nbsp;endif<br>
 
 </code>
 </p>
@@ -8953,16 +9145,41 @@ endif)<br>
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">or2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if either 
+				<code class="code">self</code> or 
+				<code class="code">b</code> is 
+				<code class="code">true</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -9015,11 +9232,32 @@ endif)<br>
 <div class="literallayout">
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self&nbsp;&lt;&gt;&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">xor2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> &lt;&gt; 
+				<code class="code">b</code>
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;self&nbsp;&lt;&gt;&nbsp;b<br>
 
 </code>
 </p>
@@ -9257,21 +9495,21 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">intersection(c : Collection(T)) : Bag(T)</code>
-			
-</p>
-<p>The intersection of 
-				<code class="code">self</code> and bag; the bag of all elements that are in both 
-				<code class="code">self</code> and c.
-			</p>
-<p>
-				
 <code class="code">intersection(u : UniqueCollection(T)) : Set(T)</code>
 			
 </p>
 <p>The intersection of 
 				<code class="code">self</code> and a unique collection; the set of all elements that are in both 
 				<code class="code">self</code> and u.
+			</p>
+<p>
+				
+<code class="code">intersection(c : Collection(T)) : Bag(T)</code>
+			
+</p>
+<p>The intersection of 
+				<code class="code">self</code> and bag; the bag of all elements that are in both 
+				<code class="code">self</code> and c.
 			</p>
 <p>
 				
@@ -9326,7 +9564,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1]))[*|1]</code>
+<code class="code">product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1]))</code>
 			
 </p>
 <p>The cartesian product operation of 
@@ -9334,12 +9572,12 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : Collection(TT)[*|1]</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : Collection(TT)</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : Collection(TT)[*|1]</code>
+<code class="code">selectByType(TT)(type : TT[?]) : Collection(TT)</code>
 			
 </p>
 <p>
@@ -9539,7 +9777,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Return a set of all enumeration values of 
@@ -9574,12 +9812,12 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">Enumeration : Bag(Enumeration)</code>
+<code class="code">Enumeration : Bag(Enumeration[*|?])</code>
 			
 </p>
 <p>
 				
-<code class="code">OclEnumeration : Bag(OclEnumeration)</code>
+<code class="code">OclEnumeration : Bag(OclEnumeration[*|?])</code>
 			
 </p>
 </div>
@@ -9652,7 +9890,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">/(i : OclSelf[?]) : Real[1]</code>
+<code class="code">/(i : OclSelf[?]) : Real[1] invalidating</code>
 				precedence: 
 				<code class="code">MULTIPLICATIVE</code>
 			
@@ -10031,6 +10269,16 @@ endif)<br>
 <p>Operations of OclAny, where the instance of OclAny is called object.</p>
 <p>
 				
+<span class="bold"><strong>Attributes</strong></span>
+			
+</p>
+<p>
+				
+<code class="code">OclInvalid : Bag(OclInvalid[*|?])</code>
+			
+</p>
+<p>
+				
 <span class="bold"><strong>Operations</strong></span>
 			
 </p>
@@ -10072,7 +10320,7 @@ endif)<br>
 <p></p>
 <p>
 				
-<code class="code">oclAsSet() : Set(OclSelf)[*|1]</code>
+<code class="code">oclAsSet() : Set(OclSelf)</code>
 			
 </p>
 <p>Returns a Set with 
@@ -10205,7 +10453,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">oclTypes() : Set(OclSelf)</code>
+<code class="code">oclTypes() : Set(OclSelf[*|?])</code>
 			
 </p>
 <p>Evaluates to all of the most derived type of which 
@@ -10332,17 +10580,17 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">OclElement : Bag(OclElement)</code>
+<code class="code">OclElement : Bag(OclElement[*|?])</code>
 			
 </p>
 <p>
 				
-<code class="code">OclElement : Bag(OclElement)</code>
+<code class="code">OclElement : Bag(OclElement[*|?])</code>
 			
 </p>
 <p>
 				
-<code class="code">oclContents : Set(OclElement)[*|1]</code>
+<code class="code">oclContents : Set(OclElement)</code>
 			
 </p>
 <p>The composed contents of self.</p>
@@ -10364,7 +10612,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Return a set of all instances of the type and derived types of self.</p>
@@ -10413,7 +10661,7 @@ endif)<br>
 <p>Returns the object for which self is a composed content or null if there is no such object.</p>
 <p>
 				
-<code class="code">oclContents() : Set(OclElement)[*|1]</code>
+<code class="code">oclContents() : Set(OclElement)</code>
 			
 </p>
 <p>Returns the composed contents of self.</p>
@@ -10453,7 +10701,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">oclModelTypes() : Set(OclSelf)</code>
+<code class="code">oclModelTypes() : Set(OclSelf[*|?])</code>
 			
 </p>
 <p>Evaluates to all of the most derived model types of which 
@@ -10507,7 +10755,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Return a set of all enumeration values of 
@@ -10541,6 +10789,17 @@ endif)<br>
 				</a>
 			
 </p>
+<p>
+				
+<span class="bold"><strong>Associations</strong></span>
+			
+</p>
+<p>
+				
+<code class="code">oclBadProperty : OclAny[?]</code>
+			
+</p>
+<p>An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.</p>
 <p>
 				
 <span class="bold"><strong>Operations</strong></span>
@@ -10590,7 +10849,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">oclAsSet() : Set(OclSelf)[*|1]</code>
+<code class="code">oclAsSet() : Set(OclSelf)</code>
 			
 </p>
 <p>
@@ -10598,6 +10857,12 @@ endif)<br>
 <code class="code">oclAsType(TT)(type : TT[?]) : TT[?]</code>
 			
 </p>
+<p>
+				
+<code class="code">oclBadOperation() : OclAny[?]</code>
+			
+</p>
+<p>An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.</p>
 <p>
 				
 <code class="code">oclIsInvalid() : Boolean[1] validating</code>
@@ -10806,7 +11071,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Return a set of all instances of the stereotype and derived types of self.</p>
@@ -10992,7 +11257,7 @@ endif)<br>
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)</code>
+<code class="code">allInstances() : Set(OclSelf[*|?])</code>
 			
 </p>
 <p>Returns 
@@ -11010,6 +11275,11 @@ endif)<br>
 <code class="code">implies(b : Boolean[?]) : Boolean[?]</code>
 				precedence: 
 				<code class="code">IMPLIES</code>
+			
+</p>
+<p>
+				
+<code class="code">oclAsSet() : Set(OclSelf)</code>
 			
 </p>
 <p>
@@ -11082,7 +11352,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">indexOf(obj : OclAny[?]) : Integer[1]</code>
+<code class="code">indexOf(obj : OclAny[?]) : Integer[1] invalidating</code>
 			
 </p>
 <p>The index of object obj in the ordered collection.</p>
@@ -11199,6 +11469,14 @@ endif)<br>
 			</p>
 <p>
 				
+<code class="code">includingAll(objects : Collection(T)) : OrderedSet(T)</code>
+			
+</p>
+<p>The ordered set containing all elements of 
+				<code class="code">self</code> plus objects added as the last elements.
+			</p>
+<p>
+				
 <code class="code">insertAt(index : Integer[?], object : T[?]) : OrderedSet(T) invalidating</code>
 			
 </p>
@@ -11253,12 +11531,12 @@ endif)<br>
 <p>The ordered set of elements with same elements but with the opposite order.</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : OrderedSet(TT)[*|1]</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : OrderedSet(TT)</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : OrderedSet(TT)[*|1]</code>
+<code class="code">selectByType(TT)(type : TT[?]) : OrderedSet(TT)</code>
 			
 </p>
 <p>
@@ -11416,7 +11694,7 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">/(r : OclSelf[?]) : Real[1]</code>
+<code class="code">/(r : OclSelf[?]) : Real[1] invalidating</code>
 				precedence: 
 				<code class="code">MULTIPLICATIVE</code>
 			
@@ -11575,6 +11853,14 @@ endif)<br>
 			</p>
 <p>
 				
+<code class="code">includingAll(objects : Collection(T)) : Sequence(T)</code>
+			
+</p>
+<p>The sequence containing all elements of 
+				<code class="code">self</code> plus objects added as the last elements.
+			</p>
+<p>
+				
 <code class="code">insertAt(index : Integer[?], object : T[?]) : Sequence(T) invalidating</code>
 			
 </p>
@@ -11605,12 +11891,12 @@ endif)<br>
 <p>The sequence containing the same elements but with the opposite order.</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : Sequence(TT)[*|1]</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : Sequence(TT)</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : Sequence(TT)[*|1]</code>
+<code class="code">selectByType(TT)(type : TT[?]) : Sequence(TT)</code>
 			
 </p>
 <p>
@@ -11766,12 +12052,12 @@ endif)<br>
 			</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : Set(TT)[*|1]</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : Set(TT)</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : Set(TT)[*|1]</code>
+<code class="code">selectByType(TT)(type : TT[?]) : Set(TT)</code>
 			
 </p>
 <p>
@@ -12352,7 +12638,7 @@ endif)<br>
 <p>Converts 
 				<code class="code">self</code> to an Integer value unless 
 				<code class="code">self</code> is 
-				<code class="code">unlimited</code> in which 
+				<span class="emphasis"><em>unlimited</em></span> in which case 
 				<code class="code">self</code> is converted to 
 				<code class="code">invalid</code>.
 			</p>
@@ -13356,7 +13642,7 @@ endif)<br>
 </div>
 <p>We have shown how OCL may be used to enrich Ecore meta-models, how model instances can be created
 					and validated and how expressions can be evaluated, all without generating any Java code.</p>
-<p>Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.3.0 (Oxygen) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
+<p>Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.4.0 (Photon) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
 					In the 
 					<a class="link" href="#CodeGenerationTutorial" title="Code Generation tutorial">Code Generation Tutorial</a>, a preliminary release of 
 					the OCL to Java code generator is described, giving an approximately five-fold speed improvement
@@ -16084,13 +16370,13 @@ inv&nbsp;UpperName&nbsp;:&nbsp;name&nbsp;=&nbsp;name.toUpperCase()<br>
 					parsed, it is well-formed (the parser automatically validates the expression
 					against the semantic well-formedness rules).</p>
 <p>The main entrypoint into the OCL API is the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">OCL</a> class. An 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html" target="_new">OCL</a> class. An 
 					<code class="code">OCL</code> provides an autonomous OCL parsing environment.  It tracks all constraints that are parsed in this environment, including the definitions of additional operations and attributes. The 
 					<code class="code">OCL.newInstance()</code> factory method is used to create a new OCL with an 
 					<code class="code">EnvironmentFactory</code> that provides the binding to a particular metamodel (Ecore or UML).  In this tutorial, we will use the Ecore binding.
 				</p>
 <p>To parse a query expression, we will use the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 						<code class="code">OCLHelper</code>
 					</a> object, which provides convenient operations for parsing queries and constraints
 					(intended for processing constraints embedded in models).
@@ -16211,7 +16497,7 @@ try&nbsp;{<br>
 </div>
 <p>More interesting than parsing an OCL expression or constraint is evaluating it
 					on some object.  The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Query.html" target="_new">
 						<code class="code">Query</code>
 					</a> 
 					interface provides two methods for evaluating expressions. Queries are
@@ -16223,7 +16509,7 @@ try&nbsp;{<br>
 <li class="listitem">
 <p>
 							
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject)" target="_new">
 								<code class="code">Object evaluate(Object)</code>
 							</a> 
 						
@@ -16244,7 +16530,7 @@ try&nbsp;{<br>
 <li class="listitem">
 <p>
 							
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject)" target="_new">
 								<code class="code">boolean evaluate(Object)</code>
 							</a> 
 						
@@ -16267,7 +16553,7 @@ try&nbsp;{<br>
 				</p>
 <p>
 					
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
 						<code class="code">setExtentMap(Map&lt;CLS, ? extends Set&lt;? extends E&gt;&gt; extentMap)</code>
 					</a> 
 					method.  This assigns a mapping of classes (in the Ecore binding,
@@ -16279,7 +16565,7 @@ try&nbsp;{<br>
 					<code class="code">Resource</code>.
 					An alternative extent map can be
 					found in 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
 						<code class="code">org.eclipse.ocl.ecore.opposites.ExtentMap</code>
 					</a> .
 					We will use a custom extent map in evaluating a query expression that finds
@@ -16377,7 +16663,7 @@ System.out.println(ok);<br>
 					<code class="code">OCLHelper</code> interface provides an operation that
 					computes content-assist proposals in an abstract form, as
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/Choice.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/Choice.html" target="_new">
 						<code class="code">Choice</code>
 					</a> s.
 					An application&rsquo;s UI can then convert these to JFace&rsquo;s
@@ -16387,7 +16673,7 @@ System.out.println(ok);<br>
 <p>Obtaining completion choices consists of supplying a partial OCL expression
 					(up to the cursor location in the UI editor) to the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind" target="_new">
 						<code class="code">OCLHelper::getSyntaxHelp(ConstraintKind, String)</code>
 					</a>, java.lang.String) 
 					method.  This method requires a 
@@ -16461,12 +16747,12 @@ oclAsType(typespec&nbsp;:&nbsp;OclType)&nbsp;:&nbsp;T<br>
 <p>For processing the abstract syntax tree (AST) parsed from OCL text, the API
 					supplies a 
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
 						<code class="code">Visitor</code>
 					</a> 
 					interface.  By implementing this interface (or extending the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
 						<code class="code">AbstractVisitor</code>
 					</a> 
 					class, which is recommended), we can walk the AST of an OCL expression to
@@ -17201,11 +17487,11 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 </div>
 </div>
 <p>The OCL parser provides two APIs for parsing constraint and query expressions. The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 					<code class="code">OCLHelper</code>
 				</a> interface is designed primarily for parsing constraints and query expressions
 				embedded in models, such as Ecore or UML models.  The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a> class serves as the main entrypoint into the parsing API but also implements the
 				parsing of 
@@ -17236,7 +17522,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 				
 </p>
 <p>The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html" target="_new">
 						<code class="code">OCL</code>
 					</a> class is a generic type; its type parameters represent the various metaclasses
 					of the metamodels that OCL works with in the UML/MOF family of OMG specifications.
@@ -17253,11 +17539,11 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">OCL</code> class defines instances of autonomous OCL
 					parsing and evaluation environments.  It has a single root
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Environment.html" target="_new">
 						<code class="code">Environment</code>
 					</a> created by an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
 						<code class="code">EnvironmentFactory</code>
 					</a> 
 					implementation for a particular EMF-based metamodel.  The OCL environment
@@ -17290,7 +17576,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 <p>An 
 					<code class="code">Environment</code> may contain named
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/expressions/Variable.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/expressions/Variable.html" target="_new">
 						<code class="code">Variable</code>
 					</a> s
 					to which OCL expressions can refer.  The most common of these is
@@ -17351,16 +17637,16 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 <p>From an OCL instance, we can create a helper object with which to parse constraints
 					and additional operation/attribute definitions.  This
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 						<code class="code">OCLHelper</code>
 					</a> 
 					stores all of the instantiations of OCL template metaclasses (such as
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/types/CollectionType.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/types/CollectionType.html" target="_new">
 						<code class="code">CollectionType(T)</code>
 					</a> 
 					and 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/types/TupleType.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/types/TupleType.html" target="_new">
 						<code class="code">TupleType</code>
 					</a> 
 					and additional operation/attribute definitions in the root environment of the
@@ -17459,7 +17745,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 				</p>
 <p>The result of parsing a query expression is an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/expressions/OCLExpression.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/expressions/OCLExpression.html" target="_new">
 						<code class="code">OCLExpression</code>
 					</a>,
 					an instance of the 
@@ -17551,7 +17837,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">OCLHelper</code> for parsing constraints, the OCL
 					facade object provides
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Query.html" target="_new">
 						<code class="code">Query</code>
 					</a>
 					objects for evaluating constraints and query expressions.
@@ -17567,7 +17853,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 <p>The 
 					<code class="code">Query</code> encapsulates an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EvaluationEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/EvaluationEnvironment.html" target="_new">
 						<code class="code">EvaluationEnvironment</code>
 					</a>
 					providing the run-time values of context variables to the OCL interpreter.  These
@@ -17624,7 +17910,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					provides support for an extent map, mapping classes to the sets of their
 					instances, as determined by the client.  A client sets the extent map using the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
 						<code class="code">OCL.setExtentMap()</code>
 					</a>
 					method.  The default extent map, if none is provided by the client, lazily
@@ -17632,7 +17918,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">Resource</code>
 					containing the context element of the evaluation. An alternative extent map can be
 					found in 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
 						<code class="code">org.eclipse.ocl.ecore.opposites.ExtentMap</code>
 					</a>.
 				</p>
@@ -17701,7 +17987,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 </div>
 <p>As we saw in the 
 				<a class="link" href="#ParsingConstraints" title="Parsing Constraints and Queries">Parsing Constraints and Queries</a> topic, the OCL parser provides an 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 					<code class="code">OCLHelper</code>
 				</a> API for parsing constraints embedded in models.  OCL also permits constraints
 				to be specified in a text document, as an adjunct to the model.  In this case,
@@ -17740,7 +18026,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 </div>
 </div>
 <p>The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCLInput.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCLInput.html" target="_new">
 						<code class="code">OCLInput</code>
 					</a> class encapsulates an OCL document.  An input can be created from a string or an
 					input stream.
@@ -17831,13 +18117,13 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 </div>
 <p>
 				The OCL API implements support for different target metamodels via the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
 					<code class="code">EnvironmentFactory</code>
 				</a> interface. An implementation of this interface binds the metamodel&rsquo;s metaclasses to the generic type parameters of the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a> class. The metamodel-specific 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Environment.html" target="_new">
 					<code class="code">Environment</code>
 				</a> implementation constructed by this factory implements the reflection capability required by OCL to discover the elements of the model being constrained and the relationships between them.
 			</p>
@@ -17855,7 +18141,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 				</p>
 <p>As is illustrated by most of the examples in this documentation, the Ecore binding is provided by the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> class.  By default, the Ecore environment uses the static 
 					<code class="code">EPackage</code> registry to look up package names.  It can also be supplied with an alternative package registry (for example, one local to a 
@@ -17863,7 +18149,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EcoreEnvironmentFactory.INSTANCE</code> is most practical.
 				</p>
 <p>The Ecore binding for OCL provides the following capabilities, reflecting the subset of Ecore&rsquo;s modeling constructs with respect to UML:</p>
-<table id="N1484E">
+<table id="N14983">
 <tr>
 						
 <th>Capability</th>
@@ -18071,7 +18357,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">InstanceSpecification</code> elements in the UML model.
 				</p>
 <p>The UML binding is provided by the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/uml/UMLEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/uml/UMLEnvironmentFactory.html" target="_new">
 						<code class="code">UMLEnvironmentFactory</code>
 					</a> class.  By default, the UML environment factory and all of the environment contexts that it creates use a private 
 					<code class="code">ResourceSet</code> to look up the corresponding UML model(s) against which OCL constraints are parsed.
@@ -18088,7 +18374,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EPackage</code> names corresponding to UML models.  A custom package registry may be provided by the client if necessary.
 				</p>
 <p>The UML binding for OCL provides the following capabilities:</p>
-<table id="N14A03">
+<table id="N14B38">
 <tr>
 						
 <th>Capability</th>
@@ -18323,7 +18609,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 </div>
 <p>
 				The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 					<code class="code">OCLHelper</code>
 				</a> API provides support for content-assist in rich editors, by parsing partial OCL
 				expressions and supplying completion suggestions. The
@@ -18341,7 +18627,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 			
 </p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/Choice.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/helper/Choice.html" target="_new">
 					<code class="code">Choice</code>
 				</a> objects returned by the helper include some convenient text strings (name and
 				description) to formulate basic JFace content-assist proposals.  Each choice
@@ -18398,7 +18684,7 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 					<code class="code">Choice</code> s is supported for the
 					following tokens, which may be used by a client as auto-assist triggers:
 				</p>
-<table id="N14C02">
+<table id="N14D37">
 <tr>
 						
 <th>Token</th>
@@ -18511,12 +18797,12 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 </div>
 </div>
 <p>All of the metaclasses in the Abstract Syntax Model (nodes in the AST) that can be visited implement the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/Visitable.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/Visitable.html" target="_new">
 						<code class="code">Visitable</code>
 					</a> interface.  It define a single operation 
 					<code class="code">accept(Visitor)</code>. This method delegates to the appropriate 
 					<code class="code">visitXyz(Xyz)</code> method of the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
 						<code class="code">Visitor</code>
 					</a> . The direct implementors of the 
 					<code class="code">Visitable</code> interface are the 
@@ -18566,7 +18852,7 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 					a 
 					<code class="code">ValidationVisitor</code> for validating OCL expressions and an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EvaluationVisitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/EvaluationVisitor.html" target="_new">
 						<code class="code">EvaluationVisitor</code>
 					</a> for evaluating OCL expressions.
 				</p>
@@ -18582,7 +18868,7 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 </div>
 <p>The best way to implement a visitor is to extend the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
 						<code class="code">AbstractVisitor</code>
 					</a> class.  It provides a 
 					<code class="code">result</code> variable of the generic
@@ -18936,7 +19222,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 				</p>
 <p>First, let&rsquo;s start by defining a specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/EcoreEnvironment.html" target="_new">
 						<code class="code">EcoreEnvironment</code>
 					</a> . The constructor that is used to initialize the root environment of an 
 					<code class="code">OCL</code>
@@ -19007,7 +19293,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 <p></p>
 <p>Next, we will define the corresponding specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html" target="_new">
 						<code class="code">EcoreEvaluationEnvironment</code>
 					</a> that will know how to evaluate calls to this custom operation:
 				</p>
@@ -19049,7 +19335,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 <p></p>
 <p>Finally, we define a specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> that creates our custom environments:
 				</p>
@@ -19218,7 +19504,7 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 </div>
 </div>
 <p>The default 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> produces environments which can find references that have an annotation with source 
 					<code class="code">http://schema.omg.org/spec/MOF/2.0/emof.xml</code>
@@ -19231,12 +19517,12 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 				</p>
 <p>The logic used to find these &ldquo;hidden&rdquo; opposites and to navigate them is provided by implementations
 					of the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface. By default, the 
 					<code class="code">EcoreEnvironmentFactory</code> uses the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
 						<code class="code">DefaultOppositeEndFinder</code>
 					</a> implementation. It performs the lookup of annotated references by maintaining a cache based on
 					the Ecore package registry. Successful navigation of those &ldquo;hidden&rdquo; opposites requires an
@@ -19251,11 +19537,11 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 					</a> has a significant downside: it responds to &ldquo;hidden&rdquo; opposite navigation requests only based on what has so far been loaded by EMF. If the set of resources held by an underlying EMF storage system contains more resources than have so far been loaded into the resource set, non-loaded content from that storage system won&rsquo;t be considered by the 
 					<code class="code">ECrossReferenceAdapter</code>. Given a store with reasonable search capabilities it is desirable to take advantage of these capabilities also to perform reverse navigation of those &ldquo;hidden&rdquo; opposites. To achieve this, a specific implementation of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface can be provided. It may be a specialization of
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
 						<code class="code">DefaultOppositeEndFinder</code>
 					</a>, e.g., when the reference lookup based on the Ecore package registry is sufficient and only the navigation behavior shall be redefined:
 				</p>
@@ -19346,7 +19632,7 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 					via 
 					<code class="code">def:</code> expressions.  The
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/TypeResolver.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/TypeResolver.html" target="_new">
 						<code class="code">TypeResolver</code>
 					</a> API is responsible for the demand-creation of these types and for their persistence.
 				</p>
@@ -19359,7 +19645,7 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 				
 </p>
 <p>Every 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Environment.html" target="_new">
 						<code class="code">Environment</code>
 					</a> has a 
 					<code class="code">TypeResolver</code> that persists demand-created types and additional features.  For a client that doesn&rsquo;t require persistence, the 
@@ -19370,13 +19656,13 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 <p>A client that does require persistence of OCL expressions and these demand-created elements
 					should provide a specific resource in which to store them, either via the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/OCL.html" target="_new">
 						<code class="code">OCL</code>
 					</a> class&rsquo;s
 
 					<code class="code">newInstance(EnvironmentFactory, Resource)</code> factory method or via
 					the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
 						<code class="code">EnvironmentFactory</code>
 					</a> interface&rsquo;s 
 					<code class="code">load(Resource)</code> method.
@@ -19404,7 +19690,7 @@ ocl&nbsp;=&nbsp;OCL.newInstance(EcoreEnvironmentFactory.INSTANCE,&nbsp;myResourc
 </div>
 <p></p>
 <p>The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/AbstractTypeResolver.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/AbstractTypeResolver.html" target="_new">
 						<code class="code">AbstractTypeResolver</code>
 					</a> class creates packages in which to store the different elements that it creates: collection types, message types, tuple types, and additional operations and attributes.  These last are owned by classes that &ldquo;shadow&rdquo; the classifiers in which context they are defined, in
 					the manner by which the OCL specification&rsquo;s adaptation for EMOF indicates that operations
@@ -19434,7 +19720,7 @@ ocl&nbsp;=&nbsp;OCL.newInstance(EcoreEnvironmentFactory.INSTANCE,&nbsp;myResourc
 				can likewise create bindings for their metamodels, to integrate OCL with their modeling
 				languages.</p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/Environment.html" target="_new">
 					<code class="code">Environment</code>
 				</a> interface has a generic type signature with several parameters, representing the metamodeling
 				constructs required by OCL, that it borrows from UML, EMOF, and the other metamodels that
@@ -19573,12 +19859,12 @@ ocl&nbsp;=&nbsp;OCL.newInstance(EcoreEnvironmentFactory.INSTANCE,&nbsp;myResourc
 				invalidated constraints after a change it would be necessary to re-evaluate all invariants
 				on all their context objects regardless their resource. This does not scale sufficiently well.</p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">
 					<code class="code">ImpactAnalyzerFactory</code>
 				</a> interface allows tool builders to efficiently determine a much smaller set of model elements on which re-evaluation of expressions is necessary after a change.
 			</p>
 <p>Given an 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/OCLExpression.html" target="_new">OCL expression</a>, the factory can be used to create an impact analyzer for a single expression as follows:
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/OCLExpression.html" target="_new">OCL expression</a>, the factory can be used to create an impact analyzer for a single expression as follows:
 			</p>
 <div class="literallayout">
 <p>
@@ -19639,8 +19925,8 @@ eventManager.subscribe(filter,&nbsp;new&nbsp;AdapterImpl()&nbsp;{<br>
 			
 </p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/eventmanager/EventManagerFactory.html" target="_new">event manager factory</a> and the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/eventmanager/EventManager.html" target="_new">event managers</a> it produces lay the scalable foundation for the re-evaluation process. Even if it has to manage many subscriptions, its performance does not degrade as it would if the change notification filters were evaluated one after the other. With this it becomes possible to register many OCL expressions for change impact analysis as shown above. The figure below shows a typical default configuration of an event manager, as a UML instance collaboration diagram.
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/eventmanager/EventManagerFactory.html" target="_new">event manager factory</a> and the 
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/eventmanager/EventManager.html" target="_new">event managers</a> it produces lay the scalable foundation for the re-evaluation process. Even if it has to manage many subscriptions, its performance does not degrade as it would if the change notification filters were evaluated one after the other. With this it becomes possible to register many OCL expressions for change impact analysis as shown above. The figure below shows a typical default configuration of an event manager, as a UML instance collaboration diagram.
 			</p>
 <p>
 				
@@ -19757,8 +20043,8 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 </div>
 <p>The impact analyzer can be created in several different configurations as explained in
 					detail in the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">Javadocs</a> . Particularly noteworthy is the relationship between the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">Javadocs</a> . Particularly noteworthy is the relationship between the 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> and the way an 
 					<code class="code">allInstance</code> expression is evaluated. Both depend on a notion of lookup 
@@ -19767,7 +20053,7 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 					<code class="code">allInstances</code> and reverse navigation when there is no explicit opposite property.
 				</p>
 <p>For this purpose, Eclipse OCL has introduced the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface through which reverse navigations
 					of references and 
@@ -19784,11 +20070,11 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 					<code class="code">allInstances</code> evaluation is most likely
 					inconsistent with the scope definitions of that opposite end finder. To avoid such problems,
 					a 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/impactanalyzer/util/OCL.html" target="_new">specific OCL factory</a> can create OCL instances that ensure consistency between opposite navigation and 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/impactanalyzer/util/OCL.html" target="_new">specific OCL factory</a> can create OCL instances that ensure consistency between opposite navigation and 
 					<code class="code">allInstances</code> evaluation.
 				</p>
 <p>Other configuration options (see 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/impactanalyzer/configuration/ActivationOption.html)" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/impactanalyzer/configuration/ActivationOption.html)" target="_new">
 						<code class="code">ActivationOption</code>
 					</a> concern the specific algorithm used for tracing back from a change notification to the set of context objects for which the expression
 					may have changed its value. The default selection has proven to be the fastest for a set
@@ -21284,7 +21570,7 @@ org.eclipse.xtext<br>
 				<a class="link" href="#ParsingConstraints" title="Parsing Constraints and Queries">Parsing Constraints and Queries</a> for the Ecore binding to see examples of the changes needed to migrate from the Ecore binding to the Pivot binding.
 			</p>
 <p>The OCL parser provides two APIs for parsing constraint and query expressions using the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a> Facade.
 			</p>
@@ -21298,7 +21584,7 @@ org.eclipse.xtext<br>
 </div>
 </div>
 <p>The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
 						<code class="code">OCL</code>
 					</a> class provides both a Facade and a Handle for the various objects that support different aspects of OCL parsing and evaluation.
 				</p>
@@ -21460,7 +21746,7 @@ org.eclipse.xtext<br>
 				</p>
 <p>The result of parsing a query expression or a constraint is an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/ExpressionInOCL.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/ExpressionInOCL.html" target="_new">
 						<code class="code">ExpressionInOCL</code>
 					</a>,
 					an instance of the 
@@ -21622,7 +21908,7 @@ org.eclipse.xtext<br>
 				<code class="code">ExpressionInOCL</code> compiled representation. Parsing constraints is interesting,
 				but evaluating them using the 
 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/Query.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/Query.html" target="_new">
 					<code class="code">Query</code>
 				</a>
 				API is much more useful. 
@@ -21638,7 +21924,7 @@ org.eclipse.xtext<br>
 </div>
 <p>The
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/Query.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/Query.html" target="_new">
 						<code class="code">Query</code>
 					</a>
 					class wraps the minimal 
@@ -21655,7 +21941,7 @@ org.eclipse.xtext<br>
 <p>The 
 					<code class="code">Query</code> encapsulates an
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/evaluation/EvaluationEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/evaluation/EvaluationEnvironment.html" target="_new">
 						<code class="code">EvaluationEnvironment</code>
 					</a>
 					providing the run-time values of context variables to the OCL interpreter.  These
@@ -21708,12 +21994,12 @@ org.eclipse.xtext<br>
 
 					<code class="code">Class</code> extents, the 
 					<code class="code">OCL</code> handle references a 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/evaluation/ModelManager.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/evaluation/ModelManager.html" target="_new">
 						<code class="code">ModelManager</code>
 					</a>
 					that provides access to the user&rsquo;s models. The default
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/internal/evaluation/PivotModelManager.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/internal/evaluation/PivotModelManager.html" target="_new">
 						<code class="code">PivotModelManager</code>
 					</a>
 					lazily computes the extent of a class from the EMF 
@@ -21765,7 +22051,7 @@ org.eclipse.xtext<br>
 </li>
 </ul>
 </div>
-<table id="N15825">
+<table id="N1595A">
 <tr>
 						
 <th>OCL</th>
@@ -21954,7 +22240,7 @@ org.eclipse.xtext<br>
 </div>
 <p>As we saw in the 
 				<a class="link" href="#PivotParsingConstraints" title="Parsing Constraints and Queries">Parsing Constraints and Queries</a> topic, the  
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/utilities/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a>
 				Facade provides an API for parsing OCL expressions embedded in models as constraints. 
@@ -22160,13 +22446,13 @@ org.eclipse.xtext<br>
 			</p>
 <p>
 				The OCL API implements support for different target metamodels via the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.html" target="_new">
 					<code class="code">EnvironmentFactory</code>
 				</a> interface. An implementation of this interface binds the metamodel&rsquo;s metaclasses to the generic type parameters of the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/utilities/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a> class. The metamodel-specific 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/examples/pivot/Environment.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/examples/pivot/Environment.html" target="_new">
 					<code class="code">Environment</code>
 				</a> implementation constructed by this factory implements the reflection capability required by OCL to discover the elements of the model being constrained and the relationships between them.
 			</p>
@@ -22233,7 +22519,7 @@ org.eclipse.xtext<br>
 				</p>
 <p>The Pivot binding is provided by the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/internal/utilities/PivotEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/org/eclipse/ocl/pivot/internal/utilities/PivotEnvironmentFactory.html" target="_new">
 						<code class="code">PivotEnvironmentFactory</code>
 					</a> class.  For compatibility, as a default, the Pivot environment uses the static 
 					<code class="code">EPackage</code> registry to look up package names. This default is deprecated since the domain of 
@@ -22480,8 +22766,8 @@ org.eclipse.xtext<br>
 </div>
 </div>
 </div>
-<p>The Javadoc for Eclipse OCL 6.3.0 (Oxygen) APIs may be found by following the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/" target="_new">OCL 6.3.0 API Reference</a> link.
+<p>The Javadoc for Eclipse OCL 6.4.0 (Photon) APIs may be found by following the 
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/" target="_new">OCL 6.4.0 API Reference</a> link.
 			</p>
 </div>
 <div class="section" title="Extension points">

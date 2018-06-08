@@ -68,7 +68,7 @@
 			</p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
+<code class="code">allInstances() : Set(OclSelf)</code>
 			
 </p>
 <p>Returns 
@@ -104,16 +104,41 @@
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">and2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">false</code> if either 
+				<code class="code">self</code> or 
+				<code class="code">b</code> is 
+				<code class="code">false</code>.
+				Otherwise 
+				<code class="code">true</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;false&nbsp;then&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -150,16 +175,16 @@
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;b<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -167,7 +192,33 @@
 <p></p>
 <p>
 				
-<code class="code">not() : Boolean[?]</code>
+<code class="code">implies2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> is 
+				<code class="code">false</code>, or if 
+				<code class="code">b</code> is 
+				<code class="code">true</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;false&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">not() : Boolean[?] validating</code>
 				precedence: 
 				<code class="code">UNARY</code>
 			
@@ -191,9 +242,30 @@
 <div class="literallayout">
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self&nbsp;=&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">not2() : Boolean[1]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> is 
+				<code class="code">false</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;then&nbsp;false&nbsp;else&nbsp;true&nbsp;endif<br>
 
 </code>
 </p>
@@ -229,16 +301,41 @@
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;self<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-			&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">or2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if either 
+				<code class="code">self</code> or 
+				<code class="code">b</code> is 
+				<code class="code">true</code>.
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;if&nbsp;self&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+			&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;true&nbsp;then&nbsp;true<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;false<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
 
 </code>
 </p>
@@ -291,11 +388,32 @@
 <div class="literallayout">
 <p>
 <code class="code">body:&nbsp;if&nbsp;self.oclIsInvalid()&nbsp;then&nbsp;self<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b.oclIsInvalid()&nbsp;then&nbsp;b<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;self&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;b&nbsp;=&nbsp;null&nbsp;then&nbsp;null<br>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;self&nbsp;&lt;&gt;&nbsp;b<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif&nbsp;endif&nbsp;endif&nbsp;endif<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>
+				
+<code class="code">xor2(b : Boolean[?]) : Boolean[?]</code>
+			
+</p>
+<p>
+				
+<code class="code">true</code> if 
+				<code class="code">self</code> &lt;&gt; 
+				<code class="code">b</code>
+				Otherwise 
+				<code class="code">false</code>.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">body:&nbsp;self&nbsp;&lt;&gt;&nbsp;b<br>
 
 </code>
 </p>
