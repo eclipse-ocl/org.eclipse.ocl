@@ -52,9 +52,9 @@ The bag containing all elements of @self@ plus object.
 
 The bag containing all elements of @self@ and objects.
 
-@selectByKind(TT)(type : TT[?]) : Bag(TT)[*|1]@
+@selectByKind(TT)(type : TT[?]) : Bag(TT)@
 
-@selectByType(TT)(type : TT[?]) : Bag(TT)[*|1]@
+@selectByType(TT)(type : TT[?]) : Bag(TT)@
 
 *Iterations*
 
@@ -118,7 +118,7 @@ precedence: @EQUALITY@
 
 Returns @true@ if the logical value of @self@ is the not same as the numeric value of object2, @false@ otherwise.
 
-@allInstances() : Set(OclSelf)[*|1]@
+@allInstances() : Set(OclSelf)@
 
 Returns @Set{false, true}@.
 
@@ -133,16 +133,28 @@ Otherwise @true@.
 bc.. 
 body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-		        else if b = false then false
+		        elseif b = false then false
 		        else self
-		        endif endif
-		      else if self = false then false
-		      else if b.oclIsInvalid() then b
-		      else if b = false then false
-		      else if self = null then null
-		      else if b = null then null
+		        endif
+		      elseif self = false then false
+		      elseif b.oclIsInvalid() then b
+		      elseif b = false then false
+		      elseif self = null then null
+		      elseif b = null then null
 		      else true
-		      endif endif endif endif endif endif
+		      endif
+p. 
+
+@and2(b : Boolean[?]) : Boolean[?]@
+
+@false@ if either @self@ or @b@ is @false@.
+Otherwise @true@.
+
+bc.. 
+body: if self = false then false
+		      elseif b = false then false
+		      else true
+		      endif
 p. 
 
 @implies(b : Boolean[?]) : Boolean[?] invalidating validating@
@@ -156,19 +168,31 @@ Otherwise @false@.
 bc.. 
 body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-		        else if b = true then true
+		        elseif b = true then true
 		        else self
-		        endif endif
-		      else if self = false then true
-		      else if b.oclIsInvalid() then b
-		      else if b = true then true
-		      else if self = null then null
-		      else if b = null then b
+		        endif
+		      elseif self = false then true
+		      elseif b.oclIsInvalid() then b
+		      elseif b = true then true
+		      elseif self = null then null
+		      elseif b = null then b
 		      else false
-		      endif endif endif endif endif endif
+		      endif
 p. 
 
-@not() : Boolean[?]@
+@implies2(b : Boolean[?]) : Boolean[?]@
+
+@true@ if @self@ is @false@, or if @b@ is @true@.
+Otherwise @false@.
+
+bc.. 
+body: if self = false then true
+		      elseif b = true then true
+		      else false
+		      endif
+p. 
+
+@not() : Boolean[?] validating@
 precedence: @UNARY@
 
 @true@ if @self@ is @false@.
@@ -178,9 +202,18 @@ Otherwise @invalid@.
 
 bc.. 
 body: if self.oclIsInvalid() then self
-		      else if self = null then null
+		      elseif self = null then null
 		      else self = false
-		      endif endif
+		      endif
+p. 
+
+@not2() : Boolean[1]@
+
+@true@ if @self@ is @false@.
+Otherwise @false@.
+
+bc.. 
+body: if self then false else true endif
 p. 
 
 @or(b : Boolean[?]) : Boolean[?] invalidating validating@
@@ -194,16 +227,28 @@ Otherwise @false@.
 bc.. 
 body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-			    else if b = true then true
+			    elseif b = true then true
 		        else self
-		        endif endif
-		      else if self = true then true
-			  else if b.oclIsInvalid() then b
-			  else if b = true then true
-			  else if self = null then null
-			  else if b = null then null
+		        endif
+		      elseif self = true then true
+			  elseif b.oclIsInvalid() then b
+			  elseif b = true then true
+			  elseif self = null then null
+			  elseif b = null then null
 		      else false
-		      endif endif endif endif endif endif
+		      endif
+p. 
+
+@or2(b : Boolean[?]) : Boolean[?]@
+
+@true@ if either @self@ or @b@ is @true@.
+Otherwise @false@.
+
+bc.. 
+body: if self = true then true
+			  elseif b = true then true
+		      else false
+		      endif
 p. 
 
 @toString() : String[1]@
@@ -220,11 +265,20 @@ Otherwise @null@.
 
 bc.. 
 body: if self.oclIsInvalid() then self
-		      else if b.oclIsInvalid() then b
-		      else if self = null then null
-		      else if b = null then null
+		      elseif b.oclIsInvalid() then b
+		      elseif self = null then null
+		      elseif b = null then null
 		      else self <> b
-		      endif endif endif endif
+		      endif
+p. 
+
+@xor2(b : Boolean[?]) : Boolean[?]@
+
+@true@ if @self@ <> @b@
+Otherwise @false@.
+
+bc.. 
+body: self <> b
 p. 
 
 h2(#Class). **@Class@**
@@ -346,13 +400,13 @@ The collection containing all elements of @self@ plus object.
 
 The collection containing all elements of @self@ and objects.
 
-@intersection(c : Collection(T)) : Bag(T)@
-
-The intersection of @self@ and bag; the bag of all elements that are in both @self@ and c.
-
 @intersection(u : UniqueCollection(T)) : Set(T)@
 
 The intersection of @self@ and a unique collection; the set of all elements that are in both @self@ and u.
+
+@intersection(c : Collection(T)) : Bag(T)@
+
+The intersection of @self@ and bag; the bag of all elements that are in both @self@ and c.
 
 @isEmpty() : Boolean[1]@
 
@@ -380,13 +434,13 @@ Is @self@ not the empty collection?
 
 @null->notEmpty()@ returns @false@ in virtue of the implicit casting from @null@ to @Bag{}@.
 
-@product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1]))[*|1]@
+@product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1]))@
 
 The cartesian product operation of @self@ and c2.
 
-@selectByKind(TT)(type : TT[?]) : Collection(TT)[*|1]@
+@selectByKind(TT)(type : TT[?]) : Collection(TT)@
 
-@selectByType(TT)(type : TT[?]) : Collection(TT)[*|1]@
+@selectByType(TT)(type : TT[?]) : Collection(TT)@
 
 @size() : Integer[1]@
 
@@ -482,7 +536,7 @@ Evaluates to the literals of the enumeration.
 
 *Operations*
 
-@allInstances() : Set(OclSelf)[*|1]@
+@allInstances() : Set(OclSelf)@
 
 Return a set of all enumeration values of @self@.
 
@@ -494,9 +548,9 @@ conformsTo "@OclAny@":#OclAny
 
 *Attributes*
 
-@Enumeration : Bag(Enumeration)@
+@Enumeration : Bag(Enumeration[*|?])@
 
-@OclEnumeration : Bag(OclEnumeration)@
+@OclEnumeration : Bag(OclEnumeration[*|?])@
 
 h2(#Integer). **@Integer@**
 
@@ -527,7 +581,7 @@ precedence: @ADDITIVE@
 
 The value of the subtraction of i from @self@.
 
-@/(i : OclSelf[?]) : Real[1]@
+@/(i : OclSelf[?]) : Real[1] invalidating@
 precedence: @MULTIPLICATIVE@
 
 The value of @self@ divided by i.
@@ -693,6 +747,10 @@ One can also use qualification by OclAny (name of the type) to explicitly refer 
 
 Operations of OclAny, where the instance of OclAny is called object.
 
+*Attributes*
+
+@OclInvalid : Bag(OclInvalid[*|?])@
+
 *Operations*
 
 @=(object2 : OclSelf[?]) : Boolean[1]@
@@ -713,7 +771,7 @@ bc..
 post: result = not (self = object2)
 p. 
 
-@oclAsSet() : Set(OclSelf)[*|1]@
+@oclAsSet() : Set(OclSelf)@
 
 Returns a Set with @self@ as the sole content, unless @self@ is @null@ in which case returns an empty set,
 
@@ -777,7 +835,7 @@ Evaluates to the most derived type of which @self@ is currently an instance. If 
 classified type, the return is the most derived type of the current classification which is established when the instance is
 passed to OCL, or re-established by an @oclAsType()@ call.
 
-@oclTypes() : Set(OclSelf)@
+@oclTypes() : Set(OclSelf[*|?])@
 
 Evaluates to all of the most derived type of which @self@ is an instance. The return from @oclTypes()@
 is normally equivalent to that from @oclType()@ unless @self@ is an instance of multiply classified type.
@@ -830,11 +888,11 @@ conformsTo "@OclAny@":#OclAny
 
 *Attributes*
 
-@OclElement : Bag(OclElement)@
+@OclElement : Bag(OclElement[*|?])@
 
-@OclElement : Bag(OclElement)@
+@OclElement : Bag(OclElement[*|?])@
 
-@oclContents : Set(OclElement)[*|1]@
+@oclContents : Set(OclElement)@
 
 The composed contents of self.
 
@@ -846,7 +904,7 @@ The object for which self is a composed content or null if there is no such obje
 
 *Operations*
 
-@allInstances() : Set(OclSelf)[*|1]@
+@allInstances() : Set(OclSelf)@
 
 Return a set of all instances of the type and derived types of self.
 
@@ -873,7 +931,7 @@ p.
 
 Returns the object for which self is a composed content or null if there is no such object.
 
-@oclContents() : Set(OclElement)[*|1]@
+@oclContents() : Set(OclElement)@
 
 Returns the composed contents of self.
 
@@ -894,7 +952,7 @@ by an @oclAsModelType()@ call.
 The return is normally @invalid@ since few model elements have model types. UML's InstanceSpecification::classifier provides
 a multiple classification for a model type.
 
-@oclModelTypes() : Set(OclSelf)@
+@oclModelTypes() : Set(OclSelf[*|?])@
 
 Evaluates to all of the most derived model types of which @self@ is an instance. The return from @oclModelTypes()@
 is normally equivalent to that from @oclModelType()@ unless @self@ is an instance of multiply classified model type.
@@ -916,7 +974,7 @@ Evaluates to the literals of the enumeration.
 
 *Operations*
 
-@allInstances() : Set(OclSelf)[*|1]@
+@allInstances() : Set(OclSelf)@
 
 Return a set of all enumeration values of @self@.
 
@@ -928,6 +986,12 @@ Any property call applied on invalid results in @invalid@, except for the operat
 OclInvalid is itself an instance of the metatype InvalidType.
 
 conformsTo "@OclVoid@":#OclVoid
+
+*Associations*
+
+@oclBadProperty : OclAny[?]@
+
+An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.
 
 *Operations*
 
@@ -951,9 +1015,13 @@ precedence: @AND@
 @implies(b : Boolean[?]) : Boolean[?] validating@
 precedence: @IMPLIES@
 
-@oclAsSet() : Set(OclSelf)[*|1]@
+@oclAsSet() : Set(OclSelf)@
 
 @oclAsType(TT)(type : TT[?]) : TT[?]@
+
+@oclBadOperation() : OclAny[?]@
+
+An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.
 
 @oclIsInvalid() : Boolean[1] validating@
 
@@ -1039,7 +1107,7 @@ conformsTo "@OclType@":#OclType
 
 *Operations*
 
-@allInstances() : Set(OclSelf)[*|1]@
+@allInstances() : Set(OclSelf)@
 
 Return a set of all instances of the stereotype and derived types of self.
 
@@ -1117,7 +1185,7 @@ if object is @invalid@, @false@ otherwise.
 @<>(object2 : OclSelf[?]) : Boolean[1]@
 precedence: @EQUALITY@
 
-@allInstances() : Set(OclSelf)@
+@allInstances() : Set(OclSelf[*|?])@
 
 Returns @Set{null}@.
 
@@ -1126,6 +1194,8 @@ precedence: @AND@
 
 @implies(b : Boolean[?]) : Boolean[?]@
 precedence: @IMPLIES@
+
+@oclAsSet() : Set(OclSelf)@
 
 @oclIsInvalid() : Boolean[1] validating@
 
@@ -1156,7 +1226,7 @@ The i-th element of ordered collection.
 
 The first element in @self@.
 
-@indexOf(obj : OclAny[?]) : Integer[1]@
+@indexOf(obj : OclAny[?]) : Integer[1] invalidating@
 
 The index of object obj in the ordered collection.
 
@@ -1210,6 +1280,10 @@ The ordered set containing all elements of @self@ apart from all occurrences of 
 
 The ordered set containing all elements of @self@ plus object added as the last element if not already present.
 
+@includingAll(objects : Collection(T)) : OrderedSet(T)@
+
+The ordered set containing all elements of @self@ plus objects added as the last elements.
+
 @insertAt(index : Integer[?], object : T[?]) : OrderedSet(T) invalidating@
 
 The ordered set consisting of @self@ with object present at position index.
@@ -1238,9 +1312,9 @@ The sequence consisting of objects, followed by all elements in @self@.
 
 The ordered set of elements with same elements but with the opposite order.
 
-@selectByKind(TT)(type : TT[?]) : OrderedSet(TT)[*|1]@
+@selectByKind(TT)(type : TT[?]) : OrderedSet(TT)@
 
-@selectByType(TT)(type : TT[?]) : OrderedSet(TT)[*|1]@
+@selectByType(TT)(type : TT[?]) : OrderedSet(TT)@
 
 @subOrderedSet(lower : Integer[?], upper : Integer[?]) : OrderedSet(T) invalidating@
 
@@ -1314,7 +1388,7 @@ precedence: @ADDITIVE@
 
 The value of the subtraction of r from @self@.
 
-@/(r : OclSelf[?]) : Real[1]@
+@/(r : OclSelf[?]) : Real[1] invalidating@
 precedence: @MULTIPLICATIVE@
 
 The value of @self@ divided by r. Evaluates to @invalid@ if r is equal to zero.
@@ -1391,6 +1465,10 @@ of all the recursively flattened elements of @self@. The order of the elements i
 
 The sequence containing all elements of @self@ plus object added as the last element.
 
+@includingAll(objects : Collection(T)) : Sequence(T)@
+
+The sequence containing all elements of @self@ plus objects added as the last elements.
+
 @insertAt(index : Integer[?], object : T[?]) : Sequence(T) invalidating@
 
 The sequence consisting of @self@ with object inserted at position index.
@@ -1407,9 +1485,9 @@ The sequence consisting of objects, followed by all elements in @self@.
 
 The sequence containing the same elements but with the opposite order.
 
-@selectByKind(TT)(type : TT[?]) : Sequence(TT)[*|1]@
+@selectByKind(TT)(type : TT[?]) : Sequence(TT)@
 
-@selectByType(TT)(type : TT[?]) : Sequence(TT)[*|1]@
+@selectByType(TT)(type : TT[?]) : Sequence(TT)@
 
 @subSequence(lower : Integer[?], upper : Integer[?]) : Sequence(T) invalidating@
 
@@ -1482,9 +1560,9 @@ The set containing all elements of @self@ plus object.
 
 The set containing all elements of @self@ and objects.
 
-@selectByKind(TT)(type : TT[?]) : Set(TT)[*|1]@
+@selectByKind(TT)(type : TT[?]) : Set(TT)@
 
-@selectByType(TT)(type : TT[?]) : Set(TT)[*|1]@
+@selectByType(TT)(type : TT[?]) : Set(TT)@
 
 *Iterations*
 
@@ -1760,4 +1838,4 @@ Conversion of _unlimited_ to Real or Integer returns @invalid@.
 
 @toInteger() : Integer[1] invalidating@
 
-Converts @self@ to an Integer value unless @self@ is @unlimited@ in which @self@ is converted to @invalid@.
+Converts @self@ to an Integer value unless @self@ is _unlimited_ in which case @self@ is converted to @invalid@.
