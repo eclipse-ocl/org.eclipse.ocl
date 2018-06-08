@@ -70,9 +70,9 @@ h3(#NoNature). Building on pre-Photon / 2018 releases
 
 The OCL builder and nature are new in the Eclipse OCL 2018 release (Photon). They comply with the standard Eclipse idiom.
 
-In earlier releases, the EMF idiom was followed whereby Problems View markers were created by ther save action
+In earlier releases, the EMF idiom was followed whereby Problems View markers were created by their save action
 of an appropriate editor. Problems in files that had not been saved were often not visible and so diagnosis
-onlyoccurred when some consuming application complained..
+only occurred when some consuming application complained..
 
 
 
