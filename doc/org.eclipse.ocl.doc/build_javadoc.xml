@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+	<target name="javadoc">
+		<!-- workspace defaults -->
+		<property name="generatedJavadoc" value="./target/javadoc" />
+		<property name="target.platform" value="${ant.home}/../.." />
+		<property name="javadoc" value="javadoc" />
+		<property name="zipFile" value="./target/OCL-javadoc.zip" />
+
+		<echo message="Java home: ${java.home}" />
+		<echo message="Javadoc Java home: ${javadoc.java.home}" />
+		<echo message="Javadoc: ${javadoc}" />
+		<echo message="Javadoc output location: ${generatedJavadoc}" />
+		<echo message="target.platform path: ${target.platform}" />
+		<echo message="ZIP output location: ${zipFile}" />
+
+		<javadoc 
+			access="public" 
+			author="true" 
+			nodeprecated="false" 
+			nodeprecatedlist="false" 
+			noindex="false" 
+			nonavbar="false" 
+			notree="false" 
+			splitindex="true"
+			use="true" 
+			version="true"
+			source="1.8" 
+			
+			overview=".\javadoc\overview.html"
+			
+			doctitle="OCL API" 
+			
+			destdir="${generatedJavadoc}"
+			>
+			
+			<bottom><![CDATA[<i>Copyright &#169; 2005, 2018 IBM Corporation and others. All Rights Reserved.</i>]]></bottom>
+			
+			<classpath>
+				<!--pathelement path="${classpath}"/-->
+      			<fileset dir="${target.platform}\plugins">
+			        <include name="com.google.guava_*.jar"/>
+			        <include name="com.google.inject_*.jar"/>
+			        <include name="com.ibm.icu_*.jar"/>
+			        <include name="lpg.runtime.java_*.jar"/>
+			        <include name="org.antlr.runtime_3.2*.jar"/>
+			        <include name="org.apache.commons.lang_*.jar"/>
+			        <include name="org.apache.log4j_*.jar"/>
+			        <include name="org.eclipse.core.commands_*.jar"/>
+			        <include name="org.eclipse.core.contenttype_*.jar"/>
+			        <include name="org.eclipse.core.expressions_*.jar"/>
+			        <include name="org.eclipse.core.filesystem_*.jar"/>
+			        <include name="org.eclipse.core.jobs_*.jar"/>
+			        <include name="org.eclipse.core.resources_*.jar"/>
+			        <include name="org.eclipse.core.runtime_*.jar"/>
+			        <include name="org.eclipse.core.variables_*.jar"/>
+			        <include name="org.eclipse.debug.core*.jar"/>
+			        <include name="org.eclipse.debug.ui*.jar"/>
+			        <include name="org.eclipse.equinox.common_*.jar"/>
+			        <include name="org.eclipse.equinox.preferences_*.jar"/>
+			        <include name="org.eclipse.equinox.registry_*.jar"/>
+			        <include name="org.eclipse.jdt.annotation_*.jar"/>
+			        <include name="org.eclipse.jdt.core_*.jar"/>
+			        <include name="org.eclipse.jface_*.jar"/>
+			        <include name="org.eclipse.jface.text_*.jar"/>
+			        <include name="org.eclipse.osgi_*.jar"/>
+			        <include name="org.eclipse.pde.core_*.jar"/>
+			        <include name="org.eclipse.swt*.jar"/>
+			        <include name="org.eclipse.text_*.jar"/>
+			        <include name="org.eclipse.ui_*.jar"/>
+			        <include name="org.eclipse.ui.console_*.jar"/>
+			        <include name="org.eclipse.ui.editors_*.jar"/>
+			        <include name="org.eclipse.ui.forms_*.jar"/>
+			        <include name="org.eclipse.ui.ide_*.jar"/>
+			        <include name="org.eclipse.ui.navigator_*.jar"/>
+			        <include name="org.eclipse.ui.views_*.jar"/>
+			        <include name="org.eclipse.ui.workbench_*.jar"/>
+			        <include name="org.eclipse.ui.workbench.texteditor_*.jar"/>
+			        <include name="org.eclipse.emf.codegen_*.jar"/>
+			        <include name="org.eclipse.emf.codegen.ecore_*.jar"/>
+			        <include name="org.eclipse.emf.common_*.jar"/>
+			        <include name="org.eclipse.emf.common.ui_*.jar"/>
+			        <include name="org.eclipse.emf.ecore_*.jar"/>
+			        <include name="org.eclipse.emf.ecore.change_*.jar"/>
+			        <include name="org.eclipse.emf.ecore.edit_*.jar"/>
+			        <include name="org.eclipse.emf.ecore.editor_*.jar"/>
+			        <include name="org.eclipse.emf.ecore.xmi_*.jar"/>
+			        <include name="org.eclipse.emf.edit_*.jar"/>
+			        <include name="org.eclipse.emf.edit.ui_*.jar"/>
+			        <include name="org.eclipse.emf.validation_*.jar"/>
+			        <include name="org.eclipse.uml2.codegen_*.jar"/>
+			        <include name="org.eclipse.uml2.common_*.jar"/>
+			        <include name="org.eclipse.uml2.types_*.jar"/>
+			        <include name="org.eclipse.uml2.uml_*.jar"/>
+			        <include name="org.eclipse.uml2.uml.resources_*.jar"/>
+			        <include name="org.eclipse.xtext_*.jar"/>
+			        <include name="org.eclipse.xtext.ide_*.jar"/>
+			        <include name="org.eclipse.xtext.ui_*.jar"/>
+			        <include name="org.eclipse.xtext.ui.shared_*.jar"/>
+			        <include name="org.eclipse.xtext.util_*.jar"/>
+			        <include name="org.objectweb.asm_*.jar"/>
+      			</fileset>
+			</classpath>
+			
+			<link offline="true" href="https://docs.oracle.com/javase/8/docs/api/" packagelistLoc=".\javadoc\java8"/>
+			<link offline="true" href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.10.0/" packagelistLoc=".\javadoc\emf_210\"/>
+			<link offline="true" href="http://help.eclipse.org/oxygen/topic/org.eclipse.platform.doc.isv/reference/api/overview-summary.html?cp=2_1_0" packagelistLoc=".\javadoc\eclipse.platform.oxygen"/>
+			
+			<tag name="generated" description="EMF generated code"></tag>
+			<tag name="model" description="EMF model element"></tag>
+			<tag name="ordered" description="Ordered"></tag>
+			<tag name="noimplement" description="Interface is not intended to be implemented by clients."></tag>
+			<tag name="noextend" description="Interface is not intended to be extended by clients."></tag>
+
+			<sourcepath>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.common\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.common.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.ecore\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.codegen\emf-gen"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.codegen\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.vm\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.vm.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity\emf-gen"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.validity\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.xtext.console\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot.uml\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot.uml\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.uml\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base.ui\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl.ui\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.essentialocl\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.essentialocl\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.essentialocl\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.essentialocl.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.essentialocl.ui\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.markup\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.markup\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.markup\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.markup.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.markup.ui\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclinecore\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclinecore\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclinecore\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclinecore.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclinecore.ui\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\emf-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclstdlib.ui\src"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.oclstdlib.ui\src-gen"/>
+			</sourcepath>
+    
+			<!--package name="org.eclipse.m2m.qvt.oml"/>
+			<package name="org.eclipse.m2m.qvt.oml.blackbox.java"/>
+			<package name="org.eclipse.m2m.qvt.oml.util"/>
+			<package name="org.eclipse.m2m.internal.qvt.oml.expressions"/>
+			<package name="org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL"/>
+			<package name="org.eclipse.m2m.qvt.oml.ocl.legacy.libraries"/>
+			<package name="org.eclipse.m2m.qvt.oml.runtime.util"/>
+			<package name="org.eclipse.m2m.qvt.oml.runtime.ui.wizards"/-->
+
+		</javadoc>
+		
+		<!-- Compress the output javadoc in a zip file --> 
+		<echo message="Compress javadoc to: ${zipFile}" />
+		<zip destfile="${zipFile}" basedir="${generatedJavadoc}"></zip>
+	</target>
+</project>

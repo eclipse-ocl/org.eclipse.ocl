@@ -18,9 +18,15 @@
         <directory>.</directory>
         <filtering>true</filtering>
         <includes>
+          <include>publisher.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>.</directory>
+        <filtering>false</filtering>
+        <includes>
           <include>downloads.sh</include>
           <include>index.html</include>
-          <include>publisher.properties</include>
           <include>updates.sh</include>
         </includes>
       </resource>
@@ -53,4 +59,40 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>javadoc</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>../../doc/org.eclipse.ocl.doc/target</directory>
+            <filtering>false</filtering>
+            <includes>
+              <include>OCL-javadoc.zip</include>
+            </includes>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <profile>
+      <id>pdfdoc</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>../../doc/org.eclipse.ocl.doc/target</directory>
+            <filtering>false</filtering>
+            <includes>
+              <include>ocl.pdf</include>
+            </includes>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
 </project>
