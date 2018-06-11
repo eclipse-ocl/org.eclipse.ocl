@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
 <locations>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="com.google.inject" version="0.0.0"/>
     <unit id="com.ibm.icu" version="0.0.0"/>
@@ -11,9 +11,9 @@
     <unit id="org.sat4j.core" version="0.0.0"/>
     <unit id="org.sat4j.pb" version="0.0.0"/>
     <unit id="org.tukaani.xz" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20180504181223/repository"/>
+    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
   </location>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="org.eclipse.ant.core" version="0.0.0"/>
     <unit id="org.eclipse.compare" version="0.0.0"/>
     <unit id="org.eclipse.compare.core" version="0.0.0"/>
@@ -56,7 +56,8 @@
     <unit id="org.eclipse.equinox.simpleconfigurator.manipulator" version="0.0.0"/>
     <unit id="org.eclipse.help" version="0.0.0"/>
     <unit id="org.eclipse.jdt.annotation" version="0.0.0"/>
-    <unit id="org.eclipse.jdt.core" version="3.14.0.v20180516-0801"/>   <!-- Bug 535509 -->
+    <unit id="org.eclipse.jdt.core" version="0.0.0"/>
+    <!--unit id="org.eclipse.jdt.core" version="3.14.0.v20180516-0801"/-->   <!-- Bug 535509 -->
     <unit id="org.eclipse.jdt.debug" version="0.0.0"/>
     <unit id="org.eclipse.jdt.launching" version="0.0.0"/>
     <unit id="org.eclipse.jface" version="0.0.0"/>
@@ -108,9 +109,10 @@
 
     <unit id="org.hamcrest.core" version="0.0.0"/>
     <unit id="org.junit" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/releases/photon/201805251000"/>
+    <!--repository location="http://download.eclipse.org/releases/photon/201805251000"/-->
+    <repository location="https://ci.eclipse.org/simrel/job/simrel.photon.runaggregator.BUILD__CLEAN/lastSuccessfulBuild/artifact/aggregation/final"/>
   </location>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="org.eclipse.ocl" version="0.0.0"/>
     <unit id="org.eclipse.ocl.common" version="0.0.0"/>
@@ -149,7 +151,7 @@
     <repository location="https://hudson.eclipse.org/ocl/job/ocl-branch-tests/lastSuccessfulBuild/artifact/targetPlatform/"/>
     <!--repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases/6.3.0"/-->
   </location>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
     <repository location="http://download.eclipse.org/modeling/emf/emf/builds/release/2.13"/>
   </location>

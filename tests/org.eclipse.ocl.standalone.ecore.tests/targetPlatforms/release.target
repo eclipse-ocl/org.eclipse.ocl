@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
+<locations>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.emf.common" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.emf.ecore.xmi" version="0.0.0"/>
+    <unit id="org.hamcrest.core" version="0.0.0"/>
+    <unit id="org.junit" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/releases/photon"/>
+    <!--repository location="http://download.eclipse.org/releases/photon/201805251000"/-->
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <!--unit id="org.eclipse.osgi" version="0.0.0"/-->
+    <repository location="http://download.eclipse.org/releases/kepler"/>
+    <!--repository location="http://download.eclipse.org/releases/kepler/201402280900"/-->
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <unit id="lpg.runtime.java" version="0.0.0"/>
+    <unit id="org.eclipse.ocl" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.common" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.ecore" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.ecore.tests" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases>
+  </location>
+</locations>
+</target>

@@ -205,13 +205,33 @@
   </build>
   <profiles>
     <profile>
-      <id>ecore</id>
+      <id>branchTestsLatest</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <buildType></buildType>
-        <targetRelease>ecore</targetRelease>
+        <targetRelease>branchTestsLatest</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>masterLatest</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>masterLatest</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>release</targetRelease>
       </properties>
     </profile>
   </profiles>
