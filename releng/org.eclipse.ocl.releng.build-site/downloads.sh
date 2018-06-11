@@ -92,10 +92,8 @@ then
       pdfSize=$(wc -c <"new${pdfName}")
       if [ ${pdfSize} -ge 100000 ]						# A small (423 byte) file is an HTTP 404 message
       then
-        unzip -ou ${localZip} -d new${PUBLISH__VERSION}
-        chgrp -R ${group} new${PUBLISH__VERSION}
-        chmod -R g+w new${PUBLISH__VERSION}
-        rm -rf ${localZip}
+        chgrp -R ${group} new${pdfName}
+        chmod -R g+w new${pdfName}
         if [ -f "${pdfName}" ]
         then
           mv ${pdfName} old${pdfName}
