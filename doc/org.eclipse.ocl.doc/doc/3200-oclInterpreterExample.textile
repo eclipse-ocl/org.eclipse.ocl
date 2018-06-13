@@ -54,5 +54,5 @@ Refer to the code in this example if you need to:
 * parse, validate and evaluate OCL queries and constraints on EMF model elements
 * implement content-assist for OCL constraints in your model editor
 
-"Copyright (c) 2000, 2007 IBM Corporation and others. All Rights Reserved.":http://www.eclipse.org/legal/epl-v10.html
+"Copyright (c) 2000, 2007 IBM Corporation and others. All Rights Reserved.":http://www.eclipse.org/legal/epl-v20.html
 
