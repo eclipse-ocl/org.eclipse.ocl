@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
@@ -64,9 +65,9 @@ public class PrettyPrinter
 {
 	public static final @NonNull String NULL_PLACEHOLDER = "<null>";
 	@SuppressWarnings("null")
-	public static @NonNull List<String> reservedNameList = Arrays.asList("and", "else", "endif", "false", "if", "implies", "in", "invalid", "let", "not", "null", "or", PivotConstants.SELF_NAME, "then", "true", "xor");
+	public static @NonNull List<@NonNull String> reservedNameList = Arrays.asList("and", "else", "endif", "false", "if", "implies", "in", "invalid", "let", "not", "null", "or", PivotConstants.SELF_NAME, "then", "true", "xor");
 	@SuppressWarnings("null")
-	public static @NonNull List<String> restrictedNameList = Arrays.asList(TypeId.BAG_NAME, TypeId.BOOLEAN_NAME, "Collection", TypeId.INTEGER_NAME, TypeId.OCL_ANY_NAME, TypeId.OCL_INVALID_NAME, TypeId.OCL_VOID_NAME, TypeId.ORDERED_SET_NAME, TypeId.REAL_NAME, TypeId.SEQUENCE_NAME, TypeId.SET_NAME, TypeId.STRING_NAME, TypeId.TUPLE_NAME, TypeId.UNLIMITED_NATURAL_NAME);
+	public static @NonNull List<@NonNull String> restrictedNameList = Arrays.asList(TypeId.BAG_NAME, TypeId.BOOLEAN_NAME, "Collection", TypeId.INTEGER_NAME, TypeId.OCL_ANY_NAME, TypeId.OCL_INVALID_NAME, TypeId.OCL_VOID_NAME, TypeId.ORDERED_SET_NAME, TypeId.REAL_NAME, TypeId.SEQUENCE_NAME, TypeId.SET_NAME, TypeId.STRING_NAME, TypeId.TUPLE_NAME, TypeId.UNLIMITED_NATURAL_NAME);
 
 	private static class Fragment
 	{
@@ -75,7 +76,7 @@ public class PrettyPrinter
 		private final @NonNull String text;
 		private final @Nullable String suffix;
 		private @Nullable Fragment parent = null;
-		private List<Fragment> children = null;
+		private List<@NonNull Fragment> children = null;
 		private boolean lineWrap = true;
 		private boolean exdented = false;
 
@@ -90,7 +91,7 @@ public class PrettyPrinter
 		public @NonNull Fragment addChild(@Nullable String prefix, @NonNull String text, @Nullable String suffix) {
 			//			assert (prefix.length() + text.length() + suffix.length()) > 0;
 			if (children == null) {
-				children = new ArrayList<Fragment>();
+				children = new ArrayList<>();
 			}
 			Fragment child = new Fragment(this, depth+1, prefix, text, suffix);
 			children.add(child);
@@ -312,6 +313,7 @@ public class PrettyPrinter
 	private final AbstractVisitor<Object, PrettyPrinter> visitor;
 	private @Nullable Namespace scope;
 	private @Nullable Precedence currentPrecedence = null;
+	private @Nullable PrecedenceManager precedenceManager;
 
 	/**
 	 * Initializes me.
@@ -326,6 +328,15 @@ public class PrettyPrinter
 		Resource eResource = element.eResource();
 		ASResourceFactory asResourceFactory = eResource instanceof ASResource ? ((ASResource) eResource).getASResourceFactory() : null;
 		this.visitor = asResourceFactory != null ? asResourceFactory.createPrettyPrintVisitor(this) : new PrettyPrintVisitor(this);
+		PrecedenceManager precedenceManager = null;
+		Resource asResource = element.eResource();
+		if (asResource != null) {
+			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
+			if (metamodelManager != null) {
+				precedenceManager = metamodelManager.getPrecedenceManager();
+			}
+		}
+		this.precedenceManager = precedenceManager;
 	}
 
 	public void append(Number number) {
@@ -746,6 +757,13 @@ public class PrettyPrinter
 		s.append(StringUtil.convertToOCLString(name));
 		s.append("'");
 		return s.toString();
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	public @Nullable PrecedenceManager getPrecedenceManager() {
+		return precedenceManager;
 	}
 
 	/**

@@ -43,13 +43,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpCSImpl#getLocalRight <em>Local Right</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpCSImpl#getLocalRightmostDescendant <em>Local Rightmost Descendant</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpCSImpl#getPrecedence <em>Precedence</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpCSImpl#getPrecedenceOrder <em>Precedence Order</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ExpCSImpl
-		extends ModelElementCSImpl
-		implements ExpCS {
+extends ModelElementCSImpl
+implements ExpCS {
 
 	/**
 	 * The default value of the '{@link #isHasError() <em>Has Error</em>}' attribute.
@@ -69,6 +70,16 @@ public class ExpCSImpl
 	 * @ordered
 	 */
 	protected boolean hasError = HAS_ERROR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPrecedenceOrder() <em>Precedence Order</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrecedenceOrder()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int PRECEDENCE_ORDER_EDEFAULT = 0;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -119,6 +130,7 @@ public class ExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
@@ -137,6 +149,8 @@ public class ExpCSImpl
 				return getLocalRightmostDescendant();
 			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
 				return getPrecedence();
+			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE_ORDER:
+				return getPrecedenceOrder();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -152,9 +166,6 @@ public class ExpCSImpl
 		{
 			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
 				setHasError((Boolean)newValue);
-				return;
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
-				setPrecedence((Precedence)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -172,9 +183,6 @@ public class ExpCSImpl
 			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
 				setHasError(HAS_ERROR_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
-				setPrecedence((Precedence)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -184,7 +192,7 @@ public class ExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("null")
+	@SuppressWarnings({"null", "deprecation"})
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
@@ -203,6 +211,8 @@ public class ExpCSImpl
 				return getLocalRightmostDescendant() != null;
 			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
 				return getPrecedence() != null;
+			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE_ORDER:
+				return getPrecedenceOrder() != PRECEDENCE_ORDER_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -311,7 +321,7 @@ public class ExpCSImpl
 			return csNearestLeft;
 		}
 	}
-	
+
 	private @Nullable OperatorExpCS getLocalParentForRight(@Nullable ExpCS csRight) {
 		if (csRight == null) {
 			return null;
@@ -336,7 +346,7 @@ public class ExpCSImpl
 			return csNearestRight;
 		}
 	}
-	
+
 	private @Nullable ExpCS localRight = null;
 	private boolean hasLocalRight = false;
 
@@ -385,6 +395,11 @@ public class ExpCSImpl
 	}
 
 	@Override
+	public int getPrecedenceOrder() {
+		return PrecedenceManager.LEAF_PRECEDENCE_ORDER;
+	}
+
+	@Override
 	public boolean isLocalLeftAncestorOf(@NonNull ExpCS csExp) {	// csExp should be to the right of this for associativity resolution
 		return false;
 	}
@@ -407,10 +422,15 @@ public class ExpCSImpl
 	}
 
 	@Override
-	public void setPrecedence(Precedence newPrecedence) {
+	public final void setPrecedence(Precedence newPrecedence) {
 		throw new UnsupportedOperationException(); // Only OperatorExpCS is settable
 	}
-	
+
+	@Override
+	public void setPrecedence(@Nullable Precedence precedence, int precedenceOrder) {
+		throw new UnsupportedOperationException(); // Only OperatorExpCS is settable
+	}
+
 	/**
 	 * @generated NOT
 	 */

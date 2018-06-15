@@ -31,6 +31,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getLocalRight <em>Local Right</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getLocalRightmostDescendant <em>Local Rightmost Descendant</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedence <em>Precedence</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedenceOrder <em>Precedence Order</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getExpCS()
@@ -38,7 +39,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  * @generated
  */
 public interface ExpCS
-		extends ModelElementCS {
+extends ModelElementCS {
 
 	/**
 	 * Returns the value of the '<em><b>Local Parent</b></em>' reference.
@@ -111,7 +112,7 @@ public interface ExpCS
 	 * @generated
 	 */
 	void setHasError(boolean value);
-	
+
 	/**
 	 * Returns the value of the '<em><b>Local Left</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -151,9 +152,8 @@ public interface ExpCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Precedence</em>' reference.
-	 * @see #setPrecedence(Precedence)
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getExpCS_Precedence()
-	 * @model resolveProxies="false" transient="true" volatile="true" derived="true"
+	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
 	Precedence getPrecedence();
@@ -186,10 +186,31 @@ public interface ExpCS
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Precedence</em>' reference.
 	 * @see #getPrecedence()
+	 * @deprecated not used - use setPrecedence(Precedence, int, AssociativityKind)
+	 */
+	@Deprecated
+	void setPrecedence(Precedence value);
+
+	/**
+	 * Returns the value of the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Precedence Order</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Precedence Order</em>' attribute.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getExpCS_PrecedenceOrder()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
-	void setPrecedence(Precedence value);
-	
+	int getPrecedenceOrder();
+
 	@Nullable OperatorExpCS getLocalLeftContainer();
 	@Nullable OperatorExpCS getLocalRightContainer();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedence <em>Precedence</em>}' reference.
+	 */
+	void setPrecedence(@Nullable Precedence precedence, int precedenceOrder);
 } // ExpCS

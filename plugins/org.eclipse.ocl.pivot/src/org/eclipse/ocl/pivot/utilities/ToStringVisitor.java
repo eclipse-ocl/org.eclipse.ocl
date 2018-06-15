@@ -98,6 +98,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -1067,7 +1068,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitPrecedence(@NonNull Precedence precedence) {
 		appendName(precedence);
-		append("(" + precedence.getOrder() + ")");
+		Resource asResource = precedence.eResource();
+		if (asResource != null) {
+			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
+			if (metamodelManager != null) {
+				append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
+			}
+		}
 		return null;
 	}
 

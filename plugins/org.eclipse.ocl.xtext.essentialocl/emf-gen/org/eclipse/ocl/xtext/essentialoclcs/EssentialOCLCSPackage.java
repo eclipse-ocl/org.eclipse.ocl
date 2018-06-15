@@ -33,7 +33,7 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
  * @generated
  */
 public interface EssentialOCLCSPackage
-		extends EPackage {
+extends EPackage {
 
 	/**
 	 * The package name.
@@ -367,11 +367,22 @@ public interface EssentialOCLCSPackage
 	/**
 	 * The feature id for the '<em><b>Precedence</b></em>' reference.
 	 * <!-- begin-user-doc -->
+	 * @deprecated not used
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
+	@Deprecated
 	int EXP_CS__PRECEDENCE = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXP_CS__PRECEDENCE_ORDER = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Exp CS</em>' class.
@@ -380,7 +391,7 @@ public interface EssentialOCLCSPackage
 	 * @generated
 	 * @ordered
 	 */
-	int EXP_CS_FEATURE_COUNT = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 7;
+	int EXP_CS_FEATURE_COUNT = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.AbstractNameExpCSImpl <em>Abstract Name Exp CS</em>}' class.
@@ -499,6 +510,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int ABSTRACT_NAME_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_NAME_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -689,6 +709,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int CALL_EXP_CS__PRECEDENCE = ABSTRACT_NAME_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_EXP_CS__PRECEDENCE_ORDER = ABSTRACT_NAME_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -899,6 +928,15 @@ public interface EssentialOCLCSPackage
 	int ASSOCIATION_CLASS_CALL_EXP_CS__PRECEDENCE = CALL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_CLASS_CALL_EXP_CS__PRECEDENCE_ORDER = CALL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1106,6 +1144,15 @@ public interface EssentialOCLCSPackage
 	int LITERAL_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The number of structural features of the '<em>Literal Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1223,6 +1270,15 @@ public interface EssentialOCLCSPackage
 	int PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The number of structural features of the '<em>Primitive Literal Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1338,6 +1394,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int BOOLEAN_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOLEAN_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -1464,6 +1529,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int COLLECTION_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parts</b></em>' containment reference list.
@@ -2093,6 +2167,15 @@ public interface EssentialOCLCSPackage
 	int IF_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Is Implicit</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2265,6 +2348,15 @@ public interface EssentialOCLCSPackage
 	int IF_THEN_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_THEN_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Owned Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2410,6 +2502,15 @@ public interface EssentialOCLCSPackage
 	int OPERATOR_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATOR_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2552,6 +2653,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int INFIX_EXP_CS__PRECEDENCE = OPERATOR_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFIX_EXP_CS__PRECEDENCE_ORDER = OPERATOR_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2716,6 +2826,15 @@ public interface EssentialOCLCSPackage
 	int INVALID_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INVALID_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The number of structural features of the '<em>Invalid Literal Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2841,6 +2960,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int ITERATION_CALL_EXP_CS__PRECEDENCE = CALL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION_CALL_EXP_CS__PRECEDENCE_ORDER = CALL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -3067,6 +3195,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int ITERATE_CALL_EXP_CS__PRECEDENCE = ITERATION_CALL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CALL_EXP_CS__PRECEDENCE_ORDER = ITERATION_CALL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -3304,6 +3441,15 @@ public interface EssentialOCLCSPackage
 	int LAMBDA_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAMBDA_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Owned Expression CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3428,6 +3574,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int LET_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Implicit</b></em>' attribute.
@@ -3572,6 +3727,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int LET_VARIABLE_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3744,6 +3908,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int MAP_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parts</b></em>' containment reference list.
@@ -4043,6 +4216,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int NAME_EXP_CS__PRECEDENCE = ASSOCIATION_CLASS_CALL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAME_EXP_CS__PRECEDENCE_ORDER = ASSOCIATION_CLASS_CALL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -4441,6 +4623,15 @@ public interface EssentialOCLCSPackage
 	int NESTED_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NESTED_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Owned Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4567,6 +4758,15 @@ public interface EssentialOCLCSPackage
 	int NULL_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The number of structural features of the '<em>Null Literal Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4682,6 +4882,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int NUMBER_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMBER_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -4818,6 +5027,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int OPERATION_CALL_EXP_CS__PRECEDENCE = CALL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP_CS__PRECEDENCE_ORDER = CALL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -5037,6 +5255,15 @@ public interface EssentialOCLCSPackage
 	int PATTERN_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Owned Pattern Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5242,6 +5469,15 @@ public interface EssentialOCLCSPackage
 	int PREFIX_EXP_CS__PRECEDENCE = OPERATOR_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFIX_EXP_CS__PRECEDENCE_ORDER = OPERATOR_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5384,6 +5620,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int PROPERTY_CALL_EXP_CS__PRECEDENCE = CALL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_CALL_EXP_CS__PRECEDENCE_ORDER = CALL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -5638,6 +5883,15 @@ public interface EssentialOCLCSPackage
 	int SELF_EXP_CS__PRECEDENCE = EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELF_EXP_CS__PRECEDENCE_ORDER = EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5772,6 +6026,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int SHADOW_EXP_CS__PRECEDENCE = ABSTRACT_NAME_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP_CS__PRECEDENCE_ORDER = ABSTRACT_NAME_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -6117,6 +6380,15 @@ public interface EssentialOCLCSPackage
 	int STRING_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Segments</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6241,6 +6513,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int TUPLE_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parts</b></em>' containment reference list.
@@ -6531,6 +6812,15 @@ public interface EssentialOCLCSPackage
 	int TYPE_LITERAL_EXP_CS__PRECEDENCE = LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_LITERAL_EXP_CS__PRECEDENCE_ORDER = LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The feature id for the '<em><b>Owned Path Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6757,6 +7047,15 @@ public interface EssentialOCLCSPackage
 	int UNLIMITED_NATURAL_LITERAL_EXP_CS__PRECEDENCE = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE;
 
 	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS__PRECEDENCE_ORDER = PRIMITIVE_LITERAL_EXP_CS__PRECEDENCE_ORDER;
+
+	/**
 	 * The number of structural features of the '<em>Unlimited Natural Literal Exp CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6882,6 +7181,15 @@ public interface EssentialOCLCSPackage
 	 * @ordered
 	 */
 	int VARIABLE_EXP_CS__PRECEDENCE = ABSTRACT_NAME_EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_EXP_CS__PRECEDENCE_ORDER = ABSTRACT_NAME_EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The feature id for the '<em><b>Is Pre</b></em>' attribute.
@@ -7278,13 +7586,26 @@ public interface EssentialOCLCSPackage
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedence <em>Precedence</em>}'.
 	 * <!-- begin-user-doc -->
+	 * @deprecated not used
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Precedence</em>'.
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedence()
 	 * @see #getExpCS()
 	 * @generated
 	 */
+	@Deprecated
 	EReference getExpCS_Precedence();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedenceOrder <em>Precedence Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Precedence Order</em>'.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.ExpCS#getPrecedenceOrder()
+	 * @see #getExpCS()
+	 * @generated
+	 */
+	EAttribute getExpCS_PrecedenceOrder();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS <em>Exp Specification CS</em>}'.
@@ -8787,6 +9108,14 @@ public interface EssentialOCLCSPackage
 		 * @generated
 		 */
 		EReference EXP_CS__PRECEDENCE = eINSTANCE.getExpCS_Precedence();
+
+		/**
+		 * The meta object literal for the '<em><b>Precedence Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXP_CS__PRECEDENCE_ORDER = eINSTANCE.getExpCS_PrecedenceOrder();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpSpecificationCSImpl <em>Exp Specification CS</em>}' class.

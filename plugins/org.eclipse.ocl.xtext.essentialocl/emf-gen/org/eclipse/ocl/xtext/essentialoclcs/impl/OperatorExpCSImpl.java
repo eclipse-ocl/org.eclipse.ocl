@@ -44,8 +44,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.OperatorExpCS;
  * @generated
  */
 public abstract class OperatorExpCSImpl
-		extends ExpCSImpl
-		implements OperatorExpCS {
+extends ExpCSImpl
+implements OperatorExpCS {
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -308,7 +308,10 @@ public abstract class OperatorExpCSImpl
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-	
+
+	private Precedence precedence = null;
+	private int precedenceOrder = 0;
+
 	protected @Nullable ExpCS getExpressionForLeft(@NonNull ExpCS csLeft) {
 		if (csLeft instanceof OperatorExpCS) {
 			OperatorExpCS csLeftOperator = (OperatorExpCS) csLeft;
@@ -333,7 +336,7 @@ public abstract class OperatorExpCSImpl
 		}
 		return getExpressionForLefts(csLeft.getLocalLeft(), csLowestLeft);
 	}
-	
+
 	protected @Nullable ExpCS getExpressionForRight(@NonNull ExpCS csRight) {
 		if (csRight instanceof OperatorExpCS) {
 			OperatorExpCS csRightOperator = (OperatorExpCS) csRight;
@@ -359,6 +362,18 @@ public abstract class OperatorExpCSImpl
 		return getExpressionForRights(csRight.getLocalRight(), csLowestRight);
 	}
 
+	@Override
+	public @Nullable ExpCS getLocalRight() {
+		ExpCS ownedRight = getOwnedRight();
+		return ownedRight != null ? ownedRight.getLocalLeftmostDescendant() : null;
+	}
+
+	@Override
+	public @NonNull ExpCS getLocalRightmostDescendant() {
+		ExpCS ownedRight = getOwnedRight();
+		return ownedRight != null ? ownedRight.getLocalRightmostDescendant() : this;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -378,23 +393,14 @@ public abstract class OperatorExpCSImpl
 		return eContainer instanceof ElementCS ? (ElementCS) eContainer : null;		// Avoid CCE for Bug 432749
 	}
 
-	private Precedence precedence = null;
-	
 	@Override
-	public Precedence getPrecedence() {
+	public @NonNull Precedence getPrecedence() {
 		return precedence != null ? precedence : PrecedenceManager.NULL_PRECEDENCE;
 	}
 
 	@Override
-	public @Nullable ExpCS getLocalRight() {
-		ExpCS ownedRight = getOwnedRight();
-		return ownedRight != null ? ownedRight.getLocalLeftmostDescendant() : null;
-	}
-
-	@Override
-	public @NonNull ExpCS getLocalRightmostDescendant() {
-		ExpCS ownedRight = getOwnedRight();
-		return ownedRight != null ? ownedRight.getLocalRightmostDescendant() : this;
+	public int getPrecedenceOrder() {
+		return precedenceOrder;
 	}
 
 	@Override
@@ -402,17 +408,15 @@ public abstract class OperatorExpCSImpl
 
 	@Override
 	public boolean isLocalLeftAncestorOf(@NonNull ExpCS csExp) {	// csExp should be to the right of this for associativity resolution
-		Precedence leftPrecedence = getPrecedence();
-		Precedence rightPrecedence = csExp.getPrecedence();
-		int leftOrder = leftPrecedence.getOrder().intValue();
-		int rightOrder = rightPrecedence.getOrder().intValue();
+		int leftOrder = getPrecedenceOrder();
+		int rightOrder = csExp.getPrecedenceOrder();
 		if (leftOrder > rightOrder) {
 			return true;
 		}
 		else if (leftOrder > rightOrder) {
 			return false;
 		}
-		else if (leftPrecedence.getAssociativity() == AssociativityKind.RIGHT) {
+		else if (getPrecedence().getAssociativity() == AssociativityKind.RIGHT) {
 			return true;
 		}
 		else {
@@ -438,8 +442,9 @@ public abstract class OperatorExpCSImpl
 	}
 
 	@Override
-	public void setPrecedence(Precedence newPrecedence) {
+	public void setPrecedence(@Nullable Precedence newPrecedence, int newPrecedenceOrder) {
 		precedence = newPrecedence;
+		precedenceOrder = newPrecedenceOrder;
 	}
 
 	/**

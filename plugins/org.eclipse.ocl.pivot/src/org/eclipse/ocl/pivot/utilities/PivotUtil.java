@@ -120,7 +120,10 @@ public class PivotUtil
 {
 	/**
 	 * 'Highest' precedence first
+	 *
+	 * @deprecated (Not used) The Precedence.order is not a constant in a shared library. Use the PrecedenceManager.
 	 */
+	@Deprecated
 	public static class PrecedenceComparator implements Comparator<Precedence>
 	{
 		public static final PrecedenceComparator INSTANCE = new PrecedenceComparator();

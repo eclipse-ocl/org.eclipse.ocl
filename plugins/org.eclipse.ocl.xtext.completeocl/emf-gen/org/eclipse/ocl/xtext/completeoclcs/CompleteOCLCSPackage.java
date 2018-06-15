@@ -33,7 +33,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
  * @generated
  */
 public interface CompleteOCLCSPackage
-		extends EPackage {
+extends EPackage {
 
 	/**
 	 * The package name.
@@ -1066,7 +1066,17 @@ public interface CompleteOCLCSPackage
 	 * @generated
 	 * @ordered
 	 */
+	@SuppressWarnings("deprecation")
 	int OCL_MESSAGE_ARG_CS__PRECEDENCE = EssentialOCLCSPackage.EXP_CS__PRECEDENCE;
+
+	/**
+	 * The feature id for the '<em><b>Precedence Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OCL_MESSAGE_ARG_CS__PRECEDENCE_ORDER = EssentialOCLCSPackage.EXP_CS__PRECEDENCE_ORDER;
 
 	/**
 	 * The number of structural features of the '<em>OCL Message Arg CS</em>' class.

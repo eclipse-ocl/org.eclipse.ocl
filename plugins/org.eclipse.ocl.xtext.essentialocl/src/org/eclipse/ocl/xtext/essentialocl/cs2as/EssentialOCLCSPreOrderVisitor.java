@@ -104,8 +104,14 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 		public BasicContinuation<?> execute() {
 			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
 			String operatorName = csElement.getName();
-			Precedence precedence = operatorName != null ? metamodelManager.getInfixPrecedence(operatorName) : null;
-			csElement.setPrecedence(precedence);
+			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getInfixPrecedence(operatorName) : null;
+			//			csElement.setPrecedence(precedence);
+			if (precedence != null) {
+				csElement.setPrecedence(precedence, metamodelManager.getPrecedenceManager().getOrder(precedence));
+			}
+			else {
+				csElement.setPrecedence(null, PrecedenceManager.NULL_PRECEDENCE_ORDER);
+			}
 			return super.execute();
 		}
 	}
@@ -157,8 +163,14 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 		public BasicContinuation<?> execute() {
 			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
 			String operatorName = csElement.getName();
-			Precedence precedence = operatorName != null ? metamodelManager.getPrefixPrecedence(operatorName) : null;
-			csElement.setPrecedence(precedence);
+			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getPrefixPrecedence(operatorName) : null;
+			//			csElement.setPrecedence(precedence);
+			if (precedence != null) {
+				csElement.setPrecedence(precedence, metamodelManager.getPrecedenceManager().getOrder(precedence));
+			}
+			else {
+				csElement.setPrecedence(null, PrecedenceManager.NULL_PRECEDENCE_ORDER);
+			}
 			return super.execute();
 		}
 	}
@@ -229,7 +241,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 	@Override
 	public Continuation<?> visitInfixExpCS(@NonNull InfixExpCS csElement) {
 		if (NavigationUtil.isNavigationInfixExp(csElement)) {
-			csElement.setPrecedence(PrecedenceManager.NAVIGATION_PRECEDENCE);
+			csElement.setPrecedence(PrecedenceManager.NAVIGATION_PRECEDENCE, PrecedenceManager.NAVIGATION_PRECEDENCE_ORDER);
 			return null;
 		}
 		else {

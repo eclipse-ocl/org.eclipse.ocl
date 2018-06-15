@@ -1421,8 +1421,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeClass.getPartialClasses();
 	}
 
+	/**
+	 * @since 1.5
+	 */
 	@SuppressWarnings("null")
-	protected @NonNull PrecedenceManager getPrecedenceManager() {
+	public @NonNull PrecedenceManager getPrecedenceManager() {
 		if (precedenceManager == null) {
 			standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
 			synchronized (this) {

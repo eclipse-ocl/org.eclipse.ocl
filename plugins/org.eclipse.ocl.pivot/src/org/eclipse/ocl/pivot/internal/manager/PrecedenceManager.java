@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -27,20 +28,35 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * PrecedenceManager encapsulates the knowledge about known precedences.
+ * @since 1.5
  */
 public class PrecedenceManager
 {
-
 	public static @NonNull Precedence NULL_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
+	/**
+	 * @since 1.5
+	 */
+	public static final int NULL_PRECEDENCE_ORDER = Integer.MAX_VALUE/2;
 	public static @NonNull Precedence NAVIGATION_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
+	/**
+	 * @since 1.5
+	 */
+	public static final int NAVIGATION_PRECEDENCE_ORDER = Integer.valueOf(-1);
 	public static @NonNull Precedence LEAF_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
+	/**
+	 * @since 1.5
+	 */
+	public static final int LEAF_PRECEDENCE_ORDER = Integer.valueOf(-2);
 	static {
 		NULL_PRECEDENCE.setName("NULL");
-		NULL_PRECEDENCE.setOrder(Integer.MAX_VALUE/2);			// Small enough to avoid wrap around during comparison
+		//		NULL_PRECEDENCE.setOrder(NULL_PRECEDENCE_ORDER);			// Small enough to avoid wrap around during comparison
+		NULL_PRECEDENCE.setAssociativity(AssociativityKind.LEFT);
 		NAVIGATION_PRECEDENCE.setName("NAVIGATION");
-		NAVIGATION_PRECEDENCE.setOrder(Integer.valueOf(-1));
+		//		NAVIGATION_PRECEDENCE.setOrder(NAVIGATION_PRECEDENCE_ORDER);
+		NAVIGATION_PRECEDENCE.setAssociativity(AssociativityKind.LEFT);
 		LEAF_PRECEDENCE.setName("LEAF");
-		LEAF_PRECEDENCE.setOrder(Integer.valueOf(-2));
+		//		LEAF_PRECEDENCE.setOrder(LEAF_PRECEDENCE_ORDER);
+		LEAF_PRECEDENCE.setAssociativity(AssociativityKind.LEFT);
 	}
 
 	/**
@@ -52,11 +68,13 @@ public class PrecedenceManager
 	 * e.g. <tt> precedence A B D</tt> and <tt>precedence B C D</tt> merge to
 	 * <tt>A B C D</tt> with duplicate precedence objects for B and D.
 	 */
-	private Map<@NonNull String, @NonNull List<Precedence>> nameToPrecedencesMap = null;
+	private Map<@NonNull String, @NonNull List<@NonNull Precedence>> nameToPrecedencesMap = null;
 
 	private Map<@NonNull String, String> infixToPrecedenceNameMap = null;
 
 	private Map<@NonNull String, @NonNull String> prefixToPrecedenceNameMap = null;
+
+	private Map<@NonNull Precedence, @NonNull Integer> precedence2order = null;
 
 	/**
 	 * Interleave the ownedPrecedences of the rootPackages to establish a merged
@@ -70,6 +88,7 @@ public class PrecedenceManager
 		nameToPrecedencesMap = new HashMap<>();
 		infixToPrecedenceNameMap = new HashMap<>();
 		prefixToPrecedenceNameMap = new HashMap<>();
+		precedence2order = new HashMap<>();
 		for (@NonNull Library library : libraries) {
 			List<@NonNull Precedence> precedences = ClassUtil.nullFree(library.getOwnedPrecedences());
 			if (precedences.size() > 0) {
@@ -106,12 +125,15 @@ public class PrecedenceManager
 				}
 			}
 		}
+		precedence2order.put(NULL_PRECEDENCE, NULL_PRECEDENCE_ORDER);			// Small enough to avoid wrap around during comparison
+		precedence2order.put(NAVIGATION_PRECEDENCE, NAVIGATION_PRECEDENCE_ORDER);
+		precedence2order.put(LEAF_PRECEDENCE, LEAF_PRECEDENCE_ORDER);
 		for (int i = 0; i < orderedPrecedences.size(); i++) {
 			String name = orderedPrecedences.get(i);
-			List<Precedence> precedences = nameToPrecedencesMap.get(name);
+			List<@NonNull Precedence> precedences = nameToPrecedencesMap.get(name);
 			assert precedences != null;
 			for (Precedence precedence : precedences) {
-				precedence.setOrder(i);
+				precedence2order.put(precedence, i);
 			}
 		}
 		return errors;
@@ -171,11 +193,22 @@ public class PrecedenceManager
 		if (precedenceName == null) {
 			return null;
 		}
-		List<Precedence> precedences = nameToPrecedencesMap.get(precedenceName);
+		List<@NonNull Precedence> precedences = nameToPrecedencesMap.get(precedenceName);
 		if (precedences == null) {
 			return null;
 		}
-		return precedences.get(0);
+		Precedence precedence = precedences.get(0);
+		if (precedence == null) {
+			return null;
+		}
+		return precedence;
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	public int getOrder(@NonNull Precedence precedence) {
+		return ClassUtil.nonNullState(precedence2order.get(precedence));
 	}
 
 	public @Nullable Precedence getPrefixPrecedence(@NonNull String operatorName) {
@@ -183,10 +216,14 @@ public class PrecedenceManager
 		if (precedenceName == null) {
 			return null;
 		}
-		List<Precedence> precedences = nameToPrecedencesMap.get(precedenceName);
+		List<@NonNull Precedence> precedences = nameToPrecedencesMap.get(precedenceName);
 		if (precedences == null) {
 			return null;
 		}
-		return precedences.get(0);
+		Precedence precedence = precedences.get(0);
+		if (precedence == null) {
+			return null;
+		}
+		return precedence;
 	}
 }

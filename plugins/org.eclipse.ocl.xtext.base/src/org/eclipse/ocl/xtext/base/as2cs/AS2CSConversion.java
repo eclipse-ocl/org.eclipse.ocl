@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -279,6 +280,10 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				return defaultExpressionVisitor;
 			}
 		}
+	}
+
+	public @NonNull PrecedenceManager getPrecedenceManager() {
+		return metamodelManager.getPrecedenceManager();
 	}
 
 	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass, @Nullable Namespace scope) {

@@ -582,6 +582,34 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/PrecedenceManager.java" type="org.eclipse.ocl.pivot.internal.manager.PrecedenceManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.PrecedenceManager"/>
+                <message_argument value="LEAF_PRECEDENCE_ORDER"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.PrecedenceManager"/>
+                <message_argument value="NAVIGATION_PRECEDENCE_ORDER"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.PrecedenceManager"/>
+                <message_argument value="NULL_PRECEDENCE_ORDER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceImpl.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
+                <message_argument value="CHECK_IMMUTABILITY"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

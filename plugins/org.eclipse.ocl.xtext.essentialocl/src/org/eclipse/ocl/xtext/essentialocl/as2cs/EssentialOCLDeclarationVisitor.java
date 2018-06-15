@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -276,7 +277,8 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		if (asThisPrecedence == null) {
 			return false;
 		}
-		return asThisPrecedence.getOrder().intValue() > asThatPrecedence.getOrder().intValue();
+		PrecedenceManager precedenceManager = context.getPrecedenceManager();
+		return precedenceManager.getOrder(asThisPrecedence) > precedenceManager.getOrder(asThatPrecedence);
 	}
 
 	protected ElementCS refreshConstraint(@NonNull ConstraintCS csElement, @NonNull Constraint object) {

@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
  */
 public class PrecedenceTests extends XtextTestCase
 {
-	protected Precedence createPrecedence(Library library1, String name, AssociativityKind associativity) {
+	protected @NonNull Precedence createPrecedence(Library library1, String name, AssociativityKind associativity) {
 		Precedence precedence = PivotFactory.eINSTANCE.createPrecedence();
 		precedence.setName(name);
 		precedence.setAssociativity(associativity);
@@ -47,13 +47,14 @@ public class PrecedenceTests extends XtextTestCase
 		Precedence p2b = createPrecedence(library2, "C", AssociativityKind.LEFT);
 		Precedence p2c = createPrecedence(library2, "D", AssociativityKind.LEFT);
 		libraries.add(library2);
-		List<String> errors = new PrecedenceManager().compilePrecedences(libraries);
-		assertEquals(0, p1a.getOrder());
-		assertEquals(1, p1b.getOrder());
-		assertEquals(3, p1c.getOrder());
-		assertEquals(1, p2a.getOrder());
-		assertEquals(2, p2b.getOrder());
-		assertEquals(3, p2c.getOrder());
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<String> errors = precedenceManager.compilePrecedences(libraries);
+		assertEquals(0, precedenceManager.getOrder(p1a));
+		assertEquals(1, precedenceManager.getOrder(p1b));
+		assertEquals(3, precedenceManager.getOrder(p1c));
+		assertEquals(1, precedenceManager.getOrder(p2a));
+		assertEquals(2, precedenceManager.getOrder(p2b));
+		assertEquals(3, precedenceManager.getOrder(p2c));
 		assertEquals(0, errors.size());
 	}
 
@@ -67,11 +68,12 @@ public class PrecedenceTests extends XtextTestCase
 		Precedence p2a = createPrecedence(library2, "B", AssociativityKind.LEFT);
 		Precedence p2b = createPrecedence(library2, "A", AssociativityKind.LEFT);
 		libraries.add(library2);
-		List<String> errors = new PrecedenceManager().compilePrecedences(libraries);
-		assertEquals(0, p1a.getOrder());
-		assertEquals(1, p1b.getOrder());
-		assertEquals(1, p2a.getOrder());
-		assertEquals(0, p2b.getOrder());
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<String> errors = precedenceManager.compilePrecedences(libraries);
+		assertEquals(0, precedenceManager.getOrder(p1a));
+		assertEquals(1, precedenceManager.getOrder(p1b));
+		assertEquals(1, precedenceManager.getOrder(p2a));
+		assertEquals(0, precedenceManager.getOrder(p2b));
 		assertEquals(1, errors.size());
 	}
 
@@ -83,9 +85,10 @@ public class PrecedenceTests extends XtextTestCase
 		Library library2 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p2a = createPrecedence(library2, "A", AssociativityKind.RIGHT);
 		libraries.add(library2);
-		List<String> errors = new PrecedenceManager().compilePrecedences(libraries);
-		assertEquals(0, p1a.getOrder());
-		assertEquals(0, p2a.getOrder());
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<String> errors = precedenceManager.compilePrecedences(libraries);
+		assertEquals(0, precedenceManager.getOrder(p1a));
+		assertEquals(0, precedenceManager.getOrder(p2a));
 		assertEquals(1, errors.size());
 	}
 
@@ -101,13 +104,14 @@ public class PrecedenceTests extends XtextTestCase
 		Precedence p2b = createPrecedence(library2, "C", AssociativityKind.LEFT);
 		Precedence p2c = createPrecedence(library2, "D", AssociativityKind.LEFT);
 		libraries.add(library2);
-		List<String> errors = new PrecedenceManager().compilePrecedences(libraries);
-		assertEquals(0, p1a.getOrder());
-		assertEquals(2, p1b.getOrder());
-		assertEquals(3, p1c.getOrder());
-		assertEquals(0, p2a.getOrder());
-		assertEquals(1, p2b.getOrder());
-		assertEquals(3, p2c.getOrder());
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<String> errors = precedenceManager.compilePrecedences(libraries);
+		assertEquals(0, precedenceManager.getOrder(p1a));
+		assertEquals(2, precedenceManager.getOrder(p1b));
+		assertEquals(3, precedenceManager.getOrder(p1c));
+		assertEquals(0, precedenceManager.getOrder(p2a));
+		assertEquals(1, precedenceManager.getOrder(p2b));
+		assertEquals(3, precedenceManager.getOrder(p2c));
 		assertEquals(1, errors.size());
 	}
 
@@ -121,11 +125,12 @@ public class PrecedenceTests extends XtextTestCase
 		Precedence p2a = createPrecedence(library2, "A", AssociativityKind.LEFT);
 		Precedence p2b = createPrecedence(library2, "C", AssociativityKind.LEFT);
 		libraries.add(library2);
-		List<String> errors = new PrecedenceManager().compilePrecedences(libraries);
-		assertEquals(0, p1a.getOrder());
-		assertEquals(2, p1b.getOrder());
-		assertEquals(0, p2a.getOrder());
-		assertEquals(1, p2b.getOrder());
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<String> errors = precedenceManager.compilePrecedences(libraries);
+		assertEquals(0, precedenceManager.getOrder(p1a));
+		assertEquals(2, precedenceManager.getOrder(p1b));
+		assertEquals(0, precedenceManager.getOrder(p2a));
+		assertEquals(1, precedenceManager.getOrder(p2b));
 		assertEquals(1, errors.size());
 	}
 }

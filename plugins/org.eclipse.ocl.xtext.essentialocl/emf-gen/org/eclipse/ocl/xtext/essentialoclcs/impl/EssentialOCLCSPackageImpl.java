@@ -815,6 +815,17 @@ implements EssentialOCLCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getExpCS_PrecedenceOrder()
+	{
+		return (EAttribute)expCSEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getExpSpecificationCS() {
 		return expSpecificationCSEClass;
 	}
@@ -2073,6 +2084,7 @@ implements EssentialOCLCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("deprecation")
 	public void createPackageContents() {
 		if (isCreated) return;
 		isCreated = true;
@@ -2132,6 +2144,7 @@ implements EssentialOCLCSPackage {
 		createEReference(expCSEClass, EXP_CS__LOCAL_RIGHT);
 		createEReference(expCSEClass, EXP_CS__LOCAL_RIGHTMOST_DESCENDANT);
 		createEReference(expCSEClass, EXP_CS__PRECEDENCE);
+		createEAttribute(expCSEClass, EXP_CS__PRECEDENCE_ORDER);
 
 		expSpecificationCSEClass = createEClass(EXP_SPECIFICATION_CS);
 		createEReference(expSpecificationCSEClass, EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
@@ -2420,7 +2433,8 @@ implements EssentialOCLCSPackage {
 		initEReference(getExpCS_LocalParent(), this.getOperatorExpCS(), null, "localParent", null, 0, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getExpCS_LocalRight(), this.getExpCS(), null, "localRight", null, 0, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getExpCS_LocalRightmostDescendant(), this.getExpCS(), null, "localRightmostDescendant", null, 1, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getExpCS_Precedence(), thePivotPackage.getPrecedence(), null, "precedence", null, 0, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getExpCS_Precedence(), thePivotPackage.getPrecedence(), null, "precedence", null, 0, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getExpCS_PrecedenceOrder(), ecorePackage.getEInt(), "precedenceOrder", null, 0, 1, ExpCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		EOperation op = addEOperation(expCSEClass, ecorePackage.getEBoolean(), "isLocalLeftAncestorOf", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getExpCS(), "csExp", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$

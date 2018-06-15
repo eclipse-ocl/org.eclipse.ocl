@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -465,7 +466,15 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			}
 			else {
 				Precedence currentPrecedence = context.getCurrentPrecedence();
-				boolean lowerPrecedence = (currentPrecedence  != null) && (precedence.getOrder().intValue() > currentPrecedence.getOrder().intValue());
+				boolean lowerPrecedence = currentPrecedence != null;
+				if (currentPrecedence != null) {
+					PrecedenceManager precedenceManager = context.getPrecedenceManager();
+					if (precedenceManager != null) {
+						int precedenceOrder = precedenceManager.getOrder(precedence);
+						int currentPrecedenceOrder = precedenceManager.getOrder(currentPrecedence);
+						lowerPrecedence = precedenceOrder > currentPrecedenceOrder;
+					}
+				}
 				if (lowerPrecedence) {
 					context.push("(", null);
 				}
