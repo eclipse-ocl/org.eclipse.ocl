@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.examples.impactanalyzer" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="3.10.0"/>
+                <message_argument value="3.2.700"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/examples/impactanalyzer/ValueNotFoundException.java" type="org.eclipse.ocl.examples.impactanalyzer.ValueNotFoundException">
         <filter comment="[486542] HIde benign longstanding  warning" id="576725006">
             <message_arguments>
