@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -20,8 +21,11 @@ import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.junit.After;
 import org.junit.Before;
 
@@ -37,6 +41,18 @@ public class InheritanceTests extends PivotTestSuite
 	@Override
 	protected @NonNull TestOCL createOCL() {
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+	}
+
+	public @NonNull String installLibraryClone() {
+		String libraryClone = "http://www.eclipse.org/ocl/2015/LibraryClone";
+		StandardLibraryContribution mutableLibrary = new OCLstdlib.Loader() {
+			@Override
+			public @NonNull Resource getResource() {
+				return OCLstdlib.create(libraryClone + PivotConstants.OCL_AS_FILE_EXTENSION);
+			}
+		};
+		StandardLibraryContribution.REGISTRY.put(libraryClone, mutableLibrary );
+		return libraryClone;
 	}
 
 	@Override
@@ -189,6 +205,7 @@ public class InheritanceTests extends PivotTestSuite
 	public void test_Inheritance_Loop() {
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
 			assertEquals(3, integerTypeInheritance.getDepth());
@@ -212,6 +229,7 @@ public class InheritanceTests extends PivotTestSuite
 	public void test_Inheritance_Addition() {
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
 			assertEquals(3, integerTypeInheritance.getDepth());
@@ -234,6 +252,7 @@ public class InheritanceTests extends PivotTestSuite
 	public void test_Inheritance_Removal() {
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
 			assertEquals(3, integerTypeInheritance.getDepth());
