@@ -17,31 +17,45 @@
  *******************************************************************************/
 package	org.eclipse.ocl.pivot.model;
 
-import java.math.BigInteger;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionKind;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PseudostateKind;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -61,8 +75,10 @@ public class OCLmetamodel extends ASResourceImpl
 	 */
 	public static final @NonNull String PIVOT_URI = "http://www.eclipse.org/ocl/2015/Pivot";
 
+	private static final @NonNull URI PIVOT_AS_URI = URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+
 	public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-		OCLmetamodel resource = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
+		OCLmetamodel resource = new ReadOnly(PIVOT_AS_URI);
 		Contents contents = new Contents(standardLibrary.getPackage(), name, nsPrefix, nsURI);
 		Model model = contents.getModel();
 		resource.getContents().add(model);
@@ -78,7 +94,7 @@ public class OCLmetamodel extends ASResourceImpl
 	public static @NonNull OCLmetamodel getDefault() {
 		OCLmetamodel metamodel = INSTANCE;
 		if (metamodel == null) {
-			metamodel = INSTANCE = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
+			metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
 			Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodel.getContents().add(contents.getModel());
 		}
@@ -106,6 +122,57 @@ public class OCLmetamodel extends ASResourceImpl
 
 		protected LibraryContents(@NonNull Package standardLibrary) {
 			this.standardLibrary = standardLibrary;
+		}
+	}
+
+	/**
+	 * A ReadOnly OCLmetamodel overrides inherited functionality to impose immutable shared behaviour.
+	 */
+	protected static class ReadOnly extends OCLmetamodel
+	{
+		protected ReadOnly(@NonNull URI uri) {
+			super(uri);
+			setSaveable(false);
+		}
+
+		/**
+		 * Overridden to inhibit entry of the shared instance in any ResourceSet.
+		 */
+		@Override
+		public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+			return notifications;
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected void doUnload() {}
+
+		/**
+		 * Overridden to trivialise loading of the shared instance.
+		 */
+		@Override
+		public void load(Map<?, ?> options) throws IOException {
+			if (this != INSTANCE) {
+				super.load(options);
+			}
+			else {
+				setLoaded(true);
+			}
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected Notification setLoaded(boolean isLoaded) {
+			if (isLoaded) {
+				return super.setLoaded(isLoaded);
+			}
+			else {
+				return null;
+			}
 		}
 	}
 

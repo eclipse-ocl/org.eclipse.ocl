@@ -79,7 +79,8 @@ public class CGLibrary extends ASResourceImpl
 		CGLibrary oclstdlib = INSTANCE;
 		if (oclstdlib == null) {
 			Contents contents = new Contents("http://www.eclipse.org/ocl/2015/Library");
-			oclstdlib = INSTANCE = new CGLibrary(STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION, contents.getModel());
+			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+			oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
 		}
 		return oclstdlib;
 	}
@@ -155,6 +156,59 @@ public class CGLibrary extends ASResourceImpl
 	}
 
 	/**
+	 * A ReadOnly CGLibrary overrides inherited functionality to impose immutable shared behaviour.
+	 *
+	 * @since 1.5
+	 */
+	protected static class ReadOnly extends CGLibrary
+	{
+		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
+			super(asURI, libraryModel);
+			setSaveable(false);
+		}
+
+		/**
+		 * Overridden to inhibit entry of the shared instance in any ResourceSet.
+		 */
+		@Override
+		public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+			return notifications;
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected void doUnload() {}
+
+		/**
+		 * Overridden to trivialise loading of the shared instance.
+		 */
+		@Override
+		public void load(Map<?, ?> options) throws IOException {
+			if (this != INSTANCE) {
+				super.load(options);
+			}
+			else {
+				setLoaded(true);
+			}
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected Notification setLoaded(boolean isLoaded) {
+			if (isLoaded) {
+				return super.setLoaded(isLoaded);
+			}
+			else {
+				return null;
+			}
+		}
+	}
+
+	/**
 	 *	Construct a copy of the OCL Standard Library with specified resource URI,
 	 *  and package name, prefix and namespace URI.
 	 */
@@ -172,55 +226,6 @@ public class CGLibrary extends ASResourceImpl
 		getContents().add(libraryModel);
 	}
 
-	/**
-	 * Overridden to inhibit entry of the static shared instance in any ResourceSet.
-	 */
-	@Override
-	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-		if (this != INSTANCE) {
-			return super.basicSetResourceSet(resourceSet, notifications);
-		}
-		else {
-			return notifications;
-		}
-	}
-
-	/**
-	 * Overridden to inhibit unloading of the static shared instance.
-	 */
-	@Override
-	protected void doUnload() {
-		if (this != INSTANCE) {
-			super.doUnload();
-		}
-	}
-
-	/**
-	 * Overridden to trivialise loading of the static shared instance.
-	 */
-	@Override
-	public void load(Map<?, ?> options) throws IOException {
-		if (this != INSTANCE) {
-			super.load(options);
-		}
-		else {
-			setLoaded(true);
-		}
-	}
-
-	/**
-	 * Overridden to inhibit unloading of the static shared instance.
-	 */
-	@Override
-	protected Notification setLoaded(boolean isLoaded) {
-		if (isLoaded || (this != INSTANCE)) {
-			return super.setLoaded(isLoaded);
-		}
-		else {
-			return null;
-		}
-	}
-
 	private static class Contents extends AbstractContents
 	{
 		private final @NonNull Model model;
@@ -231,6 +236,7 @@ public class CGLibrary extends ASResourceImpl
 			model = createModel(asURI);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL);
 			installPackages();
+			installPrimitiveTypes();
 			installOperations();
 			installComments();
 		}
@@ -251,6 +257,16 @@ public class CGLibrary extends ASResourceImpl
 			model.getOwnedImports().add(createImport(null, _ocl));
 		}
 
+		private final @NonNull PrimitiveType _String_1 = createPrimitiveType("String");
+
+		private void installPrimitiveTypes() {
+			List<Class> ownedClasses;
+			PrimitiveType type;
+
+			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses.add(type = _String_1);
+		}
+
 		private final @NonNull Operation op_String_getSeverity = createOperation("getSeverity", _Integer, "org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation", org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation.INSTANCE);
 		private final @NonNull Operation op_String_logDiagnostic = createOperation("logDiagnostic", _Boolean, "org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation", org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation.INSTANCE);
 		private final @NonNull Operation op_String_logDiagnostic_1 = createOperation("logDiagnostic", _Boolean, "org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation", org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation.INSTANCE);
@@ -261,7 +277,7 @@ public class CGLibrary extends ASResourceImpl
 			Operation operation;
 			Parameter parameter;
 
-			ownedOperations = _String.getOwnedOperations();
+			ownedOperations = _String_1.getOwnedOperations();
 			ownedOperations.add(operation = op_String_getSeverity);
 			ownedOperations.add(operation = op_String_logDiagnostic);
 			operation.setIsValidating(true);

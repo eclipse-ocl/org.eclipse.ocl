@@ -18,39 +18,48 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -87,7 +96,8 @@ public class OCLstdlib extends ASResourceImpl
 		OCLstdlib oclstdlib = INSTANCE;
 		if (oclstdlib == null) {
 			Contents contents = new Contents("http://www.eclipse.org/ocl/2015/Library");
-			oclstdlib = INSTANCE = new OCLstdlib(STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION, contents.getModel());
+			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+			oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
 		}
 		return oclstdlib;
 	}
@@ -163,6 +173,59 @@ public class OCLstdlib extends ASResourceImpl
 	}
 
 	/**
+	 * A ReadOnly OCLstdlib overrides inherited functionality to impose immutable shared behaviour.
+	 *
+	 * @since 1.5
+	 */
+	protected static class ReadOnly extends OCLstdlib
+	{
+		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
+			super(asURI, libraryModel);
+			setSaveable(false);
+		}
+
+		/**
+		 * Overridden to inhibit entry of the shared instance in any ResourceSet.
+		 */
+		@Override
+		public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+			return notifications;
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected void doUnload() {}
+
+		/**
+		 * Overridden to trivialise loading of the shared instance.
+		 */
+		@Override
+		public void load(Map<?, ?> options) throws IOException {
+			if (this != INSTANCE) {
+				super.load(options);
+			}
+			else {
+				setLoaded(true);
+			}
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected Notification setLoaded(boolean isLoaded) {
+			if (isLoaded) {
+				return super.setLoaded(isLoaded);
+			}
+			else {
+				return null;
+			}
+		}
+	}
+
+	/**
 	 *	Construct a copy of the OCL Standard Library with specified resource URI,
 	 *  and package name, prefix and namespace URI.
 	 */
@@ -178,55 +241,6 @@ public class OCLstdlib extends ASResourceImpl
 		super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 		assert PivotUtilInternal.isASURI(asURI);
 		getContents().add(libraryModel);
-	}
-
-	/**
-	 * Overridden to inhibit entry of the static shared instance in any ResourceSet.
-	 */
-	@Override
-	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-		if (this != INSTANCE) {
-			return super.basicSetResourceSet(resourceSet, notifications);
-		}
-		else {
-			return notifications;
-		}
-	}
-
-	/**
-	 * Overridden to inhibit unloading of the static shared instance.
-	 */
-	@Override
-	protected void doUnload() {
-		if (this != INSTANCE) {
-			super.doUnload();
-		}
-	}
-
-	/**
-	 * Overridden to trivialise loading of the static shared instance.
-	 */
-	@Override
-	public void load(Map<?, ?> options) throws IOException {
-		if (this != INSTANCE) {
-			super.load(options);
-		}
-		else {
-			setLoaded(true);
-		}
-	}
-
-	/**
-	 * Overridden to inhibit unloading of the static shared instance.
-	 */
-	@Override
-	protected Notification setLoaded(boolean isLoaded) {
-		if (isLoaded || (this != INSTANCE)) {
-			return super.setLoaded(isLoaded);
-		}
-		else {
-			return null;
-		}
 	}
 
 	private static class Contents extends AbstractContents

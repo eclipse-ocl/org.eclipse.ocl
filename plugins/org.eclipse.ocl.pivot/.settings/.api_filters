@@ -374,6 +374,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel$ReadOnly">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ReadOnly"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
