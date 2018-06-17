@@ -12,7 +12,7 @@
 #
 #    Promote the PUBLISH__URL to an updates repository.
 #
-#    PUBLISH__URL            The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
+#    PUBLISH__URL            The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
 #    PUBLISH__VERSION        Unqualified version e.g. 6.5.0
 #    PUBLISH__BUILD_T        Build type N/I/S, blank suppresses promotion
 #    PUBLISH__QUALIFIER      Version qualifier e.g. v20171020-1234

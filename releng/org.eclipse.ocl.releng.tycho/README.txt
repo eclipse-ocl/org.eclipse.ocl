@@ -13,11 +13,11 @@ ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.reposit
 
 (This can be checked by installing new software from e.g. http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.5.0)
 
-The Photon aggregator is configured by GIT\org.eclipse.simrel.build\ocl.aggrcon to use an explicit milestone entry
+The SimREl aggregator is configured by GIT\org.eclipse.simrel.build\ocl.aggrcon to use an explicit milestone entry
 
 So edit ocl.aggrcon to update 
 location="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.5.0/S201408191307"
-commit with a comment sych as [ocl] 6.5.0M5 for Photon and Push to Gerrit (refs/for/master)
+commit with a comment such as [ocl] 6.5.0M5 for Photon and Push to Gerrit (refs/for/master)
 If that comes back wuth SUCCESS, push to master
 
 Once a release has been promoted update ocl.aggrcon to the final release
@@ -40,7 +40,7 @@ Run XVNC during build
 
 Execute:
 
-/shared/common/apache-maven-latest/bin/mvn clean verify -V -B -e -DBUILD_ALIAS=$BUILD_ALIAS -DBUILD_TYPE=$BUILD_TYPE -Dmaven.repo.local=/home/hudson/genie.ocl/.hudson/jobs/ocl-photon-master/workspace/.maven/repo -f releng/org.eclipse.ocl.releng.tycho/pom.xml -P ${BUILD_TYPE} -P sign
+/shared/common/apache-maven-latest/bin/mvn clean verify -V -B -e -DBUILD_ALIAS=$BUILD_ALIAS -DBUILD_TYPE=$BUILD_TYPE -Dmaven.repo.local=/home/hudson/genie.ocl/.hudson/jobs/ocl-master/workspace/.maven/repo -f releng/org.eclipse.ocl.releng.tycho/pom.xml -P ${BUILD_TYPE} -P sign
 
 Path: releng/org.eclipse.ocl.releng.build-site/target/repository
 Name: OCL Tycho %BUILD_TYPE Repository
