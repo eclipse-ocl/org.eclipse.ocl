@@ -28,7 +28,10 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -55,22 +58,49 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	private static class ImmutabilityCheckingAdapter extends AdapterImpl
 	{
+		private @NonNull String formatMutationMessage(@NonNull Notification notification) {
+			Object notifier = notification.getNotifier();
+			StringBuilder s = new StringBuilder();
+			Resource resource = null;
+			if (notifier instanceof Resource) {
+				resource = (Resource)notifier;
+			}
+			else if (notifier instanceof EObject) {
+				resource = ((EObject)notifier).eResource();
+			}
+			s.append(resource != null ? resource.getURI() : notifier.getClass().getName());
+			s.append(" modified at a ");
+			s.append(TracingAdapter.getFeatureType(notification));
+			return s.toString();
+		}
+
 		@Override
 		public void notifyChanged(Notification notification) {
 			if (!notification.isTouch()) {
 				Object notifier = notification.getNotifier();
-				StringBuilder s = new StringBuilder();
-				Resource resource = null;
-				if (notifier instanceof Resource) {
-					resource = (Resource)notifier;
+				int eventType = notification.getEventType();
+				if (eventType == Notification.SET) {
+					if (notifier instanceof Feature) {
+						int featureId = notification.getFeatureID(Feature.class);
+						if (featureId == PivotPackage.FEATURE__IMPLEMENTATION) {	// A known safe transient See Bug 535888#c6
+							Object oldValue = notification.getOldValue();
+							if (oldValue == null) {
+								return;
+							}
+						}
+					}
+					else if (notifier instanceof ExpressionInOCL) {					// A known safe laziness See Bug 535888#c6
+						System.out.println(formatMutationMessage(notification));
+						return;
+					}
 				}
-				else if (notifier instanceof EObject) {
-					resource = ((EObject)notifier).eResource();
+				else if (eventType == Notification.ADD) {
+					if (notifier instanceof ExpressionInOCL) {						// A known safe laziness See Bug 535888#c6
+						System.out.println(formatMutationMessage(notification));
+						return;
+					}
 				}
-				s.append(resource != null ? resource.getURI() : notifier.getClass().getName());
-				s.append(" modified at a ");
-				s.append(TracingAdapter.getFeatureType(notification));
-				throw new IllegalStateException(s.toString());
+				throw new IllegalStateException(formatMutationMessage(notification));
 			}
 		}
 	}

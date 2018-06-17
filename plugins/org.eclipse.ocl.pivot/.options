@@ -66,6 +66,9 @@ org.eclipse.ocl.pivot/partialModels=false
 # Trace maintenance of PartialPackages 
 org.eclipse.ocl.pivot/partialPackages=false
 
+# Throw an IllegalStateException if an immuatbke resource is modified. 
+org.eclipse.ocl.pivot/resource/checkImmutability=false
+
 # Trace validation of InstanceSpecifications 
 org.eclipse.ocl.pivot/validate/instance=false
 

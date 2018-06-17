@@ -51,6 +51,7 @@ public class Orphanage extends PackageImpl
 	{
 		protected OrphanResource(@NonNull URI uri) {
 			super(uri, OCLASResourceFactory.getInstance());
+			setSaveable(false);
 		}
 
 		@Override
@@ -63,7 +64,7 @@ public class Orphanage extends PackageImpl
 				}
 				contents = null;
 			}
-//			super.doUnload();
+			//			super.doUnload();
 		}
 	}
 
@@ -149,17 +150,17 @@ public class Orphanage extends PackageImpl
 				throw new UnsupportedOperationException();
 			}
 		}
-		
+
 		/**
 		 * Map of content-value to list-index.
 		 */
 		private final @NonNull WeakHashMap<T, Integer> weakMap = new WeakHashMap<T, Integer>();
-		
+
 		/**
 		 * Incrermenting counter used to sort the list into a predictable order.
 		 */
 		private int counter = 0;
-		
+
 		/**
 		 * The most recent ordered view of the weakMap.
 		 */
@@ -302,10 +303,10 @@ public class Orphanage extends PackageImpl
 			return weakMap.size() == 0;
 		}
 
-//		@Override
-//		protected boolean isUnique() {
-//			return true;		-- implementing this makes things really really slow.
-//		}
+		//		@Override
+		//		protected boolean isUnique() {
+		//			return true;		-- implementing this makes things really really slow.
+		//		}
 
 		@Override
 		public @NonNull Iterator<T> iterator() {
@@ -321,7 +322,7 @@ public class Orphanage extends PackageImpl
 		public @NonNull ListIterator<T> listIterator(int index) {
 			return new ListIterator<T>(getList(), index);
 		}
-		  
+
 		@Override
 		public void move(int newPosition, T object) {
 			throw new UnsupportedOperationException();
@@ -360,7 +361,7 @@ public class Orphanage extends PackageImpl
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	private static Orphanage INSTANCE = null;
-	
+
 	public static void disposeInstance() {
 		if (INSTANCE != null) {
 			INSTANCE.dispose();
@@ -373,9 +374,9 @@ public class Orphanage extends PackageImpl
 	 * the eObject, else the global Orphanage.
 	 */
 	public static @Nullable Orphanage getOrphanage(@NonNull EObject eObject) {
-//		if (eObject == null) {
-//			return null;
-//		}
+		//		if (eObject == null) {
+		//			return null;
+		//		}
 		Resource resource = eObject.eResource();
 		if (resource == null) {
 			return null;
@@ -430,10 +431,10 @@ public class Orphanage extends PackageImpl
 			return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 		}
 	}
-	
+
 	public Orphanage(@NonNull String name, @NonNull String nsURI) {
-//		super(uri);
-//		setLoaded(true);
+		//		super(uri);
+		//		setLoaded(true);
 		setName(name);
 		setURI(nsURI);
 	}
@@ -443,7 +444,7 @@ public class Orphanage extends PackageImpl
 			((WeakEList<?>)ownedClasses).dispose();
 		}
 	}
-	
+
 	@Override
 	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
 		EList<org.eclipse.ocl.pivot.Class> ownedType2 = ownedClasses;
