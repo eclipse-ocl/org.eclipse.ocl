@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
- class GenerateOCLstdlibXtend extends GenerateOCLstdlib
+class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
@@ -31,7 +31,7 @@ import java.util.GregorianCalendar
 				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
 					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
 				«ELSE»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -132,14 +132,14 @@ import java.util.GregorianCalendar
 				 *	The static package-of-types pivot model of the Standard Library.
 				 */
 				private static «javaClassName» INSTANCE = null;
-				
+			
 				/**
 				 *	The URI of this Standard Library.
 				 */
 				public static final @NonNull String STDLIB_URI = "«uri»";
 			
 				/**
-				 * Return the default «uri» standard Library Resource. 
+				 * Return the default «uri» standard Library Resource.
 				 *  This static definition auto-generated from «sourceFile»
 				 *  is used as the default when no overriding copy is registered.
 				 * It cannot be unloaded or rather unloading has no effect.
@@ -148,15 +148,16 @@ import java.util.GregorianCalendar
 					«javaClassName» oclstdlib = INSTANCE;
 					if (oclstdlib == null) {
 						Contents contents = new Contents("«lib.getURI»");
-						oclstdlib = INSTANCE = new «javaClassName»(STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION, contents.getModel());
+						String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+						oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
 					}
 					return oclstdlib;
 				}
 
 				/**
-				 * Return the default «uri» standard Library model. 
+				 * Return the default «uri» standard Library model.
 				 *  This static definition auto-generated from «sourceFile»
-				 *  is used as the default when no overriding copy is registered. 
+				 *  is used as the default when no overriding copy is registered.
 				 */
 				public static @NonNull Model getDefaultModel() {
 					Model model = (Model)(getDefault().getContents().get(0));
@@ -166,9 +167,9 @@ import java.util.GregorianCalendar
 				«IF (externalPackages.size() == 2)»
 
 				/**
-				 * Return the default «uri» standard Library package. 
+				 * Return the default «uri» standard Library package.
 				 *  This static definition auto-generated from «sourceFile»
-				 *  is used as the default when no overriding copy is registered. 
+				 *  is used as the default when no overriding copy is registered.
 				 */
 				public static @NonNull Package getDefaultPackage() {
 					Package pkge = getDefaultModel().getOwnedPackages().get(0);
@@ -181,7 +182,7 @@ import java.util.GregorianCalendar
 				 * Install this library in the {@link StandardLibraryContribution#REGISTRY}.
 				 * This method may be invoked by standalone applications to replicate
 				 * the registration that should appear as a standard_library plugin
-				 * extension when running within Eclipse. 
+				 * extension when running within Eclipse.
 				 */
 				public static void install() {
 					StandardLibraryContribution.REGISTRY.put(STDLIB_URI, new Loader());
@@ -200,16 +201,16 @@ import java.util.GregorianCalendar
 				/**
 				 * Unnstall this library from the {@link StandardLibraryContribution#REGISTRY}.
 				 * This method may be invoked by standalone applications to release the library
-				 * resources for garbage collection and memory leakage detection. 
+				 * resources for garbage collection and memory leakage detection.
 				 */
 				public static void uninstall() {
 					StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 					INSTANCE = null;
 				}
-				
+			
 				/**
 				 * The Loader shares the Standard Library instance whenever this default library
-				 * is loaded from the registry of Standard Libraries populated by the standard_library 
+				 * is loaded from the registry of Standard Libraries populated by the standard_library
 				 * extension point.
 				 */
 				public static class Loader implements StandardLibraryContribution
@@ -218,13 +219,66 @@ import java.util.GregorianCalendar
 					public @NonNull StandardLibraryContribution getContribution() {
 						return this;
 					}
-					
+			
 					@Override
 					public @NonNull Resource getResource() {
 						return getDefault();
 					}
 				}
-				
+			
+				/**
+				 * A ReadOnly «javaClassName» overrides inherited functionality to impose immutable shared behaviour.
+				 *
+				 * @since 1.5
+				 */
+				protected static class ReadOnly extends «javaClassName»
+				{
+					protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
+						super(asURI, libraryModel);
+						setSaveable(false);
+					}
+			
+					/**
+					 * Overridden to inhibit entry of the shared instance in any ResourceSet.
+					 */
+					@Override
+					public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+						return notifications;
+					}
+			
+					/**
+					 * Overridden to inhibit unloading of the shared instance.
+					 */
+					@Override
+					protected void doUnload() {}
+			
+					/**
+					 * Overridden to trivialise loading of the shared instance.
+					 */
+					@Override
+					public void load(Map<?, ?> options) throws IOException {
+						if (this != INSTANCE) {
+							super.load(options);
+						}
+						else {
+							setLoaded(true);
+						}
+					}
+			
+					/**
+					 * Overridden to inhibit unloading of the shared instance.
+					 */
+					@Override
+					protected Notification setLoaded(boolean isLoaded) {
+						if (isLoaded) {
+							return super.setLoaded(isLoaded);
+						}
+						else {
+							return null;
+						}
+					}
+				}
+			
 				/**
 				 *	Construct a copy of the OCL Standard Library with specified resource URI,
 				 *  and package name, prefix and namespace URI.
@@ -233,7 +287,7 @@ import java.util.GregorianCalendar
 					Contents contents = new Contents(asURI);
 					return new «javaClassName»(asURI, contents.getModel());
 				}
-				
+			
 				/**
 				 *	Construct an OCL Standard Library with specified resource URI and library content.
 				 */
@@ -241,55 +295,6 @@ import java.util.GregorianCalendar
 					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(asURI);
 					getContents().add(libraryModel);
-				}
-			
-				/**
-				 * Overridden to inhibit entry of the static shared instance in any ResourceSet.
-				 */
-				@Override
-				public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-					if (this != INSTANCE) {
-						return super.basicSetResourceSet(resourceSet, notifications);
-					}
-					else {
-						return notifications;
-					}
-				}
-			
-				/**
-				 * Overridden to inhibit unloading of the static shared instance.
-				 */
-				@Override
-				protected void doUnload() {
-					if (this != INSTANCE) {
-						super.doUnload();
-					}
-				}
-
-				/**
-				 * Overridden to trivialise loading of the static shared instance.
-				 */
-				@Override
-				public void load(Map<?, ?> options) throws IOException {
-					if (this != INSTANCE) {
-						super.load(options);
-					}
-					else {
-						setLoaded(true);
-					}
-				}
-
-				/**
-				 * Overridden to inhibit unloading of the static shared instance.
-				 */
-				@Override
-				protected Notification setLoaded(boolean isLoaded) {
-					if (isLoaded || (this != INSTANCE)) {
-						return super.setLoaded(isLoaded);
-					}
-					else {
-						return null;
-					}
 				}
 			
 				private static class Contents extends AbstractContents
@@ -321,7 +326,7 @@ import java.util.GregorianCalendar
 						«root.installPrecedences()»
 						«root.installComments()»
 					}
-					
+			
 					public @NonNull Model getModel() {
 						return «root.getSymbolName()»;
 					}

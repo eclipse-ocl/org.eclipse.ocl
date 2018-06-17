@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import org.eclipse.ocl.pivot.values.Unlimited
 
- abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
+abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
 	protected def String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.values.Unlimited
 		«FOR pkge : sortedPackages»
 
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.partialName())» = create«type.
+				private final @NonNull «type.eClass.name» «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = create«type.
 				eClass.name»("«type.name»");
 			«ENDFOR»
 		«ENDFOR»
@@ -123,7 +123,7 @@ import org.eclipse.ocl.pivot.values.Unlimited
 			«FOR pkge : sortedPackages»
 
 				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-				private final @NonNull PrimitiveType «type.getPrefixedSymbolName("_" + type.partialName())» = createPrimitiveType("«type.name»");
+				private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = createPrimitiveType("«type.name»");
 				«ENDFOR»
 			«ENDFOR»
 		'''
@@ -548,7 +548,7 @@ import org.eclipse.ocl.pivot.values.Unlimited
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
 						«var superClasses = type.getSuperclassesInPackage()»
-						ownedClasses.add(type = «type.getSymbolName()»);
+						ownedClasses.add(type = «type.getSymbolNameWithoutNormalization()»);
 						«FOR superClass : superClasses»
 							type.getSuperClasses().add(«superClass.getSymbolName()»);
 						«ENDFOR»

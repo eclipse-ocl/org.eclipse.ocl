@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
- class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
+class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
@@ -32,7 +32,7 @@ import java.util.GregorianCalendar
 				«ENDFOR»
 			«ELSE»
 				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
 				«ENDFOR»
 			«ENDIF»
 		«ENDFOR»
@@ -85,11 +85,16 @@ import java.util.GregorianCalendar
 			 *******************************************************************************/
 			package	«javaPackageName»;
 			
+			import java.io.IOException;
 			import java.math.BigInteger;
 			import java.util.List;
+			import java.util.Map;
 			
+			import org.eclipse.emf.common.notify.Notification;
+			import org.eclipse.emf.common.notify.NotificationChain;
 			import org.eclipse.emf.common.util.URI;
 			import org.eclipse.emf.ecore.resource.Resource;
+			import org.eclipse.emf.ecore.resource.ResourceSet;
 			import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
@@ -132,8 +137,10 @@ import java.util.GregorianCalendar
 				 */
 				public static final @NonNull String PIVOT_URI = "«uri»";
 			
+				private static final @NonNull URI PIVOT_AS_URI = URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+
 				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-					«javaClassName» resource = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
+					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
 					Contents contents = new Contents(standardLibrary.getPackage(), name, nsPrefix, nsURI);
 					Model model = contents.getModel();
 					resource.getContents().add(model);
@@ -149,7 +156,7 @@ import java.util.GregorianCalendar
 				public static @NonNull «javaClassName» getDefault() {
 					«javaClassName» metamodel = INSTANCE;
 					if (metamodel == null) {
-						metamodel = INSTANCE = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
+						metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
 						Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
 						metamodel.getContents().add(contents.getModel());
 					}
@@ -190,6 +197,57 @@ import java.util.GregorianCalendar
 			
 					protected LibraryContents(@NonNull Package standardLibrary) {
 						this.standardLibrary = standardLibrary;
+					}
+				}
+			
+				/**
+				 * A ReadOnly «javaClassName» overrides inherited functionality to impose immutable shared behaviour.
+				 */
+				protected static class ReadOnly extends «javaClassName»
+				{
+					protected ReadOnly(@NonNull URI uri) {
+						super(uri);
+						setSaveable(false);
+					}
+			
+					/**
+					 * Overridden to inhibit entry of the shared instance in any ResourceSet.
+					 */
+					@Override
+					public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+						return notifications;
+					}
+			
+					/**
+					 * Overridden to inhibit unloading of the shared instance.
+					 */
+					@Override
+					protected void doUnload() {}
+			
+					/**
+					 * Overridden to trivialise loading of the shared instance.
+					 */
+					@Override
+					public void load(Map<?, ?> options) throws IOException {
+						if (this != INSTANCE) {
+							super.load(options);
+						}
+						else {
+							setLoaded(true);
+						}
+					}
+			
+					/**
+					 * Overridden to inhibit unloading of the shared instance.
+					 */
+					@Override
+					protected Notification setLoaded(boolean isLoaded) {
+						if (isLoaded) {
+							return super.setLoaded(isLoaded);
+						}
+						else {
+							return null;
+						}
 					}
 				}
 

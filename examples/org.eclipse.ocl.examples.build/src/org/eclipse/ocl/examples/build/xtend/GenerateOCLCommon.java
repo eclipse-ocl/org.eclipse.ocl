@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -227,7 +228,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (reference instanceof Model) {
 			return;
 		}
+		//		boolean hasComplements = false;
 		if (reference instanceof Type) {
+			//			hasComplements = hasComplements((Type) reference);
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(reference);
 			//			assert environmentFactory == this.environmentFactory;
 			if (environmentFactory != null) {	// FIXME this conveniently does not relocate the built-in PrimitiveTypes
@@ -284,7 +287,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 		}
+		//		if (!hasComplements) {
 		name2external.put(name, reference);
+		//		}
 		external2name.put(reference, name);
 		if ((getGeneratedClassName(reference) == null) && (eContainer instanceof NamedElement)) {
 			addExternalReference((NamedElement)eContainer, root);
@@ -656,9 +661,29 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected String getPrefixedSymbolName(@NonNull EObject elem, @NonNull String prefix) {
 		if (!(elem instanceof org.eclipse.ocl.pivot.Package)) {
-			elem = metamodelManager.getPrimaryElement(elem);
+			if (!((elem instanceof Type) && hasComplements((Type)elem))) {
+				elem = metamodelManager.getPrimaryElement(elem);
+			}
 		}
-		return nameQueries.getPrefixedSymbolName(prefix.replace(".",  "_"), elem);
+		String prefixedSymbolName = nameQueries.getPrefixedSymbolName(prefix.replace(".",  "_"), elem);
+		if (prefixedSymbolName.startsWith("_Variable")) {
+			getClass();
+		}
+		return prefixedSymbolName;
+	}
+
+	protected String getPrefixedSymbolNameWithoutNormalization(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull String prefix) {
+		CompleteClass completeClass = metamodelManager.getCompleteClass(type);
+		org.eclipse.ocl.pivot.@NonNull Class primaryType = completeClass.getPrimaryClass();
+		String normalizedSymbol = nameQueries.basicGetSymbolName(completeClass);
+		if ((type == primaryType) && (normalizedSymbol != null)) {
+			return normalizedSymbol;
+		}
+		String localSymbolName = nameQueries.getPrefixedSymbolNameWithoutNormalization(prefix.replace(".",  "_"), type);
+		if (normalizedSymbol == null) {
+			nameQueries.putSymbolName(completeClass, localSymbolName);
+		}
+		return localSymbolName;
 	}
 
 	protected ResourceSet getResourceSet() {
@@ -1162,9 +1187,21 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			List<PrimitiveType> primitiveTypes = null;
 			for (Type type : pkge.getOwnedClasses()) {
 				if (type instanceof PrimitiveType) {
-					type = metamodelManager.getPrimaryElement(type);
-					String externalName = external2name.get(type);
-					if (externalName == null) {
+					boolean isDefinedPrimitive = false;
+					Type primaryType = metamodelManager.getPrimaryElement(type);
+					if (type == primaryType)  {
+						isDefinedPrimitive = true;
+					}
+					else if (!hasComplements(type)) {
+						type = primaryType;
+					}
+					if (type != primaryType) {
+						String externalName = external2name.get(type);
+						if (externalName == null) {
+							isDefinedPrimitive = true;
+						}
+					}
+					if (isDefinedPrimitive) {
 						if (primitiveTypes == null) {
 							primitiveTypes = new ArrayList<>();
 							pkge2primitiveTypes.put(pkge, primitiveTypes);
@@ -1307,22 +1344,54 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected String getSymbolName(@NonNull EObject elem) {
-		if (!(elem instanceof org.eclipse.ocl.pivot.Package)) {
-			elem = metamodelManager.getPrimaryElement(elem);
+		String name = nameQueries.basicGetSymbolName(elem);
+		if (name != null) {
+			return name;
 		}
+		EObject primaryElement;
+		if (!(elem instanceof org.eclipse.ocl.pivot.Package)) {
+			primaryElement = metamodelManager.getPrimaryElement(elem);
+		}
+		else {
+			primaryElement = elem;
+		}
+		name = external2name.get(primaryElement);
+		if (name != null) {
+			return name;
+		}
+		Model thatModel = PivotUtil.getContainingModel(primaryElement);
+		if (getThisModel() == thatModel) {
+			return nameQueries.getSymbolName(primaryElement);
+		}
+		return nameQueries.getSymbolName(primaryElement);
+		//		throw new IllegalStateException("No external name defined for " + EcoreUtil.getURI(elem));
+	}
+
+	protected String getSymbolNameWithoutNormalization(@NonNull EObject elem) {
 		String name = external2name.get(elem);
 		if (name != null) {
 			return name;
 		}
 		Model thatModel = PivotUtil.getContainingModel(elem);
 		if (getThisModel() == thatModel) {
-			return nameQueries.getSymbolName(elem);
+			return nameQueries.getSymbolNameWithoutNormalization(elem);
 		}
-		return nameQueries.getSymbolName(elem);
+		return nameQueries.getSymbolNameWithoutNormalization(elem);
 		//		throw new IllegalStateException("No external name defined for " + EcoreUtil.getURI(elem));
 	}
 
 	protected abstract Model getThisModel();
+
+	protected boolean hasComplements(@NonNull Type type) {
+		if (type instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)type;
+			org.eclipse.ocl.pivot.Class asPrimaryClass = metamodelManager.getPrimaryElement(asClass);
+			if ((asClass != asPrimaryClass) && (!asClass.getOwnedOperations().isEmpty() || !asClass.getOwnedProperties().isEmpty())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	protected Boolean isEcoreConstraint(@NonNull Operation operation) {
 		for (Parameter p : operation.getOwnedParameters()) {
