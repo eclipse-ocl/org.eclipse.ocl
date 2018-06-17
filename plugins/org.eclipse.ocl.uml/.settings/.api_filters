@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.uml" version="2">
-    <resource path="src/org/eclipse/ocl/uml/OCLExpression.java" type="org.eclipse.ocl.uml.OCLExpression">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.uml.OCLExpression"/>
-                <message_argument value="has_type(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/uml/impl/AnyTypeImpl.java" type="org.eclipse.ocl.uml.impl.AnyTypeImpl">
         <filter id="576720909">
             <message_arguments>
@@ -229,21 +221,6 @@
             <message_arguments>
                 <message_argument value="ClassifierOperations"/>
                 <message_argument value="VoidTypeOperations"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/uml/util/UMLValidator.java" type="org.eclipse.ocl.uml.util.UMLValidator">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.uml.util.UMLValidator"/>
-                <message_argument value="OCL_EXPRESSION__HAS_TYPE"/>
-            </message_arguments>
-        </filter>
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.uml.util.UMLValidator"/>
-                <message_argument value="DIAGNOSTIC_CODE_COUNT"/>
-                <message_argument value="0"/>
             </message_arguments>
         </filter>
     </resource>
