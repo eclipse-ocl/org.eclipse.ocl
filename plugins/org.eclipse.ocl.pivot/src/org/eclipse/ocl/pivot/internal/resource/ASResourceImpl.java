@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -28,14 +33,61 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.TracingAdapter;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class ASResourceImpl extends XMIResourceImpl implements ASResource
 {
+	/**
+	 * If CHECK_IMMUTABILITY is set active, an ImmutabilityCheckingAdapter instance is installed for all
+	 * contents of any ASREsource that is set not-saveable. Any mutation then causes an IllegalStateException.
+	 *
+	 * @since 1.5
+	 */
+	public static final TracingOption CHECK_IMMUTABILITY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/checkImmutability"); //$NON-NLS-1$
+
+	/**
+	 * An adapter implementation for tracking resource modification.
+	 */
+	private static class ImmutabilityCheckingAdapter extends AdapterImpl
+	{
+		@Override
+		public void notifyChanged(Notification notification) {
+			if (!notification.isTouch()) {
+				Object notifier = notification.getNotifier();
+				StringBuilder s = new StringBuilder();
+				Resource resource = null;
+				if (notifier instanceof Resource) {
+					resource = (Resource)notifier;
+				}
+				else if (notifier instanceof EObject) {
+					resource = ((EObject)notifier).eResource();
+				}
+				s.append(resource != null ? resource.getURI() : notifier.getClass().getName());
+				s.append(" modified at a ");
+				s.append(TracingAdapter.getFeatureType(notification));
+				throw new IllegalStateException(s.toString());
+			}
+		}
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	private static @Nullable ImmutabilityCheckingAdapter immutabilityCheckingAdapter = null;
+
 	protected final @NonNull ASResourceFactory asResourceFactory;
 	private @Nullable LUSSIDs lussids = null;
 	private @Nullable Map<@NonNull String, @NonNull EObject> legacyXMIId2eObject = null;
+
+	/**
+	 * An attempt to save an unsaveable ASResource is ignored, probably because it is immuatble..
+	 */
+	private boolean isSaveable = true;
 
 	/**
 	 * Creates an instance of the resource.
@@ -190,6 +242,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
+	 * @since 1.5
+	 */
+	public boolean isSaveable() {
+		return isSaveable;
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	// FIXME @Override promote API
@@ -198,6 +257,41 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		lussids = null;
 		if (lussids2 != null) {
 			lussids2.dispose();
+		}
+	}
+
+	/**
+	 * Overridden to suppress saving unsaveable content to a probably read-only destination.
+	 */
+	@Override
+	public void save(Map<?, ?> options) throws IOException {
+		if (isSaveable) {
+			setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
+			super.save(options);
+		}
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	public void setSaveable(boolean isSaveable) {
+		this.isSaveable = isSaveable;
+		if (!isSaveable) {
+			if (CHECK_IMMUTABILITY.isActive()) {
+				if (immutabilityCheckingAdapter == null) {
+					immutabilityCheckingAdapter = new ImmutabilityCheckingAdapter();
+				}
+				for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext(); ) {
+					EObject eObject = i.next();
+					eObject.eAdapters().add(immutabilityCheckingAdapter);
+				}
+			}
+		}
+		else if (immutabilityCheckingAdapter != null) {
+			for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext(); ) {
+				EObject eObject = i.next();
+				eObject.eAdapters().remove(immutabilityCheckingAdapter);
+			}
 		}
 	}
 

@@ -29,15 +29,24 @@ public class TracingAdapter extends AdapterImpl
 
 	private static Map<Integer,String> eventTypes = null;
 
+	/**
+	 * @since 1.5
+	 */
 	public static void debugNotification(Object target, Notification notification) {
 		if (NOTIFICATION.isActive() && (notification.getEventType() != Notification.REMOVING_ADAPTER)) {
-			NOTIFICATION.println(Label.labelFor(target)
-					+ " <= " + Label.labelFor(notification.getNotifier())
-					+ "\n    " + getEventType(notification.getEventType())
-					+ " " + getFeatureType(notification)
-//					+ " " + getFeatureType(notification.getNotifier().getClass(), featureID)
-					+ " " + Label.labelFor(notification.getOldValue())
-					+ " => " + Label.labelFor(notification.getNewValue()));
+			StringBuilder s = new StringBuilder();
+			s.append(Label.labelFor(target));
+			s.append(" <= ");
+			s.append(Label.labelFor(notification.getNotifier()));
+			s.append("\n    ");
+			s.append(getEventType(notification.getEventType()));
+			s.append(" ");
+			s.append(getFeatureType(notification));
+			s.append(" ");
+			s.append(Label.labelFor(notification.getOldValue()));
+			s.append(" => " );
+			s.append(Label.labelFor(notification.getNewValue()));
+			NOTIFICATION.println(s.toString());
 		}
 	}
 
@@ -62,7 +71,10 @@ public class TracingAdapter extends AdapterImpl
 			return eventString;
 	}
 
-	private static String getFeatureType(@NonNull Notification notification) {
+	/**
+	 * @since 1.5
+	 */
+	public static @NonNull String getFeatureType(@NonNull Notification notification) {
 		Object feature = notification.getFeature();
 		if (feature == null) {
 			Object notifier = notification.getNotifier();
@@ -107,12 +119,12 @@ public class TracingAdapter extends AdapterImpl
 			return "<" + feature.getClass().getName() + "-Feature>";
 		return ((EStructuralFeature)feature).getEContainingClass().getName() + "." + ((EStructuralFeature)feature).getName();
 	}
-	
+
 	/**
 	 * Respond to a notification.
 	 */
 	protected void handleNotification(Notification notification) {}
-	
+
 	/**
 	 * Provide debug of the notification if tracing selected and
 	 * then pass to handleNotification.
