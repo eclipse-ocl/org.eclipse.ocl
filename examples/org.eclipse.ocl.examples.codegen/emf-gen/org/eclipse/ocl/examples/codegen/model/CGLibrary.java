@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -160,7 +161,7 @@ public class CGLibrary extends ASResourceImpl
 	 *
 	 * @since 1.5
 	 */
-	protected static class ReadOnly extends CGLibrary
+	protected static class ReadOnly extends CGLibrary implements ImmutableResource
 	{
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
@@ -180,6 +181,11 @@ public class CGLibrary extends ASResourceImpl
 		 */
 		@Override
 		protected void doUnload() {}
+
+		@Override
+		public boolean isCompatibleWith(@NonNull String metamodelURI) {
+			return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+		}
 
 		/**
 		 * Overridden to trivialise loading of the shared instance.

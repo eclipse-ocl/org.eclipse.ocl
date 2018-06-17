@@ -90,19 +90,33 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						}
 					}
 					else if (notifier instanceof ExpressionInOCL) {					// A known safe laziness See Bug 535888#c6
-						System.out.println(formatMutationMessage(notification));
+						//	System.out.println(formatMutationMessage(notification));
 						return;
 					}
 				}
 				else if (eventType == Notification.ADD) {
 					if (notifier instanceof ExpressionInOCL) {						// A known safe laziness See Bug 535888#c6
-						System.out.println(formatMutationMessage(notification));
+						//	System.out.println(formatMutationMessage(notification));
 						return;
 					}
 				}
 				throw new IllegalStateException(formatMutationMessage(notification));
 			}
 		}
+	}
+
+	/**
+	 * ImmutableResource provides additional API for derived ReadOnly/Immutable implementations.
+	 *
+	 * @since 1.5
+	 */
+	public static interface ImmutableResource
+	{
+		/**
+		 * Return true if this Immutable/ReadOnly Resource is compatible with the given metamodelURI.
+		 * This is typically used to allow a metamodelURI implementation to be re-used rather than cloned.
+		 */
+		boolean isCompatibleWith(@NonNull String metamodelURI);
 	}
 
 	/**

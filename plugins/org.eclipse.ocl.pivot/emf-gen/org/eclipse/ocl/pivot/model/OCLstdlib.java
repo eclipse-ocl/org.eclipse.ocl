@@ -177,7 +177,7 @@ public class OCLstdlib extends ASResourceImpl
 	 *
 	 * @since 1.5
 	 */
-	protected static class ReadOnly extends OCLstdlib
+	protected static class ReadOnly extends OCLstdlib implements ImmutableResource
 	{
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
@@ -197,6 +197,11 @@ public class OCLstdlib extends ASResourceImpl
 		 */
 		@Override
 		protected void doUnload() {}
+
+		@Override
+		public boolean isCompatibleWith(@NonNull String metamodelURI) {
+			return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+		}
 
 		/**
 		 * Overridden to trivialise loading of the shared instance.

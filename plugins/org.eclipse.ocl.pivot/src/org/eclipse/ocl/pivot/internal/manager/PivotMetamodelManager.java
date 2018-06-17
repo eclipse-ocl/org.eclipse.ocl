@@ -103,6 +103,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -1872,13 +1873,21 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				return;
 			}
 		}
-		String name = ClassUtil.nonNullState(asLibrary.getName());
-		//		String nsURI = ClassUtil.nonNullState(asLibrary.getNsURI());
-		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
-		Resource asResource = oclMetamodel.eResource();
+		Model asModel;
+		org.eclipse.ocl.pivot.Package asPackage;
+		if ((asLibraryResource instanceof ASResourceImpl.ImmutableResource) && ((ASResourceImpl.ImmutableResource)asLibraryResource).isCompatibleWith(OCLmetamodel.PIVOT_URI)) {
+			asModel = OCLmetamodel.getDefaultModel();
+			asPackage = asModel.getOwnedPackages().get(0);
+		}
+		else {
+			String name = ClassUtil.nonNullState(asLibrary.getName());
+			asPackage = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
+			asModel = (Model)asPackage.eContainer();
+		}
+		Resource asResource = asModel.eResource();
 		assert asResource != null;
 		asResourceSet.getResources().add(asResource);
-		setASmetamodel(oclMetamodel);		// Standard meta-model
+		setASmetamodel(asPackage);		// Standard meta-model
 		//		asResourceSet.getResources().add(asResource);
 		installResource(asResource);
 	}
