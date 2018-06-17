@@ -14,7 +14,7 @@ import org.eclipse.ocl.pivot.Namespace
 import org.eclipse.ocl.pivot.Element
 import org.eclipse.ocl.pivot.Model
 
-public class GenerateTextileForLibraryXtend extends GenerateTextileForLibraryUtils
+ class GenerateTextileForLibraryXtend extends GenerateTextileForLibraryUtils
 {
 	/*@NonNull*/ protected override String generateTextile(/*@NonNull*/ Model model) {
 		'''

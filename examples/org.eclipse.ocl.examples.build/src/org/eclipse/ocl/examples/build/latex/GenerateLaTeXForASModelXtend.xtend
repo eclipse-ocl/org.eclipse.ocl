@@ -15,7 +15,7 @@ import org.eclipse.ocl.pivot.Element
 import org.eclipse.ocl.pivot.Namespace
 import org.eclipse.ocl.pivot.Package
 
-public class GenerateLaTeXForASModelXtend extends GenerateLaTeXForASModel
+ class GenerateLaTeXForASModelXtend extends GenerateLaTeXForASModel
 {
 	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ Package asPackage) {
 		'''

@@ -26,7 +26,7 @@ import org.eclipse.xtext.TypeRef
 import org.eclipse.xtext.UntilToken
 import org.eclipse.xtext.Wildcard
 
-public class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
+ class GenerateLaTeXForGrammarXtend extends GenerateLaTeXForGrammar
 {
 	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ Grammar grammar) {
 		'''

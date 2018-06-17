@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib
 import java.util.Set
 import org.eclipse.ocl.examples.autogen.lookup.LookupCGUtil
 
-public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
+ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 {
 
 	protected String lookupFilePath;
@@ -59,19 +59,19 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	 * name resolution description (e.g. "model/NameResolution.ocl"). It 
 	 * can't be null
 	 */
-	public def setLookupFilePath(String lookupFilePath) {
+	def setLookupFilePath(String lookupFilePath) {
 		this.lookupFilePath = lookupFilePath;
 	}
 	
-	public def setLookupPackageName(String lookupPackageName) {
+	def setLookupPackageName(String lookupPackageName) {
 		this.lookupPackageName = lookupPackageName;
 	}
 	
-	public def setSuperLookupPackageName(String superLookupPackageName) {
+	def setSuperLookupPackageName(String superLookupPackageName) {
 		this.superLookupPackageName = superLookupPackageName;
 	}
 	
-	public def setBaseLookupPackageName(String baseLookupPackageName) {
+	def setBaseLookupPackageName(String baseLookupPackageName) {
 		this.baseLookupPackageName = baseLookupPackageName;
 	}
 	

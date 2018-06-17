@@ -20,7 +20,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion
 import java.util.Collections
 
-public class GenerateCS2ASVisitors extends GenerateCSVisitors
+ class GenerateCS2ASVisitors extends GenerateCSVisitors
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		super.generateVisitors(genPackage);

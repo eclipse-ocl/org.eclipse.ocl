@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.ocl.pivot.Type
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor
 
-public abstract class GenerateVisitorsXtend extends GenerateVisitors
+ abstract class GenerateVisitorsXtend extends GenerateVisitors
 {
 	/*
 	 * Abstract«projectPrefix»«generic»Visitor

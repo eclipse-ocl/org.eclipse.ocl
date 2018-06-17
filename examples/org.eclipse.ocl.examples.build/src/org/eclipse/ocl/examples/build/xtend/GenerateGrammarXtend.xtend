@@ -47,10 +47,7 @@ import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.xtext.UnorderedGroup
 import java.util.GregorianCalendar
 
-/*
- * Serialize a YYY.xtextbin grammar as an YYYGrammarResource.java class.
- */
-public class GenerateGrammarXtend extends GenerateGrammar
+ class GenerateGrammarXtend extends GenerateGrammar
 {
 	/*@NonNull*/ protected override String generate(/*@NonNull*/ Resource grammarResource) {
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);

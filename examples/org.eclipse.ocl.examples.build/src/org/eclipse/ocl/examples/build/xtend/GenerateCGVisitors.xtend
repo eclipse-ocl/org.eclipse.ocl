@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.build.xtend
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 
-public class GenerateCGVisitors extends GenerateVisitorsXtend
+ class GenerateCGVisitors extends GenerateVisitorsXtend
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();

@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
-public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
+ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();

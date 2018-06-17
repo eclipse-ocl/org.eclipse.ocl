@@ -32,7 +32,7 @@ import org.eclipse.xtext.Wildcard
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.pivot.utilities.NameUtil
 
-public class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
+ class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 {
 	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ Package asPackage,
 		/*@NonNull*/ Grammar grammar, /*@Nullable*/ Package cs2asPackage,

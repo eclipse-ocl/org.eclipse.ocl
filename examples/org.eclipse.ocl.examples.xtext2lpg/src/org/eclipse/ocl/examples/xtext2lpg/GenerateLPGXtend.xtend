@@ -27,7 +27,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.CharacterRange
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.Wildcard
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntilToken
 
-public class GenerateLPGXtend extends GenerateLPGUtils
+ class GenerateLPGXtend extends GenerateLPGUtils
 {
 	/*@NonNull*/ protected override String generateLPGKWLexer(/*@NonNull*/ Syntax syntax) {
 		return generateKWLexer(getLexerGrammar(syntax), getParserGrammar(syntax))

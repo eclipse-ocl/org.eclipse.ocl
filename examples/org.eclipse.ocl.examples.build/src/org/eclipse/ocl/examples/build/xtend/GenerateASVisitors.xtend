@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal
 
-public class GenerateASVisitors extends GenerateVisitorsXtend
+ class GenerateASVisitors extends GenerateVisitorsXtend
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();

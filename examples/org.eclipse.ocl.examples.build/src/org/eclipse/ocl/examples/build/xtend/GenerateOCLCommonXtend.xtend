@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import org.eclipse.ocl.pivot.values.Unlimited
 
-public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
+ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
 	protected def String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
