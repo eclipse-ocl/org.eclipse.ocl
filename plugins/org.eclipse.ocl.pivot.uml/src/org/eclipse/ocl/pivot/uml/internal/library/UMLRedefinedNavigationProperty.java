@@ -37,29 +37,41 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 {
-	protected final @NonNull Property baseProperty;
-	
-	public UMLRedefinedNavigationProperty(@NonNull CompleteModel completeModel, @NonNull Property property) {
-		super(property);
-		CompleteClass baseCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(property));
-		Property baseProperty = property;
-		for (@NonNull Property aProperty : PivotUtil.getRedefinedProperties(property)) {
+	private static @NonNull Property getBaseProperty(@NonNull CompleteModel completeModel, @NonNull Property redefiningProperty) {
+		CompleteClass baseCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(redefiningProperty));
+		Property baseProperty = redefiningProperty;
+		for (@NonNull Property aProperty : PivotUtil.getRedefinedProperties(redefiningProperty)) {
 			CompleteClass aCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(aProperty));
 			if (baseCompleteClass.conformsTo(aCompleteClass)) {
 				baseCompleteClass = aCompleteClass;
 				baseProperty = aProperty;
 			}
 		}
-		this.baseProperty = baseProperty;
+		return baseProperty;
 	}
-	
+
+	/** @deprecated the inherited property is now the base property */
+	@Deprecated
+	protected final @NonNull Property baseProperty;
+
+	/**
+	 * @since 1.5
+	 */
+	protected final @NonNull Property redefiningProperty;
+
+	public UMLRedefinedNavigationProperty(@NonNull CompleteModel completeModel, @NonNull Property redefiningProperty) {
+		super(getBaseProperty(completeModel, redefiningProperty));
+		this.baseProperty = property;
+		this.redefiningProperty = redefiningProperty;
+	}
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		Object unredefinedResult = super.evaluate(executor, returnTypeId, sourceValue);
-		Type unredefinedType = baseProperty.getType();
-		Type redefinedType = property.getType();
-		if (unredefinedType instanceof CollectionType) {
-			if (!(redefinedType instanceof CollectionType)) {
+		Type baseType = property.getType();
+		Type redefiningType = redefiningProperty.getType();
+		if (baseType instanceof CollectionType) {
+			if (!(redefiningType instanceof CollectionType)) {
 				CollectionValue asCollectionValue = ValueUtil.asCollectionValue(unredefinedResult);
 				int intSize = asCollectionValue.intSize();
 				switch (intSize) {
@@ -79,8 +91,8 @@ public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 			}
 		}
 		else {
-			if (redefinedType instanceof CollectionType) {
-				CollectionType collectionType = (CollectionType) redefinedType;
+			if (redefiningType instanceof CollectionType) {
+				CollectionType collectionType = (CollectionType) redefiningType;
 				CollectionTypeId typeId = collectionType.getTypeId();
 				List<Object> valueAsList = Collections.singletonList(unredefinedResult);
 				return executor.getIdResolver().createCollectionOfAll(typeId, valueAsList);

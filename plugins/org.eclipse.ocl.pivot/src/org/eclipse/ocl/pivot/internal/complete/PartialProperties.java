@@ -118,6 +118,13 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		return resolution;
 	}
 
+	/**
+	 * @since 1.5
+	 */
+	public @Nullable Iterable<@NonNull Property> getPartials() {
+		return partials != null ? partials : null;
+	}
+
 	public synchronized boolean isEmpty() {
 		if (resolution != null) {
 			return false;
