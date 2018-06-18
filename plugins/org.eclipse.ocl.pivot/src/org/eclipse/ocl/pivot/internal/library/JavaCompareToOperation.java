@@ -40,6 +40,8 @@ public class JavaCompareToOperation extends AbstractSimpleBinaryOperation
 			return ValueUtil.integerValueOf(((Integer)result).intValue());
 		} catch (Exception e) {
 			throw new InvalidValueException(e, PivotMessages.TypedResultRequired, TypeId.INTEGER_NAME);
+		} catch (AssertionError e) {
+			throw new InvalidValueException(e, PivotMessages.TypedResultRequired, TypeId.INTEGER_NAME);
 		}
 	}
 }

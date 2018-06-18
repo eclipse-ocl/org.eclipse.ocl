@@ -35,7 +35,7 @@ public class ForAllIteration extends AbstractIteration
 	public @NonNull Object createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -56,7 +56,7 @@ public class ForAllIteration extends AbstractIteration
 	}
 
 	@Override
-    protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		try {
 			Object bodyVal = iterationManager.evaluateBody();
 			if (bodyVal == Boolean.FALSE) {
@@ -87,6 +87,12 @@ public class ForAllIteration extends AbstractIteration
 			return CARRY_ON;							// Carry on for nothing found
 		}
 		catch (Exception e) {
+			MutableObject accumulatorValue = (MutableObject) iterationManager.getAccumulatorValue();
+			assert accumulatorValue != null;
+			accumulatorValue.set(ValueUtil.createInvalidValue(e));
+			return CARRY_ON;							// Carry on for nothing found
+		}
+		catch (AssertionError e) {
 			MutableObject accumulatorValue = (MutableObject) iterationManager.getAccumulatorValue();
 			assert accumulatorValue != null;
 			accumulatorValue.set(ValueUtil.createInvalidValue(e));

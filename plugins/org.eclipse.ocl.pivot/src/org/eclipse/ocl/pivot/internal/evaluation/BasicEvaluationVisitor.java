@@ -152,6 +152,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			throw e;
 		} catch (Exception e) {
 			throw new InvalidValueException(e, "Evaluation Failure");
+		} catch (AssertionError e) {
+			throw new InvalidValueException(e, "Evaluation Failure");
 		}
 	}
 
@@ -413,6 +415,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			//  and produce a better reason as a result.
 			throw new InvalidValueException(e, StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, staticIteration, sourceValue, iterateExp));	// FIXME dymamicIteration throughout
 		}
+		catch (AssertionError e) {
+			// This is a backstop. Library iterations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, staticIteration, sourceValue, iterateExp));	// FIXME dymamicIteration throughout
+		}
 		return result;
 	}
 
@@ -483,6 +490,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			throw e;
 		}
 		catch (Exception e) {
+			// This is a backstop. Library iterations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, staticIteration, sourceValue, iteratorExp);
+		}
+		catch (AssertionError e) {
 			// This is a backstop. Library iterations should catch their own exceptions
 			//  and produce a better reason as a result.
 			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, staticIteration, sourceValue, iteratorExp);

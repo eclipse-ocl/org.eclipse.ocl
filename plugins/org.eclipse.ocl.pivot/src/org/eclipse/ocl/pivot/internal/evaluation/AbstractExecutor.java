@@ -365,6 +365,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			//  and produce a better reason as a result.
 			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValue, navigationCallExp);
 		}
+		catch (AssertionError e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValue, navigationCallExp);
+		}
 	}
 
 	/**
@@ -412,6 +417,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			throw e;
 		}
 		catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceAndArgumentValues[0]), operationCallExp);
+		}
+		catch (AssertionError e) {
 			// This is a backstop. Library operations should catch their own exceptions
 			//  and produce a better reason as a result.
 			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceAndArgumentValues[0]), operationCallExp);

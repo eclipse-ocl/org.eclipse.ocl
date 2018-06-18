@@ -96,6 +96,8 @@ public class SortedByIteration extends AbstractIteration
 				throw e;
 			} catch (Exception e) {
 				throw new InvalidValueException(e);
+			} catch (AssertionError e) {
+				throw new InvalidValueException(e);
 			}
 		}
 

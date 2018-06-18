@@ -34,7 +34,9 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 			if (log != null) {
 				log.append(getSourceText(sourceVal));
 			}
-		} catch (Exception e) {}
+		}
+		catch (Exception e) {}
+		catch (AssertionError e) {}
 		return sourceVal;
 	}
 
@@ -50,7 +52,9 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 			if (log != null) {
 				log.append(message + getSourceText(sourceVal));
 			}
-		} catch (Exception e) {}
+		}
+		catch (Exception e) {}
+		catch (AssertionError e) {}
 		return sourceVal;
 	}
 

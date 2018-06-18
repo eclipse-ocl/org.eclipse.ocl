@@ -509,7 +509,18 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
+	/**
+	 * @since 1.5
+	 */
+	public static @NonNull InvalidValueException createInvalidValue(@NonNull Throwable e) {
+		if (e instanceof InvalidValueException) {
+			return (InvalidValueException)e;
+		}
+		else {
+			return new InvalidValueException(e);
+		}
+	}
+	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {	// FIXME REmove obsolete signature
 		if (e instanceof InvalidValueException) {
 			return (InvalidValueException)e;
 		}

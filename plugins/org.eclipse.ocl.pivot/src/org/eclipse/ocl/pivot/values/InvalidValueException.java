@@ -48,7 +48,14 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		return ValuesPackage.Literals.INVALID_VALUE;
 	}
 
-	public InvalidValueException(@NonNull Exception exception, /*@NonNull*/ String message) {
+	/**
+	 * @since 1.5
+	 */
+	public InvalidValueException(@NonNull Throwable exception, /*@NonNull*/ String message) {
+		super(exception, message);
+		assert !(exception instanceof InvalidValueException);
+	}
+	public InvalidValueException(@NonNull Exception exception, /*@NonNull*/ String message) {		// FIXME remove obsolete signature
 		super(exception, message);
 		assert !(exception instanceof InvalidValueException);
 	}
@@ -57,13 +64,26 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		super(messageTemplate, bindings);
 	}
 
-	public InvalidValueException(@NonNull Exception exception) {
-		super(exception, null);
-		assert !(exception instanceof InvalidValueException);
+	/**
+	 * @since 1.5
+	 */
+	public InvalidValueException(@NonNull Throwable e) {
+		super(e, null);
+		assert !(e instanceof InvalidValueException);
+	}
+	public InvalidValueException(@NonNull Exception e) {		// FIXME remove obsolete signature
+		super(e, null);
+		assert !(e instanceof InvalidValueException);
 	}
 
-	public InvalidValueException(@NonNull Exception exception, /*@NonNull*/ String messageTemplate, Object... bindings) {
-		super(exception, messageTemplate, bindings);
+	/**
+	 * @since 1.5
+	 */
+	public InvalidValueException(@NonNull Throwable e, /*@NonNull*/ String messageTemplate, Object... bindings) {
+		super(e, messageTemplate, bindings);
+	}
+	public InvalidValueException(@NonNull Exception e, /*@NonNull*/ String messageTemplate, Object... bindings) {
+		super(e, messageTemplate, bindings);					// FIXME remove obsolete signature
 	}
 
 	@Override
