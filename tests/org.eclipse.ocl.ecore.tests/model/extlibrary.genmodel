@@ -7,7 +7,8 @@
     pluginKey="extlibrary">
   <foreignModel>extlibrary.ecore</foreignModel>
   <genPackages prefix="EXTLibrary" basePackage="org.eclipse.ocl.ecore.tests" disposableProviderFactory="true"
-      contentTypeIdentifier="extendedLibrary" ecorePackage="extlibrary.ecore#/">
+      contentTypeIdentifier="org.eclipse.ocl.ecore.tests.extendedLibrary" fileExtensions=""
+      ecorePackage="extlibrary.ecore#/">
     <genEnums ecoreEnum="extlibrary.ecore#//BookCategory">
       <genEnumLiterals ecoreEnumLiteral="extlibrary.ecore#//BookCategory/Mystery"/>
       <genEnumLiterals ecoreEnumLiteral="extlibrary.ecore#//BookCategory/ScienceFiction"/>
