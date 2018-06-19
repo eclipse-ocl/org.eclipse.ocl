@@ -59,6 +59,7 @@ import org.eclipse.ocl.examples.xtext.console.actions.SaveExpressionAction;
 import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.examples.xtext.console.xtfo.EmbeddedXtextEditor;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractLogger;
@@ -845,7 +846,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					if ((instanceContext != null) && !(instanceContext instanceof Element)) {
 						instanceContext = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, instanceContext);
 					}
-					parserContext = new ClassContext(environmentFactory, null, contextType, instanceContext instanceof Type ? (Type)instanceContext : null);
+					parserContext = new ClassContext(environmentFactory, null, contextType, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
 					//				}
 					//				else {
 					//					parserContext = new ModelContext(metamodelManager, null);
