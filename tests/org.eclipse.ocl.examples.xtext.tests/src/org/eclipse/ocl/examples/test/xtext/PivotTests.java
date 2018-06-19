@@ -356,7 +356,9 @@ public class PivotTests extends XtextTestCase
 	public void testPivot_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		BaseLinkingService.DEBUG_RETRY.setState(true);
-		doPivotTestOCLstdlib(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
+		getTestFileURI("oclstdlib.oclas", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclas"));
+		URI testFileURI = getTestFileURI("oclstdlib.oclstdlib", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
+		doPivotTestOCLstdlib(ocl, testFileURI);
 		ocl.dispose();
 	}
 
