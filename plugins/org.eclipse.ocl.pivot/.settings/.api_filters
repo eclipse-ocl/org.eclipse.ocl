@@ -590,6 +590,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/scoping/AbstractAttribution.java" type="org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution"/>
+                <message_argument value="NOT_STATIC_SCOPE_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution"/>
+                <message_argument value="STATIC_SCOPE_FILTER"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AS2Moniker.java" type="org.eclipse.ocl.pivot.internal.utilities.AS2Moniker">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

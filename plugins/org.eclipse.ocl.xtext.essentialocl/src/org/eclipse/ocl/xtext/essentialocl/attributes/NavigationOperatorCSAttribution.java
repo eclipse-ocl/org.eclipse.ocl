@@ -37,14 +37,35 @@ public class NavigationOperatorCSAttribution extends AbstractAttribution
 			ExpCS argument = targetElement.getArgument();
 			if ((child == argument) && (child instanceof NameExpCS)) {
 				NameExpCS csNameExp = (NameExpCS)child;
-				Type sourceTypeValue = csNameExp.getSourceTypeValue();
-				if (sourceTypeValue != null) {
-					environmentView.addElementsOfScope(environmentView.getStandardLibrary().getClassType(), scopeView);
+				//
+				//	Non-static features of the source type
+				//
+				Type nonStaticType = csNameExp.getSourceType();
+				if (nonStaticType != null) {
+					try {
+						environmentView.addFilter(NOT_STATIC_SCOPE_FILTER);
+						environmentView.addElementsOfScope(nonStaticType, scopeView);
+					}
+					finally {
+						environmentView.removeFilter(NOT_STATIC_SCOPE_FILTER);
+					}
 				}
 				if (!environmentView.hasFinalResult()) {
-					Type type = sourceTypeValue != null ? sourceTypeValue : csNameExp.getSourceType();
-					if (type != null) {
-						environmentView.addElementsOfScope(type, scopeView);
+					//
+					//	Static features of the known source type value else source type
+					//
+					Type staticType = csNameExp.getSourceTypeValue();
+					if (staticType == null) {
+						staticType = nonStaticType;
+					}
+					if (staticType != null) {
+						try {
+							environmentView.addFilter(STATIC_SCOPE_FILTER);
+							environmentView.addElementsOfScope(staticType, scopeView);
+						}
+						finally {
+							environmentView.removeFilter(STATIC_SCOPE_FILTER);
+						}
 					}
 				}
 				return null;											// Explicit navigation must be resolved in source

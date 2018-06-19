@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.scoping;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Feature;
 
 /**
  * Ann AbstractAttribution provides the basic behaviour for a family of derived
@@ -21,6 +22,28 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class AbstractAttribution implements Attribution
 {
+	/**
+	 * @since 1.5
+	 */
+	protected static final @NonNull ScopeFilter NOT_STATIC_SCOPE_FILTER = new ScopeFilter()
+	{
+		@Override
+		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
+			return (object instanceof Feature) && !((Feature)object).isIsStatic();
+		}
+	};
+
+	/**
+	 * @since 1.5
+	 */
+	protected static final @NonNull ScopeFilter STATIC_SCOPE_FILTER = new ScopeFilter()
+	{
+		@Override
+		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
+			return (object instanceof Feature) && ((Feature)object).isIsStatic();
+		}
+	};
+
 	@Override
 	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		return scopeView.getParent();
