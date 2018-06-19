@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -56,27 +55,21 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * An adapter implementation for tracking resource modification.
 	 */
-	private static class ImmutabilityCheckingAdapter extends AdapterImpl
+	private class ImmutabilityCheckingAdapter extends AdapterImpl
 	{
 		private @NonNull String formatMutationMessage(@NonNull Notification notification) {
-			Object notifier = notification.getNotifier();
 			StringBuilder s = new StringBuilder();
-			Resource resource = null;
-			if (notifier instanceof Resource) {
-				resource = (Resource)notifier;
-			}
-			else if (notifier instanceof EObject) {
-				resource = ((EObject)notifier).eResource();
-			}
-			s.append(resource != null ? resource.getURI() : notifier.getClass().getName());
-			s.append(" modified at a ");
+			s.append("'");
+			s.append(ASResourceImpl.this.getURI());
+			s.append("' modified at a '");
 			s.append(TracingAdapter.getFeatureType(notification));
+			s.append("'");
 			return s.toString();
 		}
 
 		@Override
 		public void notifyChanged(Notification notification) {
-			if (!notification.isTouch()) {
+			if (!notification.isTouch() && !ASResourceImpl.this.isUnloading) {
 				Object notifier = notification.getNotifier();
 				int eventType = notification.getEventType();
 				if (eventType == Notification.SET) {
@@ -122,7 +115,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.5
 	 */
-	private static @Nullable ImmutabilityCheckingAdapter immutabilityCheckingAdapter = null;
+	private @Nullable ImmutabilityCheckingAdapter immutabilityCheckingAdapter = null;
 
 	protected final @NonNull ASResourceFactory asResourceFactory;
 	private @Nullable LUSSIDs lussids = null;
@@ -132,6 +125,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * An attempt to save an unsaveable ASResource is ignored, probably because it is immuatble..
 	 */
 	private boolean isSaveable = true;
+
+	/**
+	 * Set true during doUnload()
+	 */
+	private boolean isUnloading = true;
 
 	/**
 	 * Creates an instance of the resource.
@@ -178,9 +176,15 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected void doUnload() {
-		super.doUnload();
-		if (lussids != null) {
-			resetLUSSIDs();
+		isUnloading = true;
+		try {
+			super.doUnload();
+			if (lussids != null) {
+				resetLUSSIDs();
+			}
+		}
+		finally {
+			isUnloading = false;
 		}
 	}
 

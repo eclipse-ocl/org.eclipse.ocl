@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
@@ -117,6 +118,9 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 				if (importedElement != null) {
 					Resource importedResource = importedElement.eResource();
 					if (importedResource != null) {
+						if (importedResource instanceof ASResourceImpl) {
+							((ASResourceImpl)importedResource).setSaveable(false);
+						}
 						List<Resource.Diagnostic> errors = importedResource.getErrors();
 						if (errors.size() > 0) {
 							//						INode node = NodeModelUtils.getNode(target);
