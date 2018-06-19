@@ -122,6 +122,20 @@ public class LoadTests extends XtextTestCase
 		}
 	} */
 
+	private void checkMultiplicity(TypedElement typedElement, int lower, int upper) {
+		Type type = typedElement.getType();
+		if ((0 <= upper) && (upper <= 1)) {
+			assertFalse(type instanceof CollectionType);
+			assertEquals(lower > 0, typedElement.isIsRequired());
+		}
+		else {
+			assertTrue(typedElement.isIsRequired());
+			CollectionType collType = (CollectionType)type;
+			assertEquals(lower, collType.getLower());
+			assertEquals(upper >= 0 ? upper : Unlimited.INSTANCE, collType.getUpper());
+		}
+	}
+
 	public @NonNull TestOCL createOCL() {
 		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS);
 	}
@@ -1114,18 +1128,56 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	private void checkMultiplicity(TypedElement typedElement, int lower, int upper) {
-		Type type = typedElement.getType();
-		if ((0 <= upper) && (upper <= 1)) {
-			assertFalse(type instanceof CollectionType);
-			assertEquals(lower > 0, typedElement.isIsRequired());
+	public void testLoad_Bug535712_ocl() throws IOException, InterruptedException {
+		OCL ocl = createOCLWithProjectMap();
+		String testEcoreContents =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"bug535712a\" nsURI=\"bug535712a\" nsPrefix=\"bug535712a\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Bug535712a\"/>\n" +
+						"</ecore:EPackage>\n" +
+						"\n";
+		InputStream ecoreStream = new URIConverter.ReadableInputStream(testEcoreContents, "UTF-8");
+		getTestFileURI("Bug535712a.ecore", ecoreStream);
+		String testOCLinEcoreContents =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
+						"import bug535712a : 'Bug535712a.ecore#/';\n" +
+						"package bug535712b\n" +
+						"{\n" +
+						"	class Bug535712b extends bug535712a::Bug535712a\n" +
+						"	{\n" +
+						"	}\n" +
+						"}\n";
+		InputStream oclInEcoreStream = new URIConverter.ReadableInputStream(testOCLinEcoreContents, "UTF-8");
+		getTestFileURI("Bug535712b.oclinecore", oclInEcoreStream);
+		String testOclContents =
+				"import oclstdlib : 'http://www.eclipse.org/ocl/2015/Library#/'\n" +
+						"import pivot : 'http://www.eclipse.org/ocl/2015/Pivot#/'\n" +
+						"import bug535712b : 'Bug535712b.oclinecore#/'\n" +
+						"\n" +
+						"package pivot\n" +
+						"context Element\n" +
+						"inv : 2 = 1 + 1\n" +
+						"endpackage\n";
+		InputStream inputStream = new URIConverter.ReadableInputStream(testOclContents, "UTF-8");
+		URI testFileURI = getTestFileURI("Bug535712.ocl", inputStream);
+		doLoad_OCL(ocl, testFileURI);
+		for (Resource asResource : ocl.getEnvironmentFactory().getMetamodelManager().getASResourceSet().getResources()) {
+			asResource.save(null);
 		}
-		else {
-			assertTrue(typedElement.isIsRequired());
-			CollectionType collType = (CollectionType)type;
-			assertEquals(lower, collType.getLower());
-			assertEquals(upper >= 0 ? upper : Unlimited.INSTANCE, collType.getUpper());
-		}
+		ocl.dispose();
+		TestFile testFileA1 = getTestFile("Bug535712a.ecore");
+		TestFile testFileB1= getTestFile("Bug535712b.oclinecore");
+		TestFile testFileC1 = getTestFile("Bug535712.ocl");
+		assertTrue("Bug535712a.ecore should exist", testFileA1.getFile().exists());
+		assertTrue("Bug535712b.oclinecore should exist", testFileB1.getFile().exists());
+		assertTrue("Bug535712.ocl should exist", testFileC1.getFile().exists());
+		TestFile testFileA2 = getTestFile("Bug535712a.ecore.oclas");
+		TestFile testFileB2 = getTestFile("Bug535712b.oclinecore.oclas");
+		TestFile testFileC2 = getTestFile("Bug535712.ocl.oclas");
+		assertFalse("Bug535712a.ecore.oclas should not exist", testFileA2.getFile().exists());
+		assertFalse("Bug535712b.oclinecore.oclas should not exist", testFileB2.getFile().exists());
+		assertFalse("Bug535712.ocl.oclas should not exist", testFileC2.getFile().exists());
 	}
 
 	public void testLoad_Fruit_ocl() throws IOException, InterruptedException {
