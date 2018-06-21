@@ -233,6 +233,8 @@ public abstract class LUSSIDs
 
 	private @Nullable Map<@NonNull Integer, @NonNull List<@NonNull Element>> debugLUSSID2collisions = null;
 
+	private boolean assignmentStarted = false;
+
 	protected LUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
 		this.asResource = asResource;
 		this.debugLUSSID2element = options.get(AS2ID.DEBUG_LUSSID_COLLISIONS) == Boolean.TRUE ? new HashMap<>(): null;
@@ -376,6 +378,7 @@ public abstract class LUSSIDs
 	}
 
 	protected void assignLUSSIDs(@NonNull AS2ID as2id) {
+		assignmentStarted = true;
 		for (@NonNull EObject eObject : new TreeIterable(asResource)) {
 			EClass eClass = eObject.eClass();
 			assert eClass != null;
@@ -403,7 +406,12 @@ public abstract class LUSSIDs
 						}
 					}
 					else if (eResource instanceof ASResource) {
-						as2id.assignLUSSIDs((ASResource)eResource);
+						if (!((ASResource)eResource).isOrphanage()) {
+							as2id.assignLUSSIDs((ASResource)eResource);
+						}
+						else {
+							//	as2id.assignLUSSIDs((ASResource)eResource);
+						}
 					}
 				}
 			}
@@ -500,6 +508,13 @@ public abstract class LUSSIDs
 		debugLUSSID2element = null;
 		debugLUSSID2collisions = null;
 		asResource.resetLUSSIDs();
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	public boolean isAssignmentStarted() {
+		return assignmentStarted;
 	}
 
 	/**

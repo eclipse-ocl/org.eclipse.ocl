@@ -101,7 +101,7 @@ public class AS2ID
 
 	protected void assignLUSSIDs(@NonNull ASResource asResource) {
 		LUSSIDs lussids = asResource.basicGetLUSSIDs();
-		if (lussids != null) {
+		if ((lussids != null) && lussids.isAssignmentStarted()) {
 			//	System.out.println("re-assignLUSSIDs to "  + asResource.getURI());
 			lussids.assignErrors();
 			//			if (!oldLUSSIDs.contains(lussids)) {
