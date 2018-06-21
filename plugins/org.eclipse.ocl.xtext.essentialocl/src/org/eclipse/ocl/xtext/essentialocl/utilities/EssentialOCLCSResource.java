@@ -272,8 +272,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return asResource;
 		}
 		@SuppressWarnings("null")@NonNull Resource asResource2 = asResourceSet.createResource(asURI, getASContentType());
-		if (asResource2 instanceof ASResourceImpl) {
-			((ASResourceImpl)asResource2).setSaveable(false);
+		if (asResource2 instanceof ASResource) {
+			((ASResource)asResource2).setSaveable(false);
 		}
 		return (ASResource) asResource2;
 	}

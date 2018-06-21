@@ -195,7 +195,10 @@ public abstract class LUSSIDs
 		}
 	}
 
-	protected final @NonNull ASResourceImpl asResource;
+	/**
+	 * The Resource for which this LUSSIDs manages the assignment of LUSSID values.
+	 */
+	protected final @NonNull ASResource asResource;
 
 	/**
 	 * Map from each identified element to its unique-ish 32 bit hash code.
@@ -231,7 +234,7 @@ public abstract class LUSSIDs
 	private @Nullable Map<@NonNull Integer, @NonNull List<@NonNull Element>> debugLUSSID2collisions = null;
 
 	protected LUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
-		this.asResource = (ASResourceImpl) asResource;
+		this.asResource = asResource;
 		this.debugLUSSID2element = options.get(AS2ID.DEBUG_LUSSID_COLLISIONS) == Boolean.TRUE ? new HashMap<>(): null;
 		this.diagnoseXMIIDcollisions = options.get(AS2ID.DEBUG_XMIID_COLLISIONS) == Boolean.TRUE;
 	}

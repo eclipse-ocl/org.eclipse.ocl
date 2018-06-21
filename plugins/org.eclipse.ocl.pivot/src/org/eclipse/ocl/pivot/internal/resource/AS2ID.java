@@ -88,8 +88,8 @@ public class AS2ID
 
 	public int assignLUSSID(@NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
 		Resource resource = element.eResource();
-		if (resource instanceof ASResourceImpl) {
-			ASResourceImpl asResource = (ASResourceImpl)resource;
+		if (resource instanceof ASResource) {
+			ASResource asResource = (ASResource)resource;
 			LUSSIDs lussids = asResource.getLUSSIDs(options);
 			return lussids.assignLUSSID(this, element, isReferenced, normalizeTemplateParameters);
 		}
@@ -99,19 +99,17 @@ public class AS2ID
 		}
 	}
 
-	protected void assignLUSSIDs(@NonNull ASResource resource) {
-		if (!(resource instanceof ASResourceImpl)) {
-			return;
-		}
-		ASResourceImpl asResource = (ASResourceImpl)resource;
+	protected void assignLUSSIDs(@NonNull ASResource asResource) {
 		LUSSIDs lussids = asResource.basicGetLUSSIDs();
 		if (lussids != null) {
+			//	System.out.println("re-assignLUSSIDs to "  + asResource.getURI());
 			lussids.assignErrors();
 			//			if (!oldLUSSIDs.contains(lussids)) {
 			//				oldLUSSIDs.add(lussids);
 			//			}
 		}
 		else {
+			//	System.out.println("assignLUSSIDs to "  + asResource.getURI());
 			lussids = asResource.getLUSSIDs(options);
 			if (newLUSSIDs.contains(lussids)) {
 				return;

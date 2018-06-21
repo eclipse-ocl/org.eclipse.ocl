@@ -42,6 +42,12 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
+/**
+ * ASResourceImpl is the mandatory implementation of the ASResource interface that refines an
+ * a standard EMF XMIResource to be used as a Pivot AS Resource.
+ * @author ed
+ *
+ */
 public class ASResourceImpl extends XMIResourceImpl implements ASResource
 {
 	/**
@@ -141,10 +147,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
-	//	@Override
 	/**
 	 * @since 1.4
 	 */
+	@Override
 	public @Nullable EObject basicGetEObjectByID(@Nullable String id) {
 		return idToEObjectMap != null ? idToEObjectMap.get(id) : null;
 	}
@@ -152,7 +158,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.4
 	 */
-	// FIXME @Override promote API
+	@Override
 	public @Nullable LUSSIDs basicGetLUSSIDs() {
 		return lussids;
 	}
@@ -243,7 +249,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.4
 	 */
-	// FIXME @Override promote API
+	@Override
 	public @NonNull LUSSIDs getLUSSIDs(@NonNull Map<@NonNull Object, @Nullable Object> options) {
 		LUSSIDs lussids2 = lussids;
 		if (lussids2 == null) {
@@ -276,7 +282,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.4
 	 */
-	// FIXME @Override promote API
+	@Override
 	public int getXmiidVersion() {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {
@@ -289,9 +295,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return 0;
 	}
 
-	/**
-	 * @since 1.5
-	 */
+	@Override
+	public boolean isOrphanage() {
+		return false;
+	}
+
+	@Override
 	public boolean isSaveable() {
 		return isSaveable;
 	}
@@ -299,11 +308,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.4
 	 */
-	// FIXME @Override promote API
+	@Override
 	public void resetLUSSIDs() {
 		LUSSIDs lussids2 = lussids;
-		lussids = null;
 		if (lussids2 != null) {
+			lussids = null;
+			//	System.out.println("resetLUSSIDs for "  + getURI());
 			lussids2.dispose();
 		}
 	}
@@ -322,6 +332,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.5
 	 */
+	@Override
 	public void setSaveable(boolean isSaveable) {
 		this.isSaveable = isSaveable;
 		if (!isSaveable) {
@@ -346,7 +357,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.4
 	 */
-	// FIXME @Override promote API
+	@Override
 	public void setXmiidVersion(int xmiidVersion) {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {

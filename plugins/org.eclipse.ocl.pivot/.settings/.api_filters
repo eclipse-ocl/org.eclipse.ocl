@@ -608,6 +608,20 @@
                 <message_argument value="CHECK_IMMUTABILITY"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ASResource"/>
+                <message_argument value="ASResourceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/LUSSIDs.java" type="org.eclipse.ocl.pivot.internal.resource.LUSSIDs">
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.LUSSIDs"/>
+                <message_argument value="asResource"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
         <filter comment="Bug 512402 workaround" id="576725006">

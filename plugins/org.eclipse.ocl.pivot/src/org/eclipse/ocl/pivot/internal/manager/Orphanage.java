@@ -66,6 +66,11 @@ public class Orphanage extends PackageImpl
 			}
 			//			super.doUnload();
 		}
+
+		@Override
+		public boolean isOrphanage() {
+			return true;
+		}
 	}
 
 	/**

@@ -235,8 +235,8 @@ public class ASSaver
 					unresolvedSpecializingElements.remove(element);
 				}
 			}
-			if (resource instanceof ASResourceImpl){
-				((ASResourceImpl)resource).resetLUSSIDs();			// Force regeneration for localized packages
+			if (resource instanceof ASResource){
+				((ASResource)resource).resetLUSSIDs();			// Force regeneration for localized packages
 			}
 		}
 	}

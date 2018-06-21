@@ -12,16 +12,21 @@ package org.eclipse.ocl.pivot.resource;
 
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.LUSSIDs;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * A resource for an OCL Abstract Syntax (Pivot) Model
+ *
+ * @noimplement This interface is not intended to be implemented by clients. Extend ASResourceImpl.
  */
 public interface ASResource extends XMIResource
 {
@@ -68,7 +73,19 @@ public interface ASResource extends XMIResource
 	@NonNull String OCLSTDLIB_CONTENT_TYPE = CONTENT_TYPE + "." + PivotConstants.OCLSTDLIB_FILE_EXTENSION;
 	@NonNull String UML_CONTENT_TYPE = CONTENT_TYPE + ".uml";
 
-	// FIXME add API	@Nullable EObject basicGetEObjectByID(@Nullable String id);
+	/**
+	 * Return the EObject with the corresponding xmi:id, or null if none.
+	 *
+	 * @since 1.5
+	 */
+	@Nullable EObject basicGetEObjectByID(@Nullable String id);
+
+	/**
+	 * Return the manager for LUSSID assignment within this resource, or null if no LUSSIDs have been assigned.
+	 *
+	 * @since 1.5
+	 */
+	public @Nullable LUSSIDs basicGetLUSSIDs();
 
 	/**
 	 * Return the ASResourceFactory that created this ASResource and which may be used
@@ -77,7 +94,62 @@ public interface ASResource extends XMIResource
 	@NonNull ASResourceFactory getASResourceFactory();
 
 	/**
+	 * Return the manager for LUSSID assignment within this resource. If no manager has been created, create
+	 * one using the specified behavioral options.
+	 *
+	 * @since 1.5
+	 */
+	public @NonNull LUSSIDs getLUSSIDs(@NonNull Map<@NonNull Object, @Nullable Object> options);
+
+	/**
 	 * Return the Model that provides the sole root content. Throws an IllegalStateException if there is none.
 	 */
 	@NonNull Model getModel();
+
+	/**
+	 * Return the version number that identifies the algorithm used to compute xmi:ids within this Resource.
+	 *
+	 * @since 1.5
+	 */
+	public int getXmiidVersion();
+
+	/**
+	 * Return true if this Resource is a container for orphan model elements.
+	 *
+	 * @since 1.5
+	 */
+	boolean isOrphanage();
+
+	/**
+	 * Return true if this Resource may be saved. Conversely, return false if this Resource has
+	 * immutable content that does not need saving and may come from a read-only location.
+	 *
+	 * @since 1.5
+	 */
+	boolean isSaveable();
+
+	/**
+	 * Reset the Locally Unique Senantically Sensitive IDs that form the basic of xmi:id allocation.
+	 * This may be necessary to re-save a Resource that has been modified after a previous save.
+	 *
+	 * @since 1.5
+	 */
+	public void resetLUSSIDs();
+
+	/**
+	 * Enable or disable saving of this resource. Saving is normally disabled automatically for model content
+	 * that is created by a CS2AS or ES2AS conversion. A not-saveable resource may nonetheless be saved by setting
+	 * the resource saveable and ensuring that the URI references a writeable location (i.e probably not an
+	 * http: or platform:/plugin location).
+	 *
+	 * @since 1.5
+	 */
+	public void setSaveable(boolean isSaveable);
+
+	/**
+	 * Define the version number identifying the xmi:id allocation algorithm for this resource.
+	 *
+	 * @since 1.5
+	 */
+	public void setXmiidVersion(int xmiidVersion);
 }
