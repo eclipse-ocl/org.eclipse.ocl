@@ -1626,12 +1626,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		Resource asResource = asResourceSet.getResource(uri, false);
 		if (asResource == null) {
-			asResource = asResourceSet.createResource(uri, contentType);
-		}
-		if (asResource == null) {
-			throw new IllegalStateException("Failed to create '" + uri + "'");
-		} else if (!(asResource instanceof ASResource)) {
-			throw new IllegalStateException("Non ASResource created for content type '" + contentType + "'");
+			asResource = ((ASResourceFactory)asResourceFactory).createResource(uri);
+			assert asResource != null;
+			asResourceSet.getResources().add(asResource);
 		}
 		return (ASResource)asResource;
 	}
