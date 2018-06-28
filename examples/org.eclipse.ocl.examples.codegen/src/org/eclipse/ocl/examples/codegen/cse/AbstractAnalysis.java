@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -30,7 +30,7 @@ public abstract class AbstractAnalysis implements Comparable<AbstractAnalysis>
 	 * Return the analysis that shares this analysis and commonAnalysis
 	 */
 	public abstract @NonNull CommonAnalysis addCommonAnalysis(@NonNull CommonAnalysis commonAnalysis);
-	
+
 	/**
 	 * Return the analysis that shares this analysis and simpleAnalysis
 	 */
@@ -40,7 +40,7 @@ public abstract class AbstractAnalysis implements Comparable<AbstractAnalysis>
 	public int compareTo(AbstractAnalysis o2) {
 		int h1 = this.getStructuralHashCode();
 		int h2 = o2.getStructuralHashCode();
-		return h1 - h2;
+		return h1 > h2 ? 1 : h1 < h2 ? -1 : 0;
 	}
 
 	/**
@@ -63,12 +63,12 @@ public abstract class AbstractAnalysis implements Comparable<AbstractAnalysis>
 	 * Return the hash code derived from the tree structure of this analysis.
 	 */
 	public abstract int getStructuralHashCode();
-	
+
 	/**
 	 * Return true if the tree structure of this analysis is identical to thatAnalysis.
 	 */
 	public abstract boolean isStructurallyEqualTo(@NonNull AbstractAnalysis thatAnalysis);
-	
+
 	/**
 	 * Return true if the tree structure of this analysis is identical to thatAnalysis.
 	 */
