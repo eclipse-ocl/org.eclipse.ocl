@@ -1079,6 +1079,18 @@ abstract type OclState conformsTo OclAny {
 }
 
 /**
+The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined
+for OclStereotype are therefore applicable to all UML stereotypes.
+**/
+abstract type OclStereotype conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
+	/**
+	Return a set of all instances of the stereotype and derived types of self.
+	*/
+	static operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
+}
+
+/**
 The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived
 sum and zero implementations may be summed. 
 */
@@ -1096,18 +1108,6 @@ abstract type OclSummable conformsTo OclAny {
 	zero().sum(self) = self.
 	*/
 	operation zero() : OclSelf;	
-}
-
-/**
-The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined
-for OclStereotype are therefore applicable to all UML stereotypes.
-**/
-abstract type OclStereotype conformsTo OclType {
-	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
-	/**
-	Return a set of all instances of the stereotype and derived types of self.
-	*/
-	static operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
 
 /**

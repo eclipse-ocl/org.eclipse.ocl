@@ -24,6 +24,7 @@ import java.util.Map;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -51,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
@@ -75,7 +77,10 @@ public class OCLmetamodel extends ASResourceImpl
 	 */
 	public static final @NonNull String PIVOT_URI = "http://www.eclipse.org/ocl/2015/Pivot";
 
-	private static final @NonNull URI PIVOT_AS_URI = URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+	/**
+	 *	The URI of the AS representation of this Metamodel.
+	 */
+	public static final @NonNull URI PIVOT_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/Pivot" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 	public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 		OCLmetamodel resource = new ReadOnly(PIVOT_AS_URI);
@@ -112,6 +117,37 @@ public class OCLmetamodel extends ASResourceImpl
 		return model;
 	}
 
+	/**
+	 * Install this metamodel in the {@link OCLASResourceFactory#REGISTRY}.
+	 * This method may be invoked by standalone applications to replicate
+	 * the registration that should appear as a standard_library plugin
+	 * extension when running within Eclipse.
+	 */
+	public static void install() {
+		Loader contribution = new Loader();
+		OCLASResourceFactory.REGISTRY.put(PIVOT_AS_URI, contribution);
+	}
+
+	/**
+	 * Install this metamodel in the {@link OCLASResourceFactory#REGISTRY}
+	 * unless some other metamodel contribution has already been installed.
+	 */
+	public static void lazyInstall() {
+		if (OCLASResourceFactory.REGISTRY.get(PIVOT_AS_URI) == null) {
+			install();
+		}
+	}
+
+	/**
+	 * Uninstall this metamodel from the {@link OCLASResourceFactory#REGISTRY}.
+	 * This method may be invoked by standalone applications to release the library
+	 * resources for garbage collection and memory leakage detection.
+	 */
+	public static void uninstall() {
+		OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
+		INSTANCE = null;
+	}
+
 	protected OCLmetamodel(@NonNull URI uri) {
 		super(uri, OCLASResourceFactory.getInstance());
 	}
@@ -122,6 +158,23 @@ public class OCLmetamodel extends ASResourceImpl
 
 		protected LibraryContents(@NonNull Package standardLibrary) {
 			this.standardLibrary = standardLibrary;
+		}
+	}
+
+	/**
+	 * The Loader shares the metamodel instance whenever this default metamodel
+	 * is loaded from the registry of known pivot metamodels.
+	 */
+	public static class Loader implements StandardLibraryContribution
+	{
+		@Override
+		public @NonNull StandardLibraryContribution getContribution() {
+			return this;
+		}
+
+		@Override
+		public @NonNull Resource getResource() {
+			return getDefault();
 		}
 	}
 

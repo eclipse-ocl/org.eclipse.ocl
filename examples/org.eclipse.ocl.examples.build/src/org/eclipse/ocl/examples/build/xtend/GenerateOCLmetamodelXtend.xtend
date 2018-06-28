@@ -103,6 +103,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
@@ -137,7 +138,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 */
 				public static final @NonNull String PIVOT_URI = "«uri»";
 			
-				private static final @NonNull URI PIVOT_AS_URI = URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+				/**
+				 *	The URI of the AS representation of this Metamodel.
+				 */
+				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
@@ -187,6 +191,37 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				}
 				«ENDIF»
 			
+				/**
+				 * Install this metamodel in the {@link OCLASResourceFactory#REGISTRY}.
+				 * This method may be invoked by standalone applications to replicate
+				 * the registration that should appear as a standard_library plugin
+				 * extension when running within Eclipse.
+				 */
+				public static void install() {
+					Loader contribution = new Loader();
+					OCLASResourceFactory.REGISTRY.put(PIVOT_AS_URI, contribution);
+				}
+			
+				/**
+				 * Install this metamodel in the {@link OCLASResourceFactory#REGISTRY}
+				 * unless some other metamodel contribution has already been installed.
+				 */
+				public static void lazyInstall() {
+					if (OCLASResourceFactory.REGISTRY.get(PIVOT_AS_URI) == null) {
+						install();
+					}
+				}
+			
+				/**
+				 * Uninstall this metamodel from the {@link OCLASResourceFactory#REGISTRY}.
+				 * This method may be invoked by standalone applications to release the library
+				 * resources for garbage collection and memory leakage detection.
+				 */
+				public static void uninstall() {
+					OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
+					INSTANCE = null;
+				}
+			
 				protected «javaClassName»(@NonNull URI uri) {
 					super(uri, OCLASResourceFactory.getInstance());
 				}
@@ -197,6 +232,23 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			
 					protected LibraryContents(@NonNull Package standardLibrary) {
 						this.standardLibrary = standardLibrary;
+					}
+				}
+			
+				/**
+				 * The Loader shares the metamodel instance whenever this default metamodel
+				 * is loaded from the registry of known pivot metamodels.
+				 */
+				public static class Loader implements StandardLibraryContribution
+				{
+					@Override
+					public @NonNull StandardLibraryContribution getContribution() {
+						return this;
+					}
+			
+					@Override
+					public @NonNull Resource getResource() {
+						return getDefault();
 					}
 				}
 			

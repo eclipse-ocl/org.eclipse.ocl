@@ -87,6 +87,11 @@ public class OCLstdlib extends ASResourceImpl
 	public static final @NonNull String STDLIB_URI = "http://www.eclipse.org/ocl/2015/Library";
 
 	/**
+	 *	The URI of the AS representation of this Standard Library.
+	 */
+	public static final @NonNull URI STDLIB_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/Library" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+
+	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource.
 	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
 	 *  is used as the default when no overriding copy is registered.
@@ -125,17 +130,21 @@ public class OCLstdlib extends ASResourceImpl
 	}
 
 	/**
-	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}.
+	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}.
 	 * This method may be invoked by standalone applications to replicate
 	 * the registration that should appear as a standard_library plugin
 	 * extension when running within Eclipse.
 	 */
 	public static void install() {
-		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, new Loader());
+		Loader contribution = new Loader();
+		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
+		OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);
 	}
 
 	/**
 	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}
 	 * unless some other library contribution has already been installed.
 	 */
 	public static void lazyInstall() {
@@ -145,12 +154,14 @@ public class OCLstdlib extends ASResourceImpl
 	}
 
 	/**
-	 * Unnstall this library from the {@link StandardLibraryContribution#REGISTRY}.
+	 * Uninstall this library from the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}.
 	 * This method may be invoked by standalone applications to release the library
 	 * resources for garbage collection and memory leakage detection.
 	 */
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
+		OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
 		INSTANCE = null;
 	}
 
@@ -174,8 +185,6 @@ public class OCLstdlib extends ASResourceImpl
 
 	/**
 	 * A ReadOnly OCLstdlib overrides inherited functionality to impose immutable shared behaviour.
-	 *
-	 * @since 1.5
 	 */
 	protected static class ReadOnly extends OCLstdlib implements ImmutableResource
 	{

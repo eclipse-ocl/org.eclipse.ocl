@@ -374,7 +374,62 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.model.OCLmetamodel"/>
+                <message_argument value="PIVOT_AS_URI"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="PIVOT_AS_URI"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="install()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="lazyInstall()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="uninstall()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel$Loader">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="Loader"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel$ReadOnly">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ReadOnly"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLstdlib.java" type="org.eclipse.ocl.pivot.model.OCLstdlib">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.model.OCLstdlib"/>
+                <message_argument value="STDLIB_AS_URI"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STDLIB_AS_URI"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLstdlib.java" type="org.eclipse.ocl.pivot.model.OCLstdlib$ReadOnly">
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ReadOnly"/>
@@ -620,6 +675,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.LUSSIDs"/>
                 <message_argument value="asResource"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/OCLASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory"/>
+                <message_argument value="REGISTRY"/>
             </message_arguments>
         </filter>
     </resource>

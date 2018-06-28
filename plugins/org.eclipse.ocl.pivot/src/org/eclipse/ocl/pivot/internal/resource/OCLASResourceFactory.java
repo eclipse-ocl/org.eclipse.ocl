@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -24,6 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.library.RegisteredContribution;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
@@ -32,7 +34,41 @@ import org.eclipse.ocl.pivot.resource.ASResource;
  */
 public class OCLASResourceFactory extends AbstractASResourceFactory
 {
+
+	/**
+	 * @since 1.5
+	 */
+	public static class ASRegistry<@NonNull C extends RegisteredContribution<C>> //implements RegisteredContribution.Registry<C>
+	{
+		private final @NonNull Map<@NonNull URI, C>  map = new HashMap<>();
+
+		//		@Override
+		public @Nullable C get(@NonNull URI key) {
+			@Nullable C contribution = map.get(key);
+			return contribution != null ? contribution.getContribution() : null;
+		}
+
+		//		@Override
+		public @Nullable C put(@NonNull URI key, @NonNull C contribution) {
+			return map.put(key, contribution);
+		}
+
+		//		@Override
+		public @Nullable C remove(@NonNull URI key) {
+			return map.remove(key);
+		}
+
+		//		@Override
+		public int size() {
+			return map.size();
+		}
+	}
+
 	private static @Nullable OCLASResourceFactory INSTANCE = null;
+	/**
+	 * @since 1.5
+	 */
+	public static @NonNull ASRegistry<@NonNull StandardLibraryContribution> REGISTRY = new ASRegistry<@NonNull StandardLibraryContribution>();
 
 	public static synchronized @NonNull OCLASResourceFactory getInstance() {
 		if (INSTANCE == null) {
@@ -88,24 +124,26 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 
 	@Override
 	public Resource createResource(URI uri) {
-		URI nonASuri = uri.trimFileExtension();
-		String nonASuriString = nonASuri.toString();
-		assert nonASuriString != null;
+		assert uri != null;
 		//
-		//	If it's a *.oclas suffixed standard library, return the standard library.
+		//	If it's a *.oclas suffixed standard library or metamodel, return the registered AS resource.
 		//
-		StandardLibraryContribution standardLibraryContribution = StandardLibraryContribution.REGISTRY.get(nonASuriString);
+		StandardLibraryContribution standardLibraryContribution = REGISTRY.get(uri);
 		if (standardLibraryContribution != null) {
 			return standardLibraryContribution.getResource();
 		}
-		assert !"http".equals(uri.scheme());
+		//		assert !"http".equals(uri.scheme());
+		URI nonASuri = uri.trimFileExtension();
+		String nonASuriString = nonASuri.toString();
+		assert nonASuriString != null;
 		String xxxasExtension = nonASuri.fileExtension();
 		ASResourceFactory asResourceFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(xxxasExtension);
 		//		String fileExtension = uri.fileExtension();
 		//		if (fileExtension == null) {			// Must be an Ecore Package registration
 		//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
 		//		}
-		if ((asResourceFactory == null) || !nonASuri.isFile()) {					// If it's not a known double extension
+		//		if (/*(asResourceFactory == null) &&*/ !"http".equals(uri.scheme())) { //|| !nonASuri.isFile()) {					// If it's not a known double extension
+		if (uri.isPlatform() || uri.isFile() || uri.isArchive()) { // not http:
 			//
 			//	If *.xxxas exists use it.
 			//
