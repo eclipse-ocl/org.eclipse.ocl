@@ -103,8 +103,8 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 	}
 
 	public void testUnlimitedOclIsKindOf() {									// BUG 378036 this doesn't work for UML
-		assertResultTrue("*.oclIsKindOf(Integer)");
-		assertResultTrue("*.oclIsKindOf(Real)");
+		assertResultFalse("*.oclIsKindOf(Integer)");
+		assertResultFalse("*.oclIsKindOf(Real)");
 		assertResultTrue("*.oclIsKindOf(UnlimitedNatural)");
 		assertResultFalse("*.oclIsKindOf(String)");
 		assertResultTrue("*.oclIsKindOf(OclAny)");

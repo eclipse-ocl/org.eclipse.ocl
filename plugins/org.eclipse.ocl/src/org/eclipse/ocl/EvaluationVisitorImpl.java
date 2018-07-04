@@ -721,7 +721,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 						return true;
 					}
 					if (sourceType == getUnlimitedNatural()) {
-						return (targetType instanceof AnyType) || (targetType == getInteger()) || (targetType == getReal());
+						return targetType instanceof AnyType;
 					}
 					Boolean result = oclIsKindOf(sourceVal, targetType);
 					if (result == null) {
