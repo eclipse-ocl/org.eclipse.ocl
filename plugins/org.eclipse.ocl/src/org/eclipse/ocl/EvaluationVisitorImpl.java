@@ -699,8 +699,11 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 					Object targetType = arg.accept(getVisitor());
 					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
 					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
+					if (sourceType == targetType) {
+						return true;
+					}
 					if (sourceType == getUnlimitedNatural()) {
-						return targetType == getUnlimitedNatural();
+						return false;		// Suppress 'integer' integer matches
 					}
 					Boolean result = oclIsTypeOf(sourceVal, targetType);
 					if (result == null) {
@@ -714,8 +717,11 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 					Object targetType = arg.accept(getVisitor());
 					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
 					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
-					if (sourceType == getUnlimitedNatural() && targetType == getUnlimitedNatural()) {
-						return true; // other combinations properly handled since checked with Integer
+					if (sourceType == targetType) {
+						return true;
+					}
+					if (sourceType == getUnlimitedNatural()) {
+						return (targetType instanceof AnyType) || (targetType == getInteger()) || (targetType == getReal());
 					}
 					Boolean result = oclIsKindOf(sourceVal, targetType);
 					if (result == null) {

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.tests.GenericEvaluationNumberOperationTest;
 
 @SuppressWarnings("nls")
@@ -69,6 +70,10 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultTrue("(3.0).oclIsKindOf(OclAny)");
 		assertResultFalse("(3.0).oclIsKindOf(OclVoid)");
 		assertResultFalse("(3.0).oclIsKindOf(OclInvalid)");
+
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		assertResultTrue("45.oclIsKindOf(Integer)");
+		assertResultTrue("4503599627370496.oclIsKindOf(Integer)");
 	}
 
 	public void testNumberOclIsTypeOf() {										// BUG 378036 this doesn't work for UML
@@ -85,6 +90,10 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultFalse("(3.0).oclIsTypeOf(OclAny)");
 		assertResultFalse("(3.0).oclIsTypeOf(OclVoid)");
 		assertResultFalse("(3.0).oclIsTypeOf(OclInvalid)");
+
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		assertResultTrue("45.oclIsTypeOf(Integer)");
+		assertResultTrue("4503599627370496.oclIsTypeOf(Integer)");
 	}
 
 	@Override
