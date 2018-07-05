@@ -697,33 +697,29 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 				// AnyType::oclIsTypeOf(OclType)
 				if (opCode == PredefinedType.OCL_IS_TYPE_OF) {
 					Object targetType = arg.accept(getVisitor());
-					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
-					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
-					if (sourceType == targetType) {
+					if (sourceType == targetType) {							// If the type is correct - nothing more to check
 						return true;
 					}
-					if (sourceType == getUnlimitedNatural()) {
-						return false;		// Suppress 'integer' integer matches
+					if (sourceType == getUnlimitedNatural()) {				// UnlimitedNatural can only be a type of itself
+						return false;										// Suppress 'integer' integer matches
 					}
-					Boolean result = oclIsTypeOf(sourceVal, targetType);
+					Boolean result = oclIsTypeOf(sourceVal, targetType);	// Check the value
 					if (result == null) {
 						return getInvalid();
 					} else {
 						return result;
 					}
 				} else if (opCode == PredefinedType.OCL_IS_KIND_OF) {
-					// no special check for Integer representation of UnlimitedNatural necessary
-					// because UnlimitedNatural is subtype of Integer
 					Object targetType = arg.accept(getVisitor());
 					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
 					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
-					if (sourceType == targetType) {
+					if (sourceType == targetType) {							// If the type is correct - nothing more to check
 						return true;
 					}
-					if (sourceType == getUnlimitedNatural()) {
+					if (sourceType == getUnlimitedNatural()) {				// UnlimitedNatural can only be a kind of itself or OclAny
 						return targetType instanceof AnyType;
 					}
-					Boolean result = oclIsKindOf(sourceVal, targetType);
+					Boolean result = oclIsKindOf(sourceVal, targetType);	// Check the value
 					if (result == null) {
 						return getInvalid();
 					} else {
@@ -740,47 +736,44 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 
 					// if the source is undefined or the conversion to
 					// OclVoid so is the result
-					if (sourceVal == null || (argType instanceof VoidType<?>)) {
+					if ((sourceVal == null) || (argType instanceof VoidType<?>)) {		// ?  instanceof VoidType never happens
 						return sourceVal;
 					}
-					if (sourceVal == getInvalid() || (argType instanceof InvalidType<?>)) {
+					if ((sourceVal == getInvalid()) || (argType instanceof InvalidType<?>)) {		// ? instanceof InvalidType never happens
 						return getInvalid();
 					}
 
-					if (sourceVal instanceof String
-							&& ((TypeExp<C>) arg).getReferredType() == getString()) {
+					Object targetType = arg.accept(getVisitor());
+					if (targetType instanceof AnyType) {
 						return sourceVal;
-					} else if (((sourceVal instanceof Double) || (sourceVal instanceof Float) || (sourceVal instanceof BigDecimal))
-							&& (argType == getInteger())) {
-						return new Integer(((Number) sourceVal).intValue());
-					} else if (sourceVal instanceof Boolean
-							&& ((TypeExp<C>) arg).getReferredType() == getBoolean()) {
+					}
+					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
+					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
+					if (sourceType == targetType) {
 						return sourceVal;
-					} else if (sourceVal instanceof Integer
-							&& (((TypeExp<C>) arg).getReferredType() == getReal())) {
-
-						if (sourceType == getUnlimitedNatural()) {
-							int sourceInt = (Integer) sourceVal;
-
-							// the unlimited value is invalid as Real because there
-							// is no positive infinity defined in the OCL Real type
-							if (sourceInt == UnlimitedNaturalLiteralExp.UNLIMITED) {
-								return getInvalid();
-							}
+					}
+					else if (sourceType == getInteger()) {				// Integer to ... conversion
+						if (targetType == getUnlimitedNatural()) {		// Integer to UnlimitedNatural conversion
+							return sourceVal;
 						}
-
-						return new Double(((Integer) sourceVal).doubleValue());
-					} else if (sourceType == getUnlimitedNatural() && sourceVal.equals(UNLIMITED)
-							&& (((TypeExp<C>) arg).getReferredType() == getInteger())) {
-						// According to OCL 2.3 (10-11-42) Section 8.2.1, UnlimitedNatural value
-						// * is an invalid Integer.
-						return getInvalid();
-					} else if (((TypeExp<C>) arg).getReferredType() instanceof AnyType<?>) {
-						return sourceVal;
-					} else if ((sourceType == getUnlimitedNatural() && ((TypeExp<C>) arg).getReferredType() == getUnlimitedNatural()) ||
-							oclIsKindOf(sourceVal, ((TypeExp<C>) arg).getReferredType())) {
-						return sourceVal;
-					} else {
+						if (targetType == getReal()) {					// Integer to Real conversion
+							return new Double(((Number) sourceVal).doubleValue());
+						}
+					}
+					else if (sourceType == getUnlimitedNatural()) {		// UnlimitedNatural to ...
+						if (sourceVal.equals(UNLIMITED)) {
+							//							&& (((TypeExp<C>) arg).getReferredType() == getInteger())) {
+							// According to OCL 2.3 (10-11-42) Section 8.2.1, UnlimitedNatural value
+							// * is an invalid Integer.
+							return getInvalid();
+							//						return targetType instanceof AnyType ? sourceVal : getInvalid();
+						}
+						if (targetType == getInteger()) {					// UnlimitedNatural to Integer conversion
+							return sourceVal;
+						}
+						if (targetType == getReal()) {					// UnlimitedNatural to Real conversion
+							return new Double(((Number) sourceVal).doubleValue());
+						}
 						return getInvalid();
 					}
 				}

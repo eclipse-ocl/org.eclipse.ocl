@@ -54,6 +54,17 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResult(Double.valueOf(3), "(3.0).oclAsType(OclAny)");
 		assertResultInvalid("(3.0).oclAsType(OclVoid)");
 		assertResultInvalid("(3.0).oclAsType(OclInvalid)");
+
+		assertResult(Integer.valueOf(3), "3.oclAsType(UnlimitedNatural)");
+		assertResult(Integer.valueOf(3), "3.oclAsType(UnlimitedNatural).oclAsType(Integer)");
+		assertResult(Double.valueOf(3), "3.oclAsType(UnlimitedNatural).oclAsType(Real)");
+		assertResultInvalid("(3.0).oclAsType(UnlimitedNatural)");
+
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		assertResult(Integer.valueOf(45), "45.oclAsType(Integer)");
+		assertResult(Long.valueOf(4503599627370496L), "4503599627370496.oclAsType(Integer)");
+		assertResult(Double.valueOf(45), "45.oclAsType(Real)");
+		assertResult(Double.valueOf(4503599627370496L), "4503599627370496.oclAsType(Real)");
 	}
 
 	public void testNumberOclIsKindOf() {										// BUG 378036 this doesn't work for UML
