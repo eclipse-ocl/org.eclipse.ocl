@@ -80,6 +80,7 @@ import org.eclipse.ocl.internal.evaluation.IterationTemplateOne;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateReject;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateSelect;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateSortedBy;
+import org.eclipse.ocl.internal.evaluation.NumberUtil;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.options.EvaluationOptions;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
@@ -2175,7 +2176,8 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 			final Map<Object, Comparable<Object>> map, IteratorExp<C, PM> ie) {
 		// special case: UnlimitedNatural::UNLIMITED is greater than
 		// everything except for itself
-		if (ie.getBody().getType() == getUnlimitedNatural()) {
+		C type = ie.getBody().getType();
+		if (type == getUnlimitedNatural()) {
 			return new Comparator<Object>() {
 				public int compare(Object o1, Object o2) {
 					Comparable<Object> b1 = map.get(o1);
@@ -2189,13 +2191,25 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 											b1.compareTo(b2));
 				}
 			};
+		} else if ((type == getInteger()) || (type == getReal())) {
+			return new Comparator<Object>() {
+
+				@SuppressWarnings("unchecked")
+				public int compare(Object o1, Object o2) {
+					Comparable<Object> b1 = map.get(o1);
+					Comparable<Object> b2 = map.get(o2);
+					Comparable<Object> n1 = (Comparable<Object>)NumberUtil.higherPrecisionNumber((Number) b1);
+					Comparable<Object> n2 = (Comparable<Object>)NumberUtil.higherPrecisionNumber((Number) b2);
+					return n1.compareTo(n2);
+				}
+			};
 		} else {
 			return new Comparator<Object>() {
 
 				public int compare(Object o1, Object o2) {
 					Comparable<Object> b1 = map.get(o1);
 					Comparable<Object> b2 = map.get(o2);
-					return (b1.compareTo(b2));
+					return b1.compareTo(b2);
 				}
 			};
 		}

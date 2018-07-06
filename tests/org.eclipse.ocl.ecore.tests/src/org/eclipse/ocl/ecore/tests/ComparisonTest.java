@@ -15,6 +15,7 @@ package org.eclipse.ocl.ecore.tests;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -314,7 +315,6 @@ extends AbstractTestSuite {
 	 */
 	public void test_sortedBy() {
 		helper.setContext(thingType);
-
 		try {
 			@SuppressWarnings("unchecked")
 			List<Value> valuesList = (List<Value>) thing.eGet(values);
@@ -330,6 +330,25 @@ extends AbstractTestSuite {
 
 			assertEquals(expected, evaluate(helper, thing,
 					"values->sortedBy(e | e)"));
+		} catch (Exception e) {
+			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Tests the sortedby iterator.
+	 */
+	public void test_sortedBy_536686() {
+		helper.setContext(thingType);
+		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
+		try {
+			List<Number> expected = new ArrayList<Number>();
+			expected.add(1);
+			expected.add(2);
+			expected.add(888888888888L);
+
+			assertEquals(expected, evaluate(helper, thing,
+					"Sequence{1, 888888888888, 2}->sortedBy(e | e)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
