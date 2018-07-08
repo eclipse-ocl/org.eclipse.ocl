@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.m2m.qvt.oml.QvtTransformation">
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents1" value="true"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents2" value="true"/>
+    <mapAttribute key="org.eclipse.m2m.qvt.oml.interpreter.configurationProperties">
+        <mapEntry key="grammarName" value="org.eclipse.ocl.examples.ecore"/>
+    </mapAttribute>
+    <intAttribute key="org.eclipse.m2m.qvt.oml.interpreter.elemCount" value="2"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName1" value=""/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName2" value=""/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.isInrementalUpdate" value="false"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.module" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/src/org/eclipse/ocl/examples/ecore2xtext/Ecore2Xtext.qvto"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel1" value="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel2" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.textmodel"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType1" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType2" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.traceFile" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.UML2EcoreAnalyze.qvtotrace"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.useTraceFile" value="false"/>
+</launchConfiguration>

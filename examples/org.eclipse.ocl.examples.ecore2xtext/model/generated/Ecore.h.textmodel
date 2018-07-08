@@ -1,0 +1,336 @@
+/* Auto-generated Model Interface for Ecore2XMI */
+
+#define YYDEBUG 1
+#define YYSTYPE_IS_DECLARED
+#define YY_DECL int yylex_impl (void)
+
+#define null ((void *)0)
+extern int yylex_impl (void);
+
+typedef enum boolean { false, true } boolean;
+
+struct EAnnotation;
+struct EAttribute;
+struct EClass;
+struct EClassifier;
+struct EDataType;
+struct EEnum;
+struct EEnumLiteral;
+struct EFactory;
+struct EGenericType;
+struct EModelElement;
+struct ENamedElement;
+struct EObject;
+struct EOperation;
+struct EPackage;
+struct EParameter;
+struct EReference;
+struct EStringToStringMapEntry;
+struct EStructuralFeature;
+struct ETypeParameter;
+struct ETypedElement;
+
+struct EAnnotation{
+	struct EObject **s_references;
+	const char *s_source;
+	struct EAnnotation **s_eAnnotations;
+	struct EObject **s_contents;
+	struct EStringToStringMapEntry **s_details;
+};
+
+struct EAttribute{
+	boolean s_ordered;
+	boolean s_changeable;
+	struct EGenericType *s_eGenericType;
+	int s_upperBound;
+	boolean s_derived;
+	boolean s_unique;
+	boolean s_volatile;
+	boolean s_transient;
+	struct EClassifier *s_eType;
+	boolean s_unsettable;
+	const char *s_defaultValueLiteral;
+	const char *s_name;
+	boolean s_iD;
+	struct EAnnotation **s_eAnnotations;
+	int s_lowerBound;
+};
+
+struct EClass{
+	struct EStructuralFeature **s_eStructuralFeatures;
+	const char *s_instanceClassName;
+	boolean s_abstract;
+	const char *s_instanceTypeName;
+	const char *s_name;
+	struct EGenericType **s_eGenericSuperTypes;
+	struct ETypeParameter **s_eTypeParameters;
+	struct EClass **s_eSuperTypes;
+	struct EOperation **s_eOperations;
+	boolean s_interface;
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct EClassifier{
+	struct EAnnotation **s_eAnnotations;
+	const char *s_instanceTypeName;
+	const char *s_name;
+	const char *s_instanceClassName;
+	struct ETypeParameter **s_eTypeParameters;
+};
+
+struct EDataType{
+	boolean s_serializable;
+	const char *s_instanceClassName;
+	const char *s_name;
+	struct ETypeParameter **s_eTypeParameters;
+	const char *s_instanceTypeName;
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct EEnum{
+	struct EAnnotation **s_eAnnotations;
+	struct ETypeParameter **s_eTypeParameters;
+	const char *s_instanceClassName;
+	boolean s_serializable;
+	const char *s_name;
+	const char *s_instanceTypeName;
+	struct EEnumLiteral **s_eLiterals;
+};
+
+struct EEnumLiteral{
+	struct EAnnotation **s_eAnnotations;
+	int s_value;
+	const char *s_literal;
+	const char *s_name;
+};
+
+struct EFactory{
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct EGenericType{
+	struct EGenericType *s_eLowerBound;
+	struct ETypeParameter *s_eTypeParameter;
+	struct EClassifier *s_eClassifier;
+	struct EGenericType **s_eTypeArguments;
+	struct EGenericType *s_eUpperBound;
+};
+
+struct EModelElement{
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct ENamedElement{
+	const char *s_name;
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct EObject{
+};
+
+struct EOperation{
+	struct ETypeParameter **s_eTypeParameters;
+	int s_upperBound;
+	boolean s_ordered;
+	const char *s_name;
+	struct EClassifier *s_eType;
+	struct EParameter **s_eParameters;
+	boolean s_unique;
+	struct EGenericType **s_eGenericExceptions;
+	struct EAnnotation **s_eAnnotations;
+	struct EGenericType *s_eGenericType;
+	int s_lowerBound;
+	struct EClassifier **s_eExceptions;
+};
+
+struct EPackage{
+	const char *s_name;
+	struct EAnnotation **s_eAnnotations;
+	struct EClassifier **s_eClassifiers;
+	struct EPackage **s_eSubpackages;
+	const char *s_nsURI;
+	const char *s_nsPrefix;
+};
+
+struct EParameter{
+	boolean s_unique;
+	const char *s_name;
+	struct EClassifier *s_eType;
+	struct EAnnotation **s_eAnnotations;
+	struct EGenericType *s_eGenericType;
+	int s_lowerBound;
+	int s_upperBound;
+	boolean s_ordered;
+};
+
+struct EReference{
+	boolean s_changeable;
+	int s_upperBound;
+	struct EClassifier *s_eType;
+	const char *s_name;
+	const char *s_defaultValueLiteral;
+	boolean s_volatile;
+	boolean s_unsettable;
+	struct EGenericType *s_eGenericType;
+	struct EAttribute **s_eKeys;
+	boolean s_containment;
+	boolean s_derived;
+	boolean s_resolveProxies;
+	boolean s_ordered;
+	boolean s_transient;
+	int s_lowerBound;
+	struct EReference *s_eOpposite;
+	boolean s_unique;
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct EStringToStringMapEntry{
+	const char *s_value;
+	const char *s_key;
+};
+
+struct EStructuralFeature{
+	boolean s_derived;
+	struct EClassifier *s_eType;
+	int s_upperBound;
+	const char *s_name;
+	boolean s_changeable;
+	boolean s_unsettable;
+	struct EGenericType *s_eGenericType;
+	boolean s_transient;
+	struct EAnnotation **s_eAnnotations;
+	int s_lowerBound;
+	boolean s_unique;
+	boolean s_volatile;
+	const char *s_defaultValueLiteral;
+	boolean s_ordered;
+};
+
+struct ETypeParameter{
+	const char *s_name;
+	struct EGenericType **s_eBounds;
+	struct EAnnotation **s_eAnnotations;
+};
+
+struct ETypedElement{
+	int s_lowerBound;
+	struct EAnnotation **s_eAnnotations;
+	struct EClassifier *s_eType;
+	struct EGenericType *s_eGenericType;
+	const char *s_name;
+	boolean s_ordered;
+	int s_upperBound;
+	boolean s_unique;
+};
+
+enum yysenum {
+	Pointer,
+	Identifier,
+	String,
+	List,
+	EAnnotation,
+	EAttribute,
+	EClass,
+	EClassifier,
+	EDataType,
+	EEnum,
+	EEnumLiteral,
+	EFactory,
+	EGenericType,
+	EModelElement,
+	ENamedElement,
+	EObject,
+	EOperation,
+	EPackage,
+	EParameter,
+	EReference,
+	EStringToStringMapEntry,
+	EStructuralFeature,
+	ETypeParameter,
+	ETypedElement
+};
+
+typedef struct {
+	union {
+		void *pointer;
+		const char *identifier;
+		const char *string;
+		int token;
+		struct EAnnotation *u_EAnnotation;
+		struct EAttribute *u_EAttribute;
+		struct EClass *u_EClass;
+		struct EClassifier *u_EClassifier;
+		struct EDataType *u_EDataType;
+		struct EEnum *u_EEnum;
+		struct EEnumLiteral *u_EEnumLiteral;
+		struct EFactory *u_EFactory;
+		struct EGenericType *u_EGenericType;
+		struct EModelElement *u_EModelElement;
+		struct ENamedElement *u_ENamedElement;
+		struct EObject *u_EObject;
+		struct EOperation *u_EOperation;
+		struct EPackage *u_EPackage;
+		struct EParameter *u_EParameter;
+		struct EReference *u_EReference;
+		struct EStringToStringMapEntry *u_EStringToStringMapEntry;
+		struct EStructuralFeature *u_EStructuralFeature;
+		struct ETypeParameter *u_ETypeParameter;
+		struct ETypedElement *u_ETypedElement;
+	};
+} YYSTYPE;
+
+struct rtti {
+	int size;
+	enum yysenum yysenum;
+	const char *className;
+};
+
+struct rtti rtti_EAnnotation;
+struct rtti rtti_EAttribute;
+struct rtti rtti_EClass;
+struct rtti rtti_EClassifier;
+struct rtti rtti_EDataType;
+struct rtti rtti_EEnum;
+struct rtti rtti_EEnumLiteral;
+struct rtti rtti_EFactory;
+struct rtti rtti_EGenericType;
+struct rtti rtti_EModelElement;
+struct rtti rtti_ENamedElement;
+struct rtti rtti_EObject;
+struct rtti rtti_EOperation;
+struct rtti rtti_EPackage;
+struct rtti rtti_EParameter;
+struct rtti rtti_EReference;
+struct rtti rtti_EStringToStringMapEntry;
+struct rtti rtti_EStructuralFeature;
+struct rtti rtti_ETypeParameter;
+struct rtti rtti_ETypedElement;
+
+
+struct xmlns {
+	const char *const uri;
+	const int token;
+	const char *identifier;
+};
+
+int yyerror(char *s);
+void addChild(void ***out, void *in);
+void addToList(void ***out, void *in);
+void addRoot(const YYSTYPE *in);
+void copyRTTI(const char *ruleName, YYSTYPE *out, const YYSTYPE *in);
+void createRTTI(const char *ruleName, YYSTYPE *out, const struct rtti *rtti);
+void disableStrings(void);
+void enableStrings(void);
+void endXMLNSanalysis(void);
+void gatherXMLNSanalysis(const char *nsPrefix, const char *nsURI);
+boolean getBoolean(const char *string);
+int getInt(const char *string);
+const char *getString(const char *string);
+void *resolveXmiId(const char *string);
+void saveIdentifier(const char *identifier);
+void saveString(const char *string);
+void saveToken(int token);
+void setXMIVersion(const char *version);
+void setXMLEncoding(const char *encoding);
+void setXMLVersion(const char *version);
+const char *tokenText(int token);

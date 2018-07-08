@@ -133,6 +133,7 @@
 	eSuperTypes
 	eType
 	encoding
+	false
 	instanceClassName
 	key
 	lowerBound
@@ -144,6 +145,7 @@
 	serializable
 	source
 	transient
+	true
 	type
 	unsettable
 	upperBound
@@ -236,6 +238,12 @@
 		  $EndAction
 		./
 
+		| f a l s e
+		/.$BeginAction
+			$setResult($_false);
+		  $EndAction
+		./
+
 		| i n s t a n c e C l a s s N a m e
 		/.$BeginAction
 			$setResult($_instanceClassName);
@@ -299,6 +307,12 @@
 		| t r a n s i e n t
 		/.$BeginAction
 			$setResult($_transient);
+		  $EndAction
+		./
+
+		| t r u e
+		/.$BeginAction
+			$setResult($_true);
 		  $EndAction
 		./
 

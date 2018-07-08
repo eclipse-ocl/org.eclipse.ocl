@@ -11,7 +11,7 @@ package org.eclipse.ocl.examples.ecore2xtext;
 public class Ecore2XtextKWLexer extends Ecore2XtextKWLexerprs
 {
     private char[] inputChars;
-    private final int keywordKind[] = new int[32 + 1];
+    private final int keywordKind[] = new int[34 + 1];
 
     public int[] getKeywordKinds() { return keywordKind; }
 
@@ -180,143 +180,157 @@ public class Ecore2XtextKWLexer extends Ecore2XtextKWLexerprs
 
 
         //
-        // Rule 13:  KeyWord ::= i n s t a n c e C l a s s N a m e
+        // Rule 13:  KeyWord ::= f a l s e
         //
 
-		keywordKind[13] = (Ecore2XtextParsersym.TK_instanceClassName);
-
-
-        //
-        // Rule 14:  KeyWord ::= k e y
-        //
-
-		keywordKind[14] = (Ecore2XtextParsersym.TK_key);
+		keywordKind[13] = (Ecore2XtextParsersym.TK_false);
 
 
         //
-        // Rule 15:  KeyWord ::= l o w e r B o u n d
+        // Rule 14:  KeyWord ::= i n s t a n c e C l a s s N a m e
         //
 
-		keywordKind[15] = (Ecore2XtextParsersym.TK_lowerBound);
-
-
-        //
-        // Rule 16:  KeyWord ::= n a m e
-        //
-
-		keywordKind[16] = (Ecore2XtextParsersym.TK_name);
+		keywordKind[14] = (Ecore2XtextParsersym.TK_instanceClassName);
 
 
         //
-        // Rule 17:  KeyWord ::= n s P r e f i x
+        // Rule 15:  KeyWord ::= k e y
         //
 
-		keywordKind[17] = (Ecore2XtextParsersym.TK_nsPrefix);
-
-
-        //
-        // Rule 18:  KeyWord ::= n s U R I
-        //
-
-		keywordKind[18] = (Ecore2XtextParsersym.TK_nsURI);
+		keywordKind[15] = (Ecore2XtextParsersym.TK_key);
 
 
         //
-        // Rule 19:  KeyWord ::= o r d e r e d
+        // Rule 16:  KeyWord ::= l o w e r B o u n d
         //
 
-		keywordKind[19] = (Ecore2XtextParsersym.TK_ordered);
-
-
-        //
-        // Rule 20:  KeyWord ::= r e s o l v e P r o x i e s
-        //
-
-		keywordKind[20] = (Ecore2XtextParsersym.TK_resolveProxies);
+		keywordKind[16] = (Ecore2XtextParsersym.TK_lowerBound);
 
 
         //
-        // Rule 21:  KeyWord ::= s e r i a l i z a b l e
+        // Rule 17:  KeyWord ::= n a m e
         //
 
-		keywordKind[21] = (Ecore2XtextParsersym.TK_serializable);
-
-
-        //
-        // Rule 22:  KeyWord ::= s o u r c e
-        //
-
-		keywordKind[22] = (Ecore2XtextParsersym.TK_source);
+		keywordKind[17] = (Ecore2XtextParsersym.TK_name);
 
 
         //
-        // Rule 23:  KeyWord ::= t r a n s i e n t
+        // Rule 18:  KeyWord ::= n s P r e f i x
         //
 
-		keywordKind[23] = (Ecore2XtextParsersym.TK_transient);
-
-
-        //
-        // Rule 24:  KeyWord ::= t y p e
-        //
-
-		keywordKind[24] = (Ecore2XtextParsersym.TK_type);
+		keywordKind[18] = (Ecore2XtextParsersym.TK_nsPrefix);
 
 
         //
-        // Rule 25:  KeyWord ::= u n s e t t a b l e
+        // Rule 19:  KeyWord ::= n s U R I
         //
 
-		keywordKind[25] = (Ecore2XtextParsersym.TK_unsettable);
-
-
-        //
-        // Rule 26:  KeyWord ::= u p p e r B o u n d
-        //
-
-		keywordKind[26] = (Ecore2XtextParsersym.TK_upperBound);
+		keywordKind[19] = (Ecore2XtextParsersym.TK_nsURI);
 
 
         //
-        // Rule 27:  KeyWord ::= v a l u e
+        // Rule 20:  KeyWord ::= o r d e r e d
         //
 
-		keywordKind[27] = (Ecore2XtextParsersym.TK_value);
-
-
-        //
-        // Rule 28:  KeyWord ::= v e r s i o n
-        //
-
-		keywordKind[28] = (Ecore2XtextParsersym.TK_version);
+		keywordKind[20] = (Ecore2XtextParsersym.TK_ordered);
 
 
         //
-        // Rule 29:  KeyWord ::= v o l a t i l e
+        // Rule 21:  KeyWord ::= r e s o l v e P r o x i e s
         //
 
-		keywordKind[29] = (Ecore2XtextParsersym.TK_volatile);
-
-
-        //
-        // Rule 30:  KeyWord ::= x m i
-        //
-
-		keywordKind[30] = (Ecore2XtextParsersym.TK_xmi);
+		keywordKind[21] = (Ecore2XtextParsersym.TK_resolveProxies);
 
 
         //
-        // Rule 31:  KeyWord ::= x m l n s
+        // Rule 22:  KeyWord ::= s e r i a l i z a b l e
         //
 
-		keywordKind[31] = (Ecore2XtextParsersym.TK_xmlns);
+		keywordKind[22] = (Ecore2XtextParsersym.TK_serializable);
 
 
         //
-        // Rule 32:  KeyWord ::= x s i
+        // Rule 23:  KeyWord ::= s o u r c e
         //
 
-		keywordKind[32] = (Ecore2XtextParsersym.TK_xsi);
+		keywordKind[23] = (Ecore2XtextParsersym.TK_source);
+
+
+        //
+        // Rule 24:  KeyWord ::= t r a n s i e n t
+        //
+
+		keywordKind[24] = (Ecore2XtextParsersym.TK_transient);
+
+
+        //
+        // Rule 25:  KeyWord ::= t r u e
+        //
+
+		keywordKind[25] = (Ecore2XtextParsersym.TK_true);
+
+
+        //
+        // Rule 26:  KeyWord ::= t y p e
+        //
+
+		keywordKind[26] = (Ecore2XtextParsersym.TK_type);
+
+
+        //
+        // Rule 27:  KeyWord ::= u n s e t t a b l e
+        //
+
+		keywordKind[27] = (Ecore2XtextParsersym.TK_unsettable);
+
+
+        //
+        // Rule 28:  KeyWord ::= u p p e r B o u n d
+        //
+
+		keywordKind[28] = (Ecore2XtextParsersym.TK_upperBound);
+
+
+        //
+        // Rule 29:  KeyWord ::= v a l u e
+        //
+
+		keywordKind[29] = (Ecore2XtextParsersym.TK_value);
+
+
+        //
+        // Rule 30:  KeyWord ::= v e r s i o n
+        //
+
+		keywordKind[30] = (Ecore2XtextParsersym.TK_version);
+
+
+        //
+        // Rule 31:  KeyWord ::= v o l a t i l e
+        //
+
+		keywordKind[31] = (Ecore2XtextParsersym.TK_volatile);
+
+
+        //
+        // Rule 32:  KeyWord ::= x m i
+        //
+
+		keywordKind[32] = (Ecore2XtextParsersym.TK_xmi);
+
+
+        //
+        // Rule 33:  KeyWord ::= x m l n s
+        //
+
+		keywordKind[33] = (Ecore2XtextParsersym.TK_xmlns);
+
+
+        //
+        // Rule 34:  KeyWord ::= x s i
+        //
+
+		keywordKind[34] = (Ecore2XtextParsersym.TK_xsi);
 
 
         for (int i = 0; i < keywordKind.length; i++)

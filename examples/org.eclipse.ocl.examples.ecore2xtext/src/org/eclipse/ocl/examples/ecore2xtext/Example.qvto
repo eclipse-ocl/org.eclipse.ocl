@@ -1,0 +1,30 @@
+modeltype Pivot uses 'http://www.eclipse.org/ocl/2015/Pivot';
+modeltype Text uses 'http://www.eclipse.org/qvt/2018/TextModel';
+
+
+/**
+ * Create an Xtext grammar that parses the XMI for an Ecore metamodel
+ */
+transformation Ecore2Xtext(in ecore : Pivot, out Text);
+
+helper getPrecedences() : Sequence(Pivot::Precedence) {
+return null;
+}
+
+mapping Pivot::Model::emitPrecedence1() : Text::StringNode {
+	init {
+		 result := self.map emitPrecedence2();
+	}
+}
+
+mapping Pivot::Model::emitPrecedence2() : Text::StringNode {
+	result.text := 'h2(#Precedences). *Precedences*\n';
+	result.prefix := '\n';
+	result.separator := ' > ';
+	result.children += getPrecedences()->map emitPrecedence3();
+	result.suffix := '\n';
+}
+
+mapping Pivot::Precedence::emitPrecedence3() : Text::StringNode {
+	result.text := '@' + self.name + '@';
+}

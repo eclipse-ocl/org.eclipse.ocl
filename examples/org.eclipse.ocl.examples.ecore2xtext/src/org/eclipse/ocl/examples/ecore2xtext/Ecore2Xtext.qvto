@@ -1,0 +1,265 @@
+modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype Text uses 'http://www.eclipse.org/qvt/2018/TextModel';
+
+
+/**
+ * Create an Xtext grammar that parses the XMI for an Ecore metamodel
+ */
+transformation Ecore2Xtext(in ecore : Ecore, out Text);
+
+configuration property grammarName : String;
+
+helper attributeTypeTerminalName(type : EClassifier) : String {
+	return if (type.instanceClassName = 'boolean') then 'BOOLEAN'
+	else if (type.instanceClassName = 'int') then 'INTEGER'
+	else 'STRING'
+	endif
+	endif;
+}
+
+helper ruleName(name : String) : String {
+	return 'RULE_' + name;
+}
+
+helper ruleGroupName(name : String) : String {
+	return 'RULE_GROUP_' + name;
+}
+
+helper terminalName(eDataType : ecore::EDataType) : String {
+	return 'TERM_' + eDataType.name;
+}
+
+helper safeName(name : String) : String {
+	return if ((name = 'EOF') or (name = 'grammar') or (name = 'terminal')) then '^' + name else name endif;
+}
+
+helper allSuperTypes(eClass : ecore::EClass) : Set(ecore::EClass) {
+	return eClass->closure(eSuperTypes)->including(eClass);
+}
+
+helper allSubTypes(eClass : ecore::EClass) : Set(ecore::EClass) {
+	return allEClasses->select(eSuperClass | allSuperTypes(eSuperClass)->includes(eClass));
+}
+
+property rootEPackages : OrderedSet(Ecore::EPackage) = ecore.objectsOfKind(Ecore::EPackage)->asOrderedSet();
+property rootEClasses : Set(Ecore::EClass) = rootEPackages.eClassifiers->selectByKind(ecore::EClass)->asSet();
+property allEClasses : OrderedSet(Ecore::EClass) = rootEClasses->closure(eAllStructuralFeatures->selectByKind(EReference).eReferenceType)->union(rootEClasses)->sortedBy(name);
+property allEPackages : OrderedSet(Ecore::EPackage) = allEClasses.ePackage->asOrderedSet()->sortedBy(nsPrefix);
+--	property eDataTypes = self.eClassifiers->selectByKind(ecore::EDataType);
+property allEFeatures : OrderedSet(Ecore::EStructuralFeature) = allEClasses.eAllStructuralFeatures->asSet()->sortedBy(name);
+property allEAttributes = allEFeatures->selectByKind(ecore::EAttribute);
+property allEReferences : Set(ecore::EReference) = allEFeatures->selectByKind(ecore::EReference)->asSet();
+property allEDataTypes = allEAttributes.eAttributeType->asSet();
+
+main() {
+--	var rootEPackages : OrderedSet(Ecore::EPackage) = ecore.objectsOfKind(Ecore::EPackage)->asOrderedSet();
+	object Text::StringNode {
+		text := 'grammar ' + grammarName + '.XMIGrammar hidden(WS)\n\n';
+		children += rootEPackages->mapEPackage();
+	}
+}
+
+mapping Ecore::EPackage::mapEPackage() : Text::StringNode
+{
+	var eClasses := self.eClassifiers->selectByKind(ecore::EClass);
+--	var allEClasses := eClasses->closure(eAllStructuralFeatures->selectByKind(EReference).eReferenceType)->union(eClasses)->sortedBy(name);
+--	var allEPackages := allEClasses.ePackage->asOrderedSet()->sortedBy(nsPrefix);
+--	var eDataTypes := self.eClassifiers->selectByKind(ecore::EDataType);
+--	var allEFeatures := allEClasses.eAllStructuralFeatures->sortedBy(name);
+--	var allEAttributes := allEFeatures->selectByKind(ecore::EAttribute);
+--	var allEReferences : Set(ecore::EReference) := allEFeatures->selectByKind(ecore::EReference)->asSet();
+--	var allEDataTypes := allEAttributes.eAttributeType->asSet();
+	var allChangeableReferences : Set(ecore::EReference) := allEReferences->select(changeable and (not _derived) and (not transient) and (not volatile));
+	var allChangeableNames : OrderedSet(String) := allChangeableReferences.name->asSet()->sortedBy(n | n);
+	var concreteClasses : OrderedSet(ecore::EClass) := eClasses->reject(_abstract)->sortedBy(name);
+
+--	result.children += eClasses->debugENamedElement('eClasses');
+--	result.children += allEClasses->debugENamedElement('allEClasses');
+--	result.children += allEReferences->debugENamedElement('allEReferences');
+--	result.children += allChangeableReferences->debugENamedElement('allChangeableReferences');
+	result.children += allEPackages->mapEPackage2Import();
+	result.children += self.map mapEPackage2XMIRoot(concreteClasses);
+	result.children += concreteClasses->mapEClass2Rule();
+	result.children += allChangeableNames->mapEReferenceName2Rule(allChangeableReferences, allEClasses);
+	result.children += allEDataTypes->mapEDataType2Terminal();
+	result.children += self.map mapEPackage2Terminals();
+}
+
+--mapping Ecore::ENamedElement::debugENamedElement(prefix : String) : Text::StringNode
+--{
+--	result.text := '//' + prefix + ' - ' + self.name + '\n';
+--}
+
+mapping Ecore::EPackage::mapEPackage2Import() : Text::StringNode
+{
+	result.text := 'import "' + self.nsURI + '" as ' + self.nsPrefix + '\n';
+}
+
+mapping Ecore::EDataType::mapEDataType2Terminal() : Text::StringNode
+{
+	var prefix := 'terminal ' + terminalName(self) + ' returns ' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + ' : ';
+	if (self.instanceClassName = 'boolean') {
+		result.text := prefix + '\'"true"\' | \'"false"\';\n';
+	}
+	else if (self.instanceClassName = 'int') {
+		result.text := prefix + '(\'1\'..\'9\')(\'0\'..\'9\')*;\n';
+	}
+	else {
+		result.text := prefix + '\'"\' (\' \'..\'!\' /* " */ | \'#\'..\'~\')* \'"\';\n';
+	}
+--	result.children += object Text::StringNode { text := 'terminal IDENTIFIER returns ecore::EString : (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\') (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\'|\'0\'..\'9\')*;'; };
+--	result.children += object Text::StringNode { text := 'terminal STRING returns ecore::EString : \'"\' (\' \'..\'!\' /* " */ | \'#\'..\'~\')* \'"\';'; };
+--	result.children += object Text::StringNode { text := 'terminal WS : (\' \'|\'\\t\'|\'\\r\'|\'\\n\'/*|\'\\f\'*/)+;'; };
+--	result.children += object Text::StringNode { text := 'terminal XMIID returns ecore::EString : (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\') (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\'|\'0\'..\'9\')*;'; };
+}
+
+mapping Ecore::EPackage::mapEPackage2Terminals() : Text::StringNode
+{
+	result.separator := '\n';
+--	result.children += object Text::StringNode { text := 'terminal BOOLEAN returns ecore::EBoolean : \'"true"\' | \'"false"\';'; };
+--	result.children += object Text::StringNode { text := 'terminal IDENTIFIER returns ecore::EString : (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\') (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\'|\'0\'..\'9\')*;'; };
+--	result.children += object Text::StringNode { text := 'terminal INTEGER returns ecore::EInt : (\'1\'..\'9\')(\'0\'..\'9\')*;'; };
+--	result.children += object Text::StringNode { text := 'terminal STRING returns ecore::EString : \'"\' (\' \'..\'!\' /* " */ | \'#\'..\'~\')* \'"\';'; };
+	result.children += object Text::StringNode { text := 'terminal WS : (\' \'|\'\\t\'|\'\\r\'|\'\\n\'/*|\'\\f\'*/)+;'; };
+	result.children += object Text::StringNode { text := 'terminal XMIID returns ecore::EString : (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\') (\'a\'..\'z\'|\'A\'..\'Z\'|\'_\'..\'_\'|\'0\'..\'9\')*;'; };
+}
+
+mapping Ecore::EPackage::mapEPackage2XMIRoot(concreteClasses : OrderedSet(ecore::EClass)) : Text::StringNode
+{
+--	result.text := ruleName(XMLDocument) + 'returns ecore::EAnnotation : \n'
+--		+ '<?xml' ('version' '=' version=TERM_EString)? ('encoding' '=' encoding=Terminal_String)? '?>'
+--	(body+=EcoreRoot_ecore_EPackage | ('<xmi:XMI' attributes+=(XMLAttribute_xmi_version | XMLAttribute_xmlns_)* ( '/>' | ('>' (body+=XmlElement)* '</xmi:XMI>'))))
+--XMLDocument_ecore_EPackage: {XMLDocument_ecore_EPackage} '<?xml' ('version' '=' version=Terminal_String)? ('encoding' '=' encoding=Terminal_String)? '?>'
+--	(body+=EcoreRoot_ecore_EPackage | ('<xmi:XMI' attributes+=(XMLAttribute_xmi_version | XMLAttribute_xmlns_)* ( '/>' | ('>' (body+=XmlElement)* '</xmi:XMI>'))))
+--;
+	result.text := '\nDocument returns ecore::EObject:\n';
+	result.prefix := '\t  '; 
+	result.separator := '\n\t| '; 
+	result.children += concreteClasses->mapEClass2XMIRoot(); 
+	result.suffix := ';\n'; 
+}
+mapping Ecore::EClass::mapEClass2XMIRoot() : Text::StringNode
+{
+	result.text := ruleName(self.name);
+}
+
+mapping Ecore::EClass::mapEClass2Rule() : Text::StringNode
+{
+	var changeableEFeatures := self.eAllStructuralFeatures->select(changeable and (not _derived) and (not transient) and (not volatile));
+	var changeableEAttributes := changeableEFeatures->selectByKind(ecore::EAttribute);
+	var changeableEReferences := changeableEFeatures->selectByKind(ecore::EReference); --->reject(container);
+--	var optionalXsiType := 
+	var qualifiedName := safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name);
+	result.text := '\n' + ruleName(self.name) + ' returns ' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + ': {' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + '}\n';
+--	result.indent := '\t';
+	result.children += object Text::StringNode { text := '\t\'<' + safeName(self.ePackage.nsPrefix) + ':' + safeName(self.name) + '\'\n'};
+	result.children += object Text::StringNode {
+		prefix := '\n\t(';
+		separator := ' | ';
+		children += changeableEAttributes->mapEAttribute2Attribute(0);
+		suffix := ')*';
+	};
+	result.children += object Text::StringNode { text := '\t( \'/>\'\n'};
+	result.children += object Text::StringNode { text := '\t| (\'>\''};
+	result.children += object Text::StringNode {
+		prefix := ' (';
+		separator := ' | ';
+		children += changeableEReferences->mapEReference2Element();
+		suffix := ')*';
+	};
+	result.children += object Text::StringNode { text := ' \'</' + safeName(self.ePackage.nsPrefix) + ':' + safeName(self.name) + '>\''};
+	result.children += object Text::StringNode { text := ')\n'};
+	result.children += object Text::StringNode { text := '\t);\n'};
+}
+
+mapping String::mapEReferenceName2Rule(allEReferences : Set(ecore::EReference), allEClasses : Set(ecore::EClass)) : Text::StringNode
+{
+--	result.text := '\n\n--' + self + '\n';
+	var eReferences = allEReferences->select(name = self);
+	var eReferenceTypes = eReferences.eType->asSet();
+	result.children += eReferenceTypes->mapEReference2RuleGroup(self);
+}
+
+mapping ecore::EClassifier::mapEReference2RuleGroup(name : String) : Text::StringNode
+disjuncts ecore::EDataType::mapEReference2RuleGroup, ecore::EClass::mapEReference2RuleGroup;
+
+mapping ecore::EDataType::mapEReference2RuleGroup(name : String) : Text::StringNode
+{
+	result.text := '\n' + ruleName(self.name + '_' + name) + ' returns ' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + ':\n';
+--	result.indent := '\t';
+	result.children += object Text::StringNode { text := '\t\'<' + name + '\''};
+	result.children += object Text::StringNode { '>\'\n'};
+	result.children += object Text::StringNode { text := '\t\'</' + name + '>\';\n'};
+}
+
+mapping ecore::EClass::mapEReference2RuleGroup(name : String) : Text::StringNode
+{
+	var subTypes : Set(ecore::EClass) := allSubTypes(self)->reject(_abstract);
+	result.text := '\n' + ruleGroupName(self.name + '_' + name) + ' returns ' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + ':';
+	result.children += object Text::StringNode {
+		prefix := '\n\t  ';
+		separator := '\n\t| ';
+		children += subTypes->mapEReference2RuleName(name);
+		suffix := ';\n';
+	};
+	result.children += subTypes->mapEReference2Rule(name);
+}
+
+mapping ecore::EClass::mapEReference2RuleName(name : String) : Text::StringNode
+{
+	result.text := ruleName(self.name + '_' + name);
+}
+
+mapping ecore::EClass::mapEReference2Rule(name : String) : Text::StringNode
+{
+--		result.children += object Text::StringNode { text := 'subTypes\n'; };
+--	var subTypes : Set(ecore::EClass) := allSubTypes(self);
+--	subTypes->forEach(eClass) {
+--		result.children += object Text::StringNode { text := 'subType : ' + getName(eClass) + '\n'; };
+--	};
+	var changeableEFeatures := self.eAllStructuralFeatures->select(changeable and (not _derived) and (not transient) and (not volatile));
+	var changeableEAttributes := changeableEFeatures->selectByKind(ecore::EAttribute);
+	var changeableEReferences := changeableEFeatures->selectByKind(ecore::EReference); --->reject(container);
+--	var optionalXsiType := 
+	result.text := '\n' + ruleName(self.name + '_' + name) + ' returns ' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + ': {' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + '}\n';
+--	result.indent := '\t';
+	result.children += object Text::StringNode { text := '\t\'<' + name + '\''};
+	result.children += object Text::StringNode {
+		prefix := '\n\t(';
+		separator := ' | ';
+		children += changeableEAttributes->mapEAttribute2Attribute(1);
+		suffix := ')*';
+	};
+	result.children += object Text::StringNode { text := '\n\t(\'xsi:type\' \'=\' \'"' + safeName(self.ePackage.nsPrefix) + '::' + safeName(self.name) + '"\')';} ;
+	result.children += object Text::StringNode {
+		prefix := '\n\t(';
+		separator := ' | ';
+		children += changeableEAttributes->mapEAttribute2Attribute(2);
+		suffix := ')*\n';
+	};
+	result.children += object Text::StringNode { text := '\t( \'/>\'\n'};
+	result.children += object Text::StringNode { text := '\t| (\'>\''};
+	result.children += object Text::StringNode {
+		prefix := ' (';
+		separator := ' | ';
+		children += changeableEReferences->mapEReference2Element();
+		suffix := ')*';
+	};
+	result.children += object Text::StringNode { text := ' \'</' + name + '>\''};
+	result.children += object Text::StringNode { text := ')\n'};
+	result.children += object Text::StringNode { text := '\t);\n'};
+}
+
+mapping ecore::EAttribute::mapEAttribute2Attribute(disambiguator : Integer) : Text::StringNode
+{
+	result.text := safeName(self.name) + '=' + terminalName(self.eAttributeType);
+}
+
+mapping ecore::EReference::mapEReference2Element() : Text::StringNode
+{
+	var assignmentOperator := if self.many then '+=' else '=' endif;
+	var containedReference := ruleGroupName(self.eType.name + '_' + self.name);
+	var uncontainedReference := '[' + safeName(self.eType.ePackage.nsPrefix) + '::' + safeName(self.eType.name) + '|XMIID]';
+	var reference := if self.containment then containedReference else uncontainedReference endif;
+	result.text := safeName(self.name) + assignmentOperator + reference;
+}

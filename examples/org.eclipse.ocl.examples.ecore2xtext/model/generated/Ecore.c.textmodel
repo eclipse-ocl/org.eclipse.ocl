@@ -1,0 +1,62 @@
+/* Auto-generated Model Implementation for Ecore2XMI */
+#include <Ecore2XMI.h>
+#include <Ecore2XMI.tab.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+const struct rtti RTTI_EAnnotation = { sizeof(EAnnotation), EAnnotation , "EAnnotation" };
+const struct rtti RTTI_EAttribute = { sizeof(EAttribute), EAttribute , "EAttribute" };
+const struct rtti RTTI_EClass = { sizeof(EClass), EClass , "EClass" };
+const struct rtti RTTI_EClassifier = { sizeof(EClassifier), EClassifier , "EClassifier" };
+const struct rtti RTTI_EDataType = { sizeof(EDataType), EDataType , "EDataType" };
+const struct rtti RTTI_EEnum = { sizeof(EEnum), EEnum , "EEnum" };
+const struct rtti RTTI_EEnumLiteral = { sizeof(EEnumLiteral), EEnumLiteral , "EEnumLiteral" };
+const struct rtti RTTI_EFactory = { sizeof(EFactory), EFactory , "EFactory" };
+const struct rtti RTTI_EGenericType = { sizeof(EGenericType), EGenericType , "EGenericType" };
+const struct rtti RTTI_EModelElement = { sizeof(EModelElement), EModelElement , "EModelElement" };
+const struct rtti RTTI_ENamedElement = { sizeof(ENamedElement), ENamedElement , "ENamedElement" };
+const struct rtti RTTI_EObject = { sizeof(EObject), EObject , "EObject" };
+const struct rtti RTTI_EOperation = { sizeof(EOperation), EOperation , "EOperation" };
+const struct rtti RTTI_EPackage = { sizeof(EPackage), EPackage , "EPackage" };
+const struct rtti RTTI_EParameter = { sizeof(EParameter), EParameter , "EParameter" };
+const struct rtti RTTI_EReference = { sizeof(EReference), EReference , "EReference" };
+const struct rtti RTTI_EStringToStringMapEntry = { sizeof(EStringToStringMapEntry), EStringToStringMapEntry , "EStringToStringMapEntry" };
+const struct rtti RTTI_EStructuralFeature = { sizeof(EStructuralFeature), EStructuralFeature , "EStructuralFeature" };
+const struct rtti RTTI_ETypeParameter = { sizeof(ETypeParameter), ETypeParameter , "ETypeParameter" };
+const struct rtti RTTI_ETypedElement = { sizeof(ETypedElement), ETypedElement , "ETypedElement" };
+
+
+const struct rtti *getRTTI(enum yysenum yysenum) {
+	switch (yysenum) {
+		case EAnnotation : return &RTTI_EAnnotation;
+		case EAttribute : return &RTTI_EAttribute;
+		case EClass : return &RTTI_EClass;
+		case EClassifier : return &RTTI_EClassifier;
+		case EDataType : return &RTTI_EDataType;
+		case EEnum : return &RTTI_EEnum;
+		case EEnumLiteral : return &RTTI_EEnumLiteral;
+		case EFactory : return &RTTI_EFactory;
+		case EGenericType : return &RTTI_EGenericType;
+		case EModelElement : return &RTTI_EModelElement;
+		case ENamedElement : return &RTTI_ENamedElement;
+		case EObject : return &RTTI_EObject;
+		case EOperation : return &RTTI_EOperation;
+		case EPackage : return &RTTI_EPackage;
+		case EParameter : return &RTTI_EParameter;
+		case EReference : return &RTTI_EReference;
+		case EStringToStringMapEntry : return &RTTI_EStringToStringMapEntry;
+		case EStructuralFeature : return &RTTI_EStructuralFeature;
+		case ETypeParameter : return &RTTI_ETypeParameter;
+		case ETypedElement : return &RTTI_ETypedElement;
+		default: return 0;
+	}
+}
+
+struct xmlns xmlnsData[] = {
+	{ "http://www.eclipse.org/emf/2002/Ecore", NSecore, 0 },
+	{ "http://www.omg.org/XMI", NSxmi, 0 },
+	{ "http://www.w3.org/2001/XMLSchema-instance", NSxsi, 0 },
+	{ 0, 0, 0 }
+};
+

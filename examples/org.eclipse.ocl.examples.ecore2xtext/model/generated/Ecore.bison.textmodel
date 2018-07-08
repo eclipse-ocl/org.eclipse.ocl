@@ -1,0 +1,1410 @@
+/* Auto-generated Bison grammar for Ecore2XMI*/
+
+%{
+#include <Ecore2XMI.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+extern FILE *yyin;
+%}
+
+%token IDENTIFIER
+%token STRING
+
+%token COLON
+%token DQUOTE
+%token EQ
+%token GT
+%token KWEAnnotation
+%token KWEAttribute
+%token KWEClass
+%token KWEClassifier
+%token KWEDataType
+%token KWEEnum
+%token KWEEnumLiteral
+%token KWEFactory
+%token KWEGenericType
+%token KWEModelElement
+%token KWENamedElement
+%token KWEObject
+%token KWEOperation
+%token KWEPackage
+%token KWEParameter
+%token KWEReference
+%token KWEStringToStringMapEntry
+%token KWEStructuralFeature
+%token KWETypeParameter
+%token KWETypedElement
+%token KWXMI
+%token KWabstract
+%token KWchangeable
+%token KWcontainment
+%token KWcontents
+%token KWdefaultValueLiteral
+%token KWderived
+%token KWdetails
+%token KWeAnnotations
+%token KWeBounds
+%token KWeClassifier
+%token KWeClassifiers
+%token KWeExceptions
+%token KWeGenericExceptions
+%token KWeGenericSuperTypes
+%token KWeGenericType
+%token KWeKeys
+%token KWeLiterals
+%token KWeLowerBound
+%token KWeOperations
+%token KWeOpposite
+%token KWeParameters
+%token KWeStructuralFeatures
+%token KWeSubpackages
+%token KWeSuperTypes
+%token KWeType
+%token KWeTypeArguments
+%token KWeTypeParameter
+%token KWeTypeParameters
+%token KWeUpperBound
+%token KWencoding
+%token KWiD
+%token KWinstanceClassName
+%token KWinstanceTypeName
+%token KWinterface
+%token KWkey
+%token KWliteral
+%token KWlowerBound
+%token KWname
+%token KWnsPrefix
+%token KWnsURI
+%token KWordered
+%token KWreferences
+%token KWresolveProxies
+%token KWserializable
+%token KWsource
+%token KWtransient
+%token KWtype
+%token KWunique
+%token KWunsettable
+%token KWupperBound
+%token KWvalue
+%token KWversion
+%token KWvolatile
+%token KWxml
+%token KWxmlns
+%token LT
+%token QUERY
+%token SLASH
+
+%token NSecore
+%token NSxmi
+%token NSxsi
+
+%start DOCUMENT
+%%
+
+//
+// Parse the XML Processing Instruction
+//
+PREAMBLE_PI_Head : LT QUERY KWxml
+PREAMBLE_PI_Head : PREAMBLE_PI_Head KWversion EQ STRING
+	{ setXMLVersion($4.string); }
+PREAMBLE_PI_Head : PREAMBLE_PI_Head KWencoding EQ STRING
+	{ setXMLEncoding($4.string); }
+PREAMBLE_PI : PREAMBLE_PI_Head QUERY GT
+
+//
+// Parse the root XML Element to identify the xmlns mappings, saving the non-xmlns tokens for a re-parse.
+//
+PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER COLON IDENTIFIER
+	{ saveToken(LT); saveIdentifier($3.identifier); saveToken(COLON); saveIdentifier($5.identifier); }
+PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER COLON IDENTIFIER_TOKEN
+	{ saveToken(LT); saveIdentifier($3.identifier); saveToken(COLON); saveToken($5.token); }
+PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER_TOKEN COLON IDENTIFIER
+	{ saveToken(LT); saveToken($3.token); saveToken(COLON); saveIdentifier($5.identifier); }
+PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER_TOKEN COLON IDENTIFIER_TOKEN
+	{ saveToken(LT); saveToken($3.token); saveToken(COLON); saveToken($5.token); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head KWxmlns COLON IDENTIFIER EQ STRING
+	{ gatherXMLNS($4.identifier, $6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head KWxmlns COLON IDENTIFIER_TOKEN EQ STRING
+	{ gatherXMLNS(tokenText($4.token), $6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head KWxmlns EQ STRING
+	{ gatherXMLNS(null, $4.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER COLON IDENTIFIER EQ STRING
+	{ saveIdentifier($2.identifier); saveToken(COLON); saveIdentifier($4.identifier); saveToken(EQ); saveString($6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER COLON IDENTIFIER_TOKEN EQ STRING
+	{ saveIdentifier($2.identifier); saveToken(COLON); saveToken($4.token); saveToken(EQ); saveString($6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN COLON IDENTIFIER EQ STRING
+	{ saveToken($2.token); saveToken(COLON); saveIdentifier($4.identifier); saveToken(EQ); saveString($6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN COLON IDENTIFIER_TOKEN EQ STRING
+	{ saveToken($2.token); saveToken(COLON); saveToken($4.token); saveToken(EQ); saveString($6.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER EQ STRING
+	{ saveIdentifier($2.identifier); saveToken(EQ); saveString($4.string); }
+PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN EQ STRING
+	{ saveToken($2.token); saveToken(EQ); saveString($4.string); }
+PREAMBLE_XMLNS : PREAMBLE_XMLNS_Head GT
+	{ saveToken(GT); endXMLNSanalysis(); }
+PREAMBLE_XMLNS : PREAMBLE_XMLNS_Head SLASH GT
+	{ saveToken(SLASH); saveToken(GT); endXMLNSanalysis(); }
+
+//
+// Re-parse the root XML Element after the xmlms attributes have been stripped.
+//
+DOCUMENT_Head1 : PREAMBLE_XMLNS LT NSxmi COLON KWXMI
+DOCUMENT_Head1 : DOCUMENT_Head1 NSxmi COLON KWversion EQ STRING
+	{ setXMIVersion($6.string); }
+DOCUMENT : DOCUMENT_Head1 SLASH GT
+DOCUMENT_Head2 : DOCUMENT_Head1 GT
+DOCUMENT_Head2 : DOCUMENT_Head2 ROOT
+	{ addRoot(&$2); }
+DOCUMENT : DOCUMENT_Head2 LT SLASH NSxmi COLON KWXMI GT
+DOCUMENT : PREAMBLE_XMLNS ROOT
+	{ addRoot(&$2); }
+
+XMI_OR_XSI_TYPE_EQ : NSxmi COLON KWtype EQ
+	{ disableStrings(); }
+XMI_OR_XSI_TYPE_EQ : NSxsi COLON KWtype EQ
+	{ disableStrings(); }
+
+TYPE_ecore_EAnnotation : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEAnnotation DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EAnnotation", &$$, &rtti_EAnnotation); }
+
+TYPE_ecore_EAttribute : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEAttribute DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EAttribute", &$$, &rtti_EAttribute); }
+
+TYPE_ecore_EClass : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEClass DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EClass", &$$, &rtti_EClass); }
+
+TYPE_ecore_EDataType : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEDataType DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EDataType", &$$, &rtti_EDataType); }
+
+TYPE_ecore_EEnum : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEEnum DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EEnum", &$$, &rtti_EEnum); }
+
+TYPE_ecore_EEnumLiteral : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEEnumLiteral DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EEnumLiteral", &$$, &rtti_EEnumLiteral); }
+
+TYPE_ecore_EGenericType : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEGenericType DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EGenericType", &$$, &rtti_EGenericType); }
+
+TYPE_ecore_EObject : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEObject DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EObject", &$$, &rtti_EObject); }
+
+TYPE_ecore_EOperation : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEOperation DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EOperation", &$$, &rtti_EOperation); }
+
+TYPE_ecore_EPackage : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEPackage DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EPackage", &$$, &rtti_EPackage); }
+
+TYPE_ecore_EParameter : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEParameter DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EParameter", &$$, &rtti_EParameter); }
+
+TYPE_ecore_EReference : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEReference DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EReference", &$$, &rtti_EReference); }
+
+TYPE_ecore_EStringToStringMapEntry : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWEStringToStringMapEntry DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_EStringToStringMapEntry", &$$, &rtti_EStringToStringMapEntry); }
+
+TYPE_ecore_ETypeParameter : XMI_OR_XSI_TYPE_EQ DQUOTE NSecore COLON KWETypeParameter DQUOTE
+	{ enableStrings(); createRTTI("TYPE_ecore_ETypeParameter", &$$, &rtti_ETypeParameter); }
+
+ROOT : RT_EAnnotation
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EAttribute
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EClass
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EDataType
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EEnum
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EEnumLiteral
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EFactory
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EGenericType
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EObject
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EOperation
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EPackage
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EParameter
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EReference
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_EStringToStringMapEntry
+	{ copyRTTI("ROOT", &$$, &$1); }
+ROOT : RT_ETypeParameter
+	{ copyRTTI("ROOT", &$$, &$1); }
+
+
+RT_EAnnotation_Post : LT NSecore COLON KWEAnnotation
+	{ createRTTI("RT_EAnnotation_Post", &$$, &rtti_EAnnotation); }
+RT_EAnnotation_Post : RT_EAnnotation_Post KWsource EQ STRING
+	{ copyRTTI("RT_EAnnotation_Post", &$$, &$1); $$.u_EAnnotation->s_source = getString($4.string); }
+RT_EAnnotation_Post : RT_EAnnotation_Post KWreferences EQ STRING
+	{ copyRTTI("RT_EAnnotation_Post", &$$, &$1); addToList((void ***)&$$.u_EAnnotation->s_references, resolveXmiId($4.string)); }
+RT_EAnnotation_Head : RT_EAnnotation_Post GT
+	{ copyRTTI("RT_EAnnotation_Head", &$$, &$1); }
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_contents
+	{ copyRTTI("RT_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_contents, resolveXmiId($2.string)); }
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_details
+	{ copyRTTI("RT_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_details, resolveXmiId($2.string)); }
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_eAnnotations
+	{ copyRTTI("RT_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EAnnotation : RT_EAnnotation_Head LT SLASH NSecore COLON KWEAnnotation GT
+	{ createRTTI("RT_EAnnotation", &$$, &rtti_EAnnotation); }
+RT_EAnnotation : RT_EAnnotation_Post SLASH GT
+	{ copyRTTI("RT_EAnnotation", &$$, &$1); }
+
+RT_EAttribute_Post : LT NSecore COLON KWEAttribute
+	{ createRTTI("RT_EAttribute_Post", &$$, &rtti_EAttribute); }
+RT_EAttribute_Post : RT_EAttribute_Post KWchangeable EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_changeable = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWdefaultValueLiteral EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_defaultValueLiteral = getString($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWderived EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_derived = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWiD EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_iD = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWlowerBound EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_lowerBound = getInt($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWname EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_name = getString($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWordered EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_ordered = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWtransient EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_transient = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWunique EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_unique = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWunsettable EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_unsettable = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWupperBound EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_upperBound = getInt($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWvolatile EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_volatile = getBoolean($4.string); }
+RT_EAttribute_Post : RT_EAttribute_Post KWeType EQ STRING
+	{ copyRTTI("RT_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_eType = resolveXmiId($4.string); }
+RT_EAttribute_Head : RT_EAttribute_Post GT
+	{ copyRTTI("RT_EAttribute_Head", &$$, &$1); }
+RT_EAttribute_Head : RT_EAttribute_Head CH_eAnnotations
+	{ copyRTTI("RT_EAttribute_Head", &$$, &$1); addChild((void ***)&$$.u_EAttribute->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EAttribute_Head : RT_EAttribute_Head CH_eGenericType
+	{ copyRTTI("RT_EAttribute_Head", &$$, &$1); $$.u_EAttribute->s_eGenericType = resolveXmiId($2.string); }
+RT_EAttribute : RT_EAttribute_Head LT SLASH NSecore COLON KWEAttribute GT
+	{ createRTTI("RT_EAttribute", &$$, &rtti_EAttribute); }
+RT_EAttribute : RT_EAttribute_Post SLASH GT
+	{ copyRTTI("RT_EAttribute", &$$, &$1); }
+
+RT_EClass_Post : LT NSecore COLON KWEClass
+	{ createRTTI("RT_EClass_Post", &$$, &rtti_EClass); }
+RT_EClass_Post : RT_EClass_Post KWabstract EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); $$.u_EClass->s_abstract = getBoolean($4.string); }
+RT_EClass_Post : RT_EClass_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); $$.u_EClass->s_instanceClassName = getString($4.string); }
+RT_EClass_Post : RT_EClass_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); $$.u_EClass->s_instanceTypeName = getString($4.string); }
+RT_EClass_Post : RT_EClass_Post KWinterface EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); $$.u_EClass->s_interface = getBoolean($4.string); }
+RT_EClass_Post : RT_EClass_Post KWname EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); $$.u_EClass->s_name = getString($4.string); }
+RT_EClass_Post : RT_EClass_Post KWeSuperTypes EQ STRING
+	{ copyRTTI("RT_EClass_Post", &$$, &$1); addToList((void ***)&$$.u_EClass->s_eSuperTypes, resolveXmiId($4.string)); }
+RT_EClass_Head : RT_EClass_Post GT
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); }
+RT_EClass_Head : RT_EClass_Head CH_eAnnotations
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EClass_Head : RT_EClass_Head CH_eGenericSuperTypes
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eGenericSuperTypes, resolveXmiId($2.string)); }
+RT_EClass_Head : RT_EClass_Head CH_eOperations
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eOperations, resolveXmiId($2.string)); }
+RT_EClass_Head : RT_EClass_Head CH_eStructuralFeatures
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eStructuralFeatures, resolveXmiId($2.string)); }
+RT_EClass_Head : RT_EClass_Head CH_eTypeParameters
+	{ copyRTTI("RT_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eTypeParameters, resolveXmiId($2.string)); }
+RT_EClass : RT_EClass_Head LT SLASH NSecore COLON KWEClass GT
+	{ createRTTI("RT_EClass", &$$, &rtti_EClass); }
+RT_EClass : RT_EClass_Post SLASH GT
+	{ copyRTTI("RT_EClass", &$$, &$1); }
+
+RT_EDataType_Post : LT NSecore COLON KWEDataType
+	{ createRTTI("RT_EDataType_Post", &$$, &rtti_EDataType); }
+RT_EDataType_Post : RT_EDataType_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("RT_EDataType_Post", &$$, &$1); $$.u_EDataType->s_instanceClassName = getString($4.string); }
+RT_EDataType_Post : RT_EDataType_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("RT_EDataType_Post", &$$, &$1); $$.u_EDataType->s_instanceTypeName = getString($4.string); }
+RT_EDataType_Post : RT_EDataType_Post KWname EQ STRING
+	{ copyRTTI("RT_EDataType_Post", &$$, &$1); $$.u_EDataType->s_name = getString($4.string); }
+RT_EDataType_Post : RT_EDataType_Post KWserializable EQ STRING
+	{ copyRTTI("RT_EDataType_Post", &$$, &$1); $$.u_EDataType->s_serializable = getBoolean($4.string); }
+RT_EDataType_Head : RT_EDataType_Post GT
+	{ copyRTTI("RT_EDataType_Head", &$$, &$1); }
+RT_EDataType_Head : RT_EDataType_Head CH_eAnnotations
+	{ copyRTTI("RT_EDataType_Head", &$$, &$1); addChild((void ***)&$$.u_EDataType->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EDataType_Head : RT_EDataType_Head CH_eTypeParameters
+	{ copyRTTI("RT_EDataType_Head", &$$, &$1); addChild((void ***)&$$.u_EDataType->s_eTypeParameters, resolveXmiId($2.string)); }
+RT_EDataType : RT_EDataType_Head LT SLASH NSecore COLON KWEDataType GT
+	{ createRTTI("RT_EDataType", &$$, &rtti_EDataType); }
+RT_EDataType : RT_EDataType_Post SLASH GT
+	{ copyRTTI("RT_EDataType", &$$, &$1); }
+
+RT_EEnum_Post : LT NSecore COLON KWEEnum
+	{ createRTTI("RT_EEnum_Post", &$$, &rtti_EEnum); }
+RT_EEnum_Post : RT_EEnum_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("RT_EEnum_Post", &$$, &$1); $$.u_EEnum->s_instanceClassName = getString($4.string); }
+RT_EEnum_Post : RT_EEnum_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("RT_EEnum_Post", &$$, &$1); $$.u_EEnum->s_instanceTypeName = getString($4.string); }
+RT_EEnum_Post : RT_EEnum_Post KWname EQ STRING
+	{ copyRTTI("RT_EEnum_Post", &$$, &$1); $$.u_EEnum->s_name = getString($4.string); }
+RT_EEnum_Post : RT_EEnum_Post KWserializable EQ STRING
+	{ copyRTTI("RT_EEnum_Post", &$$, &$1); $$.u_EEnum->s_serializable = getBoolean($4.string); }
+RT_EEnum_Head : RT_EEnum_Post GT
+	{ copyRTTI("RT_EEnum_Head", &$$, &$1); }
+RT_EEnum_Head : RT_EEnum_Head CH_eAnnotations
+	{ copyRTTI("RT_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EEnum_Head : RT_EEnum_Head CH_eLiterals
+	{ copyRTTI("RT_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eLiterals, resolveXmiId($2.string)); }
+RT_EEnum_Head : RT_EEnum_Head CH_eTypeParameters
+	{ copyRTTI("RT_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eTypeParameters, resolveXmiId($2.string)); }
+RT_EEnum : RT_EEnum_Head LT SLASH NSecore COLON KWEEnum GT
+	{ createRTTI("RT_EEnum", &$$, &rtti_EEnum); }
+RT_EEnum : RT_EEnum_Post SLASH GT
+	{ copyRTTI("RT_EEnum", &$$, &$1); }
+
+RT_EEnumLiteral_Post : LT NSecore COLON KWEEnumLiteral
+	{ createRTTI("RT_EEnumLiteral_Post", &$$, &rtti_EEnumLiteral); }
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWliteral EQ STRING
+	{ copyRTTI("RT_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_literal = getString($4.string); }
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWname EQ STRING
+	{ copyRTTI("RT_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_name = getString($4.string); }
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWvalue EQ STRING
+	{ copyRTTI("RT_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_value = getInt($4.string); }
+RT_EEnumLiteral_Head : RT_EEnumLiteral_Post GT
+	{ copyRTTI("RT_EEnumLiteral_Head", &$$, &$1); }
+RT_EEnumLiteral_Head : RT_EEnumLiteral_Head CH_eAnnotations
+	{ copyRTTI("RT_EEnumLiteral_Head", &$$, &$1); addChild((void ***)&$$.u_EEnumLiteral->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EEnumLiteral : RT_EEnumLiteral_Head LT SLASH NSecore COLON KWEEnumLiteral GT
+	{ createRTTI("RT_EEnumLiteral", &$$, &rtti_EEnumLiteral); }
+RT_EEnumLiteral : RT_EEnumLiteral_Post SLASH GT
+	{ copyRTTI("RT_EEnumLiteral", &$$, &$1); }
+
+RT_EFactory_Post : LT NSecore COLON KWEFactory
+	{ createRTTI("RT_EFactory_Post", &$$, &rtti_EFactory); }
+RT_EFactory_Head : RT_EFactory_Post GT
+	{ copyRTTI("RT_EFactory_Head", &$$, &$1); }
+RT_EFactory_Head : RT_EFactory_Head CH_eAnnotations
+	{ copyRTTI("RT_EFactory_Head", &$$, &$1); addChild((void ***)&$$.u_EFactory->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EFactory : RT_EFactory_Head LT SLASH NSecore COLON KWEFactory GT
+	{ createRTTI("RT_EFactory", &$$, &rtti_EFactory); }
+RT_EFactory : RT_EFactory_Post SLASH GT
+	{ copyRTTI("RT_EFactory", &$$, &$1); }
+
+RT_EGenericType_Post : LT NSecore COLON KWEGenericType
+	{ createRTTI("RT_EGenericType_Post", &$$, &rtti_EGenericType); }
+RT_EGenericType_Post : RT_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("RT_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+RT_EGenericType_Post : RT_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("RT_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+RT_EGenericType_Head : RT_EGenericType_Post GT
+	{ copyRTTI("RT_EGenericType_Head", &$$, &$1); }
+RT_EGenericType_Head : RT_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("RT_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+RT_EGenericType_Head : RT_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("RT_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+RT_EGenericType_Head : RT_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("RT_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+RT_EGenericType : RT_EGenericType_Head LT SLASH NSecore COLON KWEGenericType GT
+	{ createRTTI("RT_EGenericType", &$$, &rtti_EGenericType); }
+RT_EGenericType : RT_EGenericType_Post SLASH GT
+	{ copyRTTI("RT_EGenericType", &$$, &$1); }
+
+RT_EObject_Post : LT NSecore COLON KWEObject
+	{ createRTTI("RT_EObject_Post", &$$, &rtti_EObject); }
+RT_EObject_Head : RT_EObject_Post GT
+	{ copyRTTI("RT_EObject_Head", &$$, &$1); }
+RT_EObject : RT_EObject_Head LT SLASH NSecore COLON KWEObject GT
+	{ createRTTI("RT_EObject", &$$, &rtti_EObject); }
+RT_EObject : RT_EObject_Post SLASH GT
+	{ copyRTTI("RT_EObject", &$$, &$1); }
+
+RT_EOperation_Post : LT NSecore COLON KWEOperation
+	{ createRTTI("RT_EOperation_Post", &$$, &rtti_EOperation); }
+RT_EOperation_Post : RT_EOperation_Post KWlowerBound EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_lowerBound = getInt($4.string); }
+RT_EOperation_Post : RT_EOperation_Post KWname EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_name = getString($4.string); }
+RT_EOperation_Post : RT_EOperation_Post KWordered EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_ordered = getBoolean($4.string); }
+RT_EOperation_Post : RT_EOperation_Post KWunique EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_unique = getBoolean($4.string); }
+RT_EOperation_Post : RT_EOperation_Post KWupperBound EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_upperBound = getInt($4.string); }
+RT_EOperation_Post : RT_EOperation_Post KWeExceptions EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); addToList((void ***)&$$.u_EOperation->s_eExceptions, resolveXmiId($4.string)); }
+RT_EOperation_Post : RT_EOperation_Post KWeType EQ STRING
+	{ copyRTTI("RT_EOperation_Post", &$$, &$1); $$.u_EOperation->s_eType = resolveXmiId($4.string); }
+RT_EOperation_Head : RT_EOperation_Post GT
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); }
+RT_EOperation_Head : RT_EOperation_Head CH_eAnnotations
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EOperation_Head : RT_EOperation_Head CH_eGenericExceptions
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eGenericExceptions, resolveXmiId($2.string)); }
+RT_EOperation_Head : RT_EOperation_Head CH_eGenericType
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); $$.u_EOperation->s_eGenericType = resolveXmiId($2.string); }
+RT_EOperation_Head : RT_EOperation_Head CH_eParameters
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eParameters, resolveXmiId($2.string)); }
+RT_EOperation_Head : RT_EOperation_Head CH_eTypeParameters
+	{ copyRTTI("RT_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eTypeParameters, resolveXmiId($2.string)); }
+RT_EOperation : RT_EOperation_Head LT SLASH NSecore COLON KWEOperation GT
+	{ createRTTI("RT_EOperation", &$$, &rtti_EOperation); }
+RT_EOperation : RT_EOperation_Post SLASH GT
+	{ copyRTTI("RT_EOperation", &$$, &$1); }
+
+RT_EPackage_Post : LT NSecore COLON KWEPackage
+	{ createRTTI("RT_EPackage_Post", &$$, &rtti_EPackage); }
+RT_EPackage_Post : RT_EPackage_Post KWname EQ STRING
+	{ copyRTTI("RT_EPackage_Post", &$$, &$1); $$.u_EPackage->s_name = getString($4.string); }
+RT_EPackage_Post : RT_EPackage_Post KWnsPrefix EQ STRING
+	{ copyRTTI("RT_EPackage_Post", &$$, &$1); $$.u_EPackage->s_nsPrefix = getString($4.string); }
+RT_EPackage_Post : RT_EPackage_Post KWnsURI EQ STRING
+	{ copyRTTI("RT_EPackage_Post", &$$, &$1); $$.u_EPackage->s_nsURI = getString($4.string); }
+RT_EPackage_Head : RT_EPackage_Post GT
+	{ copyRTTI("RT_EPackage_Head", &$$, &$1); }
+RT_EPackage_Head : RT_EPackage_Head CH_eAnnotations
+	{ copyRTTI("RT_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EPackage_Head : RT_EPackage_Head CH_eClassifiers
+	{ copyRTTI("RT_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eClassifiers, resolveXmiId($2.string)); }
+RT_EPackage_Head : RT_EPackage_Head CH_eSubpackages
+	{ copyRTTI("RT_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eSubpackages, resolveXmiId($2.string)); }
+RT_EPackage : RT_EPackage_Head LT SLASH NSecore COLON KWEPackage GT
+	{ createRTTI("RT_EPackage", &$$, &rtti_EPackage); }
+RT_EPackage : RT_EPackage_Post SLASH GT
+	{ copyRTTI("RT_EPackage", &$$, &$1); }
+
+RT_EParameter_Post : LT NSecore COLON KWEParameter
+	{ createRTTI("RT_EParameter_Post", &$$, &rtti_EParameter); }
+RT_EParameter_Post : RT_EParameter_Post KWlowerBound EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_lowerBound = getInt($4.string); }
+RT_EParameter_Post : RT_EParameter_Post KWname EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_name = getString($4.string); }
+RT_EParameter_Post : RT_EParameter_Post KWordered EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_ordered = getBoolean($4.string); }
+RT_EParameter_Post : RT_EParameter_Post KWunique EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_unique = getBoolean($4.string); }
+RT_EParameter_Post : RT_EParameter_Post KWupperBound EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_upperBound = getInt($4.string); }
+RT_EParameter_Post : RT_EParameter_Post KWeType EQ STRING
+	{ copyRTTI("RT_EParameter_Post", &$$, &$1); $$.u_EParameter->s_eType = resolveXmiId($4.string); }
+RT_EParameter_Head : RT_EParameter_Post GT
+	{ copyRTTI("RT_EParameter_Head", &$$, &$1); }
+RT_EParameter_Head : RT_EParameter_Head CH_eAnnotations
+	{ copyRTTI("RT_EParameter_Head", &$$, &$1); addChild((void ***)&$$.u_EParameter->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EParameter_Head : RT_EParameter_Head CH_eGenericType
+	{ copyRTTI("RT_EParameter_Head", &$$, &$1); $$.u_EParameter->s_eGenericType = resolveXmiId($2.string); }
+RT_EParameter : RT_EParameter_Head LT SLASH NSecore COLON KWEParameter GT
+	{ createRTTI("RT_EParameter", &$$, &rtti_EParameter); }
+RT_EParameter : RT_EParameter_Post SLASH GT
+	{ copyRTTI("RT_EParameter", &$$, &$1); }
+
+RT_EReference_Post : LT NSecore COLON KWEReference
+	{ createRTTI("RT_EReference_Post", &$$, &rtti_EReference); }
+RT_EReference_Post : RT_EReference_Post KWchangeable EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_changeable = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWcontainment EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_containment = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWdefaultValueLiteral EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_defaultValueLiteral = getString($4.string); }
+RT_EReference_Post : RT_EReference_Post KWderived EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_derived = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWlowerBound EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_lowerBound = getInt($4.string); }
+RT_EReference_Post : RT_EReference_Post KWname EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_name = getString($4.string); }
+RT_EReference_Post : RT_EReference_Post KWordered EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_ordered = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWresolveProxies EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_resolveProxies = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWtransient EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_transient = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWunique EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_unique = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWunsettable EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_unsettable = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWupperBound EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_upperBound = getInt($4.string); }
+RT_EReference_Post : RT_EReference_Post KWvolatile EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_volatile = getBoolean($4.string); }
+RT_EReference_Post : RT_EReference_Post KWeKeys EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); addToList((void ***)&$$.u_EReference->s_eKeys, resolveXmiId($4.string)); }
+RT_EReference_Post : RT_EReference_Post KWeOpposite EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_eOpposite = resolveXmiId($4.string); }
+RT_EReference_Post : RT_EReference_Post KWeType EQ STRING
+	{ copyRTTI("RT_EReference_Post", &$$, &$1); $$.u_EReference->s_eType = resolveXmiId($4.string); }
+RT_EReference_Head : RT_EReference_Post GT
+	{ copyRTTI("RT_EReference_Head", &$$, &$1); }
+RT_EReference_Head : RT_EReference_Head CH_eAnnotations
+	{ copyRTTI("RT_EReference_Head", &$$, &$1); addChild((void ***)&$$.u_EReference->s_eAnnotations, resolveXmiId($2.string)); }
+RT_EReference_Head : RT_EReference_Head CH_eGenericType
+	{ copyRTTI("RT_EReference_Head", &$$, &$1); $$.u_EReference->s_eGenericType = resolveXmiId($2.string); }
+RT_EReference : RT_EReference_Head LT SLASH NSecore COLON KWEReference GT
+	{ createRTTI("RT_EReference", &$$, &rtti_EReference); }
+RT_EReference : RT_EReference_Post SLASH GT
+	{ copyRTTI("RT_EReference", &$$, &$1); }
+
+RT_EStringToStringMapEntry_Post : LT NSecore COLON KWEStringToStringMapEntry
+	{ createRTTI("RT_EStringToStringMapEntry_Post", &$$, &rtti_EStringToStringMapEntry); }
+RT_EStringToStringMapEntry_Post : RT_EStringToStringMapEntry_Post KWkey EQ STRING
+	{ copyRTTI("RT_EStringToStringMapEntry_Post", &$$, &$1); $$.u_EStringToStringMapEntry->s_key = getString($4.string); }
+RT_EStringToStringMapEntry_Post : RT_EStringToStringMapEntry_Post KWvalue EQ STRING
+	{ copyRTTI("RT_EStringToStringMapEntry_Post", &$$, &$1); $$.u_EStringToStringMapEntry->s_value = getString($4.string); }
+RT_EStringToStringMapEntry_Head : RT_EStringToStringMapEntry_Post GT
+	{ copyRTTI("RT_EStringToStringMapEntry_Head", &$$, &$1); }
+RT_EStringToStringMapEntry : RT_EStringToStringMapEntry_Head LT SLASH NSecore COLON KWEStringToStringMapEntry GT
+	{ createRTTI("RT_EStringToStringMapEntry", &$$, &rtti_EStringToStringMapEntry); }
+RT_EStringToStringMapEntry : RT_EStringToStringMapEntry_Post SLASH GT
+	{ copyRTTI("RT_EStringToStringMapEntry", &$$, &$1); }
+
+RT_ETypeParameter_Post : LT NSecore COLON KWETypeParameter
+	{ createRTTI("RT_ETypeParameter_Post", &$$, &rtti_ETypeParameter); }
+RT_ETypeParameter_Post : RT_ETypeParameter_Post KWname EQ STRING
+	{ copyRTTI("RT_ETypeParameter_Post", &$$, &$1); $$.u_ETypeParameter->s_name = getString($4.string); }
+RT_ETypeParameter_Head : RT_ETypeParameter_Post GT
+	{ copyRTTI("RT_ETypeParameter_Head", &$$, &$1); }
+RT_ETypeParameter_Head : RT_ETypeParameter_Head CH_eAnnotations
+	{ copyRTTI("RT_ETypeParameter_Head", &$$, &$1); addChild((void ***)&$$.u_ETypeParameter->s_eAnnotations, resolveXmiId($2.string)); }
+RT_ETypeParameter_Head : RT_ETypeParameter_Head CH_eBounds
+	{ copyRTTI("RT_ETypeParameter_Head", &$$, &$1); addChild((void ***)&$$.u_ETypeParameter->s_eBounds, resolveXmiId($2.string)); }
+RT_ETypeParameter : RT_ETypeParameter_Head LT SLASH NSecore COLON KWETypeParameter GT
+	{ createRTTI("RT_ETypeParameter", &$$, &rtti_ETypeParameter); }
+RT_ETypeParameter : RT_ETypeParameter_Post SLASH GT
+	{ copyRTTI("RT_ETypeParameter", &$$, &$1); }
+
+CH_contents_EObject : TYPE_ecore_EObject
+	{ $$ = $1; }
+
+CH_contents : CH_contents_EObject
+	{ copyRTTI("CH_contents", &$$, &$1); }
+
+CH_details_EStringToStringMapEntry_Post : 
+	{ createRTTI("CH_details_EStringToStringMapEntry", &$$, &rtti_EStringToStringMapEntry); }
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Post TYPE_ecore_EStringToStringMapEntry
+	{ $$ = $1; }
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Post KWvalue EQ STRING
+	{ copyRTTI("CH_details_EStringToStringMapEntry_Post", &$$, &$1); $$.u_EStringToStringMapEntry->s_value = getString($4.string); }
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Post KWkey EQ STRING
+	{ copyRTTI("CH_details_EStringToStringMapEntry_Post", &$$, &$1); $$.u_EStringToStringMapEntry->s_key = getString($4.string); }
+CH_details_EStringToStringMapEntry_Head : LT KWdetails CH_details_EStringToStringMapEntry_Post GT
+	{ copyRTTI("CH_details_EStringToStringMapEntry_Head", &$$, &$1); }
+CH_details_EStringToStringMapEntry : LT KWdetails CH_details_EStringToStringMapEntry_Post SLASH GT
+	{ copyRTTI("CH_details_EStringToStringMapEntry", &$$, &$1); }
+CH_details_EStringToStringMapEntry : CH_details_EStringToStringMapEntry_Head LT SLASH KWdetails GT
+	{ copyRTTI("CH_details_EStringToStringMapEntry", &$$, &$1); }
+CH_details_EStringToStringMapEntry : LT KWdetails CH_details_EStringToStringMapEntry_Head LT SLASH
+	{ copyRTTI("CH_details_EStringToStringMapEntry", &$$, &$1); }
+
+CH_details : CH_details_EStringToStringMapEntry
+	{ copyRTTI("CH_details", &$$, &$1); }
+
+CH_eAnnotations_EAnnotation_Post : 
+	{ createRTTI("CH_eAnnotations_EAnnotation", &$$, &rtti_EAnnotation); }
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Post TYPE_ecore_EAnnotation
+	{ $$ = $1; }
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Post KWsource EQ STRING
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Post", &$$, &$1); $$.u_EAnnotation->s_source = getString($4.string); }
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Post KWreferences EQ STRING
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Post", &$$, &$1); addToList((void ***)&$$.u_EAnnotation->s_references, resolveXmiId($4.string)); }
+CH_eAnnotations_EAnnotation_Head : LT KWeAnnotations CH_eAnnotations_EAnnotation_Post GT
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Head", &$$, &$1); }
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_contents
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_contents, resolveXmiId($2.string)); }
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_details
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_details, resolveXmiId($2.string)); }
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_eAnnotations
+	{ copyRTTI("CH_eAnnotations_EAnnotation_Head", &$$, &$1); addChild((void ***)&$$.u_EAnnotation->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eAnnotations_EAnnotation : LT KWeAnnotations CH_eAnnotations_EAnnotation_Post SLASH GT
+	{ copyRTTI("CH_eAnnotations_EAnnotation", &$$, &$1); }
+CH_eAnnotations_EAnnotation : CH_eAnnotations_EAnnotation_Head LT SLASH KWeAnnotations GT
+	{ copyRTTI("CH_eAnnotations_EAnnotation", &$$, &$1); }
+CH_eAnnotations_EAnnotation : LT KWeAnnotations CH_eAnnotations_EAnnotation_Head LT SLASH
+	{ copyRTTI("CH_eAnnotations_EAnnotation", &$$, &$1); }
+
+CH_eAnnotations : CH_eAnnotations_EAnnotation
+	{ copyRTTI("CH_eAnnotations", &$$, &$1); }
+
+CH_eBounds_EGenericType_Post : 
+	{ createRTTI("CH_eBounds_EGenericType", &$$, &rtti_EGenericType); }
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eBounds_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eBounds_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eBounds_EGenericType_Head : LT KWeBounds CH_eBounds_EGenericType_Post GT
+	{ copyRTTI("CH_eBounds_EGenericType_Head", &$$, &$1); }
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eBounds_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eBounds_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eBounds_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eBounds_EGenericType : LT KWeBounds CH_eBounds_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eBounds_EGenericType", &$$, &$1); }
+CH_eBounds_EGenericType : CH_eBounds_EGenericType_Head LT SLASH KWeBounds GT
+	{ copyRTTI("CH_eBounds_EGenericType", &$$, &$1); }
+CH_eBounds_EGenericType : LT KWeBounds CH_eBounds_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eBounds_EGenericType", &$$, &$1); }
+
+CH_eBounds : CH_eBounds_EGenericType
+	{ copyRTTI("CH_eBounds", &$$, &$1); }
+
+CH_eClassifiers_EClass_Pre : TYPE_ecore_EClass
+	{ $$ = $1; }
+CH_eClassifiers_EClass_Pre : KWinstanceTypeName EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); $$.u_EClass->s_instanceTypeName = getString($3.string); }
+CH_eClassifiers_EClass_Pre : KWinterface EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); $$.u_EClass->s_interface = getBoolean($3.string); }
+CH_eClassifiers_EClass_Pre : KWname EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); $$.u_EClass->s_name = getString($3.string); }
+CH_eClassifiers_EClass_Pre : KWabstract EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); $$.u_EClass->s_abstract = getBoolean($3.string); }
+CH_eClassifiers_EClass_Pre : KWinstanceClassName EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); $$.u_EClass->s_instanceClassName = getString($3.string); }
+CH_eClassifiers_EClass_Pre : KWeSuperTypes EQ STRING CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Pre", &$$, &$4); addToList((void ***)&$$.u_EClass->s_eSuperTypes, resolveXmiId($3.string)); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Pre
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); $$.u_EClass->s_instanceTypeName = getString($4.string); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWinterface EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); $$.u_EClass->s_interface = getBoolean($4.string); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWname EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); $$.u_EClass->s_name = getString($4.string); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWabstract EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); $$.u_EClass->s_abstract = getBoolean($4.string); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); $$.u_EClass->s_instanceClassName = getString($4.string); }
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWeSuperTypes EQ STRING
+	{ copyRTTI("CH_eClassifiers_EClass_Post", &$$, &$1); addToList((void ***)&$$.u_EClass->s_eSuperTypes, resolveXmiId($4.string)); }
+CH_eClassifiers_EClass_Head : LT KWeClassifiers CH_eClassifiers_EClass_Post GT
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); }
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eOperations
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eOperations, resolveXmiId($2.string)); }
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eTypeParameters
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eTypeParameters, resolveXmiId($2.string)); }
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eGenericSuperTypes
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eGenericSuperTypes, resolveXmiId($2.string)); }
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eStructuralFeatures
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eStructuralFeatures, resolveXmiId($2.string)); }
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eAnnotations
+	{ copyRTTI("CH_eClassifiers_EClass_Head", &$$, &$1); addChild((void ***)&$$.u_EClass->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eClassifiers_EClass : LT KWeClassifiers CH_eClassifiers_EClass_Post SLASH GT
+	{ copyRTTI("CH_eClassifiers_EClass", &$$, &$1); }
+CH_eClassifiers_EClass : CH_eClassifiers_EClass_Head LT SLASH KWeClassifiers GT
+	{ copyRTTI("CH_eClassifiers_EClass", &$$, &$1); }
+CH_eClassifiers_EClass : LT KWeClassifiers CH_eClassifiers_EClass_Head LT SLASH
+	{ copyRTTI("CH_eClassifiers_EClass", &$$, &$1); }
+
+CH_eClassifiers_EDataType_Pre : TYPE_ecore_EDataType
+	{ $$ = $1; }
+CH_eClassifiers_EDataType_Pre : KWinstanceTypeName EQ STRING CH_eClassifiers_EDataType_Pre
+	{ copyRTTI("CH_eClassifiers_EDataType_Pre", &$$, &$4); $$.u_EDataType->s_instanceTypeName = getString($3.string); }
+CH_eClassifiers_EDataType_Pre : KWname EQ STRING CH_eClassifiers_EDataType_Pre
+	{ copyRTTI("CH_eClassifiers_EDataType_Pre", &$$, &$4); $$.u_EDataType->s_name = getString($3.string); }
+CH_eClassifiers_EDataType_Pre : KWinstanceClassName EQ STRING CH_eClassifiers_EDataType_Pre
+	{ copyRTTI("CH_eClassifiers_EDataType_Pre", &$$, &$4); $$.u_EDataType->s_instanceClassName = getString($3.string); }
+CH_eClassifiers_EDataType_Pre : KWserializable EQ STRING CH_eClassifiers_EDataType_Pre
+	{ copyRTTI("CH_eClassifiers_EDataType_Pre", &$$, &$4); $$.u_EDataType->s_serializable = getBoolean($3.string); }
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Pre
+	{ copyRTTI("CH_eClassifiers_EDataType_Post", &$$, &$1); }
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EDataType_Post", &$$, &$1); $$.u_EDataType->s_instanceTypeName = getString($4.string); }
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWname EQ STRING
+	{ copyRTTI("CH_eClassifiers_EDataType_Post", &$$, &$1); $$.u_EDataType->s_name = getString($4.string); }
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EDataType_Post", &$$, &$1); $$.u_EDataType->s_instanceClassName = getString($4.string); }
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWserializable EQ STRING
+	{ copyRTTI("CH_eClassifiers_EDataType_Post", &$$, &$1); $$.u_EDataType->s_serializable = getBoolean($4.string); }
+CH_eClassifiers_EDataType_Head : LT KWeClassifiers CH_eClassifiers_EDataType_Post GT
+	{ copyRTTI("CH_eClassifiers_EDataType_Head", &$$, &$1); }
+CH_eClassifiers_EDataType_Head : CH_eClassifiers_EDataType_Head CH_eTypeParameters
+	{ copyRTTI("CH_eClassifiers_EDataType_Head", &$$, &$1); addChild((void ***)&$$.u_EDataType->s_eTypeParameters, resolveXmiId($2.string)); }
+CH_eClassifiers_EDataType_Head : CH_eClassifiers_EDataType_Head CH_eAnnotations
+	{ copyRTTI("CH_eClassifiers_EDataType_Head", &$$, &$1); addChild((void ***)&$$.u_EDataType->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eClassifiers_EDataType : LT KWeClassifiers CH_eClassifiers_EDataType_Post SLASH GT
+	{ copyRTTI("CH_eClassifiers_EDataType", &$$, &$1); }
+CH_eClassifiers_EDataType : CH_eClassifiers_EDataType_Head LT SLASH KWeClassifiers GT
+	{ copyRTTI("CH_eClassifiers_EDataType", &$$, &$1); }
+CH_eClassifiers_EDataType : LT KWeClassifiers CH_eClassifiers_EDataType_Head LT SLASH
+	{ copyRTTI("CH_eClassifiers_EDataType", &$$, &$1); }
+
+CH_eClassifiers_EEnum_Pre : TYPE_ecore_EEnum
+	{ $$ = $1; }
+CH_eClassifiers_EEnum_Pre : KWinstanceTypeName EQ STRING CH_eClassifiers_EEnum_Pre
+	{ copyRTTI("CH_eClassifiers_EEnum_Pre", &$$, &$4); $$.u_EEnum->s_instanceTypeName = getString($3.string); }
+CH_eClassifiers_EEnum_Pre : KWname EQ STRING CH_eClassifiers_EEnum_Pre
+	{ copyRTTI("CH_eClassifiers_EEnum_Pre", &$$, &$4); $$.u_EEnum->s_name = getString($3.string); }
+CH_eClassifiers_EEnum_Pre : KWinstanceClassName EQ STRING CH_eClassifiers_EEnum_Pre
+	{ copyRTTI("CH_eClassifiers_EEnum_Pre", &$$, &$4); $$.u_EEnum->s_instanceClassName = getString($3.string); }
+CH_eClassifiers_EEnum_Pre : KWserializable EQ STRING CH_eClassifiers_EEnum_Pre
+	{ copyRTTI("CH_eClassifiers_EEnum_Pre", &$$, &$4); $$.u_EEnum->s_serializable = getBoolean($3.string); }
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Pre
+	{ copyRTTI("CH_eClassifiers_EEnum_Post", &$$, &$1); }
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWinstanceTypeName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EEnum_Post", &$$, &$1); $$.u_EEnum->s_instanceTypeName = getString($4.string); }
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWname EQ STRING
+	{ copyRTTI("CH_eClassifiers_EEnum_Post", &$$, &$1); $$.u_EEnum->s_name = getString($4.string); }
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWinstanceClassName EQ STRING
+	{ copyRTTI("CH_eClassifiers_EEnum_Post", &$$, &$1); $$.u_EEnum->s_instanceClassName = getString($4.string); }
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWserializable EQ STRING
+	{ copyRTTI("CH_eClassifiers_EEnum_Post", &$$, &$1); $$.u_EEnum->s_serializable = getBoolean($4.string); }
+CH_eClassifiers_EEnum_Head : LT KWeClassifiers CH_eClassifiers_EEnum_Post GT
+	{ copyRTTI("CH_eClassifiers_EEnum_Head", &$$, &$1); }
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eLiterals
+	{ copyRTTI("CH_eClassifiers_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eLiterals, resolveXmiId($2.string)); }
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eTypeParameters
+	{ copyRTTI("CH_eClassifiers_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eTypeParameters, resolveXmiId($2.string)); }
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eAnnotations
+	{ copyRTTI("CH_eClassifiers_EEnum_Head", &$$, &$1); addChild((void ***)&$$.u_EEnum->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eClassifiers_EEnum : LT KWeClassifiers CH_eClassifiers_EEnum_Post SLASH GT
+	{ copyRTTI("CH_eClassifiers_EEnum", &$$, &$1); }
+CH_eClassifiers_EEnum : CH_eClassifiers_EEnum_Head LT SLASH KWeClassifiers GT
+	{ copyRTTI("CH_eClassifiers_EEnum", &$$, &$1); }
+CH_eClassifiers_EEnum : LT KWeClassifiers CH_eClassifiers_EEnum_Head LT SLASH
+	{ copyRTTI("CH_eClassifiers_EEnum", &$$, &$1); }
+
+CH_eClassifiers : CH_eClassifiers_EClass
+	{ copyRTTI("CH_eClassifiers", &$$, &$1); }
+CH_eClassifiers : CH_eClassifiers_EDataType
+	{ copyRTTI("CH_eClassifiers", &$$, &$1); }
+CH_eClassifiers : CH_eClassifiers_EEnum
+	{ copyRTTI("CH_eClassifiers", &$$, &$1); }
+
+CH_eGenericExceptions_EGenericType_Post : 
+	{ createRTTI("CH_eGenericExceptions_EGenericType", &$$, &rtti_EGenericType); }
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eGenericExceptions_EGenericType_Head : LT KWeGenericExceptions CH_eGenericExceptions_EGenericType_Post GT
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Head", &$$, &$1); }
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eGenericExceptions_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eGenericExceptions_EGenericType : LT KWeGenericExceptions CH_eGenericExceptions_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eGenericExceptions_EGenericType", &$$, &$1); }
+CH_eGenericExceptions_EGenericType : CH_eGenericExceptions_EGenericType_Head LT SLASH KWeGenericExceptions GT
+	{ copyRTTI("CH_eGenericExceptions_EGenericType", &$$, &$1); }
+CH_eGenericExceptions_EGenericType : LT KWeGenericExceptions CH_eGenericExceptions_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eGenericExceptions_EGenericType", &$$, &$1); }
+
+CH_eGenericExceptions : CH_eGenericExceptions_EGenericType
+	{ copyRTTI("CH_eGenericExceptions", &$$, &$1); }
+
+CH_eGenericSuperTypes_EGenericType_Post : 
+	{ createRTTI("CH_eGenericSuperTypes_EGenericType", &$$, &rtti_EGenericType); }
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eGenericSuperTypes_EGenericType_Head : LT KWeGenericSuperTypes CH_eGenericSuperTypes_EGenericType_Post GT
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Head", &$$, &$1); }
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eGenericSuperTypes_EGenericType : LT KWeGenericSuperTypes CH_eGenericSuperTypes_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType", &$$, &$1); }
+CH_eGenericSuperTypes_EGenericType : CH_eGenericSuperTypes_EGenericType_Head LT SLASH KWeGenericSuperTypes GT
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType", &$$, &$1); }
+CH_eGenericSuperTypes_EGenericType : LT KWeGenericSuperTypes CH_eGenericSuperTypes_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eGenericSuperTypes_EGenericType", &$$, &$1); }
+
+CH_eGenericSuperTypes : CH_eGenericSuperTypes_EGenericType
+	{ copyRTTI("CH_eGenericSuperTypes", &$$, &$1); }
+
+CH_eGenericType_EGenericType_Post : 
+	{ createRTTI("CH_eGenericType_EGenericType", &$$, &rtti_EGenericType); }
+CH_eGenericType_EGenericType_Post : CH_eGenericType_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eGenericType_EGenericType_Post : CH_eGenericType_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eGenericType_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eGenericType_EGenericType_Post : CH_eGenericType_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eGenericType_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eGenericType_EGenericType_Head : LT KWeGenericType CH_eGenericType_EGenericType_Post GT
+	{ copyRTTI("CH_eGenericType_EGenericType_Head", &$$, &$1); }
+CH_eGenericType_EGenericType_Head : CH_eGenericType_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eGenericType_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eGenericType_EGenericType_Head : CH_eGenericType_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eGenericType_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eGenericType_EGenericType_Head : CH_eGenericType_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eGenericType_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eGenericType_EGenericType : LT KWeGenericType CH_eGenericType_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eGenericType_EGenericType", &$$, &$1); }
+CH_eGenericType_EGenericType : CH_eGenericType_EGenericType_Head LT SLASH KWeGenericType GT
+	{ copyRTTI("CH_eGenericType_EGenericType", &$$, &$1); }
+CH_eGenericType_EGenericType : LT KWeGenericType CH_eGenericType_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eGenericType_EGenericType", &$$, &$1); }
+
+CH_eGenericType : CH_eGenericType_EGenericType
+	{ copyRTTI("CH_eGenericType", &$$, &$1); }
+
+CH_eLiterals_EEnumLiteral_Post : 
+	{ createRTTI("CH_eLiterals_EEnumLiteral", &$$, &rtti_EEnumLiteral); }
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post TYPE_ecore_EEnumLiteral
+	{ $$ = $1; }
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWname EQ STRING
+	{ copyRTTI("CH_eLiterals_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_name = getString($4.string); }
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWvalue EQ STRING
+	{ copyRTTI("CH_eLiterals_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_value = getInt($4.string); }
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWliteral EQ STRING
+	{ copyRTTI("CH_eLiterals_EEnumLiteral_Post", &$$, &$1); $$.u_EEnumLiteral->s_literal = getString($4.string); }
+CH_eLiterals_EEnumLiteral_Head : LT KWeLiterals CH_eLiterals_EEnumLiteral_Post GT
+	{ copyRTTI("CH_eLiterals_EEnumLiteral_Head", &$$, &$1); }
+CH_eLiterals_EEnumLiteral_Head : CH_eLiterals_EEnumLiteral_Head CH_eAnnotations
+	{ copyRTTI("CH_eLiterals_EEnumLiteral_Head", &$$, &$1); addChild((void ***)&$$.u_EEnumLiteral->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eLiterals_EEnumLiteral : LT KWeLiterals CH_eLiterals_EEnumLiteral_Post SLASH GT
+	{ copyRTTI("CH_eLiterals_EEnumLiteral", &$$, &$1); }
+CH_eLiterals_EEnumLiteral : CH_eLiterals_EEnumLiteral_Head LT SLASH KWeLiterals GT
+	{ copyRTTI("CH_eLiterals_EEnumLiteral", &$$, &$1); }
+CH_eLiterals_EEnumLiteral : LT KWeLiterals CH_eLiterals_EEnumLiteral_Head LT SLASH
+	{ copyRTTI("CH_eLiterals_EEnumLiteral", &$$, &$1); }
+
+CH_eLiterals : CH_eLiterals_EEnumLiteral
+	{ copyRTTI("CH_eLiterals", &$$, &$1); }
+
+CH_eLowerBound_EGenericType_Post : 
+	{ createRTTI("CH_eLowerBound_EGenericType", &$$, &rtti_EGenericType); }
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eLowerBound_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eLowerBound_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eLowerBound_EGenericType_Head : LT KWeLowerBound CH_eLowerBound_EGenericType_Post GT
+	{ copyRTTI("CH_eLowerBound_EGenericType_Head", &$$, &$1); }
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eLowerBound_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eLowerBound_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eLowerBound_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eLowerBound_EGenericType : LT KWeLowerBound CH_eLowerBound_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eLowerBound_EGenericType", &$$, &$1); }
+CH_eLowerBound_EGenericType : CH_eLowerBound_EGenericType_Head LT SLASH KWeLowerBound GT
+	{ copyRTTI("CH_eLowerBound_EGenericType", &$$, &$1); }
+CH_eLowerBound_EGenericType : LT KWeLowerBound CH_eLowerBound_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eLowerBound_EGenericType", &$$, &$1); }
+
+CH_eLowerBound : CH_eLowerBound_EGenericType
+	{ copyRTTI("CH_eLowerBound", &$$, &$1); }
+
+CH_eOperations_EOperation_Post : 
+	{ createRTTI("CH_eOperations_EOperation", &$$, &rtti_EOperation); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post TYPE_ecore_EOperation
+	{ $$ = $1; }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWordered EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_ordered = getBoolean($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWupperBound EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_upperBound = getInt($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWname EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_name = getString($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWunique EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_unique = getBoolean($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWlowerBound EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_lowerBound = getInt($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWeType EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); $$.u_EOperation->s_eType = resolveXmiId($4.string); }
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWeExceptions EQ STRING
+	{ copyRTTI("CH_eOperations_EOperation_Post", &$$, &$1); addToList((void ***)&$$.u_EOperation->s_eExceptions, resolveXmiId($4.string)); }
+CH_eOperations_EOperation_Head : LT KWeOperations CH_eOperations_EOperation_Post GT
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); }
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eGenericType
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); $$.u_EOperation->s_eGenericType = resolveXmiId($2.string); }
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eParameters
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eParameters, resolveXmiId($2.string)); }
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eGenericExceptions
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eGenericExceptions, resolveXmiId($2.string)); }
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eTypeParameters
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eTypeParameters, resolveXmiId($2.string)); }
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eAnnotations
+	{ copyRTTI("CH_eOperations_EOperation_Head", &$$, &$1); addChild((void ***)&$$.u_EOperation->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eOperations_EOperation : LT KWeOperations CH_eOperations_EOperation_Post SLASH GT
+	{ copyRTTI("CH_eOperations_EOperation", &$$, &$1); }
+CH_eOperations_EOperation : CH_eOperations_EOperation_Head LT SLASH KWeOperations GT
+	{ copyRTTI("CH_eOperations_EOperation", &$$, &$1); }
+CH_eOperations_EOperation : LT KWeOperations CH_eOperations_EOperation_Head LT SLASH
+	{ copyRTTI("CH_eOperations_EOperation", &$$, &$1); }
+
+CH_eOperations : CH_eOperations_EOperation
+	{ copyRTTI("CH_eOperations", &$$, &$1); }
+
+CH_eParameters_EParameter_Post : 
+	{ createRTTI("CH_eParameters_EParameter", &$$, &rtti_EParameter); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post TYPE_ecore_EParameter
+	{ $$ = $1; }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWordered EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_ordered = getBoolean($4.string); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWupperBound EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_upperBound = getInt($4.string); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWname EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_name = getString($4.string); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWunique EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_unique = getBoolean($4.string); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWlowerBound EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_lowerBound = getInt($4.string); }
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWeType EQ STRING
+	{ copyRTTI("CH_eParameters_EParameter_Post", &$$, &$1); $$.u_EParameter->s_eType = resolveXmiId($4.string); }
+CH_eParameters_EParameter_Head : LT KWeParameters CH_eParameters_EParameter_Post GT
+	{ copyRTTI("CH_eParameters_EParameter_Head", &$$, &$1); }
+CH_eParameters_EParameter_Head : CH_eParameters_EParameter_Head CH_eGenericType
+	{ copyRTTI("CH_eParameters_EParameter_Head", &$$, &$1); $$.u_EParameter->s_eGenericType = resolveXmiId($2.string); }
+CH_eParameters_EParameter_Head : CH_eParameters_EParameter_Head CH_eAnnotations
+	{ copyRTTI("CH_eParameters_EParameter_Head", &$$, &$1); addChild((void ***)&$$.u_EParameter->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eParameters_EParameter : LT KWeParameters CH_eParameters_EParameter_Post SLASH GT
+	{ copyRTTI("CH_eParameters_EParameter", &$$, &$1); }
+CH_eParameters_EParameter : CH_eParameters_EParameter_Head LT SLASH KWeParameters GT
+	{ copyRTTI("CH_eParameters_EParameter", &$$, &$1); }
+CH_eParameters_EParameter : LT KWeParameters CH_eParameters_EParameter_Head LT SLASH
+	{ copyRTTI("CH_eParameters_EParameter", &$$, &$1); }
+
+CH_eParameters : CH_eParameters_EParameter
+	{ copyRTTI("CH_eParameters", &$$, &$1); }
+
+CH_eStructuralFeatures_EAttribute_Pre : TYPE_ecore_EAttribute
+	{ $$ = $1; }
+CH_eStructuralFeatures_EAttribute_Pre : KWordered EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_ordered = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWupperBound EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_upperBound = getInt($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWname EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_name = getString($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWdefaultValueLiteral EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_defaultValueLiteral = getString($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWderived EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_derived = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWunique EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_unique = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWvolatile EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_volatile = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWtransient EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_transient = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWiD EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_iD = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWlowerBound EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_lowerBound = getInt($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWchangeable EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_changeable = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWunsettable EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_unsettable = getBoolean($3.string); }
+CH_eStructuralFeatures_EAttribute_Pre : KWeType EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Pre", &$$, &$4); $$.u_EAttribute->s_eType = resolveXmiId($3.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWordered EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_ordered = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWupperBound EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_upperBound = getInt($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWname EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_name = getString($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWdefaultValueLiteral EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_defaultValueLiteral = getString($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWderived EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_derived = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWunique EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_unique = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWvolatile EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_volatile = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWtransient EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_transient = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWiD EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_iD = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWlowerBound EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_lowerBound = getInt($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWchangeable EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_changeable = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWunsettable EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_unsettable = getBoolean($4.string); }
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWeType EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Post", &$$, &$1); $$.u_EAttribute->s_eType = resolveXmiId($4.string); }
+CH_eStructuralFeatures_EAttribute_Head : LT KWeStructuralFeatures CH_eStructuralFeatures_EAttribute_Post GT
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Head", &$$, &$1); }
+CH_eStructuralFeatures_EAttribute_Head : CH_eStructuralFeatures_EAttribute_Head CH_eGenericType
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Head", &$$, &$1); $$.u_EAttribute->s_eGenericType = resolveXmiId($2.string); }
+CH_eStructuralFeatures_EAttribute_Head : CH_eStructuralFeatures_EAttribute_Head CH_eAnnotations
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute_Head", &$$, &$1); addChild((void ***)&$$.u_EAttribute->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eStructuralFeatures_EAttribute : LT KWeStructuralFeatures CH_eStructuralFeatures_EAttribute_Post SLASH GT
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute", &$$, &$1); }
+CH_eStructuralFeatures_EAttribute : CH_eStructuralFeatures_EAttribute_Head LT SLASH KWeStructuralFeatures GT
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute", &$$, &$1); }
+CH_eStructuralFeatures_EAttribute : LT KWeStructuralFeatures CH_eStructuralFeatures_EAttribute_Head LT SLASH
+	{ copyRTTI("CH_eStructuralFeatures_EAttribute", &$$, &$1); }
+
+CH_eStructuralFeatures_EReference_Pre : TYPE_ecore_EReference
+	{ $$ = $1; }
+CH_eStructuralFeatures_EReference_Pre : KWupperBound EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_upperBound = getInt($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWname EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_name = getString($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWdefaultValueLiteral EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_defaultValueLiteral = getString($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWunique EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_unique = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWvolatile EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_volatile = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWtransient EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_transient = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWlowerBound EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_lowerBound = getInt($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWchangeable EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_changeable = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWunsettable EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_unsettable = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWordered EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_ordered = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWderived EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_derived = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWcontainment EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_containment = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWresolveProxies EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_resolveProxies = getBoolean($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWeType EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_eType = resolveXmiId($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWeOpposite EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); $$.u_EReference->s_eOpposite = resolveXmiId($3.string); }
+CH_eStructuralFeatures_EReference_Pre : KWeKeys EQ STRING CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Pre", &$$, &$4); addToList((void ***)&$$.u_EReference->s_eKeys, resolveXmiId($3.string)); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Pre
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWupperBound EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_upperBound = getInt($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWname EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_name = getString($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWdefaultValueLiteral EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_defaultValueLiteral = getString($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWunique EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_unique = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWvolatile EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_volatile = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWtransient EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_transient = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWlowerBound EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_lowerBound = getInt($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWchangeable EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_changeable = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWunsettable EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_unsettable = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWordered EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_ordered = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWderived EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_derived = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWcontainment EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_containment = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWresolveProxies EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_resolveProxies = getBoolean($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWeType EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_eType = resolveXmiId($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWeOpposite EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); $$.u_EReference->s_eOpposite = resolveXmiId($4.string); }
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWeKeys EQ STRING
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Post", &$$, &$1); addToList((void ***)&$$.u_EReference->s_eKeys, resolveXmiId($4.string)); }
+CH_eStructuralFeatures_EReference_Head : LT KWeStructuralFeatures CH_eStructuralFeatures_EReference_Post GT
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Head", &$$, &$1); }
+CH_eStructuralFeatures_EReference_Head : CH_eStructuralFeatures_EReference_Head CH_eGenericType
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Head", &$$, &$1); $$.u_EReference->s_eGenericType = resolveXmiId($2.string); }
+CH_eStructuralFeatures_EReference_Head : CH_eStructuralFeatures_EReference_Head CH_eAnnotations
+	{ copyRTTI("CH_eStructuralFeatures_EReference_Head", &$$, &$1); addChild((void ***)&$$.u_EReference->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eStructuralFeatures_EReference : LT KWeStructuralFeatures CH_eStructuralFeatures_EReference_Post SLASH GT
+	{ copyRTTI("CH_eStructuralFeatures_EReference", &$$, &$1); }
+CH_eStructuralFeatures_EReference : CH_eStructuralFeatures_EReference_Head LT SLASH KWeStructuralFeatures GT
+	{ copyRTTI("CH_eStructuralFeatures_EReference", &$$, &$1); }
+CH_eStructuralFeatures_EReference : LT KWeStructuralFeatures CH_eStructuralFeatures_EReference_Head LT SLASH
+	{ copyRTTI("CH_eStructuralFeatures_EReference", &$$, &$1); }
+
+CH_eStructuralFeatures : CH_eStructuralFeatures_EAttribute
+	{ copyRTTI("CH_eStructuralFeatures", &$$, &$1); }
+CH_eStructuralFeatures : CH_eStructuralFeatures_EReference
+	{ copyRTTI("CH_eStructuralFeatures", &$$, &$1); }
+
+CH_eSubpackages_EPackage_Post : 
+	{ createRTTI("CH_eSubpackages_EPackage", &$$, &rtti_EPackage); }
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post TYPE_ecore_EPackage
+	{ $$ = $1; }
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWname EQ STRING
+	{ copyRTTI("CH_eSubpackages_EPackage_Post", &$$, &$1); $$.u_EPackage->s_name = getString($4.string); }
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWnsURI EQ STRING
+	{ copyRTTI("CH_eSubpackages_EPackage_Post", &$$, &$1); $$.u_EPackage->s_nsURI = getString($4.string); }
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWnsPrefix EQ STRING
+	{ copyRTTI("CH_eSubpackages_EPackage_Post", &$$, &$1); $$.u_EPackage->s_nsPrefix = getString($4.string); }
+CH_eSubpackages_EPackage_Head : LT KWeSubpackages CH_eSubpackages_EPackage_Post GT
+	{ copyRTTI("CH_eSubpackages_EPackage_Head", &$$, &$1); }
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eClassifiers
+	{ copyRTTI("CH_eSubpackages_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eClassifiers, resolveXmiId($2.string)); }
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eSubpackages
+	{ copyRTTI("CH_eSubpackages_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eSubpackages, resolveXmiId($2.string)); }
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eAnnotations
+	{ copyRTTI("CH_eSubpackages_EPackage_Head", &$$, &$1); addChild((void ***)&$$.u_EPackage->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eSubpackages_EPackage : LT KWeSubpackages CH_eSubpackages_EPackage_Post SLASH GT
+	{ copyRTTI("CH_eSubpackages_EPackage", &$$, &$1); }
+CH_eSubpackages_EPackage : CH_eSubpackages_EPackage_Head LT SLASH KWeSubpackages GT
+	{ copyRTTI("CH_eSubpackages_EPackage", &$$, &$1); }
+CH_eSubpackages_EPackage : LT KWeSubpackages CH_eSubpackages_EPackage_Head LT SLASH
+	{ copyRTTI("CH_eSubpackages_EPackage", &$$, &$1); }
+
+CH_eSubpackages : CH_eSubpackages_EPackage
+	{ copyRTTI("CH_eSubpackages", &$$, &$1); }
+
+CH_eTypeArguments_EGenericType_Post : 
+	{ createRTTI("CH_eTypeArguments_EGenericType", &$$, &rtti_EGenericType); }
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eTypeArguments_EGenericType_Head : LT KWeTypeArguments CH_eTypeArguments_EGenericType_Post GT
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Head", &$$, &$1); }
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eTypeArguments_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eTypeArguments_EGenericType : LT KWeTypeArguments CH_eTypeArguments_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eTypeArguments_EGenericType", &$$, &$1); }
+CH_eTypeArguments_EGenericType : CH_eTypeArguments_EGenericType_Head LT SLASH KWeTypeArguments GT
+	{ copyRTTI("CH_eTypeArguments_EGenericType", &$$, &$1); }
+CH_eTypeArguments_EGenericType : LT KWeTypeArguments CH_eTypeArguments_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eTypeArguments_EGenericType", &$$, &$1); }
+
+CH_eTypeArguments : CH_eTypeArguments_EGenericType
+	{ copyRTTI("CH_eTypeArguments", &$$, &$1); }
+
+CH_eTypeParameters_ETypeParameter_Post : 
+	{ createRTTI("CH_eTypeParameters_ETypeParameter", &$$, &rtti_ETypeParameter); }
+CH_eTypeParameters_ETypeParameter_Post : CH_eTypeParameters_ETypeParameter_Post TYPE_ecore_ETypeParameter
+	{ $$ = $1; }
+CH_eTypeParameters_ETypeParameter_Post : CH_eTypeParameters_ETypeParameter_Post KWname EQ STRING
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter_Post", &$$, &$1); $$.u_ETypeParameter->s_name = getString($4.string); }
+CH_eTypeParameters_ETypeParameter_Head : LT KWeTypeParameters CH_eTypeParameters_ETypeParameter_Post GT
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter_Head", &$$, &$1); }
+CH_eTypeParameters_ETypeParameter_Head : CH_eTypeParameters_ETypeParameter_Head CH_eBounds
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter_Head", &$$, &$1); addChild((void ***)&$$.u_ETypeParameter->s_eBounds, resolveXmiId($2.string)); }
+CH_eTypeParameters_ETypeParameter_Head : CH_eTypeParameters_ETypeParameter_Head CH_eAnnotations
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter_Head", &$$, &$1); addChild((void ***)&$$.u_ETypeParameter->s_eAnnotations, resolveXmiId($2.string)); }
+CH_eTypeParameters_ETypeParameter : LT KWeTypeParameters CH_eTypeParameters_ETypeParameter_Post SLASH GT
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter", &$$, &$1); }
+CH_eTypeParameters_ETypeParameter : CH_eTypeParameters_ETypeParameter_Head LT SLASH KWeTypeParameters GT
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter", &$$, &$1); }
+CH_eTypeParameters_ETypeParameter : LT KWeTypeParameters CH_eTypeParameters_ETypeParameter_Head LT SLASH
+	{ copyRTTI("CH_eTypeParameters_ETypeParameter", &$$, &$1); }
+
+CH_eTypeParameters : CH_eTypeParameters_ETypeParameter
+	{ copyRTTI("CH_eTypeParameters", &$$, &$1); }
+
+CH_eUpperBound_EGenericType_Post : 
+	{ createRTTI("CH_eUpperBound_EGenericType", &$$, &rtti_EGenericType); }
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Post TYPE_ecore_EGenericType
+	{ $$ = $1; }
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Post KWeClassifier EQ STRING
+	{ copyRTTI("CH_eUpperBound_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eClassifier = resolveXmiId($4.string); }
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Post KWeTypeParameter EQ STRING
+	{ copyRTTI("CH_eUpperBound_EGenericType_Post", &$$, &$1); $$.u_EGenericType->s_eTypeParameter = resolveXmiId($4.string); }
+CH_eUpperBound_EGenericType_Head : LT KWeUpperBound CH_eUpperBound_EGenericType_Post GT
+	{ copyRTTI("CH_eUpperBound_EGenericType_Head", &$$, &$1); }
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eTypeArguments
+	{ copyRTTI("CH_eUpperBound_EGenericType_Head", &$$, &$1); addChild((void ***)&$$.u_EGenericType->s_eTypeArguments, resolveXmiId($2.string)); }
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eLowerBound
+	{ copyRTTI("CH_eUpperBound_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eLowerBound = resolveXmiId($2.string); }
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eUpperBound
+	{ copyRTTI("CH_eUpperBound_EGenericType_Head", &$$, &$1); $$.u_EGenericType->s_eUpperBound = resolveXmiId($2.string); }
+CH_eUpperBound_EGenericType : LT KWeUpperBound CH_eUpperBound_EGenericType_Post SLASH GT
+	{ copyRTTI("CH_eUpperBound_EGenericType", &$$, &$1); }
+CH_eUpperBound_EGenericType : CH_eUpperBound_EGenericType_Head LT SLASH KWeUpperBound GT
+	{ copyRTTI("CH_eUpperBound_EGenericType", &$$, &$1); }
+CH_eUpperBound_EGenericType : LT KWeUpperBound CH_eUpperBound_EGenericType_Head LT SLASH
+	{ copyRTTI("CH_eUpperBound_EGenericType", &$$, &$1); }
+
+CH_eUpperBound : CH_eUpperBound_EGenericType
+	{ copyRTTI("CH_eUpperBound", &$$, &$1); }
+
+NON_XMLNS_IDENTIFIER_TOKEN : 
+	  KWEAnnotation { $$.token = KWEAnnotation; }
+	| KWEAttribute { $$.token = KWEAttribute; }
+	| KWEClass { $$.token = KWEClass; }
+	| KWEClassifier { $$.token = KWEClassifier; }
+	| KWEDataType { $$.token = KWEDataType; }
+	| KWEEnum { $$.token = KWEEnum; }
+	| KWEEnumLiteral { $$.token = KWEEnumLiteral; }
+	| KWEFactory { $$.token = KWEFactory; }
+	| KWEGenericType { $$.token = KWEGenericType; }
+	| KWEModelElement { $$.token = KWEModelElement; }
+	| KWENamedElement { $$.token = KWENamedElement; }
+	| KWEObject { $$.token = KWEObject; }
+	| KWEOperation { $$.token = KWEOperation; }
+	| KWEPackage { $$.token = KWEPackage; }
+	| KWEParameter { $$.token = KWEParameter; }
+	| KWEReference { $$.token = KWEReference; }
+	| KWEStringToStringMapEntry { $$.token = KWEStringToStringMapEntry; }
+	| KWEStructuralFeature { $$.token = KWEStructuralFeature; }
+	| KWETypeParameter { $$.token = KWETypeParameter; }
+	| KWETypedElement { $$.token = KWETypedElement; }
+	| KWXMI { $$.token = KWXMI; }
+	| KWabstract { $$.token = KWabstract; }
+	| KWchangeable { $$.token = KWchangeable; }
+	| KWcontainment { $$.token = KWcontainment; }
+	| KWcontents { $$.token = KWcontents; }
+	| KWdefaultValueLiteral { $$.token = KWdefaultValueLiteral; }
+	| KWderived { $$.token = KWderived; }
+	| KWdetails { $$.token = KWdetails; }
+	| KWeAnnotations { $$.token = KWeAnnotations; }
+	| KWeBounds { $$.token = KWeBounds; }
+	| KWeClassifier { $$.token = KWeClassifier; }
+	| KWeClassifiers { $$.token = KWeClassifiers; }
+	| KWeExceptions { $$.token = KWeExceptions; }
+	| KWeGenericExceptions { $$.token = KWeGenericExceptions; }
+	| KWeGenericSuperTypes { $$.token = KWeGenericSuperTypes; }
+	| KWeGenericType { $$.token = KWeGenericType; }
+	| KWeKeys { $$.token = KWeKeys; }
+	| KWeLiterals { $$.token = KWeLiterals; }
+	| KWeLowerBound { $$.token = KWeLowerBound; }
+	| KWeOperations { $$.token = KWeOperations; }
+	| KWeOpposite { $$.token = KWeOpposite; }
+	| KWeParameters { $$.token = KWeParameters; }
+	| KWeStructuralFeatures { $$.token = KWeStructuralFeatures; }
+	| KWeSubpackages { $$.token = KWeSubpackages; }
+	| KWeSuperTypes { $$.token = KWeSuperTypes; }
+	| KWeType { $$.token = KWeType; }
+	| KWeTypeArguments { $$.token = KWeTypeArguments; }
+	| KWeTypeParameter { $$.token = KWeTypeParameter; }
+	| KWeTypeParameters { $$.token = KWeTypeParameters; }
+	| KWeUpperBound { $$.token = KWeUpperBound; }
+	| KWencoding { $$.token = KWencoding; }
+	| KWiD { $$.token = KWiD; }
+	| KWinstanceClassName { $$.token = KWinstanceClassName; }
+	| KWinstanceTypeName { $$.token = KWinstanceTypeName; }
+	| KWinterface { $$.token = KWinterface; }
+	| KWkey { $$.token = KWkey; }
+	| KWliteral { $$.token = KWliteral; }
+	| KWlowerBound { $$.token = KWlowerBound; }
+	| KWname { $$.token = KWname; }
+	| KWnsPrefix { $$.token = KWnsPrefix; }
+	| KWnsURI { $$.token = KWnsURI; }
+	| KWordered { $$.token = KWordered; }
+	| KWreferences { $$.token = KWreferences; }
+	| KWresolveProxies { $$.token = KWresolveProxies; }
+	| KWserializable { $$.token = KWserializable; }
+	| KWsource { $$.token = KWsource; }
+	| KWtransient { $$.token = KWtransient; }
+	| KWtype { $$.token = KWtype; }
+	| KWunique { $$.token = KWunique; }
+	| KWunsettable { $$.token = KWunsettable; }
+	| KWupperBound { $$.token = KWupperBound; }
+	| KWvalue { $$.token = KWvalue; }
+	| KWversion { $$.token = KWversion; }
+	| KWvolatile { $$.token = KWvolatile; }
+	| KWxml { $$.token = KWxml; };
+
+IDENTIFIER_TOKEN :
+	  NON_XMLNS_IDENTIFIER_TOKEN { $$.token = $1.token; }
+	| KWxmlns { $$.token = KWxmlns; }
+%%
+
+const char *tokenText(int token) {
+	switch (token) {
+		case COLON: return ":";
+		case DQUOTE: return "\"";
+		case EQ: return "=";
+		case GT: return ">";
+		case KWEAnnotation: return "EAnnotation";
+		case KWEAttribute: return "EAttribute";
+		case KWEClass: return "EClass";
+		case KWEClassifier: return "EClassifier";
+		case KWEDataType: return "EDataType";
+		case KWEEnum: return "EEnum";
+		case KWEEnumLiteral: return "EEnumLiteral";
+		case KWEFactory: return "EFactory";
+		case KWEGenericType: return "EGenericType";
+		case KWEModelElement: return "EModelElement";
+		case KWENamedElement: return "ENamedElement";
+		case KWEObject: return "EObject";
+		case KWEOperation: return "EOperation";
+		case KWEPackage: return "EPackage";
+		case KWEParameter: return "EParameter";
+		case KWEReference: return "EReference";
+		case KWEStringToStringMapEntry: return "EStringToStringMapEntry";
+		case KWEStructuralFeature: return "EStructuralFeature";
+		case KWETypeParameter: return "ETypeParameter";
+		case KWETypedElement: return "ETypedElement";
+		case KWXMI: return "XMI";
+		case KWabstract: return "abstract";
+		case KWchangeable: return "changeable";
+		case KWcontainment: return "containment";
+		case KWcontents: return "contents";
+		case KWdefaultValueLiteral: return "defaultValueLiteral";
+		case KWderived: return "derived";
+		case KWdetails: return "details";
+		case KWeAnnotations: return "eAnnotations";
+		case KWeBounds: return "eBounds";
+		case KWeClassifier: return "eClassifier";
+		case KWeClassifiers: return "eClassifiers";
+		case KWeExceptions: return "eExceptions";
+		case KWeGenericExceptions: return "eGenericExceptions";
+		case KWeGenericSuperTypes: return "eGenericSuperTypes";
+		case KWeGenericType: return "eGenericType";
+		case KWeKeys: return "eKeys";
+		case KWeLiterals: return "eLiterals";
+		case KWeLowerBound: return "eLowerBound";
+		case KWeOperations: return "eOperations";
+		case KWeOpposite: return "eOpposite";
+		case KWeParameters: return "eParameters";
+		case KWeStructuralFeatures: return "eStructuralFeatures";
+		case KWeSubpackages: return "eSubpackages";
+		case KWeSuperTypes: return "eSuperTypes";
+		case KWeType: return "eType";
+		case KWeTypeArguments: return "eTypeArguments";
+		case KWeTypeParameter: return "eTypeParameter";
+		case KWeTypeParameters: return "eTypeParameters";
+		case KWeUpperBound: return "eUpperBound";
+		case KWencoding: return "encoding";
+		case KWiD: return "iD";
+		case KWinstanceClassName: return "instanceClassName";
+		case KWinstanceTypeName: return "instanceTypeName";
+		case KWinterface: return "interface";
+		case KWkey: return "key";
+		case KWliteral: return "literal";
+		case KWlowerBound: return "lowerBound";
+		case KWname: return "name";
+		case KWnsPrefix: return "nsPrefix";
+		case KWnsURI: return "nsURI";
+		case KWordered: return "ordered";
+		case KWreferences: return "references";
+		case KWresolveProxies: return "resolveProxies";
+		case KWserializable: return "serializable";
+		case KWsource: return "source";
+		case KWtransient: return "transient";
+		case KWtype: return "type";
+		case KWunique: return "unique";
+		case KWunsettable: return "unsettable";
+		case KWupperBound: return "upperBound";
+		case KWvalue: return "value";
+		case KWversion: return "version";
+		case KWvolatile: return "volatile";
+		case KWxml: return "xml";
+		case KWxmlns: return "xmlns";
+		case LT: return "<";
+		case QUERY: return "?";
+		case SLASH: return "/";
+		default: return null;
+	}
+}

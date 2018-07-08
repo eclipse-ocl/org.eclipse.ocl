@@ -1,0 +1,410 @@
+grammar org.eclipse.ocl.examples.ecore.XMIGrammar hidden(WS)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Document returns ecore::EObject:
+	  RULE_EAnnotation
+	| RULE_EAttribute
+	| RULE_EClass
+	| RULE_EDataType
+	| RULE_EEnum
+	| RULE_EEnumLiteral
+	| RULE_EFactory
+	| RULE_EGenericType
+	| RULE_EObject
+	| RULE_EOperation
+	| RULE_EPackage
+	| RULE_EParameter
+	| RULE_EReference
+	| RULE_EStringToStringMapEntry
+	| RULE_ETypeParameter;
+
+RULE_EAnnotation returns ecore::EAnnotation: {ecore::EAnnotation}
+	'<ecore:EAnnotation'
+
+	(source=TERM_EString)*	( '/>'
+	| ('>' '</ecore:EAnnotation>')
+	);
+
+RULE_EAttribute returns ecore::EAttribute: {ecore::EAttribute}
+	'<ecore:EAttribute'
+
+	(iD=TERM_EBoolean)*	( '/>'
+	| ('>' '</ecore:EAttribute>')
+	);
+
+RULE_EClass returns ecore::EClass: {ecore::EClass}
+	'<ecore:EClass'
+
+	(abstract=TERM_EBoolean | interface=TERM_EBoolean)*	( '/>'
+	| ('>' '</ecore:EClass>')
+	);
+
+RULE_EDataType returns ecore::EDataType: {ecore::EDataType}
+	'<ecore:EDataType'
+	( '/>'
+	| ('>' '</ecore:EDataType>')
+	);
+
+RULE_EEnum returns ecore::EEnum: {ecore::EEnum}
+	'<ecore:EEnum'
+
+	(serializable=TERM_EBoolean)*	( '/>'
+	| ('>' '</ecore:EEnum>')
+	);
+
+RULE_EEnumLiteral returns ecore::EEnumLiteral: {ecore::EEnumLiteral}
+	'<ecore:EEnumLiteral'
+
+	(value=TERM_EInt | literal=TERM_EString)*	( '/>'
+	| ('>' '</ecore:EEnumLiteral>')
+	);
+
+RULE_EFactory returns ecore::EFactory: {ecore::EFactory}
+	'<ecore:EFactory'
+	( '/>'
+	| ('>' '</ecore:EFactory>')
+	);
+
+RULE_EGenericType returns ecore::EGenericType: {ecore::EGenericType}
+	'<ecore:EGenericType'
+	( '/>'
+	| ('>' '</ecore:EGenericType>')
+	);
+
+RULE_EObject returns ecore::EObject: {ecore::EObject}
+	'<ecore:EObject'
+	( '/>'
+	| ('>' '</ecore:EObject>')
+	);
+
+RULE_EOperation returns ecore::EOperation: {ecore::EOperation}
+	'<ecore:EOperation'
+	( '/>'
+	| ('>' '</ecore:EOperation>')
+	);
+
+RULE_EPackage returns ecore::EPackage: {ecore::EPackage}
+	'<ecore:EPackage'
+
+	(nsURI=TERM_EString | nsPrefix=TERM_EString)*	( '/>'
+	| ('>' '</ecore:EPackage>')
+	);
+
+RULE_EParameter returns ecore::EParameter: {ecore::EParameter}
+	'<ecore:EParameter'
+	( '/>'
+	| ('>' '</ecore:EParameter>')
+	);
+
+RULE_EReference returns ecore::EReference: {ecore::EReference}
+	'<ecore:EReference'
+
+	(ordered=TERM_EBoolean | unique=TERM_EBoolean | lowerBound=TERM_EInt | upperBound=TERM_EInt | changeable=TERM_EBoolean | volatile=TERM_EBoolean | transient=TERM_EBoolean | defaultValueLiteral=TERM_EString | unsettable=TERM_EBoolean | derived=TERM_EBoolean | containment=TERM_EBoolean | resolveProxies=TERM_EBoolean)*	( '/>'
+	| ('>' '</ecore:EReference>')
+	);
+
+RULE_EStringToStringMapEntry returns ecore::EStringToStringMapEntry: {ecore::EStringToStringMapEntry}
+	'<ecore:EStringToStringMapEntry'
+
+	(key=TERM_EString | value=TERM_EString)*	( '/>'
+	| ('>' '</ecore:EStringToStringMapEntry>')
+	);
+
+RULE_ETypeParameter returns ecore::ETypeParameter: {ecore::ETypeParameter}
+	'<ecore:ETypeParameter'
+
+	(name=TERM_EString)*	( '/>'
+	| ('>' '</ecore:ETypeParameter>')
+	);
+
+RULE_GROUP_EObject_contents returns ecore::EObject:
+	  RULE_EObject_contents;
+
+RULE_EObject_contents returns ecore::EObject: {ecore::EObject}
+	'<contents'
+	('xsi:type' '=' '"ecore::EObject"')	( '/>'
+	| ('>' '</contents>')
+	);
+
+RULE_GROUP_EStringToStringMapEntry_details returns ecore::EStringToStringMapEntry:
+	  RULE_EStringToStringMapEntry_details;
+
+RULE_EStringToStringMapEntry_details returns ecore::EStringToStringMapEntry: {ecore::EStringToStringMapEntry}
+	'<details'
+	(key=TERM_EString | value=TERM_EString)*
+	('xsi:type' '=' '"ecore::EStringToStringMapEntry"')
+	(key=TERM_EString | value=TERM_EString)*
+	( '/>'
+	| ('>' '</details>')
+	);
+
+RULE_GROUP_EAnnotation_eAnnotations returns ecore::EAnnotation:
+	  RULE_EAnnotation_eAnnotations;
+
+RULE_EAnnotation_eAnnotations returns ecore::EAnnotation: {ecore::EAnnotation}
+	'<eAnnotations'
+	(source=TERM_EString)*
+	('xsi:type' '=' '"ecore::EAnnotation"')
+	(source=TERM_EString)*
+	( '/>'
+	| ('>' (details+=RULE_GROUP_EStringToStringMapEntry_details | contents+=RULE_GROUP_EObject_contents | references+=[ecore::EObject|XMIID])* '</eAnnotations>')
+	);
+
+RULE_GROUP_EGenericType_eBounds returns ecore::EGenericType:
+	  RULE_EGenericType_eBounds;
+
+RULE_EGenericType_eBounds returns ecore::EGenericType: {ecore::EGenericType}
+	'<eBounds'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eBounds>')
+	);
+
+RULE_GROUP_EClassifier_eClassifier returns ecore::EClassifier:
+	  RULE_EDataType_eClassifier
+	| RULE_EEnum_eClassifier
+	| RULE_EClass_eClassifier;
+
+RULE_EEnum_eClassifier returns ecore::EEnum: {ecore::EEnum}
+	'<eClassifier'
+	('xsi:type' '=' '"ecore::EEnum"')	( '/>'
+	| ('>' '</eClassifier>')
+	);
+
+RULE_EDataType_eClassifier returns ecore::EDataType: {ecore::EDataType}
+	'<eClassifier'
+	('xsi:type' '=' '"ecore::EDataType"')	( '/>'
+	| ('>' '</eClassifier>')
+	);
+
+RULE_EClass_eClassifier returns ecore::EClass: {ecore::EClass}
+	'<eClassifier'
+	('xsi:type' '=' '"ecore::EClass"')	( '/>'
+	| ('>' '</eClassifier>')
+	);
+
+RULE_GROUP_EClassifier_eClassifiers returns ecore::EClassifier:
+	  RULE_EDataType_eClassifiers
+	| RULE_EClass_eClassifiers
+	| RULE_EEnum_eClassifiers;
+
+RULE_EEnum_eClassifiers returns ecore::EEnum: {ecore::EEnum}
+	'<eClassifiers'
+	('xsi:type' '=' '"ecore::EEnum"')	( '/>'
+	| ('>' '</eClassifiers>')
+	);
+
+RULE_EDataType_eClassifiers returns ecore::EDataType: {ecore::EDataType}
+	'<eClassifiers'
+	('xsi:type' '=' '"ecore::EDataType"')	( '/>'
+	| ('>' '</eClassifiers>')
+	);
+
+RULE_EClass_eClassifiers returns ecore::EClass: {ecore::EClass}
+	'<eClassifiers'
+	('xsi:type' '=' '"ecore::EClass"')	( '/>'
+	| ('>' '</eClassifiers>')
+	);
+
+RULE_GROUP_EClassifier_eExceptions returns ecore::EClassifier:
+	  RULE_EEnum_eExceptions
+	| RULE_EDataType_eExceptions
+	| RULE_EClass_eExceptions;
+
+RULE_EDataType_eExceptions returns ecore::EDataType: {ecore::EDataType}
+	'<eExceptions'
+	(serializable=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EDataType"')
+	(serializable=TERM_EBoolean)*
+	( '/>'
+	| ('>' '</eExceptions>')
+	);
+
+RULE_EEnum_eExceptions returns ecore::EEnum: {ecore::EEnum}
+	'<eExceptions'
+	('xsi:type' '=' '"ecore::EEnum"')	( '/>'
+	| ('>' (eLiterals+=RULE_GROUP_EEnumLiteral_eLiterals)* '</eExceptions>')
+	);
+
+RULE_EClass_eExceptions returns ecore::EClass: {ecore::EClass}
+	'<eExceptions'
+	('xsi:type' '=' '"ecore::EClass"')	( '/>'
+	| ('>' '</eExceptions>')
+	);
+
+RULE_GROUP_EGenericType_eGenericExceptions returns ecore::EGenericType:
+	  RULE_EGenericType_eGenericExceptions;
+
+RULE_EGenericType_eGenericExceptions returns ecore::EGenericType: {ecore::EGenericType}
+	'<eGenericExceptions'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eGenericExceptions>')
+	);
+
+RULE_GROUP_EGenericType_eGenericSuperTypes returns ecore::EGenericType:
+	  RULE_EGenericType_eGenericSuperTypes;
+
+RULE_EGenericType_eGenericSuperTypes returns ecore::EGenericType: {ecore::EGenericType}
+	'<eGenericSuperTypes'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eGenericSuperTypes>')
+	);
+
+RULE_GROUP_EAttribute_eKeys returns ecore::EAttribute:
+	  RULE_EAttribute_eKeys;
+
+RULE_EAttribute_eKeys returns ecore::EAttribute: {ecore::EAttribute}
+	'<eKeys'
+	('xsi:type' '=' '"ecore::EAttribute"')	( '/>'
+	| ('>' '</eKeys>')
+	);
+
+RULE_GROUP_EEnumLiteral_eLiterals returns ecore::EEnumLiteral:
+	  RULE_EEnumLiteral_eLiterals;
+
+RULE_EEnumLiteral_eLiterals returns ecore::EEnumLiteral: {ecore::EEnumLiteral}
+	'<eLiterals'
+	(value=TERM_EInt | literal=TERM_EString)*
+	('xsi:type' '=' '"ecore::EEnumLiteral"')
+	(value=TERM_EInt | literal=TERM_EString)*
+	( '/>'
+	| ('>' '</eLiterals>')
+	);
+
+RULE_GROUP_EGenericType_eLowerBound returns ecore::EGenericType:
+	  RULE_EGenericType_eLowerBound;
+
+RULE_EGenericType_eLowerBound returns ecore::EGenericType: {ecore::EGenericType}
+	'<eLowerBound'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eLowerBound>')
+	);
+
+RULE_GROUP_EOperation_eOperations returns ecore::EOperation:
+	  RULE_EOperation_eOperations;
+
+RULE_EOperation_eOperations returns ecore::EOperation: {ecore::EOperation}
+	'<eOperations'
+	('xsi:type' '=' '"ecore::EOperation"')	( '/>'
+	| ('>' (eTypeParameters+=RULE_GROUP_ETypeParameter_eTypeParameters | eParameters+=RULE_GROUP_EParameter_eParameters | eExceptions+=[ecore::EClassifier|XMIID] | eGenericExceptions+=RULE_GROUP_EGenericType_eGenericExceptions)* '</eOperations>')
+	);
+
+RULE_GROUP_EReference_eOpposite returns ecore::EReference:
+	  RULE_EReference_eOpposite;
+
+RULE_EReference_eOpposite returns ecore::EReference: {ecore::EReference}
+	'<eOpposite'
+	('xsi:type' '=' '"ecore::EReference"')	( '/>'
+	| ('>' '</eOpposite>')
+	);
+
+RULE_GROUP_EParameter_eParameters returns ecore::EParameter:
+	  RULE_EParameter_eParameters;
+
+RULE_EParameter_eParameters returns ecore::EParameter: {ecore::EParameter}
+	'<eParameters'
+	('xsi:type' '=' '"ecore::EParameter"')	( '/>'
+	| ('>' '</eParameters>')
+	);
+
+RULE_GROUP_EStructuralFeature_eStructuralFeatures returns ecore::EStructuralFeature:
+	  RULE_EReference_eStructuralFeatures
+	| RULE_EAttribute_eStructuralFeatures;
+
+RULE_EReference_eStructuralFeatures returns ecore::EReference: {ecore::EReference}
+	'<eStructuralFeatures'
+	(ordered=TERM_EBoolean | unique=TERM_EBoolean | lowerBound=TERM_EInt | upperBound=TERM_EInt | changeable=TERM_EBoolean | volatile=TERM_EBoolean | transient=TERM_EBoolean | defaultValueLiteral=TERM_EString | unsettable=TERM_EBoolean | derived=TERM_EBoolean | containment=TERM_EBoolean | resolveProxies=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EReference"')
+	(ordered=TERM_EBoolean | unique=TERM_EBoolean | lowerBound=TERM_EInt | upperBound=TERM_EInt | changeable=TERM_EBoolean | volatile=TERM_EBoolean | transient=TERM_EBoolean | defaultValueLiteral=TERM_EString | unsettable=TERM_EBoolean | derived=TERM_EBoolean | containment=TERM_EBoolean | resolveProxies=TERM_EBoolean)*
+	( '/>'
+	| ('>' (eOpposite=[ecore::EReference|XMIID] | eKeys+=[ecore::EAttribute|XMIID])* '</eStructuralFeatures>')
+	);
+
+RULE_EAttribute_eStructuralFeatures returns ecore::EAttribute: {ecore::EAttribute}
+	'<eStructuralFeatures'
+	(iD=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EAttribute"')
+	(iD=TERM_EBoolean)*
+	( '/>'
+	| ('>' '</eStructuralFeatures>')
+	);
+
+RULE_GROUP_EPackage_eSubpackages returns ecore::EPackage:
+	  RULE_EPackage_eSubpackages;
+
+RULE_EPackage_eSubpackages returns ecore::EPackage: {ecore::EPackage}
+	'<eSubpackages'
+	(nsURI=TERM_EString | nsPrefix=TERM_EString)*
+	('xsi:type' '=' '"ecore::EPackage"')
+	(nsURI=TERM_EString | nsPrefix=TERM_EString)*
+	( '/>'
+	| ('>' (eClassifiers+=RULE_GROUP_EClassifier_eClassifiers | eSubpackages+=RULE_GROUP_EPackage_eSubpackages)* '</eSubpackages>')
+	);
+
+RULE_GROUP_EClass_eSuperTypes returns ecore::EClass:
+	  RULE_EClass_eSuperTypes;
+
+RULE_EClass_eSuperTypes returns ecore::EClass: {ecore::EClass}
+	'<eSuperTypes'
+	(abstract=TERM_EBoolean | interface=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EClass"')
+	(abstract=TERM_EBoolean | interface=TERM_EBoolean)*
+	( '/>'
+	| ('>' (eTypeParameters+=RULE_GROUP_ETypeParameter_eTypeParameters | eSuperTypes+=[ecore::EClass|XMIID] | eOperations+=RULE_GROUP_EOperation_eOperations | eStructuralFeatures+=RULE_GROUP_EStructuralFeature_eStructuralFeatures | eGenericSuperTypes+=RULE_GROUP_EGenericType_eGenericSuperTypes)* '</eSuperTypes>')
+	);
+
+RULE_GROUP_EGenericType_eTypeArguments returns ecore::EGenericType:
+	  RULE_EGenericType_eTypeArguments;
+
+RULE_EGenericType_eTypeArguments returns ecore::EGenericType: {ecore::EGenericType}
+	'<eTypeArguments'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eTypeArguments>')
+	);
+
+RULE_GROUP_ETypeParameter_eTypeParameter returns ecore::ETypeParameter:
+	  RULE_ETypeParameter_eTypeParameter;
+
+RULE_ETypeParameter_eTypeParameter returns ecore::ETypeParameter: {ecore::ETypeParameter}
+	'<eTypeParameter'
+	('xsi:type' '=' '"ecore::ETypeParameter"')	( '/>'
+	| ('>' '</eTypeParameter>')
+	);
+
+RULE_GROUP_ETypeParameter_eTypeParameters returns ecore::ETypeParameter:
+	  RULE_ETypeParameter_eTypeParameters;
+
+RULE_ETypeParameter_eTypeParameters returns ecore::ETypeParameter: {ecore::ETypeParameter}
+	'<eTypeParameters'
+	(name=TERM_EString)*
+	('xsi:type' '=' '"ecore::ETypeParameter"')
+	(name=TERM_EString)*
+	( '/>'
+	| ('>' (eAnnotations+=RULE_GROUP_EAnnotation_eAnnotations | eBounds+=RULE_GROUP_EGenericType_eBounds)* '</eTypeParameters>')
+	);
+
+RULE_GROUP_EGenericType_eUpperBound returns ecore::EGenericType:
+	  RULE_EGenericType_eUpperBound;
+
+RULE_EGenericType_eUpperBound returns ecore::EGenericType: {ecore::EGenericType}
+	'<eUpperBound'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' (eUpperBound=RULE_GROUP_EGenericType_eUpperBound | eTypeArguments+=RULE_GROUP_EGenericType_eTypeArguments | eLowerBound=RULE_GROUP_EGenericType_eLowerBound | eTypeParameter=[ecore::ETypeParameter|XMIID] | eClassifier=[ecore::EClassifier|XMIID])* '</eUpperBound>')
+	);
+
+RULE_GROUP_EObject_references returns ecore::EObject:
+	  RULE_EObject_references;
+
+RULE_EObject_references returns ecore::EObject: {ecore::EObject}
+	'<references'
+	('xsi:type' '=' '"ecore::EObject"')	( '/>'
+	| ('>' '</references>')
+	);
+terminal TERM_EString returns ecore::EString : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EJavaObject returns ecore::EJavaObject : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EBoolean returns ecore::EBoolean : '"true"' | '"false"';
+terminal TERM_EEnumerator returns ecore::EEnumerator : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EJavaClass returns ecore::EJavaClass : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EInt returns ecore::EInt : ('1'..'9')('0'..'9')*;
+terminal WS : (' '|'\t'|'\r'|'\n'/*|'\f'*/)+;
+terminal XMIID returns ecore::EString : ('a'..'z'|'A'..'Z'|'_'..'_') ('a'..'z'|'A'..'Z'|'_'..'_'|'0'..'9')*;

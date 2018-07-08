@@ -20,6 +20,14 @@ EcoreClass_ecore_EPackage_eClassifiers: {EcoreClass_ecore_EPackage_eClassifiers}
 	'<eClassifiers' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_ENamedElement_name | EcoreFeature_ecore_EClass_abstract | InstanceClassNameAttribute | EcoreFeature_ecore_EDataType_serializable | EcoreFeature_ecore_EClass_eSuperTypes | OtherAttribute)*
 	( '/>' | ('>' elements+=(EcoreClass_ecore_EClass_eStructuralFeatures | EcoreClass_ecore_EClass_eOperations | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eClassifiers>'));
 
+/*EcoreClass_ecore_EPackage_eClass returns ecore::EClass:
+	'<eClassifiers'
+	(('abstract' '=' abstract=Terminal_Boolean) | ('instanceClassName' '=' instanceClassName=Terminal_String) | ('name' '=' name=Terminal_String) | ('serializable' '=' abstract=Terminal_Boolean))*
+	('xsi' ':' 'type' '=' 'ecore' '::' 'EClass')
+	(('abstract' '=' abstract=Terminal_Boolean) | ('name' '=' name=Terminal_String))*
+	attributes+=(EcoreFeature_ecore_EDataType_serializable | EcoreFeature_ecore_EClass_eSuperTypes | OtherAttribute)*
+	( '/>' | ('>' elements+=(EcoreClass_ecore_EClass_eStructuralFeatures | EcoreClass_ecore_EClass_eOperations | EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</eClassifiers>'));
+*/
 EcoreFeature_ecore_EAnnotation_details: {EcoreFeature_ecore_EAnnotation_details}
 	'<details' attributes+=(XMLAttribute_xsi_type | EcoreFeature_ecore_EStringToStringMapEntry_key | EcoreFeature_ecore_EStringToStringMapEntry_value | OtherAttribute)*
 	( '/>' | ('>' elements+=(EcoreClass_ecore_EModelElement_eAnnotations | OtherElement)* '</details>'));
@@ -199,6 +207,8 @@ XmlElement:
   | EcoreFeature_ecore_EAnnotation_details
   | OtherElement
 ;
+
+Terminal_Boolean returns ecore::EBoolean : 'true' | 'false';
 
 Terminal_String : STRING;
 

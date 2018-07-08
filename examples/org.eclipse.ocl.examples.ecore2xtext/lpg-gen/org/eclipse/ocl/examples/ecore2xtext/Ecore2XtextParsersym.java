@@ -50,6 +50,7 @@ public interface Ecore2XtextParsersym {
       TK_eSuperTypes = 31,
       TK_eType = 20,
       TK_encoding = 59,
+      TK_false = 67,
       TK_instanceClassName = 32,
       TK_key = 33,
       TK_lowerBound = 34,
@@ -61,6 +62,7 @@ public interface Ecore2XtextParsersym {
       TK_serializable = 37,
       TK_source = 38,
       TK_transient = 39,
+      TK_true = 68,
       TK_type = 64,
       TK_unsettable = 40,
       TK_upperBound = 41,
@@ -71,7 +73,7 @@ public interface Ecore2XtextParsersym {
       TK_xmlns = 19,
       TK_xsi = 14,
       TK_EOF_TOKEN = 65,
-      TK_ERROR_TOKEN = 67;
+      TK_ERROR_TOKEN = 69;
 
     public final static String orderedTerminalSymbols[] = {
                  "",
@@ -141,6 +143,8 @@ public interface Ecore2XtextParsersym {
                  "type",
                  "EOF_TOKEN",
                  "WS",
+                 "false",
+                 "true",
                  "ERROR_TOKEN"
              };
 

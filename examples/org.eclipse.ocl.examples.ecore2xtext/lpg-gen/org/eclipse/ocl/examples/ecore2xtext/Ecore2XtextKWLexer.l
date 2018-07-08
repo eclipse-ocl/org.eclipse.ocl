@@ -25,44 +25,44 @@ Options in effect for Ecore2XtextKWLexer.gi:
 
 
 
-Ecore2XtextKWLexer.gi:159:9:159:15:3146:3152: Informative: Grammar is  SLR(1).
+Ecore2XtextKWLexer.gi:161:9:161:15:3159:3165: Informative: Grammar is  SLR(1).
 
 Number of Terminals: 38
 Number of Nonterminals: 1
-Number of Productions: 33
+Number of Productions: 35
 Number of Single Productions: 0
-Number of Items: 306
-Number of States: 213
-Number of Shift actions: 211
+Number of Items: 317
+Number of States: 218
+Number of Shift actions: 216
 Number of Goto actions: 1
-Number of Shift/Reduce actions: 31
+Number of Shift/Reduce actions: 33
 Number of Goto/Reduce actions: 0
 Number of Reduce actions: 2
 Number of Shift-Reduce conflicts: 0
 Number of Reduce-Reduce conflicts: 0
 
-Number of entries in base Action Table: 214
+Number of entries in base Action Table: 219
 Additional space required for compaction of Action Table: 0.4%
 
-Number of unique terminal states: 213
+Number of unique terminal states: 218
 Number of Shift actions saved by merging: 0
 Number of Conflict points saved by merging: 0
 Number of Reduce actions saved by merging: 0
 Number of Reduce saved by default: 1
 
-Number of entries in Terminal Action Table: 456
+Number of entries in Terminal Action Table: 468
 Additional space required for compaction of Terminal Table: 1.7%
 
 Actions in Compressed Tables:
-     Number of Shifts: 211
-     Number of Shift/Reduces: 31
+     Number of Shifts: 216
+     Number of Shift/Reduces: 33
      Number of Gotos: 1
      Number of Goto/Reduces: 0
      Number of Reduces: 1
      Number of Defaults: 1
 
 Parsing Tables storage:
-    Storage required for BASE_CHECK: 33 Bytes
-    Storage required for BASE_ACTION: 498 Bytes
-    Storage required for TERM_CHECK: 492 Bytes
-    Storage required for TERM_ACTION: 930 Bytes
+    Storage required for BASE_CHECK: 35 Bytes
+    Storage required for BASE_ACTION: 512 Bytes
+    Storage required for TERM_CHECK: 509 Bytes
+    Storage required for TERM_ACTION: 954 Bytes

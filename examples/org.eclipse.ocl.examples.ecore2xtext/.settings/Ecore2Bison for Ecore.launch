@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.m2m.qvt.oml.QvtTransformation">
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents1" value="true"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents2" value="true"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents3" value="true"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents4" value="true"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.clearContents5" value="true"/>
+    <mapAttribute key="org.eclipse.m2m.qvt.oml.interpreter.configurationProperties">
+        <mapEntry key="grammarName" value="Ecore2XMI"/>
+    </mapAttribute>
+    <intAttribute key="org.eclipse.m2m.qvt.oml.interpreter.elemCount" value="5"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName1" value=""/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName2" value=""/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName3" value=""/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName4" value=""/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.featureName5" value=""/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.isInrementalUpdate" value="false"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.module" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/src/org/eclipse/ocl/examples/ecore2xtext/Ecore2Bison.qvto"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel1" value="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel2" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.h.textmodel"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel3" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.c.textmodel"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel4" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.lex.textmodel"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetModel5" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.bison.textmodel"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType1" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType2" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType3" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType4" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.targetType5" value="NEW_MODEL"/>
+    <stringAttribute key="org.eclipse.m2m.qvt.oml.interpreter.traceFile" value="platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore.h.UML2EcoreAnalyze.qvtotrace"/>
+    <booleanAttribute key="org.eclipse.m2m.qvt.oml.interpreter.useTraceFile" value="false"/>
+</launchConfiguration>

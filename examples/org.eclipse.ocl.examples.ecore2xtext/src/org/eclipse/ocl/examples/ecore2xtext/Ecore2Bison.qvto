@@ -1,0 +1,757 @@
+modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+modeltype Text uses 'http://www.eclipse.org/qvt/2018/TextModel';
+
+/**
+ * Create an Xtext grammar that parses the XMI for an Ecore metamodel
+ */
+transformation Ecore2Bison(in ecore : Ecore, out h : Text, out c : Text, out flex : Text, out bison : Text);
+
+configuration property grammarName : String;
+
+helper ecore::EClass::allSuperTypes() : Set(ecore::EClass) {
+	return self->closure(eSuperTypes)->including(self);
+}
+
+helper ecore::EClass::allSubTypes() : Set(ecore::EClass) {
+	return allEClasses->select(eSuperClass | eSuperClass.allSuperTypes()->includes(self));
+}
+
+helper attributeTypeTerminalName(type : EClassifier) : String {
+	return if (type.instanceClassName = 'boolean') then 'BOOLEAN'
+	else if (type.instanceClassName = 'int') then 'INTEGER'
+	else 'STRING'
+	endif
+	endif;
+}
+
+helper childRuleName(name : String) : String {
+	return 'CH_' + name;
+}
+
+helper keywordName(string : String) : String {
+	if (string = '"') { return 'DQUOTE'; };
+	if (string = ':') { return 'COLON'; };
+	if (string = '?') { return 'QUERY'; };
+	if (string = '<') { return 'LT'; };
+	if (string = '>') { return 'GT'; };
+	if (string = '=') { return 'EQ'; };
+	if (string = '/') { return 'SLASH'; };
+	return 'KW' + string;
+}
+
+helper terminalName(eDataType : ecore::EDataType) : String {
+	return 'TERM_' + eDataType.name;
+}
+
+helper ecore::EDataType::dataTypeName() : String {
+	var instanceClassName = self.instanceClassName;
+	if (instanceClassName = 'boolean') {
+		return 'boolean ';
+	};
+	if (instanceClassName = 'double') {
+		return 'double ';
+	};
+	if (instanceClassName = 'int') {
+		return 'int ';
+	};
+	if (instanceClassName = 'java.lang.String') {
+		return 'const char *';
+	};
+	return safeName(self.name) + ' ';
+}
+
+helper ecore::EStructuralFeature::getFunctionName() : String {
+	var instanceClassName = self.eType.instanceClassName;
+	if (instanceClassName = 'boolean') {
+		return 'getBoolean';
+	};
+	if (instanceClassName = 'double') {
+		return 'getDouble';
+	};
+	if (instanceClassName = 'int') {
+		return 'getInt';
+	};
+	if (instanceClassName = 'java.lang.String') {
+		return 'getString';
+	};
+	return 'resolveXmiId';
+}
+
+--helper ltNsName(ePackage : ecore::EPackage) : String {
+--	return 'LT_NS_' + ePackage.nsPrefix;
+--}
+
+--helper ltNsName(nsPrefix : String, nsURI : String) : String {
+--	return 'LT_NS_' + nsPrefix;
+--}
+
+helper ecore::EStructuralFeature::memberName() : String {
+	return 's_' + self.name;
+}
+
+helper ecore::EClass::memberName() : String {
+	return 'u_' + self.name;
+}
+
+helper ecore::EPackage::nsName() : String {
+	return 'NS' + self.nsPrefix;
+}
+
+helper nsName(nsPrefix : String) : String {
+	return 'NS' + nsPrefix;
+}
+
+--helper nsName(nsPrefix : String, nsURI : String) : String {
+--	return 'NS' + nsPrefix;
+--}
+
+helper rootRuleName(name : String) : String {
+	return 'RT_' + name;
+}
+
+helper ruleGroupName(name : String) : String {
+	return 'RULE_GROUP_' + name;
+}
+
+helper safeName(name : String) : String {
+	return if ((name = 'EOF') or (name = 'grammar') or (name = 'terminal')) then '^' + name else name endif;
+}
+
+helper stringLine(string : String) : Text::StringNode {
+	return object Text::StringNode { text := string + '\n'; };
+}
+
+helper stringNode(string : String) : Text::StringNode {
+	return object Text::StringNode { text := string; };
+}
+
+helper selectChangeable(eFeatures : Set(ecore::EStructuralFeature)) : Set(ecore::EStructuralFeature) {
+	return eFeatures->select(changeable and (not _derived) and (not transient)); -- and (not volatile));
+}
+
+helper String::tokenTextInC() : String {
+	var c = keyword2text->get(self);
+	return if c = '"' then '\\"' else c endif;
+}
+
+helper ecore::EClass::typeRuleName() : String {
+	return 'TYPE_' + self.ePackage.nsPrefix + '_' + self.name;
+}
+
+property rootEPackages : OrderedSet(Ecore::EPackage) = ecore.objectsOfKind(Ecore::EPackage)->asOrderedSet();
+property rootEClasses : Set(Ecore::EClass) = rootEPackages.eClassifiers->selectByKind(ecore::EClass)->asSet();
+property allEClasses : OrderedSet(Ecore::EClass) = rootEClasses->closure(eAllStructuralFeatures->selectByKind(EReference).eReferenceType)->union(rootEClasses)->sortedBy(name);
+property allEPackages : OrderedSet(Ecore::EPackage) = allEClasses.ePackage->asOrderedSet()->sortedBy(nsPrefix);
+--	property eDataTypes = self.eClassifiers->selectByKind(ecore::EDataType);
+property allEFeatures : OrderedSet(Ecore::EStructuralFeature) = allEClasses.eAllStructuralFeatures->asSet()->sortedBy(name);
+property allEAttributes = allEFeatures->selectByKind(ecore::EAttribute);
+property allEReferences : Set(ecore::EReference) = allEFeatures->selectByKind(ecore::EReference)->asSet();
+property allEDataTypes = allEAttributes.eAttributeType->asSet();
+property allChangeableEFeatures : Set(Ecore::EStructuralFeature) = selectChangeable(allEFeatures);
+property allChangeableEAttributes = allChangeableEFeatures->selectByKind(ecore::EAttribute);
+property allChangeableEReferences = allChangeableEFeatures->selectByKind(ecore::EReference);
+property keyword2text : Dict(String, String);
+property namespace2text : Dict(String, String);
+
+helper computeAllTokens() {
+	var keyword2text : Dict(String, String) := Dict{};
+	var attributeNames := allChangeableEAttributes.name->asSet();
+	var containmentNames := allChangeableEReferences->select(containment).name->asSet();
+	var referenceNames := allChangeableEReferences->reject(containment).name->asSet();
+	var classNames := allEClasses.name->asSet();
+	rootEPackages->addNamespace();
+	'xmi'->addNamespace('http://www.omg.org/XMI');
+	'xsi'->addNamespace('http://www.w3.org/2001/XMLSchema-instance');
+	':'->addToken('', '');
+	'='->addToken('', '');
+	'<'->addToken('', '');
+	'>'->addToken('', '');
+	'?'->addToken('', '');
+	'"'->addToken('', '');
+	'/'->addToken('', '');
+--	'?>'->addToken('', '');
+--	'/>'->addToken('', '');
+--	'</'->addToken('', '');
+	'type'->addToken('', '');
+--	'xsi'->addToken('', '');
+	'encoding'->addToken('', '');
+	'version'->addToken('', '');
+--	'<?xml'->addToken('', '');
+	'xml'->addToken('', '');
+	'xmlns'->addToken('', '');
+	'XMI'->addToken('', '');
+--	'xmi'->addToken('', '');
+--	stringLine('');
+	classNames->addToken('', '');
+--	stringLine('');
+	attributeNames->addToken('', '');
+--	stringLine('');
+	referenceNames->addToken('', '');
+--	containmentNames->addToken('<', '');
+--	stringLine('');
+	containmentNames->addToken('', '');
+}
+
+helper String::addNamespace(nsURI : String) {
+	namespace2text->put('NS' + self, nsURI);
+}
+
+helper ecore::EPackage::addNamespace() {
+	namespace2text->put('NS' + self.nsPrefix, self.nsURI);
+}
+
+helper String::addToken(prefix : String, suffix : String) {
+	var text := prefix + self + suffix;
+	keyword2text->put(keywordName(text), text);
+}
+
+main() {
+--	var rootEPackages : OrderedSet(Ecore::EPackage) = ecore.objectsOfKind(Ecore::EPackage)->asOrderedSet();
+	computeAllTokens();
+	map emitModelInterface();
+	map emitModelImplementation();
+	map emitFlexGrammar();
+	map emitBisonGrammar();
+}
+
+-----------------------------------------------------------------------------------------------------------------
+--	Emit the Model interface that provides C declarations of the model types.
+-----------------------------------------------------------------------------------------------------------------
+mapping emitModelInterface() : Text::StringNode@h {
+	result.text := '/* Auto-generated Model Interface for ' + grammarName + ' */\n';
+	result.children += stringLine('');
+	result.children += stringLine('#define YYDEBUG 1');
+	result.children += stringLine('#define YYSTYPE_IS_DECLARED');
+	result.children += stringLine('#define YY_DECL int yylex_impl (void)');
+	result.children += stringLine('');
+	result.children += stringLine('#define null ((void *)0)');
+	result.children += stringLine('extern int yylex_impl (void);');
+	result.children += stringLine('');
+	result.children += stringLine('typedef enum boolean { false, true } boolean;');
+	result.children += stringLine('');
+	result.children += allEClasses->map emitModelStructDeclaration();
+	result.children += allEClasses->map emitModelStructDefinition();
+	result.children += stringLine('');
+	result.children += map emitModelEnum();
+	result.children += stringLine('');
+	result.children += map emitModelUnion();
+	result.children += map emitModelRTTIDeclaration();
+	result.children += stringLine('');
+	result.children += allEClasses->map emitModelRTTIDeclaration();
+	result.children += stringLine('');
+	result.children += map emitModelXMLNSDeclaration();
+	result.children += stringLine('');
+	result.children += stringLine('int yyerror(char *s);');
+	result.children += stringLine('void addChild(void ***out, void *in);');
+	result.children += stringLine('void addToList(void ***out, void *in);');
+	result.children += stringLine('void addRoot(const YYSTYPE *in);');
+	result.children += stringLine('void copyRTTI(const char *ruleName, YYSTYPE *out, const YYSTYPE *in);');
+	result.children += stringLine('void createRTTI(const char *ruleName, YYSTYPE *out, const struct rtti *rtti);');
+	result.children += stringLine('void disableStrings(void);');
+	result.children += stringLine('void enableStrings(void);');
+	result.children += stringLine('void endXMLNSanalysis(void);');
+	result.children += stringLine('void gatherXMLNSanalysis(const char *nsPrefix, const char *nsURI);');
+	result.children += stringLine('boolean getBoolean(const char *string);');
+	result.children += stringLine('int getInt(const char *string);');
+	result.children += stringLine('const char *getString(const char *string);');
+	result.children += stringLine('void *resolveXmiId(const char *string);');
+	result.children += stringLine('void saveIdentifier(const char *identifier);');
+	result.children += stringLine('void saveString(const char *string);');
+	result.children += stringLine('void saveToken(int token);');
+	result.children += stringLine('void setXMIVersion(const char *version);');
+	result.children += stringLine('void setXMLEncoding(const char *encoding);');
+	result.children += stringLine('void setXMLVersion(const char *version);');
+	result.children += stringLine('const char *tokenText(int token);');
+}
+
+mapping ecore::EClass::emitModelRTTIDeclaration() : Text::StringNode@h {
+	result.text := 'struct rtti rtti_' + safeName(self.name) + ';\n';
+}
+
+mapping ecore::EClass::emitModelStructDeclaration() : Text::StringNode@h {
+	result.text := 'struct ' + safeName(self.name) + ';\n';
+}
+
+mapping emitModelRTTIDeclaration() : Text::StringNode@h {
+	result.children += stringLine('');
+	result.children += stringLine('struct rtti {');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		children += stringLine('int size;');
+		children += stringLine('enum yysenum yysenum;');
+		children += stringLine('const char *className;');
+	};
+	result.children += stringLine('};');
+}
+
+mapping emitModelXMLNSDeclaration() : Text::StringNode@h {
+	result.children += stringLine('');
+	result.children += stringLine('struct xmlns {');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		children += stringLine('const char *const uri;');
+		children += stringLine('const int token;');
+		children += stringLine('const char *identifier;');
+	};
+	result.children += stringLine('};');
+}
+
+mapping ecore::EClass::emitModelStructDefinition() : Text::StringNode@h {
+	var changeableEFeatures : Set(Ecore::EStructuralFeature) = selectChangeable(self.eAllStructuralFeatures);
+	result.children += stringLine('');
+	result.children += stringLine('struct ' + safeName(self.name) + '{');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		children += changeableEFeatures->emitModelStructMember(self);
+	};
+	result.children += stringLine('};');
+}
+
+mapping ecore::EStructuralFeature::emitModelStructMember(disambiguator : ecore::EClass) : Text::StringNode@h
+	disjuncts ecore::EAttribute::emitModelStructMember, ecore::EReference::emitModelStructMember;
+
+mapping ecore::EAttribute::emitModelStructMember(disambiguator : ecore::EClass) : Text::StringNode@h {
+	result.children += stringLine(self.eAttributeType.dataTypeName() + if self.many  then '*' else '' endif + self.memberName() + ';');
+}
+
+mapping ecore::EReference::emitModelStructMember(disambiguator : ecore::EClass) : Text::StringNode@h {
+	result.children += stringLine('struct ' + safeName(self.eReferenceType.name) + if self.many  then ' **' else ' *' endif + self.memberName() + ';');
+}
+
+mapping emitModelEnum() : Text::StringNode@h {
+	result.children += stringLine('enum yysenum {');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		separator := ',\n';
+		children += stringNode('Pointer');
+		children += stringNode('Identifier');
+		children += stringNode('String');
+		children += stringNode('List');
+		children += allEClasses->emitModelEnumMember();
+		suffix := '\n';
+	};
+	result.children += stringLine('};');
+}
+
+mapping ecore::EClass::emitModelEnumMember() : Text::StringNode@h {
+	result.children += stringNode(safeName(self.name));
+}
+
+mapping emitModelUnion() : Text::StringNode@h {
+	result.children += stringLine('typedef struct {');
+--	result.children += stringLine('\tenum yysenum yysenum;');
+	result.children += stringLine('\tunion {');
+	result.children += object Text::StringNode {
+		indent := '\t\t';
+		children += stringLine('void *pointer;');
+--		children += stringLine('EResource *resource;');
+		children += stringLine('const char *identifier;');
+		children += stringLine('const char *string;');
+		children += stringLine('int token;');
+--		children += stringLine('void **list;');
+		children += allEClasses->emitModelUnionMember();
+	};
+	result.children += stringLine('\t};');
+	result.children += stringLine('} YYSTYPE;');
+}
+
+mapping ecore::EClass::emitModelUnionMember() : Text::StringNode@h {
+	result.children += stringLine('struct ' + safeName(self.name) + ' *' + self.memberName() + ';');
+}
+-----------------------------------------------------------------------------------------------------------------
+--	Emit the Model implementation that provides C definitions of the model types.
+-----------------------------------------------------------------------------------------------------------------
+mapping emitModelImplementation() : Text::StringNode@c {
+	result.text := '/* Auto-generated Model Implementation for ' + grammarName + ' */\n';
+	result.children += stringLine('#include <' + grammarName + '.h>');
+	result.children += stringLine('#include <' + grammarName + '.tab.h>');
+	result.children += stringLine('#include <math.h>');
+	result.children += stringLine('#include <stdio.h>');
+	result.children += stringLine('#include <stdlib.h>');
+	result.children += stringLine('');
+	result.children += allEClasses->map emitModelRTTIDefinition();
+	result.children += stringLine('');
+	result.children += stringLine('');
+	result.children += stringLine('const struct rtti *getRTTI(enum yysenum yysenum) {');
+	result.children += stringLine('\tswitch (yysenum) {');
+	result.children += allEClasses->map emitModelRTTIEnumCase();
+	result.children += stringLine('\t\tdefault: return 0;');
+	result.children += stringLine('\t}');
+	result.children += stringLine('}');
+	result.children += stringLine('');
+	result.children += stringLine('struct xmlns xmlnsData[] = {');
+	result.children += object Text::StringNode {
+		prefix := '\t';
+		separator := ',\n\t';
+		children += namespace2text->keys()->asSet()->sortedBy(k | namespace2text->get(k))->map emitModelXMLNSDefinition();
+		children += stringNode('{ 0, 0, 0 }');
+		suffix := '\n};\n';
+	};
+	result.children += stringLine('');
+--	result.children += stringLine('');
+--	result.children += stringLine('void copyRTTI(const char *ruleName, YYSTYPE *out, const YYSTYPE *in) {');
+--	result.children += stringLine('\tprintf("%s : copyRTTI\\n", ruleName)');
+--	result.children += stringLine('\tout->yysenum = in->yysenum;');
+--	result.children += stringLine('\tout->pointer = in->pointer;');
+--	result.children += stringLine('}');
+--	result.children += stringLine('');
+--	result.children += stringLine('void createRTTI(const char *ruleName, YYSTYPE *out, const struct rtti *rtti) {');
+--	result.children += stringLine('\tprintf("%s : createRTTI %s\\n", ruleName, rtti->className)');
+--	result.children += stringLine('\tout->yysenum = rtti->yysenum;');
+--	result.children += stringLine('\tout->pointer = malloc(rtti->size);');
+--	result.children += stringLine('}');
+}
+
+mapping ecore::EClass::emitModelRTTIDefinition() : Text::StringNode@h {
+	result.children += stringLine('const struct rtti RTTI_' + safeName(self.name) + ' = { sizeof(' + safeName(self.name) + '), ' + self.name + ' , "' + self.name + '" };');
+}
+
+mapping String::emitModelXMLNSDefinition() : Text::StringNode@h {
+	result.children += stringNode('{ "' + namespace2text->get(self) + '", ' + self + ', 0 }');
+}
+
+mapping ecore::EClass::emitModelRTTIEnumCase() : Text::StringNode@h {
+	result.children += stringLine('\t\tcase ' + safeName(self.name) + ' : return &RTTI_' + safeName(self.name) + ';');
+}
+
+-----------------------------------------------------------------------------------------------------------------
+--	Emit the Flex grammar to tokenize the model XMI.
+-----------------------------------------------------------------------------------------------------------------
+mapping emitFlexGrammar() : Text::StringNode@flex {
+	var keywords := keyword2text->keys()->sortedBy(n|n);
+	result.text := '/* Auto-generated Flex grammar for ' + grammarName + '*/\n\n';
+	result.children += stringLine('%{');
+	result.children += stringLine('#include <' + grammarName + '.h>');
+	result.children += stringLine('#include <' + grammarName + '.tab.h>');
+	result.children += stringLine('#include <stdlib.h>');
+	result.children += stringLine('#include <string.h>');
+	result.children += stringLine('%}');
+	result.children += stringLine('');
+	result.children += stringLine('/* Strings are normally opaque and so lexed as a single token.');
+	result.children += stringLine('* String content may be exposed to reveal namespace references.');
+	result.children += stringLine(' */');
+	result.children += stringLine('%s STRINGS_OFF');
+	result.children += stringLine('');
+	result.children += stringLine('white [ \\t]+');
+	result.children += stringLine('digit [0-9]');
+	result.children += stringLine('letter [A-Z_a-z]');
+	result.children += stringLine('identifier ({letter}({letter}|{digit})*)');
+	result.children += stringLine('string (\\"([^\\"\\\\\\n]|\\\\.)*\\")');
+	result.children += stringLine('%%');
+	result.children += stringLine('');
+	result.children += stringLine('{white} { }');
+	result.children += stringLine('');
+	result.children += keywords->map emitFlexKeyword();
+	result.children += stringLine('');
+	result.children += stringLine('{identifier} { char *p = yytext;');
+	result.children += stringLine('\tyylval.identifier=strdup(yytext);');
+	result.children += stringLine('\treturn IDENTIFIER;');
+	result.children += stringLine('}');
+	result.children += stringLine('');
+	result.children += stringLine('<INITIAL>{string} { char *p = yytext;');
+	result.children += stringLine('\tchar *s = strdup(yytext+1);');
+	result.children += stringLine('\ts[yyleng-2] = \'\\0\';');
+	result.children += stringLine('\tyylval.string = s;');
+	result.children += stringLine('\treturn STRING;');
+	result.children += stringLine('}');
+	result.children += stringLine('');
+	result.children += stringLine('%%');
+	result.children += stringLine('');
+	result.children += stringLine('void disableStrings() {');
+	result.children += stringLine('\tBEGIN STRINGS_OFF;');
+	result.children += stringLine('}');
+	result.children += stringLine('');
+	result.children += stringLine('void enableStrings() {');
+	result.children += stringLine('\tBEGIN INITIAL;');
+	result.children += stringLine('}');
+}
+
+mapping String::emitFlexKeyword() : Text::StringNode@flex {
+	var c = keyword2text->get(self);
+	result.text := 'case ' + self + ': return "' + if c = '"' then '\\"' else c endif + '";';
+	result.text := '"' + self.tokenTextInC() + '" return ' + self + ';\n';
+}
+
+-----------------------------------------------------------------------------------------------------------------
+--	Emit the Bison grammar to parse the model XMI.
+-----------------------------------------------------------------------------------------------------------------
+mapping emitBisonGrammar() : Text::StringNode@bison {
+	var keywords := keyword2text->keys()->sortedBy(n|n);
+	var namespaces := namespace2text->keys()->sortedBy(n|n);
+	var containments : Set(ecore::EReference) := allChangeableEReferences->select(containment);
+	var containmentNames := containments.name->asSet()->sortedBy(n|n);
+	var concreteClasses := allEClasses->reject(_abstract);
+	result.text := '/* Auto-generated Bison grammar for ' + grammarName + '*/\n\n';
+	result.children += stringLine('%{');
+	result.children += stringLine('#include <' + grammarName + '.h>');
+	result.children += stringLine('#include <math.h>');
+	result.children += stringLine('#include <stdio.h>');
+	result.children += stringLine('#include <stdlib.h>');
+	result.children += stringLine('');
+	result.children += stringLine('extern FILE *yyin;');
+	result.children += stringLine('%}');
+	result.children += stringLine('');
+	result.children += stringLine('%token IDENTIFIER');
+	result.children += stringLine('%token STRING');
+	result.children += stringLine('');
+	result.children += keywords->map emitBisonToken();
+	result.children += stringLine('');
+	result.children += namespaces->map emitBisonToken();
+--	result.children += namespaces->map emitBisonToken2();
+	result.children += stringLine('');
+	result.children += stringLine('%start DOCUMENT');
+	result.children += stringLine('%%');
+	result.children += stringLine('');
+	result.children += map emitBisonPreambleRule();
+	result.children += stringLine('');
+	result.children += map emitBisonDocumentRule();
+	result.children += stringLine('');
+	result.children += map emitBisonXsiTypeRule();
+	result.children += concreteClasses->reject(name = 'EFactory')->map emitBisonXsiTypeRule();	-- FIXME no reject
+	result.children += stringLine('');
+	result.children += concreteClasses->map emitBisonRootGroupRule();
+	result.children += stringLine('');
+	result.children += concreteClasses->map emitBisonRootRule();
+	result.children += containmentNames->map emitBisonContainmentRule(containments);
+	result.children += stringLine('');
+	result.children += stringLine('NON_XMLNS_IDENTIFIER_TOKEN : ');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		prefix := '  ';
+		separator := '\n| ';
+--		children += stringNode('IDENTIFIER' + ' { $$.identifier = $1.identifier; }');
+		children += keywords->select(startsWith('KW'))->reject(endsWith('xmlns'))->map emitBisonIdentifierToken();
+		suffix := ';\n\n'
+	};
+	result.children += stringLine('IDENTIFIER_TOKEN :');
+	result.children += stringLine('\t  NON_XMLNS_IDENTIFIER_TOKEN' + ' { $$.token = $1.token; }');
+	result.children += stringLine('\t| ' + keywordName('xmlns') + ' { $$.token = ' + keywordName('xmlns') + '; }');
+	result.children += stringLine('%%');
+--	result.children += stringLine('');
+--	result.children += stringLine('int yyerror(char *s) {');
+--	result.children += stringLine('\tprintf("%s\\n", s);');
+--	result.children += stringLine('\treturn 0;');
+--	result.children += stringLine('}');
+	result.children += stringLine('');
+	result.children += stringLine('const char *tokenText(int token) {');
+	result.children += object Text::StringNode {
+		indent := '\t';
+		prefix := 'switch (token) {\n';
+		children += object Text::StringNode {
+			indent := '\t';
+			separator := '\n';
+			children += keywords->map emitBisonIdentifierTokenText();
+			children += stringLine('default: return null;');
+		};
+		suffix := '}\n'
+	};
+	result.children += stringLine('}');
+}
+
+mapping String::emitBisonIdentifierTokenText() : Text::StringNode@bison {
+	result.text := 'case ' + self + ': return "' + self.tokenTextInC() + '";';
+}
+
+mapping String::emitBisonIdentifierToken() : Text::StringNode@bison {
+	result.text := self + ' { $$.token = ' + self + '; }';
+}
+
+mapping String::emitBisonToken() : Text::StringNode@bison {
+	result.text := '%token ' + self + '\n';
+}
+
+--mapping String::emitBisonToken2() : Text::StringNode@bison {
+--	result.text := '%token LT_' + self + '\n';
+--}
+
+mapping emitBisonPreambleRule() : Text::StringNode@bison {
+	result.children += stringLine('//');
+	result.children += stringLine('// Parse the XML Processing Instruction');
+	result.children += stringLine('//');
+	result.children += stringLine('PREAMBLE_PI_Head : LT QUERY ' + keywordName('xml'));
+	result.children += stringLine('PREAMBLE_PI_Head : PREAMBLE_PI_Head ' + keywordName('version') + ' EQ STRING');
+	result.children += stringLine('\t{ setXMLVersion($4.string); }');
+	result.children += stringLine('PREAMBLE_PI_Head : PREAMBLE_PI_Head ' + keywordName('encoding') + ' EQ STRING');
+	result.children += stringLine('\t{ setXMLEncoding($4.string); }');
+	result.children += stringLine('PREAMBLE_PI : PREAMBLE_PI_Head QUERY GT');
+	result.children += stringLine('');
+	result.children += stringLine('//');
+	result.children += stringLine('// Parse the root XML Element to identify the xmlns mappings, saving the non-xmlns tokens for a re-parse.');
+	result.children += stringLine('//');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER COLON IDENTIFIER');
+	result.children += stringLine('\t{ saveToken(LT); saveIdentifier($3.identifier); saveToken(COLON); saveIdentifier($5.identifier); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER COLON IDENTIFIER_TOKEN');
+	result.children += stringLine('\t{ saveToken(LT); saveIdentifier($3.identifier); saveToken(COLON); saveToken($5.token); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER_TOKEN COLON IDENTIFIER');
+	result.children += stringLine('\t{ saveToken(LT); saveToken($3.token); saveToken(COLON); saveIdentifier($5.identifier); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_PI LT IDENTIFIER_TOKEN COLON IDENTIFIER_TOKEN');
+	result.children += stringLine('\t{ saveToken(LT); saveToken($3.token); saveToken(COLON); saveToken($5.token); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head ' + keywordName('xmlns') + ' COLON IDENTIFIER EQ STRING');
+	result.children += stringLine('\t{ gatherXMLNS($4.identifier, $6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head ' + keywordName('xmlns') + ' COLON IDENTIFIER_TOKEN EQ STRING');
+	result.children += stringLine('\t{ gatherXMLNS(tokenText($4.token), $6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head ' + keywordName('xmlns') + ' EQ STRING');
+	result.children += stringLine('\t{ gatherXMLNS(null, $4.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER COLON IDENTIFIER EQ STRING');
+	result.children += stringLine('\t{ saveIdentifier($2.identifier); saveToken(COLON); saveIdentifier($4.identifier); saveToken(EQ); saveString($6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER COLON IDENTIFIER_TOKEN EQ STRING');
+	result.children += stringLine('\t{ saveIdentifier($2.identifier); saveToken(COLON); saveToken($4.token); saveToken(EQ); saveString($6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN COLON IDENTIFIER EQ STRING');
+	result.children += stringLine('\t{ saveToken($2.token); saveToken(COLON); saveIdentifier($4.identifier); saveToken(EQ); saveString($6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN COLON IDENTIFIER_TOKEN EQ STRING');
+	result.children += stringLine('\t{ saveToken($2.token); saveToken(COLON); saveToken($4.token); saveToken(EQ); saveString($6.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head IDENTIFIER EQ STRING');
+	result.children += stringLine('\t{ saveIdentifier($2.identifier); saveToken(EQ); saveString($4.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS_Head : PREAMBLE_XMLNS_Head NON_XMLNS_IDENTIFIER_TOKEN EQ STRING');
+	result.children += stringLine('\t{ saveToken($2.token); saveToken(EQ); saveString($4.string); }');
+	result.children += stringLine('PREAMBLE_XMLNS : PREAMBLE_XMLNS_Head GT');
+	result.children += stringLine('\t{ saveToken(GT); endXMLNSanalysis(); }');
+	result.children += stringLine('PREAMBLE_XMLNS : PREAMBLE_XMLNS_Head SLASH GT');
+	result.children += stringLine('\t{ saveToken(SLASH); saveToken(GT); endXMLNSanalysis(); }');
+}
+
+mapping emitBisonDocumentRule() : Text::StringNode@bison {
+	result.children += stringLine('//');
+	result.children += stringLine('// Re-parse the root XML Element after the xmlms attributes have been stripped.');
+	result.children += stringLine('//');
+	result.children += stringLine('DOCUMENT_Head1 : PREAMBLE_XMLNS LT ' + nsName('xmi') + ' COLON ' + keywordName('XMI'));
+	result.children += stringLine('DOCUMENT_Head1 : DOCUMENT_Head1 ' + nsName('xmi') + ' COLON ' + keywordName('version') + ' EQ STRING');
+	result.children += stringLine('\t{ setXMIVersion($6.string); }');
+	result.children += stringLine('DOCUMENT : DOCUMENT_Head1 SLASH GT');
+	result.children += stringLine('DOCUMENT_Head2 : DOCUMENT_Head1 GT');
+	result.children += stringLine('DOCUMENT_Head2 : DOCUMENT_Head2 ROOT');
+	result.children += stringLine('\t{ addRoot(&$2); }');
+	result.children += stringLine('DOCUMENT : DOCUMENT_Head2 LT SLASH ' + nsName('xmi') + ' COLON ' + keywordName('XMI') + ' GT');
+	result.children += stringLine('DOCUMENT : PREAMBLE_XMLNS ROOT');
+	result.children += stringLine('\t{ addRoot(&$2); }');
+}
+
+mapping String::emitBisonContainmentRule(allContainments : Set(ecore::EReference)) : Text::StringNode@bison {
+	var containments := allContainments->select(name = self);
+	var containedTypes := containments.eReferenceType->asSet();
+	var changeableTypes := containedTypes->collect(c | c.allSubTypes())->union(containedTypes)->reject(_abstract)->sortedBy(name);
+	result.children += changeableTypes->emitBisonChildRule(self, containments);
+	result.children += stringLine('');
+	result.children += changeableTypes->emitBisonChildGroupRule(self);
+}
+
+mapping ecore::EClass::emitBisonChildGroupRule(name : String) : Text::StringNode@bison {
+	result.children += self.map emitBisonCopyRule(childRuleName(name), '', childRuleName(name + '_' + self.name), '');
+}
+
+mapping ecore::EClass::emitBisonChildRule(name : String, allContainments : Set(ecore::EReference)) : Text::StringNode@bison {
+	var ruleName := childRuleName(name + '_' + self.name);
+	var headRuleName := childRuleName(name + '_' + self.name + '_Head');
+	var preRuleName := childRuleName(name + '_' + self.name + '_Pre');
+	var postRuleName := childRuleName(name + '_' + self.name + '_Post');
+	var changeableAttributes := selectChangeable(self.eAllAttributes)->selectByKind(ecore::EAttribute)->sortedBy(name);
+	var changeableReferences := selectChangeable(self.eAllReferences)->selectByKind(ecore::EReference)->sortedBy(name);
+	var changeableContainments := changeableReferences->select(containment);
+	var changeableNonContainments := changeableReferences->reject(containment);
+	var changeableTypes := self.allSubTypes()->reject(_abstract)->sortedBy(name);
+	var isRootRule := allContainments->forAll(eReferenceType = self);
+	var isFinalRule := changeableTypes->excluding(self)->isEmpty();
+	var xsiTypeIsOptional := isRootRule and isFinalRule;
+	result.children += stringLine('');
+	if (changeableAttributes->notEmpty() or changeableReferences->notEmpty()) {
+		if (xsiTypeIsOptional) {
+			result.children += stringLine(postRuleName + ' : ');
+			result.children += stringLine('\t{ createRTTI("' + ruleName + '", &$$, &rtti_' + safeName(self.name) + '); }');
+			result.children += stringLine(postRuleName + ' : ' + postRuleName + ' ' + self.typeRuleName());
+			result.children += stringLine('\t{ $$ = $1; }');
+		}
+		else {
+			result.children += stringLine(preRuleName + ' : ' + self.typeRuleName());
+			result.children += stringLine('\t{ $$ = $1; }');
+			result.children += changeableAttributes->emitBisonPreRule(self, preRuleName);
+			result.children += changeableNonContainments->emitBisonPreRule(self, preRuleName);
+			result.children += self.map emitBisonCopyRule(postRuleName, '', preRuleName, '');
+		};
+		result.children += changeableAttributes->emitBisonPostRule(self, postRuleName);
+		result.children += changeableNonContainments->emitBisonPostRule(self, postRuleName);
+		result.children += self.map emitBisonCopyRule(headRuleName, ' LT ' + keywordName(name), postRuleName, ' GT');
+		result.children += changeableContainments->emitBisonHeadRule(self, headRuleName);
+		result.children += self.map emitBisonCopyRule(ruleName, ' LT ' + keywordName(name), postRuleName, ' SLASH GT');
+		result.children += self.map emitBisonCopyRule(ruleName, '', headRuleName, ' LT SLASH ' + keywordName(name) + ' GT');
+		result.children += self.map emitBisonCopyRule(ruleName, ' LT ' + keywordName(name), headRuleName, ' LT SLASH');
+	}
+	else {
+		result.children += stringLine(ruleName + ' : ' + self.typeRuleName());
+		result.children += stringLine('\t{ $$ = $1; }');
+	}
+}
+
+mapping emitBisonXsiTypeRule() : Text::StringNode@bison {
+	var ruleName := 'XMI_OR_XSI_TYPE_EQ';
+	result.children += stringLine(ruleName + ' : ' + nsName('xmi') + ' COLON ' + keywordName('type') + ' EQ');
+	result.children += stringLine('\t{ disableStrings(); }');
+	result.children += stringLine(ruleName + ' : ' + nsName('xsi') + ' COLON ' + keywordName('type') + ' EQ');
+	result.children += stringLine('\t{ disableStrings(); }');
+}
+
+mapping ecore::EClass::emitBisonXsiTypeRule() : Text::StringNode@bison {
+	var ruleName := self.typeRuleName();
+	result.children += stringLine('');
+	result.children += stringLine(ruleName + ' : XMI_OR_XSI_TYPE_EQ DQUOTE ' + nsName(self.ePackage.name) + ' COLON ' + keywordName(self.name) + ' DQUOTE');
+	result.children += stringLine('\t{ enableStrings(); createRTTI("' + ruleName + '", &$$, &rtti_' + safeName(self.name) + '); }');
+}
+
+mapping ecore::EClass::emitBisonRootGroupRule() : Text::StringNode@bison {
+	result.children += self.map emitBisonCopyRule('ROOT', '', rootRuleName(self.name), '');
+}
+
+mapping ecore::EClass::emitBisonCopyRule(toRuleName : String, optionalPrefixTokenText : String, fromRuleName : String, optionalSuffixTokenText : String) : Text::StringNode@bison {
+	var prefixTokenCount := optionalSuffixTokenText->characters()->count(' ');
+	result.children += stringLine(toRuleName + ' :' + optionalPrefixTokenText + ' ' + fromRuleName + optionalSuffixTokenText);
+	result.children += stringLine('\t{ copyRTTI("' + toRuleName + '", &$$, &$' + (1+prefixTokenCount).toString() + '); }');
+}
+
+mapping ecore::EClass::emitBisonRootRule() : Text::StringNode@bison {
+	var ruleName := rootRuleName(self.name);
+	var headRuleName := rootRuleName(self.name + '_Head');
+	var postRuleName := rootRuleName(self.name + '_Post');
+	var changeableAttributes := selectChangeable(self.eAllAttributes)->selectByKind(ecore::EAttribute)->sortedBy(name);
+	var changeableElements := selectChangeable(self.eAllReferences)->selectByKind(ecore::EReference)->sortedBy(name);
+	var changeableContainments := changeableElements->select(containment);
+	var changeableReferences := changeableElements->reject(containment);
+	result.children += stringLine('');
+	result.children += stringLine(postRuleName + ' : LT ' + self.ePackage.nsName() + ' COLON ' + keywordName(self.name));
+	result.children += stringLine('\t{ createRTTI("' + postRuleName + '", &$$, &rtti_' + safeName(self.name) + '); }');
+	result.children += changeableAttributes->emitBisonPostRule(self, postRuleName);
+	result.children += changeableReferences->emitBisonPostRule(self, postRuleName);
+	result.children += self.map emitBisonCopyRule(headRuleName, '', postRuleName, ' GT');
+	result.children += changeableContainments->emitBisonHeadRule(self, headRuleName);
+	result.children += stringLine(ruleName + ' : ' + headRuleName + ' LT SLASH ' + self.ePackage.nsName() + ' COLON ' + keywordName(self.name) + ' GT');
+	result.children += stringLine('\t{ createRTTI("' + ruleName + '", &$$, &rtti_' + safeName(self.name) + '); }');
+	result.children += self.map emitBisonCopyRule(ruleName, '', postRuleName, ' SLASH GT');
+}
+
+mapping ecore::EReference::emitBisonHeadRule(eClass : ecore::EClass, ruleName : String) : Text::StringNode@bison {
+	result.children += stringLine(ruleName + ' : ' + ruleName + ' ' + childRuleName(self.name));
+	if (self.many) {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$1); addChild((void ***)&$$.' + eClass.memberName() + '->' + self.memberName() + ', ' + self.getFunctionName() + '($2.string)); }');
+	}
+	else {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$1); $$.' + eClass.memberName() + '->' + self.memberName() + ' = ' + self.getFunctionName() + '($2.string); }');
+	}
+}
+
+mapping ecore::EStructuralFeature::emitBisonPreRule(eClass : ecore::EClass, ruleName : String) : Text::StringNode@bison {
+	result.children += stringLine(ruleName + ' : ' + keywordName(self.name) + ' EQ STRING' + ' ' + ruleName);
+	if (self.many) {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$4); addToList((void ***)&$$.' + eClass.memberName() + '->' + self.memberName() + ', ' + self.getFunctionName() + '($3.string)); }');
+	}
+	else {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$4); $$.' + eClass.memberName() + '->' + self.memberName() + ' = ' + self.getFunctionName() + '($3.string); }');
+	}
+}
+
+mapping ecore::EStructuralFeature::emitBisonPostRule(eClass : ecore::EClass, ruleName : String) : Text::StringNode@bison {
+	result.children += stringLine(ruleName + ' : ' + ruleName + ' ' + keywordName(self.name) + ' EQ STRING');
+	if (self.many) {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$1); addToList((void ***)&$$.' + eClass.memberName() + '->' + self.memberName() + ', ' + self.getFunctionName() + '($4.string)); }');
+	}
+	else {
+		result.children += stringLine('\t{ copyRTTI("' + ruleName + '", &$$, &$1); $$.' + eClass.memberName() + '->' + self.memberName() + ' = ' + self.getFunctionName() + '($4.string); }');
+	}
+}

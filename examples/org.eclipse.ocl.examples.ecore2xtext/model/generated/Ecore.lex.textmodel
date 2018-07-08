@@ -1,0 +1,128 @@
+/* Auto-generated Flex grammar for Ecore2XMI*/
+
+%{
+#include <Ecore2XMI.h>
+#include <Ecore2XMI.tab.h>
+#include <stdlib.h>
+#include <string.h>
+%}
+
+/* Strings are normally opaque and so lexed as a single token.
+* String content may be exposed to reveal namespace references.
+ */
+%s STRINGS_OFF
+
+white [ \t]+
+digit [0-9]
+letter [A-Z_a-z]
+identifier ({letter}({letter}|{digit})*)
+string (\"([^\"\\\n]|\\.)*\")
+%%
+
+{white} { }
+
+":" return COLON;
+"\"" return DQUOTE;
+"=" return EQ;
+">" return GT;
+"EAnnotation" return KWEAnnotation;
+"EAttribute" return KWEAttribute;
+"EClass" return KWEClass;
+"EClassifier" return KWEClassifier;
+"EDataType" return KWEDataType;
+"EEnum" return KWEEnum;
+"EEnumLiteral" return KWEEnumLiteral;
+"EFactory" return KWEFactory;
+"EGenericType" return KWEGenericType;
+"EModelElement" return KWEModelElement;
+"ENamedElement" return KWENamedElement;
+"EObject" return KWEObject;
+"EOperation" return KWEOperation;
+"EPackage" return KWEPackage;
+"EParameter" return KWEParameter;
+"EReference" return KWEReference;
+"EStringToStringMapEntry" return KWEStringToStringMapEntry;
+"EStructuralFeature" return KWEStructuralFeature;
+"ETypeParameter" return KWETypeParameter;
+"ETypedElement" return KWETypedElement;
+"XMI" return KWXMI;
+"abstract" return KWabstract;
+"changeable" return KWchangeable;
+"containment" return KWcontainment;
+"contents" return KWcontents;
+"defaultValueLiteral" return KWdefaultValueLiteral;
+"derived" return KWderived;
+"details" return KWdetails;
+"eAnnotations" return KWeAnnotations;
+"eBounds" return KWeBounds;
+"eClassifier" return KWeClassifier;
+"eClassifiers" return KWeClassifiers;
+"eExceptions" return KWeExceptions;
+"eGenericExceptions" return KWeGenericExceptions;
+"eGenericSuperTypes" return KWeGenericSuperTypes;
+"eGenericType" return KWeGenericType;
+"eKeys" return KWeKeys;
+"eLiterals" return KWeLiterals;
+"eLowerBound" return KWeLowerBound;
+"eOperations" return KWeOperations;
+"eOpposite" return KWeOpposite;
+"eParameters" return KWeParameters;
+"eStructuralFeatures" return KWeStructuralFeatures;
+"eSubpackages" return KWeSubpackages;
+"eSuperTypes" return KWeSuperTypes;
+"eType" return KWeType;
+"eTypeArguments" return KWeTypeArguments;
+"eTypeParameter" return KWeTypeParameter;
+"eTypeParameters" return KWeTypeParameters;
+"eUpperBound" return KWeUpperBound;
+"encoding" return KWencoding;
+"iD" return KWiD;
+"instanceClassName" return KWinstanceClassName;
+"instanceTypeName" return KWinstanceTypeName;
+"interface" return KWinterface;
+"key" return KWkey;
+"literal" return KWliteral;
+"lowerBound" return KWlowerBound;
+"name" return KWname;
+"nsPrefix" return KWnsPrefix;
+"nsURI" return KWnsURI;
+"ordered" return KWordered;
+"references" return KWreferences;
+"resolveProxies" return KWresolveProxies;
+"serializable" return KWserializable;
+"source" return KWsource;
+"transient" return KWtransient;
+"type" return KWtype;
+"unique" return KWunique;
+"unsettable" return KWunsettable;
+"upperBound" return KWupperBound;
+"value" return KWvalue;
+"version" return KWversion;
+"volatile" return KWvolatile;
+"xml" return KWxml;
+"xmlns" return KWxmlns;
+"<" return LT;
+"?" return QUERY;
+"/" return SLASH;
+
+{identifier} { char *p = yytext;
+	yylval.identifier=strdup(yytext);
+	return IDENTIFIER;
+}
+
+<INITIAL>{string} { char *p = yytext;
+	char *s = strdup(yytext+1);
+	s[yyleng-2] = '\0';
+	yylval.string = s;
+	return STRING;
+}
+
+%%
+
+void disableStrings() {
+	BEGIN STRINGS_OFF;
+}
+
+void enableStrings() {
+	BEGIN INITIAL;
+}

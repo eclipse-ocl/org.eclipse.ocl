@@ -611,15 +611,15 @@
 		  $EndAction
 	./
 
-	RANGE_6 -> ' ' | '!'
+	RANGE_1 -> ' ' | '!'
 
-	RANGE_5 -> '#' | '$' | '%' | '&' | "'" | '(' | ')' | '*' | '+' | ',' | '-' | '.' | '/' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | ':' | ';' | '<' | '=' | '>' | '?' | '@' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '[' | '\' | ']' | '^' | '_' | '`' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | '{' | '|' | '}' | '~'
+	RANGE_2 -> '#' | '$' | '%' | '&' | "'" | '(' | ')' | '*' | '+' | ',' | '-' | '.' | '/' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | ':' | ';' | '<' | '=' | '>' | '?' | '@' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '[' | '\' | ']' | '^' | '_' | '`' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | '{' | '|' | '}' | '~'
 
 	DIGITS -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 	UPPERS -> 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'
 
-	RANGE_3 -> '_'
+	RANGE_5 -> '_'
 
 	LOWERS -> 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z'
 
@@ -630,18 +630,18 @@
 			./
 
 	IDENTIFIER -> LOWERS
-	IDENTIFIER -> RANGE_3
+	IDENTIFIER -> RANGE_5
 	IDENTIFIER -> UPPERS
 	IDENTIFIER -> LOWERS IDENTIFIER_3
-	IDENTIFIER -> RANGE_3 IDENTIFIER_3
+	IDENTIFIER -> RANGE_5 IDENTIFIER_3
 	IDENTIFIER -> UPPERS IDENTIFIER_3
 	IDENTIFIER_3 -> DIGITS
 	IDENTIFIER_3 -> LOWERS
-	IDENTIFIER_3 -> RANGE_3
+	IDENTIFIER_3 -> RANGE_5
 	IDENTIFIER_3 -> UPPERS
 	IDENTIFIER_3 -> IDENTIFIER_3 DIGITS
 	IDENTIFIER_3 -> IDENTIFIER_3 LOWERS
-	IDENTIFIER_3 -> IDENTIFIER_3 RANGE_3
+	IDENTIFIER_3 -> IDENTIFIER_3 RANGE_5
 	IDENTIFIER_3 -> IDENTIFIER_3 UPPERS
 
 		Token ::= STRING
@@ -652,10 +652,10 @@
 
 	STRING -> DQUOTE DQUOTE
 	STRING -> DQUOTE STRING_3 DQUOTE
-	STRING_3 -> RANGE_5
-	STRING_3 -> RANGE_6
-	STRING_3 -> STRING_3 RANGE_5
-	STRING_3 -> STRING_3 RANGE_6
+	STRING_3 -> RANGE_1
+	STRING_3 -> RANGE_2
+	STRING_3 -> STRING_3 RANGE_1
+	STRING_3 -> STRING_3 RANGE_2
 
 		Token ::= WS
 			/.$BeginAction

@@ -1,0 +1,598 @@
+grammar org.eclipse.ocl.examples.xbnf.XMIGrammar hidden(WS)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/ocl/XBNF" as xbnf
+
+Document returns ecore::EObject:
+	  RULE_AbstractRule
+	| RULE_ActionAssignment
+	| RULE_CharacterRange
+	| RULE_Conjunction
+	| RULE_Disjunction
+	| RULE_EOF
+	| RULE_Epsilon
+	| RULE_Grammar
+	| RULE_Keyword
+	| RULE_KeywordAssignment
+	| RULE_LexerGrammar
+	| RULE_MetamodelDeclaration
+	| RULE_NegatedToken
+	| RULE_ParserGrammar
+	| RULE_ParserRule
+	| RULE_RuleCall
+	| RULE_RuleCallAssignment
+	| RULE_Syntax
+	| RULE_TerminalRule
+	| RULE_UntilToken
+	| RULE_UntypedRule
+	| RULE_Wildcard;
+
+RULE_AbstractRule returns xbnf::AbstractRule: {xbnf::AbstractRule}
+	'<xbnf:AbstractRule'
+	( '/>'
+	| ('>' '</xbnf:AbstractRule>')
+	);
+
+RULE_ActionAssignment returns xbnf::ActionAssignment: {xbnf::ActionAssignment}
+	'<xbnf:ActionAssignment'
+	( '/>'
+	| ('>' (type=[ecore::EClassifier|XMIID])* '</xbnf:ActionAssignment>')
+	);
+
+RULE_CharacterRange returns xbnf::CharacterRange: {xbnf::CharacterRange}
+	'<xbnf:CharacterRange'
+
+	(left=TERM_EString | right=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:CharacterRange>')
+	);
+
+RULE_Conjunction returns xbnf::Conjunction: {xbnf::Conjunction}
+	'<xbnf:Conjunction'
+	( '/>'
+	| ('>' '</xbnf:Conjunction>')
+	);
+
+RULE_Disjunction returns xbnf::Disjunction: {xbnf::Disjunction}
+	'<xbnf:Disjunction'
+	( '/>'
+	| ('>' (conjunctions+=RULE_Conjunction_conjunctions)* '</xbnf:Disjunction>')
+	);
+
+RULE_EOF returns xbnf::^EOF: {xbnf::^EOF}
+	'<xbnf:^EOF'
+	( '/>'
+	| ('>' '</xbnf:^EOF>')
+	);
+
+RULE_Epsilon returns xbnf::Epsilon: {xbnf::Epsilon}
+	'<xbnf:Epsilon'
+	( '/>'
+	| ('>' '</xbnf:Epsilon>')
+	);
+
+RULE_Grammar returns xbnf::Grammar: {xbnf::Grammar}
+	'<xbnf:Grammar'
+	( '/>'
+	| ('>' '</xbnf:Grammar>')
+	);
+
+RULE_Keyword returns xbnf::Keyword: {xbnf::Keyword}
+	'<xbnf:Keyword'
+	( '/>'
+	| ('>' '</xbnf:Keyword>')
+	);
+
+RULE_KeywordAssignment returns xbnf::KeywordAssignment: {xbnf::KeywordAssignment}
+	'<xbnf:KeywordAssignment'
+
+	(value=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:KeywordAssignment>')
+	);
+
+RULE_LexerGrammar returns xbnf::LexerGrammar: {xbnf::LexerGrammar}
+	'<xbnf:LexerGrammar'
+	( '/>'
+	| ('>' '</xbnf:LexerGrammar>')
+	);
+
+RULE_MetamodelDeclaration returns xbnf::MetamodelDeclaration: {xbnf::MetamodelDeclaration}
+	'<xbnf:MetamodelDeclaration'
+
+	(name=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:MetamodelDeclaration>')
+	);
+
+RULE_NegatedToken returns xbnf::NegatedToken: {xbnf::NegatedToken}
+	'<xbnf:NegatedToken'
+	( '/>'
+	| ('>' (^terminal=RULE_AbstractElement_terminal)* '</xbnf:NegatedToken>')
+	);
+
+RULE_ParserGrammar returns xbnf::ParserGrammar: {xbnf::ParserGrammar}
+	'<xbnf:ParserGrammar'
+
+	(name=TERM_EString | debug=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:ParserGrammar>')
+	);
+
+RULE_ParserRule returns xbnf::ParserRule: {xbnf::ParserRule}
+	'<xbnf:ParserRule'
+	( '/>'
+	| ('>' '</xbnf:ParserRule>')
+	);
+
+RULE_RuleCall returns xbnf::RuleCall: {xbnf::RuleCall}
+	'<xbnf:RuleCall'
+	( '/>'
+	| ('>' '</xbnf:RuleCall>')
+	);
+
+RULE_RuleCallAssignment returns xbnf::RuleCallAssignment: {xbnf::RuleCallAssignment}
+	'<xbnf:RuleCallAssignment'
+
+	(operator=TERM_EString)*	( '/>'
+	| ('>' (feature=[ecore::EStructuralFeature|XMIID] | referredRule=[xbnf::AbstractRule|XMIID])* '</xbnf:RuleCallAssignment>')
+	);
+
+RULE_Syntax returns xbnf::Syntax: {xbnf::Syntax}
+	'<xbnf:Syntax'
+
+	(name=TERM_EString | debug=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:Syntax>')
+	);
+
+RULE_TerminalRule returns xbnf::TerminalRule: {xbnf::TerminalRule}
+	'<xbnf:TerminalRule'
+	( '/>'
+	| ('>' '</xbnf:TerminalRule>')
+	);
+
+RULE_UntilToken returns xbnf::UntilToken: {xbnf::UntilToken}
+	'<xbnf:UntilToken'
+	( '/>'
+	| ('>' (^terminal=RULE_AbstractElement_terminal)* '</xbnf:UntilToken>')
+	);
+
+RULE_UntypedRule returns xbnf::UntypedRule: {xbnf::UntypedRule}
+	'<xbnf:UntypedRule'
+
+	(name=TERM_EString | debug=TERM_EString | kind=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:UntypedRule>')
+	);
+
+RULE_Wildcard returns xbnf::Wildcard: {xbnf::Wildcard}
+	'<xbnf:Wildcard'
+
+	(debug=TERM_EString)*	( '/>'
+	| ('>' '</xbnf:Wildcard>')
+	);
+
+RULE_Conjunction_conjunctions returns xbnf::Conjunction: {xbnf::Conjunction}
+subTypes
+subType : Conjunction
+	'<conjunctions'
+	('xsi:type' '=' '"xbnf::Conjunction"')	( '/>'
+	| ('>' (elements+=RULE_AbstractElement_elements)* '</conjunctions>')
+	);
+
+RULE_EObject_contents returns ecore::EObject: {ecore::EObject}
+subTypes
+subType : EObject
+	'<contents'
+	('xsi:type' '=' '"ecore::EObject"')	( '/>'
+	| ('>' '</contents>')
+	);
+
+RULE_EStringToStringMapEntry_details returns ecore::EStringToStringMapEntry: {ecore::EStringToStringMapEntry}
+subTypes
+subType : EStringToStringMapEntry
+	'<details'
+	(key=TERM_EString | value=TERM_EString)*
+	('xsi:type' '=' '"ecore::EStringToStringMapEntry"')
+	(key=TERM_EString | value=TERM_EString)*
+	( '/>'
+	| ('>' '</details>')
+	);
+
+RULE_EAnnotation_eAnnotations returns ecore::EAnnotation: {ecore::EAnnotation}
+subTypes
+subType : EAnnotation
+	'<eAnnotations'
+	(source=TERM_EString)*
+	('xsi:type' '=' '"ecore::EAnnotation"')
+	(source=TERM_EString)*
+	( '/>'
+	| ('>' (details+=RULE_EStringToStringMapEntry_details | contents+=RULE_EObject_contents | references+=[ecore::EObject|XMIID])* '</eAnnotations>')
+	);
+
+RULE_EGenericType_eBounds returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eBounds'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eBounds>')
+	);
+
+RULE_EClassifier_eClassifier returns ecore::EClassifier: {ecore::EClassifier}
+subTypes
+subType : EClass
+subType : EClassifier
+subType : EDataType
+	'<eClassifier'
+	('xsi:type' '=' '"ecore::EClassifier"')	( '/>'
+	| ('>' '</eClassifier>')
+	);
+
+RULE_EClassifier_eClassifiers returns ecore::EClassifier: {ecore::EClassifier}
+subTypes
+subType : EClass
+subType : EClassifier
+subType : EDataType
+	'<eClassifiers'
+	('xsi:type' '=' '"ecore::EClassifier"')	( '/>'
+	| ('>' '</eClassifiers>')
+	);
+
+RULE_EClassifier_eExceptions returns ecore::EClassifier: {ecore::EClassifier}
+subTypes
+subType : EClass
+subType : EClassifier
+subType : EDataType
+	'<eExceptions'
+	('xsi:type' '=' '"ecore::EClassifier"')	( '/>'
+	| ('>' '</eExceptions>')
+	);
+
+RULE_EGenericType_eGenericExceptions returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eGenericExceptions'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eGenericExceptions>')
+	);
+
+RULE_EGenericType_eGenericSuperTypes returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eGenericSuperTypes'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eGenericSuperTypes>')
+	);
+
+RULE_EAttribute_eKeys returns ecore::EAttribute: {ecore::EAttribute}
+subTypes
+subType : EAttribute
+	'<eKeys'
+	(iD=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EAttribute"')
+	(iD=TERM_EBoolean)*
+	( '/>'
+	| ('>' '</eKeys>')
+	);
+
+RULE_EGenericType_eLowerBound returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eLowerBound'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eLowerBound>')
+	);
+
+RULE_EOperation_eOperations returns ecore::EOperation: {ecore::EOperation}
+subTypes
+subType : EOperation
+	'<eOperations'
+	('xsi:type' '=' '"ecore::EOperation"')	( '/>'
+	| ('>' (eTypeParameters+=RULE_ETypeParameter_eTypeParameters | eParameters+=RULE_EParameter_eParameters | eExceptions+=[ecore::EClassifier|XMIID] | eGenericExceptions+=RULE_EGenericType_eGenericExceptions)* '</eOperations>')
+	);
+
+RULE_EReference_eOpposite returns ecore::EReference: {ecore::EReference}
+subTypes
+subType : EReference
+	'<eOpposite'
+	(containment=TERM_EBoolean | resolveProxies=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EReference"')
+	(containment=TERM_EBoolean | resolveProxies=TERM_EBoolean)*
+	( '/>'
+	| ('>' (eOpposite=[ecore::EReference|XMIID] | eKeys+=[ecore::EAttribute|XMIID])* '</eOpposite>')
+	);
+
+RULE_EParameter_eParameters returns ecore::EParameter: {ecore::EParameter}
+subTypes
+subType : EParameter
+	'<eParameters'
+	('xsi:type' '=' '"ecore::EParameter"')	( '/>'
+	| ('>' '</eParameters>')
+	);
+
+RULE_EStructuralFeature_eStructuralFeatures returns ecore::EStructuralFeature: {ecore::EStructuralFeature}
+subTypes
+subType : EAttribute
+subType : EReference
+subType : EStructuralFeature
+	'<eStructuralFeatures'
+	('xsi:type' '=' '"ecore::EStructuralFeature"')	( '/>'
+	| ('>' '</eStructuralFeatures>')
+	);
+
+RULE_EPackage_eSubpackages returns ecore::EPackage: {ecore::EPackage}
+subTypes
+subType : EPackage
+	'<eSubpackages'
+	('xsi:type' '=' '"ecore::EPackage"')	( '/>'
+	| ('>' '</eSubpackages>')
+	);
+
+RULE_EClass_eSuperTypes returns ecore::EClass: {ecore::EClass}
+subTypes
+subType : EClass
+	'<eSuperTypes'
+	(abstract=TERM_EBoolean | interface=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EClass"')
+	(abstract=TERM_EBoolean | interface=TERM_EBoolean)*
+	( '/>'
+	| ('>' (eSuperTypes+=[ecore::EClass|XMIID] | eOperations+=RULE_EOperation_eOperations | eStructuralFeatures+=RULE_EStructuralFeature_eStructuralFeatures | eGenericSuperTypes+=RULE_EGenericType_eGenericSuperTypes)* '</eSuperTypes>')
+	);
+
+RULE_EGenericType_eTypeArguments returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eTypeArguments'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' '</eTypeArguments>')
+	);
+
+RULE_ETypeParameter_eTypeParameter returns ecore::ETypeParameter: {ecore::ETypeParameter}
+subTypes
+subType : ETypeParameter
+	'<eTypeParameter'
+	('xsi:type' '=' '"ecore::ETypeParameter"')	( '/>'
+	| ('>' '</eTypeParameter>')
+	);
+
+RULE_ETypeParameter_eTypeParameters returns ecore::ETypeParameter: {ecore::ETypeParameter}
+subTypes
+subType : ETypeParameter
+	'<eTypeParameters'
+	('xsi:type' '=' '"ecore::ETypeParameter"')	( '/>'
+	| ('>' (eBounds+=RULE_EGenericType_eBounds)* '</eTypeParameters>')
+	);
+
+RULE_EGenericType_eUpperBound returns ecore::EGenericType: {ecore::EGenericType}
+subTypes
+subType : EGenericType
+	'<eUpperBound'
+	('xsi:type' '=' '"ecore::EGenericType"')	( '/>'
+	| ('>' (eUpperBound=RULE_EGenericType_eUpperBound | eTypeArguments+=RULE_EGenericType_eTypeArguments | eLowerBound=RULE_EGenericType_eLowerBound | eTypeParameter=[ecore::ETypeParameter|XMIID] | eClassifier=[ecore::EClassifier|XMIID])* '</eUpperBound>')
+	);
+
+RULE_AbstractElement_element returns xbnf::AbstractElement: {xbnf::AbstractElement}
+subTypes
+subType : AbstractElement
+subType : ActionAssignment
+subType : Assignment
+subType : CharacterRange
+subType : Conjunction
+subType : Disjunction
+subType : EOF
+subType : Epsilon
+subType : Keyword
+subType : KeywordAssignment
+subType : NegatedToken
+subType : RuleCall
+subType : RuleCallAssignment
+subType : UntilToken
+subType : Wildcard
+	'<element'
+	('xsi:type' '=' '"xbnf::AbstractElement"')	( '/>'
+	| ('>' '</element>')
+	);
+
+RULE_AbstractElement_elements returns xbnf::AbstractElement: {xbnf::AbstractElement}
+subTypes
+subType : AbstractElement
+subType : ActionAssignment
+subType : Assignment
+subType : CharacterRange
+subType : Conjunction
+subType : Disjunction
+subType : EOF
+subType : Epsilon
+subType : Keyword
+subType : KeywordAssignment
+subType : NegatedToken
+subType : RuleCall
+subType : RuleCallAssignment
+subType : UntilToken
+subType : Wildcard
+	'<elements'
+	('xsi:type' '=' '"xbnf::AbstractElement"')	( '/>'
+	| ('>' '</elements>')
+	);
+
+RULE_EStructuralFeature_feature returns ecore::EStructuralFeature: {ecore::EStructuralFeature}
+subTypes
+subType : EAttribute
+subType : EReference
+subType : EStructuralFeature
+	'<feature'
+	(ordered=TERM_EBoolean | unique=TERM_EBoolean | lowerBound=TERM_EInt | upperBound=TERM_EInt | changeable=TERM_EBoolean | volatile=TERM_EBoolean | transient=TERM_EBoolean | defaultValueLiteral=TERM_EString | unsettable=TERM_EBoolean | derived=TERM_EBoolean)*
+	('xsi:type' '=' '"ecore::EStructuralFeature"')
+	(ordered=TERM_EBoolean | unique=TERM_EBoolean | lowerBound=TERM_EInt | upperBound=TERM_EInt | changeable=TERM_EBoolean | volatile=TERM_EBoolean | transient=TERM_EBoolean | defaultValueLiteral=TERM_EString | unsettable=TERM_EBoolean | derived=TERM_EBoolean)*
+	( '/>'
+	| ('>' '</feature>')
+	);
+
+RULE_TypedRule_goals returns xbnf::TypedRule: {xbnf::TypedRule}
+subTypes
+subType : ParserRule
+subType : TerminalRule
+subType : TypedRule
+	'<goals'
+	('xsi:type' '=' '"xbnf::TypedRule"')	( '/>'
+	| ('>' '</goals>')
+	);
+
+RULE_Grammar_grammar returns xbnf::Grammar: {xbnf::Grammar}
+subTypes
+subType : Grammar
+subType : LexerGrammar
+subType : ParserGrammar
+	'<grammar'
+	('xsi:type' '=' '"xbnf::Grammar"')	( '/>'
+	| ('>' '</grammar>')
+	);
+
+RULE_Grammar_grammars returns xbnf::Grammar: {xbnf::Grammar}
+subTypes
+subType : Grammar
+subType : LexerGrammar
+subType : ParserGrammar
+	'<grammars'
+	(name=TERM_EString | debug=TERM_EString)*
+	('xsi:type' '=' '"xbnf::Grammar"')
+	(name=TERM_EString | debug=TERM_EString)*
+	( '/>'
+	| ('>' (syntax=[xbnf::Syntax|XMIID] | goals+=[xbnf::TypedRule|XMIID] | rules+=RULE_TypedRule_rules)* '</grammars>')
+	);
+
+RULE_MetamodelDeclaration_metamodelDeclarations returns xbnf::MetamodelDeclaration: {xbnf::MetamodelDeclaration}
+subTypes
+subType : MetamodelDeclaration
+	'<metamodelDeclarations'
+	(name=TERM_EString)*
+	('xsi:type' '=' '"xbnf::MetamodelDeclaration"')
+	(name=TERM_EString)*
+	( '/>'
+	| ('>' (referredPackage=[ecore::EPackage|XMIID])* '</metamodelDeclarations>')
+	);
+
+RULE_AbstractRule_parentRule returns xbnf::AbstractRule: {xbnf::AbstractRule}
+subTypes
+subType : AbstractRule
+subType : ParserRule
+subType : TerminalRule
+subType : TypedRule
+subType : UntypedRule
+	'<parentRule'
+	('xsi:type' '=' '"xbnf::AbstractRule"')	( '/>'
+	| ('>' '</parentRule>')
+	);
+
+RULE_EObject_references returns ecore::EObject: {ecore::EObject}
+subTypes
+subType : EObject
+	'<references'
+	('xsi:type' '=' '"ecore::EObject"')	( '/>'
+	| ('>' '</references>')
+	);
+
+RULE_EPackage_referredPackage returns ecore::EPackage: {ecore::EPackage}
+subTypes
+subType : EPackage
+	'<referredPackage'
+	(nsURI=TERM_EString | nsPrefix=TERM_EString)*
+	('xsi:type' '=' '"ecore::EPackage"')
+	(nsURI=TERM_EString | nsPrefix=TERM_EString)*
+	( '/>'
+	| ('>' (eClassifiers+=RULE_EClassifier_eClassifiers | eSubpackages+=RULE_EPackage_eSubpackages)* '</referredPackage>')
+	);
+
+RULE_AbstractRule_referredRule returns xbnf::AbstractRule: {xbnf::AbstractRule}
+subTypes
+subType : AbstractRule
+subType : ParserRule
+subType : TerminalRule
+subType : TypedRule
+subType : UntypedRule
+	'<referredRule'
+	('xsi:type' '=' '"xbnf::AbstractRule"')	( '/>'
+	| ('>' '</referredRule>')
+	);
+
+RULE_TypedRule_rules returns xbnf::TypedRule: {xbnf::TypedRule}
+subTypes
+subType : ParserRule
+subType : TerminalRule
+subType : TypedRule
+	'<rules'
+	('xsi:type' '=' '"xbnf::TypedRule"')	( '/>'
+	| ('>' '</rules>')
+	);
+
+RULE_UntypedRule_subrules returns xbnf::UntypedRule: {xbnf::UntypedRule}
+subTypes
+subType : UntypedRule
+	'<subrules'
+	('xsi:type' '=' '"xbnf::UntypedRule"')	( '/>'
+	| ('>' (typedRule=[xbnf::TypedRule|XMIID])* '</subrules>')
+	);
+
+RULE_Syntax_syntax returns xbnf::Syntax: {xbnf::Syntax}
+subTypes
+subType : Syntax
+	'<syntax'
+	(name=TERM_EString | debug=TERM_EString)*
+	('xsi:type' '=' '"xbnf::Syntax"')
+	(name=TERM_EString | debug=TERM_EString)*
+	( '/>'
+	| ('>' (grammars+=RULE_Grammar_grammars | metamodelDeclarations+=RULE_MetamodelDeclaration_metamodelDeclarations)* '</syntax>')
+	);
+
+RULE_AbstractElement_terminal returns xbnf::AbstractElement: {xbnf::AbstractElement}
+subTypes
+subType : AbstractElement
+subType : ActionAssignment
+subType : Assignment
+subType : CharacterRange
+subType : Conjunction
+subType : Disjunction
+subType : EOF
+subType : Epsilon
+subType : Keyword
+subType : KeywordAssignment
+subType : NegatedToken
+subType : RuleCall
+subType : RuleCallAssignment
+subType : UntilToken
+subType : Wildcard
+	'<terminal'
+	(debug=TERM_EString)*
+	('xsi:type' '=' '"xbnf::AbstractElement"')
+	(debug=TERM_EString)*
+	( '/>'
+	| ('>' (parentRule=[xbnf::AbstractRule|XMIID])* '</terminal>')
+	);
+
+RULE_EClassifier_type returns ecore::EClassifier: {ecore::EClassifier}
+subTypes
+subType : EClass
+subType : EClassifier
+subType : EDataType
+	'<type'
+	(name=TERM_EString)*
+	('xsi:type' '=' '"ecore::EClassifier"')
+	(name=TERM_EString)*
+	( '/>'
+	| ('>' (eAnnotations+=RULE_EAnnotation_eAnnotations | eTypeParameters+=RULE_ETypeParameter_eTypeParameters)* '</type>')
+	);
+
+RULE_TypedRule_typedRule returns xbnf::TypedRule: {xbnf::TypedRule}
+subTypes
+subType : ParserRule
+subType : TerminalRule
+subType : TypedRule
+	'<typedRule'
+	(name=TERM_EString | debug=TERM_EString | kind=TERM_EString)*
+	('xsi:type' '=' '"xbnf::TypedRule"')
+	(name=TERM_EString | debug=TERM_EString | kind=TERM_EString)*
+	( '/>'
+	| ('>' (element=RULE_AbstractElement_element | type=[ecore::EClassifier|XMIID] | subrules+=RULE_UntypedRule_subrules | ^grammar=[xbnf::Grammar|XMIID])* '</typedRule>')
+	);
+terminal TERM_EJavaClass returns ecore::EJavaClass : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EJavaObject returns ecore::EJavaObject : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EString returns ecore::EString : '"' (' '..'!' /* " */ | '#'..'~')* '"';
+terminal TERM_EInt returns ecore::EInt : ('1'..'9')('0'..'9')*;
+terminal TERM_EBoolean returns ecore::EBoolean : '"true"' | '"false"';
+terminal WS : (' '|'\t'|'\r'|'\n'/*|'\f'*/)+;
+terminal XMIID returns ecore::EString : ('a'..'z'|'A'..'Z'|'_'..'_') ('a'..'z'|'A'..'Z'|'_'..'_'|'0'..'9')*;

@@ -1619,419 +1619,430 @@ StringAttribute ::= XMLAttribute_xsi_type --300
 		  $EndAction
 		./
 
-Terminal_Identifier ::= abstract --301
+Terminal_Boolean ::= false --301
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+Terminal_Boolean ::= true --302
+		/.$BeginAction
+					setResult(createEObject());
+		  $EndAction
+		./
+
+Terminal_Identifier ::= abstract --303
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= changeable --302
+Terminal_Identifier ::= changeable --304
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= containment --303
+Terminal_Identifier ::= containment --305
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= defaultValueLiteral --304
+Terminal_Identifier ::= defaultValueLiteral --306
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= derived --305
+Terminal_Identifier ::= derived --307
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= eClassifier --306
+Terminal_Identifier ::= eClassifier --308
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= eExceptions --307
+Terminal_Identifier ::= eExceptions --309
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= eOpposite --308
+Terminal_Identifier ::= eOpposite --310
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= eSuperTypes --309
+Terminal_Identifier ::= eSuperTypes --311
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= eType --310
+Terminal_Identifier ::= eType --312
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= encoding --311
+Terminal_Identifier ::= encoding --313
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= instanceClassName --312
+Terminal_Identifier ::= instanceClassName --314
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= key --313
+Terminal_Identifier ::= key --315
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= lowerBound --314
+Terminal_Identifier ::= lowerBound --316
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= name --315
+Terminal_Identifier ::= name --317
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= nsPrefix --316
+Terminal_Identifier ::= nsPrefix --318
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= nsURI --317
+Terminal_Identifier ::= nsURI --319
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= ordered --318
+Terminal_Identifier ::= ordered --320
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= resolveProxies --319
+Terminal_Identifier ::= resolveProxies --321
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= serializable --320
+Terminal_Identifier ::= serializable --322
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= source --321
+Terminal_Identifier ::= source --323
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= transient --322
+Terminal_Identifier ::= transient --324
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= unsettable --323
+Terminal_Identifier ::= unsettable --325
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= upperBound --324
+Terminal_Identifier ::= upperBound --326
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= value --325
+Terminal_Identifier ::= value --327
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= version --326
+Terminal_Identifier ::= version --328
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= volatile --327
+Terminal_Identifier ::= volatile --329
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= xmi --328
+Terminal_Identifier ::= xmi --330
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= xsi --329
+Terminal_Identifier ::= xsi --331
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
-Terminal_Identifier ::= IDENTIFIER --330
+Terminal_Identifier ::= IDENTIFIER --332
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
 
-Terminal_String ::= STRING --331
+Terminal_String ::= STRING --333
 		/.$BeginAction
 					setResult(getRhsTokenText(1));
 		  $EndAction
 		./
 
-XMLAttribute_xmi_version ::= xmi COLON version EQ Terminal_String --332
+XMLAttribute_xmi_version ::= xmi COLON version EQ Terminal_String --334
 		/.$BeginAction
 					setResult(createXMIAttribute("version"));
 		  $EndAction
 		./
 
-XMLAttribute_xmlns_ ::= xmlns COLON Terminal_Identifier EQ Terminal_String --333
+XMLAttribute_xmlns_ ::= xmlns COLON Terminal_Identifier EQ Terminal_String --335
 		/.$BeginAction
 					setResult(createXMLNSAttribute());
 		  $EndAction
 		./
 
-XMLAttribute_xsi_type ::= xsi COLON type EQ Terminal_String --334
+XMLAttribute_xsi_type ::= xsi COLON type EQ Terminal_String --336
 		/.$BeginAction
 					setResult(createXSIAttribute("type"));
 		  $EndAction
 		./
 
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT EcoreRoot_ecore_EPackage --335
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT EcoreRoot_ecore_EPackage --337
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(3)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --336
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --338
 		/.$BeginAction
 					setResult(createXMLDocument());
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --337
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --339
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --338
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --340
 		/.$BeginAction
 					setResult(createXMLDocument());
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --339
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --341
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --340
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --342
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(5)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --341
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --343
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --342
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --344
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --343
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --345
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(6)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --344
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --346
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --345
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --347
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --346
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --348
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --347
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --349
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --348
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --350
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --349
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --351
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --350
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --352
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --351
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --353
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(8)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --352
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --354
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --353
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --355
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(8)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --354
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT EcoreRoot_ecore_EPackage --356
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --355
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --357
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --356
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --358
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(9)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --357
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I SLASH_GT --359
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --358
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 SLASH_GT --360
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --359
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT LT_SLASH_x_m_i_COLON_X_M_I_GT --361
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --360
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT LT_SLASH_x_m_i_COLON_X_M_I_GT --362
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --361
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --363
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(11)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --362
+XMLDocument_ecore_EPackage ::= LT_QUERY_x_m_l version EQ Terminal_String encoding EQ Terminal_String QUERY_GT LT_x_m_i_COLON_X_M_I XMLDocument_ecore_EPackage_7 GT XMLDocument_ecore_EPackage_2 LT_SLASH_x_m_i_COLON_X_M_I_GT --364
 		/.$BeginAction
 					setResult(createXMLDocument(getRhsSym(4), getRhsSym(7), getRhsSym(10), getRhsSym(12)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_2 ::= XmlElement --363
+XMLDocument_ecore_EPackage_2 ::= XmlElement --365
 		/.$BeginAction
 					setResult(SetAttributes.create(getRhsSym(1)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_2 ::= XMLDocument_ecore_EPackage_2 XmlElement --364
+XMLDocument_ecore_EPackage_2 ::= XMLDocument_ecore_EPackage_2 XmlElement --366
 		/.$BeginAction
 					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmi_version --365
+XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmi_version --367
 		/.$BeginAction
 					setResult(SetAttributes.create(getRhsSym(1)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmlns_ --366
+XMLDocument_ecore_EPackage_7 ::= XMLAttribute_xmlns_ --368
 		/.$BeginAction
 					setResult(SetAttributes.create(getRhsSym(1)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmi_version --367
+XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmi_version --369
 		/.$BeginAction
 					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
 		  $EndAction
 		./
-XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmlns_ --368
+XMLDocument_ecore_EPackage_7 ::= XMLDocument_ecore_EPackage_7 XMLAttribute_xmlns_ --370
 		/.$BeginAction
 					setResult(SetAttributes.concatenate(getRhsSym(1), getRhsSym(2)));
 		  $EndAction
 		./
 
-XmlAttribute ::= BooleanAttribute --369
+XmlAttribute ::= BooleanAttribute --371
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlAttribute ::= IntegerAttribute --370
+XmlAttribute ::= IntegerAttribute --372
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlAttribute ::= OtherAttribute --371
+XmlAttribute ::= OtherAttribute --373
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlAttribute ::= StringAttribute --372
+XmlAttribute ::= StringAttribute --374
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
 
-XmlElement ::= EcoreClass_ecore_EClass_eOperations --373
+XmlElement ::= EcoreClass_ecore_EClass_eOperations --375
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EClass_eStructuralFeatures --374
+XmlElement ::= EcoreClass_ecore_EClass_eStructuralFeatures --376
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EGenericType_eTypeArguments --375
+XmlElement ::= EcoreClass_ecore_EGenericType_eTypeArguments --377
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EModelElement_eAnnotations --376
+XmlElement ::= EcoreClass_ecore_EModelElement_eAnnotations --378
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EOperation_eParameters --377
+XmlElement ::= EcoreClass_ecore_EOperation_eParameters --379
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EPackage_eClassifiers --378
+XmlElement ::= EcoreClass_ecore_EPackage_eClassifiers --380
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_EPackage_eSubpackages --379
+XmlElement ::= EcoreClass_ecore_EPackage_eSubpackages --381
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreClass_ecore_ETypedElement_eGenericType --380
+XmlElement ::= EcoreClass_ecore_ETypedElement_eGenericType --382
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= EcoreFeature_ecore_EAnnotation_details --381
+XmlElement ::= EcoreFeature_ecore_EAnnotation_details --383
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction
 		./
-XmlElement ::= OtherElement --382
+XmlElement ::= OtherElement --384
 		/.$BeginAction
 					setResult(createEObject());
 		  $EndAction

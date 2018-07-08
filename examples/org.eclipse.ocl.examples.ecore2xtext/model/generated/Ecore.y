@@ -1,0 +1,645 @@
+/* Auto-generated Bison grammar for Ecore2XMI*/
+
+%{
+#include <Ecore2XMI.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+extern FILE *yyin;
+%}
+
+%token IDENTIFIER
+%token STRING
+
+%token KWEAnnotation
+%token KWEAttribute
+%token KWEClass
+%token KWEClassifier
+%token KWEDataType
+%token KWEEnum
+%token KWEEnumLiteral
+%token KWEFactory
+%token KWEGenericType
+%token KWEModelElement
+%token KWENamedElement
+%token KWEObject
+%token KWEOperation
+%token KWEPackage
+%token KWEParameter
+%token KWEReference
+%token KWEStringToStringMapEntry
+%token KWEStructuralFeature
+%token KWETypeParameter
+%token KWETypedElement
+%token KWXMI
+%token KW_CO
+%token KW_EQ
+%token KW_GT
+%token KW_LT_QMxml
+%token KW_LT_SL
+%token KW_LT_SLcontents_GT
+%token KW_LT_SLdetails_GT
+%token KW_LT_SLeAnnotations_GT
+%token KW_LT_SLeBounds_GT
+%token KW_LT_SLeClassifiers_GT
+%token KW_LT_SLeGenericExceptions_GT
+%token KW_LT_SLeGenericSuperTypes_GT
+%token KW_LT_SLeLiterals_GT
+%token KW_LT_SLeLowerBound_GT
+%token KW_LT_SLeOperations_GT
+%token KW_LT_SLeParameters_GT
+%token KW_LT_SLeStructuralFeatures_GT
+%token KW_LT_SLeSubpackages_GT
+%token KW_LT_SLeTypeArguments_GT
+%token KW_LT_SLeTypeParameters_GT
+%token KW_LT_SLeUpperBound_GT
+%token KW_LT_SLxmi_COXMI_GT
+%token KW_LTcontents
+%token KW_LTdetails
+%token KW_LTeAnnotations
+%token KW_LTeBounds
+%token KW_LTeClassifiers
+%token KW_LTeGenericExceptions
+%token KW_LTeGenericSuperTypes
+%token KW_LTeLiterals
+%token KW_LTeLowerBound
+%token KW_LTeOperations
+%token KW_LTeParameters
+%token KW_LTeStructuralFeatures
+%token KW_LTeSubpackages
+%token KW_LTeTypeArguments
+%token KW_LTeTypeParameters
+%token KW_LTeUpperBound
+%token KW_LTecore
+%token KW_LTxmi
+%token KW_LTxmi_COXMI
+%token KW_QM_GT
+%token KW_SL_GT
+%token KWabstract
+%token KWchangeable
+%token KWcontainment
+%token KWdefaultValueLiteral
+%token KWderived
+%token KWeClassifier
+%token KWeExceptions
+%token KWeKeys
+%token KWeOpposite
+%token KWeSuperTypes
+%token KWeTypeParameter
+%token KWencoding
+%token KWiD
+%token KWinterface
+%token KWkey
+%token KWliteral
+%token KWlowerBound
+%token KWname
+%token KWnsPrefix
+%token KWnsURI
+%token KWordered
+%token KWreferences
+%token KWresolveProxies
+%token KWserializable
+%token KWsource
+%token KWtransient
+%token KWtype
+%token KWunique
+%token KWunsettable
+%token KWupperBound
+%token KWvalue
+%token KWversion
+%token KWvolatile
+%token KWxmi
+%token KWxsi
+
+%token NS_ecore
+%token NS_xmi
+%token NS_xmlns
+%token LT_NS_ecore
+%token LT_NS_xmi
+%token LT_NS_xmlns
+
+%start DOCUMENT
+%%
+
+PREAMBLE_Head : KW_LT_QMxml
+PREAMBLE_Head : PREAMBLE_Head KWversion KW_EQ STRING
+PREAMBLE_Head : PREAMBLE_Head KWencoding KW_EQ STRING
+PREAMBLE : PREAMBLE_Head KW_QM_GT
+
+DOCUMENT_Head1 : PREAMBLE LT_NS_xmi KW_CO KWXMI
+DOCUMENT_Head1 : DOCUMENT_Head1 NS_xmi KW_CO KWversion KW_EQ STRING
+DOCUMENT_Head1 : DOCUMENT_Head1 NS_xmlns KW_CO KWxmi KW_EQ STRING
+DOCUMENT : DOCUMENT_Head1 KW_SL_GT
+DOCUMENT_Head2 : DOCUMENT_Head1 KW_GT
+DOCUMENT_Head2 : DOCUMENT_Head2 ROOT
+DOCUMENT : DOCUMENT_Head2 KW_LT_SL LT_NS_xmi KW_CO KWXMI KW_GT
+DOCUMENT : PREAMBLE ROOT
+
+ROOT : RT_EAnnotation
+ROOT : RT_EAttribute
+ROOT : RT_EClass
+ROOT : RT_EDataType
+ROOT : RT_EEnum
+ROOT : RT_EEnumLiteral
+ROOT : RT_EFactory
+ROOT : RT_EGenericType
+ROOT : RT_EObject
+ROOT : RT_EOperation
+ROOT : RT_EPackage
+ROOT : RT_EParameter
+ROOT : RT_EReference
+ROOT : RT_EStringToStringMapEntry
+ROOT : RT_ETypeParameter
+
+
+RT_EAnnotation_Post : LT_NS_ecore KW_CO KWEAnnotation
+RT_EAnnotation_Post : RT_EAnnotation_Post KWsource KW_EQ STRING
+RT_EAnnotation_Post : RT_EAnnotation_Post KWreferences KW_EQ STRING
+RT_EAnnotation_Head : RT_EAnnotation_Post KW_GT
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_contents
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_details
+RT_EAnnotation_Head : RT_EAnnotation_Head CH_eAnnotations
+RT_EAnnotation : RT_EAnnotation_Head KW_LT_SL NS_ecore KW_CO KWEAnnotation KW_GT
+RT_EAnnotation : RT_EAnnotation_Post KW_SL_GT
+
+RT_EAttribute_Post : LT_NS_ecore KW_CO KWEAttribute
+RT_EAttribute_Post : RT_EAttribute_Post KWchangeable KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWdefaultValueLiteral KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWderived KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWiD KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWlowerBound KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWname KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWordered KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWtransient KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWunique KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWunsettable KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWupperBound KW_EQ STRING
+RT_EAttribute_Post : RT_EAttribute_Post KWvolatile KW_EQ STRING
+RT_EAttribute_Head : RT_EAttribute_Post KW_GT
+RT_EAttribute_Head : RT_EAttribute_Head CH_eAnnotations
+RT_EAttribute : RT_EAttribute_Head KW_LT_SL NS_ecore KW_CO KWEAttribute KW_GT
+RT_EAttribute : RT_EAttribute_Post KW_SL_GT
+
+RT_EClass_Post : LT_NS_ecore KW_CO KWEClass
+RT_EClass_Post : RT_EClass_Post KWabstract KW_EQ STRING
+RT_EClass_Post : RT_EClass_Post KWinterface KW_EQ STRING
+RT_EClass_Post : RT_EClass_Post KWname KW_EQ STRING
+RT_EClass_Post : RT_EClass_Post KWeSuperTypes KW_EQ STRING
+RT_EClass_Head : RT_EClass_Post KW_GT
+RT_EClass_Head : RT_EClass_Head CH_eAnnotations
+RT_EClass_Head : RT_EClass_Head CH_eGenericSuperTypes
+RT_EClass_Head : RT_EClass_Head CH_eOperations
+RT_EClass_Head : RT_EClass_Head CH_eStructuralFeatures
+RT_EClass_Head : RT_EClass_Head CH_eTypeParameters
+RT_EClass : RT_EClass_Head KW_LT_SL NS_ecore KW_CO KWEClass KW_GT
+RT_EClass : RT_EClass_Post KW_SL_GT
+
+RT_EDataType_Post : LT_NS_ecore KW_CO KWEDataType
+RT_EDataType_Post : RT_EDataType_Post KWname KW_EQ STRING
+RT_EDataType_Post : RT_EDataType_Post KWserializable KW_EQ STRING
+RT_EDataType_Head : RT_EDataType_Post KW_GT
+RT_EDataType_Head : RT_EDataType_Head CH_eAnnotations
+RT_EDataType_Head : RT_EDataType_Head CH_eTypeParameters
+RT_EDataType : RT_EDataType_Head KW_LT_SL NS_ecore KW_CO KWEDataType KW_GT
+RT_EDataType : RT_EDataType_Post KW_SL_GT
+
+RT_EEnum_Post : LT_NS_ecore KW_CO KWEEnum
+RT_EEnum_Post : RT_EEnum_Post KWname KW_EQ STRING
+RT_EEnum_Post : RT_EEnum_Post KWserializable KW_EQ STRING
+RT_EEnum_Head : RT_EEnum_Post KW_GT
+RT_EEnum_Head : RT_EEnum_Head CH_eAnnotations
+RT_EEnum_Head : RT_EEnum_Head CH_eLiterals
+RT_EEnum_Head : RT_EEnum_Head CH_eTypeParameters
+RT_EEnum : RT_EEnum_Head KW_LT_SL NS_ecore KW_CO KWEEnum KW_GT
+RT_EEnum : RT_EEnum_Post KW_SL_GT
+
+RT_EEnumLiteral_Post : LT_NS_ecore KW_CO KWEEnumLiteral
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWliteral KW_EQ STRING
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWname KW_EQ STRING
+RT_EEnumLiteral_Post : RT_EEnumLiteral_Post KWvalue KW_EQ STRING
+RT_EEnumLiteral_Head : RT_EEnumLiteral_Post KW_GT
+RT_EEnumLiteral_Head : RT_EEnumLiteral_Head CH_eAnnotations
+RT_EEnumLiteral : RT_EEnumLiteral_Head KW_LT_SL NS_ecore KW_CO KWEEnumLiteral KW_GT
+RT_EEnumLiteral : RT_EEnumLiteral_Post KW_SL_GT
+
+RT_EFactory_Post : LT_NS_ecore KW_CO KWEFactory
+RT_EFactory_Head : RT_EFactory_Post KW_GT
+RT_EFactory_Head : RT_EFactory_Head CH_eAnnotations
+RT_EFactory : RT_EFactory_Head KW_LT_SL NS_ecore KW_CO KWEFactory KW_GT
+RT_EFactory : RT_EFactory_Post KW_SL_GT
+
+RT_EGenericType_Post : LT_NS_ecore KW_CO KWEGenericType
+RT_EGenericType_Post : RT_EGenericType_Post KWeClassifier KW_EQ STRING
+RT_EGenericType_Post : RT_EGenericType_Post KWeTypeParameter KW_EQ STRING
+RT_EGenericType_Head : RT_EGenericType_Post KW_GT
+RT_EGenericType_Head : RT_EGenericType_Head CH_eLowerBound
+RT_EGenericType_Head : RT_EGenericType_Head CH_eTypeArguments
+RT_EGenericType_Head : RT_EGenericType_Head CH_eUpperBound
+RT_EGenericType : RT_EGenericType_Head KW_LT_SL NS_ecore KW_CO KWEGenericType KW_GT
+RT_EGenericType : RT_EGenericType_Post KW_SL_GT
+
+RT_EObject_Post : LT_NS_ecore KW_CO KWEObject
+RT_EObject_Head : RT_EObject_Post KW_GT
+RT_EObject : RT_EObject_Head KW_LT_SL NS_ecore KW_CO KWEObject KW_GT
+RT_EObject : RT_EObject_Post KW_SL_GT
+
+RT_EOperation_Post : LT_NS_ecore KW_CO KWEOperation
+RT_EOperation_Post : RT_EOperation_Post KWlowerBound KW_EQ STRING
+RT_EOperation_Post : RT_EOperation_Post KWname KW_EQ STRING
+RT_EOperation_Post : RT_EOperation_Post KWordered KW_EQ STRING
+RT_EOperation_Post : RT_EOperation_Post KWunique KW_EQ STRING
+RT_EOperation_Post : RT_EOperation_Post KWupperBound KW_EQ STRING
+RT_EOperation_Post : RT_EOperation_Post KWeExceptions KW_EQ STRING
+RT_EOperation_Head : RT_EOperation_Post KW_GT
+RT_EOperation_Head : RT_EOperation_Head CH_eAnnotations
+RT_EOperation_Head : RT_EOperation_Head CH_eGenericExceptions
+RT_EOperation_Head : RT_EOperation_Head CH_eParameters
+RT_EOperation_Head : RT_EOperation_Head CH_eTypeParameters
+RT_EOperation : RT_EOperation_Head KW_LT_SL NS_ecore KW_CO KWEOperation KW_GT
+RT_EOperation : RT_EOperation_Post KW_SL_GT
+
+RT_EPackage_Post : LT_NS_ecore KW_CO KWEPackage
+RT_EPackage_Post : RT_EPackage_Post KWname KW_EQ STRING
+RT_EPackage_Post : RT_EPackage_Post KWnsPrefix KW_EQ STRING
+RT_EPackage_Post : RT_EPackage_Post KWnsURI KW_EQ STRING
+RT_EPackage_Head : RT_EPackage_Post KW_GT
+RT_EPackage_Head : RT_EPackage_Head CH_eAnnotations
+RT_EPackage_Head : RT_EPackage_Head CH_eClassifiers
+RT_EPackage_Head : RT_EPackage_Head CH_eSubpackages
+RT_EPackage : RT_EPackage_Head KW_LT_SL NS_ecore KW_CO KWEPackage KW_GT
+RT_EPackage : RT_EPackage_Post KW_SL_GT
+
+RT_EParameter_Post : LT_NS_ecore KW_CO KWEParameter
+RT_EParameter_Post : RT_EParameter_Post KWlowerBound KW_EQ STRING
+RT_EParameter_Post : RT_EParameter_Post KWname KW_EQ STRING
+RT_EParameter_Post : RT_EParameter_Post KWordered KW_EQ STRING
+RT_EParameter_Post : RT_EParameter_Post KWunique KW_EQ STRING
+RT_EParameter_Post : RT_EParameter_Post KWupperBound KW_EQ STRING
+RT_EParameter_Head : RT_EParameter_Post KW_GT
+RT_EParameter_Head : RT_EParameter_Head CH_eAnnotations
+RT_EParameter : RT_EParameter_Head KW_LT_SL NS_ecore KW_CO KWEParameter KW_GT
+RT_EParameter : RT_EParameter_Post KW_SL_GT
+
+RT_EReference_Post : LT_NS_ecore KW_CO KWEReference
+RT_EReference_Post : RT_EReference_Post KWchangeable KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWcontainment KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWdefaultValueLiteral KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWderived KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWlowerBound KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWname KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWordered KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWresolveProxies KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWtransient KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWunique KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWunsettable KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWupperBound KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWvolatile KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWeKeys KW_EQ STRING
+RT_EReference_Post : RT_EReference_Post KWeOpposite KW_EQ STRING
+RT_EReference_Head : RT_EReference_Post KW_GT
+RT_EReference_Head : RT_EReference_Head CH_eAnnotations
+RT_EReference : RT_EReference_Head KW_LT_SL NS_ecore KW_CO KWEReference KW_GT
+RT_EReference : RT_EReference_Post KW_SL_GT
+
+RT_EStringToStringMapEntry_Post : LT_NS_ecore KW_CO KWEStringToStringMapEntry
+RT_EStringToStringMapEntry_Post : RT_EStringToStringMapEntry_Post KWkey KW_EQ STRING
+RT_EStringToStringMapEntry_Post : RT_EStringToStringMapEntry_Post KWvalue KW_EQ STRING
+RT_EStringToStringMapEntry_Head : RT_EStringToStringMapEntry_Post KW_GT
+RT_EStringToStringMapEntry : RT_EStringToStringMapEntry_Head KW_LT_SL NS_ecore KW_CO KWEStringToStringMapEntry KW_GT
+RT_EStringToStringMapEntry : RT_EStringToStringMapEntry_Post KW_SL_GT
+
+RT_ETypeParameter_Post : LT_NS_ecore KW_CO KWETypeParameter
+RT_ETypeParameter_Post : RT_ETypeParameter_Post KWname KW_EQ STRING
+RT_ETypeParameter_Head : RT_ETypeParameter_Post KW_GT
+RT_ETypeParameter_Head : RT_ETypeParameter_Head CH_eAnnotations
+RT_ETypeParameter_Head : RT_ETypeParameter_Head CH_eBounds
+RT_ETypeParameter : RT_ETypeParameter_Head KW_LT_SL NS_ecore KW_CO KWETypeParameter KW_GT
+RT_ETypeParameter : RT_ETypeParameter_Post KW_SL_GT
+
+CH_contents_EObject : KWxsi KW_CO KWtype KW_EQ KWEObject
+
+CH_contents : CH_contents_EObject
+
+CH_details_EStringToStringMapEntry_Pre : KWxsi KW_CO KWtype KW_EQ KWEStringToStringMapEntry
+CH_details_EStringToStringMapEntry_Pre : KWvalue KW_EQ STRING CH_details_EStringToStringMapEntry_Pre
+CH_details_EStringToStringMapEntry_Pre : KWkey KW_EQ STRING CH_details_EStringToStringMapEntry_Pre
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Pre
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Post KWvalue KW_EQ STRING
+CH_details_EStringToStringMapEntry_Post : CH_details_EStringToStringMapEntry_Post KWkey KW_EQ STRING
+CH_details_EStringToStringMapEntry_Head : KW_LTdetails CH_details_EStringToStringMapEntry_Post KW_GT
+CH_details_EStringToStringMapEntry : CH_details_EStringToStringMapEntry_Head KW_LT_SLdetails_GT
+CH_details_EStringToStringMapEntry : KW_LTdetails CH_details_EStringToStringMapEntry_Post KW_SL_GT
+
+CH_details : CH_details_EStringToStringMapEntry
+
+CH_eAnnotations_EAnnotation_Pre : KWxsi KW_CO KWtype KW_EQ KWEAnnotation
+CH_eAnnotations_EAnnotation_Pre : KWsource KW_EQ STRING CH_eAnnotations_EAnnotation_Pre
+CH_eAnnotations_EAnnotation_Pre : KWreferences KW_EQ STRING CH_eAnnotations_EAnnotation_Pre
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Pre
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Post KWsource KW_EQ STRING
+CH_eAnnotations_EAnnotation_Post : CH_eAnnotations_EAnnotation_Post KWreferences KW_EQ STRING
+CH_eAnnotations_EAnnotation_Head : KW_LTeAnnotations CH_eAnnotations_EAnnotation_Post KW_GT
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_contents
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_details
+CH_eAnnotations_EAnnotation_Head : CH_eAnnotations_EAnnotation_Head CH_eAnnotations
+CH_eAnnotations_EAnnotation : CH_eAnnotations_EAnnotation_Head KW_LT_SLeAnnotations_GT
+CH_eAnnotations_EAnnotation : KW_LTeAnnotations CH_eAnnotations_EAnnotation_Post KW_SL_GT
+
+CH_eAnnotations : CH_eAnnotations_EAnnotation
+
+CH_eBounds_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eBounds_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eBounds_EGenericType_Pre
+CH_eBounds_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eBounds_EGenericType_Pre
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Pre
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eBounds_EGenericType_Post : CH_eBounds_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eBounds_EGenericType_Head : KW_LTeBounds CH_eBounds_EGenericType_Post KW_GT
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eTypeArguments
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eLowerBound
+CH_eBounds_EGenericType_Head : CH_eBounds_EGenericType_Head CH_eUpperBound
+CH_eBounds_EGenericType : CH_eBounds_EGenericType_Head KW_LT_SLeBounds_GT
+CH_eBounds_EGenericType : KW_LTeBounds CH_eBounds_EGenericType_Post KW_SL_GT
+
+CH_eBounds : CH_eBounds_EGenericType
+
+CH_eClassifiers_EClass_Pre : KWxsi KW_CO KWtype KW_EQ KWEClass
+CH_eClassifiers_EClass_Pre : KWinterface KW_EQ STRING CH_eClassifiers_EClass_Pre
+CH_eClassifiers_EClass_Pre : KWname KW_EQ STRING CH_eClassifiers_EClass_Pre
+CH_eClassifiers_EClass_Pre : KWabstract KW_EQ STRING CH_eClassifiers_EClass_Pre
+CH_eClassifiers_EClass_Pre : KWeSuperTypes KW_EQ STRING CH_eClassifiers_EClass_Pre
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Pre
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWinterface KW_EQ STRING
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWname KW_EQ STRING
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWabstract KW_EQ STRING
+CH_eClassifiers_EClass_Post : CH_eClassifiers_EClass_Post KWeSuperTypes KW_EQ STRING
+CH_eClassifiers_EClass_Head : KW_LTeClassifiers CH_eClassifiers_EClass_Post KW_GT
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eOperations
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eTypeParameters
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eGenericSuperTypes
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eStructuralFeatures
+CH_eClassifiers_EClass_Head : CH_eClassifiers_EClass_Head CH_eAnnotations
+CH_eClassifiers_EClass : CH_eClassifiers_EClass_Head KW_LT_SLeClassifiers_GT
+CH_eClassifiers_EClass : KW_LTeClassifiers CH_eClassifiers_EClass_Post KW_SL_GT
+
+CH_eClassifiers_EDataType_Pre : KWxsi KW_CO KWtype KW_EQ KWEDataType
+CH_eClassifiers_EDataType_Pre : KWname KW_EQ STRING CH_eClassifiers_EDataType_Pre
+CH_eClassifiers_EDataType_Pre : KWserializable KW_EQ STRING CH_eClassifiers_EDataType_Pre
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Pre
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWname KW_EQ STRING
+CH_eClassifiers_EDataType_Post : CH_eClassifiers_EDataType_Post KWserializable KW_EQ STRING
+CH_eClassifiers_EDataType_Head : KW_LTeClassifiers CH_eClassifiers_EDataType_Post KW_GT
+CH_eClassifiers_EDataType_Head : CH_eClassifiers_EDataType_Head CH_eTypeParameters
+CH_eClassifiers_EDataType_Head : CH_eClassifiers_EDataType_Head CH_eAnnotations
+CH_eClassifiers_EDataType : CH_eClassifiers_EDataType_Head KW_LT_SLeClassifiers_GT
+CH_eClassifiers_EDataType : KW_LTeClassifiers CH_eClassifiers_EDataType_Post KW_SL_GT
+
+CH_eClassifiers_EEnum_Pre : KWxsi KW_CO KWtype KW_EQ KWEEnum
+CH_eClassifiers_EEnum_Pre : KWname KW_EQ STRING CH_eClassifiers_EEnum_Pre
+CH_eClassifiers_EEnum_Pre : KWserializable KW_EQ STRING CH_eClassifiers_EEnum_Pre
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Pre
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWname KW_EQ STRING
+CH_eClassifiers_EEnum_Post : CH_eClassifiers_EEnum_Post KWserializable KW_EQ STRING
+CH_eClassifiers_EEnum_Head : KW_LTeClassifiers CH_eClassifiers_EEnum_Post KW_GT
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eLiterals
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eTypeParameters
+CH_eClassifiers_EEnum_Head : CH_eClassifiers_EEnum_Head CH_eAnnotations
+CH_eClassifiers_EEnum : CH_eClassifiers_EEnum_Head KW_LT_SLeClassifiers_GT
+CH_eClassifiers_EEnum : KW_LTeClassifiers CH_eClassifiers_EEnum_Post KW_SL_GT
+
+CH_eClassifiers : CH_eClassifiers_EClass
+CH_eClassifiers : CH_eClassifiers_EDataType
+CH_eClassifiers : CH_eClassifiers_EEnum
+
+CH_eGenericExceptions_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eGenericExceptions_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eGenericExceptions_EGenericType_Pre
+CH_eGenericExceptions_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eGenericExceptions_EGenericType_Pre
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Pre
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eGenericExceptions_EGenericType_Post : CH_eGenericExceptions_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eGenericExceptions_EGenericType_Head : KW_LTeGenericExceptions CH_eGenericExceptions_EGenericType_Post KW_GT
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eTypeArguments
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eLowerBound
+CH_eGenericExceptions_EGenericType_Head : CH_eGenericExceptions_EGenericType_Head CH_eUpperBound
+CH_eGenericExceptions_EGenericType : CH_eGenericExceptions_EGenericType_Head KW_LT_SLeGenericExceptions_GT
+CH_eGenericExceptions_EGenericType : KW_LTeGenericExceptions CH_eGenericExceptions_EGenericType_Post KW_SL_GT
+
+CH_eGenericExceptions : CH_eGenericExceptions_EGenericType
+
+CH_eGenericSuperTypes_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eGenericSuperTypes_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eGenericSuperTypes_EGenericType_Pre
+CH_eGenericSuperTypes_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eGenericSuperTypes_EGenericType_Pre
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Pre
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eGenericSuperTypes_EGenericType_Post : CH_eGenericSuperTypes_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eGenericSuperTypes_EGenericType_Head : KW_LTeGenericSuperTypes CH_eGenericSuperTypes_EGenericType_Post KW_GT
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eTypeArguments
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eLowerBound
+CH_eGenericSuperTypes_EGenericType_Head : CH_eGenericSuperTypes_EGenericType_Head CH_eUpperBound
+CH_eGenericSuperTypes_EGenericType : CH_eGenericSuperTypes_EGenericType_Head KW_LT_SLeGenericSuperTypes_GT
+CH_eGenericSuperTypes_EGenericType : KW_LTeGenericSuperTypes CH_eGenericSuperTypes_EGenericType_Post KW_SL_GT
+
+CH_eGenericSuperTypes : CH_eGenericSuperTypes_EGenericType
+
+CH_eLiterals_EEnumLiteral_Pre : KWxsi KW_CO KWtype KW_EQ KWEEnumLiteral
+CH_eLiterals_EEnumLiteral_Pre : KWname KW_EQ STRING CH_eLiterals_EEnumLiteral_Pre
+CH_eLiterals_EEnumLiteral_Pre : KWvalue KW_EQ STRING CH_eLiterals_EEnumLiteral_Pre
+CH_eLiterals_EEnumLiteral_Pre : KWliteral KW_EQ STRING CH_eLiterals_EEnumLiteral_Pre
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Pre
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWname KW_EQ STRING
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWvalue KW_EQ STRING
+CH_eLiterals_EEnumLiteral_Post : CH_eLiterals_EEnumLiteral_Post KWliteral KW_EQ STRING
+CH_eLiterals_EEnumLiteral_Head : KW_LTeLiterals CH_eLiterals_EEnumLiteral_Post KW_GT
+CH_eLiterals_EEnumLiteral_Head : CH_eLiterals_EEnumLiteral_Head CH_eAnnotations
+CH_eLiterals_EEnumLiteral : CH_eLiterals_EEnumLiteral_Head KW_LT_SLeLiterals_GT
+CH_eLiterals_EEnumLiteral : KW_LTeLiterals CH_eLiterals_EEnumLiteral_Post KW_SL_GT
+
+CH_eLiterals : CH_eLiterals_EEnumLiteral
+
+CH_eLowerBound_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eLowerBound_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eLowerBound_EGenericType_Pre
+CH_eLowerBound_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eLowerBound_EGenericType_Pre
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Pre
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eLowerBound_EGenericType_Post : CH_eLowerBound_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eLowerBound_EGenericType_Head : KW_LTeLowerBound CH_eLowerBound_EGenericType_Post KW_GT
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eTypeArguments
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eLowerBound
+CH_eLowerBound_EGenericType_Head : CH_eLowerBound_EGenericType_Head CH_eUpperBound
+CH_eLowerBound_EGenericType : CH_eLowerBound_EGenericType_Head KW_LT_SLeLowerBound_GT
+CH_eLowerBound_EGenericType : KW_LTeLowerBound CH_eLowerBound_EGenericType_Post KW_SL_GT
+
+CH_eLowerBound : CH_eLowerBound_EGenericType
+
+CH_eOperations_EOperation_Pre : KWxsi KW_CO KWtype KW_EQ KWEOperation
+CH_eOperations_EOperation_Pre : KWordered KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Pre : KWupperBound KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Pre : KWname KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Pre : KWunique KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Pre : KWlowerBound KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Pre : KWeExceptions KW_EQ STRING CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Pre
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWordered KW_EQ STRING
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWupperBound KW_EQ STRING
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWname KW_EQ STRING
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWunique KW_EQ STRING
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWlowerBound KW_EQ STRING
+CH_eOperations_EOperation_Post : CH_eOperations_EOperation_Post KWeExceptions KW_EQ STRING
+CH_eOperations_EOperation_Head : KW_LTeOperations CH_eOperations_EOperation_Post KW_GT
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eParameters
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eGenericExceptions
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eTypeParameters
+CH_eOperations_EOperation_Head : CH_eOperations_EOperation_Head CH_eAnnotations
+CH_eOperations_EOperation : CH_eOperations_EOperation_Head KW_LT_SLeOperations_GT
+CH_eOperations_EOperation : KW_LTeOperations CH_eOperations_EOperation_Post KW_SL_GT
+
+CH_eOperations : CH_eOperations_EOperation
+
+CH_eParameters_EParameter_Pre : KWxsi KW_CO KWtype KW_EQ KWEParameter
+CH_eParameters_EParameter_Pre : KWordered KW_EQ STRING CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Pre : KWupperBound KW_EQ STRING CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Pre : KWname KW_EQ STRING CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Pre : KWunique KW_EQ STRING CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Pre : KWlowerBound KW_EQ STRING CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Pre
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWordered KW_EQ STRING
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWupperBound KW_EQ STRING
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWname KW_EQ STRING
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWunique KW_EQ STRING
+CH_eParameters_EParameter_Post : CH_eParameters_EParameter_Post KWlowerBound KW_EQ STRING
+CH_eParameters_EParameter_Head : KW_LTeParameters CH_eParameters_EParameter_Post KW_GT
+CH_eParameters_EParameter_Head : CH_eParameters_EParameter_Head CH_eAnnotations
+CH_eParameters_EParameter : CH_eParameters_EParameter_Head KW_LT_SLeParameters_GT
+CH_eParameters_EParameter : KW_LTeParameters CH_eParameters_EParameter_Post KW_SL_GT
+
+CH_eParameters : CH_eParameters_EParameter
+
+CH_eStructuralFeatures_EAttribute_Pre : KWxsi KW_CO KWtype KW_EQ KWEAttribute
+CH_eStructuralFeatures_EAttribute_Pre : KWordered KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWupperBound KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWname KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWdefaultValueLiteral KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWderived KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWunique KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWvolatile KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWtransient KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWiD KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWlowerBound KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWchangeable KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Pre : KWunsettable KW_EQ STRING CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Pre
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWordered KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWupperBound KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWname KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWdefaultValueLiteral KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWderived KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWunique KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWvolatile KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWtransient KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWiD KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWlowerBound KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWchangeable KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Post : CH_eStructuralFeatures_EAttribute_Post KWunsettable KW_EQ STRING
+CH_eStructuralFeatures_EAttribute_Head : KW_LTeStructuralFeatures CH_eStructuralFeatures_EAttribute_Post KW_GT
+CH_eStructuralFeatures_EAttribute_Head : CH_eStructuralFeatures_EAttribute_Head CH_eAnnotations
+CH_eStructuralFeatures_EAttribute : CH_eStructuralFeatures_EAttribute_Head KW_LT_SLeStructuralFeatures_GT
+CH_eStructuralFeatures_EAttribute : KW_LTeStructuralFeatures CH_eStructuralFeatures_EAttribute_Post KW_SL_GT
+
+CH_eStructuralFeatures_EReference_Pre : KWxsi KW_CO KWtype KW_EQ KWEReference
+CH_eStructuralFeatures_EReference_Pre : KWupperBound KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWname KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWdefaultValueLiteral KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWunique KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWvolatile KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWtransient KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWlowerBound KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWchangeable KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWunsettable KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWordered KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWderived KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWcontainment KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWresolveProxies KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWeOpposite KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Pre : KWeKeys KW_EQ STRING CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Pre
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWupperBound KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWname KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWdefaultValueLiteral KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWunique KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWvolatile KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWtransient KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWlowerBound KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWchangeable KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWunsettable KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWordered KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWderived KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWcontainment KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWresolveProxies KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWeOpposite KW_EQ STRING
+CH_eStructuralFeatures_EReference_Post : CH_eStructuralFeatures_EReference_Post KWeKeys KW_EQ STRING
+CH_eStructuralFeatures_EReference_Head : KW_LTeStructuralFeatures CH_eStructuralFeatures_EReference_Post KW_GT
+CH_eStructuralFeatures_EReference_Head : CH_eStructuralFeatures_EReference_Head CH_eAnnotations
+CH_eStructuralFeatures_EReference : CH_eStructuralFeatures_EReference_Head KW_LT_SLeStructuralFeatures_GT
+CH_eStructuralFeatures_EReference : KW_LTeStructuralFeatures CH_eStructuralFeatures_EReference_Post KW_SL_GT
+
+CH_eStructuralFeatures : CH_eStructuralFeatures_EAttribute
+CH_eStructuralFeatures : CH_eStructuralFeatures_EReference
+
+CH_eSubpackages_EPackage_Pre : KWxsi KW_CO KWtype KW_EQ KWEPackage
+CH_eSubpackages_EPackage_Pre : KWname KW_EQ STRING CH_eSubpackages_EPackage_Pre
+CH_eSubpackages_EPackage_Pre : KWnsURI KW_EQ STRING CH_eSubpackages_EPackage_Pre
+CH_eSubpackages_EPackage_Pre : KWnsPrefix KW_EQ STRING CH_eSubpackages_EPackage_Pre
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Pre
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWname KW_EQ STRING
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWnsURI KW_EQ STRING
+CH_eSubpackages_EPackage_Post : CH_eSubpackages_EPackage_Post KWnsPrefix KW_EQ STRING
+CH_eSubpackages_EPackage_Head : KW_LTeSubpackages CH_eSubpackages_EPackage_Post KW_GT
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eClassifiers
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eSubpackages
+CH_eSubpackages_EPackage_Head : CH_eSubpackages_EPackage_Head CH_eAnnotations
+CH_eSubpackages_EPackage : CH_eSubpackages_EPackage_Head KW_LT_SLeSubpackages_GT
+CH_eSubpackages_EPackage : KW_LTeSubpackages CH_eSubpackages_EPackage_Post KW_SL_GT
+
+CH_eSubpackages : CH_eSubpackages_EPackage
+
+CH_eTypeArguments_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eTypeArguments_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eTypeArguments_EGenericType_Pre
+CH_eTypeArguments_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eTypeArguments_EGenericType_Pre
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Pre
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eTypeArguments_EGenericType_Post : CH_eTypeArguments_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eTypeArguments_EGenericType_Head : KW_LTeTypeArguments CH_eTypeArguments_EGenericType_Post KW_GT
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eTypeArguments
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eLowerBound
+CH_eTypeArguments_EGenericType_Head : CH_eTypeArguments_EGenericType_Head CH_eUpperBound
+CH_eTypeArguments_EGenericType : CH_eTypeArguments_EGenericType_Head KW_LT_SLeTypeArguments_GT
+CH_eTypeArguments_EGenericType : KW_LTeTypeArguments CH_eTypeArguments_EGenericType_Post KW_SL_GT
+
+CH_eTypeArguments : CH_eTypeArguments_EGenericType
+
+CH_eTypeParameters_ETypeParameter_Pre : KWxsi KW_CO KWtype KW_EQ KWETypeParameter
+CH_eTypeParameters_ETypeParameter_Pre : KWname KW_EQ STRING CH_eTypeParameters_ETypeParameter_Pre
+CH_eTypeParameters_ETypeParameter_Post : CH_eTypeParameters_ETypeParameter_Pre
+CH_eTypeParameters_ETypeParameter_Post : CH_eTypeParameters_ETypeParameter_Post KWname KW_EQ STRING
+CH_eTypeParameters_ETypeParameter_Head : KW_LTeTypeParameters CH_eTypeParameters_ETypeParameter_Post KW_GT
+CH_eTypeParameters_ETypeParameter_Head : CH_eTypeParameters_ETypeParameter_Head CH_eBounds
+CH_eTypeParameters_ETypeParameter_Head : CH_eTypeParameters_ETypeParameter_Head CH_eAnnotations
+CH_eTypeParameters_ETypeParameter : CH_eTypeParameters_ETypeParameter_Head KW_LT_SLeTypeParameters_GT
+CH_eTypeParameters_ETypeParameter : KW_LTeTypeParameters CH_eTypeParameters_ETypeParameter_Post KW_SL_GT
+
+CH_eTypeParameters : CH_eTypeParameters_ETypeParameter
+
+CH_eUpperBound_EGenericType_Pre : KWxsi KW_CO KWtype KW_EQ KWEGenericType
+CH_eUpperBound_EGenericType_Pre : KWeClassifier KW_EQ STRING CH_eUpperBound_EGenericType_Pre
+CH_eUpperBound_EGenericType_Pre : KWeTypeParameter KW_EQ STRING CH_eUpperBound_EGenericType_Pre
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Pre
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Post KWeClassifier KW_EQ STRING
+CH_eUpperBound_EGenericType_Post : CH_eUpperBound_EGenericType_Post KWeTypeParameter KW_EQ STRING
+CH_eUpperBound_EGenericType_Head : KW_LTeUpperBound CH_eUpperBound_EGenericType_Post KW_GT
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eTypeArguments
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eLowerBound
+CH_eUpperBound_EGenericType_Head : CH_eUpperBound_EGenericType_Head CH_eUpperBound
+CH_eUpperBound_EGenericType : CH_eUpperBound_EGenericType_Head KW_LT_SLeUpperBound_GT
+CH_eUpperBound_EGenericType : KW_LTeUpperBound CH_eUpperBound_EGenericType_Post KW_SL_GT
+
+CH_eUpperBound : CH_eUpperBound_EGenericType

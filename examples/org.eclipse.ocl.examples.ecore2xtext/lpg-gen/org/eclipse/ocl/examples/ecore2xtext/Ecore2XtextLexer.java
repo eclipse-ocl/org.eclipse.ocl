@@ -5,7 +5,7 @@ import lpg.runtime.*;
 public class Ecore2XtextLexer implements RuleAction
 {
     private Ecore2XtextLexerLpgLexStream lexStream;
-    
+
     private static ParseTable prs = new Ecore2XtextLexerprs();
     public ParseTable getParseTable() { return prs; }
 
@@ -37,15 +37,15 @@ public class Ecore2XtextLexer implements RuleAction
     {
         reset(input_chars, filename, 1);
     }
-    
+
     public void reset(char[] input_chars, String filename, int tab)
     {
         lexStream = new Ecore2XtextLexerLpgLexStream(input_chars, filename, tab);
         lexParser.reset((ILexStream) lexStream, prs, (RuleAction) this);
         resetKeywordLexer();
     }
-    
-    public Ecore2XtextLexer(String filename, int tab) throws java.io.IOException 
+
+    public Ecore2XtextLexer(String filename, int tab) throws java.io.IOException
     {
         reset(filename, tab);
     }
@@ -87,7 +87,7 @@ public class Ecore2XtextLexer implements RuleAction
     {
         lexer(null, prsStream);
     }
-    
+
     public void lexer(Monitor monitor, IPrsStream prsStream)
     {
         initializeLexer(prsStream, 0, -1);
@@ -99,7 +99,7 @@ public class Ecore2XtextLexer implements RuleAction
     {
         lexer(null, prsStream, start_offset, end_offset);
     }
-    
+
     public void lexer(Monitor monitor, IPrsStream prsStream, int start_offset, int end_offset)
     {
         if (start_offset <= 1)
@@ -131,7 +131,7 @@ public class Ecore2XtextLexer implements RuleAction
                 else break;
             }
             prs_stream.makeToken(startLoc, endLoc, 0); // add an error token to the prsStream
-        }        
+        }
     }
 
 	//
@@ -161,12 +161,12 @@ public class Ecore2XtextLexer implements RuleAction
 	{
 		reset(content, filename);
 	}
-	
+
 	final void makeToken(int left_token, int right_token, int kind)
 	{
 		lexStream.makeToken(left_token, right_token, kind);
 	}
-	
+
 	final void makeToken(int kind)
 	{
 		int startOffset = getLeftSpan(),
@@ -191,7 +191,7 @@ public class Ecore2XtextLexer implements RuleAction
 	{
 		if (printTokens) printValue(getLeftSpan(), getRightSpan());
 	}
-	
+
 	final void checkForKeyWord()
 	{
 		int startOffset = getLeftSpan(),
@@ -200,7 +200,7 @@ public class Ecore2XtextLexer implements RuleAction
 		lexStream.makeToken(startOffset, endOffset, kwKind);
 		if (printTokens) printValue(startOffset, endOffset);
 	}
-	
+
 	//
 	// This flavor of checkForKeyWord is necessary when the default kind
 	// (which is returned when the keyword filter doesn't match) is something
@@ -216,7 +216,7 @@ public class Ecore2XtextLexer implements RuleAction
 		lexStream.makeToken(startOffset, endOffset, kwKind);
 		if (printTokens) printValue(startOffset, endOffset);
 	}
-	
+
 	final void printValue(int startOffset, int endOffset)
 	{
 		String s = new String(lexStream.getInputChars(), startOffset, endOffset - startOffset + 1);
@@ -357,11 +357,11 @@ public class Ecore2XtextLexer implements RuleAction
 			Ecore2XtextLexersym.Char_BAR,	// 124 0x7c
 			Ecore2XtextLexersym.Char_RBRACE,	// 125 0x7d
 			Ecore2XtextLexersym.Char_TILDE,	// 126 0x7e
-		
+
 			Ecore2XtextLexersym.Char_AfterASCII,	  // for all chars in range 128..65534
-			Ecore2XtextLexersym.Char_EOF			  // for '\uffff' or 65535 
+			Ecore2XtextLexersym.Char_EOF			  // for '\uffff' or 65535
 		};
-			
+
 	public final int getKind(int i)  // Classify character at ith location
 	{
 		int c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
@@ -398,7 +398,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 1:  Token ::= / >
             //
-            case 1: { 
+            case 1: {
 		makeToken(Ecore2XtextParsersym.TK_SLASH_GT);
 	              break;
             }
@@ -406,7 +406,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 2:  Token ::= :
             //
-            case 2: { 
+            case 2: {
 		makeToken(Ecore2XtextParsersym.TK_COLON);
 	              break;
             }
@@ -414,7 +414,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 3:  Token ::= <
             //
-            case 3: { 
+            case 3: {
 		makeToken(Ecore2XtextParsersym.TK_LT);
 	              break;
             }
@@ -422,7 +422,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 4:  Token ::= < /
             //
-            case 4: { 
+            case 4: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH);
 	              break;
             }
@@ -430,7 +430,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 5:  Token ::= < / d e t a i l s >
             //
-            case 5: { 
+            case 5: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_d_e_t_a_i_l_s_GT);
 	              break;
             }
@@ -438,7 +438,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 6:  Token ::= < / e A n n o t a t i o n s >
             //
-            case 6: { 
+            case 6: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_A_n_n_o_t_a_t_i_o_n_s_GT);
 	              break;
             }
@@ -446,7 +446,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 7:  Token ::= < / e C l a s s i f i e r s >
             //
-            case 7: { 
+            case 7: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_C_l_a_s_s_i_f_i_e_r_s_GT);
 	              break;
             }
@@ -454,7 +454,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 8:  Token ::= < / e G e n e r i c T y p e >
             //
-            case 8: { 
+            case 8: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_G_e_n_e_r_i_c_T_y_p_e_GT);
 	              break;
             }
@@ -462,7 +462,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 9:  Token ::= < / e O p e r a t i o n s >
             //
-            case 9: { 
+            case 9: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_O_p_e_r_a_t_i_o_n_s_GT);
 	              break;
             }
@@ -470,7 +470,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 10:  Token ::= < / e P a c k a g e s >
             //
-            case 10: { 
+            case 10: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_P_a_c_k_a_g_e_s_GT);
 	              break;
             }
@@ -478,7 +478,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 11:  Token ::= < / e P a r a m e t e r s >
             //
-            case 11: { 
+            case 11: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_P_a_r_a_m_e_t_e_r_s_GT);
 	              break;
             }
@@ -486,7 +486,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 12:  Token ::= < / e S t r u c t u r a l F e a t u r e s >
             //
-            case 12: { 
+            case 12: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s_GT);
 	              break;
             }
@@ -494,7 +494,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 13:  Token ::= < / e T y p e A r g u m e n t s >
             //
-            case 13: { 
+            case 13: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_T_y_p_e_A_r_g_u_m_e_n_t_s_GT);
 	              break;
             }
@@ -502,7 +502,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 14:  Token ::= < / e c o r e : E P a c k a g e >
             //
-            case 14: { 
+            case 14: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e_GT);
 	              break;
             }
@@ -510,7 +510,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 15:  Token ::= < / x m i : X M I >
             //
-            case 15: { 
+            case 15: {
 		makeToken(Ecore2XtextParsersym.TK_LT_SLASH_x_m_i_COLON_X_M_I_GT);
 	              break;
             }
@@ -518,7 +518,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 16:  Token ::= < ? x m l
             //
-            case 16: { 
+            case 16: {
 		makeToken(Ecore2XtextParsersym.TK_LT_QUERY_x_m_l);
 	              break;
             }
@@ -526,7 +526,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 17:  Token ::= < d e t a i l s
             //
-            case 17: { 
+            case 17: {
 		makeToken(Ecore2XtextParsersym.TK_LT_d_e_t_a_i_l_s);
 	              break;
             }
@@ -534,7 +534,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 18:  Token ::= < e A n n o t a t i o n s
             //
-            case 18: { 
+            case 18: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_A_n_n_o_t_a_t_i_o_n_s);
 	              break;
             }
@@ -542,7 +542,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 19:  Token ::= < e C l a s s i f i e r s
             //
-            case 19: { 
+            case 19: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_C_l_a_s_s_i_f_i_e_r_s);
 	              break;
             }
@@ -550,7 +550,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 20:  Token ::= < e G e n e r i c T y p e
             //
-            case 20: { 
+            case 20: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_G_e_n_e_r_i_c_T_y_p_e);
 	              break;
             }
@@ -558,7 +558,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 21:  Token ::= < e O p e r a t i o n s
             //
-            case 21: { 
+            case 21: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_O_p_e_r_a_t_i_o_n_s);
 	              break;
             }
@@ -566,7 +566,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 22:  Token ::= < e P a r a m e t e r s
             //
-            case 22: { 
+            case 22: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_P_a_r_a_m_e_t_e_r_s);
 	              break;
             }
@@ -574,7 +574,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 23:  Token ::= < e S t r u c t u r a l F e a t u r e s
             //
-            case 23: { 
+            case 23: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_S_t_r_u_c_t_u_r_a_l_F_e_a_t_u_r_e_s);
 	              break;
             }
@@ -582,7 +582,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 24:  Token ::= < e S u b p a c k a g e s
             //
-            case 24: { 
+            case 24: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_S_u_b_p_a_c_k_a_g_e_s);
 	              break;
             }
@@ -590,7 +590,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 25:  Token ::= < e T y p e A r g u m e n t s
             //
-            case 25: { 
+            case 25: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_T_y_p_e_A_r_g_u_m_e_n_t_s);
 	              break;
             }
@@ -598,7 +598,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 26:  Token ::= < e c o r e : E P a c k a g e
             //
-            case 26: { 
+            case 26: {
 		makeToken(Ecore2XtextParsersym.TK_LT_e_c_o_r_e_COLON_E_P_a_c_k_a_g_e);
 	              break;
             }
@@ -606,7 +606,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 27:  Token ::= < x m i : X M I
             //
-            case 27: { 
+            case 27: {
 		makeToken(Ecore2XtextParsersym.TK_LT_x_m_i_COLON_X_M_I);
 	              break;
             }
@@ -614,7 +614,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 28:  Token ::= =
             //
-            case 28: { 
+            case 28: {
 		makeToken(Ecore2XtextParsersym.TK_EQ);
 	              break;
             }
@@ -622,7 +622,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 29:  Token ::= >
             //
-            case 29: { 
+            case 29: {
 		makeToken(Ecore2XtextParsersym.TK_GT);
 	              break;
             }
@@ -630,7 +630,7 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 30:  Token ::= ? >
             //
-            case 30: { 
+            case 30: {
 		makeToken(Ecore2XtextParsersym.TK_QUERY_GT);
 	              break;
             }
@@ -638,28 +638,28 @@ public class Ecore2XtextLexer implements RuleAction
             //
             // Rule 188:  Token ::= IDENTIFIER
             //
-            case 188: { 
+            case 188: {
 					makeIdentifier(Ecore2XtextParsersym.TK_IDENTIFIER);
 		              break;
             }
-		
+
             //
             // Rule 203:  Token ::= STRING
             //
-            case 203: { 
+            case 203: {
 					makeToken(Ecore2XtextParsersym.TK_STRING);
 		              break;
             }
-		
+
             //
             // Rule 210:  Token ::= WS
             //
-            case 210: { 
+            case 210: {
 					skipToken(Ecore2XtextParsersym.TK_WS);
 		              break;
             }
-		
-    
+
+
             default:
                 break;
         }
