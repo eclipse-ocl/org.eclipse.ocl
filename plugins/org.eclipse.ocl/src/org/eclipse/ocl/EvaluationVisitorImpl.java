@@ -743,21 +743,24 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 					if ((sourceVal == getInvalid()) || (argType instanceof InvalidType<?>)) {		// ? instanceof InvalidType never happens
 						return getInvalid();
 					}
-
+					// Recovering types from values is awkward, particularly for types with
+					//	diverse representations such as Integer, and impossible for UnlimitedNatural
+					//  that uses Integer types so orchestrate the conversion based on the declared types.
 					Object targetType = arg.accept(getVisitor());
-					if (targetType instanceof AnyType) {
-						return sourceVal;
+					if (targetType instanceof AnyType) {				// ... to Any conversion
+						return sourceVal;								//  is always ok
 					}
-					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
-					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
-					if (sourceType == targetType) {
-						return sourceVal;
+					if (sourceType == targetType) {						// Redundant conversion
+						return sourceVal;								//  is always ok
+					}
+					else if (sourceType == getReal()) {					// Real to ... conversion
+						return getInvalid();							//  is never ok
 					}
 					else if (sourceType == getInteger()) {				// Integer to ... conversion
 						if (targetType == getUnlimitedNatural()) {		// Integer to UnlimitedNatural conversion
 							return sourceVal;
 						}
-						if (targetType == getReal()) {					// Integer to Real conversion
+						else if (targetType == getReal()) {					// Integer to Real conversion
 							return new Double(((Number) sourceVal).doubleValue());
 						}
 					}
@@ -769,14 +772,17 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 							return getInvalid();
 							//						return targetType instanceof AnyType ? sourceVal : getInvalid();
 						}
-						if (targetType == getInteger()) {					// UnlimitedNatural to Integer conversion
-							return sourceVal;
+						else if (targetType == getInteger()) {			// non-unlimited UnlimitedNatural to Integer conversion
+							return sourceVal;							//  is always ok
 						}
-						if (targetType == getReal()) {					// UnlimitedNatural to Real conversion
+						else if (targetType == getReal()) {				// UnlimitedNatural to Real conversion
 							return new Double(((Number) sourceVal).doubleValue());
 						}
-						return getInvalid();
 					}
+					else if (oclIsKindOf(sourceVal, ((TypeExp<C>) arg).getReferredType())) {	// compatible conversion
+						return sourceVal;								//  is always ok
+					}
+					return getInvalid();
 				}
 
 				// evaluate arg, unless we have a boolean operation
