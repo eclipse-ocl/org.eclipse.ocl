@@ -4,18 +4,21 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.plugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 
 /**
@@ -45,22 +48,24 @@ public class StandardLibraryRegistryReader extends RegistryReader
 			} else if (element.getAttribute(ATT_CLASS) == null) {
 				logMissingAttribute(element, ATT_CLASS);
 			} else if (add) {
-				Object previous = StandardLibraryContribution.REGISTRY
-					.put(uri, new StandardLibraryContribution.Descriptor(element, ATT_CLASS));
+				StandardLibraryContribution.Descriptor contribution = new StandardLibraryContribution.Descriptor(element, ATT_CLASS);
+				Object previous = StandardLibraryContribution.REGISTRY.put(uri, contribution);
+				OCLASResourceFactory.REGISTRY.put(PivotUtilInternal.getASURI(URI.createURI(uri)), contribution);
 				if (previous instanceof StandardLibraryContribution.Descriptor) {
 					StandardLibraryContribution.Descriptor descriptor = (StandardLibraryContribution.Descriptor) previous;
 					EcorePlugin.INSTANCE.log("Both '"
-						+ descriptor.getElement().getContributor().getName()
-						+ "' and '" + element.getContributor().getName()
-						+ "' register a setting delegate factory for '" + uri
-						+ "'");
+							+ descriptor.getElement().getContributor().getName()
+							+ "' and '" + element.getContributor().getName()
+							+ "' register a setting delegate factory for '" + uri
+							+ "'");
 				}
+
 				return true;
 			} else {
 				StandardLibraryContribution.REGISTRY.remove(uri);
 				return true;
 			}
 		}
-	    return false;
+		return false;
 	}
 }
