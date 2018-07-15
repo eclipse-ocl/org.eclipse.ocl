@@ -197,11 +197,7 @@ public class PrecedenceManager
 		if (precedences == null) {
 			return null;
 		}
-		Precedence precedence = precedences.get(0);
-		if (precedence == null) {
-			return null;
-		}
-		return precedence;
+		return precedences.get(0);
 	}
 
 	/**
@@ -220,10 +216,6 @@ public class PrecedenceManager
 		if (precedences == null) {
 			return null;
 		}
-		Precedence precedence = precedences.get(0);
-		if (precedence == null) {
-			return null;
-		}
-		return precedence;
+		return precedences.get(0);
 	}
 }
