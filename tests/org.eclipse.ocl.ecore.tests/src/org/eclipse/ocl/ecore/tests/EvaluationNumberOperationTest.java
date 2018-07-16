@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.tests.GenericEvaluationNumberOperationTest;
 
 @SuppressWarnings("nls")
@@ -54,17 +53,6 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResult(Double.valueOf(3), "(3.0).oclAsType(OclAny)");
 		assertResultInvalid("(3.0).oclAsType(OclVoid)");
 		assertResultInvalid("(3.0).oclAsType(OclInvalid)");
-
-		assertResult(Integer.valueOf(3), "3.oclAsType(UnlimitedNatural)");
-		assertResult(Integer.valueOf(3), "3.oclAsType(UnlimitedNatural).oclAsType(Integer)");
-		assertResult(Double.valueOf(3), "3.oclAsType(UnlimitedNatural).oclAsType(Real)");
-		assertResultInvalid("(3.0).oclAsType(UnlimitedNatural)");
-
-		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
-		assertResult(Integer.valueOf(45), "45.oclAsType(Integer)");
-		assertResult(Long.valueOf(4503599627370496L), "4503599627370496.oclAsType(Integer)");
-		assertResult(Double.valueOf(45), "45.oclAsType(Real)");
-		assertResult(Double.valueOf(4503599627370496L), "4503599627370496.oclAsType(Real)");
 	}
 
 	public void testNumberOclIsKindOf() {										// BUG 378036 this doesn't work for UML
@@ -81,10 +69,6 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultTrue("(3.0).oclIsKindOf(OclAny)");
 		assertResultFalse("(3.0).oclIsKindOf(OclVoid)");
 		assertResultFalse("(3.0).oclIsKindOf(OclInvalid)");
-
-		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
-		assertResultTrue("45.oclIsKindOf(Integer)");
-		assertResultTrue("4503599627370496.oclIsKindOf(Integer)");
 	}
 
 	public void testNumberOclIsTypeOf() {										// BUG 378036 this doesn't work for UML
@@ -101,10 +85,6 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 		assertResultFalse("(3.0).oclIsTypeOf(OclAny)");
 		assertResultFalse("(3.0).oclIsTypeOf(OclVoid)");
 		assertResultFalse("(3.0).oclIsTypeOf(OclInvalid)");
-
-		ParsingOptions.setOption(helper.getOCL().getEnvironment(), ParsingOptions.USE_LONG_INTEGERS, true);
-		assertResultTrue("45.oclIsTypeOf(Integer)");
-		assertResultTrue("4503599627370496.oclIsTypeOf(Integer)");
 	}
 
 	@Override
@@ -114,8 +94,8 @@ EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAc
 	}
 
 	public void testUnlimitedOclIsKindOf() {									// BUG 378036 this doesn't work for UML
-		assertResultFalse("*.oclIsKindOf(Integer)");
-		assertResultFalse("*.oclIsKindOf(Real)");
+		assertResultTrue("*.oclIsKindOf(Integer)");
+		assertResultTrue("*.oclIsKindOf(Real)");
 		assertResultTrue("*.oclIsKindOf(UnlimitedNatural)");
 		assertResultFalse("*.oclIsKindOf(String)");
 		assertResultTrue("*.oclIsKindOf(OclAny)");

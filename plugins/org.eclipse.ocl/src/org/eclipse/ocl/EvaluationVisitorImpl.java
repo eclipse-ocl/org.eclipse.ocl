@@ -80,7 +80,6 @@ import org.eclipse.ocl.internal.evaluation.IterationTemplateOne;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateReject;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateSelect;
 import org.eclipse.ocl.internal.evaluation.IterationTemplateSortedBy;
-import org.eclipse.ocl.internal.evaluation.NumberUtil;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.options.EvaluationOptions;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
@@ -698,29 +697,27 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 				// AnyType::oclIsTypeOf(OclType)
 				if (opCode == PredefinedType.OCL_IS_TYPE_OF) {
 					Object targetType = arg.accept(getVisitor());
-					if (sourceType == targetType) {							// If the type is correct - nothing more to check
-						return true;
+					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
+					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
+					if (sourceType == getUnlimitedNatural()) {
+						return targetType == getUnlimitedNatural();
 					}
-					if (sourceType == getUnlimitedNatural()) {				// UnlimitedNatural can only be a type of itself
-						return false;										// Suppress 'integer' integer matches
-					}
-					Boolean result = oclIsTypeOf(sourceVal, targetType);	// Check the value
+					Boolean result = oclIsTypeOf(sourceVal, targetType);
 					if (result == null) {
 						return getInvalid();
 					} else {
 						return result;
 					}
 				} else if (opCode == PredefinedType.OCL_IS_KIND_OF) {
+					// no special check for Integer representation of UnlimitedNatural necessary
+					// because UnlimitedNatural is subtype of Integer
 					Object targetType = arg.accept(getVisitor());
 					// UnlimitedNatural is represented as Integer, so checking sourceVal's type
 					// doesn't work. Therefore, UnlimitedNatural needs to be handled here.
-					if (sourceType == targetType) {							// If the type is correct - nothing more to check
-						return true;
+					if (sourceType == getUnlimitedNatural() && targetType == getUnlimitedNatural()) {
+						return true; // other combinations properly handled since checked with Integer
 					}
-					if (sourceType == getUnlimitedNatural()) {				// UnlimitedNatural can only be a kind of itself or OclAny
-						return targetType instanceof AnyType;
-					}
-					Boolean result = oclIsKindOf(sourceVal, targetType);	// Check the value
+					Boolean result = oclIsKindOf(sourceVal, targetType);
 					if (result == null) {
 						return getInvalid();
 					} else {
@@ -737,52 +734,49 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 
 					// if the source is undefined or the conversion to
 					// OclVoid so is the result
-					if ((sourceVal == null) || (argType instanceof VoidType<?>)) {		// ?  instanceof VoidType never happens
+					if (sourceVal == null || (argType instanceof VoidType<?>)) {
 						return sourceVal;
 					}
-					if ((sourceVal == getInvalid()) || (argType instanceof InvalidType<?>)) {		// ? instanceof InvalidType never happens
+					if (sourceVal == getInvalid() || (argType instanceof InvalidType<?>)) {
 						return getInvalid();
 					}
-					// Recovering types from values is awkward, particularly for types with
-					//	diverse representations such as Integer, and impossible for UnlimitedNatural
-					//  that uses Integer types so orchestrate the conversion based on the declared types.
-					Object targetType = arg.accept(getVisitor());
-					if (targetType instanceof AnyType) {				// ... to Any conversion
-						return sourceVal;								//  is always ok
-					}
-					if (sourceType == targetType) {						// Redundant conversion
-						return sourceVal;								//  is always ok
-					}
-					else if (sourceType == getReal()) {					// Real to ... conversion
-						return getInvalid();							//  is never ok
-					}
-					else if (sourceType == getInteger()) {				// Integer to ... conversion
-						if (targetType == getUnlimitedNatural()) {		// Integer to UnlimitedNatural conversion
-							return sourceVal;
+
+					if (sourceVal instanceof String
+							&& ((TypeExp<C>) arg).getReferredType() == getString()) {
+						return sourceVal;
+					} else if (((sourceVal instanceof Double) || (sourceVal instanceof Float) || (sourceVal instanceof BigDecimal))
+							&& (argType == getInteger())) {
+						return new Integer(((Number) sourceVal).intValue());
+					} else if (sourceVal instanceof Boolean
+							&& ((TypeExp<C>) arg).getReferredType() == getBoolean()) {
+						return sourceVal;
+					} else if (sourceVal instanceof Integer
+							&& (((TypeExp<C>) arg).getReferredType() == getReal())) {
+
+						if (sourceType == getUnlimitedNatural()) {
+							int sourceInt = (Integer) sourceVal;
+
+							// the unlimited value is invalid as Real because there
+							// is no positive infinity defined in the OCL Real type
+							if (sourceInt == UnlimitedNaturalLiteralExp.UNLIMITED) {
+								return getInvalid();
+							}
 						}
-						else if (targetType == getReal()) {					// Integer to Real conversion
-							return new Double(((Number) sourceVal).doubleValue());
-						}
+
+						return new Double(((Integer) sourceVal).doubleValue());
+					} else if (sourceType == getUnlimitedNatural() && sourceVal.equals(UNLIMITED)
+							&& (((TypeExp<C>) arg).getReferredType() == getInteger())) {
+						// According to OCL 2.3 (10-11-42) Section 8.2.1, UnlimitedNatural value
+						// * is an invalid Integer.
+						return getInvalid();
+					} else if (((TypeExp<C>) arg).getReferredType() instanceof AnyType<?>) {
+						return sourceVal;
+					} else if ((sourceType == getUnlimitedNatural() && ((TypeExp<C>) arg).getReferredType() == getUnlimitedNatural()) ||
+							oclIsKindOf(sourceVal, ((TypeExp<C>) arg).getReferredType())) {
+						return sourceVal;
+					} else {
+						return getInvalid();
 					}
-					else if (sourceType == getUnlimitedNatural()) {		// UnlimitedNatural to ...
-						if (sourceVal.equals(UNLIMITED)) {
-							//							&& (((TypeExp<C>) arg).getReferredType() == getInteger())) {
-							// According to OCL 2.3 (10-11-42) Section 8.2.1, UnlimitedNatural value
-							// * is an invalid Integer.
-							return getInvalid();
-							//						return targetType instanceof AnyType ? sourceVal : getInvalid();
-						}
-						else if (targetType == getInteger()) {			// non-unlimited UnlimitedNatural to Integer conversion
-							return sourceVal;							//  is always ok
-						}
-						else if (targetType == getReal()) {				// UnlimitedNatural to Real conversion
-							return new Double(((Number) sourceVal).doubleValue());
-						}
-					}
-					else if (oclIsKindOf(sourceVal, ((TypeExp<C>) arg).getReferredType())) {	// compatible conversion
-						return sourceVal;								//  is always ok
-					}
-					return getInvalid();
 				}
 
 				// evaluate arg, unless we have a boolean operation
@@ -2182,8 +2176,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 			final Map<Object, Comparable<Object>> map, IteratorExp<C, PM> ie) {
 		// special case: UnlimitedNatural::UNLIMITED is greater than
 		// everything except for itself
-		C type = ie.getBody().getType();
-		if (type == getUnlimitedNatural()) {
+		if (ie.getBody().getType() == getUnlimitedNatural()) {
 			return new Comparator<Object>() {
 				public int compare(Object o1, Object o2) {
 					Comparable<Object> b1 = map.get(o1);
@@ -2197,25 +2190,13 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 											b1.compareTo(b2));
 				}
 			};
-		} else if ((type == getInteger()) || (type == getReal())) {
-			return new Comparator<Object>() {
-
-				@SuppressWarnings("unchecked")
-				public int compare(Object o1, Object o2) {
-					Comparable<Object> b1 = map.get(o1);
-					Comparable<Object> b2 = map.get(o2);
-					Comparable<Object> n1 = (Comparable<Object>)NumberUtil.higherPrecisionNumber((Number) b1);
-					Comparable<Object> n2 = (Comparable<Object>)NumberUtil.higherPrecisionNumber((Number) b2);
-					return n1.compareTo(n2);
-				}
-			};
 		} else {
 			return new Comparator<Object>() {
 
 				public int compare(Object o1, Object o2) {
 					Comparable<Object> b1 = map.get(o1);
 					Comparable<Object> b2 = map.get(o2);
-					return b1.compareTo(b2);
+					return (b1.compareTo(b2));
 				}
 			};
 		}
