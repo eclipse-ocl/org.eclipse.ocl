@@ -4,31 +4,34 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
+import org.eclipse.emf.codegen.ecore.generator.Generator;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
-import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
+import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
 
 /**
  * The OCLinEcoreGeneratorAdapterFactory registers the OCLinEcore code generation capabilities.
  * <p>
- * For Eclipse usage it is activated by the <tt>org.eclipse.emf.codegen.ecore.generatorAdapters</tt> extension point regisdtration.
+ * For Eclipse usage it is activated by the <tt>org.eclipse.emf.codegen.ecore.generatorAdapters</tt> extension point registration.
  * <p>
  * For standalone usage, {@link #install()} should be invoked.
  */
-public class OCLinEcoreGeneratorAdapterFactory extends GenModelGeneratorAdapterFactory
+public class OCLinEcoreGeneratorAdapterFactory extends GenModelAdapterFactory implements GeneratorAdapterFactory
 {
 	/**
 	 * A descriptor for this adapter factory, which can be used to programatically
 	 * {@link org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry#addDescriptor(String, org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor)
 	 * register} it.
-	 * 
+	 *
 	 * @see org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry
 	 */
 	public static final GeneratorAdapterFactory.Descriptor DESCRIPTOR = new GeneratorAdapterFactory.Descriptor()
@@ -43,16 +46,11 @@ public class OCLinEcoreGeneratorAdapterFactory extends GenModelGeneratorAdapterF
 		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor(GenModelPackage.eNS_URI, DESCRIPTOR);
 	}
 
-	@Override
-	public Adapter createGenClassAdapter() {
-		genClassGeneratorAdapter = null;
-		return genClassGeneratorAdapter;
-	}
+	protected Generator generator;
+	protected GenBaseGeneratorAdapter genModelGeneratorAdapter;
 
-	@Override
-	public Adapter createGenEnumAdapter() {
-	    genEnumGeneratorAdapter = null;
-	    return genEnumGeneratorAdapter;
+	public OCLinEcoreGeneratorAdapterFactory() {
+		super();
 	}
 
 	@Override
@@ -64,8 +62,28 @@ public class OCLinEcoreGeneratorAdapterFactory extends GenModelGeneratorAdapterF
 	}
 
 	@Override
-	public Adapter createGenPackageAdapter() {
-		genPackageGeneratorAdapter = null;
-		return genPackageGeneratorAdapter;
+	public void dispose() {
+		if (genModelGeneratorAdapter != null) genModelGeneratorAdapter.dispose();
+	}
+
+	@Override
+	public Generator getGenerator() {
+		return generator;
+	}
+
+	@Override
+	public void initialize(Object input) {}
+
+	/**
+	 * Returns <code>true</code> when the type is <code>GeneratorAdapter.class</code>.
+	 */
+	@Override
+	public boolean isFactoryForType(Object type) {
+		return type == GeneratorAdapter.class;
+	}
+
+	@Override
+	public void setGenerator(Generator generator) {
+		this.generator = generator;
 	}
 }
