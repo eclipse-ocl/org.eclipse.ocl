@@ -30,7 +30,7 @@ import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
  * and the corresponding Concrete Syntax Resources.
  */
 public class AS2CS extends AbstractConversion
-{	
+{
 	public static interface Factory {
 		@NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter);
 		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
@@ -48,12 +48,12 @@ public class AS2CS extends AbstractConversion
 		public @NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter) {
 			return new BaseDeclarationVisitor(converter);
 		}
-	
+
 		@Override
 		public @NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
 			return createReferenceVisitor(converter, scope);
 		}
-	
+
 		@Override
 		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
 			return new BaseReferenceVisitor(converter);
@@ -64,19 +64,19 @@ public class AS2CS extends AbstractConversion
 			return new @NonNull EClass[] {};
 		}
 	}
-	
-	private @NonNull Map<EClass, Factory> factoryMap = new HashMap<EClass, Factory>();
-	
+
+	private @NonNull Map<@NonNull EClass, @NonNull Factory> factoryMap = new HashMap<>();
+
 	/**
 	 * Mapping of each CS resource to its corresponding pivot Resource.
 	 */
-	protected final @NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap;
-	
-	public AS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected final @NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap;
+
+	public AS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 		this.cs2asResourceMap = cs2asResourceMap;
 	}
-	
+
 	public AS2CS(@NonNull AS2CS aConverter) {
 		super(aConverter.getEnvironmentFactory());
 		this.cs2asResourceMap = aConverter.cs2asResourceMap;
@@ -104,11 +104,11 @@ public class AS2CS extends AbstractConversion
 		return cs2asResourceMap.get(csResource);
 	}
 
-	public @NonNull Collection<? extends Resource> getASResources() {
+	public @NonNull Collection<@NonNull ? extends Resource> getASResources() {
 		return cs2asResourceMap.values();
 	}
 
-	public @NonNull Collection<? extends BaseCSResource> getCSResources() {
+	public @NonNull Collection<@NonNull ? extends BaseCSResource> getCSResources() {
 		return cs2asResourceMap.keySet();
 	}
 
@@ -118,10 +118,8 @@ public class AS2CS extends AbstractConversion
 
 	public void update() {
 		AS2CSConversion conversion = new AS2CSConversion(this);
-		for (BaseCSResource csResource : getCSResources()) {
-			if (csResource != null) {
-				conversion.update(csResource);
-			}
+		for (@NonNull BaseCSResource csResource : getCSResources()) {
+			conversion.update(csResource);
 		}
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		csi2asMapping.add(cs2asResourceMap);

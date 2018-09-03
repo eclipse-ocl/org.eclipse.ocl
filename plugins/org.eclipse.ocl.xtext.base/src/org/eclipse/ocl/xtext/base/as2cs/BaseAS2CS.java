@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class BaseAS2CS extends AS2CS
-{	
+{
 	private static final class Factory extends AbstractFactory
 	{
 		private static AS2CS.@NonNull Factory INSTANCE = new Factory();
@@ -30,7 +30,7 @@ public class BaseAS2CS extends AS2CS
 		}
 	}
 
-	public BaseAS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap,
+	public BaseAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
 			@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(cs2asResourceMap, environmentFactory);
 		addFactory(Factory.INSTANCE);

@@ -43,7 +43,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  * repeatedly while editing (CS2AS conversions) to associate changing CS elements with
  * stable Pivot elements.
  * The mapping is also created during a AS2CS conversion to allow subsequent CS2AS
- * conversions to reuse the original AS elements.  
+ * conversions to reuse the original AS elements.
  */
 public class CSI2ASMapping implements ICSI2ASMapping
 {
@@ -53,7 +53,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public static @Nullable CSI2ASMapping basicGetCSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
 	}
-	
+
 	/**
 	 * Create/reuse the CSI2ASMapping owned by the environmentFactory on behalf of CS-aware consumers.
 	 */
@@ -65,14 +65,14 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 		return (CSI2ASMapping) csi2asMapping;
 	}
-	
+
 	/**
 	 * An AbstractCSI defines the private interface for a CSI and the shared support for a hashCode and toString.
 	 */
 	private abstract static class AbstractCSI implements CSI
 	{
 		protected final int hashCode;
-		
+
 		protected AbstractCSI(int hashCode) {
 			this.hashCode = hashCode;
 		}
@@ -95,7 +95,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 		protected abstract void toString(@NonNull StringBuilder s);
 	}
-	
+
 	/**
 	 * A RootCSI defines the CSI for the root element in a CSI hierrachy for which the parent is a Resource.
 	 */
@@ -103,7 +103,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	{
 		private final @NonNull String name;				//. Resource.uri
 		private final int index;						// index in Resource.contents
-		
+
 		private RootCSI(int hashCode, @NonNull String name, int index) {
 			super(hashCode);
 			this.name = name;
@@ -131,7 +131,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			s.append(index);
 		}
 	}
-	
+
 	/**
 	 * A MultipleChildCSI defines the CSI for the non-root element in a CSI hierarchy. The element may not have siblings.
 	 */
@@ -139,7 +139,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	{
 		protected final @NonNull AbstractCSI parent;
 		protected final @NonNull EReference child;		// null only at root
-		
+
 		protected SingleChildCSI(int hashCode, @NonNull AbstractCSI parent, @NonNull EReference child) {
 			super(hashCode);
 			this.parent = parent;
@@ -164,7 +164,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			s.append(child.getName());
 		}
 	}
-	
+
 	/**
 	 * A MultipleChildCSI defines the CSI for the non-root element in a CSI hierarchy. The element may have siblings which are
 	 * distinguished primarily by name, and then be sequential index of same-named elements.
@@ -173,7 +173,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	{
 		protected final @Nullable String name;			// null for nameless elements, URI at root
 		protected final int index;						// index of same-named elements in parent container
-		
+
 		private MultipleChildCSI(int hashCode, @NonNull AbstractCSI parent, @NonNull EReference child, @Nullable String name, int index) {
 			super(hashCode, parent, child);
 			this.name = name;
@@ -202,10 +202,10 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			s.append(index);
 		}
 	}
-	
+
 	/**
 	 * HashedCSIs maintains the known CSIs in an array of entries that may comprise null for no content, a CSI for
-	 * a single content or a LIst<CSI> for multiple content.
+	 * a single content or a List<CSI> for multiple content.
 	 */
 	private class HashedCSIs
 	{
@@ -213,12 +213,12 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		 * And mask for the number of bins in hash2csis.
 		 */
 		private int hashMask;
-		
+
 		/**
 		 * The known CSIs binned into hashSize null/single-CSI/multiple-List<CSI> entries.
 		 */
 		private Object[] hash2csis;
-		
+
 		public HashedCSIs(int hashSize) {
 			int mask = 1;
 			while ((mask < hashSize) && (mask < 0xFFFF)){
@@ -229,7 +229,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 
 		private void add(@NonNull AbstractCSI csi) {
-			WeakReference<AbstractCSI> csiRef = new WeakReference<AbstractCSI>(csi);
+			WeakReference<@NonNull AbstractCSI> csiRef = new WeakReference<>(csi);
 			int hashCode = csi.hashCode();
 			int hashIndex = hashCode & hashMask;
 			Object entry = hash2csis[hashIndex];
@@ -237,14 +237,14 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				hash2csis[hashIndex] = csiRef;
 			}
 			else if (entry instanceof WeakReference<?>) {
-				List<WeakReference<AbstractCSI>> csiList = new ArrayList<WeakReference<AbstractCSI>>();
+				List<@NonNull WeakReference<@NonNull AbstractCSI>> csiList = new ArrayList<>();
 				hash2csis[hashIndex] = csiList;
-				@SuppressWarnings("unchecked")WeakReference<AbstractCSI> castEntry = (WeakReference<AbstractCSI>)entry;
+				@SuppressWarnings("unchecked")WeakReference<@NonNull AbstractCSI> castEntry = (WeakReference<@NonNull AbstractCSI>)entry;
 				csiList.add(castEntry);
 				csiList.add(csiRef);
 			}
 			else {
-				@SuppressWarnings("unchecked") List<WeakReference<AbstractCSI>> csiList = (List<WeakReference<AbstractCSI>>) entry;
+				@SuppressWarnings("unchecked") List<@NonNull WeakReference<@NonNull AbstractCSI>> csiList = (List<@NonNull WeakReference<@NonNull AbstractCSI>>) entry;
 				csiList.add(csiRef);
 			}
 			// FIXME grow() ??
@@ -254,8 +254,8 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			int hashIndex = hashCode & hashMask;
 			Object entry = hash2csis[hashIndex];
 			if (entry instanceof List<?>) {
-				@SuppressWarnings("unchecked") List<WeakReference<AbstractCSI>> csiList = (List<WeakReference<AbstractCSI>>) entry;
-				for (WeakReference<AbstractCSI> thatRef : csiList) {
+				@SuppressWarnings("unchecked") List<@NonNull WeakReference<@NonNull AbstractCSI>> csiList = (List<@NonNull WeakReference<@NonNull AbstractCSI>>) entry;
+				for (@NonNull WeakReference<@NonNull AbstractCSI> thatRef : csiList) {
 					AbstractCSI thatCSI = thatRef.get();
 					if (thatCSI != null) {
 						AbstractCSI childCSI = thatCSI.isCSIfor(thisParent, thisChild, thisName, thisIndex);
@@ -266,7 +266,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				}
 			}
 			else if (entry instanceof WeakReference<?>) {
-				@SuppressWarnings("unchecked") WeakReference<AbstractCSI> thatRef = (WeakReference<AbstractCSI>) entry;
+				@SuppressWarnings("unchecked") WeakReference<@NonNull AbstractCSI> thatRef = (WeakReference<@NonNull AbstractCSI>) entry;
 				AbstractCSI thatCSI = thatRef.get();
 				if (thatCSI != null) {
 					AbstractCSI childCSI = thatCSI.isCSIfor(thisParent, thisChild, thisName, thisIndex);
@@ -292,7 +292,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			add(csi);
 			return (RootCSI)csi;
 		}
-		
+
 		protected @NonNull CSI getChildCSI(@NonNull ElementCS csElement) {
 			assert csElement.getCsi() == null;
 			EObject eContainer = csElement.eContainer();
@@ -346,27 +346,27 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			return csi;
 		}
 	}
-	
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	
+
 	/**
 	 * Mapping of each CS resource to its corresponding pivot Resource.
 	 */
-	protected final @NonNull Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
+	protected final @NonNull Map<@NonNull BaseCSResource, @NonNull ASResource> cs2asResourceMap = new HashMap<>();
 
-	protected final @NonNull Map<BaseCSResource, CS2AS> cs2as2as = new HashMap<BaseCSResource, CS2AS>();
+	protected final @NonNull Map<@NonNull BaseCSResource, @NonNull CS2AS> cs2as2as = new HashMap<>();
 
 	/**
 	 * The map from CS element (identified by URI) to pivot element at the end of the last update. This map enables
 	 * the next update from a potentially different CS Resource and elements but the same URIs to re-use the pivot elements
-	 * and to kill off the obsolete elements. 
+	 * and to kill off the obsolete elements.
 	 */
-	private Map<CSI, Element> csi2as = new HashMap<CSI, Element>();
+	private @NonNull Map<@NonNull CSI, @Nullable Element> csi2as = new HashMap<>();
 
 	/**
 	 * A lazily created inverse map that may be required for navigation from an outline.
 	 */
-	private Map<Element, ModelElementCS> as2cs = null;
+	private @Nullable Map<@NonNull Element, @NonNull ModelElementCS> as2cs = null;
 
 	/**
 	 * The known CSIs binned into hashSize sublists.
@@ -376,30 +376,30 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Available CS2AS converters.
 	 */
-//	private @Nullable List<CS2AS> cs2ases = null;
-	
+	//	private @Nullable List<CS2AS> cs2ases = null;
+
 	private CSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 	}
 
-	public void add(Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap) {
+	public void add(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap) {
 		as2cs = null;
-		this.cs2asResourceMap.putAll(cs2asResourceMap); 
+		this.cs2asResourceMap.putAll(cs2asResourceMap);
 	}
 
 	public void add(@NonNull BaseCSResource csResource, @NonNull CS2AS cs2as) {
 		as2cs = null;
-		this.cs2asResourceMap.put(csResource, cs2as.getASResource()); 
-		this.cs2as2as.put(csResource, cs2as); 
-//		List<CS2AS> cs2ases2 = cs2ases;
-//		if (cs2ases2 == null) {
-//			cs2ases = cs2ases2 = new ArrayList<CS2AS>();
-//		}
-//		cs2ases2.add(cs2as); 
+		this.cs2asResourceMap.put(csResource, cs2as.getASResource());
+		this.cs2as2as.put(csResource, cs2as);
+		//		List<CS2AS> cs2ases2 = cs2ases;
+		//		if (cs2ases2 == null) {
+		//			cs2ases = cs2ases2 = new ArrayList<>();
+		//		}
+		//		cs2ases2.add(cs2as);
 	}
-	
-	public Set<CSI> computeCSIs(@NonNull BaseCSResource csResource) {
-		Set<CSI> map = new HashSet<CSI>();
+
+	public @NonNull Set<@NonNull CSI> computeCSIs(@NonNull BaseCSResource csResource) {
+		Set<@NonNull CSI> map = new HashSet<>();
 		for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
 			EObject eObject = it.next();
 			if (eObject instanceof ModelElementCS) {
@@ -411,8 +411,8 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		return map;
 	}
 
-	protected @NonNull Map<Element, ModelElementCS> computeAS2CSMap() {
-		Map<Element, ModelElementCS> map = new HashMap<Element, ModelElementCS>();
+	protected @NonNull Map<@NonNull Element, @NonNull ModelElementCS> computeAS2CSMap() {
+		Map<@NonNull Element, @NonNull ModelElementCS> map = new HashMap<>();
 		for (Resource csResource : cs2asResourceMap.keySet()) {
 			for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
 				EObject eObject = it.next();
@@ -422,7 +422,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 					if (pivotElement != null) {
 						map.put(pivotElement, csElement);
 					}
-//					System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
+					//					System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
 				}
 			}
 		}
@@ -431,18 +431,18 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	@Override
 	public void dispose() {
-		for (BaseCSResource csResource : new ArrayList<BaseCSResource>(cs2as2as.keySet())) {
+		for (@NonNull BaseCSResource csResource : new ArrayList<>(cs2as2as.keySet())) {
 			csResource.dispose();
 		}
 		csi2as.clear();
 		as2cs = null;
-//		List<CS2AS> cs2ases2 = cs2ases;
-//		if (cs2ases2 != null) {
-//			cs2ases = null;
-//			for (CS2AS cs2as : cs2ases2) {
-//				cs2as.dispose();
-//			}
-//		}
+		//		List<CS2AS> cs2ases2 = cs2ases;
+		//		if (cs2ases2 != null) {
+		//			cs2ases = null;
+		//			for (CS2AS cs2as : cs2ases2) {
+		//				cs2as.dispose();
+		//			}
+		//		}
 	}
 
 	/**
@@ -467,7 +467,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Get the Concrete Syntax Identifier for a CS element. This is a form of URI. It is significantly compacted to
 	 * save on memory.
-	 * @param csResource2aliasMap 
+	 * @param csResource2aliasMap
 	 */
 	private @NonNull AbstractCSI getCSI(@NonNull ElementCS csElement) {
 		CSI csi = csElement.getCsi();
@@ -492,9 +492,9 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			else { //if (eContainer instanceof ElementCS) {
 				csi = hashedCSIs2.getChildCSI(csElement);
 			}
-//			else {
-//				csi = hashedCSIs2.getOtherCSI(csElement);
-//			}
+			//			else {
+			//				csi = hashedCSIs2.getOtherCSI(csElement);
+			//			}
 			csElement.setCsi(csi);
 		}
 		return (AbstractCSI) csi;
@@ -503,19 +503,20 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Return all mapped CS Resources.
 	 */
-	public @NonNull Set<BaseCSResource> getCSResources() {
+	public @NonNull Set<@NonNull BaseCSResource> getCSResources() {
 		return cs2asResourceMap.keySet();
 	}
 
 	public @Nullable ModelElementCS getCSElement(@NonNull Element pivotElement) {
-		if (as2cs == null) {
-			as2cs = computeAS2CSMap();
+		Map<@NonNull Element, @NonNull ModelElementCS> as2cs2 = as2cs;
+		if (as2cs2 == null) {
+			as2cs = as2cs2 = computeAS2CSMap();
 		}
-		ModelElementCS modelElementCS = as2cs.get(pivotElement);
+		ModelElementCS modelElementCS = as2cs2.get(pivotElement);
 		if ((modelElementCS == null) && (pivotElement instanceof ExpressionInOCL)) {	// ExpressionInOCL may be created later
 			EObject eObject = ((ExpressionInOCL)pivotElement).eContainer();
 			if (eObject instanceof Element) {
-				modelElementCS = as2cs.get(eObject);
+				modelElementCS = as2cs2.get(eObject);
 				if (modelElementCS instanceof ConstraintCS) {
 					modelElementCS = ((ConstraintCS)modelElementCS).getOwnedSpecification();
 				}
@@ -523,12 +524,12 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 		return modelElementCS;
 	}
-	
+
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
 	}
 
-	public Map<CSI, Element> getMapping() {
+	public @NonNull Map<@NonNull CSI, @Nullable Element> getMapping() {
 		return csi2as;
 	}
 
@@ -545,7 +546,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	public void removeCSResource(@NonNull BaseCSResource csResource) {
 		as2cs = null;
-		cs2asResourceMap.remove(csResource); 
+		cs2asResourceMap.remove(csResource);
 		cs2as2as.remove(csResource);
 	}
 
@@ -555,15 +556,30 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public void update() {
 		as2cs = null;
 		csi2as.clear();
-		for (Resource csResource : cs2asResourceMap.keySet()) {
-			for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
-				EObject eObject = it.next();
-				if (eObject instanceof ModelElementCS) {
-					ModelElementCS csElement = (ModelElementCS)eObject;
-					Element pivotElement = csElement.getPivot();
-					put(csElement, pivotElement);
+		List<@NonNull BaseCSResource> iterationDomain = new ArrayList<>(cs2asResourceMap.keySet());
+		int oldSize = cs2asResourceMap.size();
+		while (true) {
+			for (@NonNull BaseCSResource csResource : iterationDomain) {
+				for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
+					EObject eObject = it.next();
+					if (eObject instanceof ModelElementCS) {
+						ModelElementCS csElement = (ModelElementCS)eObject;
+						Element pivotElement = csElement.getPivot();
+						put(csElement, pivotElement);
+					}
 				}
 			}
+			int newSize = cs2asResourceMap.size();		// Bug 538551 - this iterationDomain was observed to grow
+			if (newSize <= oldSize) {
+				break;
+			}
+			oldSize = newSize;
+			Set<@NonNull BaseCSResource> newIterationDomain = new HashSet<>(cs2asResourceMap.keySet());
+			newIterationDomain.removeAll(iterationDomain);
+			iterationDomain.clear();
+			iterationDomain.addAll(newIterationDomain);
+			assert iterationDomain.size() > 0;
+			assert iterationDomain.size() == (newSize - oldSize);
 		}
 	}
 }

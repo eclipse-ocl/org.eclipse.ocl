@@ -29,7 +29,7 @@ import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLAS2CS;
 import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLReferenceVisitor;
 
 public class CompleteOCLAS2CS extends EssentialOCLAS2CS
-{	
+{
 	private static final class Factory extends AbstractFactory
 	{
 		private static AS2CS.@NonNull Factory INSTANCE = new Factory();
@@ -58,8 +58,8 @@ public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 			};
 		}
 	}
-		
-	public CompleteOCLAS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
+
+	public CompleteOCLAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(cs2asResourceMap, environmentFactory);
 		addFactory(Factory.INSTANCE);
 		for (Resource csResource : cs2asResourceMap.keySet()) {

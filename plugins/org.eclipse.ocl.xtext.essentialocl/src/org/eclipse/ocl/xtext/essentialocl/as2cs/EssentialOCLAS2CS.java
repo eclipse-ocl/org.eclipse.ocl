@@ -24,7 +24,7 @@ import org.eclipse.ocl.xtext.base.as2cs.BaseAS2CS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class EssentialOCLAS2CS extends BaseAS2CS
-{	
+{
 	private static final class Factory extends AbstractFactory
 	{
 		private static AS2CS.@NonNull Factory INSTANCE = new Factory();
@@ -44,8 +44,8 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 			return new @NonNull EClass @NonNull []{};
 		}
 	}
-		
-	public EssentialOCLAS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
+
+	public EssentialOCLAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(cs2asResourceMap, environmentFactory);
 		addFactory(Factory.INSTANCE);
 	}
