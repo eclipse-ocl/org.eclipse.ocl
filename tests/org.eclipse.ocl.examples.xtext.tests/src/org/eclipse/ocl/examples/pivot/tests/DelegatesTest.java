@@ -118,6 +118,9 @@ import junit.framework.TestCase;
 
 /**
  * Tests for the OCL delegate implementations.
+ *
+ * Beware these tests may fail as plugin tests if a CG project such as _OCL_UsageTests__testCodegenCompany
+ * is open as a project in the development workspace.
  */
 public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 {
