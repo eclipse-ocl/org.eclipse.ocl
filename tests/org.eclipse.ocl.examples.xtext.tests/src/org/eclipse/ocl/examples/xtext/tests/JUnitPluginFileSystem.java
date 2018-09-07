@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -256,6 +257,16 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					if (!project.isOpen()) {
 						project.open(null);
 					}
+					IFolder settingsFolder = project.getFolder(".settings");
+					settingsFolder.create(true, true, null);
+					IFile resourcesFile = settingsFolder.getFile("org.eclipse.core.resources.prefs");
+					String resourcesContents = getResourcesPreferenceContents();
+					InputStream resourcesStream = new URIConverter.ReadableInputStream(resourcesContents, "UTF-8");
+					resourcesFile.create(resourcesStream, true, null);
+					IFile runtimeFile = settingsFolder.getFile("org.eclipse.core.runtime.prefs");
+					String runtimeContents = getRuntimePreferenceContents();
+					InputStream runtimeStream = new URIConverter.ReadableInputStream(runtimeContents, "UTF-8");
+					runtimeFile.create(runtimeStream, true, null);
 					IProjectDescription projectDescription = project.getDescription();
 					if (projectDescription != null) {
 						projectDescription = helper.updateProjectDescription(projectDescription);

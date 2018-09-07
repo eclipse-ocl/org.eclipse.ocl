@@ -52,6 +52,18 @@ public class TestFileSystemHelper
 		return file;
 	}
 
+	public @NonNull File createFile(@NonNull File file, @NonNull String fileContents) {
+		Writer s;
+		try {
+			s = new FileWriter(file);
+			s.append(fileContents);
+			s.close();
+		} catch (IOException e) {
+			throw new WrappedException(e);
+		}
+		return file;
+	}
+
 	public @Nullable File createManifestFile(@NonNull File bundleFolder, @NonNull String projectName) {
 		return null;
 	}

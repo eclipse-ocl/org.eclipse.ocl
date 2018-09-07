@@ -208,6 +208,12 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 					TestUtil.deleteDirectory(newFile);
 				}
 				newFile.mkdirs();
+				File settingsFolder = new File(newFile, ".settings");
+				settingsFolder.mkdir();
+				File resourcesFile = new File(settingsFolder, "org.eclipse.core.resources.prefs");
+				helper.createFile(resourcesFile, getResourcesPreferenceContents());
+				File runtimeFile = new File(settingsFolder, "org.eclipse.core.runtime.prefs");
+				helper.createFile(runtimeFile, getRuntimePreferenceContents());
 				File dotProjectFile = new File(newFile, ".project");
 				if (!dotProjectFile.exists()) {
 					helper.createDotProjectFile(newFile, projectName);

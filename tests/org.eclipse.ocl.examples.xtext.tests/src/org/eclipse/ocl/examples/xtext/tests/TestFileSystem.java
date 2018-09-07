@@ -35,5 +35,13 @@ public abstract class TestFileSystem
 		this.helper = helper;
 	}
 
+	protected @NonNull String getResourcesPreferenceContents() {
+		return "eclipse.preferences.version=1\n" + "encoding/<project>=UTF-8\n";
+	}
+
+	protected @NonNull String getRuntimePreferenceContents() {
+		return "eclipse.preferences.version=1\n" + "line.separator=\\n\n";
+	}
+
 	public abstract @NonNull TestProject getTestProject(@NonNull String projectName, boolean cleanProject);
 }
