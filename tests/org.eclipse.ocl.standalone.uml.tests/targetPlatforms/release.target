@@ -25,7 +25,7 @@
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases>
+    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases"/>
   </location>
 </locations>
 </target>
