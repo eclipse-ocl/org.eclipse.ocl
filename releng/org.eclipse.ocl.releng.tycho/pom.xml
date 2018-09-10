@@ -122,7 +122,7 @@
         <configuration>
           <includePackedArtifacts>true</includePackedArtifacts>
           <resolver>p2</resolver>
-          <executionEnvironment>JavaSE-1.8</executionEnvironment>
+          <executionEnvironment>JavaSE-10</executionEnvironment>
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
@@ -147,6 +147,11 @@
                 <type>eclipse-plugin</type>
                 <id>org.eclipse.jdt.annotation</id>
                 <versionRange>[2.0.0,3.0.0)</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>javax.annotation</id>
+                <versionRange>[1.0.0,2.0.0)</versionRange>
               </requirement>
               <!--requirement>
                 <type>eclipse-plugin</type>
