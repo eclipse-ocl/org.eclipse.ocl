@@ -44,12 +44,12 @@ import org.eclipse.ocl.util.TypeUtil;
 
 /**
  * Tests for collection types.
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 @SuppressWarnings("nls")
 public class CollectionsTest
-		extends AbstractTestSuite {
+extends AbstractTestSuite {
 
 	/**
 	 * Tests the insertAt() operation for sequences.
@@ -59,7 +59,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Sequence{'a', 'b', 'd', 'e'}->insertAt(3, 'c')");
+					.createQuery("Sequence{'a', 'b', 'd', 'e'}->insertAt(3, 'c')");
 
 			List<?> result = (List<?>) ocl.evaluate("", expr);
 
@@ -80,7 +80,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->insertAt(3, 'c')");
+					.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->insertAt(3, 'c')");
 
 			Set<?> result = (Set<?>) ocl.evaluate("", expr);
 
@@ -92,7 +92,7 @@ public class CollectionsTest
 			// no duplicates; result is exactly equivalent (order preserved)
 
 			expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->insertAt(5, 'c')");
+					.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->insertAt(5, 'c')");
 
 			result = (Set<?>) ocl.evaluate("", expr);
 
@@ -112,7 +112,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Sequence{'a', 'b', 'd', 'e'}->prepend('c')");
+					.createQuery("Sequence{'a', 'b', 'd', 'e'}->prepend('c')");
 
 			List<?> result = (List<?>) ocl.evaluate("", expr);
 
@@ -133,7 +133,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->prepend('c')");
+					.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->prepend('c')");
 
 			Set<?> result = (Set<?>) ocl.evaluate("", expr);
 
@@ -145,7 +145,7 @@ public class CollectionsTest
 			// no duplicates; result has prepended element first
 
 			expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->prepend('c')");
+					.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->prepend('c')");
 
 			result = (Set<?>) ocl.evaluate("", expr);
 
@@ -165,7 +165,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Sequence{'a', 'b', 'd', 'e'}->append('c')");
+					.createQuery("Sequence{'a', 'b', 'd', 'e'}->append('c')");
 
 			List<?> result = (List<?>) ocl.evaluate("", expr);
 
@@ -186,7 +186,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->append('c')");
+					.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->append('c')");
 
 			Set<?> result = (Set<?>) ocl.evaluate("", expr);
 
@@ -198,7 +198,7 @@ public class CollectionsTest
 			// no duplicates; appended element is at end
 
 			expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->append('c')");
+					.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->append('c')");
 
 			result = (Set<?>) ocl.evaluate("", expr);
 
@@ -218,7 +218,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Sequence{'a', 'b', 'd', 'e'}->including('c')");
+					.createQuery("Sequence{'a', 'b', 'd', 'e'}->including('c')");
 
 			List<?> result = (List<?>) ocl.evaluate("", expr);
 
@@ -239,24 +239,24 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->including('c')");
+					.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->including('c')");
 
 			Set<?> result = (Set<?>) ocl.evaluate("", expr);
 
 			Set<?> expected = new java.util.HashSet<Object>(Arrays
-				.asList(new Object[]{"a", "b", "d", "e", "c"}));
+					.asList(new Object[]{"a", "b", "d", "e", "c"}));
 
 			assertEquals(expected, result);
 
 			// no duplicates
 
 			expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->including('c')");
+					.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->including('c')");
 
 			result = (Set<?>) ocl.evaluate("", expr);
 
 			expected = new java.util.HashSet<Object>(Arrays
-				.asList(new Object[]{"a", "b", "c", "d", "e"}));
+					.asList(new Object[]{"a", "b", "c", "d", "e"}));
 
 			assertEquals(expected, result);
 		} catch (Exception e) {
@@ -272,7 +272,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Sequence{'a', 'b', 'c', 'd', 'e'}->excluding('c')");
+					.createQuery("Sequence{'a', 'b', 'c', 'd', 'e'}->excluding('c')");
 
 			List<?> result = (List<?>) ocl.evaluate("", expr);
 
@@ -292,24 +292,24 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->excluding('c')");
+					.createQuery("OrderedSet{'a', 'b', 'c', 'd', 'e'}->excluding('c')");
 
 			Set<?> result = (Set<?>) ocl.evaluate("", expr);
 
 			Set<?> expected = new java.util.HashSet<Object>(Arrays
-				.asList(new Object[]{"a", "b", "d", "e"}));
+					.asList(new Object[]{"a", "b", "d", "e"}));
 
 			assertEquals(expected, result);
 
 			// just for fun, try excluding an already excluded element
 
 			expr = helper
-				.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->excluding('c')");
+					.createQuery("OrderedSet{'a', 'b', 'd', 'e'}->excluding('c')");
 
 			result = (Set<?>) ocl.evaluate("", expr);
 
 			expected = new java.util.HashSet<Object>(Arrays
-				.asList(new Object[]{"a", "b", "d", "e"}));
+					.asList(new Object[]{"a", "b", "d", "e"}));
 
 			assertEquals(expected, result);
 		} catch (Exception e) {
@@ -322,10 +322,10 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{'a', 'b', 'c', 'd', 'e'}->first() = 'a'"));
+					"Sequence{'a', 'b', 'c', 'd', 'e'}->first() = 'a'"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{'a', 'b', 'c', 'd', 'e'}->first() = 'a'"));
+					"OrderedSet{'a', 'b', 'c', 'd', 'e'}->first() = 'a'"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -336,10 +336,10 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{'a', 'b', 'c', 'd', 'e'}->last() = 'e'"));
+					"Sequence{'a', 'b', 'c', 'd', 'e'}->last() = 'e'"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{'a', 'b', 'c', 'd', 'e'}->last() = 'e'"));
+					"OrderedSet{'a', 'b', 'c', 'd', 'e'}->last() = 'e'"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -350,10 +350,10 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{'a', 'b', 'c', 'd', 'e'}->at(3) = 'c'"));
+					"Sequence{'a', 'b', 'c', 'd', 'e'}->at(3) = 'c'"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{'a', 'b', 'c', 'd', 'e'}->at(3)= 'c'"));
+					"OrderedSet{'a', 'b', 'c', 'd', 'e'}->at(3)= 'c'"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -364,10 +364,10 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{'a', 'b', 'c', 'd', 'e'}->indexOf('c') = 3"));
+					"Sequence{'a', 'b', 'c', 'd', 'e'}->indexOf('c') = 3"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{'a', 'b', 'c', 'd', 'e'}->indexOf('c')= 3"));
+					"OrderedSet{'a', 'b', 'c', 'd', 'e'}->indexOf('c')= 3"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -581,28 +581,28 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->count(3) = 2"));
+					"Sequence{1, 2, 3, 3, 4, 5}->count(3) = 2"));
 
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->count(6) = 0"));
+					"Sequence{1, 2, 3, 3, 4, 5}->count(6) = 0"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->count(3) = 1"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->count(3) = 1"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->count(6) = 0"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->count(6) = 0"));
 
 			assertTrue(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->count(3) = 1"));
+					"Set{1, 2, 3, 3, 4, 5}->count(3) = 1"));
 
 			assertTrue(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->count(6) = 0"));
+					"Set{1, 2, 3, 3, 4, 5}->count(6) = 0"));
 
 			assertTrue(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->count(3) = 2"));
+					"Bag{1, 2, 3, 3, 4, 5}->count(3) = 2"));
 
 			assertTrue(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->count(6) = 0"));
+					"Bag{1, 2, 3, 3, 4, 5}->count(6) = 0"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -613,16 +613,16 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->sum() = 18"));
+					"Sequence{1, 2, 3, 3, 4, 5}->sum() = 18"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->sum() = 15"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->sum() = 15"));
 
 			assertTrue(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->sum() = 15"));
+					"Set{1, 2, 3, 3, 4, 5}->sum() = 15"));
 
 			assertTrue(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->sum() = 18"));
+					"Bag{1, 2, 3, 3, 4, 5}->sum() = 18"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -635,20 +635,20 @@ public class CollectionsTest
 	public void test_sum_emptyIntegerCollection_204753() {
 		helper.setContext(EcorePackage.Literals.EINT);
 
-		Integer zero = new Integer(0);
+		Integer zero = Integer.valueOf(0);
 
 		try {
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Sequence(Integer) = Sequence{} in s->sum()"));
+					"let s : Sequence(Integer) = Sequence{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : OrderedSet(Integer) = OrderedSet{} in s->sum()"));
+					"let s : OrderedSet(Integer) = OrderedSet{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Set(Integer) = Set{} in s->sum()"));
+					"let s : Set(Integer) = Set{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Bag(Integer) = Bag{} in s->sum()"));
+					"let s : Bag(Integer) = Bag{} in s->sum()"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -661,20 +661,20 @@ public class CollectionsTest
 	public void test_sum_emptyRealCollection_204753() {
 		helper.setContext(EcorePackage.Literals.EINT);
 
-		Double zero = new Double(0.0);
+		Double zero = Double.valueOf(0.0);
 
 		try {
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Sequence(Real) = Sequence{} in s->sum()"));
+					"let s : Sequence(Real) = Sequence{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : OrderedSet(Real) = OrderedSet{} in s->sum()"));
+					"let s : OrderedSet(Real) = OrderedSet{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Set(Real) = Set{} in s->sum()"));
+					"let s : Set(Real) = Set{} in s->sum()"));
 
 			assertEquals(zero, evaluate(helper, "",
-				"let s : Bag(Real) = Bag{} in s->sum()"));
+					"let s : Bag(Real) = Bag{} in s->sum()"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -685,28 +685,28 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->includes(3)"));
+					"Sequence{1, 2, 3, 3, 4, 5}->includes(3)"));
 
 			assertFalse(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->includes(6)"));
+					"Sequence{1, 2, 3, 3, 4, 5}->includes(6)"));
 
 			assertTrue(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->includes(3)"));
+					"Set{1, 2, 3, 3, 4, 5}->includes(3)"));
 
 			assertFalse(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->includes(6)"));
+					"Set{1, 2, 3, 3, 4, 5}->includes(6)"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->includes(3)"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->includes(3)"));
 
 			assertFalse(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->includes(6)"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->includes(6)"));
 
 			assertTrue(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->includes(3)"));
+					"Bag{1, 2, 3, 3, 4, 5}->includes(3)"));
 
 			assertFalse(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->includes(6)"));
+					"Bag{1, 2, 3, 3, 4, 5}->includes(6)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -717,28 +717,28 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->includesAll(Sequence{1, 3})"));
+					"Sequence{1, 2, 3, 3, 4, 5}->includesAll(Sequence{1, 3})"));
 
 			assertFalse(check(helper, "",
-				"Sequence{1, 2, 3, 3, 4, 5}->includesAll(Sequence{1, 6})"));
+					"Sequence{1, 2, 3, 3, 4, 5}->includesAll(Sequence{1, 6})"));
 
 			assertTrue(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->includesAll(Set{1, 3})"));
+					"Set{1, 2, 3, 3, 4, 5}->includesAll(Set{1, 3})"));
 
 			assertFalse(check(helper, "",
-				"Set{1, 2, 3, 3, 4, 5}->includesAll(Set{1, 6})"));
+					"Set{1, 2, 3, 3, 4, 5}->includesAll(Set{1, 6})"));
 
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->includesAll(OrderedSet{1, 3})"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->includesAll(OrderedSet{1, 3})"));
 
 			assertFalse(check(helper, "",
-				"OrderedSet{1, 2, 3, 3, 4, 5}->includesAll(OrderedSet{1, 6})"));
+					"OrderedSet{1, 2, 3, 3, 4, 5}->includesAll(OrderedSet{1, 6})"));
 
 			assertTrue(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->includesAll(Bag{1, 3})"));
+					"Bag{1, 2, 3, 3, 4, 5}->includesAll(Bag{1, 3})"));
 
 			assertFalse(check(helper, "",
-				"Bag{1, 2, 3, 3, 4, 5}->includesAll(Bag{1, 6})"));
+					"Bag{1, 2, 3, 3, 4, 5}->includesAll(Bag{1, 6})"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -833,11 +833,11 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("self.eClassifiers->union(self.eSubpackages.eClassifiers->asSet())->asSet()");
+					.createQuery("self.eClassifiers->union(self.eSubpackages.eClassifiers->asSet())->asSet()");
 
 			assertEquals(new java.util.HashSet<EClassifier>(
-				ExpressionsPackage.eINSTANCE.getEClassifiers()), ocl.evaluate(
-				ExpressionsPackage.eINSTANCE, expr));
+					ExpressionsPackage.eINSTANCE.getEClassifiers()), ocl.evaluate(
+						ExpressionsPackage.eINSTANCE, expr));
 		} catch (Exception exc) {
 			fail("Failed to parse or evaluate: " + exc.getLocalizedMessage());
 		}
@@ -863,7 +863,7 @@ public class CollectionsTest
 
 		try {
 			helper
-				.createQuery("self.getFakes()->union(self.getFakes().getFakes()->asSet())");
+			.createQuery("self.getFakes()->union(self.getFakes().getFakes()->asSet())");
 		} catch (Exception exc) {
 			fail("Failed to parse or evaluate: " + exc.getLocalizedMessage());
 		}
@@ -877,38 +877,38 @@ public class CollectionsTest
 
 		try {
 			Collection<?> result = (Collection<?>) evaluate(helper,
-				new Integer(1), "Sequence{1 .. 10}");
+				Integer.valueOf(1), "Sequence{1 .. 10}");
 
 			for (int i = 1; i <= 10; i++) {
-				assertTrue(result.contains(new Integer(i)));
+				assertTrue(result.contains(Integer.valueOf(i)));
 			}
 
-			result = (Collection<?>) evaluate(helper, new Integer(1),
-				"Sequence{1, (2+1)..(3+4), 10}");
+			result = (Collection<?>) evaluate(helper, Integer.valueOf(1),
+					"Sequence{1, (2+1)..(3+4), 10}");
 
-			assertTrue(result.contains(new Integer(1)));
+			assertTrue(result.contains(Integer.valueOf(1)));
 			for (int i = 3; i <= 7; i++) {
-				assertTrue(result.contains(new Integer(i)));
+				assertTrue(result.contains(Integer.valueOf(i)));
 			}
-			assertTrue(result.contains(new Integer(10)));
+			assertTrue(result.contains(Integer.valueOf(10)));
 
 			// try the first expression without spaces (needed a grammar change)
-			result = (Collection<?>) evaluate(helper, new Integer(1),
-				"Sequence{1..10}");
+			result = (Collection<?>) evaluate(helper, Integer.valueOf(1),
+					"Sequence{1..10}");
 
 			for (int i = 1; i <= 10; i++) {
-				assertTrue(result.contains(new Integer(i)));
+				assertTrue(result.contains(Integer.valueOf(i)));
 			}
 
 			// and a negation, too (the same grammar change)
-			result = (Collection<?>) evaluate(helper, new Integer(1),
-				"Sequence{-20, -10..-1, 1}");
+			result = (Collection<?>) evaluate(helper, Integer.valueOf(1),
+					"Sequence{-20, -10..-1, 1}");
 
-			assertTrue(result.contains(new Integer(-20)));
+			assertTrue(result.contains(Integer.valueOf(-20)));
 			for (int i = -10; i <= -1; i++) {
-				assertTrue(result.contains(new Integer(i)));
+				assertTrue(result.contains(Integer.valueOf(i)));
 			}
-			assertTrue(result.contains(new Integer(1)));
+			assertTrue(result.contains(Integer.valueOf(1)));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -923,9 +923,9 @@ public class CollectionsTest
 
 		try {
 			Collection<?> result = (Collection<?>) evaluate(helper,
-				new Integer(1), "Sequence{1 .. 1}");
+				Integer.valueOf(1), "Sequence{1 .. 1}");
 			assertEquals(1, result.size());
-			assertTrue(result.contains(new Integer(1)));
+			assertTrue(result.contains(Integer.valueOf(1)));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -940,7 +940,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Tuple{a = self.eClassifiers}");
+					.createQuery("Tuple{a = self.eClassifiers}");
 
 			assertTrue(expr.getType() instanceof TupleType);
 			TupleType tt = (TupleType) expr.getType();
@@ -953,7 +953,7 @@ public class CollectionsTest
 
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) part
-				.getEType();
+			.getEType();
 			assertSame(EcorePackage.Literals.ECLASSIFIER, collType
 				.getElementType());
 
@@ -979,7 +979,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Tuple{a = Sequence{'a', 'b', 'c'}}");
+					.createQuery("Tuple{a = Sequence{'a', 'b', 'c'}}");
 
 			assertTrue(expr.getType() instanceof TupleType);
 			TupleType tt = (TupleType) expr.getType();
@@ -992,7 +992,7 @@ public class CollectionsTest
 
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) part
-				.getEType();
+			.getEType();
 			assertSame(getOCLStandardLibrary().getString(), collType
 				.getElementType());
 
@@ -1017,7 +1017,7 @@ public class CollectionsTest
 		helper.setContext(EcorePackage.Literals.EPACKAGE);
 
 		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE
-			.createVariable();
+				.createVariable();
 		var.setName("var");
 		var.setType(TypeUtil.resolveSetType(ocl.getEnvironment(),
 			getOCLStandardLibrary().getString()));
@@ -1026,7 +1026,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Set{'a', 'b', 'c'}->union(var)");
+					.createQuery("Set{'a', 'b', 'c'}->union(var)");
 
 			ocl.getEvaluationEnvironment().add("var", getInvalid());
 			Object result = ocl.evaluate(EcorePackage.eINSTANCE, expr);
@@ -1046,7 +1046,7 @@ public class CollectionsTest
 		helper.setContext(EcorePackage.Literals.EPACKAGE);
 
 		Variable<EClassifier, EParameter> var = ExpressionsFactory.eINSTANCE
-			.createVariable();
+				.createVariable();
 		var.setName("var");
 		var.setType(TypeUtil.resolveSetType(ocl.getEnvironment(),
 			getOCLStandardLibrary().getString()));
@@ -1055,7 +1055,7 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-				.createQuery("Set{'a', 'b', 'c'}->union(var)");
+					.createQuery("Set{'a', 'b', 'c'}->union(var)");
 
 			ocl.getEvaluationEnvironment().add("var", null);
 			Object result = ocl.evaluate(EcorePackage.eINSTANCE, expr);
@@ -1078,10 +1078,10 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3} <> Sequence{3, 2, 1}"));
+					"Sequence{1, 2, 3} <> Sequence{3, 2, 1}"));
 
 			assertFalse(check(helper, "",
-				"Sequence{1, 2, 3} <> Sequence{1, 2, 3}"));
+					"Sequence{1, 2, 3} <> Sequence{1, 2, 3}"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1096,7 +1096,7 @@ public class CollectionsTest
 		try {
 			assertTrue(check(helper, EcorePackage.Literals.ECLASS,
 				"self.eAllStructuralFeatures->sortedBy(upperBound)->first().upperBound = 1"+
-				" and self.eAllStructuralFeatures->sortedBy(upperBound)->last().upperBound = *"));
+					" and self.eAllStructuralFeatures->sortedBy(upperBound)->last().upperBound = *"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1114,11 +1114,11 @@ public class CollectionsTest
 
 		try {
 			OCLExpression<EClassifier> expr = helper
-			.createQuery("self.eContents()");
+					.createQuery("self.eContents()");
 			assertTrue(expr.getType() instanceof CollectionType<?, ?>);
 
 			CollectionType<?, ?> actualType = (CollectionType<?, ?>) expr
-				.getType();
+					.getType();
 
 			// should be a Sequence(OclAny)
 			assertSame(CollectionKind.SEQUENCE_LITERAL, actualType.getKind());
@@ -1139,11 +1139,11 @@ public class CollectionsTest
 	 */
 	public void test_resolutionOfGenericCollectionTypes_222581() {
 		TypeResolver<EClassifier, EOperation, EStructuralFeature> resolver = ocl
-			.getEnvironment().getTypeResolver();
+				.getEnvironment().getTypeResolver();
 		Resource resource = resolver.getResource();
 
 		OCLStandardLibrary<EClassifier> stdlib = ocl.getEnvironment()
-			.getOCLStandardLibrary();
+				.getOCLStandardLibrary();
 		EClassifier t = stdlib.getT();
 
 		CollectionType<EClassifier, EOperation> collectionType;
@@ -1182,10 +1182,10 @@ public class CollectionsTest
 
 		try {
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->at(0)"));
+					"OrderedSet{1, 2, 3}->at(0)"));
 
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->at(4)"));
+					"OrderedSet{1, 2, 3}->at(4)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1199,10 +1199,10 @@ public class CollectionsTest
 
 		try {
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->at(0)"));
+					"Sequence{1, 2, 3}->at(0)"));
 
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->at(4)"));
+					"Sequence{1, 2, 3}->at(4)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1217,16 +1217,16 @@ public class CollectionsTest
 		try {
 			// this is OK, as it effectively appends
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3}->insertAt(4, 4) = OrderedSet{1, 2, 3, 4}"));
+					"OrderedSet{1, 2, 3}->insertAt(4, 4) = OrderedSet{1, 2, 3, 4}"));
 			// and this prepends
 			assertTrue(check(helper, "",
-				"OrderedSet{1, 2, 3}->insertAt(1, 0) = OrderedSet{0, 1, 2, 3}"));
+					"OrderedSet{1, 2, 3}->insertAt(1, 0) = OrderedSet{0, 1, 2, 3}"));
 
 			// this is not
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->insertAt(5, 5)"));
+					"OrderedSet{1, 2, 3}->insertAt(5, 5)"));
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->insertAt(0, 0)"));
+					"OrderedSet{1, 2, 3}->insertAt(0, 0)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1241,16 +1241,16 @@ public class CollectionsTest
 		try {
 			// this is OK, as it effectively appends
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3}->insertAt(4, 4) = Sequence{1, 2, 3, 4}"));
+					"Sequence{1, 2, 3}->insertAt(4, 4) = Sequence{1, 2, 3, 4}"));
 			// and this prepends
 			assertTrue(check(helper, "",
-				"Sequence{1, 2, 3}->insertAt(1, 0) = Sequence{0, 1, 2, 3}"));
+					"Sequence{1, 2, 3}->insertAt(1, 0) = Sequence{0, 1, 2, 3}"));
 
 			// this is not
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->insertAt(5, 5)"));
+					"Sequence{1, 2, 3}->insertAt(5, 5)"));
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->insertAt(0, 0)"));
+					"Sequence{1, 2, 3}->insertAt(0, 0)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1265,13 +1265,13 @@ public class CollectionsTest
 
 		try {
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->subOrderedSet(0, 2)"));
+					"OrderedSet{1, 2, 3}->subOrderedSet(0, 2)"));
 
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->subOrderedSet(2, 4)"));
+					"OrderedSet{1, 2, 3}->subOrderedSet(2, 4)"));
 
 			assertInvalid(evaluate(helper, "",
-				"OrderedSet{1, 2, 3}->subOrderedSet(2, 1)"));
+					"OrderedSet{1, 2, 3}->subOrderedSet(2, 1)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1286,13 +1286,13 @@ public class CollectionsTest
 
 		try {
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->subSequence(0, 2)"));
+					"Sequence{1, 2, 3}->subSequence(0, 2)"));
 
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->subSequence(2, 4)"));
+					"Sequence{1, 2, 3}->subSequence(2, 4)"));
 
 			assertInvalid(evaluate(helper, "",
-				"Sequence{1, 2, 3}->subSequence(2, 1)"));
+					"Sequence{1, 2, 3}->subSequence(2, 1)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -1305,7 +1305,7 @@ public class CollectionsTest
 
 		try {
 			assertTrue(check("let aSeq : Sequence(OclAny) = Sequence {'aString'} in" +
-				" aSeq->including(10) = Sequence {'aString',10}"));
+					" aSeq->including(10) = Sequence {'aString',10}"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}

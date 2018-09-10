@@ -33,8 +33,8 @@ import org.eclipse.ocl.cst.UnlimitedNaturalLiteralExpCS;
  * @generated
  */
 public class UnlimitedNaturalLiteralExpCSImpl
-		extends PrimitiveLiteralExpCSImpl
-		implements UnlimitedNaturalLiteralExpCS {
+extends PrimitiveLiteralExpCSImpl
+implements UnlimitedNaturalLiteralExpCS {
 
 	/**
 	 * The default value of the '{@link #getIntegerSymbol() <em>Integer Symbol</em>}' attribute.
@@ -65,7 +65,7 @@ public class UnlimitedNaturalLiteralExpCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Long EXTENDED_INTEGER_SYMBOL_EDEFAULT = new Long(0L);
+	protected static final Long EXTENDED_INTEGER_SYMBOL_EDEFAULT = Long.valueOf(0L);
 
 	/**
 	 * The cached value of the '{@link #getExtendedIntegerSymbol() <em>Extended Integer Symbol</em>}' attribute.
@@ -116,7 +116,7 @@ public class UnlimitedNaturalLiteralExpCSImpl
 	public Integer getIntegerSymbol() {
 		if (extendedIntegerSymbol != 0) {
 			throw new IllegalStateException(
-				"getIntegerSymbol() for non-Integer"); //$NON-NLS-1$
+					"getIntegerSymbol() for non-Integer"); //$NON-NLS-1$
 		}
 		return integerSymbol;
 	}
@@ -160,9 +160,9 @@ public class UnlimitedNaturalLiteralExpCSImpl
 	 */
 	public Long getLongSymbol() {
 		return extendedIntegerSymbol * (1L << Integer.SIZE)
-			+ (integerSymbol != null
+				+ (integerSymbol != null
 				? integerSymbol
-				: 0);
+					: 0);
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class UnlimitedNaturalLiteralExpCSImpl
 		Long oldExtendedIntegerSymbol = extendedIntegerSymbol;
 		integerSymbol = (int) (newLongSymbol & ((1L << Integer.SIZE) - 1));
 		extendedIntegerSymbol = (newLongSymbol >> Integer.SIZE)
-			+ ((integerSymbol < 0)
-				? 1
-				: 0);
+				+ ((integerSymbol < 0)
+						? 1
+							: 0);
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				CSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL,
@@ -253,17 +253,17 @@ public class UnlimitedNaturalLiteralExpCSImpl
 		switch (featureID) {
 			case CSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS__INTEGER_SYMBOL :
 				return INTEGER_SYMBOL_EDEFAULT == null
-					? integerSymbol != null
-					: !INTEGER_SYMBOL_EDEFAULT.equals(integerSymbol);
+				? integerSymbol != null
+				: !INTEGER_SYMBOL_EDEFAULT.equals(integerSymbol);
 			case CSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS__EXTENDED_INTEGER_SYMBOL :
 				return EXTENDED_INTEGER_SYMBOL_EDEFAULT == null
-					? extendedIntegerSymbol != null
-					: !EXTENDED_INTEGER_SYMBOL_EDEFAULT
-						.equals(extendedIntegerSymbol);
+				? extendedIntegerSymbol != null
+				: !EXTENDED_INTEGER_SYMBOL_EDEFAULT
+				.equals(extendedIntegerSymbol);
 			case CSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS__LONG_SYMBOL :
 				return LONG_SYMBOL_EDEFAULT == null
-					? getLongSymbol() != null
-					: !LONG_SYMBOL_EDEFAULT.equals(getLongSymbol());
+				? getLongSymbol() != null
+				: !LONG_SYMBOL_EDEFAULT.equals(getLongSymbol());
 		}
 		return super.eIsSet(featureID);
 	}

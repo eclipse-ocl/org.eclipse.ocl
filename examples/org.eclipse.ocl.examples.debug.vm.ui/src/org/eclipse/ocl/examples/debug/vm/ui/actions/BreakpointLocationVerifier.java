@@ -145,7 +145,7 @@ public abstract class BreakpointLocationVerifier {
 		List<Element> elements = getValidBreakpointLocator()
 				.getBreakpointableElementsForLine(compilationUnit, getLineNumberProvider(doc), lineNumber);
 		if (elements.isEmpty()) {
-			report(NLS.bind(fInvalidLocationMessage, new Integer(lineNumber)));
+			report(NLS.bind(fInvalidLocationMessage, Integer.valueOf(lineNumber)));
 			return canceled();
 		}
 

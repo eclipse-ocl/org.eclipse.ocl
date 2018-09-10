@@ -166,10 +166,10 @@ public abstract class VMLineBreakpoint extends LineBreakpoint {
 		if (getHitCount() != count) {
 			if (!isEnabled() && count > -1) {
 				setAttributes(new String[] { ENABLED, HIT_COUNT },
-						new Object[] { Boolean.TRUE, new Integer(count) });
+						new Object[] { Boolean.TRUE, Integer.valueOf(count) });
 			} else {
 				setAttributes(new String[] { HIT_COUNT },
-						new Object[] { new Integer(count) });
+						new Object[] { Integer.valueOf(count) });
 			}
 		}
 	}

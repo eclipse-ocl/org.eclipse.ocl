@@ -1044,7 +1044,7 @@ extends AbstractTestSuite {
 		eattr.setUpper(1);  // not a collection
 
 		InstanceSpecification aFake = instantiate(fakePkg, fake);
-		setValue(aFake, eattr, new Integer(7));
+		setValue(aFake, eattr, Integer.valueOf(7));
 
 		helper.setContext(fake);
 

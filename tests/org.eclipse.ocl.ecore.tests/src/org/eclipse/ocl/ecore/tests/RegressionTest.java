@@ -1148,7 +1148,7 @@ extends AbstractTestSuite {
 		fake.getEStructuralFeatures().add(eattr);
 
 		EObject aFake = fakePkg.getEFactoryInstance().create(fake);
-		aFake.eSet(eattr, new Integer(7));
+		aFake.eSet(eattr, Integer.valueOf(7));
 
 		helper.setContext(fake);
 

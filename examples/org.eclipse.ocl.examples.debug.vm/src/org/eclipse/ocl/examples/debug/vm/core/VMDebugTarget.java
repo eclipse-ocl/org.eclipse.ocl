@@ -154,7 +154,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 
 			if (enabled) {
-				installedBreakpoints.put(new Long(vmBp.getID()),
+				installedBreakpoints.put(Long.valueOf(vmBp.getID()),
 						vmBp);
 				try {
 					String unitURI = vmBp.getUnitURI().toString();
@@ -179,7 +179,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 					VMBreakpointResponse bpResponse = (VMBreakpointResponse) response;
 
 					for(long addedID : bpResponse.getAddedBreakpointsIDs()) {
-						Long key = new Long(addedID);
+						Long key = Long.valueOf(addedID);
 						VMLineBreakpoint bp = installedBreakpoints.get(key);
 						if(bp != null) {
 							fID2Breakpoint.put(key, bp);
@@ -369,7 +369,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 				VMBreakpointResponse bpResponse = (VMBreakpointResponse) response;
 				long[] addedIDs = bpResponse.getAddedBreakpointsIDs();
 				if(addedIDs.length > 0) {
-					fID2Breakpoint.put(new Long(addedIDs[0]), vmBreakpoint);
+					fID2Breakpoint.put(Long.valueOf(addedIDs[0]), vmBreakpoint);
 				}
 			}
 		} catch (CoreException e) {
@@ -434,7 +434,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 				}
 			}
 			VMLineBreakpoint vmBreakpoint = (VMLineBreakpoint) breakpoint;
-			fID2Breakpoint.remove(new Long(((VMLineBreakpoint) breakpoint)
+			fID2Breakpoint.remove(Long.valueOf(((VMLineBreakpoint) breakpoint)
 					.getID()));
 
 			VMBreakpointRequest removeRequest = VMBreakpointRequest

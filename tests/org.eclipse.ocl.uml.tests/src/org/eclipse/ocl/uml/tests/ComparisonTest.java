@@ -379,16 +379,16 @@ extends AbstractTestSuite {
 		helper.setContext(thingType);
 
 		try {
-			assertEquals(new Integer(1), evaluate(helper, thing, "3 - 2"));
-			assertEquals(new Integer(3), evaluate(helper, thing, "1 + 2"));
-			assertEquals(new Double(2.0), evaluate(helper, thing, "6 / 3"));
-			assertEquals(new Integer(6), evaluate(helper, thing, "2 * 3"));
-			assertEquals(new Integer(-1), evaluate(helper, thing, "- 1"));
-			assertEquals(new Integer(3), evaluate(helper, thing, "(2 - 5).abs()"));
-			assertEquals(new Integer(3), evaluate(helper, thing, "3.max(2)"));
-			assertEquals(new Integer(2), evaluate(helper, thing, "3.min(2)"));
-			assertEquals(new Integer(3), evaluate(helper, thing, "7.div(2)"));
-			assertEquals(new Integer(1), evaluate(helper, thing, "7.mod(2)"));
+			assertEquals(Integer.valueOf(1), evaluate(helper, thing, "3 - 2"));
+			assertEquals(Integer.valueOf(3), evaluate(helper, thing, "1 + 2"));
+			assertEquals(Double.valueOf(2.0), evaluate(helper, thing, "6 / 3"));
+			assertEquals(Integer.valueOf(6), evaluate(helper, thing, "2 * 3"));
+			assertEquals(Integer.valueOf(-1), evaluate(helper, thing, "- 1"));
+			assertEquals(Integer.valueOf(3), evaluate(helper, thing, "(2 - 5).abs()"));
+			assertEquals(Integer.valueOf(3), evaluate(helper, thing, "3.max(2)"));
+			assertEquals(Integer.valueOf(2), evaluate(helper, thing, "3.min(2)"));
+			assertEquals(Integer.valueOf(3), evaluate(helper, thing, "7.div(2)"));
+			assertEquals(Integer.valueOf(1), evaluate(helper, thing, "7.mod(2)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -401,14 +401,14 @@ extends AbstractTestSuite {
 		helper.setContext(thingType);
 
 		try {
-			assertEquals(new Double(1.0), evaluate(helper, thing, "3.0 - 2.0"));
-			assertEquals(new Double(3.0), evaluate(helper, thing, "1.0 + 2.0"));
-			assertEquals(new Double(2.0), evaluate(helper, thing, "6.0 / 3.0"));
-			assertEquals(new Double(6.0), evaluate(helper, thing, "2.0 * 3.0"));
-			assertEquals(new Double(-1.0), evaluate(helper, thing, "- 1.0"));
-			assertEquals(new Double(3.0), evaluate(helper, thing, "(2.0 - 5.0).abs()"));
-			assertEquals(new Double(3.0), evaluate(helper, thing, "3.0.max(2.0)"));
-			assertEquals(new Double(2.0), evaluate(helper, thing, "3.0.min(2.0)"));
+			assertEquals(Double.valueOf(1.0), evaluate(helper, thing, "3.0 - 2.0"));
+			assertEquals(Double.valueOf(3.0), evaluate(helper, thing, "1.0 + 2.0"));
+			assertEquals(Double.valueOf(2.0), evaluate(helper, thing, "6.0 / 3.0"));
+			assertEquals(Double.valueOf(6.0), evaluate(helper, thing, "2.0 * 3.0"));
+			assertEquals(Double.valueOf(-1.0), evaluate(helper, thing, "- 1.0"));
+			assertEquals(Double.valueOf(3.0), evaluate(helper, thing, "(2.0 - 5.0).abs()"));
+			assertEquals(Double.valueOf(3.0), evaluate(helper, thing, "3.0.max(2.0)"));
+			assertEquals(Double.valueOf(2.0), evaluate(helper, thing, "3.0.min(2.0)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -422,12 +422,12 @@ extends AbstractTestSuite {
 		helper.setContext(thingType);
 
 		try {
-			assertEquals(new Double(1.0), evaluate(helper, thing, "3 - 2.0"));
-			assertEquals(new Double(3.0), evaluate(helper, thing, "1 + 2.0"));
-			assertEquals(new Double(2.0), evaluate(helper, thing, "6 / 3.0"));
-			assertEquals(new Double(6.0), evaluate(helper, thing, "2 * 3.0"));
-			assertEquals(new Double(3.0), evaluate(helper, thing, "3.max(2.0)"));
-			assertEquals(new Double(2.0), evaluate(helper, thing, "3.min(2.0)"));
+			assertEquals(Double.valueOf(1.0), evaluate(helper, thing, "3 - 2.0"));
+			assertEquals(Double.valueOf(3.0), evaluate(helper, thing, "1 + 2.0"));
+			assertEquals(Double.valueOf(2.0), evaluate(helper, thing, "6 / 3.0"));
+			assertEquals(Double.valueOf(6.0), evaluate(helper, thing, "2 * 3.0"));
+			assertEquals(Double.valueOf(3.0), evaluate(helper, thing, "3.max(2.0)"));
+			assertEquals(Double.valueOf(2.0), evaluate(helper, thing, "3.min(2.0)"));
 		} catch (Exception e) {
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
@@ -437,12 +437,12 @@ extends AbstractTestSuite {
 		ParsingOptions.setOption(helper.getEnvironment(), ProblemOption.CONCEPTUAL_OPERATION_NAME, ProblemHandler.Severity.OK);
 		helper.setContext(getUMLInteger());
 
-		Integer minusOne = new Integer(-1);
-		Integer one = new Integer(1);
-		Integer two = new Integer(2);
-		Double doubleTwo = new Double(2.0);
-		Integer three = new Integer(3);
-		Integer six = new Integer(6);
+		Integer minusOne = Integer.valueOf(-1);
+		Integer one = Integer.valueOf(1);
+		Integer two = Integer.valueOf(2);
+		Double doubleTwo = Double.valueOf(2.0);
+		Integer three = Integer.valueOf(3);
+		Integer six = Integer.valueOf(6);
 
 		try {
 			// new NUMERIC_OPERATION token

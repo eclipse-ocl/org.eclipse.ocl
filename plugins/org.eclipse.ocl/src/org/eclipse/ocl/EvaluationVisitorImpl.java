@@ -318,7 +318,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 		//			the result is false.
 		//
 		//		For example,
-		// 			"1 = 1.0" evaluates to true (unlike "(new Integer(1)).equals(new
+		// 			"1 = 1.0" evaluates to true (unlike "(Integer.valueOf(1)).equals(new
 		// Double(1.0))" which evalutes to false).
 		//			"1 = 'x'" evalutes to false
 		//			"(1/0) = 1" evaluates to false
@@ -552,9 +552,9 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 					case PredefinedType.SIZE:
 						if (sourceType == getString()) {
 							// String::size()
-							return new Integer(((String) sourceVal).length());
+							return Integer.valueOf(((String) sourceVal).length());
 						} else if (sourceType instanceof CollectionType<?, ?>) {
-							return new Integer(((Collection<?>) sourceVal).size());
+							return Integer.valueOf(((Collection<?>) sourceVal).size());
 						}
 
 					case PredefinedType.TO_BOOLEAN:
@@ -612,9 +612,9 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 							C numType = numCollType.getElementType();
 
 							if (numType == getReal()) {
-								num = new Double(0.0);
+								num = Double.valueOf(0.0);
 							} else if (numType == getInteger()) {
-								num = new Integer(0);
+								num = Integer.valueOf(0);
 							}
 						}
 
@@ -746,7 +746,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 						return sourceVal;
 					} else if (((sourceVal instanceof Double) || (sourceVal instanceof Float) || (sourceVal instanceof BigDecimal))
 							&& (argType == getInteger())) {
-						return new Integer(((Number) sourceVal).intValue());
+						return Integer.valueOf(((Number) sourceVal).intValue());
 					} else if (sourceVal instanceof Boolean
 							&& ((TypeExp<C>) arg).getReferredType() == getBoolean()) {
 						return sourceVal;
@@ -763,7 +763,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 							}
 						}
 
-						return new Double(((Integer) sourceVal).doubleValue());
+						return Double.valueOf(((Integer) sourceVal).doubleValue());
 					} else if (sourceType == getUnlimitedNatural() && sourceVal.equals(UNLIMITED)
 							&& (((TypeExp<C>) arg).getReferredType() == getInteger())) {
 						// According to OCL 2.3 (10-11-42) Section 8.2.1, UnlimitedNatural value
@@ -1305,7 +1305,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 
 						case PredefinedType.COUNT:
 							// Collection::count(T)
-							return new Integer(CollectionUtil.count(
+							return Integer.valueOf(CollectionUtil.count(
 								sourceColl, argVal));
 
 						case PredefinedType.INCLUDES_ALL:
@@ -2591,7 +2591,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 						int firstInt = firstVal.intValue();
 						int lastInt = lastVal.intValue();
 						for (int i = firstInt; i <= lastInt; i++) {
-							result.add(new Integer(i));
+							result.add(Integer.valueOf(i));
 						}
 					}
 				} // end of collection range
@@ -2661,7 +2661,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 				OCLPlugin.throwing(getClass(), "get", error);//$NON-NLS-1$
 				throw error;
 			}
-			return new Integer(first + index);
+			return Integer.valueOf(first + index);
 		}
 
 		@Override
@@ -2683,7 +2683,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 						initialized = true;
 					}
 					if (hasNext()) {
-						return new Integer(++curr);
+						return Integer.valueOf(++curr);
 					}
 					throw new NoSuchElementException();
 				}

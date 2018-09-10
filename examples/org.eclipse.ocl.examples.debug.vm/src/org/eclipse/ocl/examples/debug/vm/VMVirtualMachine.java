@@ -300,7 +300,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 					VMBreakpoint breakpoint = fBreakpointManager.createBreakpoint(newBreakpoint);
 
 					if(breakpoint != null) {
-						addedBpIDs.add(new Long(newBreakpoint.getID()));
+						addedBpIDs.add(Long.valueOf(newBreakpoint.getID()));
 
 						getDebugCore().getTrace().trace(DebugOptions.VM,
 								"Installing breakpoint: " + " line:" //$NON-NLS-1$ //$NON-NLS-2$

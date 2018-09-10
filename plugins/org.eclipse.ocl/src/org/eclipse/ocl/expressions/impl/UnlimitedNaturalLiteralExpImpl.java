@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
@@ -12,13 +12,11 @@
 package org.eclipse.ocl.expressions.impl;
 
 import java.util.Map;
-import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.operations.UnlimitedNaturalLiteralExpOperations;
@@ -41,8 +39,8 @@ import org.eclipse.ocl.utilities.Visitor;
  * @generated
  */
 public class UnlimitedNaturalLiteralExpImpl<C>
-		extends NumericLiteralExpImpl<C>
-		implements UnlimitedNaturalLiteralExp<C> {
+extends NumericLiteralExpImpl<C>
+implements UnlimitedNaturalLiteralExp<C> {
 
 	/**
 	 * The default value of the '{@link #getIntegerSymbol() <em>Integer Symbol</em>}' attribute.
@@ -83,7 +81,7 @@ public class UnlimitedNaturalLiteralExpImpl<C>
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Long EXTENDED_INTEGER_SYMBOL_EDEFAULT = new Long(0L);
+	protected static final Long EXTENDED_INTEGER_SYMBOL_EDEFAULT = Long.valueOf(0L);
 
 	/**
 	 * The cached value of the '{@link #getExtendedIntegerSymbol() <em>Extended Integer Symbol</em>}' attribute.
@@ -290,19 +288,19 @@ public class UnlimitedNaturalLiteralExpImpl<C>
 		switch (featureID) {
 			case ExpressionsPackage.UNLIMITED_NATURAL_LITERAL_EXP__INTEGER_SYMBOL :
 				return INTEGER_SYMBOL_EDEFAULT == null
-					? integerSymbol != null
-					: !INTEGER_SYMBOL_EDEFAULT.equals(integerSymbol);
+				? integerSymbol != null
+				: !INTEGER_SYMBOL_EDEFAULT.equals(integerSymbol);
 			case ExpressionsPackage.UNLIMITED_NATURAL_LITERAL_EXP__UNLIMITED :
 				return isUnlimited() != UNLIMITED_EDEFAULT;
 			case ExpressionsPackage.UNLIMITED_NATURAL_LITERAL_EXP__EXTENDED_INTEGER_SYMBOL :
 				return EXTENDED_INTEGER_SYMBOL_EDEFAULT == null
-					? extendedIntegerSymbol != null
-					: !EXTENDED_INTEGER_SYMBOL_EDEFAULT
-						.equals(extendedIntegerSymbol);
+				? extendedIntegerSymbol != null
+				: !EXTENDED_INTEGER_SYMBOL_EDEFAULT
+				.equals(extendedIntegerSymbol);
 			case ExpressionsPackage.UNLIMITED_NATURAL_LITERAL_EXP__LONG_SYMBOL :
 				return LONG_SYMBOL_EDEFAULT == null
-					? getLongSymbol() != null
-					: !LONG_SYMBOL_EDEFAULT.equals(getLongSymbol());
+				? getLongSymbol() != null
+				: !LONG_SYMBOL_EDEFAULT.equals(getLongSymbol());
 		}
 		return super.eIsSet(featureID);
 	}
@@ -314,7 +312,7 @@ public class UnlimitedNaturalLiteralExpImpl<C>
 	@SuppressWarnings("unchecked")
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((Visitor<T, C, ?, ?, ?, ?, ?, ?, ?, ?>) v)
-			.visitUnlimitedNaturalLiteralExp(this);
+				.visitUnlimitedNaturalLiteralExp(this);
 	}
 
 	/**
