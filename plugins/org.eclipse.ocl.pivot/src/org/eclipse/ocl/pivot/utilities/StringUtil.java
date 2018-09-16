@@ -21,16 +21,16 @@ import org.eclipse.osgi.util.NLS;
 
 
 public class StringUtil
-{	
+{
 	private static final String maxIntValue = Integer.toString(Integer.MAX_VALUE);
 	private static final int maxIntSize = maxIntValue.length();
 	private static final String maxLongValue = Long.toString(Long.MAX_VALUE);
 	private static final int maxLongSize = maxLongValue.length();
 
 	/**
-	 * Copied from {@link java.util.Properties}
+	 * Table mapping the four bits of a nibble to the corresponding uppercase hex ASCII character.
 	 */
-	private static final char[] hexDigit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	private static final char[] nibble2uchex = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 	/**
 	 * Append a multiplicity string such as "[1..5]" to a StringBuilder.
@@ -81,170 +81,113 @@ public class StringUtil
 	}
 
 	/**
-	 * Mostly copied from {@link java.util.Properties#loadConvert} via
-	 * {@link org.eclipse.xtext.util.Strings#convertFromJavaString}
+	 * Return the decoding of oclString as a sequence of Unicode characters. THe surrounding quotes
+	 * should have been removed from oclString by the caller. This inverts the convertToOCLSTring method.
+	 * Return oclSting if there are no encoded characters.
 	 */
-	public static@NonNull  String convertFromOCLString(@NonNull String javaString) {
-		char[] in = javaString.toCharArray();
-		int off = 0;
-		int len = javaString.length();
-		char[] convtBuf = new char[len];
-		char aChar;
-		char[] out = convtBuf;
-		int outLen = 0;
-		int end = off + len;
-	
-		while (off < end) {
-			aChar = in[off++];
-			if (aChar == '\\') {
-				aChar = in[off++];
-				if (aChar == 'u') {
-					// Read the xxxx
-					int value = 0;
-					if(off+4 > end)
-						throw new IllegalArgumentException("Malformed \\uxxxx encoding.");
-					for (int i = 0; i < 4; i++) {
-						aChar = in[off++];
-						switch (aChar) {
-							case '0':
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-							case '6':
-							case '7':
-							case '8':
-							case '9':
-								value = (value << 4) + aChar - '0';
-								break;
-							case 'a':
-							case 'b':
-							case 'c':
-							case 'd':
-							case 'e':
-							case 'f':
-								value = (value << 4) + 10 + aChar - 'a';
-								break;
-							case 'A':
-							case 'B':
-							case 'C':
-							case 'D':
-							case 'E':
-							case 'F':
-								value = (value << 4) + 10 + aChar - 'A';
-								break;
-							default:
-								throw new IllegalArgumentException("Malformed \\uxxxx encoding.");
-						}
-					}
-					out[outLen++] = (char) value;
-				} else {
-					if (aChar == 't')
-						aChar = '\t';
-					else if (aChar == 'r')
-						aChar = '\r';
-					else if (aChar == 'n')
-						aChar = '\n';
-					else if (aChar == 'f')
-						aChar = '\f';
-					else if (aChar == 'b')
-						aChar = '\b';
-					else if (aChar == '"')
-						aChar = '\"';
-					else if (aChar == '\'')
-						aChar = '\'';
-					else if (aChar == '\\')
-						aChar = '\\';
-					else
-						throw new IllegalArgumentException("Illegal escape character \\" + aChar);
-					out[outLen++] = aChar;
+	public static @NonNull String convertFromOCLString(@NonNull String oclString) {
+		StringBuilder s = null;					// Lazily created if encoding actually necessary.
+		int iMax = oclString.length();
+		for (int i = 0; i < iMax; i++) {
+			char c = oclString.charAt(i);
+			if (c == '\\') {
+				if (s == null) {
+					s = new StringBuilder(iMax);
+					s.append(oclString, 0, i);	// Seed the lazy buffer with the characters so far.
 				}
-			} else {
-				out[outLen++] = aChar;
+				int iStart = i;
+				if (++i < iMax) {
+					c = oclString.charAt(i);
+					switch (c) {
+						case 't': s.append('\t'); break;
+						case 'n': s.append('\n'); break;
+						case 'r': s.append('\r'); break;
+						case 'f': s.append('\f'); break;
+						case 'b': s.append('\b'); break;
+						case 'u': {
+							if (i+4 < iMax) {
+								int value = 0;
+								for (int j = 0; j < 4; j++) {
+									c = oclString.charAt(++i);
+									if (('0' <= c) && (c <= '9')) {
+										value = (16 * value) + c - '0';
+									}
+									else if (('A' <= c) && (c <= 'F')) {
+										value = (16 * value) + c - 'A' + 10;
+									}
+									else if (('a' <= c) && (c <= 'f')) {
+										value = (16 * value) + c - 'a' + 10;
+									}
+									else {
+										throw new IllegalArgumentException("Malformed Unicode escape: " + oclString.substring(iStart, i+1 - iStart) + ".");
+									}
+								}
+								s.append((char)value);
+							}
+							break;
+						}
+						default:					// Any other character, especially quotes, backslash are de-escaped.
+							s.append(c);
+					}
+				}
+			}
+			else if (s != null) {
+				s.append(c);
 			}
 		}
-		return new String(out, 0, outLen);
+		return s != null ? s.toString() : oclString;
 	}
 
 	/**
-	 * Mostly copied from {@link java.util.Properties#saveConvert} via
-	 * {@link org.eclipse.xtext.util.Strings#convertToJavaString}
+	 * Return the encoding of theString that once surrounded by single quotes is a valid OCL string.
+	 * Returns null for a null theString. Returns theString if no-encoding necessary.
 	 */
 	public static String convertToOCLString(String theString) {
 		if (theString == null) {
 			return null;
 		}
-		int len = theString.length();
-		int bufLen = len * 2;
-		if (bufLen < 0) {
-			bufLen = Integer.MAX_VALUE;
-		}
-		StringBuilder outBuffer = new StringBuilder(bufLen);
-
-		for (int x = 0; x < len; x++) {
-			char aChar = theString.charAt(x);
-			// Handle common case first, selecting largest block that
-			// avoids the specials below
-			if ((aChar > 61) && (aChar < 127)) {
-				if (aChar == '\\') {
-					outBuffer.append('\\');
-					outBuffer.append('\\');
-					continue;
-				}
-				outBuffer.append(aChar);
-				continue;
-			}
-			switch (aChar) {
-				case ' ':
-					outBuffer.append(' ');
-					break;
-				case '\t':
-					outBuffer.append('\\');
-					outBuffer.append('t');
-					break;
-				case '\n':
-					outBuffer.append('\\');
-					outBuffer.append('n');
-					break;
-				case '\r':
-					outBuffer.append('\\');
-					outBuffer.append('r');
-					break;
-				case '\f':
-					outBuffer.append('\\');
-					outBuffer.append('f');
-					break;
-				case '\b':
-					outBuffer.append('\\');
-					outBuffer.append('b');
-					break;
-				case '\'':
-					outBuffer.append('\\');
-					outBuffer.append('\'');
-					break;
-				case '\\':
-					outBuffer.append('\\');
-					outBuffer.append('\\');
-					break;
-//				case '"':
-//					outBuffer.append('\\');
-//					outBuffer.append('"');
-//					break;
+		StringBuilder s = null;				// Lazily created if encoding actually necessary.
+		int iMax = theString.length();
+		for (int i = 0; i < iMax; i++) {
+			char c = theString.charAt(i);
+			switch (c) {
+				case '\t': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\t"); break;
+				case '\n': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\n"); break;
+				case '\r': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\r"); break;
+				case '\f': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\f"); break;
+				case '\b': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\b"); break;
+				case '\'': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\\'"); break;
+				case '\\': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\\\"); break;
+				//				case '"': s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\\""); break;
 				default:
-					if (((aChar < 0x0020) || (aChar > 0x007e))) {
-						outBuffer.append('\\');
-						outBuffer.append('u');
-						outBuffer.append(toHex((aChar >> 12) & 0xF));
-						outBuffer.append(toHex((aChar >> 8) & 0xF));
-						outBuffer.append(toHex((aChar >> 4) & 0xF));
-						outBuffer.append(toHex(aChar & 0xF));
-					} else {
-						outBuffer.append(aChar);
+					if (((c < 0x0020) || (c > 0x007e))) {
+						s = convertToOCLStringLazyStringBuilder(s, theString, i, "\\u");
+						s.append(nibble2uchex[(c >> 12) & 0xF]);
+						s.append(nibble2uchex[(c >> 8) & 0xF]);
+						s.append(nibble2uchex[(c >> 4) & 0xF]);
+						s.append(nibble2uchex[c & 0xF]);
+					} else if (s != null) {
+						s.append(c);
 					}
 			}
 		}
-		return outBuffer.toString();
+		return s != null ? s.toString() : theString;
+	}
+
+	private static @NonNull StringBuilder convertToOCLStringLazyStringBuilder(@Nullable StringBuilder s, @NonNull String theString, int theIndex, @NonNull String suffix) {
+		if (s == null) {
+			int length = theString.length();
+			length += 1 + length / 10;			// Guess at 10% excess encoded characters
+			if (length < 0) {
+				s = new StringBuilder();		// In the unlikely event of a numeric wraparound use simple growth.
+			}
+			else {
+				s = new StringBuilder(length);
+			}
+			s.append(theString, 0, theIndex);	// Seed the lazy buffer with the characters so far.
+		}
+		s.append(suffix);
+		return s;
 	}
 
 	public static @NonNull Number createNumberFromString(@NonNull String aValue) throws NumberFormatException {
@@ -312,7 +255,7 @@ public class StringUtil
 	/**
 	 * Return a composite string comprising each element od strings separated by separator.
 	 * A null strings is returned as a null string. An empty strings as an empty string.
-	 * 
+	 *
 	 * @param strings strings to be spliced
 	 * @param separator between elements
 	 * @return spliced string
@@ -335,9 +278,11 @@ public class StringUtil
 	}
 
 	/**
-	 * Copied from {@link java.util.Properties}
+	 * Return the uppercase hex ASCII character for the least significant 4 bits of value.
 	 */
-	public static char toHex(int nibble) {
-		return hexDigit[(nibble & 0xF)];
+	@Deprecated /* @deprecated this routine is no longer used */
+	public static char toHex(int value) {
+		int nibble = value & 0xF;
+		return nibble2uchex[nibble];
 	}
 }
