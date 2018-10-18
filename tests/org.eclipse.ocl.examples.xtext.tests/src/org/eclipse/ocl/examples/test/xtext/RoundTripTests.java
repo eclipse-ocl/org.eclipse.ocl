@@ -684,6 +684,25 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testMultiplicitiesRoundTrip_540244() throws IOException, InterruptedException {
+		String testFileContents =
+				"package p : p = 'p'\n" +
+						"{\n" +
+						"	class c\n" +
+						"	{\n" +
+						"		property endpoints : Port[*|1] { ordered };\n" +
+						"		property ports : Port[2|1] { ordered } {\n" +
+						"			initial: let v = OrderedSet{endpoints->first(), endpoints->last()}->oclAsType(OrderedSet(Port[2|1])) in v;\n" +
+						"		}\n" +
+						"	}\n" +
+						"	class Port;\n" +
+						"}";
+		TestFile testFile = createOCLinEcoreFile("Multiplicities.oclinecore", testFileContents);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, testFile);
+		ocl.dispose();
+	}
+
 	public void testOCLinEcoreCSTRoundTrip() throws IOException, InterruptedException, ParserException {
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.ecore", true);
 		//		String stem = uri.trimFileExtension().lastSegment();
