@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -178,6 +179,10 @@ public class CGUtil
 		}
 		return null;
 	} */
+
+	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {
+		return ClassUtil.nonNullState(cgLetExp.getIn());
+	}
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGTuplePart cgTuplePart) {
 		return ClassUtil.nonNullState(cgTuplePart.getInit());

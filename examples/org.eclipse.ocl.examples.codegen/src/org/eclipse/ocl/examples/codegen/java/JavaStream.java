@@ -799,6 +799,10 @@ public class JavaStream
 		elementId.accept(id2JavaExpressionVisitor);
 	}
 
+	public void appendIntegerString(int value) {
+		append(Integer.toString(value));
+	}
+
 	public void appendIsCaught(boolean isNonInvalid, boolean isCaught) {
 		append("/*");
 		append(isNonInvalid ? "@NonInvalid" : isCaught ? "@Caught" : "@Thrown");
