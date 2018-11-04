@@ -87,7 +87,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
+            locationURI="popup:#OCLinEcoreEditorContext?after=group.edit">
              <command
                  commandId="org.eclipse.ocl.xtext.oclinecore.OCLinEcore.validate"
                  style="push"
@@ -101,7 +101,7 @@
          </menuContribution>
     </extension>
     <extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+		<menuContribution locationURI="popup:#OCLinEcoreEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
                 	<reference definitionId="org.eclipse.ocl.xtext.oclinecore.OCLinEcore.Editor.opened">
@@ -169,7 +169,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
-			locationURI="popup:#TextEditorContext?after=group.open">
+			locationURI="popup:#OCLinEcoreEditorContext?after=group.open">
 			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
 				style="push"
 				tooltip="%MF_OpenQuickOutline">
@@ -292,7 +292,7 @@
             </visibleWhen>
 	    </command-->
 	  </menuContribution>
-	  <menuContribution locationURI="popup:#TextEditorContext?after=group.rest">
+	  <menuContribution locationURI="popup:#OCLinEcoreEditorContext?after=group.rest">
 	    <command commandId="org.eclipse.ocl.xtext.oclinecore.ui.outline.CreateDynamicInstanceCommand"
 	      label="%MF_CreateDynamicInstance">
             <visibleWhen checkEnabled="false">

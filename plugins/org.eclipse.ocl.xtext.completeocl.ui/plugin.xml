@@ -88,7 +88,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
+            locationURI="popup:#CompleteOCLEditorContext?after=group.edit">
              <command
                  commandId="org.eclipse.ocl.xtext.completeocl.CompleteOCL.validate"
                  style="push"
@@ -102,7 +102,7 @@
          </menuContribution>
     </extension>
     <extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+		<menuContribution locationURI="popup:#CompleteOCLEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
                 	<reference definitionId="org.eclipse.ocl.xtext.completeocl.CompleteOCL.Editor.opened">
@@ -170,7 +170,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
-			locationURI="popup:#TextEditorContext?after=group.open">
+			locationURI="popup:#CompleteOCLEditorContext?after=group.open">
 			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
 				style="push"
 				tooltip="%MF_OpenQuickOutline">
@@ -224,7 +224,7 @@
 		<!--
            	locationURI="popup:org.eclipse.ui.popup.any?after=additions">
 			locationURI="popup:org.eclipse.ui.menus.showInMenu" TextEditor, Xtexteditor, not Ecore editor
-			locationURI="popup:#TextEditorContext?after=group.open"  TextEditor, Xtexteditor, not Ecore editor
+			locationURI="popup:#CompleteOCLEditorContext?after=group.open"  TextEditor, Xtexteditor, not Ecore editor
 		-->
 	</extension>
 

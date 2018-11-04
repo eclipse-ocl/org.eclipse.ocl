@@ -98,7 +98,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
+            locationURI="popup:#OCLstdlibEditorContext?after=group.edit">
              <command
                  commandId="org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.validate"
                  style="push"
@@ -112,7 +112,7 @@
          </menuContribution>
     </extension>
     <extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+		<menuContribution locationURI="popup:#OCLstdlibEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
                 	<reference definitionId="org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.Editor.opened">
@@ -180,7 +180,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
-			locationURI="popup:#TextEditorContext?after=group.open">
+			locationURI="popup:#OCLstdlibEditorContext?after=group.open">
 			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
 				style="push"
 				tooltip="%MF_OpenQuickOutline">
@@ -216,7 +216,7 @@
 	</extension>
     <extension point="org.eclipse.ui.menus">
          <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
+            locationURI="popup:#OCLstdlibEditorContext?after=group.edit">
          <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
                style="push">
             <visibleWhen checkEnabled="false">

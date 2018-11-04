@@ -91,7 +91,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
+            locationURI="popup:#EssentialOCLEditorContext?after=group.edit">
              <command
                  commandId="org.eclipse.ocl.xtext.essentialocl.EssentialOCL.validate"
                  style="push"
@@ -105,7 +105,7 @@
          </menuContribution>
     </extension>
     <extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+		<menuContribution locationURI="popup:#EssentialOCLEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
                 	<reference definitionId="org.eclipse.ocl.xtext.essentialocl.EssentialOCL.Editor.opened">
@@ -190,7 +190,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
-			locationURI="popup:#TextEditorContext?after=group.open">
+			locationURI="popup:#EssentialOCLEditorContext?after=group.open">
 			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
 				style="push"
 				tooltip="%MF_OpenQuickOutline">
