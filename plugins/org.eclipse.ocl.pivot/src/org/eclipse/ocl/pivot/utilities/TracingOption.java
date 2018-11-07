@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,6 +22,8 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 public final class TracingOption implements Appendable
 {
 	public static final TracingOption DEBUG = new TracingOption(PivotPlugin.PLUGIN_ID, "debug"); //$NON-NLS-1$
+
+	private static Set<@NonNull TracingOption> allOptions = null;
 
 	/**
 	 * Helper routine to append string to an appendable without throwing an exception.
@@ -33,6 +37,19 @@ public final class TracingOption implements Appendable
 		} catch (IOException e) {}
 	}
 
+	/**
+	 * Reset all constructed tracing options. Typically used at the start/end of a test to avoid inter-test interference.
+	 *
+	 * @since 1.6
+	 */
+	public static void resetAll() {
+		if (allOptions != null) {
+			for (@NonNull TracingOption option : allOptions) {
+				option.reset();
+			}
+		}
+	}
+
 	private final @NonNull String option;
 	private boolean resolved = false;		// true once .options state determined by resolveState
 	private boolean state = false;			// true/false once .options state determined resolveState
@@ -42,6 +59,10 @@ public final class TracingOption implements Appendable
 	}
 
 	public TracingOption(String pluginId, String option) {
+		if (allOptions == null) {
+			allOptions = new HashSet<>();
+		}
+		allOptions.add(this);
 		this.option = pluginId + "/" + option;
 	}
 
@@ -102,6 +123,14 @@ public final class TracingOption implements Appendable
 		}
 		if (state)
 			System.out.println(option + " : " + clazz.getSimpleName() + " : " + string);
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	public void reset() {
+		state = false;
+		resolved = false;
 	}
 
 	public boolean resolveState() {
