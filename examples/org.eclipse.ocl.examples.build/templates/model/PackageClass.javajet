@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="PackageClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="PackageClass"%>
 <%
 /**
  * Copyright (c) 2002-2010 IBM Corporation and others.
@@ -13,7 +13,7 @@
 %>
 <%final GenPackage genPackage = (GenPackage)((Object[])argument)[0]; final GenModel genModel=genPackage.getGenModel();%>
 <%final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;%>
-<%boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]);%>
+<%boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]);  boolean useInterfaceOverrideAnnotation = genModel.useInterfaceOverrideAnnotation() && !(isInterface && isImplementation);%>
 <%boolean packageNeedsSuppressDeprecation = isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getOrderedGenClassifiers()) && !genPackage.hasAPIDeprecatedTag();%>
 <%String publicStaticFinalFlag = isImplementation ? "public static final " : "";%>
 <%boolean needsAddEOperation = false;%>
@@ -153,10 +153,10 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * <!-- end-user-doc -->
 	 * @see <%=genClass.getQualifiedClassName()%>
       <%} else {%>
-	 * The meta object id for the '{@link <%=genClass.getQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}' class.
+	 * The meta object id for the '{@link <%=genClass.getRawQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see <%=genClass.getQualifiedInterfaceName()%>
+	 * @see <%=genClass.getRawQualifiedInterfaceName()%>
       <%}%>
     <%} else if (genClassifier instanceof GenEnum) { GenEnum genEnum = (GenEnum)genClassifier;%>
 	 * The meta object id for the '{@link <%=genEnum.getQualifiedName()%> <em><%=genEnum.getFormattedName()%></em>}' enum.
@@ -395,6 +395,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 			(the<%=genPackage.getBasicPackageName()%>,
 			 new <%=genModel.getImportedName("org.eclipse.emf.ecore.EValidator")%>.Descriptor()
 			 {
+ <%if (genModel.useInterfaceOverrideAnnotation()) {%>
+				 @Override
+ <%}%>
 				 public <%=genModel.getImportedName("org.eclipse.emf.ecore.EValidator")%> getEValidator()
 				 {
 					 return <%=genPackage.getImportedValidatorClassName()%>.INSTANCE;
@@ -505,11 +508,11 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 <%if (isInterface) {%>
 	/**
     <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
-	 * Returns the meta object for class '{@link <%=genClass.getQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}'.
+	 * Returns the meta object for class '{@link <%=genClass.getRawQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em><%=genClass.getFormattedName()%></em>'.
-	 * @see <%=genClass.getQualifiedInterfaceName()%>
+	 * @see <%=genClass.getRawQualifiedInterfaceName()%>
       <%if (!genModel.isSuppressEMFModelTags() && (genClass.isExternalInterface() || genClass.isDynamic())) { boolean first = true; for (StringTokenizer stringTokenizer = new StringTokenizer(genClass.getModelInfo(), "\n\r"); stringTokenizer.hasMoreTokens(); ) { String modelInfo = stringTokenizer.nextToken(); if (first) { first = false;%>
 	 * @model <%=modelInfo%>
         <%} else {%>
@@ -567,6 +570,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	@Deprecated
   <%}%>
 <%if (isImplementation) {%>
+ <%if (useInterfaceOverrideAnnotation) {%>
+	@Override
+ <%}%>
 	public <%=genClassifier.getImportedMetaType()%> get<%=genClassifier.getClassifierAccessorName()%>()
 	{
     <%if (genPackage.isLoadedInitialization()) {%>
@@ -586,11 +592,11 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
       <%for (GenFeature genFeature : genClass.getGenFeatures()) {%>
 <%if (isInterface) {%>
 	/**
-	 * Returns the meta object for the <%=genFeature.getFeatureKind()%> '{@link <%=genClass.getQualifiedInterfaceName()%><%if (!genClass.isMapEntry() && !genFeature.isSuppressedGetVisibility()) {%>#<%=genFeature.getGetAccessor()%><%}%> <em><%=genFeature.getFormattedName()%></em>}'.
+	 * Returns the meta object for the <%=genFeature.getFeatureKind()%> '{@link <%=genClass.getRawQualifiedInterfaceName()%><%if (!genClass.isMapEntry() && !genFeature.isSuppressedGetVisibility()) {%>#<%=genFeature.getGetAccessor()%><%}%> <em><%=genFeature.getFormattedName()%></em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the <%=genFeature.getFeatureKind()%> '<em><%=genFeature.getFormattedName()%></em>'.
-	 * @see <%=genClass.getQualifiedInterfaceName()%><%if (!genClass.isMapEntry() && !genFeature.isSuppressedGetVisibility()) {%>#<%=genFeature.getGetAccessor()%>()<%}%>
+	 * @see <%=genClass.getRawQualifiedInterfaceName()%><%if (!genClass.isMapEntry() && !genFeature.isSuppressedGetVisibility()) {%>#<%=genFeature.getGetAccessor()%>()<%}%>
 	 * @see #get<%=genClass.getClassifierAccessorName()%>()
     <%if (genFeature.hasImplicitAPITags()) {%>
 	 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
@@ -611,6 +617,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	@Deprecated
 <%}%>
 <%if (isImplementation) {%>
+   <%if (useInterfaceOverrideAnnotation) {%>
+	@Override
+   <%}%>
 	public <%=genFeature.getImportedMetaType()%> get<%=genFeature.getFeatureAccessorName()%>()
 	{
         <%if (!genPackage.isLoadedInitialization()) {%>
@@ -628,11 +637,11 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
         <%for (GenOperation genOperation : genClass.getGenOperations()) {%>
 <%if (isInterface) {%>
 	/**
-	 * Returns the meta object for the '{@link <%=genClass.getQualifiedInterfaceName()%>#<%=genOperation.getName()%>(<%=genOperation.getParameterTypes(", ")%>) <em><%=genOperation.getFormattedName()%></em>}' operation.
+	 * Returns the meta object for the '{@link <%=genClass.getRawQualifiedInterfaceName()%>#<%=genOperation.getName()%>(<%=genOperation.getParameterTypes(", ")%>) <em><%=genOperation.getFormattedName()%></em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em><%=genOperation.getFormattedName()%></em>' operation.
-	 * @see <%=genClass.getQualifiedInterfaceName()%>#<%=genOperation.getName()%>(<%=genOperation.getParameterTypes(", ")%>)
+	 * @see <%=genClass.getRawQualifiedInterfaceName()%>#<%=genOperation.getName()%>(<%=genOperation.getParameterTypes(", ")%>)
     <%if (genOperation.hasImplicitAPITags()) {%>
 	 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
     <%}%>
@@ -652,6 +661,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	@Deprecated
 <%}%>
 <%if (isImplementation) {%>
+   <%if (useInterfaceOverrideAnnotation) {%>
+	@Override
+   <%}%>
 	public <%=genOperation.getImportedMetaType()%> get<%=genOperation.getOperationAccessorName()%>()
 	{
         <%if (!genPackage.isLoadedInitialization()) {%>
@@ -684,6 +696,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 */
 <%}%>
 <%if (isImplementation) {%>
+   <%if (useInterfaceOverrideAnnotation) {%>
+	@Override
+   <%}%>
 	public <%=genPackage.getImportedFactoryInterfaceName()%> get<%=genPackage.getFactoryName()%>()
 	{
 		return (<%=genPackage.getImportedFactoryInterfaceName()%>)getEFactoryInstance();
@@ -1260,10 +1275,10 @@ int maxGenericTypeAssignment = 0;
 		 * <!-- end-user-doc -->
 		 * @see <%=genClass.getQualifiedClassName()%>
       <%} else {%>
-		 * The meta object literal for the '{@link <%=genClass.getQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}' class.
+		 * The meta object literal for the '{@link <%=genClass.getRawQualifiedInterfaceName()%> <em><%=genClass.getFormattedName()%></em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see <%=genClass.getQualifiedInterfaceName()%>
+		 * @see <%=genClass.getRawQualifiedInterfaceName()%>
       <%}%>
     <%} else if (genClassifier instanceof GenEnum) { GenEnum genEnum = (GenEnum)genClassifier;%>
 		 * The meta object literal for the '{@link <%=genEnum.getQualifiedName()%> <em><%=genEnum.getFormattedName()%></em>}' enum.
