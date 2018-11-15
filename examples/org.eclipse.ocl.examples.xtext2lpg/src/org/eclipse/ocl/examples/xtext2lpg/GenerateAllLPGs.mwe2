@@ -25,28 +25,28 @@ var lpgOpts = ""
 Workflow {
 	component = @GenerateLPG {
 		syntaxName = "EssentialOCL"
-		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/EssentialOCL.xtext"
+		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext"
 		lpgExe = "${lpgExe}"
 		lpgIncs = "${lpgIncs}"
 		lpgOpts = "${lpgOpts}"
 	}
 	component = @GenerateLPG {
 		syntaxName = "CompleteOCL"
-		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.completeocl/src/org/eclipse/ocl/examples/xtext/completeocl/CompleteOCL.xtext"
+		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.completeocl/src/org/eclipse/ocl/xtext/completeocl/CompleteOCL.xtext"
 		lpgExe = "${lpgExe}"
 		lpgIncs = "${lpgIncs}"
 		lpgOpts = "${lpgOpts}"
 	}
 	component = @GenerateLPG {
 		syntaxName = "OCLstdlib"
-		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.oclstdlib/src/org/eclipse/ocl/examples/xtext/oclstdlib/OCLstdlib.xtext"
+		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.oclstdlib/src/org/eclipse/ocl/xtext/oclstdlib/OCLstdlib.xtext"
 		lpgExe = "${lpgExe}"
 		lpgIncs = "${lpgIncs}"
 		lpgOpts = "${lpgOpts}"
 	}
 	component = @GenerateLPG {
 		syntaxName = "OCLinEcore"
-		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.oclinecore/src/org/eclipse/ocl/examples/xtext/oclinecore/OCLinEcore.xtext"
+		grammarPath = "platform:/resource/org.eclipse.ocl.xtext.oclinecore/src/org/eclipse/ocl/xtext/oclinecore/OCLinEcore.xtext"
 		lpgExe = "${lpgExe}"
 		lpgIncs = "${lpgIncs}"
 		lpgOpts = "${lpgOpts}"
