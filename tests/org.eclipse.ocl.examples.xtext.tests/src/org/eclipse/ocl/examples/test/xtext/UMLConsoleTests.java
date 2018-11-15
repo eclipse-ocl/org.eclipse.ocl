@@ -50,7 +50,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		assertConsoleResult(consolePage, bookInstance, "self.classifier", "Bug400090::Book\n");
 		assertTrue(consolePage.isPopUpModelTypesUsageInformation());
 		consolePage.resetPopUpModelTypesUsageInformation();
-		assertConsoleResult(consolePage, bookInstance, "self.price", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Property 'UML::InstanceSpecification::price'\n</error>");
+		assertConsoleResult(consolePage, bookInstance, "self.price", "<b><error>Parsing failure\n</error></b><error>\n1:6: Unresolved Property 'UML::InstanceSpecification::price'\n</error>");
 		assertFalse(consolePage.isPopUpModelTypesUsageInformation());
 		assertConsoleResult(consolePage, bookClass, "self", "Bug400090::Book\n");
 		assertFalse(consolePage.isPopUpModelTypesUsageInformation());

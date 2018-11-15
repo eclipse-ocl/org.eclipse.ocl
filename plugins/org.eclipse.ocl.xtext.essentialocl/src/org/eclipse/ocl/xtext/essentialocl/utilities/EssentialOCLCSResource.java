@@ -315,7 +315,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			{
 				@Override
 				public int getColumn() {
-					return -1;
+					try {
+						return super.getColumn();
+					}
+					catch (Throwable e) {			// Older versions of Xtext give an NPE
+						return -1;
+					}
 				}
 			};
 		}

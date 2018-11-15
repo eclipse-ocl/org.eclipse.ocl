@@ -77,7 +77,7 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		EObject aLoan = ((List<EObject>) xmiLibrary.eGet(ecoreLoans)).get(0);
 		//
 		assertConsoleResult(consolePage, xmiLibrary, "books->sortedBy(name)", "Library lib::Book b1\nLibrary lib::Book b2\n");
-		assertConsoleResult(consolePage, xmiLibrary, "isAvailable()", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Operation '::isAvailable()'\n</error>");
+		assertConsoleResult(consolePage, xmiLibrary, "isAvailable()", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Operation '::isAvailable()'\n</error>");
 		assertConsoleResult(consolePage, b2Book, "isAvailable()", "false\n");
 		assertConsoleResult(consolePage, b1Book, "isAvailable()", "true\n");
 		aLoan.eSet(loanBook, b1Book);
@@ -88,7 +88,7 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		assertConsoleResult(consolePage, b1Book, "isAvailable()", "false\n");
 		//
 		assertConsoleResult(consolePage, ecoreBook, "name", "'Book'\n");
-		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Property '::copies'\n</error>");
+		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Property '::copies'\n</error>");
 		assertConsoleResult(consolePage, ecoreBook, "oclType().ownedProperties->sortedBy(name)",
 			"ecore::EClass::EClass\n" +
 					"ecore::EClass::EClass\n" +

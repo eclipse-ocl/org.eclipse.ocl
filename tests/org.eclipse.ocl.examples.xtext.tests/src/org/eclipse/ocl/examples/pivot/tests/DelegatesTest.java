@@ -571,7 +571,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		//
 		delegate = factory.createQueryDelegate(companyClass, variables, badName);
 		executeWithException2(delegate, acme, null, getErrorsInMessage(PivotConstantsInternal.QUERY_ROLE, "company::Company", badName) +
-			StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedProperty_ERROR_, "", badName));
+			StringUtil.bind("1:1: " + PivotMessagesInternal.UnresolvedProperty_ERROR_, "", badName));
 		//
 		//	Definition of undeclared variable
 		//
@@ -1032,7 +1032,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initModelWithErrors(resourceSet);
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		invokeWithException(badClassInstance, "operationParsingToSemanticError",
-			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1:7: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
 	}
 
 	public void test_operationParsingToSyntacticError() throws InvocationTargetException {
