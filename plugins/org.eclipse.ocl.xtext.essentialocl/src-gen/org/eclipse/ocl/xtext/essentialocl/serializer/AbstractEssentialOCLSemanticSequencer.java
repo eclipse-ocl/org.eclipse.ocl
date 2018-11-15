@@ -755,7 +755,10 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     NavigatingArgCS returns NavigatingArgCS
 	 *
 	 * Constraint:
-	 *     ((ownedNameExpression=NavigatingArgExpCS ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | ownedInitExpression=ExpCS)?) | ownedType=TypeExpCS)
+	 *     (
+	 *         (ownedNameExpression=NavigatingArgExpCS ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | (ownedType=TypeExpCS? ownedInitExpression=ExpCS))?) |
+	 *         ownedType=TypeExpCS
+	 *     )
 	 */
 	protected void sequence_NavigatingArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -779,7 +782,11 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     NavigatingCommaArgCS returns NavigatingArgCS
 	 *
 	 * Constraint:
-	 *     (prefix=',' ownedNameExpression=NavigatingArgExpCS ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | ownedInitExpression=ExpCS)?)
+	 *     (
+	 *         prefix=','
+	 *         ownedNameExpression=NavigatingArgExpCS
+	 *         ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | (ownedType=TypeExpCS? ownedInitExpression=ExpCS))?
+	 *     )
 	 */
 	protected void sequence_NavigatingCommaArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -791,7 +798,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     NavigatingSemiArgCS returns NavigatingArgCS
 	 *
 	 * Constraint:
-	 *     (prefix=';' ownedNameExpression=NavigatingArgExpCS ownedType=TypeExpCS? ownedInitExpression=ExpCS?)
+	 *     (prefix=';' ownedNameExpression=NavigatingArgExpCS (ownedType=TypeExpCS ownedInitExpression=ExpCS?)?)
 	 */
 	protected void sequence_NavigatingSemiArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

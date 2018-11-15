@@ -132,6 +132,7 @@ public class EssentialOCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNavigatingArgCSAccess().getGroup_0_1_0(), "rule__NavigatingArgCS__Group_0_1_0__0");
 					put(grammarAccess.getNavigatingArgCSAccess().getGroup_0_1_0_2(), "rule__NavigatingArgCS__Group_0_1_0_2__0");
 					put(grammarAccess.getNavigatingArgCSAccess().getGroup_0_1_1(), "rule__NavigatingArgCS__Group_0_1_1__0");
+					put(grammarAccess.getNavigatingArgCSAccess().getGroup_0_1_1_0(), "rule__NavigatingArgCS__Group_0_1_1_0__0");
 					put(grammarAccess.getNavigatingArgCSAccess().getGroup_1(), "rule__NavigatingArgCS__Group_1__0");
 					put(grammarAccess.getNavigatingBarArgCSAccess().getGroup(), "rule__NavigatingBarArgCS__Group__0");
 					put(grammarAccess.getNavigatingBarArgCSAccess().getGroup_2(), "rule__NavigatingBarArgCS__Group_2__0");
@@ -140,9 +141,10 @@ public class EssentialOCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getGroup_2_0(), "rule__NavigatingCommaArgCS__Group_2_0__0");
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getGroup_2_0_2(), "rule__NavigatingCommaArgCS__Group_2_0_2__0");
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getGroup_2_1(), "rule__NavigatingCommaArgCS__Group_2_1__0");
+					put(grammarAccess.getNavigatingCommaArgCSAccess().getGroup_2_1_0(), "rule__NavigatingCommaArgCS__Group_2_1_0__0");
 					put(grammarAccess.getNavigatingSemiArgCSAccess().getGroup(), "rule__NavigatingSemiArgCS__Group__0");
 					put(grammarAccess.getNavigatingSemiArgCSAccess().getGroup_2(), "rule__NavigatingSemiArgCS__Group_2__0");
-					put(grammarAccess.getNavigatingSemiArgCSAccess().getGroup_3(), "rule__NavigatingSemiArgCS__Group_3__0");
+					put(grammarAccess.getNavigatingSemiArgCSAccess().getGroup_2_2(), "rule__NavigatingSemiArgCS__Group_2_2__0");
 					put(grammarAccess.getIfExpCSAccess().getGroup(), "rule__IfExpCS__Group__0");
 					put(grammarAccess.getElseIfThenExpCSAccess().getGroup(), "rule__ElseIfThenExpCS__Group__0");
 					put(grammarAccess.getLetExpCSAccess().getGroup(), "rule__LetExpCS__Group__0");
@@ -240,7 +242,8 @@ public class EssentialOCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNavigatingArgCSAccess().getOwnedNameExpressionAssignment_0_0(), "rule__NavigatingArgCS__OwnedNameExpressionAssignment_0_0");
 					put(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeAssignment_0_1_0_1(), "rule__NavigatingArgCS__OwnedTypeAssignment_0_1_0_1");
 					put(grammarAccess.getNavigatingArgCSAccess().getOwnedInitExpressionAssignment_0_1_0_2_1(), "rule__NavigatingArgCS__OwnedInitExpressionAssignment_0_1_0_2_1");
-					put(grammarAccess.getNavigatingArgCSAccess().getOwnedInitExpressionAssignment_0_1_1_1(), "rule__NavigatingArgCS__OwnedInitExpressionAssignment_0_1_1_1");
+					put(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeAssignment_0_1_1_0_1(), "rule__NavigatingArgCS__OwnedTypeAssignment_0_1_1_0_1");
+					put(grammarAccess.getNavigatingArgCSAccess().getOwnedInitExpressionAssignment_0_1_1_2(), "rule__NavigatingArgCS__OwnedInitExpressionAssignment_0_1_1_2");
 					put(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeAssignment_1_1(), "rule__NavigatingArgCS__OwnedTypeAssignment_1_1");
 					put(grammarAccess.getNavigatingBarArgCSAccess().getPrefixAssignment_0(), "rule__NavigatingBarArgCS__PrefixAssignment_0");
 					put(grammarAccess.getNavigatingBarArgCSAccess().getOwnedNameExpressionAssignment_1(), "rule__NavigatingBarArgCS__OwnedNameExpressionAssignment_1");
@@ -250,11 +253,12 @@ public class EssentialOCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedNameExpressionAssignment_1(), "rule__NavigatingCommaArgCS__OwnedNameExpressionAssignment_1");
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedTypeAssignment_2_0_1(), "rule__NavigatingCommaArgCS__OwnedTypeAssignment_2_0_1");
 					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedInitExpressionAssignment_2_0_2_1(), "rule__NavigatingCommaArgCS__OwnedInitExpressionAssignment_2_0_2_1");
-					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedInitExpressionAssignment_2_1_1(), "rule__NavigatingCommaArgCS__OwnedInitExpressionAssignment_2_1_1");
+					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedTypeAssignment_2_1_0_1(), "rule__NavigatingCommaArgCS__OwnedTypeAssignment_2_1_0_1");
+					put(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedInitExpressionAssignment_2_1_2(), "rule__NavigatingCommaArgCS__OwnedInitExpressionAssignment_2_1_2");
 					put(grammarAccess.getNavigatingSemiArgCSAccess().getPrefixAssignment_0(), "rule__NavigatingSemiArgCS__PrefixAssignment_0");
 					put(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedNameExpressionAssignment_1(), "rule__NavigatingSemiArgCS__OwnedNameExpressionAssignment_1");
 					put(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedTypeAssignment_2_1(), "rule__NavigatingSemiArgCS__OwnedTypeAssignment_2_1");
-					put(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionAssignment_3_1(), "rule__NavigatingSemiArgCS__OwnedInitExpressionAssignment_3_1");
+					put(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionAssignment_2_2_1(), "rule__NavigatingSemiArgCS__OwnedInitExpressionAssignment_2_2_1");
 					put(grammarAccess.getIfExpCSAccess().getOwnedConditionAssignment_1(), "rule__IfExpCS__OwnedConditionAssignment_1");
 					put(grammarAccess.getIfExpCSAccess().getOwnedThenExpressionAssignment_3(), "rule__IfExpCS__OwnedThenExpressionAssignment_3");
 					put(grammarAccess.getIfExpCSAccess().getOwnedIfThenExpressionsAssignment_4(), "rule__IfExpCS__OwnedIfThenExpressionsAssignment_4");

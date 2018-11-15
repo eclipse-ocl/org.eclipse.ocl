@@ -8227,46 +8227,68 @@ ruleNavigatingArgCS returns [EObject current=null]
 
 )
 ))?)
-    |(	otherlv_5='in'
+    |((	otherlv_5=':'
     {
-    	newLeafNode(otherlv_5, grammarAccess.getNavigatingArgCSAccess().getInKeyword_0_1_1_0());
+    	newLeafNode(otherlv_5, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_0_1_1_0_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getNavigatingArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_0_1_1_1_0());
+	        newCompositeNode(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeTypeExpCSParserRuleCall_0_1_1_0_1_0());
 	    }
-		lv_ownedInitExpression_6_0=ruleExpCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getNavigatingArgCSRule());
-	        }
-       		set(
-       			$current,
-       			"ownedInitExpression",
-        		lv_ownedInitExpression_6_0,
-        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.ExpCS");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)))?)
-    |(	otherlv_7=':'
-    {
-    	newLeafNode(otherlv_7, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_1_0());
-    }
-(
-(
-		{
-	        newCompositeNode(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeTypeExpCSParserRuleCall_1_1_0());
-	    }
-		lv_ownedType_8_0=ruleTypeExpCS		{
+		lv_ownedType_6_0=ruleTypeExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getNavigatingArgCSRule());
 	        }
        		set(
        			$current,
        			"ownedType",
-        		lv_ownedType_8_0,
+        		lv_ownedType_6_0,
+        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.TypeExpCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?	otherlv_7='in'
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getNavigatingArgCSAccess().getInKeyword_0_1_1_1());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getNavigatingArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_0_1_1_2_0());
+	    }
+		lv_ownedInitExpression_8_0=ruleExpCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getNavigatingArgCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedInitExpression",
+        		lv_ownedInitExpression_8_0,
+        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.ExpCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))?)
+    |(	otherlv_9=':'
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_1_0());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getNavigatingArgCSAccess().getOwnedTypeTypeExpCSParserRuleCall_1_1_0());
+	    }
+		lv_ownedType_10_0=ruleTypeExpCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getNavigatingArgCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedType",
+        		lv_ownedType_10_0,
         		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.TypeExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -8469,23 +8491,45 @@ ruleNavigatingCommaArgCS returns [EObject current=null]
 
 )
 ))?)
-    |(	otherlv_6='in'
+    |((	otherlv_6=':'
     {
-    	newLeafNode(otherlv_6, grammarAccess.getNavigatingCommaArgCSAccess().getInKeyword_2_1_0());
+    	newLeafNode(otherlv_6, grammarAccess.getNavigatingCommaArgCSAccess().getColonKeyword_2_1_0_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_2_1_1_0());
+	        newCompositeNode(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedTypeTypeExpCSParserRuleCall_2_1_0_1_0());
 	    }
-		lv_ownedInitExpression_7_0=ruleExpCS		{
+		lv_ownedType_7_0=ruleTypeExpCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getNavigatingCommaArgCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedType",
+        		lv_ownedType_7_0,
+        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.TypeExpCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?	otherlv_8='in'
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getNavigatingCommaArgCSAccess().getInKeyword_2_1_1());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getNavigatingCommaArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_2_1_2_0());
+	    }
+		lv_ownedInitExpression_9_0=ruleExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getNavigatingCommaArgCSRule());
 	        }
        		set(
        			$current,
        			"ownedInitExpression",
-        		lv_ownedInitExpression_7_0,
+        		lv_ownedInitExpression_9_0,
         		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.ExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -8567,14 +8611,14 @@ ruleNavigatingSemiArgCS returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_4='='
+)(	otherlv_4='='
     {
-    	newLeafNode(otherlv_4, grammarAccess.getNavigatingSemiArgCSAccess().getEqualsSignKeyword_3_0());
+    	newLeafNode(otherlv_4, grammarAccess.getNavigatingSemiArgCSAccess().getEqualsSignKeyword_2_2_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_3_1_0());
+	        newCompositeNode(grammarAccess.getNavigatingSemiArgCSAccess().getOwnedInitExpressionExpCSParserRuleCall_2_2_1_0());
 	    }
 		lv_ownedInitExpression_5_0=ruleExpCS		{
 	        if ($current==null) {
@@ -8589,7 +8633,7 @@ ruleNavigatingSemiArgCS returns [EObject current=null]
 	    }
 
 )
-))?)
+))?)?)
 ;
 
 

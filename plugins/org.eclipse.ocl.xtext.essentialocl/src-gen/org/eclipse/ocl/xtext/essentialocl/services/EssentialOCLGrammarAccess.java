@@ -1991,9 +1991,13 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedInitExpressionAssignment_0_1_0_2_1 = (Assignment)cGroup_0_1_0_2.eContents().get(1);
 		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_0_1_0_2_1_0 = (RuleCall)cOwnedInitExpressionAssignment_0_1_0_2_1.eContents().get(0);
 		private final Group cGroup_0_1_1 = (Group)cAlternatives_0_1.eContents().get(1);
-		private final Keyword cInKeyword_0_1_1_0 = (Keyword)cGroup_0_1_1.eContents().get(0);
-		private final Assignment cOwnedInitExpressionAssignment_0_1_1_1 = (Assignment)cGroup_0_1_1.eContents().get(1);
-		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_0_1_1_1_0 = (RuleCall)cOwnedInitExpressionAssignment_0_1_1_1.eContents().get(0);
+		private final Group cGroup_0_1_1_0 = (Group)cGroup_0_1_1.eContents().get(0);
+		private final Keyword cColonKeyword_0_1_1_0_0 = (Keyword)cGroup_0_1_1_0.eContents().get(0);
+		private final Assignment cOwnedTypeAssignment_0_1_1_0_1 = (Assignment)cGroup_0_1_1_0.eContents().get(1);
+		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_0_1_1_0_1_0 = (RuleCall)cOwnedTypeAssignment_0_1_1_0_1.eContents().get(0);
+		private final Keyword cInKeyword_0_1_1_1 = (Keyword)cGroup_0_1_1.eContents().get(1);
+		private final Assignment cOwnedInitExpressionAssignment_0_1_1_2 = (Assignment)cGroup_0_1_1.eContents().get(2);
+		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_0_1_1_2_0 = (RuleCall)cOwnedInitExpressionAssignment_0_1_1_2.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cOwnedTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -2002,16 +2006,16 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
 		// * parameter or an iterator. */
 		//NavigatingArgCS:
-		//	ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-		//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS;
+		//	ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+		//	ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-		//ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS
+		//ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+		//ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-		//ownedInitExpression=ExpCS)?
+		//ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+		//ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?
 		public Group getGroup_0() { return cGroup_0; }
 
 		//ownedNameExpression=NavigatingArgExpCS
@@ -2020,7 +2024,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_0_0_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_0_0_0; }
 
-		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in' ownedInitExpression=ExpCS)?
+		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?
 		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
 
 		//':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?
@@ -2047,17 +2051,29 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_0_1_0_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_0_1_0_2_1_0; }
 
-		//'in' ownedInitExpression=ExpCS
+		//(':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS
 		public Group getGroup_0_1_1() { return cGroup_0_1_1; }
 
+		//(':' ownedType=TypeExpCS)?
+		public Group getGroup_0_1_1_0() { return cGroup_0_1_1_0; }
+
+		//':'
+		public Keyword getColonKeyword_0_1_1_0_0() { return cColonKeyword_0_1_1_0_0; }
+
+		//ownedType=TypeExpCS
+		public Assignment getOwnedTypeAssignment_0_1_1_0_1() { return cOwnedTypeAssignment_0_1_1_0_1; }
+
+		//TypeExpCS
+		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_0_1_1_0_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_0_1_1_0_1_0; }
+
 		//'in'
-		public Keyword getInKeyword_0_1_1_0() { return cInKeyword_0_1_1_0; }
+		public Keyword getInKeyword_0_1_1_1() { return cInKeyword_0_1_1_1; }
 
 		//ownedInitExpression=ExpCS
-		public Assignment getOwnedInitExpressionAssignment_0_1_1_1() { return cOwnedInitExpressionAssignment_0_1_1_1; }
+		public Assignment getOwnedInitExpressionAssignment_0_1_1_2() { return cOwnedInitExpressionAssignment_0_1_1_2; }
 
 		//ExpCS
-		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_0_1_1_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_0_1_1_1_0; }
+		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_0_1_1_2_0() { return cOwnedInitExpressionExpCSParserRuleCall_0_1_1_2_0; }
 
 		//':' ownedType=TypeExpCS
 		public Group getGroup_1() { return cGroup_1; }
@@ -2152,21 +2168,25 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedInitExpressionAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
 		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_2_0_2_1_0 = (RuleCall)cOwnedInitExpressionAssignment_2_0_2_1.eContents().get(0);
 		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
-		private final Keyword cInKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cOwnedInitExpressionAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_2_1_1_0 = (RuleCall)cOwnedInitExpressionAssignment_2_1_1.eContents().get(0);
+		private final Group cGroup_2_1_0 = (Group)cGroup_2_1.eContents().get(0);
+		private final Keyword cColonKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
+		private final Assignment cOwnedTypeAssignment_2_1_0_1 = (Assignment)cGroup_2_1_0.eContents().get(1);
+		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_1_0_1_0 = (RuleCall)cOwnedTypeAssignment_2_1_0_1.eContents().get(0);
+		private final Keyword cInKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Assignment cOwnedInitExpressionAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_2_1_2_0 = (RuleCall)cOwnedInitExpressionAssignment_2_1_2.eContents().get(0);
 
 		//// Type-less init is an illegal infix expression
 		//
 		///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
 		// * parameters or a second iterator. */
 		//NavigatingCommaArgCS NavigatingArgCS:
-		//	prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-		//	ownedInitExpression=ExpCS)?;
+		//	prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+		//	ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-		//ownedInitExpression=ExpCS)?
+		//prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+		//ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?
 		public Group getGroup() { return cGroup; }
 
 		//prefix=','
@@ -2181,7 +2201,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0; }
 
-		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in' ownedInitExpression=ExpCS)?
+		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?
@@ -2208,17 +2228,29 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_0_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_0_2_1_0; }
 
-		//'in' ownedInitExpression=ExpCS
+		//(':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
+		//(':' ownedType=TypeExpCS)?
+		public Group getGroup_2_1_0() { return cGroup_2_1_0; }
+
+		//':'
+		public Keyword getColonKeyword_2_1_0_0() { return cColonKeyword_2_1_0_0; }
+
+		//ownedType=TypeExpCS
+		public Assignment getOwnedTypeAssignment_2_1_0_1() { return cOwnedTypeAssignment_2_1_0_1; }
+
+		//TypeExpCS
+		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_1_0_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_1_0_1_0; }
+
 		//'in'
-		public Keyword getInKeyword_2_1_0() { return cInKeyword_2_1_0; }
+		public Keyword getInKeyword_2_1_1() { return cInKeyword_2_1_1; }
 
 		//ownedInitExpression=ExpCS
-		public Assignment getOwnedInitExpressionAssignment_2_1_1() { return cOwnedInitExpressionAssignment_2_1_1; }
+		public Assignment getOwnedInitExpressionAssignment_2_1_2() { return cOwnedInitExpressionAssignment_2_1_2; }
 
 		//ExpCS
-		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_1_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_1_1_0; }
+		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_1_2_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_1_2_0; }
 	}
 
 	public class NavigatingSemiArgCSElements extends AbstractParserRuleElementFinder {
@@ -2232,19 +2264,19 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cOwnedTypeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_1_0 = (RuleCall)cOwnedTypeAssignment_2_1.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cOwnedInitExpressionAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_3_1_0 = (RuleCall)cOwnedInitExpressionAssignment_3_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cOwnedInitExpressionAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cOwnedInitExpressionExpCSParserRuleCall_2_2_1_0 = (RuleCall)cOwnedInitExpressionAssignment_2_2_1.eContents().get(0);
 
 		//// Type-less init is an illegal infix expression
 		//
 		///* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 		//NavigatingSemiArgCS NavigatingArgCS:
-		//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;
+		//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?
+		//prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?
 		public Group getGroup() { return cGroup; }
 
 		//prefix=';'
@@ -2259,7 +2291,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0; }
 
-		//(':' ownedType=TypeExpCS)?
+		//(':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//':'
@@ -2272,16 +2304,16 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_1_0; }
 
 		//('=' ownedInitExpression=ExpCS)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//'='
-		public Keyword getEqualsSignKeyword_3_0() { return cEqualsSignKeyword_3_0; }
+		public Keyword getEqualsSignKeyword_2_2_0() { return cEqualsSignKeyword_2_2_0; }
 
 		//ownedInitExpression=ExpCS
-		public Assignment getOwnedInitExpressionAssignment_3_1() { return cOwnedInitExpressionAssignment_3_1; }
+		public Assignment getOwnedInitExpressionAssignment_2_2_1() { return cOwnedInitExpressionAssignment_2_2_1; }
 
 		//ExpCS
-		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_3_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_3_1_0; }
+		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_2_1_0; }
 	}
 
 	public class NavigatingArgExpCSElements extends AbstractParserRuleElementFinder {
@@ -3324,8 +3356,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
 	// * parameter or an iterator. */
 	//NavigatingArgCS:
-	//	ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS;
+	//	ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+	//	ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS;
 	public NavigatingArgCSElements getNavigatingArgCSAccess() {
 		return pNavigatingArgCS;
 	}
@@ -3352,8 +3384,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
 	// * parameters or a second iterator. */
 	//NavigatingCommaArgCS NavigatingArgCS:
-	//	prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | 'in'
-	//	ownedInitExpression=ExpCS)?;
+	//	prefix=',' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)? | (':'
+	//	ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)?;
 	public NavigatingCommaArgCSElements getNavigatingCommaArgCSAccess() {
 		return pNavigatingCommaArgCS;
 	}
@@ -3366,7 +3398,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	///* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 	//NavigatingSemiArgCS NavigatingArgCS:
-	//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;
+	//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
 	public NavigatingSemiArgCSElements getNavigatingSemiArgCSAccess() {
 		return pNavigatingSemiArgCS;
 	}
