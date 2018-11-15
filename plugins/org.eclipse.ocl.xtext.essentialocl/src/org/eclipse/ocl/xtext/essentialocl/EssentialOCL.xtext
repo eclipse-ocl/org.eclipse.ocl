@@ -270,7 +270,10 @@ SquareBracketedClauseCS:
 /* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
  * parameter or an iterator. */
 NavigatingArgCS returns NavigatingArgCS:
-	(ownedNameExpression=NavigatingArgExpCS ((':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?) | ('in' ownedInitExpression=ExpCS))?)
+	(ownedNameExpression=NavigatingArgExpCS ((':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)
+											| ((':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)
+											)?
+	)
 	| (':' ownedType=TypeExpCS);	// Type-less init is an illegal infix expression
 
 /* A navigating bar argument is a generalized rule for a bar-prefixed argument in a round bracket clause. This is typically the body of an iteration. */
@@ -280,11 +283,13 @@ NavigatingBarArgCS returns NavigatingArgCS:
 /* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
  * parameters or a second iterator. */
 NavigatingCommaArgCS returns NavigatingArgCS:
-	prefix=',' ownedNameExpression=NavigatingArgExpCS ((':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?) | ('in' ownedInitExpression=ExpCS))?;	// Type-less init is an illegal infix expression
+	prefix=',' ownedNameExpression=NavigatingArgExpCS ((':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)
+													  | ((':' ownedType=TypeExpCS)? 'in' ownedInitExpression=ExpCS)
+													  )?;	// Type-less init is an illegal infix expression
 
 /* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 NavigatingSemiArgCS returns NavigatingArgCS:
-	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS)? ('=' ownedInitExpression=ExpCS)?;	// Type-less init is an illegal infix expression
+	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;	// Type-less init is an illegal infix expression
 
 NavigatingArgExpCS returns ExpCS: // Intended to be overridden
 	ExpCS
