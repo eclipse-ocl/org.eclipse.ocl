@@ -1727,7 +1727,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     instanceClassName=SINGLE_QUOTED_STRING ('{' '!serializable'? '}')? (ambiguity) (rule end)
@@ -1746,13 +1746,13 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 * This ambiguous syntax occurs at:
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
-	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (('{' '}') | ';') (rule end)
 	 *     name=UnrestrictedName (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
-	 *     name=UnrestrictedName (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     name=UnrestrictedName (ambiguity) (('{' '}') | ';') (rule end)
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
-	 *     ownedSignature=TemplateSignatureCS (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     ownedSignature=TemplateSignatureCS (ambiguity) (('{' '}') | ';') (rule end)
 	 */
 	protected void emit_DataTypeCS___LeftCurlyBracketKeyword_5_0_SerializableKeyword_5_1_1_q_RightCurlyBracketKeyword_5_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1760,7 +1760,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     instanceClassName=SINGLE_QUOTED_STRING ('{' '!serializable'? '}')? (ambiguity) (rule end)
@@ -1780,15 +1780,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedLiterals+=EnumerationLiteralCS
-	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (('{' '}') | ';') (rule end)
 	 *     name=UnrestrictedName (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedLiterals+=EnumerationLiteralCS
-	 *     name=UnrestrictedName (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     name=UnrestrictedName (ambiguity) (('{' '}') | ';') (rule end)
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedLiterals+=EnumerationLiteralCS
-	 *     ownedSignature=TemplateSignatureCS (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     ownedSignature=TemplateSignatureCS (ambiguity) (('{' '}') | ';') (rule end)
 	 */
 	protected void emit_EnumerationCS___LeftCurlyBracketKeyword_4_0_SerializableKeyword_4_1_1_q_RightCurlyBracketKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1857,7 +1857,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='!derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='!derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='!derived' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='!derived' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!transient'
@@ -1870,7 +1870,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='!ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='!ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='!ordered' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='!ordered' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!transient'
@@ -1883,7 +1883,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='!transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='!transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='!transient' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='!transient' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!transient'
@@ -1896,7 +1896,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='!unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='!unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='!unique' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='!unique' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!transient'
@@ -1909,7 +1909,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='derived' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='derived' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='derived' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!transient'
@@ -1922,7 +1922,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='ordered' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='ordered' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='ordered' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!transient'
@@ -1935,7 +1935,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='transient' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='transient' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='transient' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!transient'
@@ -1948,7 +1948,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='unique' (ambiguity) '}' '{' ('body' UnrestrictedName? ':' ';')* ownedPreconditions+=PreconditionConstraintCS
-	 *     qualifiers+='unique' (ambiguity) '}' (';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')) (rule end)
+	 *     qualifiers+='unique' (ambiguity) '}' (('{' ('body' UnrestrictedName? ':' ';')* '}') | ';') (rule end)
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!ordered'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!transient'
@@ -1964,7 +1964,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' ('body' UnrestrictedName? ':' ';')* '}')
+	 *     ('{' ('body' UnrestrictedName? ':' ';')* '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name=UnrestrictedName '(' ')' (ambiguity) (rule end)
@@ -2109,7 +2109,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name=UnrestrictedName (ambiguity) (rule end)
@@ -2607,9 +2607,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *         (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':')*
 	 *         ownedDefaultExpressions+=SpecificationCS
 	 *     )
-	 *     qualifiers+='!composes' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!composes' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!composes' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!composes' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!composes' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!composes' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='!ordered'
@@ -2628,9 +2628,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!composes' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!derived' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!derived' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!derived' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!derived' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!derived' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!derived' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='!ordered'
@@ -2649,9 +2649,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!derived' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!ordered' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!ordered' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!ordered' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!ordered' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!ordered' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!ordered' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='!ordered'
@@ -2670,9 +2670,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!ordered' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!readonly' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!readonly' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!readonly' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!readonly' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!readonly' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!readonly' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='!ordered'
@@ -2691,9 +2691,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!readonly' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!resolve' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!resolve' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!resolve' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!resolve' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!resolve' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!resolve' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='!ordered'
@@ -2712,9 +2712,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!resolve' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!transient' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!transient' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!transient' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!transient' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!transient' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!transient' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='!ordered'
@@ -2733,9 +2733,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!transient' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!unique' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!unique' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!unique' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!unique' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!unique' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!unique' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='!ordered'
@@ -2754,9 +2754,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!unique' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!unsettable' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!unsettable' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!unsettable' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!unsettable' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!unsettable' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!unsettable' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='!ordered'
@@ -2775,9 +2775,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!unsettable' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='!volatile' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='!volatile' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='!volatile' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='!volatile' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='!volatile' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='!volatile' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='!ordered'
@@ -2796,9 +2796,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='!volatile' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='composes' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='composes' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='composes' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='composes' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='composes' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='composes' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='!ordered'
@@ -2817,9 +2817,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='composes' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='derived' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='derived' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='derived' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='derived' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='derived' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='derived' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='!ordered'
@@ -2838,9 +2838,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='derived' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='ordered' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='ordered' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='ordered' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='ordered' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='ordered' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='ordered' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='!ordered'
@@ -2859,9 +2859,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='ordered' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='readonly' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='readonly' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='readonly' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='readonly' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='readonly' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='readonly' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='!ordered'
@@ -2880,9 +2880,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='readonly' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='resolve' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='resolve' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='resolve' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='resolve' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='resolve' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='resolve' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='!ordered'
@@ -2901,9 +2901,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='resolve' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='transient' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='transient' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='transient' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='transient' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='transient' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='transient' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='!ordered'
@@ -2922,9 +2922,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='transient' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='unique' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='unique' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='unique' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='unique' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='unique' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='unique' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!ordered'
@@ -2943,9 +2943,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='unsettable' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='unsettable' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='unsettable' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='unsettable' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='unsettable' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='unsettable' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='!ordered'
@@ -2964,9 +2964,9 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='unsettable' (ambiguity) qualifiers+='volatile'
-	 *     qualifiers+='volatile' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
-	 *     qualifiers+='volatile' (ambiguity) '}' '{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
-	 *     qualifiers+='volatile' (ambiguity) '}' (';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')) (rule end)
+	 *     qualifiers+='volatile' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* 'key' referredKeys+=[Property|UnrestrictedName]
+	 *     qualifiers+='volatile' (ambiguity) '}' '{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* ownedAnnotations+=AnnotationElementCS
+	 *     qualifiers+='volatile' (ambiguity) '}' (('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';') (rule end)
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='!composes'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='!derived'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='!ordered'
@@ -2992,7 +2992,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))* '}')
+	 *     ('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     default=SINGLE_QUOTED_STRING (ambiguity) (rule end)
@@ -3842,7 +3842,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     (('derivation' UnrestrictedName? ':' ';') | ('initial' UnrestrictedName? ':' ';'))*
+	 *     (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))*
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     default=SINGLE_QUOTED_STRING '{' (ambiguity) 'key' referredKeys+=[Property|UnrestrictedName]
@@ -3902,7 +3902,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     instanceClassName=SINGLE_QUOTED_STRING ('{' '}')? (ambiguity) (rule end)
@@ -3924,22 +3924,22 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedOperations+=OperationCS
 	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) '{' ownedProperties+=StructuralFeatureCS
-	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     instanceClassName=SINGLE_QUOTED_STRING (ambiguity) (('{' '}') | ';') (rule end)
 	 *     name=UnrestrictedName (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedOperations+=OperationCS
 	 *     name=UnrestrictedName (ambiguity) '{' ownedProperties+=StructuralFeatureCS
-	 *     name=UnrestrictedName (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     name=UnrestrictedName (ambiguity) (('{' '}') | ';') (rule end)
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedOperations+=OperationCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedProperties+=StructuralFeatureCS
-	 *     ownedSignature=TemplateSignatureCS (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     ownedSignature=TemplateSignatureCS (ambiguity) (('{' '}') | ';') (rule end)
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedOperations+=OperationCS
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedProperties+=StructuralFeatureCS
-	 *     ownedSuperTypes+=TypedRefCS (ambiguity) (';' | ('{' '}')) (rule end)
+	 *     ownedSuperTypes+=TypedRefCS (ambiguity) (('{' '}') | ';') (rule end)
 	 */
 	protected void emit_StructuredClassCS___LeftCurlyBracketKeyword_6_0_RightCurlyBracketKeyword_6_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

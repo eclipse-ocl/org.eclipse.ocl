@@ -121,7 +121,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     implementation=[JavaClassCS|SINGLE_QUOTED_STRING] (ambiguity) (rule end)

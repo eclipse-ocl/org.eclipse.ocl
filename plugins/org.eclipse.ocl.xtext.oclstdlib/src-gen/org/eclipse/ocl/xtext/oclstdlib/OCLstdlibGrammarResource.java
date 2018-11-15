@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -19,8 +19,8 @@ package	org.eclipse.ocl.xtext.oclstdlib;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
 import org.eclipse.xtext.AbstractMetamodelDeclaration;
 import org.eclipse.xtext.AbstractRule;
