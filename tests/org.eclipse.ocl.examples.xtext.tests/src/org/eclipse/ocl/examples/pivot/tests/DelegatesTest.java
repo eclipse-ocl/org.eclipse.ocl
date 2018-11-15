@@ -565,7 +565,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		//
 		delegate = factory.createQueryDelegate(companyClass, null, "n=");
 		executeWithException2(delegate, amy, null, getErrorsInMessage(PivotConstantsInternal.QUERY_ROLE, "company::Company", "n=") +
-			StringUtil.bind("1:2: extraneous input ''{0}'' expecting EOF", "="));
+			StringUtil.bind("1:2: no viable alternative following input ''{0}''", "="));
 		//
 		//	Undeclared variable
 		//
@@ -709,7 +709,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		getWithException(badClassInstance, "attributeParsingToLexicalError",
 			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
-			StringUtil.bind("1:3: no viable alternative at input ''{0}''", "#"));
+			StringUtil.bind("1:3: missing EOF at ''{0}''", "#"));
 	}
 
 	public void test_attributeParsingToSemanticError() {
@@ -728,7 +728,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:9" : "1";
 		getWithException(badClassInstance, "attributeParsingToSyntacticError",
 			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
-			StringUtil.bind(location + ": no viable alternative at input ''{0}''", "null"));
+			StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
 	}
 
 	/**

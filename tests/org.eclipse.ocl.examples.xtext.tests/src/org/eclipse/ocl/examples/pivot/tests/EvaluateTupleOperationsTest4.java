@@ -156,7 +156,7 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Tuple{a = 3, b = Tuple{a = '3', b = Tuple{a = 3.1}}}.a");
 		ocl.assertQueryEquals(null, "3", "Tuple{a = 3, b = Tuple{a = '3', b = Tuple{a = 3.1}}}.b.a");
 		ocl.assertQueryEquals(null, 3.1, "Tuple{a = 3, b = Tuple{a = '3', b = Tuple{a = 3.1}}}.b.b.a");
-		ocl.assertSemanticErrorQuery(null, "Tuple{}.a", "no viable alternative at input ''{''");
+		ocl.assertSemanticErrorQuery(null, "Tuple{}.a", "missing EOF at ''{''");
 		ocl.assertSemanticErrorQuery(null, "Tuple{a = 3, b = '4'}.c", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Tuple(a:Integer[1],b:String[1])", "c");
 		// FIXME Duplicate parts warning		ocl.assertQueryEquals(null, 3, "Tuple{a = 1, a = 1}.a");
 		ocl.dispose();

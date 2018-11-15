@@ -1082,7 +1082,7 @@ public class EditTests extends XtextTestCase
 		//
 		{
 			replace(xtextResource, goodString, badString);
-			assertResourceErrors("Pasting operation", xtextResource, "mismatched input 'coer' expecting '}'", "no viable alternative at 'type'");
+			assertResourceErrors("Pasting operation", xtextResource, "mismatched input 'coer' expecting '}'", "missing EOF at 'type'");
 			//			assertNoValidationErrors("Pasting operation", xtextResource);
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);

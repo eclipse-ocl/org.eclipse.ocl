@@ -122,7 +122,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 		@Override
 		public int getColumn() {
-			return -1;
+			try {
+				return super.getColumn();
+			}
+			catch (Throwable e) {			// Xtext used tio throw an NPE
+				return -1;
+			}
 		}
 
 		@Override
@@ -177,8 +182,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	private static final String NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF = "no viable alternative at input '<EOF>'";
 	private static final String NO_VIABLE_ALTERNATIVE_FOLLOWING = "no viable alternative following input ";
-	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
-	private static final String MISSING_EOF_AT = "missing EOF at ";
+	//	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
+	//	private static final String MISSING_EOF_AT = "missing EOF at ";
 
 	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
 
@@ -232,7 +237,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 						}
 					}
 				}
-				else if ((message != null) && message.contains(MISSING_EOF_AT)){
+				/*	else if ((message != null) && message.contains(MISSING_EOF_AT)){
 					int index = message.indexOf(MISSING_EOF_AT);
 					if (index >= 0) {
 						String tokenText = NodeModelUtils.getTokenText(error);
@@ -241,7 +246,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 							diagnostic = new RenamedDiagnostic(syntaxErrorMessage, error, newMessage);
 						}
 					}
-				}
+				} */
 			}
 			if (diagnostic == null) {
 				diagnostic = new XtextSyntaxDiagnostic(error);
