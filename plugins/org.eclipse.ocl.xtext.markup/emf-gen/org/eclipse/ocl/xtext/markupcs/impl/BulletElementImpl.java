@@ -95,7 +95,7 @@ public class BulletElementImpl extends CompoundElementImpl implements BulletElem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

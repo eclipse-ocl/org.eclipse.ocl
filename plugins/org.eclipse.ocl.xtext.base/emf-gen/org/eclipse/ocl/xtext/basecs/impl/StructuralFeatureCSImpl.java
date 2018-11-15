@@ -180,11 +180,10 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
 	}
 

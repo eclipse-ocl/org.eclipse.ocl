@@ -77,7 +77,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

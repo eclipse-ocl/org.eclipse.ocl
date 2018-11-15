@@ -197,11 +197,10 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		ICompositeNode parserNode = NodeModelUtils.getNode(this);
 		if (parserNode != null) {
 			return parserNode.getText().trim();

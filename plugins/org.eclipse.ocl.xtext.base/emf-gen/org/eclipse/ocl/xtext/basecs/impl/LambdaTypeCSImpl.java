@@ -321,11 +321,10 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
 	}
 
