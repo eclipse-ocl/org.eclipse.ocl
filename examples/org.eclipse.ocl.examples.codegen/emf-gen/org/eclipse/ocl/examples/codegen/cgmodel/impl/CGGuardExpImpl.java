@@ -144,7 +144,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

@@ -157,7 +157,7 @@ public class CGIsEqualExpImpl extends CGCallExpImpl implements CGIsEqualExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

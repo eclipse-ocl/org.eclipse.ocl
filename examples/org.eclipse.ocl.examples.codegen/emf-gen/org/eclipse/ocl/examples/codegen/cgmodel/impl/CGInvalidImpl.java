@@ -129,7 +129,7 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

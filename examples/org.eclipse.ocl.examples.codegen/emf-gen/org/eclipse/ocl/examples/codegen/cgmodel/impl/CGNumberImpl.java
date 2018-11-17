@@ -100,7 +100,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {

@@ -98,7 +98,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
