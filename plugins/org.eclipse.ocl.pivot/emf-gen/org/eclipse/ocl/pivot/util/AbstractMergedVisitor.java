@@ -250,6 +250,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitIterableType(org.eclipse.ocl.pivot.@NonNull IterableType object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return visiting(object);
 	}

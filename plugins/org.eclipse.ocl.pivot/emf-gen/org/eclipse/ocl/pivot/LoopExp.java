@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.emf.common.util.ECollections;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedBody <em>Owned Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedCoIterators <em>Owned Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedIterators <em>Owned Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getReferredIteration <em>Referred Iteration</em>}</li>
  * </ul>
@@ -34,7 +35,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @generated
  */
 public interface LoopExp
-		extends CallExp {
+extends CallExp {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Body</b></em>' containment reference.
@@ -62,6 +63,22 @@ public interface LoopExp
 	void setOwnedBody(OCLExpression value);
 
 	/**
+	 * Returns the value of the '<em><b>Owned Co Iterators</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.Variable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Co Iterators</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Co Iterators</em>' containment reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_OwnedCoIterators()
+	 * @generated NOT
+	 */
+	default List<Variable> getOwnedCoIterators() { return ECollections.emptyEList(); }
+
+	/**
 	 * Returns the value of the '<em><b>Owned Iterators</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.pivot.Variable}.
 	 * <!-- begin-user-doc -->
@@ -74,7 +91,7 @@ public interface LoopExp
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_OwnedIterators()
 	 * @generated
 	 */
-	@NonNull List<Variable> getOwnedIterators();
+	List<Variable> getOwnedIterators();
 
 	/**
 	 * Returns the value of the '<em><b>Referred Iteration</b></em>' reference.
@@ -103,10 +120,42 @@ public interface LoopExp
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	default boolean validateMatchingMapCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context) { return true; }
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	default boolean validateNoCoInitializers(DiagnosticChain diagnostics, Map<Object, Object> context) { return true; }
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	default boolean validateNoCollectionCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context) { return true; }
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	boolean validateSourceIsCollection(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	default boolean validateSourceIsIterable(DiagnosticChain diagnostics, Map<Object, Object> context) { return true; }
 
 	/**
 	 * <!-- begin-user-doc -->

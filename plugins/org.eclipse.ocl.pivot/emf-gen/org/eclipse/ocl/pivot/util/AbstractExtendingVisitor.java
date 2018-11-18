@@ -109,7 +109,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitCollectionType(org.eclipse.ocl.pivot.@NonNull CollectionType object) {
-		return visitDataType(object);
+		return visitIterableType(object);
 	}
 
 	@Override
@@ -258,6 +258,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitIterableType(org.eclipse.ocl.pivot.@NonNull IterableType object) {
+		return visitDataType(object);
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return visitLoopExp(object);
 	}
@@ -324,7 +329,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitMapType(org.eclipse.ocl.pivot.@NonNull MapType object) {
-		return visitDataType(object);
+		return visitIterableType(object);
 	}
 
 	@Override

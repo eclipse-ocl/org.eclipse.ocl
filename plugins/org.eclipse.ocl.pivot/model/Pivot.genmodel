@@ -335,6 +335,7 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidLiteralExp"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-IterableType"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-IterateExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-IterateExp-ownedResult"/>
       <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType">
@@ -419,6 +420,10 @@
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceElementType/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceElementType/context"/>
       </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired/context"/>
@@ -496,8 +501,21 @@
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-LiteralExp"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-LoopExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-LoopExp-ownedBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-LoopExp-ownedCoIterators"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-LoopExp-ownedIterators"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-LoopExp-referredIteration"/>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCoInitializers">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoInitializers">
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/context"/>
@@ -505,6 +523,10 @@
       <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateSourceIsCollection">
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsCollection/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsCollection/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateSourceIsIterable">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsIterable/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsIterable/context"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-MapLiteralExp">
@@ -516,7 +538,9 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-MapType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-MapType-keyType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-MapType-keysAreNullFree"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-MapType-valueType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-MapType-valuesAreNullFree"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-MessageExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-MessageExp-ownedArguments"/>

@@ -157,7 +157,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedFirst" lowerBound="1" eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLast" lowerBound="1" eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CollectionType" eSuperTypes="#//DataType">
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionType" eSuperTypes="#//IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1" eType="#//Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNullFree" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false"/>
@@ -411,6 +411,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidLiteralExp" eSuperTypes="#//LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IterableType" abstract="true" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="IterateExp" eSuperTypes="#//LoopExp #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" eType="#//Variable" containment="true"/>
   </eClassifiers>
@@ -442,6 +443,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="LiteralExp" abstract="true" eSuperTypes="#//OCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="LoopExp" abstract="true" eSuperTypes="#//CallExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBody" lowerBound="1" eType="#//OCLExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCoIterators" upperBound="-1" eType="#//Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1" eType="#//Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredIteration" eType="#//Iteration"/>
   </eClassifiers>
@@ -452,11 +454,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedKey" lowerBound="1" eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedValue" lowerBound="1" eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//DataType">
+  <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1" eType="#//Type" volatile="true" transient="true" derived="true"
         resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keysAreNullFree" lowerBound="1" eType="#//Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1" eType="#//Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valuesAreNullFree" lowerBound="1" eType="#//Boolean" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageExp" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedArguments" upperBound="-1" eType="#//OCLExpression" containment="true"/>

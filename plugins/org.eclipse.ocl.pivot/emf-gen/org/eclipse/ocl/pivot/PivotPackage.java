@@ -30,7 +30,6 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
- * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.PivotFactory
  * @generated
@@ -87,7 +86,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOCLExpression()
 	 * @generated
 	 */
-	int OCL_EXPRESSION = 68;
+	int OCL_EXPRESSION = 69;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.CallExpImpl <em>Call Exp</em>}' class.
@@ -117,7 +116,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNavigationCallExp()
 	 * @generated
 	 */
-	int NAVIGATION_CALL_EXP = 65;
+	int NAVIGATION_CALL_EXP = 66;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.AssociationClassCallExpImpl <em>Association Class Call Exp</em>}' class.
@@ -167,7 +166,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLiteralExp()
 	 * @generated
 	 */
-	int LITERAL_EXP = 53;
+	int LITERAL_EXP = 54;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveLiteralExpImpl <em>Primitive Literal Exp</em>}' class.
@@ -177,7 +176,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPrimitiveLiteralExp()
 	 * @generated
 	 */
-	int PRIMITIVE_LITERAL_EXP = 80;
+	int PRIMITIVE_LITERAL_EXP = 81;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.BooleanLiteralExpImpl <em>Boolean Literal Exp</em>}' class.
@@ -287,7 +286,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVariable()
 	 * @generated
 	 */
-	int VARIABLE = 122;
+	int VARIABLE = 123;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.IfExpImpl <em>If Exp</em>}' class.
@@ -307,7 +306,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNumericLiteralExp()
 	 * @generated
 	 */
-	int NUMERIC_LITERAL_EXP = 67;
+	int NUMERIC_LITERAL_EXP = 68;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.IntegerLiteralExpImpl <em>Integer Literal Exp</em>}' class.
@@ -347,7 +346,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLetExp()
 	 * @generated
 	 */
-	int LET_EXP = 50;
+	int LET_EXP = 51;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.LoopExpImpl <em>Loop Exp</em>}' class.
@@ -357,7 +356,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLoopExp()
 	 * @generated
 	 */
-	int LOOP_EXP = 54;
+	int LOOP_EXP = 55;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.MessageExpImpl <em>Message Exp</em>}' class.
@@ -367,7 +366,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMessageExp()
 	 * @generated
 	 */
-	int MESSAGE_EXP = 58;
+	int MESSAGE_EXP = 59;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SendSignalActionImpl <em>Send Signal Action</em>}' class.
@@ -377,7 +376,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSendSignalAction()
 	 * @generated
 	 */
-	int SEND_SIGNAL_ACTION = 92;
+	int SEND_SIGNAL_ACTION = 93;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SignalImpl <em>Signal</em>}' class.
@@ -387,7 +386,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSignal()
 	 * @generated
 	 */
-	int SIGNAL = 97;
+	int SIGNAL = 98;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.MessageTypeImpl <em>Message Type</em>}' class.
@@ -397,7 +396,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMessageType()
 	 * @generated
 	 */
-	int MESSAGE_TYPE = 59;
+	int MESSAGE_TYPE = 60;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.NullLiteralExpImpl <em>Null Literal Exp</em>}' class.
@@ -407,7 +406,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNullLiteralExp()
 	 * @generated
 	 */
-	int NULL_LITERAL_EXP = 66;
+	int NULL_LITERAL_EXP = 67;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.OperationCallExpImpl <em>Operation Call Exp</em>}' class.
@@ -417,7 +416,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOperationCallExp()
 	 * @generated
 	 */
-	int OPERATION_CALL_EXP = 70;
+	int OPERATION_CALL_EXP = 71;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl <em>Ordered Set Type</em>}' class.
@@ -427,7 +426,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrderedSetType()
 	 * @generated
 	 */
-	int ORDERED_SET_TYPE = 72;
+	int ORDERED_SET_TYPE = 73;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
@@ -437,7 +436,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPrimitiveType()
 	 * @generated
 	 */
-	int PRIMITIVE_TYPE = 81;
+	int PRIMITIVE_TYPE = 82;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PropertyCallExpImpl <em>Property Call Exp</em>}' class.
@@ -447,7 +446,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPropertyCallExp()
 	 * @generated
 	 */
-	int PROPERTY_CALL_EXP = 85;
+	int PROPERTY_CALL_EXP = 86;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.RealLiteralExpImpl <em>Real Literal Exp</em>}' class.
@@ -457,7 +456,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getRealLiteralExp()
 	 * @generated
 	 */
-	int REAL_LITERAL_EXP = 87;
+	int REAL_LITERAL_EXP = 88;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SequenceTypeImpl <em>Sequence Type</em>}' class.
@@ -467,7 +466,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSequenceType()
 	 * @generated
 	 */
-	int SEQUENCE_TYPE = 93;
+	int SEQUENCE_TYPE = 94;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SetTypeImpl <em>Set Type</em>}' class.
@@ -477,7 +476,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSetType()
 	 * @generated
 	 */
-	int SET_TYPE = 94;
+	int SET_TYPE = 95;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StateImpl <em>State</em>}' class.
@@ -487,7 +486,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getState()
 	 * @generated
 	 */
-	int STATE = 100;
+	int STATE = 101;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StateExpImpl <em>State Exp</em>}' class.
@@ -497,7 +496,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStateExp()
 	 * @generated
 	 */
-	int STATE_EXP = 101;
+	int STATE_EXP = 102;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StringLiteralExpImpl <em>String Literal Exp</em>}' class.
@@ -507,7 +506,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStringLiteralExp()
 	 * @generated
 	 */
-	int STRING_LITERAL_EXP = 105;
+	int STRING_LITERAL_EXP = 106;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TupleLiteralExpImpl <em>Tuple Literal Exp</em>}' class.
@@ -517,7 +516,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTupleLiteralExp()
 	 * @generated
 	 */
-	int TUPLE_LITERAL_EXP = 113;
+	int TUPLE_LITERAL_EXP = 114;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TupleLiteralPartImpl <em>Tuple Literal Part</em>}' class.
@@ -527,7 +526,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTupleLiteralPart()
 	 * @generated
 	 */
-	int TUPLE_LITERAL_PART = 114;
+	int TUPLE_LITERAL_PART = 115;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TupleTypeImpl <em>Tuple Type</em>}' class.
@@ -537,7 +536,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTupleType()
 	 * @generated
 	 */
-	int TUPLE_TYPE = 115;
+	int TUPLE_TYPE = 116;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TypeExpImpl <em>Type Exp</em>}' class.
@@ -547,7 +546,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTypeExp()
 	 * @generated
 	 */
-	int TYPE_EXP = 117;
+	int TYPE_EXP = 118;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.UnlimitedNaturalLiteralExpImpl <em>Unlimited Natural Literal Exp</em>}' class.
@@ -557,7 +556,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUnlimitedNaturalLiteralExp()
 	 * @generated
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP = 119;
+	int UNLIMITED_NATURAL_LITERAL_EXP = 120;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.UnspecifiedValueExpImpl <em>Unspecified Value Exp</em>}' class.
@@ -567,7 +566,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUnspecifiedValueExp()
 	 * @generated
 	 */
-	int UNSPECIFIED_VALUE_EXP = 120;
+	int UNSPECIFIED_VALUE_EXP = 121;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.VariableExpImpl <em>Variable Exp</em>}' class.
@@ -577,7 +576,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVariableExp()
 	 * @generated
 	 */
-	int VARIABLE_EXP = 124;
+	int VARIABLE_EXP = 125;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.VoidTypeImpl <em>Void Type</em>}' class.
@@ -587,7 +586,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVoidType()
 	 * @generated
 	 */
-	int VOID_TYPE = 127;
+	int VOID_TYPE = 128;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.utilities.Pivotable <em>Pivotable</em>}' class.
@@ -597,7 +596,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPivotable()
 	 * @generated
 	 */
-	int PIVOTABLE = 77;
+	int PIVOTABLE = 78;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ElementImpl <em>Element</em>}' class.
@@ -617,7 +616,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNamedElement()
 	 * @generated
 	 */
-	int NAMED_ELEMENT = 63;
+	int NAMED_ELEMENT = 64;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.AnnotationImpl <em>Annotation</em>}' class.
@@ -637,7 +636,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 116;
+	int TYPE = 117;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ClassImpl <em>Class</em>}' class.
@@ -657,7 +656,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateableElement()
 	 * @generated
 	 */
-	int TEMPLATEABLE_ELEMENT = 110;
+	int TEMPLATEABLE_ELEMENT = 111;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TemplateBindingImpl <em>Template Binding</em>}' class.
@@ -667,7 +666,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateBinding()
 	 * @generated
 	 */
-	int TEMPLATE_BINDING = 106;
+	int TEMPLATE_BINDING = 107;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TemplateSignatureImpl <em>Template Signature</em>}' class.
@@ -677,7 +676,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateSignature()
 	 * @generated
 	 */
-	int TEMPLATE_SIGNATURE = 109;
+	int TEMPLATE_SIGNATURE = 110;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TemplateParameterImpl <em>Template Parameter</em>}' class.
@@ -687,7 +686,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateParameter()
 	 * @generated
 	 */
-	int TEMPLATE_PARAMETER = 107;
+	int TEMPLATE_PARAMETER = 108;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl <em>Template Parameter Substitution</em>}' class.
@@ -697,7 +696,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateParameterSubstitution()
 	 * @generated
 	 */
-	int TEMPLATE_PARAMETER_SUBSTITUTION = 108;
+	int TEMPLATE_PARAMETER_SUBSTITUTION = 109;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PackageImpl <em>Package</em>}' class.
@@ -707,7 +706,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPackage()
 	 * @generated
 	 */
-	int PACKAGE = 74;
+	int PACKAGE = 75;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.NamespaceImpl <em>Namespace</em>}' class.
@@ -717,7 +716,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNamespace()
 	 * @generated
 	 */
-	int NAMESPACE = 64;
+	int NAMESPACE = 65;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PrecedenceImpl <em>Precedence</em>}' class.
@@ -727,7 +726,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPrecedence()
 	 * @generated
 	 */
-	int PRECEDENCE = 78;
+	int PRECEDENCE = 79;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PropertyImpl <em>Property</em>}' class.
@@ -737,7 +736,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getProperty()
 	 * @generated
 	 */
-	int PROPERTY = 84;
+	int PROPERTY = 85;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TypedElementImpl <em>Typed Element</em>}' class.
@@ -747,7 +746,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTypedElement()
 	 * @generated
 	 */
-	int TYPED_ELEMENT = 118;
+	int TYPED_ELEMENT = 119;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.AssociationClassImpl <em>Association Class</em>}' class.
@@ -767,7 +766,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOperation()
 	 * @generated
 	 */
-	int OPERATION = 69;
+	int OPERATION = 70;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ParameterImpl <em>Parameter</em>}' class.
@@ -777,7 +776,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getParameter()
 	 * @generated
 	 */
-	int PARAMETER = 75;
+	int PARAMETER = 76;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -787,7 +786,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVariableDeclaration()
 	 * @generated
 	 */
-	int VARIABLE_DECLARATION = 123;
+	int VARIABLE_DECLARATION = 124;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.CommentImpl <em>Comment</em>}' class.
@@ -817,7 +816,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getValueSpecification()
 	 * @generated
 	 */
-	int VALUE_SPECIFICATION = 121;
+	int VALUE_SPECIFICATION = 122;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.utilities.Nameable <em>Nameable</em>}' class.
@@ -827,7 +826,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNameable()
 	 * @generated
 	 */
-	int NAMEABLE = 62;
+	int NAMEABLE = 63;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.DetailImpl <em>Detail</em>}' class.
@@ -867,7 +866,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIterateExp()
 	 * @generated
 	 */
-	int ITERATE_EXP = 44;
+	int ITERATE_EXP = 45;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.IterationImpl <em>Iteration</em>}' class.
@@ -877,7 +876,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIteration()
 	 * @generated
 	 */
-	int ITERATION = 45;
+	int ITERATION = 46;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.IteratorExpImpl <em>Iterator Exp</em>}' class.
@@ -887,7 +886,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIteratorExp()
 	 * @generated
 	 */
-	int ITERATOR_EXP = 46;
+	int ITERATOR_EXP = 47;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.LibraryImpl <em>Library</em>}' class.
@@ -897,7 +896,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLibrary()
 	 * @generated
 	 */
-	int LIBRARY = 52;
+	int LIBRARY = 53;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -1217,7 +1216,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLambdaType()
 	 * @generated
 	 */
-	int LAMBDA_TYPE = 48;
+	int LAMBDA_TYPE = 49;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.utilities.MorePivotable <em>More Pivotable</em>}' class.
@@ -1227,7 +1226,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMorePivotable()
 	 * @generated
 	 */
-	int MORE_PIVOTABLE = 61;
+	int MORE_PIVOTABLE = 62;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.VertexImpl <em>Vertex</em>}' class.
@@ -1237,7 +1236,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVertex()
 	 * @generated
 	 */
-	int VERTEX = 125;
+	int VERTEX = 126;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ConnectionPointReferenceImpl <em>Connection Point Reference</em>}' class.
@@ -1287,7 +1286,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getProfile()
 	 * @generated
 	 */
-	int PROFILE = 82;
+	int PROFILE = 83;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PseudostateImpl <em>Pseudostate</em>}' class.
@@ -1297,7 +1296,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPseudostate()
 	 * @generated
 	 */
-	int PSEUDOSTATE = 86;
+	int PSEUDOSTATE = 87;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.ReferringElement <em>Referring Element</em>}' class.
@@ -1307,7 +1306,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getReferringElement()
 	 * @generated
 	 */
-	int REFERRING_ELEMENT = 88;
+	int REFERRING_ELEMENT = 89;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.RegionImpl <em>Region</em>}' class.
@@ -1317,7 +1316,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getRegion()
 	 * @generated
 	 */
-	int REGION = 89;
+	int REGION = 90;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SelfTypeImpl <em>Self Type</em>}' class.
@@ -1327,7 +1326,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSelfType()
 	 * @generated
 	 */
-	int SELF_TYPE = 91;
+	int SELF_TYPE = 92;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.FinalStateImpl <em>Final State</em>}' class.
@@ -1367,7 +1366,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOppositePropertyCallExp()
 	 * @generated
 	 */
-	int OPPOSITE_PROPERTY_CALL_EXP = 71;
+	int OPPOSITE_PROPERTY_CALL_EXP = 72;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
@@ -3692,13 +3691,23 @@ extends EPackage
 	int DATA_TYPE_OPERATION_COUNT = CLASS_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.IterableTypeImpl <em>Iterable Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.internal.IterableTypeImpl
+	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIterableType()
+	 * @generated
+	 */
+	int ITERABLE_TYPE = 44;
+
+	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__ANNOTATING_COMMENTS = DATA_TYPE__ANNOTATING_COMMENTS;
+	int ITERABLE_TYPE__ANNOTATING_COMMENTS = DATA_TYPE__ANNOTATING_COMMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
@@ -3707,7 +3716,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_ANNOTATIONS = DATA_TYPE__OWNED_ANNOTATIONS;
+	int ITERABLE_TYPE__OWNED_ANNOTATIONS = DATA_TYPE__OWNED_ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comments</b></em>' containment reference list.
@@ -3716,7 +3725,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_COMMENTS = DATA_TYPE__OWNED_COMMENTS;
+	int ITERABLE_TYPE__OWNED_COMMENTS = DATA_TYPE__OWNED_COMMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Extensions</b></em>' containment reference list.
@@ -3725,7 +3734,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_EXTENSIONS = DATA_TYPE__OWNED_EXTENSIONS;
+	int ITERABLE_TYPE__OWNED_EXTENSIONS = DATA_TYPE__OWNED_EXTENSIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3734,7 +3743,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__NAME = DATA_TYPE__NAME;
+	int ITERABLE_TYPE__NAME = DATA_TYPE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Owned Constraints</b></em>' containment reference list.
@@ -3743,7 +3752,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_CONSTRAINTS = DATA_TYPE__OWNED_CONSTRAINTS;
+	int ITERABLE_TYPE__OWNED_CONSTRAINTS = DATA_TYPE__OWNED_CONSTRAINTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Bindings</b></em>' containment reference list.
@@ -3752,7 +3761,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_BINDINGS = DATA_TYPE__OWNED_BINDINGS;
+	int ITERABLE_TYPE__OWNED_BINDINGS = DATA_TYPE__OWNED_BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Signature</b></em>' containment reference.
@@ -3761,7 +3770,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_SIGNATURE = DATA_TYPE__OWNED_SIGNATURE;
+	int ITERABLE_TYPE__OWNED_SIGNATURE = DATA_TYPE__OWNED_SIGNATURE;
 
 	/**
 	 * The feature id for the '<em><b>Unspecialized Element</b></em>' reference.
@@ -3770,7 +3779,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__UNSPECIALIZED_ELEMENT = DATA_TYPE__UNSPECIALIZED_ELEMENT;
+	int ITERABLE_TYPE__UNSPECIALIZED_ELEMENT = DATA_TYPE__UNSPECIALIZED_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Extenders</b></em>' reference list.
@@ -3779,7 +3788,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__EXTENDERS = DATA_TYPE__EXTENDERS;
+	int ITERABLE_TYPE__EXTENDERS = DATA_TYPE__EXTENDERS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -3788,7 +3797,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__INSTANCE_CLASS_NAME = DATA_TYPE__INSTANCE_CLASS_NAME;
+	int ITERABLE_TYPE__INSTANCE_CLASS_NAME = DATA_TYPE__INSTANCE_CLASS_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -3797,7 +3806,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__IS_ABSTRACT = DATA_TYPE__IS_ABSTRACT;
+	int ITERABLE_TYPE__IS_ABSTRACT = DATA_TYPE__IS_ABSTRACT;
 
 	/**
 	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
@@ -3806,7 +3815,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__IS_ACTIVE = DATA_TYPE__IS_ACTIVE;
+	int ITERABLE_TYPE__IS_ACTIVE = DATA_TYPE__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -3815,7 +3824,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__IS_INTERFACE = DATA_TYPE__IS_INTERFACE;
+	int ITERABLE_TYPE__IS_INTERFACE = DATA_TYPE__IS_INTERFACE;
 
 	/**
 	 * The feature id for the '<em><b>Owned Behaviors</b></em>' containment reference list.
@@ -3824,7 +3833,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_BEHAVIORS = DATA_TYPE__OWNED_BEHAVIORS;
+	int ITERABLE_TYPE__OWNED_BEHAVIORS = DATA_TYPE__OWNED_BEHAVIORS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Invariants</b></em>' containment reference list.
@@ -3833,7 +3842,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_INVARIANTS = DATA_TYPE__OWNED_INVARIANTS;
+	int ITERABLE_TYPE__OWNED_INVARIANTS = DATA_TYPE__OWNED_INVARIANTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Operations</b></em>' containment reference list.
@@ -3842,7 +3851,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_OPERATIONS = DATA_TYPE__OWNED_OPERATIONS;
+	int ITERABLE_TYPE__OWNED_OPERATIONS = DATA_TYPE__OWNED_OPERATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Properties</b></em>' containment reference list.
@@ -3851,7 +3860,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNED_PROPERTIES = DATA_TYPE__OWNED_PROPERTIES;
+	int ITERABLE_TYPE__OWNED_PROPERTIES = DATA_TYPE__OWNED_PROPERTIES;
 
 	/**
 	 * The feature id for the '<em><b>Owning Package</b></em>' container reference.
@@ -3860,7 +3869,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__OWNING_PACKAGE = DATA_TYPE__OWNING_PACKAGE;
+	int ITERABLE_TYPE__OWNING_PACKAGE = DATA_TYPE__OWNING_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Super Classes</b></em>' reference list.
@@ -3869,7 +3878,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__SUPER_CLASSES = DATA_TYPE__SUPER_CLASSES;
+	int ITERABLE_TYPE__SUPER_CLASSES = DATA_TYPE__SUPER_CLASSES;
 
 	/**
 	 * The feature id for the '<em><b>Behavioral Class</b></em>' reference.
@@ -3878,7 +3887,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__BEHAVIORAL_CLASS = DATA_TYPE__BEHAVIORAL_CLASS;
+	int ITERABLE_TYPE__BEHAVIORAL_CLASS = DATA_TYPE__BEHAVIORAL_CLASS;
 
 	/**
 	 * The feature id for the '<em><b>Is Serializable</b></em>' attribute.
@@ -3887,7 +3896,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+	int ITERABLE_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -3896,52 +3905,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__VALUE = DATA_TYPE__VALUE;
+	int ITERABLE_TYPE__VALUE = DATA_TYPE__VALUE;
 
 	/**
-	 * The feature id for the '<em><b>Element Type</b></em>' reference.
+	 * The number of structural features of the '<em>Iterable Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE__ELEMENT_TYPE = DATA_TYPE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Is Null Free</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COLLECTION_TYPE__IS_NULL_FREE = DATA_TYPE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Lower</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COLLECTION_TYPE__LOWER = DATA_TYPE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Upper</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COLLECTION_TYPE__UPPER = DATA_TYPE_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Collection Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COLLECTION_TYPE_FEATURE_COUNT = DATA_TYPE_FEATURE_COUNT + 4;
+	int ITERABLE_TYPE_FEATURE_COUNT = DATA_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -3950,7 +3923,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___ALL_OWNED_ELEMENTS = DATA_TYPE___ALL_OWNED_ELEMENTS;
+	int ITERABLE_TYPE___ALL_OWNED_ELEMENTS = DATA_TYPE___ALL_OWNED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Value</em>' operation.
@@ -3959,7 +3932,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___GET_VALUE__TYPE_STRING = DATA_TYPE___GET_VALUE__TYPE_STRING;
+	int ITERABLE_TYPE___GET_VALUE__TYPE_STRING = DATA_TYPE___GET_VALUE__TYPE_STRING;
 
 	/**
 	 * The operation id for the '<em>Flattened Type</em>' operation.
@@ -3968,7 +3941,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___FLATTENED_TYPE = DATA_TYPE___FLATTENED_TYPE;
+	int ITERABLE_TYPE___FLATTENED_TYPE = DATA_TYPE___FLATTENED_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Class</em>' operation.
@@ -3977,7 +3950,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___IS_CLASS = DATA_TYPE___IS_CLASS;
+	int ITERABLE_TYPE___IS_CLASS = DATA_TYPE___IS_CLASS;
 
 	/**
 	 * The operation id for the '<em>Is Template Parameter</em>' operation.
@@ -3986,7 +3959,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___IS_TEMPLATE_PARAMETER = DATA_TYPE___IS_TEMPLATE_PARAMETER;
+	int ITERABLE_TYPE___IS_TEMPLATE_PARAMETER = DATA_TYPE___IS_TEMPLATE_PARAMETER;
 
 	/**
 	 * The operation id for the '<em>Specialize In</em>' operation.
@@ -3995,7 +3968,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+	int ITERABLE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
 	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
@@ -4004,7 +3977,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+	int ITERABLE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -4013,7 +3986,340 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
+	int ITERABLE_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The number of operations of the '<em>Iterable Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERABLE_TYPE_OPERATION_COUNT = DATA_TYPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__ANNOTATING_COMMENTS = ITERABLE_TYPE__ANNOTATING_COMMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_ANNOTATIONS = ITERABLE_TYPE__OWNED_ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Comments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_COMMENTS = ITERABLE_TYPE__OWNED_COMMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Extensions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_EXTENSIONS = ITERABLE_TYPE__OWNED_EXTENSIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__NAME = ITERABLE_TYPE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Constraints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_CONSTRAINTS = ITERABLE_TYPE__OWNED_CONSTRAINTS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_BINDINGS = ITERABLE_TYPE__OWNED_BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Signature</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_SIGNATURE = ITERABLE_TYPE__OWNED_SIGNATURE;
+
+	/**
+	 * The feature id for the '<em><b>Unspecialized Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__UNSPECIALIZED_ELEMENT = ITERABLE_TYPE__UNSPECIALIZED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Extenders</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__EXTENDERS = ITERABLE_TYPE__EXTENDERS;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__INSTANCE_CLASS_NAME = ITERABLE_TYPE__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__IS_ABSTRACT = ITERABLE_TYPE__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__IS_ACTIVE = ITERABLE_TYPE__IS_ACTIVE;
+
+	/**
+	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__IS_INTERFACE = ITERABLE_TYPE__IS_INTERFACE;
+
+	/**
+	 * The feature id for the '<em><b>Owned Behaviors</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_BEHAVIORS = ITERABLE_TYPE__OWNED_BEHAVIORS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Invariants</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_INVARIANTS = ITERABLE_TYPE__OWNED_INVARIANTS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Operations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_OPERATIONS = ITERABLE_TYPE__OWNED_OPERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Owned Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNED_PROPERTIES = ITERABLE_TYPE__OWNED_PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Owning Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__OWNING_PACKAGE = ITERABLE_TYPE__OWNING_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Super Classes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__SUPER_CLASSES = ITERABLE_TYPE__SUPER_CLASSES;
+
+	/**
+	 * The feature id for the '<em><b>Behavioral Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__BEHAVIORAL_CLASS = ITERABLE_TYPE__BEHAVIORAL_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Is Serializable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__IS_SERIALIZABLE = ITERABLE_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__VALUE = ITERABLE_TYPE__VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Element Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__ELEMENT_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Is Null Free</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__IS_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Lower</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__LOWER = ITERABLE_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Upper</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__UPPER = ITERABLE_TYPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Collection Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE_FEATURE_COUNT = ITERABLE_TYPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>All Owned Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___ALL_OWNED_ELEMENTS = ITERABLE_TYPE___ALL_OWNED_ELEMENTS;
+
+	/**
+	 * The operation id for the '<em>Get Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___GET_VALUE__TYPE_STRING = ITERABLE_TYPE___GET_VALUE__TYPE_STRING;
+
+	/**
+	 * The operation id for the '<em>Flattened Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___FLATTENED_TYPE = ITERABLE_TYPE___FLATTENED_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Class</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___IS_CLASS = ITERABLE_TYPE___IS_CLASS;
+
+	/**
+	 * The operation id for the '<em>Is Template Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___IS_TEMPLATE_PARAMETER = ITERABLE_TYPE___IS_TEMPLATE_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Specialize In</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = ITERABLE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = ITERABLE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = ITERABLE_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Collection Type</em>' class.
@@ -4022,7 +4328,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE_OPERATION_COUNT = DATA_TYPE_OPERATION_COUNT + 0;
+	int COLLECTION_TYPE_OPERATION_COUNT = ITERABLE_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -9087,7 +9393,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLanguageExpression()
 	 * @generated
 	 */
-	int LANGUAGE_EXPRESSION = 49;
+	int LANGUAGE_EXPRESSION = 50;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -9709,7 +10015,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getProfileApplication()
 	 * @generated
 	 */
-	int PROFILE_APPLICATION = 83;
+	int PROFILE_APPLICATION = 84;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.SlotImpl <em>Slot</em>}' class.
@@ -9719,7 +10025,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSlot()
 	 * @generated
 	 */
-	int SLOT = 98;
+	int SLOT = 99;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StateMachineImpl <em>State Machine</em>}' class.
@@ -9729,7 +10035,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStateMachine()
 	 * @generated
 	 */
-	int STATE_MACHINE = 102;
+	int STATE_MACHINE = 103;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StereotypeImpl <em>Stereotype</em>}' class.
@@ -9739,7 +10045,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStereotype()
 	 * @generated
 	 */
-	int STEREOTYPE = 103;
+	int STEREOTYPE = 104;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TransitionImpl <em>Transition</em>}' class.
@@ -9749,7 +10055,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTransition()
 	 * @generated
 	 */
-	int TRANSITION = 111;
+	int TRANSITION = 112;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.TriggerImpl <em>Trigger</em>}' class.
@@ -9759,7 +10065,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTrigger()
 	 * @generated
 	 */
-	int TRIGGER = 112;
+	int TRIGGER = 113;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
@@ -11501,13 +11807,22 @@ extends EPackage
 	int LOOP_EXP__OWNED_BODY = CALL_EXP_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Owned Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP__OWNED_CO_ITERATORS = CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Owned Iterators</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP__OWNED_ITERATORS = CALL_EXP_FEATURE_COUNT + 1;
+	int LOOP_EXP__OWNED_ITERATORS = CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Referred Iteration</b></em>' reference.
@@ -11516,7 +11831,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP__REFERRED_ITERATION = CALL_EXP_FEATURE_COUNT + 2;
+	int LOOP_EXP__REFERRED_ITERATION = CALL_EXP_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Loop Exp</em>' class.
@@ -11525,7 +11840,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP_FEATURE_COUNT = CALL_EXP_FEATURE_COUNT + 3;
+	int LOOP_EXP_FEATURE_COUNT = CALL_EXP_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -11591,13 +11906,40 @@ extends EPackage
 	int LOOP_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Matching Map Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Validate No Co Initializers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate No Collection Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 0;
+	int LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
@@ -11606,7 +11948,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 1;
+	int LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Iterable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP = CALL_EXP_OPERATION_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Loop Exp</em>' class.
@@ -11615,7 +11966,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LOOP_EXP_OPERATION_COUNT = CALL_EXP_OPERATION_COUNT + 2;
+	int LOOP_EXP_OPERATION_COUNT = CALL_EXP_OPERATION_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -11735,6 +12086,15 @@ extends EPackage
 	int ITERATE_EXP__OWNED_BODY = LOOP_EXP__OWNED_BODY;
 
 	/**
+	 * The feature id for the '<em><b>Owned Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP__OWNED_CO_ITERATORS = LOOP_EXP__OWNED_CO_ITERATORS;
+
+	/**
 	 * The feature id for the '<em><b>Owned Iterators</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11834,6 +12194,33 @@ extends EPackage
 	int ITERATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Matching Map Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate No Co Initializers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate No Collection Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11850,6 +12237,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Iterable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
@@ -12764,6 +13160,15 @@ extends EPackage
 	int ITERATOR_EXP__OWNED_BODY = LOOP_EXP__OWNED_BODY;
 
 	/**
+	 * The feature id for the '<em><b>Owned Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP__OWNED_CO_ITERATORS = LOOP_EXP__OWNED_CO_ITERATORS;
+
+	/**
 	 * The feature id for the '<em><b>Owned Iterators</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12854,6 +13259,33 @@ extends EPackage
 	int ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Matching Map Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate No Co Initializers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate No Collection Co Iterators</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12870,6 +13302,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATOR_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Iterable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
@@ -12998,13 +13439,22 @@ extends EPackage
 	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 13;
 
 	/**
+	 * The operation id for the '<em>Validate Iterator Type Is Source Key Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
+
+	/**
 	 * The operation id for the '<em>Validate Safe Iterator Is Required</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
+	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Source Can Be Null</em>' operation.
@@ -13013,7 +13463,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
+	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Element Type Is Source Element Type</em>' operation.
@@ -13022,7 +13472,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Is Ordered If Source Is Ordered</em>' operation.
@@ -13031,7 +13481,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 18;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Iterator Type Is Comparable</em>' operation.
@@ -13040,7 +13490,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 18;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 19;
 
 	/**
 	 * The operation id for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
@@ -13049,7 +13499,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 19;
+	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 20;
 
 	/**
 	 * The number of operations of the '<em>Iterator Exp</em>' class.
@@ -13058,7 +13508,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 20;
+	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.LetVariableImpl <em>Let Variable</em>}' class.
@@ -13069,7 +13519,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLetVariable()
 	 * @generated
 	 */
-	int LET_VARIABLE = 51;
+	int LET_VARIABLE = 52;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.MapLiteralExpImpl <em>Map Literal Exp</em>}' class.
@@ -13079,7 +13529,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMapLiteralExp()
 	 * @generated
 	 */
-	int MAP_LITERAL_EXP = 55;
+	int MAP_LITERAL_EXP = 56;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.MapLiteralPartImpl <em>Map Literal Part</em>}' class.
@@ -13089,7 +13539,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMapLiteralPart()
 	 * @generated
 	 */
-	int MAP_LITERAL_PART = 56;
+	int MAP_LITERAL_PART = 57;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.MapTypeImpl <em>Map Type</em>}' class.
@@ -13099,7 +13549,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getMapType()
 	 * @generated
 	 */
-	int MAP_TYPE = 57;
+	int MAP_TYPE = 58;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ModelImpl <em>Model</em>}' class.
@@ -13109,7 +13559,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getModel()
 	 * @generated
 	 */
-	int MODEL = 60;
+	int MODEL = 61;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl <em>Orphan Complete Package</em>}' class.
@@ -13119,7 +13569,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrphanCompletePackage()
 	 * @generated
 	 */
-	int ORPHAN_COMPLETE_PACKAGE = 73;
+	int ORPHAN_COMPLETE_PACKAGE = 74;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -13282,7 +13732,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPrimitiveCompletePackage()
 	 * @generated
 	 */
-	int PRIMITIVE_COMPLETE_PACKAGE = 79;
+	int PRIMITIVE_COMPLETE_PACKAGE = 80;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ResultVariableImpl <em>Result Variable</em>}' class.
@@ -13293,7 +13743,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getResultVariable()
 	 * @generated
 	 */
-	int RESULT_VARIABLE = 90;
+	int RESULT_VARIABLE = 91;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ShadowExpImpl <em>Shadow Exp</em>}' class.
@@ -13303,7 +13753,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getShadowExp()
 	 * @generated
 	 */
-	int SHADOW_EXP = 95;
+	int SHADOW_EXP = 96;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ShadowPartImpl <em>Shadow Part</em>}' class.
@@ -13313,7 +13763,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getShadowPart()
 	 * @generated
 	 */
-	int SHADOW_PART = 96;
+	int SHADOW_PART = 97;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StandardLibraryImpl <em>Standard Library</em>}' class.
@@ -13323,7 +13773,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStandardLibrary()
 	 * @generated
 	 */
-	int STANDARD_LIBRARY = 99;
+	int STANDARD_LIBRARY = 100;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.StereotypeExtenderImpl <em>Stereotype Extender</em>}' class.
@@ -13333,7 +13783,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStereotypeExtender()
 	 * @generated
 	 */
-	int STEREOTYPE_EXTENDER = 104;
+	int STEREOTYPE_EXTENDER = 105;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -13533,7 +13983,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIteratorVariable()
 	 * @generated
 	 */
-	int ITERATOR_VARIABLE = 47;
+	int ITERATOR_VARIABLE = 48;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -15101,7 +15551,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__ANNOTATING_COMMENTS = DATA_TYPE__ANNOTATING_COMMENTS;
+	int MAP_TYPE__ANNOTATING_COMMENTS = ITERABLE_TYPE__ANNOTATING_COMMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotations</b></em>' containment reference list.
@@ -15110,7 +15560,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_ANNOTATIONS = DATA_TYPE__OWNED_ANNOTATIONS;
+	int MAP_TYPE__OWNED_ANNOTATIONS = ITERABLE_TYPE__OWNED_ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comments</b></em>' containment reference list.
@@ -15119,7 +15569,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_COMMENTS = DATA_TYPE__OWNED_COMMENTS;
+	int MAP_TYPE__OWNED_COMMENTS = ITERABLE_TYPE__OWNED_COMMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Extensions</b></em>' containment reference list.
@@ -15128,7 +15578,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_EXTENSIONS = DATA_TYPE__OWNED_EXTENSIONS;
+	int MAP_TYPE__OWNED_EXTENSIONS = ITERABLE_TYPE__OWNED_EXTENSIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15137,7 +15587,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__NAME = DATA_TYPE__NAME;
+	int MAP_TYPE__NAME = ITERABLE_TYPE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Owned Constraints</b></em>' containment reference list.
@@ -15146,7 +15596,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_CONSTRAINTS = DATA_TYPE__OWNED_CONSTRAINTS;
+	int MAP_TYPE__OWNED_CONSTRAINTS = ITERABLE_TYPE__OWNED_CONSTRAINTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Bindings</b></em>' containment reference list.
@@ -15155,7 +15605,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_BINDINGS = DATA_TYPE__OWNED_BINDINGS;
+	int MAP_TYPE__OWNED_BINDINGS = ITERABLE_TYPE__OWNED_BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Signature</b></em>' containment reference.
@@ -15164,7 +15614,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_SIGNATURE = DATA_TYPE__OWNED_SIGNATURE;
+	int MAP_TYPE__OWNED_SIGNATURE = ITERABLE_TYPE__OWNED_SIGNATURE;
 
 	/**
 	 * The feature id for the '<em><b>Unspecialized Element</b></em>' reference.
@@ -15173,7 +15623,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__UNSPECIALIZED_ELEMENT = DATA_TYPE__UNSPECIALIZED_ELEMENT;
+	int MAP_TYPE__UNSPECIALIZED_ELEMENT = ITERABLE_TYPE__UNSPECIALIZED_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Extenders</b></em>' reference list.
@@ -15182,7 +15632,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__EXTENDERS = DATA_TYPE__EXTENDERS;
+	int MAP_TYPE__EXTENDERS = ITERABLE_TYPE__EXTENDERS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -15191,7 +15641,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__INSTANCE_CLASS_NAME = DATA_TYPE__INSTANCE_CLASS_NAME;
+	int MAP_TYPE__INSTANCE_CLASS_NAME = ITERABLE_TYPE__INSTANCE_CLASS_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -15200,7 +15650,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__IS_ABSTRACT = DATA_TYPE__IS_ABSTRACT;
+	int MAP_TYPE__IS_ABSTRACT = ITERABLE_TYPE__IS_ABSTRACT;
 
 	/**
 	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
@@ -15209,7 +15659,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__IS_ACTIVE = DATA_TYPE__IS_ACTIVE;
+	int MAP_TYPE__IS_ACTIVE = ITERABLE_TYPE__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -15218,7 +15668,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__IS_INTERFACE = DATA_TYPE__IS_INTERFACE;
+	int MAP_TYPE__IS_INTERFACE = ITERABLE_TYPE__IS_INTERFACE;
 
 	/**
 	 * The feature id for the '<em><b>Owned Behaviors</b></em>' containment reference list.
@@ -15227,7 +15677,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_BEHAVIORS = DATA_TYPE__OWNED_BEHAVIORS;
+	int MAP_TYPE__OWNED_BEHAVIORS = ITERABLE_TYPE__OWNED_BEHAVIORS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Invariants</b></em>' containment reference list.
@@ -15236,7 +15686,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_INVARIANTS = DATA_TYPE__OWNED_INVARIANTS;
+	int MAP_TYPE__OWNED_INVARIANTS = ITERABLE_TYPE__OWNED_INVARIANTS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Operations</b></em>' containment reference list.
@@ -15245,7 +15695,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_OPERATIONS = DATA_TYPE__OWNED_OPERATIONS;
+	int MAP_TYPE__OWNED_OPERATIONS = ITERABLE_TYPE__OWNED_OPERATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Owned Properties</b></em>' containment reference list.
@@ -15254,7 +15704,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNED_PROPERTIES = DATA_TYPE__OWNED_PROPERTIES;
+	int MAP_TYPE__OWNED_PROPERTIES = ITERABLE_TYPE__OWNED_PROPERTIES;
 
 	/**
 	 * The feature id for the '<em><b>Owning Package</b></em>' container reference.
@@ -15263,7 +15713,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__OWNING_PACKAGE = DATA_TYPE__OWNING_PACKAGE;
+	int MAP_TYPE__OWNING_PACKAGE = ITERABLE_TYPE__OWNING_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Super Classes</b></em>' reference list.
@@ -15272,7 +15722,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__SUPER_CLASSES = DATA_TYPE__SUPER_CLASSES;
+	int MAP_TYPE__SUPER_CLASSES = ITERABLE_TYPE__SUPER_CLASSES;
 
 	/**
 	 * The feature id for the '<em><b>Behavioral Class</b></em>' reference.
@@ -15281,7 +15731,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__BEHAVIORAL_CLASS = DATA_TYPE__BEHAVIORAL_CLASS;
+	int MAP_TYPE__BEHAVIORAL_CLASS = ITERABLE_TYPE__BEHAVIORAL_CLASS;
 
 	/**
 	 * The feature id for the '<em><b>Is Serializable</b></em>' attribute.
@@ -15290,7 +15740,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+	int MAP_TYPE__IS_SERIALIZABLE = ITERABLE_TYPE__IS_SERIALIZABLE;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -15299,7 +15749,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__VALUE = DATA_TYPE__VALUE;
+	int MAP_TYPE__VALUE = ITERABLE_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Key Type</b></em>' reference.
@@ -15308,7 +15758,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__KEY_TYPE = DATA_TYPE_FEATURE_COUNT + 0;
+	int MAP_TYPE__KEY_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Keys Are Null Free</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_TYPE__KEYS_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value Type</b></em>' reference.
@@ -15317,7 +15776,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__VALUE_TYPE = DATA_TYPE_FEATURE_COUNT + 1;
+	int MAP_TYPE__VALUE_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Values Are Null Free</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_TYPE__VALUES_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Map Type</em>' class.
@@ -15326,7 +15794,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE_FEATURE_COUNT = DATA_TYPE_FEATURE_COUNT + 2;
+	int MAP_TYPE_FEATURE_COUNT = ITERABLE_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -15335,7 +15803,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___ALL_OWNED_ELEMENTS = DATA_TYPE___ALL_OWNED_ELEMENTS;
+	int MAP_TYPE___ALL_OWNED_ELEMENTS = ITERABLE_TYPE___ALL_OWNED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Value</em>' operation.
@@ -15344,7 +15812,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___GET_VALUE__TYPE_STRING = DATA_TYPE___GET_VALUE__TYPE_STRING;
+	int MAP_TYPE___GET_VALUE__TYPE_STRING = ITERABLE_TYPE___GET_VALUE__TYPE_STRING;
 
 	/**
 	 * The operation id for the '<em>Flattened Type</em>' operation.
@@ -15353,7 +15821,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___FLATTENED_TYPE = DATA_TYPE___FLATTENED_TYPE;
+	int MAP_TYPE___FLATTENED_TYPE = ITERABLE_TYPE___FLATTENED_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Class</em>' operation.
@@ -15362,7 +15830,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___IS_CLASS = DATA_TYPE___IS_CLASS;
+	int MAP_TYPE___IS_CLASS = ITERABLE_TYPE___IS_CLASS;
 
 	/**
 	 * The operation id for the '<em>Is Template Parameter</em>' operation.
@@ -15371,7 +15839,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___IS_TEMPLATE_PARAMETER = DATA_TYPE___IS_TEMPLATE_PARAMETER;
+	int MAP_TYPE___IS_TEMPLATE_PARAMETER = ITERABLE_TYPE___IS_TEMPLATE_PARAMETER;
 
 	/**
 	 * The operation id for the '<em>Specialize In</em>' operation.
@@ -15380,7 +15848,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+	int MAP_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = ITERABLE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
 	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
@@ -15389,7 +15857,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+	int MAP_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = ITERABLE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -15398,7 +15866,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
+	int MAP_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = ITERABLE_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Map Type</em>' class.
@@ -15407,7 +15875,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE_OPERATION_COUNT = DATA_TYPE_OPERATION_COUNT + 0;
+	int MAP_TYPE_OPERATION_COUNT = ITERABLE_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -17356,7 +17824,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getParameterVariable()
 	 * @generated
 	 */
-	int PARAMETER_VARIABLE = 76;
+	int PARAMETER_VARIABLE = 77;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -24730,7 +25198,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getVisitable()
 	 * @generated
 	 */
-	int VISITABLE = 126;
+	int VISITABLE = 127;
 
 	/**
 	 * The number of structural features of the '<em>Visitable</em>' class.
@@ -25028,7 +25496,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getWildcardType()
 	 * @generated
 	 */
-	int WILDCARD_TYPE = 128;
+	int WILDCARD_TYPE = 129;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -25326,7 +25794,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getAssociativityKind()
 	 * @generated
 	 */
-	int ASSOCIATIVITY_KIND = 129;
+	int ASSOCIATIVITY_KIND = 130;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.CollectionKind <em>Collection Kind</em>}' enum.
@@ -25336,7 +25804,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCollectionKind()
 	 * @generated
 	 */
-	int COLLECTION_KIND = 130;
+	int COLLECTION_KIND = 131;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.PseudostateKind <em>Pseudostate Kind</em>}' enum.
@@ -25346,7 +25814,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getPseudostateKind()
 	 * @generated
 	 */
-	int PSEUDOSTATE_KIND = 131;
+	int PSEUDOSTATE_KIND = 132;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.TransitionKind <em>Transition Kind</em>}' enum.
@@ -25356,7 +25824,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTransitionKind()
 	 * @generated
 	 */
-	int TRANSITION_KIND = 132;
+	int TRANSITION_KIND = 133;
 
 	/**
 	 * The meta object id for the '<em>Boolean</em>' data type.
@@ -25365,7 +25833,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getBoolean()
 	 * @generated
 	 */
-	int BOOLEAN = 133;
+	int BOOLEAN = 134;
 
 	/**
 	 * The meta object id for the '<em>Integer</em>' data type.
@@ -25375,7 +25843,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getInteger()
 	 * @generated
 	 */
-	int INTEGER = 134;
+	int INTEGER = 135;
 
 	/**
 	 * The meta object id for the '<em>Library Feature</em>' data type.
@@ -25385,7 +25853,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLibraryFeature()
 	 * @generated
 	 */
-	int LIBRARY_FEATURE = 135;
+	int LIBRARY_FEATURE = 136;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -25395,7 +25863,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 136;
+	int OBJECT = 137;
 
 	/**
 	 * The meta object id for the '<em>Real</em>' data type.
@@ -25405,7 +25873,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getReal()
 	 * @generated
 	 */
-	int REAL = 137;
+	int REAL = 138;
 
 	/**
 	 * The meta object id for the '<em>String</em>' data type.
@@ -25415,7 +25883,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getString()
 	 * @generated
 	 */
-	int STRING = 138;
+	int STRING = 139;
 
 	/**
 	 * The meta object id for the '<em>Throwable</em>' data type.
@@ -25425,7 +25893,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getThrowable()
 	 * @generated
 	 */
-	int THROWABLE = 139;
+	int THROWABLE = 140;
 
 	/**
 	 * The meta object id for the '<em>Unlimited Natural</em>' data type.
@@ -25435,7 +25903,7 @@ extends EPackage
 	 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUnlimitedNatural()
 	 * @generated
 	 */
-	int UNLIMITED_NATURAL = 140;
+	int UNLIMITED_NATURAL = 141;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Annotation <em>Annotation</em>}'.
@@ -26544,6 +27012,16 @@ extends EPackage
 	EClass getInvalidType();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.IterableType <em>Iterable Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Iterable Type</em>'.
+	 * @see org.eclipse.ocl.pivot.IterableType
+	 * @generated
+	 */
+	EClass getIterableType();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.IterateExp <em>Iterate Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -26858,6 +27336,16 @@ extends EPackage
 	EOperation getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateIteratorTypeIsSourceKeyType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Iterator Type Is Source Key Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Iterator Type Is Source Key Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IteratorExp#validateIteratorTypeIsSourceKeyType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIteratorExp__ValidateIteratorTypeIsSourceKeyType__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateSafeIteratorIsRequired(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Safe Iterator Is Required</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -27109,6 +27597,17 @@ extends EPackage
 	EReference getLoopExp_OwnedBody();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.LoopExp#getOwnedCoIterators <em>Owned Co Iterators</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Co Iterators</em>'.
+	 * @see org.eclipse.ocl.pivot.LoopExp#getOwnedCoIterators()
+	 * @see #getLoopExp()
+	 * @generated
+	 */
+	EReference getLoopExp_OwnedCoIterators();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.LoopExp#getOwnedIterators <em>Owned Iterators</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -27131,6 +27630,36 @@ extends EPackage
 	EReference getLoopExp_ReferredIteration();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateMatchingMapCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Matching Map Co Iterators</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Matching Map Co Iterators</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateMatchingMapCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateMatchingMapCoIterators__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoCoInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Co Initializers</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate No Co Initializers</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateNoCoInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateNoCoInitializers__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Collection Co Iterators</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate No Collection Co Iterators</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateNoCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateSourceIsCollection(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Source Is Collection</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -27139,6 +27668,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getLoopExp__ValidateSourceIsCollection__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateSourceIsIterable(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Source Is Iterable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Source Is Iterable</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateSourceIsIterable(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateSourceIsIterable__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MapLiteralExp <em>Map Literal Exp</em>}'.
@@ -27215,6 +27754,17 @@ extends EPackage
 	EReference getMapType_KeyType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.MapType#isKeysAreNullFree <em>Keys Are Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Keys Are Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.MapType#isKeysAreNullFree()
+	 * @see #getMapType()
+	 * @generated
+	 */
+	EAttribute getMapType_KeysAreNullFree();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.MapType#getValueType <em>Value Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -27224,6 +27774,17 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getMapType_ValueType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.MapType#isValuesAreNullFree <em>Values Are Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Values Are Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.MapType#isValuesAreNullFree()
+	 * @see #getMapType()
+	 * @generated
+	 */
+	EAttribute getMapType_ValuesAreNullFree();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Initializers</em>}' operation.
@@ -30871,9 +31432,9 @@ extends EPackage
 	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Boolean is used for logical expressions, consisting of the predefined values true and false.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Boolean is used for logical expressions, consisting of the predefined values true and false.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @generated
 	 */
@@ -30883,9 +31444,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Integer is a primitive type representing integer values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Integer is a primitive type representing integer values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -30916,9 +31477,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Real is a primitive type representing the mathematical concept of real.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Real is a primitive type representing the mathematical concept of real.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -30929,9 +31490,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -30952,9 +31513,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * UnlimitedNatural is a primitive type representing unlimited natural values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * UnlimitedNatural is a primitive type representing unlimited natural values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31890,6 +32451,16 @@ extends EPackage
 		EClass INVALID_TYPE = eINSTANCE.getInvalidType();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.IterableTypeImpl <em>Iterable Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.IterableTypeImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getIterableType()
+		 * @generated
+		 */
+		EClass ITERABLE_TYPE = eINSTANCE.getIterableType();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.IterateExpImpl <em>Iterate Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32147,6 +32718,14 @@ extends EPackage
 		EOperation ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Iterator Type Is Source Key Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateIteratorTypeIsSourceKeyType__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Safe Iterator Is Required</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32352,6 +32931,14 @@ extends EPackage
 		EReference LOOP_EXP__OWNED_BODY = eINSTANCE.getLoopExp_OwnedBody();
 
 		/**
+		 * The meta object literal for the '<em><b>Owned Co Iterators</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LOOP_EXP__OWNED_CO_ITERATORS = eINSTANCE.getLoopExp_OwnedCoIterators();
+
+		/**
 		 * The meta object literal for the '<em><b>Owned Iterators</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32368,12 +32955,44 @@ extends EPackage
 		EReference LOOP_EXP__REFERRED_ITERATION = eINSTANCE.getLoopExp_ReferredIteration();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Matching Map Co Iterators</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateMatchingMapCoIterators__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate No Co Initializers</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoCoInitializers__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate No Collection Co Iterators</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Source Is Collection</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateSourceIsCollection__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Source Is Iterable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateSourceIsIterable__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MapLiteralExpImpl <em>Map Literal Exp</em>}' class.
@@ -32438,12 +33057,28 @@ extends EPackage
 		EReference MAP_TYPE__KEY_TYPE = eINSTANCE.getMapType_KeyType();
 
 		/**
+		 * The meta object literal for the '<em><b>Keys Are Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAP_TYPE__KEYS_ARE_NULL_FREE = eINSTANCE.getMapType_KeysAreNullFree();
+
+		/**
 		 * The meta object literal for the '<em><b>Value Type</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference MAP_TYPE__VALUE_TYPE = eINSTANCE.getMapType_ValueType();
+
+		/**
+		 * The meta object literal for the '<em><b>Values Are Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAP_TYPE__VALUES_ARE_NULL_FREE = eINSTANCE.getMapType_ValuesAreNullFree();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate No Initializers</b></em>' operation.

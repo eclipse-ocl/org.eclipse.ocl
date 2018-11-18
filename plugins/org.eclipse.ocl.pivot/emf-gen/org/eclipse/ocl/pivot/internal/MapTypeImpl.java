@@ -13,7 +13,9 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
@@ -43,13 +45,56 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getKeyType <em>Key Type</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#isKeysAreNullFree <em>Keys Are Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getValueType <em>Value Type</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#isValuesAreNullFree <em>Values Are Null Free</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MapTypeImpl extends DataTypeImpl implements MapType
+public class MapTypeImpl extends IterableTypeImpl implements MapType
 {
+	/**
+	 * The default value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @see #isKeysAreNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean KEYS_ARE_NULL_FREE_EDEFAULT = true;
+	/**
+	 * The flag representing the value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @see #isKeysAreNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int KEYS_ARE_NULL_FREE_EFLAG = 1 << 12;
+	/**
+	 * The default value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @see #isValuesAreNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean VALUES_ARE_NULL_FREE_EDEFAULT = true;
+	/**
+	 * The flag representing the value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @see #isValuesAreNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int VALUES_ARE_NULL_FREE_EFLAG = 1 << 13;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -58,6 +103,8 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 	protected MapTypeImpl()
 	{
 		super();
+		eFlags |= KEYS_ARE_NULL_FREE_EFLAG;
+		eFlags |= VALUES_ARE_NULL_FREE_EFLAG;
 	}
 
 	/**
@@ -130,8 +177,12 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 				return getValue();
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				return getKeyType();
+			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+				return isKeysAreNullFree();
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
 				return getValueType();
+			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+				return isValuesAreNullFree();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -228,8 +279,14 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				setKeyType((Type)newValue);
 				return;
+			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+				setKeysAreNullFree((Boolean)newValue);
+				return;
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
 				setValueType((Type)newValue);
+				return;
+			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+				setValuesAreNullFree((Boolean)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -314,8 +371,14 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				setKeyType((Type)null);
 				return;
+			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+				setKeysAreNullFree(KEYS_ARE_NULL_FREE_EDEFAULT);
+				return;
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
 				setValueType((Type)null);
+				return;
+			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+				setValuesAreNullFree(VALUES_ARE_NULL_FREE_EDEFAULT);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -379,10 +442,33 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				return getKeyType() != null;
+			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
 				return getValueType() != null;
+			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (keysAreNullFree: "); //$NON-NLS-1$
+		result.append((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0);
+		result.append(", valuesAreNullFree: "); //$NON-NLS-1$
+		result.append((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 	/**
@@ -452,8 +538,58 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 		System.err.println(eClass().getName() + ".setKeyType() is ignored");
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isKeysAreNullFree()
+	{
+		return (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setKeysAreNullFree(boolean newKeysAreNullFree)
+	{
+		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
+		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE, oldKeysAreNullFree, newKeysAreNullFree));
+	}
+
 	@Override
 	public void setValueType(Type newValueType) {			// FIXME delete me once compatibility not needed
 		System.err.println(eClass().getName() + ".setValueType() is ignored");
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isValuesAreNullFree()
+	{
+		return (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setValuesAreNullFree(boolean newValuesAreNullFree)
+	{
+		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
+		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE, oldValuesAreNullFree, newValuesAreNullFree));
 	}
 } //MapTypeImpl

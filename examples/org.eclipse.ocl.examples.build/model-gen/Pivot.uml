@@ -203,7 +203,7 @@
         association="Ppivot.A_ownedLast_CollectionRange"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionType" name="CollectionType">
-    <generalization xmi:id="Ppivot.TCollectionType.g0" general="Ppivot.TDataType"/>
+    <generalization xmi:id="Ppivot.TCollectionType.g0" general="Ppivot.TIterableType"/>
     <ownedAttribute xmi:id="Ppivot.TCollectionType.PisNullFree" name="isNullFree" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TCollectionType.PisNullFree.dlV" value="false"/>
     </ownedAttribute>
@@ -570,6 +570,9 @@
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInvalidType" name="InvalidType">
     <generalization xmi:id="Ppivot.TInvalidType.g0" general="Ppivot.TClass"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIterableType" name="IterableType" isAbstract="true">
+    <generalization xmi:id="Ppivot.TIterableType.g0" general="Ppivot.TDataType"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIterateExp" name="IterateExp">
     <generalization xmi:id="Ppivot.TIterateExp.g0" general="Ppivot.TLoopExp"/>
     <ownedAttribute xmi:id="Ppivot.TIterateExp.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
@@ -647,6 +650,11 @@
     <generalization xmi:id="Ppivot.TLoopExp.g0" general="Ppivot.TCallExp"/>
     <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
         association="Ppivot.A_ownedBody_LoopExp"/>
+    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedCoIterators" name="ownedCoIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
+        association="Ppivot.A_ownedCoIterators_LoopExp">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLoopExp.PownedCoIterators.lV"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLoopExp.PownedCoIterators.uV" value="*"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedIterators" name="ownedIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
         association="Ppivot.A_ownedIterators_LoopExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLoopExp.PownedIterators.lV"/>
@@ -672,7 +680,13 @@
         association="Ppivot.A_ownedValue_MapLiteralPart"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMapType" name="MapType">
-    <generalization xmi:id="Ppivot.TMapType.g0" general="Ppivot.TDataType"/>
+    <generalization xmi:id="Ppivot.TMapType.g0" general="Ppivot.TIterableType"/>
+    <ownedAttribute xmi:id="Ppivot.TMapType.PkeysAreNullFree" name="keysAreNullFree" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TMapType.PkeysAreNullFree.dlV" value="true"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="Ppivot.TMapType.PvaluesAreNullFree" name="valuesAreNullFree" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TMapType.PvaluesAreNullFree.dlV" value="true"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TMapType.PkeyType" name="keyType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_keyType_MapType"/>
     <ownedAttribute xmi:id="Ppivot.TMapType.PvalueType" name="valueType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_valueType_MapType"/>
   </packagedElement>
@@ -1589,6 +1603,9 @@
     <ownedEnd xmi:id="Ppivot.A_ownedCalledOperation_MessageExp.Pnull" type="Ppivot.TMessageExp" association="Ppivot.A_ownedCalledOperation_MessageExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedClasses_owningPackage" name="A_ownedClasses_owningPackage" memberEnd="Ppivot.TPackage.PownedClasses Ppivot.TClass.PowningPackage"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCoIterators_LoopExp" name="A_ownedCoIterators_LoopExp" memberEnd="Ppivot.TLoopExp.PownedCoIterators Ppivot.A_ownedCoIterators_LoopExp.Pnull">
+    <ownedEnd xmi:id="Ppivot.A_ownedCoIterators_LoopExp.Pnull" type="Ppivot.TLoopExp" association="Ppivot.A_ownedCoIterators_LoopExp"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedComments_owningElement" name="A_ownedComments_owningElement" memberEnd="Ppivot.TElement.PownedComments Ppivot.TComment.PowningElement"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompleteClasses_owningCompletePackage" name="A_ownedCompleteClasses_owningCompletePackage"
       memberEnd="Ppivot.TCompletePackage.PownedCompleteClasses Ppivot.TCompleteClass.PowningCompletePackage"/>

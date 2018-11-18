@@ -19,7 +19,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Iterator Exp</b></em>'.
- * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  *
@@ -149,6 +148,14 @@ public interface IteratorExp extends LoopExp, ReferringElement
 	 * @generated
 	 */
 	boolean validateIteratorTypeIsSourceElementType(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.6
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	default boolean validateIteratorTypeIsSourceKeyType(DiagnosticChain diagnostics, Map<Object, Object> context) { return true; }
 
 	/**
 	 * <!-- begin-user-doc -->

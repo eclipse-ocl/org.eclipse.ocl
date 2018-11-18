@@ -67,7 +67,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * @generated
  */
 public class CollectionTypeImpl
-extends DataTypeImpl
+extends IterableTypeImpl
 implements CollectionType {
 
 	/**

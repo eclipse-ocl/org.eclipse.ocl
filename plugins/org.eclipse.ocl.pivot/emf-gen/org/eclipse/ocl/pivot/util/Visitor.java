@@ -85,6 +85,7 @@ public interface Visitor<R>
 	R visitIntegerLiteralExp(org.eclipse.ocl.pivot.@NonNull IntegerLiteralExp object);
 	R visitInvalidLiteralExp(org.eclipse.ocl.pivot.@NonNull InvalidLiteralExp object);
 	R visitInvalidType(org.eclipse.ocl.pivot.@NonNull InvalidType object);
+	R visitIterableType(org.eclipse.ocl.pivot.@NonNull IterableType object);
 	R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object);
 	R visitIteration(org.eclipse.ocl.pivot.@NonNull Iteration object);
 	R visitIteratorExp(org.eclipse.ocl.pivot.@NonNull IteratorExp object);

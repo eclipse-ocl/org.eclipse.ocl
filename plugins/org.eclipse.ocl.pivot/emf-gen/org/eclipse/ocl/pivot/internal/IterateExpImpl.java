@@ -173,6 +173,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return basicSetOwnedSource(null, msgs);
 			case PivotPackage.ITERATE_EXP__OWNED_BODY:
 				return basicSetOwnedBody(null, msgs);
+			case PivotPackage.ITERATE_EXP__OWNED_CO_ITERATORS:
+				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
 			case PivotPackage.ITERATE_EXP__OWNED_ITERATORS:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 			case PivotPackage.ITERATE_EXP__OWNED_RESULT:
@@ -218,6 +220,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return getOwnedSource();
 			case PivotPackage.ITERATE_EXP__OWNED_BODY:
 				return getOwnedBody();
+			case PivotPackage.ITERATE_EXP__OWNED_CO_ITERATORS:
+				return getOwnedCoIterators();
 			case PivotPackage.ITERATE_EXP__OWNED_ITERATORS:
 				return getOwnedIterators();
 			case PivotPackage.ITERATE_EXP__REFERRED_ITERATION:
@@ -280,6 +284,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case PivotPackage.ITERATE_EXP__OWNED_BODY:
 				setOwnedBody((OCLExpression)newValue);
 				return;
+			case PivotPackage.ITERATE_EXP__OWNED_CO_ITERATORS:
+				getOwnedCoIterators().clear();
+				getOwnedCoIterators().addAll((Collection<? extends Variable>)newValue);
+				return;
 			case PivotPackage.ITERATE_EXP__OWNED_ITERATORS:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends Variable>)newValue);
@@ -340,6 +348,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case PivotPackage.ITERATE_EXP__OWNED_BODY:
 				setOwnedBody((OCLExpression)null);
 				return;
+			case PivotPackage.ITERATE_EXP__OWNED_CO_ITERATORS:
+				getOwnedCoIterators().clear();
+				return;
 			case PivotPackage.ITERATE_EXP__OWNED_ITERATORS:
 				getOwnedIterators().clear();
 				return;
@@ -389,6 +400,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return ownedSource != null;
 			case PivotPackage.ITERATE_EXP__OWNED_BODY:
 				return ownedBody != null;
+			case PivotPackage.ITERATE_EXP__OWNED_CO_ITERATORS:
+				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
 			case PivotPackage.ITERATE_EXP__OWNED_ITERATORS:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 			case PivotPackage.ITERATE_EXP__REFERRED_ITERATION:
@@ -443,10 +456,18 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATE_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP:
+				return validateMatchingMapCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATE_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP:
+				return validateNoCoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATE_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP:
+				return validateNoCollectionCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATE_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP:
 				return validateNoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP:
 				return validateSourceIsCollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATE_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP:
+				return validateSourceIsIterable((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATE_EXP___GET_REFERRED_ELEMENT:
 				return getReferredElement();
 			case PivotPackage.ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP:
@@ -575,6 +596,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
+					@SuppressWarnings("null")
 					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
@@ -797,6 +819,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 			/*@NonInvalid*/ boolean result;
 			if (isSafe) {
+				@SuppressWarnings("null")
 				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;

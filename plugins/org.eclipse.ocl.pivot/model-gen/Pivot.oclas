@@ -127,7 +127,7 @@
       <ownedProperties xmi:id="TGoSr" isComposite="true" name="ownedFirst" type="#BFtK4"/>
       <ownedProperties xmi:id="jF9nj" isComposite="true" name="ownedLast" type="#BFtK4"/>
     </ownedClasses>
-    <ownedClasses xmi:id="pawWx" name="CollectionType" superClasses="#1mHCJ">
+    <ownedClasses xmi:id="pawWx" name="CollectionType" superClasses="#9ppvF">
       <ownedProperties xmi:id="zzSGt" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="elementType"
           type="#rrwsa"/>
       <ownedProperties xmi:id="6Rs,j" defaultValueString="false" name="isNullFree" type="#ZuwnB"/>
@@ -356,6 +356,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="2uMHH" name="InvalidLiteralExp" superClasses="#fKWWp"/>
     <ownedClasses xmi:id="CFNJF" name="InvalidType" superClasses="#pDcbe"/>
+    <ownedClasses xmi:id="9ppvF" isAbstract="true" name="IterableType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="0L28o" name="IterateExp" superClasses="#KhrnS #dXAFV">
       <ownedInvariants xmi:id="X3QaQ" isCallable="true" name="BodyTypeConformsToResultType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedBody.type.conformsTo(ownedResult?.type)&#xA;&#xA;"/>
@@ -420,7 +421,10 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'collect' implies&#xA;if ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then&#xA;type.oclIsKindOf(SequenceType)&#xA;else&#xA;type.oclIsKindOf(BagType)&#xA;endif&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="BqluY" isCallable="true" name="IteratorTypeIsSourceElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedIterators->forAll(p | ownedSource?.type.oclAsType(CollectionType).elementType.conformsTo(p.type))&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies&#xA;    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in&#xA;    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="kHNTE" isCallable="true" name="IteratorTypeIsSourceKeyType">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies&#xA;    let sourceKeyType = sourceType.oclAsType(MapType).keyType in&#xA;    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cf60q" isCallable="true" name="SafeIteratorIsRequired">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies ownedIterators->forAll(isRequired)&#xA;"/>
@@ -490,13 +494,26 @@
         superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
     <ownedClasses xmi:id="fKWWp" isAbstract="true" name="LiteralExp" superClasses="#BFtK4"/>
     <ownedClasses xmi:id="KhrnS" isAbstract="true" name="LoopExp" superClasses="#QJrde">
+      <ownedInvariants xmi:id="0p5ql" isCallable="true" name="MatchingMapCoIterators">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="Y3Nh," isCallable="true" name="NoCoInitializers">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedCoIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="Us5+3" isCallable="true" name="NoCollectionCoIterators">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="Mu9dD" isCallable="true" name="NoInitializers">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="9R+V7" isCallable="true" name="SourceIsCollection">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(CollectionType)&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="R+NOk" isCallable="true" name="SourceIsIterable">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" type="#BFtK4"/>
+      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#Rl6IP"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" type="#Rl6IP"/>
       <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" type="#OZhAb"/>
     </ownedClasses>
@@ -508,10 +525,12 @@
       <ownedProperties xmi:id=",hDi+" isComposite="true" name="ownedValue" type="#BFtK4"/>
       <ownedProperties xmi:id="aqXmL" isImplicit="true" isRequired="false" name="MapLiteralExp" opposite="#C1zzW" type="#bTDI1"/>
     </ownedClasses>
-    <ownedClasses xmi:id="nozov" name="MapType" superClasses="#1mHCJ">
+    <ownedClasses xmi:id="nozov" name="MapType" superClasses="#9ppvF">
       <ownedProperties xmi:id="cBKS6" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="keyType" type="#rrwsa"/>
+      <ownedProperties xmi:id="W6bzu" defaultValueString="true" name="keysAreNullFree" type="#ZuwnB"/>
       <ownedProperties xmi:id="up7P9" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="valueType"
           type="#rrwsa"/>
+      <ownedProperties xmi:id="oaq2q" defaultValueString="true" name="valuesAreNullFree" type="#ZuwnB"/>
     </ownedClasses>
     <ownedClasses xmi:id="HRils" name="MessageExp" superClasses="#BFtK4">
       <ownedInvariants xmi:id="K+QpH" isCallable="true" name="OneCallOrOneSend">
@@ -1218,6 +1237,7 @@
       <ownedProperties xmi:id="a3p9g" isImplicit="true" isRequired="false" name="ExpressionInOCL" opposite="#2tYZA" type="#sFfJa"/>
       <ownedProperties xmi:id="i9Axv" isImplicit="true" isRequired="false" name="IterateExp" opposite="#eb1wJ" type="#0L28o"/>
       <ownedProperties xmi:id="6HKvR" isImplicit="true" isRequired="false" name="LetExp" opposite="#AvpRG" type="#zmGAi"/>
+      <ownedProperties xmi:id="Wqpuw" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
       <ownedProperties xmi:id="qs4sI" isImplicit="true" isRequired="false" name="LoopExp" opposite="#aRrs3" type="#KhrnS"/>
     </ownedClasses>
     <ownedClasses xmi:id="PT,bz" isAbstract="true" name="VariableDeclaration" superClasses="#j7EI0">

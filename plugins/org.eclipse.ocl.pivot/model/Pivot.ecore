@@ -380,7 +380,7 @@
         name="ownedLast" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionType" name="CollectionType"
-      eSuperTypes="#T-pivot-DataType">
+      eSuperTypes="#T-pivot-IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CollectionType-elementType"
         name="elementType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
@@ -859,6 +859,8 @@
       eSuperTypes="#T-pivot-LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidType" name="InvalidType"
       eSuperTypes="#T-pivot-Class"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterableType" name="IterableType"
+      abstract="true" eSuperTypes="#T-pivot-DataType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterateExp" name="IterateExp"
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateBodyTypeConformsToResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1145,10 +1147,25 @@
     </eOperations>
     <eOperations name="validateIteratorTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedIterators->forAll(p | ownedSource?.type.oclAsType(CollectionType).elementType.conformsTo(p.type))&#xA;"/>
+        <details key="body" value="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies&#xA;    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in&#xA;    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="IteratorTypeIsSourceElementType"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateIteratorTypeIsSourceKeyType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies&#xA;    let sourceKeyType = sourceType.oclAsType(MapType).keyType in&#xA;    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="IteratorTypeIsSourceKeyType"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
       <eParameters name="context">
@@ -1393,9 +1410,54 @@
       abstract="true" eSuperTypes="#T-pivot-OCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LoopExp" name="LoopExp" abstract="true"
       eSuperTypes="#T-pivot-CallExp">
+    <eOperations name="validateMatchingMapCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="MatchingMapCoIterators"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateNoCoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self.ownedCoIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="NoCoInitializers"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateNoCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="NoCollectionCoIterators"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eOperations name="validateNoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;&#xA;"/>
+        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NoInitializers"/>
@@ -1410,7 +1472,7 @@
     </eOperations>
     <eOperations name="validateSourceIsCollection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSource?.type.oclIsKindOf(CollectionType)&#xA;"/>
+        <details key="body" value="true&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SourceIsCollection"/>
@@ -1423,8 +1485,25 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eOperations name="validateSourceIsIterable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="SourceIsIterable"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedBody"
         name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
+        name="ownedCoIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedIterators"
         name="ownedIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-referredIteration"
@@ -1442,13 +1521,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapLiteralPart-ownedValue"
         name="ownedValue" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-DataType">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-keyType"
         name="keyType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-MapType-keysAreNullFree"
+        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-valueType"
         name="valueType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-MapType-valuesAreNullFree"
+        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MessageExp" name="MessageExp"
       eSuperTypes="#T-pivot-OCLExpression">

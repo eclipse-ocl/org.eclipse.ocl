@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -423,6 +424,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseInvalidType(InvalidType object)
 			{
 				return createInvalidTypeAdapter();
+			}
+			@Override
+			public Adapter caseIterableType(IterableType object)
+			{
+				return createIterableTypeAdapter();
 			}
 			@Override
 			public Adapter caseIterateExp(IterateExp object)
@@ -1292,6 +1298,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createInvalidTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.IterableType <em>Iterable Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.IterableType
+	 * @generated
+	 */
+	public Adapter createIterableTypeAdapter()
+	{
 		return null;
 	}
 

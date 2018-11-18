@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * @see org.eclipse.ocl.pivot.PivotPackage#getCollectionType()
  * @generated
  */
-public interface CollectionType extends DataType {
+public interface CollectionType extends IterableType {
 
 	/**
 	 * Returns the value of the '<em><b>Element Type</b></em>' reference.

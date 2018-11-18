@@ -18,6 +18,7 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -26,38 +27,27 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -334,6 +324,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _IntegerLiteralExp = createClass(PivotPackage.Literals.INTEGER_LITERAL_EXP);
 		private final @NonNull Class _InvalidLiteralExp = createClass(PivotPackage.Literals.INVALID_LITERAL_EXP);
 		private final @NonNull Class _InvalidType = createClass(PivotPackage.Literals.INVALID_TYPE);
+		private final @NonNull Class _IterableType = createClass(PivotPackage.Literals.ITERABLE_TYPE);
 		private final @NonNull Class _IterateExp = createClass(PivotPackage.Literals.ITERATE_EXP);
 		private final @NonNull Class _Iteration = createClass(PivotPackage.Literals.ITERATION);
 		private final @NonNull Class _IteratorExp = createClass(PivotPackage.Literals.ITERATOR_EXP);
@@ -724,7 +715,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_CollectionLiteralPart);
 			ownedClasses.add(type = _CollectionType);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_DataType);
+			superClasses.add(_IterableType);
 			ownedClasses.add(type = _Comment);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Element);
@@ -817,6 +808,10 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _InvalidType);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Class);
+			ownedClasses.add(type = _IterableType);
+			type.setIsAbstract(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_DataType);
 			ownedClasses.add(type = _IterateExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_LoopExp);
@@ -866,7 +861,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Element);
 			ownedClasses.add(type = _MapType);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_DataType);
+			superClasses.add(_IterableType);
 			ownedClasses.add(type = _MessageExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OCLExpression);
@@ -2136,6 +2131,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_LetExp_ownedVariable = createProperty(PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, _Variable);
 		private final @NonNull Property pr_Library_ownedPrecedences = createProperty(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, _OrderedSet_Precedence_NullFree);
 		private final @NonNull Property pr_LoopExp_ownedBody = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, _OCLExpression);
+		private final @NonNull Property pr_LoopExp_ownedCoIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, _OrderedSet_Variable_NullFree);
 		private final @NonNull Property pr_LoopExp_ownedIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, _OrderedSet_Variable_NullFree);
 		private final @NonNull Property pr_LoopExp_referredIteration = createProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, _Iteration);
 		private final @NonNull Property pr_MapLiteralExp_ownedParts = createProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, _OrderedSet_MapLiteralPart_NullFree);
@@ -2143,7 +2139,9 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_MapLiteralPart_ownedValue = createProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, _OCLExpression);
 		private final @NonNull Property pr_MapLiteralPart_MapLiteralExp_ownedParts = createProperty("MapLiteralExp", _MapLiteralExp);
 		private final @NonNull Property pr_MapType_keyType = createProperty(PivotPackage.Literals.MAP_TYPE__KEY_TYPE, _Type);
+		private final @NonNull Property pr_MapType_keysAreNullFree = createProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, _Boolean);
 		private final @NonNull Property pr_MapType_valueType = createProperty(PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, _Type);
+		private final @NonNull Property pr_MapType_valuesAreNullFree = createProperty(PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, _Boolean);
 		private final @NonNull Property pr_MessageExp_ownedArguments = createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, _OrderedSet_OCLExpression_NullFree);
 		private final @NonNull Property pr_MessageExp_ownedCalledOperation = createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, _CallOperationAction);
 		private final @NonNull Property pr_MessageExp_ownedSentSignal = createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL, _SendSignalAction);
@@ -2371,6 +2369,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Variable_ExpressionInOCL_ownedResult = createProperty("ExpressionInOCL", _ExpressionInOCL);
 		private final @NonNull Property pr_Variable_IterateExp_ownedResult = createProperty("IterateExp", _IterateExp);
 		private final @NonNull Property pr_Variable_LetExp_ownedVariable = createProperty("LetExp", _LetExp);
+		private final @NonNull Property pr_Variable_LoopExp_ownedCoIterators = createProperty("LoopExp", _LoopExp);
 		private final @NonNull Property pr_Variable_LoopExp_ownedIterators = createProperty("LoopExp", _LoopExp);
 		private final @NonNull Property pr_VariableDeclaration_typeValue = createProperty(PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, _Type);
 		private final @NonNull Property pr_VariableDeclaration_VariableExp_referredVariable = createProperty("VariableExp", _Bag_VariableExp);
@@ -2998,6 +2997,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_LoopExp_ownedBody);
+			ownedProperties.add(property = pr_LoopExp_ownedCoIterators);
+			property.setIsComposite(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Variable_LoopExp_ownedCoIterators);
 			ownedProperties.add(property = pr_LoopExp_ownedIterators);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
@@ -3034,11 +3037,15 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsTransient(true);
 			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_MapType_keyType);
+			ownedProperties.add(property = pr_MapType_keysAreNullFree);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_MapType_valueType);
 			property.setIsDerived(true);
 			property.setIsTransient(true);
 			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_MapType_valueType);
+			ownedProperties.add(property = pr_MapType_valuesAreNullFree);
+			property.setIsResolveProxies(true);
 
 			ownedProperties = _MessageExp.getOwnedProperties();
 			ownedProperties.add(property = pr_MessageExp_ownedArguments);
@@ -4017,6 +4024,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LetExp_ownedVariable);
+			ownedProperties.add(property = pr_Variable_LoopExp_ownedCoIterators);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_LoopExp_ownedCoIterators);
 			ownedProperties.add(property = pr_Variable_LoopExp_ownedIterators);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);

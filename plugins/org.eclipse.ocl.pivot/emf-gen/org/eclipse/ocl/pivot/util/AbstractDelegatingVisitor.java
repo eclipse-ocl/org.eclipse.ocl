@@ -275,6 +275,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitIterableType(org.eclipse.ocl.pivot.@NonNull IterableType object) {
+		return delegate.visitIterableType(object);
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return delegate.visitIterateExp(object);
 	}

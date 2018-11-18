@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Class</b></em>'.
- * @noimplement
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->

@@ -610,6 +610,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitIterableType(org.eclipse.ocl.pivot.@NonNull IterableType object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitIterableType(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		@Nullable P prologue = preVisit(object);
 		try {

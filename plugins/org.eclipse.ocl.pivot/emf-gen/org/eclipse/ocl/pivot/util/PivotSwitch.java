@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -257,6 +258,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				BagType bagType = (BagType)theEObject;
 				T result = caseBagType(bagType);
 				if (result == null) result = caseCollectionType(bagType);
+				if (result == null) result = caseIterableType(bagType);
 				if (result == null) result = caseDataType(bagType);
 				if (result == null) result = caseClass(bagType);
 				if (result == null) result = caseType(bagType);
@@ -373,6 +375,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 			{
 				CollectionType collectionType = (CollectionType)theEObject;
 				T result = caseCollectionType(collectionType);
+				if (result == null) result = caseIterableType(collectionType);
 				if (result == null) result = caseDataType(collectionType);
 				if (result == null) result = caseClass(collectionType);
 				if (result == null) result = caseType(collectionType);
@@ -694,6 +697,20 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PivotPackage.ITERABLE_TYPE:
+			{
+				IterableType iterableType = (IterableType)theEObject;
+				T result = caseIterableType(iterableType);
+				if (result == null) result = caseDataType(iterableType);
+				if (result == null) result = caseClass(iterableType);
+				if (result == null) result = caseType(iterableType);
+				if (result == null) result = caseNamespace(iterableType);
+				if (result == null) result = caseTemplateableElement(iterableType);
+				if (result == null) result = caseNamedElement(iterableType);
+				if (result == null) result = caseElement(iterableType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PivotPackage.ITERATE_EXP:
 			{
 				IterateExp iterateExp = (IterateExp)theEObject;
@@ -854,6 +871,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 			{
 				MapType mapType = (MapType)theEObject;
 				T result = caseMapType(mapType);
+				if (result == null) result = caseIterableType(mapType);
 				if (result == null) result = caseDataType(mapType);
 				if (result == null) result = caseClass(mapType);
 				if (result == null) result = caseType(mapType);
@@ -1024,6 +1042,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				OrderedSetType orderedSetType = (OrderedSetType)theEObject;
 				T result = caseOrderedSetType(orderedSetType);
 				if (result == null) result = caseCollectionType(orderedSetType);
+				if (result == null) result = caseIterableType(orderedSetType);
 				if (result == null) result = caseDataType(orderedSetType);
 				if (result == null) result = caseClass(orderedSetType);
 				if (result == null) result = caseType(orderedSetType);
@@ -1254,6 +1273,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				SequenceType sequenceType = (SequenceType)theEObject;
 				T result = caseSequenceType(sequenceType);
 				if (result == null) result = caseCollectionType(sequenceType);
+				if (result == null) result = caseIterableType(sequenceType);
 				if (result == null) result = caseDataType(sequenceType);
 				if (result == null) result = caseClass(sequenceType);
 				if (result == null) result = caseType(sequenceType);
@@ -1269,6 +1289,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				SetType setType = (SetType)theEObject;
 				T result = caseSetType(setType);
 				if (result == null) result = caseCollectionType(setType);
+				if (result == null) result = caseIterableType(setType);
 				if (result == null) result = caseDataType(setType);
 				if (result == null) result = caseClass(setType);
 				if (result == null) result = caseType(setType);
@@ -2094,6 +2115,22 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseInvalidType(InvalidType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Iterable Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Iterable Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIterableType(IterableType object)
+	{
 		return null;
 	}
 
