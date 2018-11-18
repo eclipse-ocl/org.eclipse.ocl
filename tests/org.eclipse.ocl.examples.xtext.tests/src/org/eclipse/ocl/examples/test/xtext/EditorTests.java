@@ -119,7 +119,6 @@ public class EditorTests extends XtextTestCase
 
 	public XtextEditor doStartUp(String editorId, String testFile, String testContent)
 			throws CoreException, PartInitException {
-		TestUIUtil.closeIntro();
 		InputStream inputStream = new URIConverter.ReadableInputStream(testContent, "UTF-8");
 		FileEditorInput fileEditorInput = createFileEditorInput("test", testFile, inputStream);
 		XtextEditor editor = doTestEditor(editorId, fileEditorInput);
@@ -151,7 +150,7 @@ public class EditorTests extends XtextTestCase
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 		XtextEditor editor = (XtextEditor) IDE.openEditor(page, fileEditorInput, editorId, true);
-		TestUIUtil.wait(750);
+		TestUIUtil.wait(7500);
 		String languageName = editor.getLanguageName();
 		assertEquals(editorId, languageName);
 		file.refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -251,6 +250,7 @@ public class EditorTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		TestUIUtil.suppressGitPrefixPopUp();
+		TestUIUtil.closeIntro();
 		super.setUp();
 	}
 
@@ -264,7 +264,7 @@ public class EditorTests extends XtextTestCase
 	public void testEditor_OpenCompleteOCLEditor4Pivot_OCL() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/Pivot.ocl", true);
 		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
-		assertTrue(documentText.contains("inv SourceIsCollection: ownedSource?.type.oclIsKindOf(CollectionType)"));
+		assertTrue(documentText.contains("inv SourceIsCollection: true"));
 	}
 
 	public void testEditor_OpenCompleteOCLEditor4Fruit_OCL() throws Exception {

@@ -171,8 +171,13 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
-	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, valueType);
+	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
+		return getMapType(genericType, keyType, true, valueType, true);
+	}
+
+	@Override
+	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		ExecutorMapType specializedType = null;
 		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>> map = mapSpecializations.get(genericType);
 		if (map == null) {

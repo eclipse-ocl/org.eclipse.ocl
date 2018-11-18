@@ -28,6 +28,7 @@ import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TuplePartCS;
@@ -96,8 +97,20 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		Type keyType = object.getKeyType();
 		Type valueType = object.getValueType();
 		if ((keyType != null) && (valueType != null)) {
-			csRef.setOwnedKeyType((TypedRefCS) keyType.accept(this));
-			csRef.setOwnedValueType((TypedRefCS) valueType.accept(this));
+			TypedRefCS csKeyType = (TypedRefCS) keyType.accept(this);
+			TypedRefCS csValueType = (TypedRefCS) valueType.accept(this);
+			if (!object.isKeysAreNullFree()) {
+				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+				csMultiplicity.setStringBounds("?");
+				csKeyType.setOwnedMultiplicity(csMultiplicity);
+			}
+			if (!object.isValuesAreNullFree()) {
+				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+				csMultiplicity.setStringBounds("?");
+				csValueType.setOwnedMultiplicity(csMultiplicity);
+			}
+			csRef.setOwnedKeyType(csKeyType);
+			csRef.setOwnedValueType(csValueType);
 			if (keyType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)keyType).getOwningPackage();
 				if (typePackage != null) {

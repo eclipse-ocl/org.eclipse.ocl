@@ -250,19 +250,28 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		Variable result = object.getOwnedResult();
 		if (context.showNames()) {
 			List<Variable> iterators = object.getOwnedIterators();
+			List<Variable> coIterators = object.getOwnedCoIterators();
+			int iteratorsSize = iterators.size();
+			int coIteratorsSize = coIterators.size();
 			appendSourceNavigation(object);
 			context.appendName(referredIteration);
 			context.push("(", "");
 			String prefix = null;
 			if (iterators.size() > 0) {
 				boolean hasExplicitIterator = false;
-				for (Variable iterator : iterators) {
+				for (int i = 0; i < iteratorsSize; i++) {
+					Variable iterator = iterators.get(i);
+					Variable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 					if (!iterator.isIsImplicit()) {
 						if (prefix != null) {
 							context.next(null, prefix, " ");
 						}
 						//						safeVisit(iterator);
 						context.appendName(iterator);
+						if (coIterator != null) {
+							context.append(" <- ");
+							context.appendName(coIterator);
+						}
 						prefix = ",";
 						hasExplicitIterator = true;
 					}
@@ -292,13 +301,23 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredIteration);
 			context.push("(", "");
 			String prefix = null;
-			for (Variable iterator : object.getOwnedIterators()) {
+			List<Variable> iterators = object.getOwnedIterators();
+			List<Variable> coIterators = object.getOwnedCoIterators();
+			int iteratorsSize = iterators.size();
+			int coIteratorsSize = coIterators.size();
+			for (int i = 0; i < iteratorsSize; i++) {
+				Variable iterator = iterators.get(i);
+				Variable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 				if (prefix != null) {
 					context.next(null, prefix, " ");
 				}
 				context.appendName(iterator);
 				context.append(" : ");
 				safeVisit(iterator.getType());
+				if (coIterator != null) {
+					context.append(" <- ");
+					context.appendName(coIterator);
+				}
 				prefix = ",";
 			}
 			context.next(null, ";", " ");
@@ -321,6 +340,9 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		OCLExpression body = object.getOwnedBody();
 		if (context.showNames()) {
 			List<Variable> iterators = object.getOwnedIterators();
+			List<Variable> coIterators = object.getOwnedCoIterators();
+			int iteratorsSize = iterators.size();
+			int coIteratorsSize = coIterators.size();
 			appendSourceNavigation(object);
 			if (object.isIsImplicit()) {
 				assert referredIteration.getName().equals("collect");
@@ -333,13 +355,19 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				if (iterators.size() > 0) {
 					String prefix = null;
 					boolean hasExplicitIterator = false;
-					for (Variable iterator : iterators) {
+					for (int i = 0; i < iteratorsSize; i++) {
+						Variable iterator = iterators.get(i);
+						Variable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 						if (!iterator.isIsImplicit()) {
 							if (prefix != null) {
 								context.next(null, prefix, " ");
 							}
 							//							safeVisit(iterator);
 							context.appendName(iterator);
+							if (coIterator != null) {
+								context.append(" <- ");
+								context.appendName(coIterator);
+							}
 							prefix = ",";
 							hasExplicitIterator = true;
 						}

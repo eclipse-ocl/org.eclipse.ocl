@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
  * IterationManager defines the supervisor for an iteration. It provides a body, one or more
@@ -29,7 +30,26 @@ public interface IterationManager
 	{
 		@NonNull Executor getExecutor();
 	}
-	
+
+	/**
+	 * @since 1.6
+	 */
+	public interface IterationManagerExtension2 extends IterationManagerExtension
+	{
+
+		/**
+		 * Create a nested iteration supervisor.
+		 * <br>
+		 * This method supports the closure iteration for which there is only a single iterator,
+		 * and so this method need only be supported by single iterator managers.
+		 *
+		 * @param value the nested iteration domain
+		 * @return the iteration space
+		 * @throws InvalidValueException
+		 */
+		@NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value);
+	}
+
 	/**
 	 * Advance the iterators to the next iteration, returning false once all possible
 	 * iterator states have been exhausted.
@@ -41,11 +61,14 @@ public interface IterationManager
 	 * <br>
 	 * This method supports the closure iteration for which there is only a single iterator,
 	 * and so this method need only be supported by single iterator managers.
-	 * 
+	 *
 	 * @param value the nested iteration domain
 	 * @return the iteration space
 	 * @throws InvalidValueException
+	 *
+	 * @deprecated use IterationManagerExtension2 and IterableValue
 	 */
+	@Deprecated
 	@NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value);
 
 	void dispose();
@@ -57,7 +80,7 @@ public interface IterationManager
 	 * and accumulator update.
 	 */
 	@Nullable Object evaluateBody();
-	
+
 	/**
 	 * Get the current state of the iterator.
 	 * <br>
@@ -80,9 +103,9 @@ public interface IterationManager
 	@NonNull CollectionValue getSourceCollection();
 
 	@NonNull StandardLibrary getStandardLibrary();
-	
+
 	/**
-	 * Return true if the iterators have a step to be evaluated. 
+	 * Return true if the iterators have a step to be evaluated.
 	 */
 	boolean hasCurrent();
 
@@ -91,9 +114,9 @@ public interface IterationManager
 	 * <br>
 	 * This implements the body of an iterate iteration for which the accumulator value may
 	 * be assigned to a completely independent value.
-	 * 
+	 *
 	 * Returns null for the iteration to continue, non-null to terminate.
-	 * @throws InvalidValueException 
+	 * @throws InvalidValueException
 	 */
 	@Nullable Object updateAccumulator(Object newValue);
 }

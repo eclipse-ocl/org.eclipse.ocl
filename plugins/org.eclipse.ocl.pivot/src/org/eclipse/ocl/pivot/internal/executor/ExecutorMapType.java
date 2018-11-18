@@ -119,12 +119,32 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
+	public boolean isKeysAreNullFree() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isValuesAreNullFree() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setKeyType(Type value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
+	public void setKeysAreNullFree(boolean value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setValueType(Type value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setValuesAreNullFree(boolean value) {
 		throw new UnsupportedOperationException();
 	}
 

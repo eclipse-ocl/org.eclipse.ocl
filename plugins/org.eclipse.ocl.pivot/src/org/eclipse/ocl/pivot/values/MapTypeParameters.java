@@ -17,4 +17,16 @@ public interface MapTypeParameters<K extends Type, V extends Type> extends Itera
 {
 	@NonNull K getKeyType();
 	@NonNull V getValueType();
+	/**
+	 * @since 1.6
+	 */
+	default boolean isKeysAreNullFree() {
+		return true;
+	}
+	/**
+	 * @since 1.6
+	 */
+	default boolean isValuesAreNullFree() {
+		return true;
+	}
 }

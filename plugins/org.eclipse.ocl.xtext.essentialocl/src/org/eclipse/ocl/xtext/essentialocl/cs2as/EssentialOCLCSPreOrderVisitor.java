@@ -139,10 +139,20 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			String name = csElement.getName();
 			assert name != null;
 			if ((csKeyType != null) && (csValueType != null)) {
+				Boolean keysAreNullFree = context.isRequired(csKeyType);
+				Boolean valuesAreNullFree = context.isRequired(csValueType);
+				//	MultiplicityCS csKeyMultiplicity = csKeyType.getOwnedMultiplicity();
+				//	if (csKeyMultiplicity != null) {
+				//		keysAreNullFree = csKeyMultiplicity.getLower() > 0;
+				//	}
+				//	MultiplicityCS csValueMultiplicity = csValueType.getOwnedMultiplicity();
+				//	if (csValueMultiplicity != null) {
+				//		valuesAreNullFree = csValueMultiplicity.getLower() > 0;
+				//	}
 				Type keyType = PivotUtil.getPivot(Type.class, csKeyType);
 				Type valueType = PivotUtil.getPivot(Type.class, csValueType);
 				if ((keyType != null) && (valueType != null)) {
-					type = metamodelManager.getMapType(name, keyType, valueType);
+					type = metamodelManager.getMapType(name, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 				}
 			}
 			if (type == null) {

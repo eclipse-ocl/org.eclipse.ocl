@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
  * ClosureIteration realizes the Collection::closure() library iteration.
@@ -36,7 +37,7 @@ public class ClosureIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -48,8 +49,9 @@ public class ClosureIteration extends AbstractIteration
 	/**
 	 * Recursively evaluates the iterator body expression.
 	 */
-    @Override
+	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+		IterationManager.IterationManagerExtension2 iterationManager2 = (IterationManager.IterationManagerExtension2)iterationManager;
 		// The parent is the iterator
 		Object value = iterationManager.get();
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
@@ -57,24 +59,24 @@ public class ClosureIteration extends AbstractIteration
 		if (!accumulatorValue.add(value)) {
 			return CARRY_ON;
 		}
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal instanceof InvalidValueException) {
 			throw (InvalidValueException)bodyVal;				// FIXME Analyze away
 		}
 		if (bodyVal == null) {
 			return iterationManager.getAccumulatorValue();		// Null body is termination
 		}
-		CollectionValue collectionValue;
+		IterableValue collectionValue;
 		if (bodyVal instanceof CollectionValue) {
 			collectionValue = (CollectionValue) bodyVal;
 		}
 		else {
-			Executor executor = ((IterationManager.IterationManagerExtension)iterationManager).getExecutor();
+			Executor executor = iterationManager2.getExecutor();
 			Type elementType = executor.getStaticTypeOf(bodyVal);
 			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedId(elementType.getTypeId());
 			collectionValue = executor.getIdResolver().createSequenceOfEach(sequenceId, bodyVal);
 		}
-		evaluateIteration(iterationManager.createNestedIterationManager(collectionValue));
+		evaluateIteration(iterationManager2.createNestedIterationManager(collectionValue));
 		return CARRY_ON;
 	}
 }

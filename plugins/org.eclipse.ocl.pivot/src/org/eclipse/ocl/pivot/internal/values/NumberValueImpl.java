@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
@@ -50,22 +51,22 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	private static final long serialVersionUID = 1L;
 
 	static class EmptyIterator implements Iterator<Value>
-    {
-        @Override
+	{
+		@Override
 		public boolean hasNext() {
-            return false;
-        }
-        @Override
+			return false;
+		}
+		@Override
 		public Value next() {
-            throw new NoSuchElementException();
-        }
-        @Override
+			throw new NoSuchElementException();
+		}
+		@Override
 		public void remove() {
-            throw new IllegalStateException();
-        }
-    }
+			throw new IllegalStateException();
+		}
+	}
 
-    /**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -94,7 +95,7 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	@Override
 	public Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		//
-		//	This partial implementation returns null to signal to the derived invoker to make a type-dependent guess 
+		//	This partial implementation returns null to signal to the derived invoker to make a type-dependent guess
 		//
 		if ((instanceClass == Double.class) || (instanceClass == double.class)) {
 			return doubleValue();
@@ -135,6 +136,14 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	@Override
 	public @NonNull IntegerValue asIntegerValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INTEGER_NAME, getTypeName());
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull IterableValue asIterableValue() {
+		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ITERABLE_NAME, getTypeName());
 	}
 
 	@Override
@@ -198,9 +207,9 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNLIMITED_NATURAL_NAME, getTypeName());
 	}
 
-//	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
-//		return getType(standardLibrary);
-//	}
+	//	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
+	//		return getType(standardLibrary);
+	//	}
 
 	public @NonNull String getTypeName() {
 		return getTypeId().getDisplayName();
@@ -215,7 +224,7 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	public boolean isUndefined() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
 		return equals(thatValue);

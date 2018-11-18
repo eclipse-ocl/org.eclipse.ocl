@@ -1150,6 +1150,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.6
+	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedCoIterators(@NonNull LoopExp loopExp) {
+		return ClassUtil.nullFree(loopExp.getOwnedCoIterators());
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Iterable<@NonNull CompleteClass> getOwnedCompleteClasses(@NonNull CompletePackage completePackage) {

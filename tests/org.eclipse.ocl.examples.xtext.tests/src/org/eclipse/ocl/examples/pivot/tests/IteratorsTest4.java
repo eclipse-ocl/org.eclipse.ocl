@@ -953,7 +953,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		ocl.assertQueryInvalid(ocl.pkg1,
 			"let e : Collection(ocl::Package) = null in e->iterate(" +
-					"p : ocl::Package; s : String = '' | s.concat(p.name))", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+					"p : ocl::Package; s : String = '' | s.concat(p.name))", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.ITERABLE_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
 
 		ocl.assertQueryInvalid(ocl.pkg1,
 			"let e : Collection(ocl::Package) = invalid in e->iterate(" +
@@ -969,7 +969,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		ocl.assertQueryInvalid(ocl.pkg1,
 			"let e : Collection(ocl::Package) = null in e->exists(" +
-					"p : ocl::Package | p.name = 'bob')", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+					"p : ocl::Package | p.name = 'bob')", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.ITERABLE_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
 
 		ocl.assertQueryInvalid(ocl.pkg1,
 			"let e : Collection(ocl::Package) = invalid in e->exists(" +

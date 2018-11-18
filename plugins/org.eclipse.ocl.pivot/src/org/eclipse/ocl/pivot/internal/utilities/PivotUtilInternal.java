@@ -476,6 +476,13 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.6
+	 */
+	public static @NonNull List<@NonNull Variable> getOwnedCoIteratorsList(@NonNull LoopExp loopExp) {
+		return ClassUtil.nullFree(loopExp.getOwnedCoIterators());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull List<@NonNull Import> getOwnedImportsList(@NonNull Model asModel) {

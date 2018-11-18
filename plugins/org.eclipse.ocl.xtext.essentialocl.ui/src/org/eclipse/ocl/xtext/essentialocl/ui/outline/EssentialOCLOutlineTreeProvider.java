@@ -31,7 +31,7 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 
 /**
  * customization of the default outline structure
- * 
+ *
  */
 public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 {
@@ -50,7 +50,7 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 			}
 		}
 		return null;
- 	}
+	}
 	protected void _createNode(IOutlineNode parentNode, ExpressionInOCL ele) {			// Skip node
 		createNode(parentNode, ele.getOwnedBody());
 	}
@@ -67,6 +67,11 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 		for (Variable iterator : ele.getOwnedIterators()) {
 			createNode(parentNode, iterator);
 		}
+		for (Variable iterator : ele.getOwnedCoIterators()) {
+			if (iterator != null) {
+				createNode(parentNode, iterator);
+			}
+		}
 		createNode(parentNode, ele.getOwnedResult());
 		createNode(parentNode, ele.getOwnedSource());
 		createNode(parentNode, ele.getOwnedBody());
@@ -75,6 +80,11 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 	protected void _createChildren(IOutlineNode parentNode, IteratorExp ele) {
 		for (Variable iterator : ele.getOwnedIterators()) {
 			createNode(parentNode, iterator);
+		}
+		for (Variable iterator : ele.getOwnedCoIterators()) {
+			if (iterator != null) {
+				createNode(parentNode, iterator);
+			}
 		}
 		createNode(parentNode, ele.getOwnedSource());
 		createNode(parentNode, ele.getOwnedBody());
@@ -100,8 +110,8 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 		createNode(parentNode, ele.getOwnedSource());
 	}
 
-//	protected boolean _isLeaf(OperationCallExp csExp) {
-//		boolean _isLeaf = super._isLeaf(csExp);
-//		return _isLeaf;
-//	}
+	//	protected boolean _isLeaf(OperationCallExp csExp) {
+	//		boolean _isLeaf = super._isLeaf(csExp);
+	//		return _isLeaf;
+	//	}
 }

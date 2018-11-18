@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -282,6 +283,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@SuppressWarnings("unchecked")			// FIXME check element types
 	public @Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
 		return (List<T>) asEcoreObject(idResolver, instanceClass);
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull IterableValue asIterableValue() {
+		return this;
 	}
 
 	public @NonNull List<? extends Object> asList() {

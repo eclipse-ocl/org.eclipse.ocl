@@ -16,11 +16,12 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
-import org.eclipse.ocl.pivot.evaluation.IterationManager.IterationManagerExtension;
+import org.eclipse.ocl.pivot.evaluation.IterationManager.IterationManagerExtension2;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
-public abstract class AbstractIterationManager implements IterationManagerExtension
+public abstract class AbstractIterationManager implements IterationManagerExtension2
 {
 	/**
 	 * @since 1.1
@@ -47,6 +48,11 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 
 	@Override
 	public @NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value) {
+		return createNestedIterationManager((IterableValue)value);
+	}
+
+	@Override
+	public @NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value) {
 		throw new UnsupportedOperationException();	// Only required for single iterator managers
 	}
 
@@ -57,20 +63,25 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 	public @Nullable Object get() {
 		throw new UnsupportedOperationException();	// Only required for single iterator managers
 	}
-	
+
 	/** @deprecated use getExecutor() */
 	@Deprecated
 	@Override
 	public @NonNull Evaluator getEvaluator() {
 		return executor;
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
 	@Override
 	public @NonNull Executor getExecutor() {
 		return executor;
+	}
+
+	@Override
+	public @NonNull CollectionValue getSourceCollection() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

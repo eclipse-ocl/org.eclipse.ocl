@@ -22,9 +22,10 @@ import org.eclipse.ocl.pivot.library.AbstractIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 public class ExecutorSingleIterationManager extends AbstractIterationManager
-{	
+{
 	class Nested extends ExecutorSingleIterationManager
 	{
 		protected final @NonNull ExecutorSingleIterationManager rootIterationManager;
@@ -40,7 +41,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		public int getDepth() {
 			return depth;
 		}
-		
+
 		@Override
 		public @NonNull ExecutorSingleIterationManager getRootIterationManager() {
 			return rootIterationManager;
@@ -51,7 +52,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 			return rootIterationManager.getSourceCollection();
 		}
 	}
-	
+
 	protected final @NonNull CollectionValue collectionValue;
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull LibraryBinaryOperation body;
@@ -89,7 +90,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		this.iteratorValue = collectionValue.iterator();
 		advanceIterators();
 	}
-	
+
 	@Override
 	public boolean advanceIterators() {
 		currentValue = iteratorValue.hasNext() ? iteratorValue.next() : iteratorValue;
@@ -97,8 +98,8 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 	}
 
 	@Override
-	public @NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value) {
-		return new Nested(this, value);
+	public @NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value) {
+		return new Nested(this, (CollectionValue)value);
 	}
 
 	@Override
@@ -119,7 +120,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 	public int getDepth() {
 		return 0;
 	}
-	
+
 	public @NonNull ExecutorSingleIterationManager getRootIterationManager() {
 		return this;
 	}
@@ -128,7 +129,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 	public @NonNull CollectionValue getSourceCollection() {
 		return collectionValue;
 	}
-	
+
 	@Override
 	public boolean hasCurrent() {
 		return currentValue != iteratorValue;

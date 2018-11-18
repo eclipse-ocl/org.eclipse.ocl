@@ -1323,7 +1323,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getMapType(libraryCompleteClass, TypeUtil.createMapTypeParameters(keyTemplateArgument, valueTemplateArgument));
+			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getMapType(libraryCompleteClass, TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
 			return specializedType;
 		}
 		else {
@@ -1342,11 +1342,19 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return lockingAnnotation;
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, @NonNull Type valueType) {
+	/**
+	 * @since 1.6
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		if (keyType.eIsProxy() || valueType.eIsProxy()) {
 			return standardLibrary.getOclInvalidType();
 		}
-		return completeEnvironment.getMapType(standardLibrary.getRequiredLibraryType(mapTypeName), keyType, valueType);
+		return completeEnvironment.getMapType(standardLibrary.getRequiredLibraryType(mapTypeName), keyType, keysAreNullFree, valueType, valuesAreNullFree);
+	}
+
+	@Deprecated /* @deprected provide null-free arguments */
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, @NonNull Type valueType) {
+		return getMapType(mapTypeName, keyType, true, valueType, true);
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {

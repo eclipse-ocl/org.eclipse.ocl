@@ -232,6 +232,25 @@ public class EquivalenceUtil
 				}
 			}
 		}
+		List<CGIterator> theseCoIterators = thisValue.getCoIterators();
+		List<CGIterator> thoseCoIterators = thatValue.getCoIterators();
+		int iCoSize = theseCoIterators.size();
+		if (iCoSize != thoseCoIterators.size()) {
+			return null;			// Different iterator lists do not guarantee different results
+		}
+		for (int i = 0; i < iCoSize; i++) {
+			CGIterator thisCoIterator = theseCoIterators.get(i);
+			CGIterator thatCoIterator = thoseCoIterators.get(i);
+			if ((thisCoIterator != null) || (thatCoIterator != null)) {
+				if ((thisCoIterator == null) || (thatCoIterator == null)) {
+					return null;			// Null co-iterators should never happen
+				}
+				Boolean equivalence = thisCoIterator.isEquivalentTo(thatCoIterator);
+				if (equivalence != Boolean.TRUE) {
+					return null;			// Different iterators do not guarantee different results
+				}
+			}
+		}
 		return Boolean.TRUE;
 	}
 

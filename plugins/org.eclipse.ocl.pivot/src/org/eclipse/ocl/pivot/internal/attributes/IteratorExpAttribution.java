@@ -33,12 +33,26 @@ public class IteratorExpAttribution extends AbstractAttribution
 			OCLExpression source = targetExpression.getOwnedSource();
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 			environmentView.addElements(targetExpression.getOwnedIterators());
+			environmentView.addElements(targetExpression.getOwnedCoIterators());
 		}
 		else if (containmentFeature == PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS) {
 			OCLExpression source = targetExpression.getOwnedSource();
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 			EObject child = scopeView.getChild();
 			for (Variable iterator : targetExpression.getOwnedIterators()) {
+				if (iterator != null) {
+					environmentView.addNamedElement(iterator);
+					if (iterator == child) {
+						break;
+					}
+				}
+			}
+		}
+		else if (containmentFeature == PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS) {
+			OCLExpression source = targetExpression.getOwnedSource();
+			environmentView.addElementsOfScope(source.getType(), scopeView);
+			EObject child = scopeView.getChild();
+			for (Variable iterator : targetExpression.getOwnedCoIterators()) {
 				if (iterator != null) {
 					environmentView.addNamedElement(iterator);
 					if (iterator == child) {

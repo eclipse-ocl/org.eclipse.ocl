@@ -60,6 +60,17 @@ public class NavigatingArgCSAttribution extends AbstractAttribution
 						return null;
 					}
 				}
+				for (Variable iterator : ((LoopExp)pivot).getOwnedCoIterators()) {
+					if (iterator.isIsImplicit()) {
+						environmentView.addElementsOfScope(iterator.getType(), scopeView);
+					}
+					else {
+						environmentView.addNamedElement(iterator);
+					}
+					if (environmentView.hasFinalResult()) {
+						return null;
+					}
+				}
 				if (pivot instanceof IterateExp) {
 					Variable result = ((IterateExp)pivot).getOwnedResult();
 					if (result.isIsImplicit()) {

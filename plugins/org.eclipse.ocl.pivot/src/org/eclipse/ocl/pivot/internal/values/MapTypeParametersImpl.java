@@ -21,7 +21,7 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	protected class Iterator implements java.util.Iterator<Object>
 	{
 		private int position = 0;
-		
+
 		@Override
 		public boolean hasNext() {
 			return position < 2;
@@ -41,17 +41,29 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	private final int hashCode;
 	private final @NonNull K keyType;
+	private final boolean keysAreNullFree;
 	private final @NonNull V valueType;
+	private final boolean valuesAreNullFree;
 
-	public MapTypeParametersImpl(@NonNull K keyType, @NonNull V valueType ) {
-		this.keyType = keyType;
-		this.valueType = valueType;
-		hashCode = 5*keyType.hashCode() + 7*valueType.hashCode();
+	@Deprecated /* @deprecated use nullFrees */
+	public MapTypeParametersImpl(@NonNull K keyType, @NonNull V valueType) {
+		this(keyType, true, valueType, true);
 	}
-	
+
+	/**
+	 * @since 1.6
+	 */
+	public MapTypeParametersImpl(@NonNull K keyType, boolean keysAreNullFree, @NonNull V valueType, boolean valuesAreNullFree) {
+		this.keyType = keyType;
+		this.keysAreNullFree = keysAreNullFree;
+		this.valueType = valueType;
+		this.valuesAreNullFree = valuesAreNullFree;
+		hashCode = 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof MapTypeParametersImpl<?,?>)) {
@@ -64,7 +76,13 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		if (!this.keyType.equals(that.keyType)) {
 			return false;
 		}
+		if (this.keysAreNullFree != that.keysAreNullFree) {
+			return false;
+		}
 		if (!this.valueType.equals(that.valueType)) {
+			return false;
+		}
+		if (this.valuesAreNullFree != that.valuesAreNullFree) {
 			return false;
 		}
 		return true;
@@ -88,7 +106,17 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	@Override
 	public @NonNull Iterator iterator() {
 		return new Iterator();
-	}		
+	}
+
+	@Override
+	public boolean isKeysAreNullFree() {
+		return keysAreNullFree;
+	}
+
+	@Override
+	public boolean isValuesAreNullFree() {
+		return valuesAreNullFree;
+	}
 
 	public int parametersSize() {
 		return 2;
@@ -100,7 +128,11 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		s.append('(');
 		s.append(keyType);
 		s.append(',');
+		s.append(keysAreNullFree);
+		s.append(',');
 		s.append(valueType);
+		s.append(',');
+		s.append(valuesAreNullFree);
 		s.append(')');
 		return s.toString();
 	}

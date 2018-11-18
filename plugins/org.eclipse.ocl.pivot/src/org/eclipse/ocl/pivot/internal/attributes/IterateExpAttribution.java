@@ -33,6 +33,7 @@ public class IterateExpAttribution extends AbstractAttribution
 			OCLExpression source = targetExpression.getOwnedSource();
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 			environmentView.addElements(targetExpression.getOwnedIterators());
+			environmentView.addElements(targetExpression.getOwnedCoIterators());
 			Variable result = targetExpression.getOwnedResult();
 			if (result != null) {
 				environmentView.addNamedElement(result);
@@ -41,6 +42,7 @@ public class IterateExpAttribution extends AbstractAttribution
 		else if (containmentFeature == PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT) {
 			OCLExpression source = targetExpression.getOwnedSource();
 			environmentView.addElements(targetExpression.getOwnedIterators());
+			environmentView.addElements(targetExpression.getOwnedCoIterators());
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 		}
 		else if (containmentFeature == PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS) {
@@ -48,6 +50,19 @@ public class IterateExpAttribution extends AbstractAttribution
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 			EObject child = scopeView.getChild();
 			for (Variable iterator : targetExpression.getOwnedIterators()) {
+				if (iterator != null) {
+					environmentView.addNamedElement(iterator);
+					if (iterator == child) {
+						break;
+					}
+				}
+			}
+		}
+		else if (containmentFeature == PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS) {
+			OCLExpression source = targetExpression.getOwnedSource();
+			environmentView.addElementsOfScope(source.getType(), scopeView);
+			EObject child = scopeView.getChild();
+			for (Variable iterator : targetExpression.getOwnedCoIterators()) {
 				if (iterator != null) {
 					environmentView.addNamedElement(iterator);
 					if (iterator == child) {

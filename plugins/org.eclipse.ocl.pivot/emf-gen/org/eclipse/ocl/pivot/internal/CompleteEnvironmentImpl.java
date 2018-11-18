@@ -748,12 +748,25 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
+		return getMapType(containerType, keyType, true, valueType, true);
+	}
+
+	@Override
+	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), metamodelManager.getPrimaryType(valueType));
+		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), keysAreNullFree, metamodelManager.getPrimaryType(valueType), valuesAreNullFree);
 	}
 
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, @NonNull Type valueType) {
+		return getMapType(containerType, keyType, true, valueType, true);
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
 		TemplateSignature templateSignature = containerType.getOwnedSignature();
 		if (templateSignature == null) {
@@ -768,7 +781,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			return containerType;
 		}
 		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, valueType);
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
 		return specializedType;
 	}

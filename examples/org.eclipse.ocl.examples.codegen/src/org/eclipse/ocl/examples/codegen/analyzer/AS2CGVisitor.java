@@ -523,15 +523,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 				cgBuiltInIterationCallExp.setReferredIteration(asIteration);
 				cgBuiltInIterationCallExp.setSource(cgSource);
-				for (@NonNull Variable iterator : ClassUtil.nullFree(element.getOwnedIterators())) {
-					CGIterator cgIterator = getIterator(iterator);
-					cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
-					cgIterator.setRequired(iterator.isIsRequired());
-					if (iterator.isIsRequired()) {
-						cgIterator.setNonNull();
-					}
-					cgIterator.setNonInvalid();
+				for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
+					CGIterator cgIterator = getNullableIterator(iterator);
 					cgBuiltInIterationCallExp.getIterators().add(cgIterator);
+				}
+				for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+					CGIterator cgCoIterator = getNullableIterator(coIterator);
+					cgBuiltInIterationCallExp.getCoIterators().add(cgCoIterator);
 				}
 				if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
 					cgBuiltInIterationCallExp.getBody().setRequired(true);
@@ -541,14 +539,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				//				cgBuiltInIterationCallExp.setNonNull();
 				setAst(cgBuiltInIterationCallExp, element);
 				@SuppressWarnings("null")@NonNull Variable accumulator = element.getOwnedResult();
-				CGIterator cgAccumulator = getIterator(accumulator);
-				cgAccumulator.setTypeId(context.getTypeId(accumulator.getTypeId()));
-				cgAccumulator.setRequired(accumulator.isIsRequired());
-				if (accumulator.isIsRequired()) {
-					cgAccumulator.setNonNull();
-				}
+				CGIterator cgAccumulator = getNullableIterator(accumulator);
 				cgAccumulator.setInit(doVisit(CGValuedElement.class, accumulator.getOwnedInit()));
-				cgAccumulator.setNonInvalid();
 				cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				cgBuiltInIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
 				/*			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
@@ -575,8 +567,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgLibraryIterateCallExp.setValidating(asIteration.isIsValidating());
 		}
 		cgLibraryIterateCallExp.setSource(cgSource);
-		for (@NonNull Variable iterator : ClassUtil.nullFree(element.getOwnedIterators())) {
+		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
 			cgLibraryIterateCallExp.getIterators().add(getIterator(iterator));
+		}
+		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+			cgLibraryIterateCallExp.getCoIterators().add(getIterator(coIterator));
 		}
 		Variable result = element.getOwnedResult();
 		if (result != null) {
@@ -593,6 +588,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLibraryIterateCallExp;
 	}
 
+	protected CGIterator getNullableIterator(Variable iterator) {
+		CGIterator cgIterator = getIterator(iterator);
+		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
+		cgIterator.setRequired(iterator.isIsRequired());
+		if (iterator.isIsRequired()) {
+			cgIterator.setNonNull();
+		}
+		cgIterator.setNonInvalid();
+		return cgIterator;
+	}
+
 	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
 		Iteration asIteration = ClassUtil.nonNullState(element.getReferredIteration());
 		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
@@ -602,14 +608,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 			cgBuiltInIterationCallExp.setReferredIteration(asIteration);
 			cgBuiltInIterationCallExp.setSource(cgSource);
-			for (@NonNull Variable iterator : ClassUtil.nullFree(element.getOwnedIterators())) {
-				CGIterator cgIterator = getIterator(iterator);
-				cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
-				cgIterator.setRequired(iterator.isIsRequired());
-				if (iterator.isIsRequired()) {
-					cgIterator.setNonNull();
-				}
+			for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
+				CGIterator cgIterator = getNullableIterator(iterator);
 				cgBuiltInIterationCallExp.getIterators().add(cgIterator);
+			}
+			for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+				CGIterator cgCoIterator = getNullableIterator(coIterator);
+				cgBuiltInIterationCallExp.getCoIterators().add(cgCoIterator);
 			}
 			cgBuiltInIterationCallExp.setInvalidating(false);
 			cgBuiltInIterationCallExp.setValidating(false);
@@ -654,8 +659,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgLibraryIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgLibraryIterationCallExp.setValidating(asIteration.isIsValidating());
 		cgLibraryIterationCallExp.setSource(cgSource);
-		for (@NonNull Variable iterator : ClassUtil.nullFree(element.getOwnedIterators())) {
+		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
 			cgLibraryIterationCallExp.getIterators().add(getIterator(iterator));
+		}
+		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+			cgLibraryIterationCallExp.getCoIterators().add(getIterator(coIterator));
 		}
 		cgLibraryIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
 		cgLibraryIterationCallExp.setRequired(isRequired);

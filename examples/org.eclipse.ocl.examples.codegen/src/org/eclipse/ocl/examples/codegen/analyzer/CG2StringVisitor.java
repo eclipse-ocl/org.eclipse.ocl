@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.analyzer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -317,11 +318,19 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(cgExp.getReferredIteration());
 		append("("); //$NON-NLS-1$
 		boolean isFirst = true;
-		for (CGIterator variable : cgExp.getIterators()) {
+		List<CGIterator> cgIterators = cgExp.getIterators();
+		List<CGIterator> cgCoIterators = cgExp.getCoIterators();
+		for (int i = 0; i < cgIterators.size(); i++) {
+			CGValuedElement cgIterator = cgIterators.get(i);
 			if (!isFirst) {
 				append(", ");
 			}
-			safeVisit(variable);
+			safeVisit(cgIterator);
+			if (i < cgCoIterators.size()) {
+				CGValuedElement cgCoIterator = cgCoIterators.get(i);
+				append(" <- ");
+				safeVisit(cgCoIterator);
+			}
 			isFirst = false;
 		}
 		CGIterator cgAccumulator = cgExp.getAccumulator();
@@ -514,9 +523,17 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(iter);
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : ic.getIterators()) {
+		List<CGIterator> cgIterators = ic.getIterators();
+		List<CGIterator> cgCoIterators = ic.getCoIterators();
+		for (int i = 0; i < cgIterators.size(); i++) {
+			CGValuedElement cgIterator = cgIterators.get(i);
 			append(prefix);
-			safeVisit(argument);
+			safeVisit(cgIterator);
+			if (i < cgCoIterators.size()) {
+				CGValuedElement cgCoIterator = cgCoIterators.get(i);
+				append(" <- ");
+				safeVisit(cgCoIterator);
+			}
 			prefix = ", ";//$NON-NLS-1$
 		}
 		if (ic instanceof CGLibraryIterateCallExp) {

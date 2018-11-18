@@ -606,7 +606,16 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType,
 			@NonNull Type keyType, @NonNull Type valueType) {
-		return environmentFactory.getCompleteEnvironment().getMapType(containerType, keyType, valueType);
+		return getMapType(containerType, keyType, true, valueType, true);
+	}
+
+	//	@Override
+	/**
+	 * @since 1.6
+	 */
+	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType,
+			@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		return environmentFactory.getCompleteEnvironment().getMapType(containerType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	@Override

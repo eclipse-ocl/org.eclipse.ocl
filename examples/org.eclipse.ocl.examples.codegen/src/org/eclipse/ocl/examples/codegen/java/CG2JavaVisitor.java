@@ -114,6 +114,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
@@ -259,6 +260,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	protected @NonNull Boolean appendLoopCall(@NonNull CGLibraryIterationCallExp cgIterationCallExp, @Nullable CGIterator iterateResult) {
 		final CGValuedElement source = getExpression(cgIterationCallExp.getSource());
 		final List<CGIterator> iterators = cgIterationCallExp.getIterators();
+		final List<CGIterator> coIterators = cgIterationCallExp.getCoIterators();
 		final CGValuedElement body = getExpression(cgIterationCallExp.getBody());
 		final CGTypeId resultType = cgIterationCallExp.getTypeId();
 		final Operation referredOperation = ((LoopExp)cgIterationCallExp.getAst()).getReferredIteration();
@@ -943,6 +945,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		CGValuedElement cgBody = getExpression(cgIterationCallExp.getBody());
 		CGIterator cgAccumulator = cgIterationCallExp.getAccumulator();
 		CGIterator cgIterator = cgIterationCallExp.getIterators().get(0);
+		CGIterator cgCoIterator = cgIterationCallExp.getCoIterators().size() > 0 ? cgIterationCallExp.getCoIterators().get(0) : null;
 		String iteratorName = getSymbolName(null, "ITERATOR_" + cgIterator.getValueName());
 		Iteration2Java iterationHelper = context.getIterationHelper(ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration()));
 		assert iterationHelper != null;
@@ -951,6 +954,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
 		}
+		//
+		//	Declare and initialize accumulator
 		//
 		if (cgAccumulator != null) {
 			CGValuedElement cgInit = cgAccumulator.getInit();
@@ -965,6 +970,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(";\n");
 		}
 		//
+		//	Declare iterator
+		//
 		js.appendIsRequired(cgIterator.isRequired());
 		js.append(" ");
 		js.appendClassReference(Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
@@ -972,11 +979,18 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendAtomicReferenceTo(cgSource);
 		js.append(".iterator();\n");
 		//
+		//	Declare body result
+		//
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(";\n");
 		//
+		//	Declare loop head
+		//
 		js.append("while (true) {\n");
 		js.pushIndentation(null);
+		//
+		//	Terminate loop once done
+		//
 		js.append("if (!" + iteratorName + ".hasNext()) {\n");
 		js.pushIndentation(null);
 		if (iterationHelper.appendFinalValue(js, cgIterationCallExp)) {
@@ -985,11 +999,32 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.popIndentation();
 		js.append("}\n");
+		//
+		// Declare iterator advance.
+		//
 		appendSuppressWarningsNull(cgIterator, Boolean.FALSE);
 		js.appendDeclaration(cgIterator);
 		js.append(" = ");
 		js.appendClassCast(cgIterator);
 		js.append(iteratorName + ".next();\n");
+		//
+		// Declare coiterator/key access.
+		//
+		if (cgCoIterator != null) {		// && !isImplicit
+			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
+			if (!asCoIterator.isIsImplicit()) {
+				js.appendDeclaration(cgCoIterator);
+				js.append(" = ");
+				js.appendClassCast(cgCoIterator);
+				js.appendReferenceTo(cgSource);
+				js.append(".at(");
+				js.appendReferenceTo(cgIterator);
+				js.append(");\n");
+			}
+		}
+		//
+		// Declare iteration body.
+		//
 		js.appendCommentWithOCL(null, cgBody.getAst());
 		if (js.appendLocalStatements(cgBody)) {
 			js.append("//\n");
@@ -997,6 +1032,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				flowContinues = true;
 			}
 		}
+		//
+		//	Declare loop tail
+		//
 		js.popIndentation();
 		js.append("}\n");
 		return flowContinues;

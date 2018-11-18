@@ -144,8 +144,16 @@ public class TypeUtil
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
 	}
 
+	@Deprecated /* @deprecated use nullFrees */
 	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, @NonNull Type valueType) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, valueType);
+		return createMapTypeParameters(keyType, true, valueType, true);
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {

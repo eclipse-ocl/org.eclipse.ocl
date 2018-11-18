@@ -39,11 +39,17 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
 	@NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, @NonNull Type valueType);
+	/**
+	 * @since 1.6
+	 */
+	default @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		return getMapType(containerType, keyType, true, valueType, true);
+	}
 	@Override
 	@NonNull CompleteModelInternal getOwnedCompleteModel();
-//	@NonNull MetamodelManager getMetamodelManager();
-//	@Override
-//	@NonNull PivotStandardLibrary getStandardLibrary();
+	//	@NonNull MetamodelManager getMetamodelManager();
+	//	@Override
+	//	@NonNull PivotStandardLibrary getStandardLibrary();
 	@Override
 	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
 	@NonNull TupleTypeManager getTupleManager();

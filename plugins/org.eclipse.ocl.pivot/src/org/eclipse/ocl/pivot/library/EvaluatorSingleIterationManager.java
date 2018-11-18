@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationManager
 {
@@ -38,7 +39,7 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 		public int getDepth() {
 			return depth;
 		}
-		
+
 		@Override
 		public @NonNull EvaluatorSingleIterationManager getRootIterationManager() {
 			return rootIterationManager;
@@ -86,9 +87,12 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 		return hasCurrent();
 	}
 
+	/**
+	 * @since 1.6
+	 */
 	@Override
-	public @NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value) {
-		return new Nested(this, value);
+	public @NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value) {
+		return new Nested(this, (CollectionValue)value);
 	}
 
 	@Override
@@ -99,7 +103,7 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 	public int getDepth() {
 		return 0;
 	}
-	
+
 	public @NonNull EvaluatorSingleIterationManager getRootIterationManager() {
 		return this;
 	}

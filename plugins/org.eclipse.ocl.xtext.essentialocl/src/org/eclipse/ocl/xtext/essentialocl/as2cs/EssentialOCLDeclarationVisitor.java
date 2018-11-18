@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.essentialocl.as2cs;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -22,6 +23,7 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -60,6 +62,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -70,12 +73,15 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseDeclarationVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
@@ -110,6 +116,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.SquareBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 
 import com.google.common.collect.Iterables;
 
@@ -358,6 +365,93 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		return csElement;
 	}
 
+	// FIXME Unify VariableCS and TypedElementCS
+	public <@NonNull T extends VariableCS> T refreshVariable(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull TypedElement object) {
+		CollectionType standardCollectionType = context.getStandardLibrary().getCollectionType();
+		T csElement = context.refreshNamedElement(csClass, csEClass, object);
+		final Type type = object.getType();
+		final Type elementType;
+		if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardCollectionType)) {
+			PivotUtil.debugWellContainedness(type);
+			elementType = ((CollectionType)type).getElementType();
+		}
+		else if (type instanceof VoidType) {
+			elementType = null;
+		}
+		else {
+			elementType = type;
+		}
+		if (elementType != null) {
+			PivotUtil.debugWellContainedness(elementType);
+			TypedRefCS typeRef = context.visitReference(TypedRefCS.class, elementType, null);
+			csElement.setOwnedType(typeRef);
+		}
+		else {
+			csElement.setOwnedType(null);
+		}
+		TypedRefCS csTypeRef = csElement.getOwnedType();
+		if (csTypeRef != null) {
+			boolean isNullFree ;
+			int lower;
+			int upper;
+			if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardCollectionType)) {
+				CollectionType collectionType = (CollectionType)type;
+				isNullFree = collectionType.isIsNullFree();
+				lower = collectionType.getLower().intValue();
+				Number upper2 = collectionType.getUpper();
+				upper = upper2 instanceof Unlimited ? -1 : upper2.intValue();
+				//	List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
+				//	context.refreshQualifiers(qualifiers, "ordered", "!ordered", collectionType.isOrdered() ? Boolean.TRUE : null);
+				//	context.refreshQualifiers(qualifiers, "unique", "!unique", collectionType.isUnique() ? null : Boolean.FALSE);
+			}
+			else {
+				isNullFree = false;
+				lower = object.isIsRequired() ? 1 : 0;
+				upper = 1;
+			}
+			//			if ((lower == 0) && (upper == 1)) {
+			//				csTypeRef.setOwnedMultiplicity(null);
+			//			}
+			//			else {
+			String stringValue = null;
+			if (lower == 0) {
+				if (upper == 1) {
+					stringValue = "?";
+				}
+				else if (upper == -1) {
+					stringValue = "*";
+				}
+				//			else if (upper == -2) {
+				//				stringValue = "0..?";
+				//			}
+			}
+			else if (lower == 1) {
+				if (upper == -1) {
+					stringValue = "+";
+				}
+			}
+			if (stringValue != null) {
+				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+				csMultiplicity.setStringBounds(stringValue);
+				csMultiplicity.setIsNullFree(isNullFree);
+				csTypeRef.setOwnedMultiplicity(csMultiplicity);
+			}
+			else {
+				MultiplicityBoundsCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityBoundsCS();
+				if (lower != 1) {
+					csMultiplicity.setLowerBound(lower);
+				}
+				if (upper != lower) {
+					csMultiplicity.setUpperBound(upper);
+				}
+				csMultiplicity.setIsNullFree(isNullFree);;
+				csTypeRef.setOwnedMultiplicity(csMultiplicity);
+			}
+			//			}
+		}
+		return csElement;
+	}
+
 	@Override
 	public @Nullable ElementCS visitBooleanLiteralExp(@NonNull BooleanLiteralExp asBooleanLiteralExp) {
 		BooleanLiteralExpCS csBooleanLiteralExp = EssentialOCLCSFactory.eINSTANCE.createBooleanLiteralExpCS();
@@ -505,9 +599,20 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		RoundBracketedClauseCS csRoundBracketedClause = EssentialOCLCSFactory.eINSTANCE.createRoundBracketedClauseCS();
 		csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);;
 		String prefix = null;
-		for (Variable asIterator : asIterateExp.getOwnedIterators()) {
+		List<Variable> asIterators = asIterateExp.getOwnedIterators();
+		List<Variable> asCoIterators = asIterateExp.getOwnedCoIterators();
+		for (int i = 0; i < asIterators.size(); i++) {
+			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
-				csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(prefix, asIterator, asIterator, null));
+				NavigatingArgCS csNavigatingArg = createNavigatingArgCS(prefix, asIterator, asIterator, null);
+				if (i < asCoIterators.size()) {
+					Variable asCoIterator = asCoIterators.get(i);
+					if (!asCoIterator.isIsImplicit()) {
+						VariableCS csCoIterator = refreshVariable(VariableCS.class, EssentialOCLCSPackage.Literals.VARIABLE_CS, asCoIterator);
+						csNavigatingArg.setOwnedCoIterator(csCoIterator);
+					}
+				}
+				csRoundBracketedClause.getOwnedArguments().add(csNavigatingArg);
 				prefix = ",";
 			}
 		}
@@ -546,9 +651,20 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		RoundBracketedClauseCS csRoundBracketedClause = EssentialOCLCSFactory.eINSTANCE.createRoundBracketedClauseCS();
 		csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);;
 		String prefix = null;
-		for (Variable asIterator : asIteratorExp.getOwnedIterators()) {
+		List<Variable> asIterators = asIteratorExp.getOwnedIterators();
+		List<Variable> asCoIterators = asIteratorExp.getOwnedCoIterators();
+		for (int i = 0; i < asIterators.size(); i++) {
+			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
-				csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(prefix, asIterator, asIterator, null));
+				NavigatingArgCS csNavigatingArg = createNavigatingArgCS(prefix, asIterator, asIterator, null);
+				if (i < asCoIterators.size()) {
+					Variable asCoIterator = asCoIterators.get(i);
+					if (!asCoIterator.isIsImplicit()) {
+						VariableCS csCoIterator = refreshVariable(VariableCS.class, EssentialOCLCSPackage.Literals.VARIABLE_CS, asCoIterator);
+						csNavigatingArg.setOwnedCoIterator(csCoIterator);
+					}
+				}
+				csRoundBracketedClause.getOwnedArguments().add(csNavigatingArg);
 				prefix = ",";
 			}
 		}

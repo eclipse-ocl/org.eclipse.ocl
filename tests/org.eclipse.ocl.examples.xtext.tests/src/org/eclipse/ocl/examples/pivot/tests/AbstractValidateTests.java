@@ -96,7 +96,9 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	}
 
 	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
-		URI ecoreURI = getTestFileURI(inputURI.trimFileExtension().appendFileExtension("ecore").lastSegment());
+		String lastSegment = inputURI.trimFileExtension().appendFileExtension("ecore").lastSegment();
+		assert lastSegment != null;
+		URI ecoreURI = getTestFileURI(lastSegment);
 		return doLoadOCLinEcore(ocl, inputURI, ecoreURI);
 	}
 

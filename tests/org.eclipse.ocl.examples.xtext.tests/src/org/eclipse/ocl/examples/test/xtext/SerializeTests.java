@@ -73,7 +73,9 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull URI inputURI) throws Exception {
-		return doSerialize(ocl, inputURI, inputURI.trimFileExtension().lastSegment(), inputURI, null, true, NO_MESSAGES, NO_MESSAGES);
+		String lastSegment = inputURI.trimFileExtension().lastSegment();
+		assert lastSegment != null;
+		return doSerialize(ocl, inputURI, lastSegment, inputURI, null, true, NO_MESSAGES, NO_MESSAGES);
 	}
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile) throws Exception {
 		return doSerialize(ocl, inputFile, true);

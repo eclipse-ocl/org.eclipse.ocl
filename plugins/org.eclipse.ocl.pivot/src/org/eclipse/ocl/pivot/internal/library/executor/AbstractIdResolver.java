@@ -903,6 +903,13 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull MapTypeId typeId) {
+		return getMapType(typeId, true, true);
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull MapTypeId typeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
 		MapTypeId generalizedId = typeId.getGeneralizedId();
 		if (typeId == generalizedId) {
 			if (generalizedId == TypeId.MAP) {
@@ -918,7 +925,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			Type keyType = getType(keyTypeId, null);
 			Type valueType = getType(valueTypeId, null);
 			if (generalizedId == TypeId.MAP) {
-				return environment.getMapType(standardLibrary.getMapType(), keyType, valueType);
+				return environment.getMapType(standardLibrary.getMapType(), keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 			else {
 				throw new UnsupportedOperationException();

@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
@@ -1019,18 +1020,36 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		//		boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
 		Iteration iteration = expression.getReferredIteration();
-		List<@NonNull Variable> pivotIterators = new ArrayList<>();
 		//
 		//	Explicit iterators
 		//
 		int iterationIteratorsSize = iteration.getOwnedIterators().size();
 		int iteratorIndex = 0;
-		CollectionType sourceCollectionType = (CollectionType)csNameExp.getSourceType();
-		if (sourceCollectionType.isIsNullFree()) {
-			isSafe = true;
+		boolean isCollection = false;
+		MapType mapType = null;
+		Type rawSourceElementType = null;
+		Type sourceType = csNameExp.getSourceType();
+		if (sourceType instanceof CollectionType) {
+			isCollection = true;
+			CollectionType sourceCollectionType = (CollectionType)sourceType;
+			if (sourceCollectionType.isIsNullFree()) {
+				isSafe = true;
+			}
+			rawSourceElementType = sourceCollectionType.getElementType();
 		}
-		Type rawSourceElementType = sourceCollectionType.getElementType();
-		//		if (sourceType.is)
+		else if (sourceType instanceof MapType) {
+			mapType = (MapType)sourceType;
+			//	MapType sourceMapType = (MapType)sourceType;
+			//	if (sourceMapType.getKeyType().isIsNullFree()) {
+			//		isSafe = true;
+			//	}
+			rawSourceElementType = mapType.getKeyType();
+		}
+		if (!isCollection && (mapType == null)) {
+			throw new UnsupportedOperationException();
+		}
+		List<@NonNull Variable> pivotIterators = new ArrayList<>();
+		List</*@Nullable*/ Variable> pivotCoIterators = (mapType != null) ? new ArrayList<>() : null;
 		Type sourceElementType = rawSourceElementType != null ? metamodelManager.getPrimaryType(rawSourceElementType) : null;
 		for (int argIndex = 0; argIndex < csRoundBracketedClause.getOwnedArguments().size(); argIndex++) {
 			NavigatingArgCS csArgument = csRoundBracketedClause.getOwnedArguments().get(argIndex);
@@ -1041,6 +1060,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				context.addWarning(csArgument, PivotMessagesInternal.RedundantIterator_WARNING_, iteration.getName());
 				continue;
 			}
+			//	if (csArgument.getCoIteratorName() != null) {
+			//		)
+			//	}
 			if (csArgument.getOwnedInitExpression() != null) {
 				context.addError(csArgument, "Unexpected initializer for iterator");
 			}
@@ -1066,6 +1088,34 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				boolean isRequired = iteratorIsRequired != null ? iteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
 				helper.setType(iterator, varType, isRequired, null);
 				pivotIterators.add(iterator);
+				Variable coIterator = null;
+				VariableCS csCoIterator = csArgument.getOwnedCoIterator();
+				if (csCoIterator != null) {
+					if ((mapType != null)) {
+						coIterator = PivotUtil.getPivot(Variable.class, csCoIterator);
+						if (coIterator != null) {
+							Type coIteratorType = null;
+							TypedRefCS csCoIteratorType = csCoIterator.getOwnedType();
+							Boolean coIteratorIsRequired = null;
+							if (csCoIteratorType != null) {
+								coIteratorIsRequired = context.isRequired(csCoIteratorType);
+								coIteratorType = PivotUtil.getPivot(Type.class, csCoIteratorType);
+							}
+							if (coIteratorType == null) {
+								coIteratorType = mapType.getValueType();
+								coIteratorIsRequired = mapType.isValuesAreNullFree();
+							}
+							boolean coIsRequired = coIteratorIsRequired != null ? coIteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
+							helper.setType(coIterator, coIteratorType, coIsRequired, null);  // FIXME isRequired *2
+						}
+					}
+					else {
+						context.addWarning(csCoIterator, "Co-iterator ignored for non-MapType");
+					}
+				}
+				if (pivotCoIterators != null) {
+					pivotCoIterators.add(coIterator);
+				}
 				iteratorIndex++;
 			}
 		}
@@ -1083,7 +1133,31 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			pivotIterators.add(iterator);
 			iteratorIndex++;
 		}
+		//
+		//	Implicit CoIterators
+		//
+		if (pivotCoIterators != null) {
+			assert mapType != null;
+			boolean valuesAreNullFree = mapType.isValuesAreNullFree();
+			for (int coiteratorIndex = 0; coiteratorIndex < pivotCoIterators.size(); coiteratorIndex++) {
+				Variable coIterator = pivotCoIterators.get(coiteratorIndex);
+				if (coIterator == null) {
+					String varName = Integer.toString(iterationIteratorsSize + coiteratorIndex+1) + "_";
+					coIterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
+					helper.refreshName(coIterator, varName);
+					helper.setType(coIterator, sourceElementType, isSafe || valuesAreNullFree, null);
+					coIterator.setIsImplicit(true);
+					pivotCoIterators.set(coiteratorIndex, coIterator);
+				}
+			}
+		}
 		helper.refreshList(expression.getOwnedIterators(), pivotIterators);
+		if (pivotCoIterators != null) {
+			helper.refreshList(expression.getOwnedCoIterators(), pivotCoIterators);
+		}
+		else {
+			expression.getOwnedCoIterators().clear();
+		}
 	}
 
 	/**
@@ -1892,34 +1966,66 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	@Override
 	public Element visitMapLiteralExpCS(@NonNull MapLiteralExpCS csMapLiteralExp) {
-		Type commonKeyType = null;
-		Type commonValueType = null;
-		//		InvalidLiteralExp invalidValue = null;
+		Type keyType = null;
+		Type valueType = null;
+		Boolean keysAreNullFree = null;
+		Boolean valuesAreNullFree = null;
+		MapTypeCS csMapType = csMapLiteralExp.getOwnedType();
+		if (csMapType != null) {
+			TypedRefCS csKeyType = csMapType.getOwnedKeyType();
+			if (csKeyType != null) {
+				keyType = (Type) csKeyType.getPivot();
+				keysAreNullFree = context.isRequired(csKeyType);
+			}
+			TypedRefCS csValueType = csMapType.getOwnedValueType();
+			if (csValueType != null) {
+				valueType = (Type) csValueType.getPivot();
+				valuesAreNullFree = context.isRequired(csValueType);
+			}
+		}
+		boolean inferKeyType = keyType == null;
+		boolean inferValueType = valueType == null;
 		for (MapLiteralPartCS csPart : csMapLiteralExp.getOwnedParts()) {
 			assert csPart != null;
 			MapLiteralPart pivotPart = context.visitLeft2Right(MapLiteralPart.class, csPart);
 			if (pivotPart != null) {
-				OCLExpression asKey = pivotPart.getOwnedKey();
-				if (asKey != null) {
-					Type asKeyType = asKey.getType();
-					if (asKeyType != null) {
-						if (commonKeyType == null) {
-							commonKeyType = asKeyType;
+				if (inferKeyType) {
+					OCLExpression asKey = pivotPart.getOwnedKey();
+					if (asKey != null) {
+						if (asKey instanceof NullLiteralExp) {
+							keysAreNullFree = false;
 						}
-						else if (commonKeyType != asKeyType) {
-							commonKeyType = metamodelManager.getCommonType(commonKeyType, TemplateParameterSubstitutions.EMPTY, asKeyType, TemplateParameterSubstitutions.EMPTY);
+						//	if (!asKey.isNonNull()) {
+						//		keysAreNullFree = false;
+						//	}
+						Type asKeyType = asKey.getType();
+						if (asKeyType != null) {
+							if (keyType == null) {
+								keyType = asKeyType;
+							}
+							else if (keyType != asKeyType) {
+								keyType = metamodelManager.getCommonType(keyType, TemplateParameterSubstitutions.EMPTY, asKeyType, TemplateParameterSubstitutions.EMPTY);
+							}
 						}
 					}
 				}
-				OCLExpression asValue = pivotPart.getOwnedValue();
-				if (asValue != null) {
-					Type asValueType = asValue.getType();
-					if (asValueType != null) {
-						if (commonValueType == null) {
-							commonValueType = asValueType;
+				if (inferValueType) {
+					OCLExpression asValue = pivotPart.getOwnedValue();
+					if (asValue != null) {
+						if (asValue instanceof NullLiteralExp) {
+							valuesAreNullFree = false;
 						}
-						else if (commonValueType != asValueType) {
-							commonValueType = metamodelManager.getCommonType(commonValueType, TemplateParameterSubstitutions.EMPTY, asValueType, TemplateParameterSubstitutions.EMPTY);
+						//	if (!asValue.isNonNull()) {
+						//		valuesAreNullFree = false;
+						//	}
+						Type asValueType = asValue.getType();
+						if (asValueType != null) {
+							if (valueType == null) {
+								valueType = asValueType;
+							}
+							else if (valueType != asValueType) {
+								valueType = metamodelManager.getCommonType(valueType, TemplateParameterSubstitutions.EMPTY, asValueType, TemplateParameterSubstitutions.EMPTY);
+							}
 						}
 					}
 				}
@@ -1930,21 +2036,15 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			MapTypeCS ownedMapType = csMapLiteralExp.getOwnedType();
 			String mapTypeName = ownedMapType.getName();
 			assert mapTypeName != null;
-			TypedRefCS ownedKeyType = ownedMapType.getOwnedKeyType();
-			if (ownedKeyType != null) {
-				commonKeyType = (Type) ownedKeyType.getPivot();
+			if (keyType == null) {
+				keyType = standardLibrary.getOclVoidType();
+				keysAreNullFree = true;
 			}
-			TypedRefCS ownedValueType = ownedMapType.getOwnedValueType();
-			if (ownedValueType != null) {
-				commonValueType = (Type) ownedValueType.getPivot();
+			if (valueType == null) {
+				valueType = standardLibrary.getOclVoidType();
+				valuesAreNullFree = true;
 			}
-			if (commonKeyType == null) {
-				commonKeyType = standardLibrary.getOclVoidType();
-			}
-			if (commonValueType == null) {
-				commonValueType = standardLibrary.getOclVoidType();
-			}
-			Type type = metamodelManager.getMapType(mapTypeName, commonKeyType, commonValueType);
+			Type type = metamodelManager.getMapType(mapTypeName, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 			helper.setType(expression, type, true, null);
 		}
 		return expression;

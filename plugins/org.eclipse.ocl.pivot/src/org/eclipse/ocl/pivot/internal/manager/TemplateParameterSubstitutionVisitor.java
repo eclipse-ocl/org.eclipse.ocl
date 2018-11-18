@@ -407,6 +407,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		analyzeTypedElement(referredIteration, object);
 		analyzeFeature(referredIteration, object.getOwnedSource());
 		analyzeTypedElements(referredIteration.getOwnedIterators(), object.getOwnedIterators());
+		//		analyzeTypedElements(referredIteration.getOwnedCoIterators(), object.getOwnedCoIterators());
 		analyzeTypedElements(referredIteration.getOwnedAccumulators(), Collections.singletonList(object.getOwnedResult()));
 		analyzeTypedElements(referredIteration.getOwnedParameters(), Collections.singletonList(object.getOwnedBody()));
 		return null;
@@ -418,6 +419,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		analyzeTypedElement(referredIteration, object);
 		analyzeFeature(referredIteration, object.getOwnedSource());
 		analyzeTypedElements(referredIteration.getOwnedIterators(), object.getOwnedIterators());
+		//		analyzeTypedElements(referredIteration.getOwnedCoIterators(), object.getOwnedCoIterators());
 		List<Parameter> formalElements = referredIteration.getOwnedParameters();
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();

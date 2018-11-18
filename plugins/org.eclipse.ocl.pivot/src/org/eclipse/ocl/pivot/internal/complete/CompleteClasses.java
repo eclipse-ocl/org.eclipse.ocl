@@ -174,8 +174,8 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 			EClass eClass = unspecializedType.eClass();
 			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-			MapType specializedType = (MapType) eFactoryInstance.create(eClass);
-			specializedType.setName(typeName);
+			MapType specializedMapType = (MapType) eFactoryInstance.create(eClass);
+			specializedMapType.setName(typeName);
 			TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 			TemplateParameter keyFormalParameter = templateParameters.get(0);
 			TemplateParameter valueFormalParameter = templateParameters.get(1);
@@ -187,13 +187,15 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			TemplateParameterSubstitution valueTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 			templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-			specializedType.getOwnedBindings().add(templateBinding);
-			getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
-			specializedType.setUnspecializedElement(unspecializedType);
+			specializedMapType.getOwnedBindings().add(templateBinding);
+			getCompleteModel().resolveSuperClasses(specializedMapType, unspecializedType);
+			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
+			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
+			specializedMapType.setUnspecializedElement(unspecializedType);
 			PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
 			Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
-			specializedType.setOwningPackage(orphanage);
-			return specializedType;
+			specializedMapType.setOwningPackage(orphanage);
+			return specializedMapType;
 		}
 
 		@Override

@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
@@ -160,6 +162,10 @@ public class CGUtil
 		cgParameter.setName(name);
 		cgParameter.setTypeId(typeId);
 		return cgParameter;
+	}
+
+	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
+		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
 
 	public static @Nullable CGClass getContainingClass(@NonNull CGElement cgExpression) {

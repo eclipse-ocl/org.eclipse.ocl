@@ -797,11 +797,21 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(callExp.getReferredIteration());
 		append("("); //$NON-NLS-1$
 		boolean isFirst = true;
-		for (Variable variable : callExp.getOwnedIterators()) {
+		List<Variable> iterators = callExp.getOwnedIterators();
+		int iteratorsSize = iterators.size();
+		List<Variable> coIterators = callExp.getOwnedCoIterators();
+		int coIteratorsSize = coIterators.size();
+		for (int i = 0; i < iteratorsSize; i++) {
+			Variable iterator = iterators.get(i);
+			Variable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 			if (!isFirst) {
 				append(", ");
 			}
-			safeVisit(variable);
+			safeVisit(iterator);
+			if (coIterator != null) {
+				append(" <- ");
+				safeVisit(coIterator);
+			}
 			isFirst = false;
 		}
 		append("; ");
@@ -867,11 +877,21 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(callExp.getReferredIteration());
 		append("("); //$NON-NLS-1$
 		boolean isFirst = true;
-		for (Variable variable : callExp.getOwnedIterators()) {
+		List<Variable> iterators = callExp.getOwnedIterators();
+		int iteratorsSize = iterators.size();
+		List<Variable> coIterators = callExp.getOwnedCoIterators();
+		int coIteratorsSize = coIterators.size();
+		for (int i = 0; i < iteratorsSize; i++) {
+			Variable iterator = iterators.get(i);
+			Variable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 			if (!isFirst) {
 				append(", ");
 			}
-			safeVisit(variable);
+			safeVisit(iterator);
+			if (coIterator != null) {
+				append(" <- ");
+				safeVisit(coIterator);
+			}
 			isFirst = false;
 		}
 		append(" | ");
@@ -951,7 +971,28 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitMapType(@NonNull MapType object) {
 		appendName(object);
-		appendTemplateBindings(object.getOwnedBindings(), null);
+		List<TemplateBinding> templateBindings = object.getOwnedBindings();
+		//	appendTemplateBindings(ownedBindings, null);		// FIXME show Map key/value-multiplicities
+		if (templateBindings.size() > 0) {
+			append("(");
+			String prefix = ""; //$NON-NLS-1$
+			int index = 0;
+			for (TemplateBinding templateBinding : templateBindings) {
+				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+					append(prefix);
+					safeVisit(templateParameterSubstitution.getActual());
+					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
+						append("[?]");
+					}
+					else if (SHOW_ALL_MULTIPLICITIES) {
+						append("[1]");
+					}
+					prefix = ",";
+					index++;
+				}
+			}
+			append(")");
+		}
 		appendTemplateSignature(object.getOwnedSignature());
 		return null;
 	}
