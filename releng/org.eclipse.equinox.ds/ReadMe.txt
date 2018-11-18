@@ -1,0 +1,1 @@
+This pseudo-plugin replaces the plugin removed from the platform in order to avoid diagnostics regarding optional plugin not found.

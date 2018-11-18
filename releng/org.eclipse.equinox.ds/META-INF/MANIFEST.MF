@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.equinox.ds
+Bundle-Vendor: %providerName
+Bundle-Version: 0.0.0.qualifier
+Automatic-Module-Name: org.eclipse.equinox.ds
