@@ -30,6 +30,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterationCallExpCSImpl#getCoIterators <em>Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterationCallExpCSImpl#getIterators <em>Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterationCallExpCSImpl#getReferredIteration <em>Referred Iteration</em>}</li>
  * </ul>
@@ -38,6 +39,16 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
  */
 public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements IterationCallExpCS
 {
+	/**
+	 * The cached value of the '{@link #getCoIterators() <em>Co Iterators</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCoIterators()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VariableCS> coIterators;
+
 	/**
 	 * The cached value of the '{@link #getIterators() <em>Iterators</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -77,6 +88,21 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	protected EClass eStaticClass()
 	{
 		return EssentialOCLCSPackage.Literals.ITERATION_CALL_EXP_CS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<VariableCS> getCoIterators()
+	{
+		if (coIterators == null)
+		{
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS);
+		}
+		return coIterators;
 	}
 
 	/**
@@ -129,6 +155,8 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
+			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+				return getCoIterators();
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
 				return getIterators();
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:
@@ -148,6 +176,10 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
+			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+				getCoIterators().clear();
+				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
+				return;
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends VariableCS>)newValue);
@@ -169,6 +201,9 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
+			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+				getCoIterators().clear();
+				return;
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
 				getIterators().clear();
 				return;
@@ -189,6 +224,8 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
+			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+				return coIterators != null && !coIterators.isEmpty();
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
 				return iterators != null && !iterators.isEmpty();
 			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:

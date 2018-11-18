@@ -1164,6 +1164,17 @@ implements EssentialOCLCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getNavigatingArgCS_OwnedCoIterator()
+	{
+		return (EReference)navigatingArgCSEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EAttribute getNavigatingArgCS_Prefix() {
 		return (EAttribute)navigatingArgCSEClass.getEStructuralFeatures().get(4);
 	}
@@ -1698,9 +1709,20 @@ implements EssentialOCLCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getIterationCallExpCS_CoIterators()
+	{
+		return (EReference)iterationCallExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getIterationCallExpCS_ReferredIteration()
 	{
-		return (EReference)iterationCallExpCSEClass.getEStructuralFeatures().get(1);
+		return (EReference)iterationCallExpCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1711,7 +1733,7 @@ implements EssentialOCLCSPackage {
 	@Override
 	public EReference getIterationCallExpCS_Iterators()
 	{
-		return (EReference)iterationCallExpCSEClass.getEStructuralFeatures().get(0);
+		return (EReference)iterationCallExpCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2170,6 +2192,7 @@ implements EssentialOCLCSPackage {
 		createEReference(iterateCallExpCSEClass, ITERATE_CALL_EXP_CS__ACCUMULATORS);
 
 		iterationCallExpCSEClass = createEClass(ITERATION_CALL_EXP_CS);
+		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__CO_ITERATORS);
 		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__ITERATORS);
 		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__REFERRED_ITERATION);
 
@@ -2209,6 +2232,7 @@ implements EssentialOCLCSPackage {
 		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE);
 		createEAttribute(navigatingArgCSEClass, NAVIGATING_ARG_CS__PREFIX);
 		createEAttribute(navigatingArgCSEClass, NAVIGATING_ARG_CS__ROLE);
+		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
 
 		nestedExpCSEClass = createEClass(NESTED_EXP_CS);
 		createEReference(nestedExpCSEClass, NESTED_EXP_CS__OWNED_EXPRESSION);
@@ -2466,6 +2490,7 @@ implements EssentialOCLCSPackage {
 		initEReference(getIterateCallExpCS_Accumulators(), this.getVariableCS(), null, "accumulators", null, 0, -1, IterateCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iterationCallExpCSEClass, IterationCallExpCS.class, "IterationCallExpCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIterationCallExpCS_CoIterators(), this.getVariableCS(), null, "coIterators", null, 0, -1, IterationCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIterationCallExpCS_Iterators(), this.getVariableCS(), null, "iterators", null, 0, -1, IterationCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIterationCallExpCS_ReferredIteration(), thePivotPackage.getIteration(), null, "referredIteration", null, 0, 1, IterationCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -2505,6 +2530,7 @@ implements EssentialOCLCSPackage {
 		initEReference(getNavigatingArgCS_OwningRoundBracketedClause(), this.getRoundBracketedClauseCS(), this.getRoundBracketedClauseCS_OwnedArguments(), "owningRoundBracketedClause", null, 0, 1, NavigatingArgCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getNavigatingArgCS_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, NavigatingArgCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getNavigatingArgCS_Role(), this.getNavigationRole(), "role", null, 0, 1, NavigatingArgCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getNavigatingArgCS_OwnedCoIterator(), this.getVariableCS(), null, "ownedCoIterator", null, 0, 1, NavigatingArgCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(nestedExpCSEClass, NestedExpCS.class, "NestedExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getNestedExpCS_OwnedExpression(), this.getExpCS(), null, "ownedExpression", null, 0, 1, NestedExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

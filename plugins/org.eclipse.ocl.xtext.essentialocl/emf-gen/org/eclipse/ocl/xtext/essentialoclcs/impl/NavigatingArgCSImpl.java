@@ -25,6 +25,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigationRole;
 import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 
 /**
@@ -41,6 +42,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NavigatingArgCSImpl#getOwningRoundBracketedClause <em>Owning Round Bracketed Clause</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NavigatingArgCSImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NavigatingArgCSImpl#getRole <em>Role</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NavigatingArgCSImpl#getOwnedCoIterator <em>Owned Co Iterator</em>}</li>
  * </ul>
  *
  * @generated
@@ -118,6 +120,16 @@ public class NavigatingArgCSImpl
 	 * @ordered
 	 */
 	protected NavigationRole role = ROLE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getOwnedCoIterator() <em>Owned Co Iterator</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedCoIterator()
+	 * @generated
+	 * @ordered
+	 */
+	protected VariableCS ownedCoIterator;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -206,6 +218,56 @@ public class NavigatingArgCSImpl
 		role = newRole == null ? ROLE_EDEFAULT : newRole;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE, oldRole, role));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public VariableCS getOwnedCoIterator()
+	{
+		return ownedCoIterator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedCoIterator(VariableCS newOwnedCoIterator, NotificationChain msgs)
+	{
+		VariableCS oldOwnedCoIterator = ownedCoIterator;
+		ownedCoIterator = newOwnedCoIterator;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, oldOwnedCoIterator, newOwnedCoIterator);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedCoIterator(VariableCS newOwnedCoIterator)
+	{
+		if (newOwnedCoIterator != ownedCoIterator)
+		{
+			NotificationChain msgs = null;
+			if (ownedCoIterator != null)
+				msgs = ((InternalEObject)ownedCoIterator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, null, msgs);
+			if (newOwnedCoIterator != null)
+				msgs = ((InternalEObject)newOwnedCoIterator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, null, msgs);
+			msgs = basicSetOwnedCoIterator(newOwnedCoIterator, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, newOwnedCoIterator, newOwnedCoIterator));
 	}
 
 	/**
@@ -421,6 +483,8 @@ public class NavigatingArgCSImpl
 				return basicSetOwnedType(null, msgs);
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
 				return basicSetOwningRoundBracketedClause(null, msgs);
+			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+				return basicSetOwnedCoIterator(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -462,6 +526,8 @@ public class NavigatingArgCSImpl
 				return getPrefix();
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
 				return getRole();
+			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+				return getOwnedCoIterator();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -492,6 +558,9 @@ public class NavigatingArgCSImpl
 				return;
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
 				setRole((NavigationRole)newValue);
+				return;
+			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+				setOwnedCoIterator((VariableCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -524,6 +593,9 @@ public class NavigatingArgCSImpl
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
 				setRole(ROLE_EDEFAULT);
 				return;
+			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+				setOwnedCoIterator((VariableCS)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -549,6 +621,8 @@ public class NavigatingArgCSImpl
 				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
 				return role != ROLE_EDEFAULT;
+			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+				return ownedCoIterator != null;
 		}
 		return super.eIsSet(featureID);
 	}

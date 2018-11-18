@@ -3052,13 +3052,22 @@ extends EPackage {
 	int ITERATION_CALL_EXP_CS__SOURCE = CALL_EXP_CS__SOURCE;
 
 	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION_CALL_EXP_CS__CO_ITERATORS = CALL_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Iterators</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATION_CALL_EXP_CS__ITERATORS = CALL_EXP_CS_FEATURE_COUNT + 0;
+	int ITERATION_CALL_EXP_CS__ITERATORS = CALL_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Referred Iteration</b></em>' reference.
@@ -3067,7 +3076,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATION_CALL_EXP_CS__REFERRED_ITERATION = CALL_EXP_CS_FEATURE_COUNT + 1;
+	int ITERATION_CALL_EXP_CS__REFERRED_ITERATION = CALL_EXP_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Iteration Call Exp CS</em>' class.
@@ -3076,7 +3085,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATION_CALL_EXP_CS_FEATURE_COUNT = CALL_EXP_CS_FEATURE_COUNT + 2;
+	int ITERATION_CALL_EXP_CS_FEATURE_COUNT = CALL_EXP_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterateCallExpCSImpl <em>Iterate Call Exp CS</em>}' class.
@@ -3285,6 +3294,15 @@ extends EPackage {
 	 * @ordered
 	 */
 	int ITERATE_CALL_EXP_CS__SOURCE = ITERATION_CALL_EXP_CS__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CALL_EXP_CS__CO_ITERATORS = ITERATION_CALL_EXP_CS__CO_ITERATORS;
 
 	/**
 	 * The feature id for the '<em><b>Iterators</b></em>' reference list.
@@ -4344,13 +4362,22 @@ extends EPackage {
 	int NAME_EXP_CS__VALUE = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAME_EXP_CS__CO_ITERATORS = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Iterators</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__ITERATORS = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3;
+	int NAME_EXP_CS__ITERATORS = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Referred Iteration</b></em>' reference.
@@ -4359,7 +4386,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__REFERRED_ITERATION = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4;
+	int NAME_EXP_CS__REFERRED_ITERATION = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Accumulators</b></em>' reference list.
@@ -4368,7 +4395,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__ACCUMULATORS = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5;
+	int NAME_EXP_CS__ACCUMULATORS = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Referred Operation</b></em>' reference.
@@ -4377,7 +4404,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__REFERRED_OPERATION = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6;
+	int NAME_EXP_CS__REFERRED_OPERATION = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Referred Property</b></em>' reference.
@@ -4386,7 +4413,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__REFERRED_PROPERTY = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7;
+	int NAME_EXP_CS__REFERRED_PROPERTY = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Referred Variable</b></em>' reference.
@@ -4395,7 +4422,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS__REFERRED_VARIABLE = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8;
+	int NAME_EXP_CS__REFERRED_VARIABLE = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Name Exp CS</em>' class.
@@ -4404,7 +4431,7 @@ extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAME_EXP_CS_FEATURE_COUNT = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9;
+	int NAME_EXP_CS_FEATURE_COUNT = ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -4506,13 +4533,22 @@ extends EPackage {
 	int NAVIGATING_ARG_CS__ROLE = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Owned Co Iterator</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAVIGATING_ARG_CS__OWNED_CO_ITERATOR = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Navigating Arg CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NAVIGATING_ARG_CS_FEATURE_COUNT = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 6;
+	int NAVIGATING_ARG_CS_FEATURE_COUNT = BaseCSPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -7947,6 +7983,17 @@ extends EPackage {
 	EAttribute getNavigatingArgCS_Role();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getOwnedCoIterator <em>Owned Co Iterator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Co Iterator</em>'.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getOwnedCoIterator()
+	 * @see #getNavigatingArgCS()
+	 * @generated
+	 */
+	EReference getNavigatingArgCS_OwnedCoIterator();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getPrefix <em>Prefix</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8476,6 +8523,17 @@ extends EPackage {
 	 * @generated
 	 */
 	EClass getIterationCallExpCS();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getCoIterators <em>Co Iterators</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Co Iterators</em>'.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getCoIterators()
+	 * @see #getIterationCallExpCS()
+	 * @generated
+	 */
+	EReference getIterationCallExpCS_CoIterators();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getReferredIteration <em>Referred Iteration</em>}'.
@@ -9400,6 +9458,14 @@ extends EPackage {
 		EAttribute NAVIGATING_ARG_CS__ROLE = eINSTANCE.getNavigatingArgCS_Role();
 
 		/**
+		 * The meta object literal for the '<em><b>Owned Co Iterator</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NAVIGATING_ARG_CS__OWNED_CO_ITERATOR = eINSTANCE.getNavigatingArgCS_OwnedCoIterator();
+
+		/**
 		 * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9836,6 +9902,14 @@ extends EPackage {
 		 * @generated
 		 */
 		EClass ITERATION_CALL_EXP_CS = eINSTANCE.getIterationCallExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Co Iterators</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ITERATION_CALL_EXP_CS__CO_ITERATORS = eINSTANCE.getIterationCallExpCS_CoIterators();
 
 		/**
 		 * The meta object literal for the '<em><b>Referred Iteration</b></em>' reference feature.

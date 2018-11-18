@@ -50,6 +50,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getParts <em>Parts</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getTypeName <em>Type Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getCoIterators <em>Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getIterators <em>Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getReferredIteration <em>Referred Iteration</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl#getAccumulators <em>Accumulators</em>}</li>
@@ -103,6 +104,16 @@ public class NameExpCSImpl
 	 * @ordered
 	 */
 	protected String value = VALUE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCoIterators() <em>Co Iterators</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCoIterators()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VariableCS> coIterators;
 
 	/**
 	 * The cached value of the '{@link #getIterators() <em>Iterators</em>}' reference list.
@@ -246,6 +257,21 @@ public class NameExpCSImpl
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__VALUE, oldValue, value));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<VariableCS> getCoIterators()
+	{
+		if (coIterators == null)
+		{
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS);
+		}
+		return coIterators;
 	}
 
 	/**
@@ -424,6 +450,8 @@ public class NameExpCSImpl
 				return getTypeName();
 			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
 				return getValue();
+			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+				return getCoIterators();
 			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
 				return getIterators();
 			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
@@ -459,6 +487,10 @@ public class NameExpCSImpl
 				return;
 			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
 				setValue((String)newValue);
+				return;
+			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+				getCoIterators().clear();
+				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
 			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
 				getIterators().clear();
@@ -502,6 +534,9 @@ public class NameExpCSImpl
 			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
+			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+				getCoIterators().clear();
+				return;
 			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
 				getIterators().clear();
 				return;
@@ -539,6 +574,8 @@ public class NameExpCSImpl
 				return typeName != null;
 			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+				return coIterators != null && !coIterators.isEmpty();
 			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
 				return iterators != null && !iterators.isEmpty();
 			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
@@ -577,6 +614,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
+				case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS;
 				case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS;
 				case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION;
 				default: return -1;
@@ -639,6 +677,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
+				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS: return EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS;
 				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS: return EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS;
 				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION: return EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION;
 				default: return -1;

@@ -109,6 +109,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//IterateCallExpCS/accumulators"/>
     </genClasses>
     <genClasses image="false" ecoreClass="EssentialOCLCS.ecore#//IterationCallExpCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//IterationCallExpCS/coIterators"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//IterationCallExpCS/iterators"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//IterationCallExpCS/referredIteration"/>
     </genClasses>
@@ -146,6 +147,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//NavigatingArgCS/owningRoundBracketedClause"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EssentialOCLCS.ecore#//NavigatingArgCS/prefix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EssentialOCLCS.ecore#//NavigatingArgCS/role"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//NavigatingArgCS/ownedCoIterator"/>
     </genClasses>
     <genClasses ecoreClass="EssentialOCLCS.ecore#//NestedExpCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//NestedExpCS/ownedExpression"/>

@@ -28,6 +28,7 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getOwningRoundBracketedClause <em>Owning Round Bracketed Clause</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getRole <em>Role</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getOwnedCoIterator <em>Owned Co Iterator</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getNavigatingArgCS()
@@ -93,6 +94,32 @@ public interface NavigatingArgCS
 	 * @generated
 	 */
 	void setRole(NavigationRole value);
+
+	/**
+	 * Returns the value of the '<em><b>Owned Co Iterator</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Co Iterator</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Co Iterator</em>' containment reference.
+	 * @see #setOwnedCoIterator(VariableCS)
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getNavigatingArgCS_OwnedCoIterator()
+	 * @model containment="true"
+	 * @generated
+	 */
+	VariableCS getOwnedCoIterator();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS#getOwnedCoIterator <em>Owned Co Iterator</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Co Iterator</em>' containment reference.
+	 * @see #getOwnedCoIterator()
+	 * @generated
+	 */
+	void setOwnedCoIterator(VariableCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Prefix</b></em>' attribute.

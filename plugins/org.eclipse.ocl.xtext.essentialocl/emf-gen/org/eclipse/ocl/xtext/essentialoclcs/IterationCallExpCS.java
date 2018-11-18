@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Iteration;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getCoIterators <em>Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getIterators <em>Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS#getReferredIteration <em>Referred Iteration</em>}</li>
  * </ul>
@@ -32,6 +33,22 @@ import org.eclipse.ocl.pivot.Iteration;
  */
 public interface IterationCallExpCS extends CallExpCS
 {
+	/**
+	 * Returns the value of the '<em><b>Co Iterators</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.xtext.essentialoclcs.VariableCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Co Iterators</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Co Iterators</em>' reference list.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getIterationCallExpCS_CoIterators()
+	 * @model resolveProxies="false" derived="true"
+	 * @generated
+	 */
+	EList<VariableCS> getCoIterators();
+
 	/**
 	 * Returns the value of the '<em><b>Referred Iteration</b></em>' reference.
 	 * <!-- begin-user-doc -->
