@@ -3,16 +3,8 @@
     <resource path="META-INF/MANIFEST.MF">
         <filter id="926941240">
             <message_arguments>
+                <message_argument value="1.6.0"/>
                 <message_argument value="1.5.0"/>
-                <message_argument value="1.4.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/uml/internal/library/UMLRedefinedNavigationProperty.java" type="org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty"/>
-                <message_argument value="redefiningProperty"/>
             </message_arguments>
         </filter>
     </resource>
