@@ -21,6 +21,8 @@ import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.Ess
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.ExpCSElements;
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.IfExpCSElements;
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.LetExpCSElements;
+import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.MapLiteralExpCSElements;
+import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.MapTypeCSElements;
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.NameExpCSElements;
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.NavigatingCommaArgCSElements;
 import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess.NavigatingSemiArgCSElements;
@@ -50,6 +52,19 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 		c.setNoSpace().before(a.getRightParenthesisKeyword_1_3());
 	}
 
+	protected void configureCurlyBracketedClauseCS(FormattingConfig c, CurlyBracketedClauseCSElements a) {
+		c.setNoSpace().around(a.getLeftCurlyBracketKeyword_1());
+		c.setNoSpace().before(a.getRightCurlyBracketKeyword_3());
+		c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
+	}
+
+	protected void configureEssentialOCLNavigationOperatorCS(FormattingConfig c, EssentialOCLNavigationOperatorNameElements a) {
+		c.setNoSpace().before(a.getFullStopKeyword_0());
+		c.setNoSpace().after(a.getFullStopKeyword_0());
+		c.setLinewrap().before(a.getHyphenMinusGreaterThanSignKeyword_1());
+		c.setNoSpace().after(a.getHyphenMinusGreaterThanSignKeyword_1());
+	}
+
 	protected void configureExpCS(FormattingConfig c, ExpCSElements a) {
 		c.setNoSpace().around(a.getNameAssignment_0_1_1());		// BaseValueConverterService.BinaryOperatorNameConverter wraps spaces
 	}
@@ -77,6 +92,19 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 		c.setIndentation(a.getInKeyword_3(), a.getGroup());
 	}
 
+	protected void configureMapLiteralExpCS(FormattingConfig c, MapLiteralExpCSElements a) {
+		c.setNoSpace().around(a.getLeftCurlyBracketKeyword_1());
+		c.setNoSpace().before(a.getCommaKeyword_2_1_0());
+		c.setNoSpace().before(a.getRightCurlyBracketKeyword_3());
+		c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
+	}
+
+	protected void configureMapTypeCS(FormattingConfig c, MapTypeCSElements a) {
+		c.setNoSpace().around(a.getLeftParenthesisKeyword_1_0());
+		c.setNoSpace().before(a.getCommaKeyword_1_2());
+		c.setNoSpace().before(a.getRightParenthesisKeyword_1_4());
+	}
+
 	protected void configureNameExpCS(FormattingConfig c, NameExpCSElements a) {
 		c.setNoSpace().after(a.getIsPreCommercialAtKeyword_4_0_0());
 	}
@@ -87,19 +115,6 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 
 	protected void configureNavigatingSemiArgCS(FormattingConfig c, NavigatingSemiArgCSElements a) {
 		c.setNoSpace().before(a.getPrefixSemicolonKeyword_0_0());
-	}
-
-	protected void configureCurlyBracketedClauseCS(FormattingConfig c, CurlyBracketedClauseCSElements a) {
-		c.setNoSpace().around(a.getLeftCurlyBracketKeyword_1());
-		c.setNoSpace().before(a.getRightCurlyBracketKeyword_3());
-		c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
-	}
-
-	protected void configureEssentialOCLNavigationOperatorCS(FormattingConfig c, EssentialOCLNavigationOperatorNameElements a) {
-		c.setNoSpace().before(a.getFullStopKeyword_0());
-		c.setNoSpace().after(a.getFullStopKeyword_0());
-		c.setLinewrap().before(a.getHyphenMinusGreaterThanSignKeyword_1());
-		c.setNoSpace().after(a.getHyphenMinusGreaterThanSignKeyword_1());
 	}
 
 	protected void configureNestedExpCS(FormattingConfig c, NestedExpCSElements a) {
