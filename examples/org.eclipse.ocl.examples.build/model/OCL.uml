@@ -107,7 +107,7 @@
         <ownedAttribute xmi:id="OCL-OCL_Expressions-CollectionRange-last" name="ownedLast" type="_aPMtkBu3EeSIos3S87O_rg" aggregation="composite"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-CollectionType" name="CollectionType">
-        <generalization xmi:id="_XpdiSH7VEeOu79LxSz8Ylw" general="_vJ60ABu3EeSIos3S87O_rg"/>
+        <generalization xmi:id="_XpdiSH7VEeOu79LxSz8Ylw" general="_8PuY8ONmEeikDdDxOl7LOg"/>
         <ownedAttribute xmi:id="OCL-OCL_Types-CollectionType-elementType" name="elementType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JM2PoGx-EeeGs8EXqqLgaA" value="1"/>
         </ownedAttribute>
@@ -123,6 +123,9 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_vJ60ABu3EeSIos3S87O_rg" name="DataType"/>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_8LvrkBu3EeSIos3S87O_rg" name="Integer"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_8PuY8ONmEeikDdDxOl7LOg" name="IterableType" isAbstract="true">
+        <generalization xmi:id="_8PuY8eNmEeikDdDxOl7LOg" general="_vJ60ABu3EeSIos3S87O_rg"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_aPMtkBu3EeSIos3S87O_rg" name="OCLExpression" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-OrderedSetType" name="OrderedSetType">
         <generalization xmi:id="_Xpwc8H7VEeOu79LxSz8Ylw" general="OCL-OCL_Types-CollectionType"/>
@@ -392,6 +395,10 @@
         <ownedAttribute xmi:id="OCL-OCL_Expressions-LoopExp-referredIteration" name="referredIteration" type="OCL-OCL_Library-Iteration">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XpdiIn7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
+        <ownedAttribute xmi:id="_8l704OjJEeiyDNW4lK79YQ" name="ownedCoIterators" type="OCL-OCL_Expressions-Variable" isOrdered="true" aggregation="composite">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8l704ejJEeiyDNW4lK79YQ"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8l704ujJEeiyDNW4lK79YQ" value="*"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Expressions-NavigationCallExp" name="NavigationCallExp" isAbstract="true">
         <generalization xmi:id="_XpnTK37VEeOu79LxSz8Ylw" general="OCL-OCL_Expressions-FeatureCallExp"/>
@@ -529,6 +536,7 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_DTjUoM_GEeSf2fJW6HRDJA" name="OCL_Maps">
+      <packagedElement xmi:type="uml:Class" xmi:id="_DMD48ONnEeikDdDxOl7LOg" name="IterableType" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_M3a3kM_GEeSf2fJW6HRDJA" name="MapLiteralExp">
         <generalization xmi:id="_M3a3kc_GEeSf2fJW6HRDJA" general="OCL-OCL_Expressions-LiteralExp"/>
         <ownedAttribute xmi:id="_M3a3k8_GEeSf2fJW6HRDJA" name="ownedParts" type="_SWDDcM_GEeSf2fJW6HRDJA" isOrdered="true" aggregation="composite">
@@ -544,12 +552,18 @@
         <ownedAttribute xmi:id="_cMiAYc_GEeSf2fJW6HRDJA" name="ownedValue" type="_aPMtkBu3EeSIos3S87O_rg" aggregation="composite"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_YcxwYM8yEeS-B8MCFKKocw" name="MapType">
-        <generalization xmi:id="_daxUYM8yEeS-B8MCFKKocw" general="OCL-OCL_UML-DataType"/>
+        <generalization xmi:id="_daxUYM8yEeS-B8MCFKKocw" general="_DMD48ONnEeikDdDxOl7LOg"/>
         <ownedAttribute xmi:id="_g0fCMM8yEeS-B8MCFKKocw" name="keyType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J52fkGx-EeeGs8EXqqLgaA" value="1"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="_hPdG8M8yEeS-B8MCFKKocw" name="valueType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KW6PAGx-EeeGs8EXqqLgaA" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_NpoEAONnEeikDdDxOl7LOg" name="keysAreNullFree" type="_PHnfsBu4EeSIos3S87O_rg">
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_NpoEAeNnEeikDdDxOl7LOg" value="true"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_QFpagONnEeikDdDxOl7LOg" name="valuesAreNullFree" type="_PHnfsBu4EeSIos3S87O_rg">
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_QFpageNnEeikDdDxOl7LOg" value="true"/>
         </ownedAttribute>
       </packagedElement>
       <profileApplication xmi:id="_-5po4Gx6EeeGs8EXqqLgaA">
@@ -753,4 +767,5 @@
   <Ecore:EReference xmi:id="_BoTAcGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="_g0fCMM8yEeS-B8MCFKKocw" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_DpMhMGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="_hPdG8M8yEeS-B8MCFKKocw" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_Lxs5YGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="OCL-OCL_Types-CollectionType-elementType" isResolveProxies="false"/>
+  <Ecore:EReference xmi:id="_8QDJEONmEeikDdDxOl7LOg" isTransient="true" isVolatile="true" isResolveProxies="false"/>
 </xmi:XMI>

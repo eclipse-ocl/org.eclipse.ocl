@@ -263,14 +263,28 @@ inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
 No additional well-formedness rules. */
 
 context LoopExp
-/** The type of the source expression must be a collection. */
-inv SourceIsCollection: ownedSource?.type.oclIsKindOf(CollectionType)
+/** Obsolete constraint replaced by SourceIsIterable. */
+inv SourceIsCollection: true
+/** The type of the source expression must be a collection or map. */
+inv SourceIsIterable: ownedSource?.type.oclIsKindOf(IterableType)
 /** The loop variable of an iterator expression has no init expression. */
 inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
+/** The loop variable of an iterator expression has no init expression. */
+inv NoCoInitializers: self.ownedCoIterators->forAll(ownedInit->isEmpty())
+/** A Map must have the same number of iterators and co-iterators. */
+inv MatchingMapCoIterators: ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()
+/** A Collection must have the same no co-iterators. */
+inv NoCollectionCoIterators: ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()
 
 context IteratorExp
-/** The type of each iterator variable must be the type of the elements of the source collection. */
-inv IteratorTypeIsSourceElementType: self.ownedIterators->forAll(p | ownedSource?.type.oclAsType(CollectionType).elementType.conformsTo(p.type))
+/** The type of each collection iterator variable must be the type of the elements of the source collection. */
+inv IteratorTypeIsSourceElementType: let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies
+    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in
+    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))
+/** The type of each map iterator variable must be the type of the keys of the source map. */
+inv IteratorTypeIsSourceKeyType: let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies
+    let sourceKeyType = sourceType.oclAsType(MapType).keyType in
+    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))
 /** Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
 /** Safe navigation is not necessary when an iterator can be null. */

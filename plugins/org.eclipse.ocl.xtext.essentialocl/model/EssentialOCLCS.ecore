@@ -152,6 +152,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IterationCallExpCS" abstract="true"
       eSuperTypes="#//CallExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="coIterators" upperBound="-1"
+        eType="#//VariableCS" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="iterators" upperBound="-1"
         eType="#//VariableCS" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredIteration" eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Iteration"
@@ -208,6 +210,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="#//NavigationRole"
         transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCoIterator" eType="#//VariableCS"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NestedExpCS" eSuperTypes="#//ExpCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedExpression" eType="#//ExpCS"
