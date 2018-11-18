@@ -41,7 +41,7 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	/**
 	 * Create the AS2CS converter for the cs2asResourceMap conversions using metamodelManager.
 	 */
-	@NonNull AS2CS createAS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory);
+	@NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory);
 
 	/**
 	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
@@ -69,10 +69,10 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	/**
 	 * Return the CS2AS adapter for this resource.
 	 * If no CS2AS adapter installed, one is created and installed using the provided metamodelManager,
-	 * which if null is also created. 
+	 * which if null is also created.
 	 */
 	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
-	
+
 	/**
 	 * Return the name of the editor for use in diagnostics.
 	 */

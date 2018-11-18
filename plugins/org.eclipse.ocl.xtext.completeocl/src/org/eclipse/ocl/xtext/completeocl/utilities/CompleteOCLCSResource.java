@@ -26,7 +26,7 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 public class CompleteOCLCSResource extends EssentialOCLCSResource
 {
 	@Override
-	public @NonNull AS2CS createAS2CS(@NonNull Map<? extends BaseCSResource, ? extends ASResource> cs2asResourceMap,
+	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
 			@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new CompleteOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
