@@ -1685,13 +1685,22 @@ public interface CGModelPackage extends EPackage {
 	int CG_ITERATION_CALL_EXP__BODY = CG_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_ITERATION_CALL_EXP__CO_ITERATORS = CG_CALL_EXP_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>CG Iteration Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CG_ITERATION_CALL_EXP_FEATURE_COUNT = CG_CALL_EXP_FEATURE_COUNT + 3;
+	int CG_ITERATION_CALL_EXP_FEATURE_COUNT = CG_CALL_EXP_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -1800,6 +1809,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_BUILT_IN_ITERATION_CALL_EXP__BODY = CG_ITERATION_CALL_EXP__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_BUILT_IN_ITERATION_CALL_EXP__CO_ITERATORS = CG_ITERATION_CALL_EXP__CO_ITERATORS;
 
 	/**
 	 * The feature id for the '<em><b>Accumulator</b></em>' containment reference.
@@ -6337,6 +6355,15 @@ public interface CGModelPackage extends EPackage {
 	int CG_LIBRARY_ITERATION_CALL_EXP__BODY = CG_ITERATION_CALL_EXP__BODY;
 
 	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_LIBRARY_ITERATION_CALL_EXP__CO_ITERATORS = CG_ITERATION_CALL_EXP__CO_ITERATORS;
+
+	/**
 	 * The feature id for the '<em><b>Library Iteration</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6461,6 +6488,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_LIBRARY_ITERATE_CALL_EXP__BODY = CG_LIBRARY_ITERATION_CALL_EXP__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Co Iterators</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_LIBRARY_ITERATE_CALL_EXP__CO_ITERATORS = CG_LIBRARY_ITERATION_CALL_EXP__CO_ITERATORS;
 
 	/**
 	 * The feature id for the '<em><b>Library Iteration</b></em>' attribute.
@@ -9819,6 +9855,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGIterationCallExp_Body();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getCoIterators <em>Co Iterators</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Co Iterators</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getCoIterators()
+	 * @see #getCGIterationCallExp()
+	 * @generated
+	 */
+	EReference getCGIterationCallExp_CoIterators();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterator <em>CG Iterator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11925,6 +11972,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_ITERATION_CALL_EXP__BODY = eINSTANCE.getCGIterationCallExp_Body();
+
+		/**
+		 * The meta object literal for the '<em><b>Co Iterators</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_ITERATION_CALL_EXP__CO_ITERATORS = eINSTANCE.getCGIterationCallExp_CoIterators();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIteratorImpl <em>CG Iterator</em>}' class.

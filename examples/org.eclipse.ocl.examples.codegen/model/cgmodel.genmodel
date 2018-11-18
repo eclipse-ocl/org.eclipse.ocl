@@ -170,6 +170,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGIterationCallExp/referredIteration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIterationCallExp/iterators"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIterationCallExp/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIterationCallExp/coIterators"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGIterator"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGLetExp">

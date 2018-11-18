@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getReferredIteration <em>Referred Iteration</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getIterators <em>Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getCoIterators <em>Co Iterators</em>}</li>
  * </ul>
  *
  * @generated
@@ -90,6 +91,16 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	 * @ordered
 	 */
 	protected CGValuedElement body;
+
+	/**
+	 * The cached value of the '{@link #getCoIterators() <em>Co Iterators</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCoIterators()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CGIterator> coIterators;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -195,6 +206,19 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<CGIterator> getCoIterators() {
+		if (coIterators == null) {
+			coIterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS);
+		}
+		return coIterators;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -214,6 +238,8 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				return ((InternalEList<?>)getIterators()).basicRemove(otherEnd, msgs);
 			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
 				return basicSetBody(null, msgs);
+			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+				return ((InternalEList<?>)getCoIterators()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -232,6 +258,8 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				return getIterators();
 			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
 				return getBody();
+			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+				return getCoIterators();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -255,6 +283,10 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
 				setBody((CGValuedElement)newValue);
 				return;
+			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+				getCoIterators().clear();
+				getCoIterators().addAll((Collection<? extends CGIterator>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -276,6 +308,9 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
 				setBody((CGValuedElement)null);
 				return;
+			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+				getCoIterators().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -294,6 +329,8 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				return iterators != null && !iterators.isEmpty();
 			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
 				return body != null;
+			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+				return coIterators != null && !coIterators.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
