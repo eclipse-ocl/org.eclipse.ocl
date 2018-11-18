@@ -19,19 +19,25 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 
-public interface MapValue extends Value//, Iterable<Object>
+public interface MapValue extends IterableValue
 {
 	/**
 	 * @generated NOT
+	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Accumulator extends MapValue {
-		boolean add(@Nullable Object value);	
+		@Deprecated /* @deprecated erroneous never-used signature */
+		boolean add(@Nullable Object value);
+		/**
+		 * @since 1.6
+		 */
+		void add(@Nullable Object key, @Nullable Object value);
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Map<? extends Object, ? extends Object> asMap();	
+	@NonNull Map<? extends Object, ? extends Object> asMap();
 
 	/**
 	 * @generated NOT
@@ -57,7 +63,8 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludes(@Nullable Object value);	
+	@Override
+	@NonNull Boolean excludes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -67,6 +74,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull Boolean excludesAll(@NonNull CollectionValue c);
 
 	/**
@@ -77,11 +85,12 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludesValue(@Nullable Object value);	
+	@NonNull Boolean excludesValue(@Nullable Object value);
 
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull MapValue excluding(@Nullable Object value);
 
 	/**
@@ -92,6 +101,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull MapValue excludingAll(@NonNull CollectionValue c);
 
 	/**
@@ -123,7 +133,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includes(@Nullable Object value);	
+	@NonNull Boolean includes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -143,7 +153,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includesValue(@Nullable Object value);	
+	@NonNull Boolean includesValue(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -169,7 +179,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	 * @generated NOT
 	 */
 	@NonNull Set<Object> keySet();
-	
+
 	/**
 	 * @generated NOT
 	 */

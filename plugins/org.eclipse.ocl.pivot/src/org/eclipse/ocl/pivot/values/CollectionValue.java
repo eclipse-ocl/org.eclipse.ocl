@@ -22,19 +22,19 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
-public interface CollectionValue extends Value, Iterable<@Nullable Object>
+public interface CollectionValue extends IterableValue
 {
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue {
-		boolean add(@Nullable Object value);	
+		boolean add(@Nullable Object value);
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> asCollection();	
+	@NonNull Collection<? extends Object> asCollection();
 
 	/**
 	 * @generated NOT
@@ -55,21 +55,25 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludes(@Nullable Object value);	
+	@Override
+	@NonNull Boolean excludes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull Boolean excludesAll(@NonNull CollectionValue c);
 
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull CollectionValue excluding(@Nullable Object value);
 
 	/**
 	 * @generated NOT
 	 */
+	@Override
 	@NonNull CollectionValue excludingAll(@NonNull CollectionValue c);
 
 	/**
@@ -101,7 +105,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includes(@Nullable Object value);	
+	@NonNull Boolean includes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -156,7 +160,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);   	
+	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
 
 	/**
 	 * @generated NOT

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,6 +31,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -40,6 +42,26 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  */
 public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Object>
 {
+	/**
+	 * @since 1.6
+	 */
+	public static class Accumulator extends MapValueImpl implements MapValue.Accumulator
+	{
+		public Accumulator(@NonNull MapTypeId typeId) {
+			super(typeId, new HashMap<Object, Object>());
+		}
+
+		@Override
+		public boolean add(@Nullable Object value) {
+			return false;
+		}
+
+		@Override
+		public void add(@Nullable Object key, @Nullable Object value) {
+			boxedValues.put(key, value);
+		}
+	}
+
 	private <K,V> boolean checkElementsAreValues(Iterable<Map.Entry<K, V>> elements) {
 		for (Map.Entry<K, V> element : elements) {
 			assert ValueUtil.isBoxed(element.getKey());
@@ -92,6 +114,14 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		//		EMap<Object, Object> eMap = new BasicEMap<Object, Object>();
 		//		return eMap;
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull IterableValue asIterableValue() {
+		return this;
 	}
 
 	@Override
@@ -480,6 +510,12 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean isEmpty() {
 		return intSize() == 0;
+	}
+
+	@Override
+	public @NonNull Iterator<@Nullable Object> iterator() {
+		@SuppressWarnings("unchecked") @NonNull Iterator<@Nullable Object> result = (@NonNull Iterator<@Nullable Object>)boxedValues.keySet().iterator();
+		return result;
 	}
 
 	@Override

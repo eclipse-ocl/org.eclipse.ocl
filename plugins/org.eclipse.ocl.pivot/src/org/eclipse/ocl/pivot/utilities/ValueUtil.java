@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
@@ -204,6 +205,18 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INTEGER_NAME, getTypeName(value));
+		}
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	public static @NonNull IterableValue asIterableValue(@Nullable Object value) {
+		if (value instanceof Value) {
+			return ((Value)value).asIterableValue();
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ITERABLE_NAME, getTypeName(value));
 		}
 	}
 
@@ -527,6 +540,13 @@ public abstract class ValueUtil
 		else {
 			return new InvalidValueException(e);
 		}
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	public static MapValue.@NonNull Accumulator createMapAccumulatorValue(@NonNull MapTypeId typeId) {
+		return new MapValueImpl.Accumulator(typeId);
 	}
 
 	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId typeId, @NonNull MapEntry @NonNull ... mapEntries) {
@@ -870,7 +890,7 @@ public abstract class ValueUtil
 		if ((object instanceof Number) && !(object instanceof RealValue) && !(object instanceof UnlimitedNaturalValue)) {
 			return false;
 		}
-		if ((object instanceof Iterable<?>) && !(object instanceof CollectionValue)) {
+		if ((object instanceof Iterable<?>) && !(object instanceof IterableValue)) {
 			return false;
 		}
 		return true;
@@ -895,7 +915,7 @@ public abstract class ValueUtil
 		if (object instanceof RealValue) {
 			return false;
 		}
-		if (object instanceof CollectionValue) {
+		if (object instanceof IterableValue) {
 			return false;
 		}
 		if ((object instanceof Collection) && !(object instanceof List)) {
@@ -922,6 +942,18 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * @since 1.6
+	 */
+	public static @Nullable IterableValue isIterableValue(@Nullable Object value) {
+		if ((value instanceof IterableValue) && !(value instanceof NullValue)) {
+			return (IterableValue)value;
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Return true if aNumber is a known floating point representation that can be converted to a RealValue.
 	 * Returns false for other types including RealValue.
 	 */
@@ -939,7 +971,7 @@ public abstract class ValueUtil
 		if (object instanceof RealValue) {
 			return false;
 		}
-		if (object instanceof CollectionValue) {
+		if (object instanceof IterableValue) {
 			return false;
 		}
 		return true;
@@ -1133,10 +1165,20 @@ public abstract class ValueUtil
 
 	/**
 	 * @since 1.1
+	 * @deprecated use IterableValue
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static @NonNull <T> Iterable<T> typedIterable(Class<T> elementClass, @NonNull CollectionValue collectionValue) {
 		return (Iterable<T>)collectionValue;
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@SuppressWarnings("unchecked")
+	public static @NonNull <T> Iterable<T> typedIterable(Class<T> elementClass, @NonNull IterableValue iterableValue) {
+		return (Iterable<T>)iterableValue;
 	}
 
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(@Nullable BigInteger value) {
