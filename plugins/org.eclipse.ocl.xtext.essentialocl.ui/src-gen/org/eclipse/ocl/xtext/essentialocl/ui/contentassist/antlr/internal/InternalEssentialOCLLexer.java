@@ -1518,8 +1518,8 @@ public class InternalEssentialOCLLexer extends Lexer {
     // $ANTLR start "RULE_ESCAPED_CHARACTER"
     public final void mRULE_ESCAPED_CHARACTER() throws RecognitionException {
         try {
-            // InternalEssentialOCL.g:13041:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
-            // InternalEssentialOCL.g:13041:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+            // InternalEssentialOCL.g:14048:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
+            // InternalEssentialOCL.g:14048:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
             match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1543,8 +1543,8 @@ public class InternalEssentialOCLLexer extends Lexer {
     // $ANTLR start "RULE_LETTER_CHARACTER"
     public final void mRULE_LETTER_CHARACTER() throws RecognitionException {
         try {
-            // InternalEssentialOCL.g:13043:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
-            // InternalEssentialOCL.g:13043:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // InternalEssentialOCL.g:14050:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
+            // InternalEssentialOCL.g:14050:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1569,11 +1569,11 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_DOUBLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13045:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalEssentialOCL.g:13045:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalEssentialOCL.g:14052:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalEssentialOCL.g:14052:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"');
-            // InternalEssentialOCL.g:13045:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalEssentialOCL.g:14052:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1589,14 +1589,14 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13045:34: RULE_ESCAPED_CHARACTER
+            	    // InternalEssentialOCL.g:14052:34: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalEssentialOCL.g:13045:57: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalEssentialOCL.g:14052:57: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1633,11 +1633,11 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13047:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // InternalEssentialOCL.g:13047:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalEssentialOCL.g:14054:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalEssentialOCL.g:14054:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\'');
-            // InternalEssentialOCL.g:13047:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalEssentialOCL.g:14054:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop2:
             do {
                 int alt2=3;
@@ -1653,14 +1653,14 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13047:35: RULE_ESCAPED_CHARACTER
+            	    // InternalEssentialOCL.g:14054:35: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalEssentialOCL.g:13047:58: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalEssentialOCL.g:14054:58: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1697,12 +1697,12 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_ML_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13049:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
-            // InternalEssentialOCL.g:13049:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
+            // InternalEssentialOCL.g:14056:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
+            // InternalEssentialOCL.g:14056:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
             match("/'");
 
-            // InternalEssentialOCL.g:13049:38: ( options {greedy=false; } : . )*
+            // InternalEssentialOCL.g:14056:38: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1727,7 +1727,7 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13049:66: .
+            	    // InternalEssentialOCL.g:14056:66: .
             	    {
             	    matchAny();
 
@@ -1757,11 +1757,11 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_SIMPLE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13051:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
-            // InternalEssentialOCL.g:13051:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalEssentialOCL.g:14058:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
+            // InternalEssentialOCL.g:14058:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
             mRULE_LETTER_CHARACTER();
-            // InternalEssentialOCL.g:13051:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalEssentialOCL.g:14058:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -1810,8 +1810,8 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_ESCAPED_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13053:17: ( '_' RULE_SINGLE_QUOTED_STRING )
-            // InternalEssentialOCL.g:13053:19: '_' RULE_SINGLE_QUOTED_STRING
+            // InternalEssentialOCL.g:14060:17: ( '_' RULE_SINGLE_QUOTED_STRING )
+            // InternalEssentialOCL.g:14060:19: '_' RULE_SINGLE_QUOTED_STRING
             {
             match('_');
             mRULE_SINGLE_QUOTED_STRING();
@@ -1831,10 +1831,10 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13055:10: ( ( '0' .. '9' )+ )
-            // InternalEssentialOCL.g:13055:12: ( '0' .. '9' )+
+            // InternalEssentialOCL.g:14062:10: ( ( '0' .. '9' )+ )
+            // InternalEssentialOCL.g:14062:12: ( '0' .. '9' )+
             {
-            // InternalEssentialOCL.g:13055:12: ( '0' .. '9' )+
+            // InternalEssentialOCL.g:14062:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -1848,7 +1848,7 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13055:13: '0' .. '9'
+            	    // InternalEssentialOCL.g:14062:13: '0' .. '9'
             	    {
             	    matchRange('0','9');
 
@@ -1880,12 +1880,12 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13057:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalEssentialOCL.g:13057:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalEssentialOCL.g:14064:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalEssentialOCL.g:14064:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*");
 
-            // InternalEssentialOCL.g:13057:24: ( options {greedy=false; } : . )*
+            // InternalEssentialOCL.g:14064:24: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -1910,7 +1910,7 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13057:52: .
+            	    // InternalEssentialOCL.g:14064:52: .
             	    {
             	    matchAny();
 
@@ -1940,12 +1940,12 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13059:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalEssentialOCL.g:13059:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalEssentialOCL.g:14066:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalEssentialOCL.g:14066:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--");
 
-            // InternalEssentialOCL.g:13059:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalEssentialOCL.g:14066:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1958,7 +1958,7 @@ public class InternalEssentialOCLLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalEssentialOCL.g:13059:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalEssentialOCL.g:14066:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1978,7 +1978,7 @@ public class InternalEssentialOCLLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalEssentialOCL.g:13059:40: ( ( '\\r' )? '\\n' )?
+            // InternalEssentialOCL.g:14066:40: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1987,9 +1987,9 @@ public class InternalEssentialOCLLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalEssentialOCL.g:13059:41: ( '\\r' )? '\\n'
+                    // InternalEssentialOCL.g:14066:41: ( '\\r' )? '\\n'
                     {
-                    // InternalEssentialOCL.g:13059:41: ( '\\r' )?
+                    // InternalEssentialOCL.g:14066:41: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -1998,7 +1998,7 @@ public class InternalEssentialOCLLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalEssentialOCL.g:13059:41: '\\r'
+                            // InternalEssentialOCL.g:14066:41: '\\r'
                             {
                             match('\r');
 
@@ -2030,10 +2030,10 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13061:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalEssentialOCL.g:13061:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalEssentialOCL.g:14068:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalEssentialOCL.g:14068:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalEssentialOCL.g:13061:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalEssentialOCL.g:14068:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt10=0;
             loop10:
             do {
@@ -2087,8 +2087,8 @@ public class InternalEssentialOCLLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalEssentialOCL.g:13063:16: ( . )
-            // InternalEssentialOCL.g:13063:18: .
+            // InternalEssentialOCL.g:14070:16: ( . )
+            // InternalEssentialOCL.g:14070:18: .
             {
             matchAny();
 

@@ -66,6 +66,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
@@ -127,6 +128,10 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 			case BaseCSPackage.PATH_NAME_CS:
 				if (rule == grammarAccess.getPathNameCSRule()) {
 					sequence_PathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
+				else if (rule == grammarAccess.getSimplePathNameCSRule()) {
+					sequence_SimplePathNameCS(context, (PathNameCS) semanticObject);
 					return;
 				}
 				else if (rule == grammarAccess.getURIPathNameCSRule()) {
@@ -362,6 +367,9 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 			case EssentialOCLCSPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS:
 				sequence_UnlimitedNaturalLiteralExpCS(context, (UnlimitedNaturalLiteralExpCS) semanticObject);
 				return;
+			case EssentialOCLCSPackage.VARIABLE_CS:
+				sequence_CoIteratorVariableCS(context, (VariableCS) semanticObject);
+				return;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -381,6 +389,18 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     (symbol='true' | symbol='false')
 	 */
 	protected void sequence_BooleanLiteralExpCS(ISerializationContext context, BooleanLiteralExpCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+
+
+	/**
+	 * Contexts:
+	 *     CoIteratorVariableCS returns VariableCS
+	 *
+	 * Constraint:
+	 *     (name=UnrestrictedName ownedType=TypeExpCS?)
+	 */
+	protected void sequence_CoIteratorVariableCS(ISerializationContext context, VariableCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 
@@ -756,7 +776,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (
-	 *         (ownedNameExpression=NavigatingArgExpCS ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | (ownedType=TypeExpCS? ownedInitExpression=ExpCS))?) |
+	 *         (
+	 *             ownedNameExpression=NavigatingArgExpCS
+	 *             (
+	 *                 (ownedCoIterator=CoIteratorVariableCS ownedInitExpression=ExpCS?) |
+	 *                 (ownedType=TypeExpCS ownedCoIterator=CoIteratorVariableCS? ownedInitExpression=ExpCS?) |
+	 *                 (ownedType=TypeExpCS? ownedCoIterator=CoIteratorVariableCS? ownedInitExpression=ExpCS)
+	 *             )?
+	 *         ) |
 	 *         ownedType=TypeExpCS
 	 *     )
 	 */
@@ -785,7 +812,11 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     (
 	 *         prefix=','
 	 *         ownedNameExpression=NavigatingArgExpCS
-	 *         ((ownedType=TypeExpCS ownedInitExpression=ExpCS?) | (ownedType=TypeExpCS? ownedInitExpression=ExpCS))?
+	 *         (
+	 *             (ownedCoIterator=CoIteratorVariableCS ownedInitExpression=ExpCS?) |
+	 *             (ownedType=TypeExpCS ownedCoIterator=CoIteratorVariableCS? ownedInitExpression=ExpCS?) |
+	 *             (ownedType=TypeExpCS? ownedCoIterator=CoIteratorVariableCS? ownedInitExpression=ExpCS)
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_NavigatingCommaArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
@@ -1025,6 +1056,18 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     )
 	 */
 	protected void sequence_ShadowPartCS(ISerializationContext context, ShadowPartCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+
+
+	/**
+	 * Contexts:
+	 *     SimplePathNameCS returns PathNameCS
+	 *
+	 * Constraint:
+	 *     ownedPathElements+=FirstPathElementCS
+	 */
+	protected void sequence_SimplePathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 

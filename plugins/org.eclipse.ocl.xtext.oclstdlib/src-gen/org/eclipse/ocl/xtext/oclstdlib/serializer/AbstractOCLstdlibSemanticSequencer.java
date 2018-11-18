@@ -73,6 +73,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.oclstdlib.services.OCLstdlibGrammarAccess;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
@@ -194,6 +195,10 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 				}
 				else if (rule == grammarAccess.getPathNameCSRule()) {
 					sequence_PathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
+				else if (rule == grammarAccess.getSimplePathNameCSRule()) {
+					sequence_SimplePathNameCS(context, (PathNameCS) semanticObject);
 					return;
 				}
 				else if (rule == grammarAccess.getURIPathNameCSRule()) {
@@ -456,6 +461,9 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 				else break;
 			case EssentialOCLCSPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS:
 				sequence_UnlimitedNaturalLiteralExpCS(context, (UnlimitedNaturalLiteralExpCS) semanticObject);
+				return;
+			case EssentialOCLCSPackage.VARIABLE_CS:
+				sequence_CoIteratorVariableCS(context, (VariableCS) semanticObject);
 				return;
 			}
 		else if (epackage == OCLstdlibCSPackage.eINSTANCE)
