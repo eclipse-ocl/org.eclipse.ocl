@@ -232,6 +232,7 @@ public class CompletionProposalTests extends XtextTestCase
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 		editor = (XtextEditor) IDE.openEditor(page, fileEditorInput, editorId, true);
+		TestUIUtil.flushEvents();
 	}
 
 	private @NonNull TestFile createIFile(@NonNull TestProject testProject, @NonNull String testFilePath, @NonNull String fileContents) throws IOException {
