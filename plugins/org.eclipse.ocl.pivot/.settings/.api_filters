@@ -22,6 +22,12 @@
                 <message_argument value="validateIteratorTypeIsSourceKeyType(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.IteratorExp"/>
+                <message_argument value="validateIteratorTypeIsSourceKeyType(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="validateIteratorTypeIsSourceKeyType(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
@@ -54,6 +60,36 @@
             </message_arguments>
         </filter>
         <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateSourceIsIterable(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="getOwnedCoIterators()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateMatchingMapCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateNoCoInitializers(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateNoCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
                 <message_argument value="validateSourceIsIterable(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
@@ -106,6 +142,30 @@
             </message_arguments>
         </filter>
         <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="setValuesAreNullFree(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="isKeysAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="isValuesAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="setKeysAreNullFree(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.MapType"/>
                 <message_argument value="setValuesAreNullFree(boolean)"/>
@@ -243,6 +303,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
                 <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -444,6 +511,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
                 <message_argument value="28"/>
             </message_arguments>
@@ -544,6 +618,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP"/>
                 <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -1689,6 +1770,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ITERATE_EXP__OWNED_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="ITERATE_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -1705,6 +1791,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATE_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP__OWNED_CO_ITERATORS"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1730,6 +1821,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATOR_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP__OWNED_CO_ITERATORS"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1770,6 +1866,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIteratorExp__ValidateIteratorTypeIsSourceKeyType__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLoopExp_OwnedCoIterators()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1872,6 +1973,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP__OWNED_CO_ITERATORS"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2351,6 +2457,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
                 <message_argument value="LOOP_EXP__VALIDATE_NO_INITIALIZERS"/>
                 <message_argument value="52"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION"/>
+                <message_argument value="53"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -2973,6 +3086,12 @@
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/values/Value.java" type="org.eclipse.ocl.pivot.values.Value">
         <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="asIterableValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
                 <message_argument value="asIterableValue()"/>
