@@ -20,78 +20,106 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
+ * AbstractEvaluatorIterableIterationManager supervises an iteration evaluation for which the iteration context is
+ * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
+ *
+ * This generic variant of AbstractEvaluatorIterationManager is suitable for Maps or Collections but is currently only used by the
+ * derived single/multiple map iteration managers. The corresponding collection managers should exploit as soon as the API ripple is acceptable.
+ *
  * @since 1.6
  */
-public abstract class AbstractEvaluatorMapIterationManager extends AbstractIterationManager
+public abstract class AbstractEvaluatorIterableIterationManager<IV extends IterableValue> extends AbstractIterationManager
 {
-	protected static class MapValueIterator
+	protected static abstract class AbstractValueIterator<IV extends IterableValue>
 	{
-		private final EvaluationEnvironment evaluationEnvironment;
-		private final @NonNull MapValue mapValue;
-		private final @NonNull TypedElement keyVariable;
-		private final @Nullable TypedElement valueVariable;
+		protected final EvaluationEnvironment evaluationEnvironment;
+		protected final @NonNull IV iterableValue;
+		private final @NonNull TypedElement iteratorVariable;
 		private Iterator<? extends Object> javaIter;
-		private Object keyValue;		// 'null' is a valid value so 'this' is used as end of iteration
+		private Object iteratorValue;		// 'null' is a valid value so 'this' is used as end of iteration
 
-		/**
-		 * @since 1.6
-		 */
-		public MapValueIterator(@NonNull Executor executor, @NonNull MapValue mapValue, @NonNull TypedElement keyVariable, @Nullable TypedElement valueVariable) {
+		public AbstractValueIterator(@NonNull Executor executor, @NonNull IV iterableValue, @NonNull TypedElement iteratorVariable) {
 			this.evaluationEnvironment = executor.getEvaluationEnvironment();
-			this.mapValue = mapValue;
-			this.keyVariable = keyVariable;
-			this.valueVariable = valueVariable;
-			reset();
+			this.iterableValue = iterableValue;
+			this.iteratorVariable = iteratorVariable;
 		}
 
 		public @Nullable Object get() {
-			return keyValue;
+			return iteratorValue;
 		}
 
 		public boolean hasCurrent() {
-			return keyValue != this;
+			return iteratorValue != this;
 		}
 
 		public @Nullable Object next() {
 			if (!javaIter.hasNext()) {
-				keyValue = this;
+				iteratorValue = this;
 			}
 			else {
-				keyValue = javaIter.next();
-				evaluationEnvironment.replace(keyVariable, keyValue);
-				TypedElement valueVariable2 = valueVariable;
-				if (valueVariable2 != null) {
-					Object valueValue = mapValue.at(keyValue);
-					evaluationEnvironment.replace(valueVariable2, valueValue);
-				}
+				iteratorValue = javaIter.next();
+				evaluationEnvironment.replace(iteratorVariable, iteratorValue);
 			}
-			return keyValue;
+			return iteratorValue;
 		}
 
 		public Object reset() {
-			javaIter = mapValue.iterator();
+			javaIter = iterableValue.iterator();
 			return next();
 		}
 
 		@Override
 		public String toString() {
-			return String.valueOf(keyVariable) + " = " + (keyValue != this ? String.valueOf(keyValue) : "<<END>>");
+			return String.valueOf(iteratorVariable) + " = " + (iteratorValue != this ? String.valueOf(iteratorValue) : "<<END>>");
 		}
 	}
 
-	protected final @NonNull MapValue mapValue;
+	protected static class CollectionValueIterator extends AbstractValueIterator<CollectionValue>
+	{
+		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement keyVariable) {
+			super(executor, collectionValue, keyVariable);
+			reset();
+		}
+	}
+
+	protected static class MapValueIterator extends AbstractValueIterator<MapValue>
+	{
+		private final @Nullable TypedElement valueVariable;
+
+		public MapValueIterator(@NonNull Executor executor, @NonNull MapValue mapValue, @NonNull TypedElement keyVariable, @Nullable TypedElement valueVariable) {
+			super(executor, mapValue, keyVariable);
+			this.valueVariable = valueVariable;
+			reset();
+		}
+
+		@Override
+		public @Nullable Object next() {
+			Object keyValue = super.next();
+			if (keyValue != this) {
+				TypedElement valueVariable2 = valueVariable;
+				if (valueVariable2 != null) {
+					Object valueValue = iterableValue.at(keyValue);
+					evaluationEnvironment.replace(valueVariable2, valueValue);
+				}
+			}
+			return keyValue;
+		}
+	}
+
+	protected final @NonNull IV iterableValue;
 	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
 	protected final @Nullable TypedElement accumulatorVariable;
 	private @Nullable Object accumulatorValue;
 
-	protected AbstractEvaluatorMapIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
+	protected AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull IV iterableValue,
 			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
 		super(executor);
-		this.mapValue = mapValue;
+		this.iterableValue = iterableValue;
 		this.callExp = callExp;
 		this.body = body;
 		this.accumulatorVariable = accumulatorVariable;
@@ -102,11 +130,11 @@ public abstract class AbstractEvaluatorMapIterationManager extends AbstractItera
 		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
-	public AbstractEvaluatorMapIterationManager(@NonNull AbstractEvaluatorMapIterationManager iterationManager, @NonNull MapValue mapValue) {
+	public AbstractEvaluatorIterableIterationManager(@NonNull AbstractEvaluatorIterableIterationManager<IV> iterationManager, @NonNull IV iterableValue) {
 		super(iterationManager.executor);
 		this.callExp = iterationManager.callExp;
 		this.body = iterationManager.body;
-		this.mapValue = mapValue;
+		this.iterableValue = iterableValue;
 		this.accumulatorValue = iterationManager.accumulatorValue;
 		this.accumulatorVariable = iterationManager.accumulatorVariable;
 		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
@@ -127,19 +155,8 @@ public abstract class AbstractEvaluatorMapIterationManager extends AbstractItera
 		return accumulatorValue;
 	}
 
-	//	public @NonNull CollectionValue getCollectionValue() {
-	//		//	return collectionValue;
-	//		throw new UnsupportedOperationException();
-	//	}
-
 	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
 		return executor.getEvaluationEnvironment();
-	}
-
-	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		//	return collectionValue;
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

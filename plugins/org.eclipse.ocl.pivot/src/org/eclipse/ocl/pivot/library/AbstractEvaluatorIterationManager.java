@@ -23,6 +23,13 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
+/**
+ * AbstractEvaluatorIterationManager supervises a collection iteration evaluation for which the iteration context is
+ * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
+ *
+ * As soon as the API ripple is acceptable, this collection-only variant of AbstractEvaluatorIterableIterationManager
+ * should be replaced by the generic collection/map capability.
+ */
 public abstract class AbstractEvaluatorIterationManager extends AbstractIterationManager
 {
 	protected static class ValueIterator

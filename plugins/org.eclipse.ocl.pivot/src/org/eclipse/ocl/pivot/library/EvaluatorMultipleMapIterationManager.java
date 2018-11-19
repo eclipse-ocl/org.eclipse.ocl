@@ -19,9 +19,12 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
+ * EvaluatorMultipleMapIterationManager supervises a multiple iterator map iteration evaluation for which the iteration context is
+ * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
+ *
  * @since 1.6
  */
-public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorMapIterationManager
+public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorIterableIterationManager<MapValue>
 {
 	protected final MapValueIterator[] iterators;
 	protected boolean hasCurrent;

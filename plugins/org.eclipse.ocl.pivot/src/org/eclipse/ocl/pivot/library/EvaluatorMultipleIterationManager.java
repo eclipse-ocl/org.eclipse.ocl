@@ -20,6 +20,10 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
+/**
+ * EvaluatorMultipleIterationManager supervises a multiple iterator collection iteration evaluation for which the iteration context is
+ * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
+ */
 public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterationManager
 {
 	protected final ValueIterator[] iterators;
@@ -31,7 +35,7 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
 		this(ValueUtil.getExecutor(invokingExecutor), null, body, collectionValue, accumulator, accumulatorValue);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -55,7 +59,7 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 		this.iterators = iterators;
 		this.hasCurrent = true;
 	}
-	
+
 	@Override
 	public boolean advanceIterators() {
 		if (hasCurrent) {
@@ -68,7 +72,7 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 						}
 						previousIterator.reset();
 					}
-				}			
+				}
 			}
 			hasCurrent = false;
 		}
@@ -80,9 +84,9 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 		if (currentValue == null) {
 			throw new IllegalStateException("cannot get() after iteration complete"); //$NON-NLS-1$
 		}
-		return currentValue;		
+		return currentValue;
 	}
-	
+
 	@Override
 	public boolean hasCurrent() {
 		return hasCurrent;

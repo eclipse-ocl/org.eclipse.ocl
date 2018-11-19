@@ -24,6 +24,10 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
+/**
+ * ExecutorSingleIterationManager supervises a single iterator collection iteration evaluation for which the iteration context is
+ * maintained in dedicated variables typically allocated by the code generator.
+ */
 public class ExecutorSingleIterationManager extends AbstractIterationManager
 {
 	class Nested extends ExecutorSingleIterationManager

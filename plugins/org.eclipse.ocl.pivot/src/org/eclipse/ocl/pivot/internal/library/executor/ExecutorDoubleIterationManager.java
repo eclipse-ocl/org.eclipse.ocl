@@ -23,8 +23,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
+/**
+ * ExecutorDoubleIterationManager supervises a double iterator collection iteration evaluation for which the iteration context is
+ * maintained in dedicated variables typically allocated by the code generator.
+ */
 public class ExecutorDoubleIterationManager extends AbstractIterationManager
-{	
+{
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull LibraryTernaryOperation body;
 	private @Nullable Object accumulatorValue;
@@ -33,7 +37,7 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 	private final @NonNull Iterator<? extends Object> iteratorValue2;
 	private Object currentValue1;
 	private Object currentValue2;
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	public ExecutorDoubleIterationManager(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @NonNull LibraryTernaryOperation body,
@@ -56,7 +60,7 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 		currentValue1 = iteratorValue1.hasNext() ? iteratorValue1.next() : null;
 		currentValue2 = iteratorValue2.hasNext() ? iteratorValue2.next() : null;
 	}
-	
+
 	@Override
 	public boolean advanceIterators() {
 		if (iteratorValue1.hasNext()) {
@@ -89,7 +93,7 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 	public @NonNull CollectionValue getSourceCollection() {
 		return collectionValue;
 	}
-	
+
 	@Override
 	public boolean hasCurrent() {
 		return currentValue1 != null;

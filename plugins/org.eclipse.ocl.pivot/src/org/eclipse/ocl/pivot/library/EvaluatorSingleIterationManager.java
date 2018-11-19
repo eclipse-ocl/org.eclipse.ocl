@@ -22,6 +22,10 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
+/**
+ * EvaluatorSingleIterationManager supervises a single iterator collection iteration evaluation for which the iteration context is
+ * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
+ */
 public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationManager
 {
 	class Nested extends EvaluatorSingleIterationManager
