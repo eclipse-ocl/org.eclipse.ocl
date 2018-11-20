@@ -39,6 +39,7 @@ public interface LibraryOperation extends LibraryFeature
 		 */
 		@Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
 	}
+
 	/**
 	 * @since 1.3
 	 */
@@ -51,8 +52,6 @@ public interface LibraryOperation extends LibraryFeature
 		@Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
-
-		//		boolean isCached();
 	}
 
 	/** @deprecated use Executor */

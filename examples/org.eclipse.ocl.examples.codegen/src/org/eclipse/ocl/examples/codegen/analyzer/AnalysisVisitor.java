@@ -268,7 +268,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			return null;
 		}
 		else if (cgSource.isNull()) {
-			context.setConstant(cgIterationCallExp, context.getInvalid(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)));
+			context.setConstant(cgIterationCallExp, context.getInvalid(PivotMessages.TypedValueRequired, TypeId.ITERABLE_NAME, ValueUtil.getTypeName(null)));
 			return null;
 		}
 		//			for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgIterationCallExp.getArguments()) {

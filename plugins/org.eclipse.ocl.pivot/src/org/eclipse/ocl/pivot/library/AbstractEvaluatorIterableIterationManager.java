@@ -160,6 +160,17 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	}
 
 	@Override
+	public boolean advanceIterators() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public @NonNull IterableValue getSourceIterable() {
+		return iterableValue;
+	}
+
+	@Override
 	public String toString() {
 		return body.toString();
 	}

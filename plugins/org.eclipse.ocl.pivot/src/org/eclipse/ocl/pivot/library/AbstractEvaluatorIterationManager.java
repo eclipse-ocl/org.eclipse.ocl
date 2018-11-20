@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
  * AbstractEvaluatorIterationManager supervises a collection iteration evaluation for which the iteration context is
@@ -178,6 +179,14 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 
 	@Override
 	public @NonNull CollectionValue getSourceCollection() {
+		return collectionValue;
+	}
+
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull IterableValue getSourceIterable() {
 		return collectionValue;
 	}
 

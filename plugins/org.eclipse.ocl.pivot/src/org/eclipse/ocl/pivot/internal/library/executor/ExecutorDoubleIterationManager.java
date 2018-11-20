@@ -22,11 +22,15 @@ import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
  * ExecutorDoubleIterationManager supervises a double iterator collection iteration evaluation for which the iteration context is
  * maintained in dedicated variables typically allocated by the code generator.
+ *
+ * @deprecated Replaced by ExecutorMultipleIterationManager
  */
+@Deprecated
 public class ExecutorDoubleIterationManager extends AbstractIterationManager
 {
 	protected final @NonNull TypeId returnTypeId;
@@ -57,25 +61,27 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 		this.collectionValue = ValueUtil.asCollectionValue(collectionValue);
 		this.iteratorValue1 = this.collectionValue.iterator();
 		this.iteratorValue2 = this.collectionValue.iterator();
-		currentValue1 = iteratorValue1.hasNext() ? iteratorValue1.next() : null;
-		currentValue2 = iteratorValue2.hasNext() ? iteratorValue2.next() : null;
+		currentValue1 = iteratorValue1.hasNext() ? iteratorValue1.next() : iteratorValue1;
+		currentValue2 = iteratorValue2.hasNext() ? iteratorValue2.next() : iteratorValue2;
 	}
 
 	@Override
 	public boolean advanceIterators() {
 		if (iteratorValue1.hasNext()) {
 			currentValue1 = iteratorValue1.next();
+			return true;
 		}
 		else if (iteratorValue2.hasNext()) {
 			currentValue2 = iteratorValue2.next();
 			iteratorValue1 = collectionValue.iterator();
-			currentValue1 = iteratorValue1.hasNext() ? iteratorValue1.next() : null;
+			if (iteratorValue1.hasNext()) {
+				currentValue1 = iteratorValue1.next();
+				return true;
+			}
 		}
-		else {
-			currentValue1 = null;
-			currentValue2 = null;
-		}
-		return currentValue1 != null;
+		currentValue1 = iteratorValue1;
+		currentValue2 = iteratorValue2;
+		return false;
 	}
 
 	@Override
@@ -94,9 +100,17 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 		return collectionValue;
 	}
 
+	/**
+	 * @since 1.6
+	 */
+	@Override
+	public @NonNull IterableValue getSourceIterable() {
+		return collectionValue;
+	}
+
 	@Override
 	public boolean hasCurrent() {
-		return currentValue1 != null;
+		return currentValue1 != iteratorValue1;
 	}
 
 	@Override

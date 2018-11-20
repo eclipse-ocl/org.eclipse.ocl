@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -168,6 +170,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
 
+	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nullFree(cgIterationCallExp.getCoIterators());
+	}
+
 	public static @Nullable CGClass getContainingClass(@NonNull CGElement cgExpression) {
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGClass) {
@@ -196,6 +202,10 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGVariable cgVariable) {
 		return ClassUtil.nonNullState(cgVariable.getInit());
+	}
+
+	public static @NonNull List<@NonNull CGIterator> getIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
 	}
 
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {

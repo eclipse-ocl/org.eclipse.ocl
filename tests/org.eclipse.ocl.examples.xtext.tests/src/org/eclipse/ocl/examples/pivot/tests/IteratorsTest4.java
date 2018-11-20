@@ -982,6 +982,9 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_exists_multipleIteratorVariables() {
 		MyOCL ocl = createOCL();
+		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 7)");
+
+
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | e1 = e2)");
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 7)");
 		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 0)");

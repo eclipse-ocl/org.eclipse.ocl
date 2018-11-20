@@ -14,29 +14,32 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
+import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
+import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
- * ExecutorSingleIterationManager supervises a single iterator collection iteration evaluation for which the iteration context is
+ * ExecutorSingleMapIterationManager supervises a single iterator map iteration evaluation for which the iteration context is
  * maintained in dedicated variables typically allocated by the code generator.
+ *
+ * @since 1.6
  */
-public class ExecutorSingleIterationManager extends AbstractIterationManager
+public class ExecutorSingleMapIterationManager extends AbstractIterationManager
 {
-	class Nested extends ExecutorSingleIterationManager
+	class Nested extends ExecutorSingleMapIterationManager
 	{
-		protected final @NonNull ExecutorSingleIterationManager rootIterationManager;
+		protected final @NonNull ExecutorSingleMapIterationManager rootIterationManager;
 		protected final int depth;
 
-		protected Nested(@NonNull ExecutorSingleIterationManager iterationManager, @NonNull CollectionValue value) {
-			super(iterationManager, value);
+		protected Nested(@NonNull ExecutorSingleMapIterationManager iterationManager, @NonNull MapValue mapValue) {
+			super(iterationManager, mapValue);
 			this.rootIterationManager = iterationManager.getRootIterationManager();
 			this.depth = iterationManager.getDepth() + 1;
 		}
@@ -47,7 +50,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		}
 
 		@Override
-		public @NonNull ExecutorSingleIterationManager getRootIterationManager() {
+		public @NonNull ExecutorSingleMapIterationManager getRootIterationManager() {
 			return rootIterationManager;
 		}
 
@@ -57,63 +60,55 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		}
 	}
 
-	protected final @NonNull CollectionValue collectionValue;
+	protected final @NonNull MapValue mapValue;
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull LibraryBinaryOperation body;
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull Iterator<? extends Object> iteratorValue;
-	private Object currentValue;		// 'null' is a valid value so 'iteratorValue' is used as end of iteration
+	private Object currentKeyValue;		// 'null' is a valid value so 'iteratorValue' is used as end of iteration
+	private Object currentValueValue;	// 'null' is a valid value
 
-	/** @deprecated use Executor */
-	@Deprecated
-	public ExecutorSingleIterationManager(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @NonNull LibraryBinaryOperation body,
-			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
-		this(ValueUtil.getExecutor(evaluator), returnTypeId, body, collectionValue, accumulatorValue);
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	public ExecutorSingleIterationManager(@NonNull Executor executor, @NonNull TypeId returnTypeId, @NonNull LibraryBinaryOperation body,
-			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
+	public ExecutorSingleMapIterationManager(@NonNull Executor executor, @NonNull TypeId returnTypeId, @NonNull LibraryBinaryOperation body,
+			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
 		super(executor);
-		this.collectionValue = ValueUtil.asCollectionValue(collectionValue);
+		this.mapValue = ValueUtil.asMapValue(mapValue);
 		this.returnTypeId = returnTypeId;
 		this.body = body;
 		updateAccumulator(accumulatorValue);
-		this.iteratorValue = this.collectionValue.iterator();
+		this.iteratorValue = this.mapValue.iterator();
 		advanceIterators();
 	}
 
-	protected ExecutorSingleIterationManager(@NonNull ExecutorSingleIterationManager iterationManager, @NonNull CollectionValue collectionValue) {
+	protected ExecutorSingleMapIterationManager(@NonNull ExecutorSingleMapIterationManager iterationManager, @NonNull MapValue mapValue) {
 		super(iterationManager.getExecutor());
-		this.collectionValue = collectionValue;
+		this.mapValue = mapValue;
 		this.returnTypeId = iterationManager.returnTypeId;
 		this.body = iterationManager.body;
 		this.accumulatorValue = iterationManager.accumulatorValue;
-		this.iteratorValue = collectionValue.iterator();
+		this.iteratorValue = mapValue.iterator();
 		advanceIterators();
 	}
 
 	@Override
 	public boolean advanceIterators() {
-		currentValue = iteratorValue.hasNext() ? iteratorValue.next() : iteratorValue;
-		return currentValue != iteratorValue;
+		currentKeyValue = iteratorValue.hasNext() ? iteratorValue.next() : iteratorValue;
+		currentValueValue = mapValue.at(currentKeyValue);
+		return currentKeyValue != iteratorValue;
 	}
 
 	@Override
 	public @NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value) {
-		return new Nested(this, (CollectionValue)value);
+		return new Nested(this, (MapValue)value);
 	}
 
 	@Override
 	public @Nullable Object evaluateBody() {
-		return ((LibraryBinaryOperation.LibraryBinaryOperationExtension)body).evaluate(executor, returnTypeId, accumulatorValue, get());
+		return ((LibraryTernaryOperation.LibraryTernaryOperationExtension)body).evaluate(executor, returnTypeId, accumulatorValue, get(), getValue());
 	}
 
 	@Override
 	public @Nullable Object get() {
-		return currentValue;
+		return currentKeyValue;
 	}
 
 	@Override
@@ -125,26 +120,23 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		return 0;
 	}
 
-	public @NonNull ExecutorSingleIterationManager getRootIterationManager() {
+	public @NonNull ExecutorSingleMapIterationManager getRootIterationManager() {
 		return this;
 	}
 
 	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		return collectionValue;
+	public @NonNull IterableValue getSourceIterable() {
+		return mapValue;
 	}
 
-	/**
-	 * @since 1.6
-	 */
-	@Override
-	public @NonNull IterableValue getSourceIterable() {
-		return collectionValue;
+	//	@Override
+	public @Nullable Object getValue() {
+		return currentValueValue;
 	}
 
 	@Override
 	public boolean hasCurrent() {
-		return currentValue != iteratorValue;
+		return currentKeyValue != iteratorValue;
 	}
 
 	@Override

@@ -36,7 +36,6 @@ public interface IterationManager
 	 */
 	public interface IterationManagerExtension2 extends IterationManagerExtension
 	{
-
 		/**
 		 * Create a nested iteration supervisor.
 		 * <br>
@@ -48,6 +47,11 @@ public interface IterationManager
 		 * @throws InvalidValueException
 		 */
 		@NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value);
+
+		/**
+		 * Return the source iteravle over which this iteration iterates.
+		 */
+		@NonNull IterableValue getSourceIterable();
 	}
 
 	/**
@@ -99,7 +103,10 @@ public interface IterationManager
 
 	/**
 	 * Return the source collection over which this (nested) iteration iterates.
+	 *
+	 * @deprecated replaced by getSourceIterable
 	 */
+	@Deprecated
 	@NonNull CollectionValue getSourceCollection();
 
 	@NonNull StandardLibrary getStandardLibrary();

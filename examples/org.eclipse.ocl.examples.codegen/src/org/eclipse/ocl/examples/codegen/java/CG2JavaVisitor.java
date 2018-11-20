@@ -127,13 +127,16 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperation;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorDoubleIterationManager;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
+import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractSimpleOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -145,6 +148,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
@@ -259,14 +263,27 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	protected @NonNull Boolean appendLoopCall(@NonNull CGLibraryIterationCallExp cgIterationCallExp, @Nullable CGIterator iterateResult) {
 		final CGValuedElement source = getExpression(cgIterationCallExp.getSource());
-		final List<CGIterator> iterators = cgIterationCallExp.getIterators();
-		final List<CGIterator> coIterators = cgIterationCallExp.getCoIterators();
+		final List<@NonNull CGIterator> iterators = CGUtil.getIteratorsList(cgIterationCallExp);
+		final List<@NonNull CGIterator> coIterators = CGUtil.getCoIteratorsList(cgIterationCallExp);
 		final CGValuedElement body = getExpression(cgIterationCallExp.getBody());
 		final CGTypeId resultType = cgIterationCallExp.getTypeId();
 		final Operation referredOperation = ((LoopExp)cgIterationCallExp.getAst()).getReferredIteration();
-		final Class<?> operationClass = genModelHelper.getAbstractOperationClass(iterators.size());
 		final int arity = iterators.size();
-		final Class<?> managerClass = arity == 1 ? ExecutorSingleIterationManager.class : ExecutorDoubleIterationManager.class; 	// FIXME ExecutorMultipleIterationManager
+		boolean isMap = coIterators.size() > 0;
+		final Class<?> managerClass; 	// FIXME ExecutorMultipleIterationManager
+		final Class<?> operationClass;
+		if (isMap) {
+			managerClass = ExecutorMultipleMapIterationManager.class;
+			operationClass = AbstractSimpleOperation.class;
+		}
+		else if (arity == 1) {
+			managerClass = ExecutorSingleIterationManager.class;
+			operationClass = AbstractBinaryOperation.class;
+		}
+		else {
+			managerClass = ExecutorMultipleIterationManager.class;
+			operationClass = AbstractSimpleOperation.class;
+		}
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
 		final Method actualMethod = getJavaMethod(libraryIteration);
 		final Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
@@ -373,23 +390,76 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(TypeId.class);
 		js.append(" ");
 		js.append(JavaConstants.TYPE_ID_NAME);
-		if (iterateResult != null) {
-			js.append(", ");
-			js.appendDeclaration(iterateResult);
-		}
-		else {
+		if (isMap || (arity > 1)) {
 			js.append(", final ");
 			js.appendIsRequired(false);
 			js.append(" Object ");
-			js.appendValueName(source);
-			//				js.appendDeclaration(source);
+			js.appendIsRequired(true);
+			js.append(" [] ");
+			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		}
-		for (@SuppressWarnings("null")@NonNull CGParameter iterator : iterators) {
-			js.append(", final ");
-			js.appendDeclaration(iterator);
+		else {
+			if (iterateResult != null) {
+				js.append(", ");
+				js.appendDeclaration(iterateResult);
+			}
+			else {
+				js.append(", final ");
+				js.appendIsRequired(false);
+				js.append(" Object ");
+				js.appendValueName(source);
+				//				js.appendDeclaration(source);
+			}
+			for (int i = 0; i < arity; i++) {
+				CGIterator iterator = iterators.get(i);
+				js.append(", final ");
+				js.appendDeclaration(iterator);
+				if (i < coIterators.size()) {
+					js.append(", final ");
+					js.appendDeclaration(coIterators.get(i));
+				}
+			}
 		}
 		js.append(") {\n");
 		js.pushIndentation(null);
+		if (isMap || (arity > 1)) {
+			int argIndex = 0;			// Skip source
+			js.append("final ");
+			js.appendTypeDeclaration(source);
+			js.append(" ");
+			js.appendValueName(source);
+			js.append(" = ");
+			js.appendClassCast(source, Object.class);
+			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+			js.append("[" + argIndex);
+			js.append("];\n");
+			argIndex++;
+			for (int i = 0; i < arity; i++) {
+				CGParameter iterator = iterators.get(i);
+				js.append("final ");
+				js.appendDeclaration(iterator);
+				js.append(" = ");
+				js.appendClassCast(iterator, Object.class);
+				js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+				js.append("[" + argIndex);
+				js.append("];\n");
+				argIndex++;
+				if (i < coIterators.size()) {
+					CGIterator coIterator = coIterators.get(i);
+					Variable asCoIterator = CGUtil.getAST(coIterator);
+					if (!asCoIterator.isIsImplicit()) {
+						js.append("final ");
+						js.appendDeclaration(coIterator);
+						js.append(" = ");
+						js.appendClassCast(coIterator, Object.class);
+						js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+						js.append("[" + argIndex);
+						js.append("];\n");
+					}
+					argIndex++;
+				}
+			}
+		}
 		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		try {
 			localContext = globalContext.getLocalContext(cgIterationCallExp);
@@ -414,9 +484,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//		js.appendReferenceTo(evaluatorParameter);
 		js.append(JavaConstants.EXECUTOR_NAME);
 		js.append(", ");
+		if (isMap || (arity > 1)) {
+			js.append(arity + ", ");
+		}
 		js.appendValueName(resultType);
 		js.append(", " + bodyName + ", ");
-		js.appendReferenceTo(CollectionValue.class, source);
+		js.appendReferenceTo(isMap ? MapValue.class : CollectionValue.class, source);
 		//		js.appendValueName(source);
 		js.append(", " + accumulatorName + ");\n");
 		//
