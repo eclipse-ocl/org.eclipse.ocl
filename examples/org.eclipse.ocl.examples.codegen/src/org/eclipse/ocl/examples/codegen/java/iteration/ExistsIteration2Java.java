@@ -102,7 +102,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.append("throw ");
 			js.appendValueName(cgInvalidValue);
 			js.append(";\n");
-			js.append("break;\n");
+			return false;
 		}
 		else if (cgBody.isConstant()) {
 			return js.appendThrowInvalidValueException(PivotMessages.NonBooleanBody, "exists");

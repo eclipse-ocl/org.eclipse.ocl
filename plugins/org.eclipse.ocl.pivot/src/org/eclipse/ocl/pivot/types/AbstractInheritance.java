@@ -33,7 +33,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		protected class Iterator implements java.util.Iterator<@NonNull InheritanceFragment>
 		{
 			private int index = firstIndex;
-			
+
 			@Override
 			public boolean hasNext() {
 				return index < lastIndex;
@@ -49,17 +49,17 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 				throw new UnsupportedOperationException();
 			}
 		}
-		
+
 		private final @NonNull InheritanceFragment @NonNull [] array;
 		private final int firstIndex;
 		private final int lastIndex;
-		
+
 		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array) {
 			this.array = array;
 			this.firstIndex = 0;
 			this.lastIndex = array.length;
 		}
-		
+
 		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array, int firstIndex, int lastIndex) {
 			this.array = array;
 			this.firstIndex = firstIndex;
@@ -70,7 +70,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		public @NonNull InheritanceFragment get(int index) {
 			return ClassUtil.nonNullState(array[firstIndex + index]);
 		}
-		
+
 		@Override
 		public java.util.@NonNull Iterator<@NonNull InheritanceFragment> iterator() {
 			return new Iterator();
@@ -99,7 +99,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			}
 			s.append("]");
 			return s.toString();
-		}		
+		}
 	}
 
 	public static final int ORDERED = 1 << 0;
@@ -111,16 +111,16 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	 * @since 1.1
 	 */
 	public static final int ABSTRACT = 1 << 5;
-	
+
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
-	
+
 	protected final int flags;
-//	protected @Nullable Map<String, DomainOperation> operationMap = null;
-//	protected @Nullable Map<String, DomainProperty> propertyMap = null;
-	
+	//	protected @Nullable Map<String, DomainOperation> operationMap = null;
+	//	protected @Nullable Map<String, DomainProperty> propertyMap = null;
+
 	public AbstractInheritance(@NonNull String name, int flags) {
 		super(name);
 		this.flags = flags;
@@ -269,7 +269,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		if (implementation == null) {
 			implementation = UnsupportedOperation.INSTANCE;
 		}
-		return implementation;			
+		return implementation;
 	}
 
 	@Override
@@ -282,6 +282,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 					int i = 0;
 					for (; i < iMax; i++) {
 						TypeId firstParameterId = firstParametersId.get(i);
+						assert firstParameterId != null;
 						@NonNull Type secondParameterType = argumentTypes[i].getPivotClass();
 						if (firstParameterId != secondParameterType.getTypeId()) {
 							break;

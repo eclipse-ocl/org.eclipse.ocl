@@ -85,6 +85,14 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	}
 
 	@Override
+	public @Nullable Object get() {
+		if (iteratorValues.size() == 1) {
+			return arguments[1];
+		}
+		return super.get();
+	}
+
+	@Override
 	public @Nullable Object getAccumulatorValue() {
 		return accumulatorValue;
 	}

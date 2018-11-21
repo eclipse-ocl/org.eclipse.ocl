@@ -631,6 +631,13 @@ public abstract class ValueUtil
 		return new SetValueImpl.Accumulator(collectedId);
 	}
 
+	/**
+	 * @since 1.6
+	 */
+	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull MapTypeId mapId) {
+		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(mapId.getKeyTypeId()));
+	}
+
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}

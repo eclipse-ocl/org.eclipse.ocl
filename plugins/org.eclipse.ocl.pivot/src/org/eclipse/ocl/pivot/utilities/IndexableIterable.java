@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * IterableWithSize provides an Iterable that can be indexed and has a known size.
  */
 public interface IndexableIterable<T> extends Iterable<T>
 {
-	T get(int index);
+	@Nullable T get(int index);
 	int size();
 }

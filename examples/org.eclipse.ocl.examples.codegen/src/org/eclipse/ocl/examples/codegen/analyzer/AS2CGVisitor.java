@@ -588,7 +588,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLibraryIterateCallExp;
 	}
 
-	protected CGIterator getNullableIterator(Variable iterator) {
+	protected CGIterator getNullableIterator(@NonNull Variable iterator) {
 		CGIterator cgIterator = getIterator(iterator);
 		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
 		cgIterator.setRequired(iterator.isIsRequired());

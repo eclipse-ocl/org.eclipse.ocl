@@ -52,7 +52,14 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 		for (int i = 0; i < iterators; i++) {
 			Iterator<@Nullable Object> iteratorValue = this.mapValue.iterator();
 			iteratorValues.add(iteratorValue);
-			this.arguments[1 + 2*i] = iteratorValue.hasNext() ? iteratorValue.next() : iteratorValues;
+			if (iteratorValue.hasNext()) {
+				Object keyValue = iteratorValue.next();
+				this.arguments[1 + 2*i] = keyValue;
+				this.arguments[2 + 2*i] = this.mapValue.at(keyValue);
+			}
+			else {
+				this.arguments[1 + 2*i] = iteratorValues;
+			}
 		}
 	}
 
@@ -84,6 +91,14 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 	@Override
 	public @Nullable Object evaluateBody() {
 		return body.evaluate(executor, returnTypeId, arguments);
+	}
+
+	@Override
+	public @Nullable Object get() {
+		if (iteratorValues.size() == 1) {
+			return arguments[1];
+		}
+		return super.get();
 	}
 
 	@Override
