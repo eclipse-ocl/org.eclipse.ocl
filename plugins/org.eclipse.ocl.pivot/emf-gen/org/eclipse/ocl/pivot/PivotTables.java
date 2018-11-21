@@ -206,17 +206,10 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IfExp_c_c_ConditionTypeIsBoolean = "IfExp::ConditionTypeIsBoolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IfExp_c_c_TypeIsNotInvalid = "IfExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IntegerLiteralExp_c_c_TypeIsInteger = "IntegerLiteralExp::TypeIsInteger";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_BodyTypeConformsToResultType = "IterateExp::BodyTypeConformsToResultType";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_OneInitializer = "IterateExp::OneInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_SafeIteratorIsRequired = "IterateExp::SafeIteratorIsRequired";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_SafeSourceCanBeNull = "IterateExp::SafeSourceCanBeNull";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_TypeIsResultType = "IterateExp::TypeIsResultType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IterateExp_c_c_UnsafeSourceCanNotBeNull = "IterateExp::UnsafeSourceCanNotBeNull";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyBodyTypeIsBoolean = "IteratorExp::AnyBodyTypeIsBoolean";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyHasOneIterator = "IteratorExp::AnyHasOneIterator";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyTypeIsSourceElementType = "IteratorExp::AnyTypeIsSourceElementType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureBodyElementTypeIsIteratorType = "IteratorExp::ClosureBodyElementTypeIsIteratorType";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureHasOneIterator = "IteratorExp::ClosureHasOneIterator";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureResultElementTypeIsIteratorType = "IteratorExp::ClosureResultElementTypeIsIteratorType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureTypeIsUniqueCollection = "IteratorExp::ClosureTypeIsUniqueCollection";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_CollectElementTypeIsFlattenedBodyType = "IteratorExp::CollectElementTypeIsFlattenedBodyType";
@@ -274,7 +267,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_TypeIsNotNull = "VariableDeclaration::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableExp_c_c_TypeIsNotInvalid = "VariableExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR__32 = " ";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_any = "any";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_closure = "closure";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_collect = "collect";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ocl = "ocl";

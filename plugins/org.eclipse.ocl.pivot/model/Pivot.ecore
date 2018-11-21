@@ -865,7 +865,7 @@
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateBodyTypeConformsToResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedBody.type.conformsTo(ownedResult?.type)&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BodyTypeConformsToResultType"/>
@@ -880,7 +880,7 @@
     </eOperations>
     <eOperations name="validateOneInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedResult?.ownedInit->size() = 1&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="OneInitializer"/>
@@ -925,7 +925,7 @@
     </eOperations>
     <eOperations name="validateTypeIsResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type = ownedResult?.type&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsResultType"/>
@@ -967,7 +967,7 @@
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateAnyBodyTypeIsBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'any' implies ownedBody.type = Boolean&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyBodyTypeIsBoolean"/>
@@ -982,7 +982,7 @@
     </eOperations>
     <eOperations name="validateAnyHasOneIterator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'any' implies ownedIterators->size() = 1&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyHasOneIterator"/>
@@ -997,7 +997,7 @@
     </eOperations>
     <eOperations name="validateAnyTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyTypeIsSourceElementType"/>
@@ -1057,7 +1057,7 @@
     </eOperations>
     <eOperations name="validateClosureHasOneIterator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'closure' implies ownedIterators->size() = 1&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureHasOneIterator"/>

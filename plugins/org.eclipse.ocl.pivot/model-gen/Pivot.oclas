@@ -359,10 +359,10 @@
     <ownedClasses xmi:id="9ppvF" isAbstract="true" name="IterableType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="0L28o" name="IterateExp" superClasses="#KhrnS #dXAFV">
       <ownedInvariants xmi:id="X3QaQ" isCallable="true" name="BodyTypeConformsToResultType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedBody.type.conformsTo(ownedResult?.type)&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="4nkmK" isCallable="true" name="OneInitializer">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedResult?.ownedInit->size() = 1&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="A3HCQ" isCallable="true" name="SafeIteratorIsRequired">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies ownedIterators->forAll(isRequired)&#xA;"/>
@@ -371,7 +371,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="3t0O1" isCallable="true" name="TypeIsResultType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type = ownedResult?.type&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="KSMAk" isCallable="true" name="UnsafeSourceCanNotBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;&#xA;"/>
@@ -385,13 +385,13 @@
     </ownedClasses>
     <ownedClasses xmi:id="AprzZ" name="IteratorExp" superClasses="#KhrnS #dXAFV">
       <ownedInvariants xmi:id="uX2KR" isCallable="true" name="AnyBodyTypeIsBoolean">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies ownedBody.type = Boolean&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="+IUau" isCallable="true" name="AnyHasOneIterator">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies ownedIterators->size() = 1&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="D+LWU" isCallable="true" name="AnyTypeIsSourceElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="DSk3n" isCallable="true" name="ClosureBodyElementTypeIsIteratorType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
@@ -403,7 +403,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body=" true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="NxSxQ" isCallable="true" name="ClosureHasOneIterator">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies ownedIterators->size() = 1&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="oEhWV" isCallable="true" name="ClosureResultElementTypeIsIteratorType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType.conformsTo(resultElementType)&#xA;&#xA;"/>

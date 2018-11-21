@@ -159,20 +159,10 @@ context IntegerLiteralExp
 inv TypeIsInteger: self.type = Integer
 
 context IteratorExp
-/** There is exactly one iterator. */
-inv AnyHasOneIterator: name = 'any' implies ownedIterators->size() = 1
-
-context IteratorExp
-/** The type is the same as the source element type */
-inv AnyTypeIsSourceElementType: name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType
-
-context IteratorExp
-/** The type of the body must be Boolean. */
-inv AnyBodyTypeIsBoolean: name = 'any' implies ownedBody.type = Boolean
-
-context IteratorExp
-/** There is exactly one iterator. */ 
-inv ClosureHasOneIterator: name = 'closure' implies ownedIterators->size() = 1
+inv AnyHasOneIterator: true -- FIXME obsolete
+inv AnyTypeIsSourceElementType: true -- FIXME obsolete
+inv AnyBodyTypeIsBoolean: true -- FIXME obsolete
+inv ClosureHasOneIterator: true -- FIXME obsolete
 
 context IteratorExp
 /** The collection type for an OrderedSet or a Sequence source type is OrderedSet.
@@ -235,15 +225,11 @@ ownedSource?.type.oclAsType(CollectionType).elementType
 
 context IterateExp
 /** The type of the iterate is the type of the result variable. */
-inv TypeIsResultType: type = ownedResult?.type
-
-context IterateExp
+inv TypeIsResultType: true -- FIXME obsolete
 /** The type of the body expression must conform to the declared type of the result variable. */
-inv BodyTypeConformsToResultType: ownedBody.type.conformsTo(ownedResult?.type)
-
-context IterateExp
+inv BodyTypeConformsToResultType: true -- FIXME obsolete
 /** A result variable must have an init expression. */
-inv OneInitializer: self.ownedResult?.ownedInit->size() = 1
+inv OneInitializer: true -- FIXME obsolete
 
 context LetExp
 /** The type of a Let expression is the type of the in expression. */

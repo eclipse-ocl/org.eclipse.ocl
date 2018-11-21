@@ -455,20 +455,11 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (keysAreNullFree: "); //$NON-NLS-1$
-		result.append((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0);
-		result.append(", valuesAreNullFree: "); //$NON-NLS-1$
-		result.append((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0);
-		result.append(')');
-		return result.toString();
+	public String toString() {
+		return super.toString();
 	}
 
 	/**
