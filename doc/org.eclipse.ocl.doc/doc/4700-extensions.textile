@@ -1,0 +1,31 @@
+
+h2(#Extensions). Extensions (in the Unified/Pivot OCL prototype)
+
+This section highlights some of the OCL extensions prototyped by the Pivot OCL.
+
+h3. Map(K,V)
+
+The Map type provides a familiar functionality comprising a set of keys with associated values.
+
+Like all other OCL types, the Map type is immutable; there are therefore not *put* or *set* operations, rather a new Map may be created by *including* a key-value pair tigether with an old Map.
+
+The content of a Map may be accessed using *at*, which returns invalid for an unknown key in the same way as an ordered collection returns invalid for an unknwon index.
+
+A Map may be created explicitly using the new Map Literal Syntax. Thus *Map(Integer,String){1 <- 'one',2 <- 'two'}*
+creates a Map of Integer to String with *'one'* bound to *1* and *'two'* bound to *2*. The type *(Integer,String)*
+parameterisation can be omitted. *null* but not *invalid* values are permitted as keys and values.
+
+The new *collectBy* iteration may be used to construct a map from a collection or map. The iterators of the *collectBy* define the keys and the value of the body of defines the values. For instance *Sequence{1..10}->collectBy(i | i+i)}* builds a map from the values 1 to 10 to the even values 2 to 20.
+
+Most standard collection iteration operations are available for Maps using the map keys as the (primary) iterator. A secondary value iterator may be specified using the new binds-to syntax. Thus *Map{1<-1,2<-4,3<-9}->reject(k<-v | k = 2 or v = 9}* defines a reject iteration over the three entry map, with a primary iterator *k* over the set of keys and a secondary co-iterator *v* over the values bound to each key. The body causes the second entry with key 2, and the third entry with value 9 to be rejected leaving just a one entry map.
+
+h4. Details
+
+The OCL metamodel is extended by a MapLiteralExp and MapType. A new abstract IterableType captures the iterable commonality of CollectionType and MapType without making map a collection.
+
+The OCL standard library defines the new Map operations and the new Collection::collectBy itetation.
+
+The OCL syntax is extended by the MapLiteralExp syntax and the binds-to co-iterator syntax for all iterators.
+
+The OCL run-time is extended by a MapValue and an abstract IteravleValue to capture the commonality with CollectionValue.
+

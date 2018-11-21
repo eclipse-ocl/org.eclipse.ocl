@@ -39,6 +39,8 @@
 
 4200-oclinterpreter-tutorial.textile
 
+4700-extensions.textile
+
 4900-examples-installation.textile
 
 3000-examples.textile
