@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation;
 import org.eclipse.ocl.pivot.library.iterator.AnyIteration;
+import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
@@ -101,6 +102,38 @@ public abstract class TemplateParameterSubstitutionHelper
 
 	public static @Nullable TemplateParameterSubstitutionHelper getHelper(@NonNull Class<? extends LibraryFeature> className) {
 		return className2helper.get(className);
+	}
+
+	//
+	//	Special case processing for closure() that deduces nullFree both source and argument.
+	//
+	private static class CollectionClosureHelper extends TemplateParameterSubstitutionHelper
+	{
+		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType instanceof CollectionType) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getType();
+					if (sourceType instanceof CollectionType) {
+						CollectionType sourceCollectionType = (CollectionType)sourceType;
+						OCLExpression body = ((LoopExp)callExp).getOwnedBody();
+						Type bodyType = body.getType();
+						if (bodyType instanceof CollectionType) {
+							CollectionType argumentCollectionType = (CollectionType)bodyType;
+							boolean isNullFree = sourceCollectionType.isIsNullFree() && argumentCollectionType.isIsNullFree();
+							CollectionType returnCollectionType = (CollectionType)returnType;
+							if (returnCollectionType.isIsNullFree() != isNullFree) {
+								@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
+								returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
+									elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+							}
+						}
+					}
+				}
+			}
+			return returnType;
+		}
 	}
 
 	//
@@ -351,6 +384,7 @@ public abstract class TemplateParameterSubstitutionHelper
 	static
 	{
 		addHelper(AnyIteration.class, new CollectionAnyHelper());
+		addHelper(ClosureIteration.class, new CollectionClosureHelper());
 		addHelper(CollectIteration.class, new CollectionCollectHelper());
 		addHelper(CollectionAsBagOperation.class, new CollectionAsCollectionHelper());
 		addHelper(CollectionAsOrderedSetOperation.class, new CollectionAsCollectionHelper());
