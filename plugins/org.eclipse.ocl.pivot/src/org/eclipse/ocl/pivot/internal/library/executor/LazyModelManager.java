@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
-import org.omg.CORBA.Environment;
 
 /**
  * A self-populating map that lazily creates the extent of a class when asked
@@ -43,10 +42,6 @@ import org.omg.CORBA.Environment;
  * class extents to the OCL engine, and it only does look-up by key.
  * Moreover, this isn't strictly a violation of any contract because there is
  * no way to distinguish this behaviour from concurrent updates.
- * </p>
- * <p>
- * See the {@link Environment} class for a description of the
- * generic type parameters of this class.
  * </p>
  */
 public abstract class LazyModelManager extends AbstractModelManager {
