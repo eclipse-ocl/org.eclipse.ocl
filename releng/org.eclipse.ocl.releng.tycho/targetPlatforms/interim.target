@@ -51,7 +51,7 @@
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/tools/orbit/S-builds/S20181031145145/repository"/>
+    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20181120221132/repository"/>
   </location>
 </locations>
 </target>
