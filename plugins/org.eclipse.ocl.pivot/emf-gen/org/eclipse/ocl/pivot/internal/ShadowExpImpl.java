@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
-import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -311,7 +310,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *             let
 		 *               allProperties : Set(Property) = type.oclAsType(Class)
 		 *               ->closure(superClasses)
-		 *               ?.ownedProperties->asSet()
+		 *               .ownedProperties->asSet()
 		 *             in
 		 *               let
 		 *                 classProperties : Set(Property) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
@@ -436,9 +435,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					};
 					final @NonNull  ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = ClassUtil.nonNullState((SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_collect_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
 					/*@Thrown*/ BagValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_1 = safe_collect_sources.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_1 = closure.iterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull BagValue collect_0;
 					while (true) {
 						if (!ITERATOR__1_1.hasNext()) {

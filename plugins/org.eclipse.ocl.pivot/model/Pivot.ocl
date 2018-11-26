@@ -399,7 +399,7 @@ context ShadowExp
 inv ClassHasNoStringValueInitializer: true -- obsolete
 inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else 
 	let partProperties = ownedParts.referredProperty->asSet() in
-	let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in
+	let allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in
 	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in
 	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in
 	let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in

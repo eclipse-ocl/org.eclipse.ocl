@@ -965,7 +965,7 @@ extends EObjectValidator {
 	 */
 	@Override
 	protected EPackage getEPackage() {
-	  return PivotPackage.eINSTANCE;
+		return PivotPackage.eINSTANCE;
 	}
 
 	/**
