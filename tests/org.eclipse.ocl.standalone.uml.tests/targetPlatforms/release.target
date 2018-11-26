@@ -16,7 +16,7 @@
     <unit id="org.eclipse.uml2.uml" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.profile.standard" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.resources" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4milestones"/>
+    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>
