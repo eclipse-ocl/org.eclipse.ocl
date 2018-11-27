@@ -243,6 +243,8 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_CompatibleReturn = "Operation::CompatibleReturn";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePostconditionName = "Operation::UniquePostconditionName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePreconditionName = "Operation::UniquePreconditionName";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull = "OppositePropertyCallExp::SafeSourceCanBeNull";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull = "OppositePropertyCallExp::UnsafeSourceCanNotBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ParameterVariable_c_c_HasNoInitializer = "ParameterVariable::HasNoInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_CompatibleResultType = "PropertyCallExp::CompatibleResultType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant = "PropertyCallExp::NonStaticSourceTypeIsConformant";

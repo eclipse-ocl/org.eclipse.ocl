@@ -74,6 +74,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/OppositePropertyCallExp.java" type="org.eclipse.ocl.pivot.OppositePropertyCallExp">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.OppositePropertyCallExp"/>
+                <message_argument value="validateSafeSourceCanBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.OppositePropertyCallExp"/>
+                <message_argument value="validateUnsafeSourceCanNotBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateSafeSourceCanBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateUnsafeSourceCanNotBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="388194388">
             <message_arguments>
@@ -1900,6 +1924,18 @@
                 <message_argument value="STR_LoopExp_c_c_SourceIsIterable"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull"/>
+            </message_arguments>
+        </filter>
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
@@ -1982,6 +2018,16 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="STR_LoopExp_c_c_SourceIsIterable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2194,6 +2240,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
                 <message_argument value="LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -2587,6 +2645,16 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateIterableType(IterableType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
@@ -2613,6 +2681,16 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateLoopExp_validateSourceIsIterable(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateOppositePropertyCallExp_validateSafeSourceCanBeNull(OppositePropertyCallExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateOppositePropertyCallExp_validateUnsafeSourceCanNotBeNull(OppositePropertyCallExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

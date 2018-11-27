@@ -365,6 +365,12 @@ inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSourc
 --p.kind <> ParameterDirectionKind::return or
 --p.kind <> ParameterDirectionKind::out)
 
+context OppositePropertyCallExp
+/** Safe navigation is not necessary when the source cannot be null. */
+inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
+/** Safe navigation is necessary when the source could be null. */
+inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource.isNonNull()
+
 context ParameterVariable
 /** Parameter variable has no initializer.*/
 inv HasNoInitializer: ownedInit = null

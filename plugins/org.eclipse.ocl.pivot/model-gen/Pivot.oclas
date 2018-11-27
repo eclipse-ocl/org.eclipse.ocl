@@ -667,6 +667,12 @@
       <ownedProperties xmi:id="ztMvO" isRequired="false" name="referredOperation" type="#Yz,F1"/>
     </ownedClasses>
     <ownedClasses xmi:id="Uj1fg" name="OppositePropertyCallExp" superClasses="#cmSzw">
+      <ownedInvariants xmi:id="u6M9K" isCallable="true" name="SafeSourceCanBeNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="qLGNt" isCallable="true" name="UnsafeSourceCanNotBeNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedProperties xmi:id="is7rW" isRequired="false" name="referredProperty" type="#Gm0Mj"/>
     </ownedClasses>
     <ownedClasses xmi:id="A10J5" name="OrderedSetType" superClasses="#pawWx"/>
