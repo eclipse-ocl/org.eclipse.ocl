@@ -1,4 +1,10 @@
 class java/util/AbstractCollection
+addAll
+ (Ljava/util/Collection<+TE;>;)Z
+ (L1java/util/Collection<+TE;>;)Z
+iterator
+ ()Ljava/util/Iterator<TE;>;
+ ()L1java/util/Iterator<TE;>;
 toArray
  <T:Ljava/lang/Object;>([TT;)[TT;
  <T:Ljava/lang/Object;>([1TT;)[1TT;

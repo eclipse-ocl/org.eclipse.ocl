@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
 /**
@@ -31,7 +32,7 @@ public class OrderedSetImpl<E> extends LinkedHashSet<E> implements OrderedSet<E>
 		super();
 	}
 
-	public OrderedSetImpl(Collection<? extends E> elements) {
+	public OrderedSetImpl(@NonNull Collection<? extends E> elements) {
 		super(elements);
 	}
 

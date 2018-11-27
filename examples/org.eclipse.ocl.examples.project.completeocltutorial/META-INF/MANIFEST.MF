@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Completeocltutorial
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.completeocltutorial;singleton:=true
 Bundle-Version: 1.6.0.qualifier
 Require-Bundle: org.eclipse.ocl.pivot

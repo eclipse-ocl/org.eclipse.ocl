@@ -815,9 +815,9 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				public Value exec(@Nullable XtextResource resource) throws Exception {
 					Object selectedObject = selected;
 					if (selectedObject instanceof IAdaptable) {
-						@Nullable Object adapted = ((IAdaptable) selectedObject).getAdapter(EObject.class);
-						@SuppressWarnings("null")boolean isNonNull = adapted != null;			// FIXME BUG 485093
-						if (isNonNull){
+						Object adapted = ((IAdaptable) selectedObject).getAdapter(EObject.class);
+						boolean isNonNull = adapted != null;			// BUG 485093 fixed in Neon reported that adapted was nonNull and so the test was redundant.
+						if (isNonNull) {
 							selectedObject = adapted;
 						}
 					}

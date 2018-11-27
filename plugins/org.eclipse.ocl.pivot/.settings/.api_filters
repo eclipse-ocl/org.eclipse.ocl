@@ -2129,12 +2129,6 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="__Collection__inverseCollectBy_V"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Map__collectBy_V2"/>
             </message_arguments>
         </filter>

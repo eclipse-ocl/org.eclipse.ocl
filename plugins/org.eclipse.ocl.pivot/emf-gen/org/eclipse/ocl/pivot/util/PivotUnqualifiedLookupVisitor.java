@@ -590,6 +590,7 @@ extends AbstractPivotCommonLookupVisitor
 	@Override
 	public /*@NonInvalid*/ LookupEnvironment visitIterateExp(final /*@NonInvalid*/ org.eclipse.ocl.pivot.@org.eclipse.jdt.annotation.NonNull IterateExp element_4) {
 		final /*@Thrown*/ java.util.List<Variable> ownedIterators = element_4.getOwnedIterators();
+		assert ownedIterators != null;
 		final /*@Thrown*/ org.eclipse.ocl.pivot.@org.eclipse.jdt.annotation.Nullable Variable ownedResult = element_4.getOwnedResult();
 		final /*@Thrown*/ boolean eq = (child != null) ? child.equals(ownedResult) : (ownedResult == null);
 		/*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.Nullable LookupEnvironment symbol_4;
@@ -658,6 +659,7 @@ extends AbstractPivotCommonLookupVisitor
 	@Override
 	public /*@NonInvalid*/ LookupEnvironment visitIteratorExp(final /*@NonInvalid*/ org.eclipse.ocl.pivot.@org.eclipse.jdt.annotation.NonNull IteratorExp element_5) {
 		final /*@Thrown*/ java.util.List<Variable> ownedIterators = element_5.getOwnedIterators();
+		assert ownedIterators != null;
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(ORD_CLSSid_Variable, ownedIterators);
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull IntegerValue index = OrderedCollectionIndexOfOperation.INSTANCE.evaluate(BOXED_ownedIterators, child);
 		final /*@Thrown*/ boolean gt = OclComparableGreaterThanOperation.INSTANCE.evaluate(executor, index, INT_1).booleanValue();

@@ -514,7 +514,8 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @NonNull Iterator<@Nullable Object> iterator() {
-		@SuppressWarnings("unchecked") @NonNull Iterator<@Nullable Object> result = (@NonNull Iterator<@Nullable Object>)boxedValues.keySet().iterator();
+		Object iterator = boxedValues.keySet().iterator();
+		@SuppressWarnings({"unchecked"}) @NonNull Iterator<@Nullable Object> result = (@NonNull Iterator<@Nullable Object>)iterator;
 		return result;
 	}
 
