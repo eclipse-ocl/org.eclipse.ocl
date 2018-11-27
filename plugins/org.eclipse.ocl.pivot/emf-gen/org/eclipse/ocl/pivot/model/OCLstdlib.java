@@ -2081,7 +2081,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OclAny_oclAsType);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", tp_OclAny_oclAsType_TT, false));
+			ownedParameters.add(parameter = createParameter("type", tp_OclAny_oclAsType_TT, true));
 			parameter.setIsTypeof(true);
 			ownedOperations.add(operation = op_OclAny_oclIsInState);
 			ownedParameters = operation.getOwnedParameters();
@@ -2090,11 +2090,11 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclAny_oclIsKindOf);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", _OclType, false));
+			ownedParameters.add(parameter = createParameter("type", _OclType, true));
 			ownedOperations.add(operation = op_OclAny_oclIsNew);
 			ownedOperations.add(operation = op_OclAny_oclIsTypeOf);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", _OclType, false));
+			ownedParameters.add(parameter = createParameter("type", _OclType, true));
 			ownedOperations.add(operation = op_OclAny_oclIsUndefined);
 			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclAny_oclLog);
@@ -2170,7 +2170,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OclInvalid_oclAsType);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", tp_OclInvalid_oclAsType_TT, false));
+			ownedParameters.add(parameter = createParameter("type", tp_OclInvalid_oclAsType_TT, true));
 			parameter.setIsTypeof(true);
 			ownedOperations.add(operation = op_OclInvalid_oclBadOperation);
 			operation.setIsRequired(false);
@@ -2178,10 +2178,10 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclInvalid_oclIsKindOf);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", _OclType, false));
+			ownedParameters.add(parameter = createParameter("type", _OclType, true));
 			ownedOperations.add(operation = op_OclInvalid_oclIsTypeOf);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("type", _OclType, false));
+			ownedParameters.add(parameter = createParameter("type", _OclType, true));
 			ownedOperations.add(operation = op_OclInvalid_oclIsUndefined);
 			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclInvalid_oclType);
