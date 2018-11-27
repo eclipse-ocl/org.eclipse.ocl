@@ -301,7 +301,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredIteration);
 			context.push("(", "");
 			String prefix = null;
-			List<Variable> iterators = object.getOwnedIterators();
+			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(object);
 			List<Variable> coIterators = object.getOwnedCoIterators();
 			int iteratorsSize = iterators.size();
 			int coIteratorsSize = coIterators.size();
@@ -313,7 +313,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				}
 				context.appendName(iterator);
 				context.append(" : ");
-				safeVisit(iterator.getType());
+				context.appendTypedMultiplicity(iterator);
 				if (coIterator != null) {
 					context.append(" <- ");
 					context.appendName(coIterator);
@@ -323,13 +323,17 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.next(null, ";", " ");
 			context.appendName(result);
 			context.append(" : ");
-			safeVisit(result.getType());
+			if (result != null) {
+				context.appendTypedMultiplicity(result);
+			}
 			context.next(null, " |", " ");
-			safeVisit(body != null ? body.getType() : null);
+			if (body != null) {
+				context.appendTypedMultiplicity(body);
+			}
 			context.next("", ")", "");
 			context.pop();
 			context.append(" : ");
-			safeVisit(object.getType());
+			context.appendTypedMultiplicity(object);
 		}
 		return null;
 	}
@@ -396,21 +400,23 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredIteration);
 			context.push("(", "");
 			String prefix = null;
-			for (Variable iterator : object.getOwnedIterators()) {
+			for (Variable iterator : PivotUtil.getOwnedIterators(object)) {
 				if (prefix != null) {
 					context.next(null, prefix, " ");
 				}
 				context.appendName(iterator);
 				context.append(" : ");
-				safeVisit(iterator.getType());
+				context.appendTypedMultiplicity(iterator);
 				prefix = ",";
 			}
 			context.next(null, " |", " ");
-			safeVisit(body != null ? body.getType() : null);
+			if (body != null) {
+				context.appendTypedMultiplicity(body);
+			}
 			context.next("", ")", "");
 			context.pop();
 			context.append(" : ");
-			safeVisit(object.getType());
+			context.appendTypedMultiplicity(object);
 		}
 		return null;
 	}
@@ -471,7 +477,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp object) {
 		OCLExpression source = object.getOwnedSource();
-		List<OCLExpression> arguments = object.getOwnedArguments();
+		List<@NonNull OCLExpression> arguments = PivotUtilInternal.getOwnedArgumentsList(object);
 		Operation referredOperation = object.getReferredOperation();
 		if (context.showNames()) {
 			Precedence precedence = referredOperation != null ? referredOperation.getPrecedence() : null;
@@ -541,15 +547,13 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				if (prefix != null) {
 					context.next(null, prefix, " ");
 				}
-				safeVisit(argument.getType());
-				context.appendTypeMultiplicity(argument);
+				context.appendTypedMultiplicity(argument);
 				prefix = ",";
 			}
 			context.next("", ")", "");
 			context.pop();
 			context.append(" : ");
-			safeVisit(object.getType());
-			context.appendTypeMultiplicity(object);
+			context.appendTypedMultiplicity(object);
 		}
 		return null;
 	}
@@ -573,8 +577,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			}
 			context.appendName(referredProperty);
 			context.append(" : ");
-			safeVisit(object.getType());
-			context.appendTypeMultiplicity(object);
+			context.appendTypedMultiplicity(object);
 		}
 		return null;
 	}
@@ -609,8 +612,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			}
 			context.appendName(referredProperty);
 			context.append(" : ");
-			safeVisit(object.getType());
-			context.appendTypeMultiplicity(object);
+			context.appendTypedMultiplicity(object);
 		}
 		return null;
 	}

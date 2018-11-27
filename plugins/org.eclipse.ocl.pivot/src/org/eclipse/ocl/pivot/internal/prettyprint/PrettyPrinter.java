@@ -374,12 +374,12 @@ public class PrettyPrinter
 		append(getName(object, keywords));
 	}
 
-	public void appendParameters(Operation operation, boolean withNames) {
+	public void appendParameters(@NonNull Operation operation, boolean withNames) {
 		append("(");
 		String prefix = ""; //$NON-NLS-1$
 		if (operation instanceof Iteration) {
 			Iteration iteration = (Iteration)operation;
-			for (Parameter parameter : iteration.getOwnedIterators()) {
+			for (Parameter parameter : PivotUtil.getOwnedIterators(iteration)) {
 				append(prefix);
 				if (withNames) {
 					appendName(parameter);
@@ -390,7 +390,7 @@ public class PrettyPrinter
 			}
 			if (iteration.getOwnedAccumulators().size() > 0) {
 				prefix = "; ";
-				for (Parameter parameter : iteration.getOwnedAccumulators()) {
+				for (Parameter parameter : PivotUtil.getOwnedAccumulators(iteration)) {
 					if (withNames) {
 						appendName(parameter);
 						append(" : ");
@@ -402,7 +402,7 @@ public class PrettyPrinter
 			}
 			prefix = " | ";
 		}
-		for (Parameter parameter : operation.getOwnedParameters()) {
+		for (Parameter parameter : PivotUtil.getOwnedParameters(operation)) {
 			append(prefix);
 			if (withNames) {
 				appendName(parameter);
@@ -664,7 +664,7 @@ public class PrettyPrinter
 	/**
 	 * @since 1.3
 	 */
-	public void appendTypeMultiplicity(TypedElement object) {
+	public void appendTypeMultiplicity(@NonNull TypedElement object) {
 		Type type = object.getType();
 		if (!object.isIsRequired()) {
 			append("[?]");
@@ -674,7 +674,7 @@ public class PrettyPrinter
 		}
 	}
 
-	public void appendTypedMultiplicity(TypedElement object) {
+	public void appendTypedMultiplicity(@NonNull TypedElement object) {
 		Type type = object.getType();
 		appendElement(type);
 		appendTypeMultiplicity(object);

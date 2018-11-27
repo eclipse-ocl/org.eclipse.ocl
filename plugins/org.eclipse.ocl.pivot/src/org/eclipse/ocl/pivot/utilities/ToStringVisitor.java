@@ -1021,6 +1021,12 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	@Override
+	public String visitModel(@NonNull Model root) {
+		append(root.getExternalURI());
+		return null;
+	}
+
+	@Override
 	public String visitNullLiteralExp(@NonNull NullLiteralExp il) {
 		append("null");
 		return null;
@@ -1163,12 +1169,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitRealLiteralExp(@NonNull RealLiteralExp rl) {
 		append(rl.getRealSymbol());
-		return null;
-	}
-
-	@Override
-	public String visitModel(@NonNull Model root) {
-		append(root.getExternalURI());
 		return null;
 	}
 

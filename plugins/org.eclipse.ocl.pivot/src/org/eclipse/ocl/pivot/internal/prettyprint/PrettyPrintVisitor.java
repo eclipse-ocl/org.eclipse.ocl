@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.prettyprint;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -31,6 +29,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import com.google.common.collect.Iterables;
 
 /**
  * The PivotPrettyPrintVisitor supports pretty printing of a Pivot model elements.
@@ -41,7 +42,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	public PrettyPrintVisitor(@NonNull PrettyPrinter context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Object safeVisit(@Nullable Visitable element) {
 		if (element == null) {
@@ -57,7 +58,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return context.toString();
@@ -101,7 +102,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 
 	@Override
 	public Object visitLambdaType(@NonNull LambdaType object) {
-//		appendParent(object.eContainer(), object, "::");
+		//		appendParent(object.eContainer(), object, "::");
 		context.appendName(object, context.getRestrictedNames());
 		context.append(" ");
 		context.appendElement(object.getContextType());
@@ -110,7 +111,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 		for (Type parameterType : object.getParameterType()) {
 			context.append(prefix);
 			context.appendElement(parameterType);
-//			appendMultiplicity(parameter);
+			//			appendMultiplicity(parameter);
 			prefix = ",";
 		}
 		context.append(") : ");
@@ -159,14 +160,14 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 			String prefix = ""; //$NON-NLS-1$
 			if (object instanceof Iteration) {
 				Iteration iteration = (Iteration)object;
-				for (Parameter parameter : iteration.getOwnedIterators()) {
+				for (Parameter parameter : PivotUtil.getOwnedIterators(iteration)) {
 					context.append(prefix);
 					context.appendTypedMultiplicity(parameter);
 					prefix = ",";
 				}
 				if (iteration.getOwnedAccumulators().size() > 0) {
 					prefix = ";";
-					for (Parameter parameter : iteration.getOwnedAccumulators()) {
+					for (Parameter parameter : PivotUtil.getOwnedAccumulators(iteration)) {
 						context.append(prefix);
 						context.appendTypedMultiplicity(parameter);
 						prefix = ",";
@@ -174,7 +175,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 				}
 				prefix = "|";
 			}
-			for (Parameter parameter : object.getOwnedParameters()) {
+			for (Parameter parameter : PivotUtil.getOwnedParameters(object)) {
 				context.append(prefix);
 				context.appendTypedMultiplicity(parameter);
 				prefix = ",";
@@ -193,7 +194,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	@Override
 	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
 		if (context.showNames()) {
-//			context.appendParent(context.getScope(), object.getSignature(), "::");
+			//			context.appendParent(context.getScope(), object.getSignature(), "::");
 			context.appendName(object);
 		}
 		else {
@@ -208,8 +209,8 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 			context.appendParent(context.getScope(), object, "::");
 		}
 		context.appendName(object);
-		List<Property> tupleParts = object.getOwnedProperties();
-		if (!tupleParts.isEmpty()) {
+		Iterable<@NonNull Property> tupleParts = PivotUtil.getOwnedProperties(object);
+		if (!Iterables.isEmpty(tupleParts)) {
 			context.append("(");
 			String prefix = ""; //$NON-NLS-1$
 			for (Property tuplePart : tupleParts) {
