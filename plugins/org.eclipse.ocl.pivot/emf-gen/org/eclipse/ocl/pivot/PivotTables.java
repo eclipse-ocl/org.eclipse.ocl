@@ -13130,4 +13130,21 @@ public class PivotTables
 	@Deprecated
 	public static final @NonNull String STR_Variable_c_c_CompatibleInitialiserType = "Variable::CompatibleInitialiserType";
 	@Deprecated
-	public static final org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(PivotTables.TUPLid_, PivotTables.STR_, org.eclipse.ocl.pivot.utilities.ValueUtil.TRUE_VALUE);}
+	public static final org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(PivotTables.TUPLid_, PivotTables.STR_, org.eclipse.ocl.pivot.utilities.ValueUtil.TRUE_VALUE);
+	@Deprecated
+	public static final @NonNull String STR_any = "any";
+	@Deprecated
+	public static final @NonNull String STR_IterateExp_c_c_BodyTypeConformsToResultType = "IterateExp::BodyTypeConformsToResultType";
+	@Deprecated
+	public static final @NonNull String STR_IterateExp_c_c_OneInitializer = "IterateExp::OneInitializer";
+	@Deprecated
+	public static final @NonNull String STR_IterateExp_c_c_TypeIsResultType = "IterateExp::TypeIsResultType";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_AnyBodyTypeIsBoolean = "IteratorExp::AnyBodyTypeIsBoolean";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_AnyHasOneIterator = "IteratorExp::AnyHasOneIterator";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_AnyTypeIsSourceElementType = "IteratorExp::AnyTypeIsSourceElementType";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_ClosureHasOneIterator = "IteratorExp::ClosureHasOneIterator";
+}

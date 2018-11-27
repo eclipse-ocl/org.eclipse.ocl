@@ -676,6 +676,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="ORDERED_SET_TYPE"/>
                 <message_argument value="72"/>
             </message_arguments>
@@ -1426,6 +1433,18 @@
                 <message_argument value="MAP_TYPE__VALUES_ARE_NULL_FREE"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
@@ -1478,6 +1497,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getMapType_ValuesAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getOppositePropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getOppositePropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1742,6 +1773,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getIterableType()"/>
             </message_arguments>
         </filter>
@@ -1783,6 +1824,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getMapType_ValuesAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOppositePropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOppositePropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1841,6 +1892,18 @@
                 <message_argument value="MAP_TYPE__VALUES_ARE_NULL_FREE"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERABLE_TYPE"/>
@@ -1884,6 +1947,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="MAP_TYPE__VALUES_ARE_NULL_FREE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1939,55 +2012,7 @@
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IterateExp_c_c_BodyTypeConformsToResultType"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IterateExp_c_c_OneInitializer"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IterateExp_c_c_TypeIsResultType"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IteratorExp_c_c_AnyBodyTypeIsBoolean"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IteratorExp_c_c_AnyHasOneIterator"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IteratorExp_c_c_AnyTypeIsSourceElementType"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_IteratorExp_c_c_ClosureHasOneIterator"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="STR_LoopExp_c_c_SourceIsCollection"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_any"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
