@@ -2728,67 +2728,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/BuiltInTypeId.java" type="org.eclipse.ocl.pivot.ids.BuiltInTypeId">
-        <filter comment="Bug 512402 workaround" id="576720909">
+    <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
+        <filter id="403767336">
             <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="BuiltInTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/LambdaTypeId.java" type="org.eclipse.ocl.pivot.ids.LambdaTypeId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="LambdaTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/NestedTypeId.java" type="org.eclipse.ocl.pivot.ids.NestedTypeId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="NestedTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateBinding.java" type="org.eclipse.ocl.pivot.ids.TemplateBinding">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="TemplateBinding"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateParameterId.java" type="org.eclipse.ocl.pivot.ids.TemplateParameterId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="TemplateParameterId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateableTypeId.java" type="org.eclipse.ocl.pivot.ids.TemplateableTypeId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="TemplateableTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/TupleTypeId.java" type="org.eclipse.ocl.pivot.ids.TupleTypeId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="TupleTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/UnspecifiedId.java" type="org.eclipse.ocl.pivot.ids.UnspecifiedId">
-        <filter comment="Bug 512402 workaround" id="576720909">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="UnspecifiedId"/>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="ITERABLE_NAME"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2824,27 +2768,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ids/AbstractTypeId.java" type="org.eclipse.ocl.pivot.internal.ids.AbstractTypeId">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="TypeId"/>
-                <message_argument value="AbstractTypeId"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="OperationId"/>
                 <message_argument value="GeneralizedOperationIdImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ids/ParametersIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="ParametersId"/>
-                <message_argument value="ParametersIdImpl"/>
             </message_arguments>
         </filter>
     </resource>

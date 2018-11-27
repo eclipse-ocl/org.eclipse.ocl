@@ -29,8 +29,6 @@ import org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl;
  * @see OclVoidTypeId
  * @see PrimitiveTypeId
  * @see TupleTypeId
- *
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface TypeId extends ElementId
 {

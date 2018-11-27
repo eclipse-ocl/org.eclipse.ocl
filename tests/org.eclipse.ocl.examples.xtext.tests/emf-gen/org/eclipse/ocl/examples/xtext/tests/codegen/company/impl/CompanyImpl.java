@@ -192,7 +192,6 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			/**
 			 * range->includes(employees->size())
 			 */
-			@SuppressWarnings("null")
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = ClassUtil.nonNullState((SequenceValue)_1.getValue(0/*range*/));
 			@SuppressWarnings("null")
 			final /*@NonInvalid*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
@@ -219,7 +218,6 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		}
 		else {
 			assert any != null;
-			@SuppressWarnings("null")
 			final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_1 = ClassUtil.nonNullState((EnumerationLiteralId)any.getValue(1/*size*/));
 			safe_size_source = size_1;
 		}
