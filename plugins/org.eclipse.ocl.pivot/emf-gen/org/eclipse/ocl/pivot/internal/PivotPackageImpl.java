@@ -6868,9 +6868,31 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	public EOperation getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
 	{
 		return callExpEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getCallExp__ValidateSafeSourceCannotBeMap__DiagnosticChain_Map()
+	{
+		return callExpEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return callExpEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -7053,6 +7075,8 @@ implements PivotPackage  {
 		createEAttribute(callExpEClass, CALL_EXP__IS_IMPLICIT);
 		createEAttribute(callExpEClass, CALL_EXP__IS_SAFE);
 		createEReference(callExpEClass, CALL_EXP__OWNED_SOURCE);
+		createEOperation(callExpEClass, CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
+		createEOperation(callExpEClass, CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP);
 		createEOperation(callExpEClass, CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 
 		callOperationActionEClass = createEClass(CALL_OPERATION_ACTION);
@@ -7898,6 +7922,24 @@ implements PivotPackage  {
 		initEAttribute(getCallExp_IsImplicit(), this.getBoolean(), "isImplicit", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getCallExp_IsSafe(), this.getBoolean(), "isSafe", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getCallExp_OwnedSource(), this.getOCLExpression(), null, "ownedSource", null, 0, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSafeSourceCanBeNull", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getCallExp__ValidateSafeSourceCannotBeMap__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSafeSourceCannotBeMap", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateTypeIsNotInvalid", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -9417,6 +9459,20 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "TypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCallExp__ValidateSafeSourceCannotBeMap__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "SafeSourceCannotBeMap" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),

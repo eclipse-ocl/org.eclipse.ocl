@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
@@ -1228,11 +1229,11 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 					if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 						throw (InvalidValueException)CAUGHT_safe_type_source;
 					}
-					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType).booleanValue();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType_0).booleanValue();
 					CAUGHT_oclIsKindOf = oclIsKindOf;
 				}
 				catch (Exception e) {
@@ -1240,11 +1241,11 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_forAll;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_1 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 					if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 						throw (InvalidValueException)CAUGHT_safe_type_source;
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull MapType oclAsType = ClassUtil.nonNullState((MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType_0));
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull MapType oclAsType = ClassUtil.nonNullState((MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType_1));
 					@SuppressWarnings("null")
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type sourceKeyType = oclAsType.getKeyType();
 					@SuppressWarnings("null")
@@ -1479,6 +1480,10 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				return isNull();
 			case PivotPackage.ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP:
+				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATOR_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP:
@@ -1525,8 +1530,6 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				return validateIteratorTypeIsSourceKeyType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP:
 				return validateSafeIteratorIsRequired((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP:
-				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP:
 				return validateSortedByElementTypeIsSourceElementType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP:
@@ -1563,6 +1566,14 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass)
 	{
+		if (baseClass == CallExp.class)
+		{
+			switch (baseOperationID)
+			{
+				case PivotPackage.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP: return PivotPackage.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
 		if (baseClass == ReferringElement.class)
 		{
 			switch (baseOperationID)

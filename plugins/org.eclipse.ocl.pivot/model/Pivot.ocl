@@ -73,6 +73,10 @@ inv TypeIsNotInvalid : type <> OclInvalid
 
 context CallExp
 inv TypeIsNotInvalid : type <> OclInvalid
+/** Safe navigation is not necessary when the source collection is null-free. */
+inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
+/** Safe navigation is not supported when the source collection is a Map. */
+inv SafeSourceCannotBeMap: isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)
 
 context IfExp
 inv TypeIsNotInvalid : type <> OclInvalid

@@ -39,8 +39,14 @@
       <ownedProperties xmi:id="D6wzN" isUnsettable="true" name="booleanSymbol" type="#ZuwnB"/>
     </ownedClasses>
     <ownedClasses xmi:id="QJrde" isAbstract="true" name="CallExp" superClasses="#BFtK4">
+      <ownedInvariants xmi:id="6ILdu" isCallable="true" name="SafeSourceCanBeNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="26xal" isCallable="true" name="SafeSourceCannotBeMap">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies let sourceType = ownedSource?.type in sourceType &lt;> null implies not sourceType.oclIsKindOf(MapType)&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="QQ,Tv" isCallable="true" name="TypeIsNotInvalid">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="Xbbpj" defaultValueString="false" name="isImplicit" type="#ZuwnB"/>
       <ownedProperties xmi:id=",1h8l" defaultValueString="false" name="isSafe" type="#ZuwnB"/>
