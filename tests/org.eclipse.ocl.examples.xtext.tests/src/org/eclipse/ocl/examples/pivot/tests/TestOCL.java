@@ -680,6 +680,8 @@ public class TestOCL extends OCLInternal
 	 * Assert that an expression cannot be used as a query, because an exception is thrown
 	 * with a diagnostic of severity containing a message that is the result of messageTemplate
 	 * resolved by bindings.
+	 *
+	 * A 'this' in the bindings is replaced by the 'expression'.
 	 * @throws IOException
 	 */
 	public void assertValidationErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
@@ -690,6 +692,11 @@ public class TestOCL extends OCLInternal
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			Resource asResource = csResource.getASResource();
+			for (int i = 0; i < bindings.length; i++) {
+				if (bindings[i] == this) {
+					bindings[i] = expression;
+				}
+			}
 			String expectedMessage = StringUtil.bind(messageTemplate, bindings);
 			PivotTestSuite.assertValidationDiagnostics("Validating", asResource, PivotTestCase.getMessages(expectedMessage));
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);

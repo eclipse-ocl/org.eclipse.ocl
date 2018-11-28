@@ -47,6 +47,10 @@ public class PivotMessages
 	public static String InvalidOperation;
 	public static String InvalidReal;
 	public static String InvalidSource;
+	/**
+	 * @since 1.6
+	 */
+	public static String MapValueForbidden;
 	public static String MissingResult;
 	public static String MissingSourceType;
 	public static String MissingSourceValue;

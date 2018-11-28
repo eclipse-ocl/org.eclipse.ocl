@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleMapIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -365,6 +366,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		Object acceptedValue = source.accept(undecoratedVisitor);
 		IterableValue sourceValue = ValueUtil.asIterableValue(acceptedValue);
 		if (iterateExp.isIsSafe()) {
+			if (sourceValue instanceof MapValue) {
+				throw new InvalidValueException(PivotMessages.MapValueForbidden);
+			}
 			sourceValue = sourceValue.excluding(null);
 		}
 		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId(), null);
@@ -465,6 +469,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//			}
 		sourceValue = ValueUtil.asIterableValue(sourceVal);
 		if (iteratorExp.isIsSafe()) {
+			if (sourceValue instanceof MapValue) {
+				throw new InvalidValueException(PivotMessages.MapValueForbidden);
+			}
 			sourceValue = sourceValue.excluding(null);
 		}
 		//		} catch (InvalidValueException e) {
@@ -654,8 +661,16 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//
 		//	Safe navigation of null source return null.
 		//
-		if ((sourceValue == null) && operationCallExp.isIsSafe()) {
-			return null;
+		if (operationCallExp.isIsSafe()) {
+			if (sourceValue == null) {
+				return null;
+			}
+			if (sourceValue instanceof MapValue) {
+				throw new InvalidValueException(PivotMessages.MapValueForbidden);
+			}
+			if (sourceValue instanceof CollectionValue) {
+				sourceValue = ((CollectionValue)sourceValue).excluding(null);
+			}
 		}
 		//
 		//	Resolve argument values catching invalid values for validating operations.

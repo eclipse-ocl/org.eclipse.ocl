@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -124,6 +125,15 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{null <- 1} = Map{null <- null}");
 		ocl.assertQueryFalse(null, "Map{true <- null} = Map{null <- null}");
 		ocl.assertQueryFalse(null, "Map{'4' <- 4} = Map{null <- null}");
+		ocl.dispose();
+	}
+
+	@Test public void testMapErrors() {
+		TestOCL ocl = createOCL();
+		ocl.assertValidationErrorQuery(null, "Map{}?->keyType", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, ocl);
+		ocl.assertValidationErrorQuery(null, "Map{}?->size()", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, ocl);
+		ocl.assertValidationErrorQuery(null, "Map{}?->collect(c | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, "Map{}?->collect(c : OclVoid[1] <- 2_ : OclVoid[1] | '')");
+		ocl.assertValidationErrorQuery(null, "Map{}?->iterate(c; acc:String = '' | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, "Map{}?->iterate(c : OclVoid[1] <- 2_ : OclVoid[1]; acc : String[1] = '' | '')");
 		ocl.dispose();
 	}
 

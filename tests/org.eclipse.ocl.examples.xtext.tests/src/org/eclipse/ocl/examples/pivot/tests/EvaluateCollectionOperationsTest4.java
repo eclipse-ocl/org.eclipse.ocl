@@ -1735,6 +1735,9 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		//		ocl.assertQueryInvalid(null, "let s : String = null in s->size()");
 		ocl.assertQueryEquals(null, 0, "let s : String = null in s->size()");
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->size()");
+		// safe navigation
+		ocl.assertQueryEquals(null, 2, "let s : Sequence(Integer) = Sequence{1, null} in s->size()");
+		ocl.assertQueryEquals(null, 1, "let s : Sequence(Integer) = Sequence{1, null} in s?->size()");
 		// null collection element
 		ocl.assertQueryEquals(null, 4, "Sequence{'a', 'b', null, null}->size()");
 		ocl.assertQueryEquals(null, 4, "Bag{'a', 'b', null, null}->size()");
