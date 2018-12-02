@@ -27,24 +27,25 @@ externalUpdatesFolder="http://download.eclipse.org/modeling/mdt/ocl/updates/"
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
 
+  tQualifier="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER:1:8}${PUBLISH__QUALIFIER:10:4}"
   if [ "${PUBLISH__BUILD_T}" = "N" ]
   then
     buildFolder="${updatesFolder}nightly"
     buildRepoName="Nightly"
-    externalFolder="${externalUpdatesFolder}nightly"
+    externalFolder="${externalUpdatesFolder}nightly/${PUBLISH__VERSION}"
   elif [ "${PUBLISH__BUILD_T}" = "I" ]
   then
     buildFolder="${updatesFolder}interim"
     buildRepoName="Interim"
-    externalFolder="${externalUpdatesFolder}interim"
+    externalFolder="${externalUpdatesFolder}interim/${PUBLISH__VERSION}"
   elif [ "${PUBLISH__BUILD_T}" = "S" ]
   then
     buildFolder="${updatesFolder}milestones"
     buildRepoName="Milestones"
-    externalFolder="${externalUpdatesFolder}milestones/${PUBLISH__VERSION}"
+    externalFolder="${externalUpdatesFolder}milestones/${PUBLISH__VERSION}/${tQualifier}"
   else
     buildFolder="${updatesFolder}other"
-    externalFolder="${externalUpdatesFolder}other"
+    externalFolder="${externalUpdatesFolder}other/${PUBLISH__VERSION}"
     buildRepoName="Other"
   fi
 
@@ -83,7 +84,6 @@ then
     then
       pushd ${buildFolder}/${PUBLISH__VERSION}
 
-        tQualifier="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER:1:8}${PUBLISH__QUALIFIER:10:4}"
         versionFolder="${buildFolder}/${tQualifier}"
         if [ ! -d "${tQualifier}" ]
         then
@@ -103,7 +103,7 @@ then
 
     mkdir ${buildFolder}/newlatest
     pushd ${buildFolder}/newlatest
-      ${manageComposite} add -Dchild.repository=${externalFolder}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+      ${manageComposite} add -Dchild.repository=${externalFolder} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
     popd
     if [ -d "latest" ]
     then
