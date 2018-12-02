@@ -116,6 +116,7 @@ public interface OperationCallExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	boolean validateSafeSourceCanBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**

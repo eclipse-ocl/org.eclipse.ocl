@@ -169,5 +169,6 @@ public interface IteratorExp extends LoopExp, ReferringElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	boolean validateSafeSourceCanBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 } // IteratorExp
