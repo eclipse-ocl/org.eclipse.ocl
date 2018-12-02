@@ -93,16 +93,19 @@ then
         chgrp -R ${group} ${tQualifier}
         chmod -R g+w ${tQualifier}
         ${manageComposite} add -Dchild.repository=${tQualifier} -Dcomposite.name="${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
-
-        mkdir newlatest
-        pushd newlatest
-          ${manageComposite} add -Dchild.repository=${milestonesRepo}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
-        popd
-        mv latest oldlatest
-        mv newlatest latest
-        rm -rf oldlatest
-
       popd
+
+      mkdir ${buildFolder}/newlatest
+      pushd ${buildFolder}/newlatest
+        ${manageComposite} add -Dchild.repository=${milestonesRepo}/${PUBLISH__VERSION}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+      popd
+      if [ -d "latest" ]
+      then
+        mv latest oldlatest
+      fi
+      mv newlatest latest
+      rm -rf oldlatest
+
     fi
    
   popd
