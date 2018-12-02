@@ -22,6 +22,7 @@ group="modeling.mdt.ocl"
 localZip="ocl.zip"
 projectRepoName="OCL"
 manageComposite="/shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml"
+milestonesRepo="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
@@ -92,6 +93,14 @@ then
         chgrp -R ${group} ${tQualifier}
         chmod -R g+w ${tQualifier}
         ${manageComposite} add -Dchild.repository=${tQualifier} -Dcomposite.name="${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+
+        mkdir newlatest
+        pushd newlatest
+          ${manageComposite} add -Dchild.repository=${milestonesRepo}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+        popd
+        mv latest oldlatest
+        mv newlatest latest
+        rm -rf oldlatest
 
       popd
     fi
