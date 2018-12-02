@@ -6,8 +6,8 @@
     <unit id="org.eclipse.emf.ecore.xmi" version="0.0.0"/>
     <unit id="org.hamcrest.core" version="0.0.0"/>
     <unit id="org.junit" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/releases/photon"/>
-    <!--repository location="http://download.eclipse.org/releases/photon/201805251000"/-->
+    <repository location="http://download.eclipse.org/releases/2018-09"/>
+    <repository location="http://download.eclipse.org/staging/2018-12"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>
@@ -16,7 +16,7 @@
     <unit id="org.eclipse.ocl.ecore" version="0.0.0"/>
     <unit id="org.eclipse.ocl.ecore.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases>
+    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases"/>
   </location>
 </locations>
 </target>
