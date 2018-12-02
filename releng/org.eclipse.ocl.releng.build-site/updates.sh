@@ -22,7 +22,7 @@ group="modeling.mdt.ocl"
 localZip="ocl.zip"
 projectRepoName="OCL"
 manageComposite="/shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml"
-milestonesRepo="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"
+externalUpdatesFolder="http://download.eclipse.org/modeling/mdt/ocl/updates/"
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
@@ -31,16 +31,20 @@ then
   then
     buildFolder="${updatesFolder}nightly"
     buildRepoName="Nightly"
+    externalFolder="${externalUpdatesFolder}nightly"
   elif [ "${PUBLISH__BUILD_T}" = "I" ]
   then
     buildFolder="${updatesFolder}interim"
     buildRepoName="Interim"
+    externalFolder="${externalUpdatesFolder}interim"
   elif [ "${PUBLISH__BUILD_T}" = "S" ]
   then
     buildFolder="${updatesFolder}milestones"
     buildRepoName="Milestones"
+    externalFolder="${externalUpdatesFolder}milestones/${PUBLISH__VERSION}"
   else
     buildFolder="${updatesFolder}other"
+    externalFolder="${externalUpdatesFolder}other"
     buildRepoName="Other"
   fi
 
@@ -95,18 +99,18 @@ then
         ${manageComposite} add -Dchild.repository=${tQualifier} -Dcomposite.name="${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
       popd
 
-      mkdir ${buildFolder}/newlatest
-      pushd ${buildFolder}/newlatest
-        ${manageComposite} add -Dchild.repository=${milestonesRepo}/${PUBLISH__VERSION}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
-      popd
-      if [ -d "latest" ]
-      then
-        mv latest oldlatest
-      fi
-      mv newlatest latest
-      rm -rf oldlatest
-
     fi
+
+    mkdir ${buildFolder}/newlatest
+    pushd ${buildFolder}/newlatest
+      ${manageComposite} add -Dchild.repository=${externalFolder}/${tQualifier} -Dcomposite.name="Latest ${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+    popd
+    if [ -d "latest" ]
+    then
+      mv latest oldlatest
+    fi
+    mv newlatest latest
+    rm -rf oldlatest
    
   popd
 
