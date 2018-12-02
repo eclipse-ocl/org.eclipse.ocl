@@ -122,7 +122,8 @@
         <configuration>
           <includePackedArtifacts>true</includePackedArtifacts>
           <resolver>p2</resolver>
-          <executionEnvironment>JavaSE-11</executionEnvironment>
+          <!-- org.eclipse.equinox.http.jetty seems to need JavaSE-1.8 to be explicit. See Bug 541797 -->
+          <executionEnvironment>JavaSE-1.8</executionEnvironment>
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
