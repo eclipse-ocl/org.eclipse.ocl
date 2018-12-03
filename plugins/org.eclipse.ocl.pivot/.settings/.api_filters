@@ -102,18 +102,7 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.OppositePropertyCallExp"/>
-                <message_argument value="validateSafeSourceCanBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.OppositePropertyCallExp"/>
                 <message_argument value="validateUnsafeSourceCanNotBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="validateSafeSourceCanBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2443,12 +2432,6 @@
                 <message_argument value="STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull"/>
             </message_arguments>
         </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="STR_LoopExp_c_c_SourceIsCollection"/>
-            </message_arguments>
-        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_IterableType"/>
@@ -2673,9 +2656,6 @@
                 <message_argument value="caseIterableType(IterableType)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java">
-        <filter id="0"/>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="336658481">
