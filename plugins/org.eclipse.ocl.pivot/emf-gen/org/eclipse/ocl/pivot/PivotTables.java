@@ -22,9 +22,6 @@
 package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.ParameterTypes;
-import org.eclipse.ocl.pivot.PivotTables;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
@@ -13149,4 +13146,6 @@ public class PivotTables
 	public static final @NonNull String STR_IteratorExp_c_c_AnyTypeIsSourceElementType = "IteratorExp::AnyTypeIsSourceElementType";
 	@Deprecated
 	public static final @NonNull String STR_IteratorExp_c_c_ClosureHasOneIterator = "IteratorExp::ClosureHasOneIterator";
+	@Deprecated
+	public static final @NonNull String STR_LoopExp_c_c_SourceIsCollection = "LoopExp::SourceIsCollection";
 }
