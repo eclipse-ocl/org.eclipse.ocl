@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getEcore_OCL_EOperation()
- * @model
+ * @model annotation="http://www.eclipse.org/OCL/MetaAnnotation"
  * @generated
  */
 public interface Ecore_OCL_EOperation extends EObject {

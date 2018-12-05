@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  *
  * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getEcore_OCL_EClassifier()
- * @model
+ * @model annotation="http://www.eclipse.org/OCL/MetaAnnotation"
  * @generated
  */
 public interface Ecore_OCL_EClassifier extends EObject {

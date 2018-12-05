@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  *
  * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getImport_EPackage()
- * @model
+ * @model annotation="http://www.eclipse.org/OCL/MetaAnnotation"
  * @generated
  */
 public interface Import_EPackage extends EObject {
