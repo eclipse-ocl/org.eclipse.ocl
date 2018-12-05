@@ -833,7 +833,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='unique'?
+	 *         qualifiers+='volatile'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
@@ -848,13 +848,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!resolve' |
 	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
+	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique' |
 	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
-	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='unique'?
+	 *             qualifiers+='volatile'?
 	 *         )*
 	 *         (
 	 *             (ownedAnnotations+=AnnotationElementCS | ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)?
