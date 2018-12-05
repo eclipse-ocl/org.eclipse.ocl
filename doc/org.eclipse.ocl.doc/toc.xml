@@ -454,6 +454,20 @@
 <topic href="help/OCLInterpreterTutorial.html#Serialization" label="Serialization"></topic>
 <topic href="help/OCLInterpreterTutorial.html#Summary3" label="Summary"></topic>
 </topic>
+<topic href="help/Extensions.html" label="Extensions (in the Unified/Pivot OCL prototype)">
+<topic href="help/Extensions.html#Models" label="Models"></topic>
+<topic href="help/Extensions.html#XMI" label="XMI"></topic>
+<topic href="help/Extensions.html#Templates" label="Templates"></topic>
+<topic href="help/Extensions.html#Extensibility" label="Extensibility"></topic>
+<topic href="help/Extensions.html#OperationOverloading" label="Operation Overloading"></topic>
+<topic href="help/Extensions.html#Stereotypes" label="Stereotypes"></topic>
+<topic href="help/Extensions.html#SafeNavigation" label="Safe Navigation"></topic>
+<topic href="help/Extensions.html#Reflection" label="Reflection"></topic>
+<topic href="help/Extensions.html#LambdaExpressions" label="Lambda Expressions"></topic>
+<topic href="help/Extensions.html#MapKV" label="Map(K,V)">
+<topic href="help/Extensions.html#Details" label="Details"></topic>
+</topic>
+</topic>
 <topic href="help/Installation.html" label="Installing the Eclipse OCL Examples and Editors">
 <topic href="help/Installation.html#Troubleshooting2" label="Troubleshooting"></topic>
 </topic>
@@ -548,7 +562,7 @@
 <topic href="help/PivotEvaluator.html#PolymorphicImplementations" label="Polymorphic Implementations"></topic>
 </topic>
 <topic href="help/PivotStandalone.html" label="Pivot Standalone Configuration">
-<topic href="help/PivotStandalone.html#Models" label="Models"></topic>
+<topic href="help/PivotStandalone.html#Models2" label="Models"></topic>
 <topic href="help/PivotStandalone.html#OCLStandardLibrary" label="OCL Standard Library"></topic>
 <topic href="help/PivotStandalone.html#PivotDelegates" label="Pivot Delegates"></topic>
 <topic href="help/PivotStandalone.html#XtextParsers" label="Xtext Parsers"></topic>
