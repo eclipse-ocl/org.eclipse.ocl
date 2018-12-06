@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -28,6 +29,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -35,6 +37,7 @@ import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.DataTypeCS;
@@ -145,6 +148,72 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
+
+	/*	protected static class MapTypeRefCompletion extends TypedRefContinuation<TypedTypeRefCS>
+	{
+		public MapTypeRefCompletion(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
+			super(context, csElement, context.getTypesHaveSignaturesInterDependency());
+			assert csElement.getOwnedBinding() == null;
+		}
+
+		@Override
+		public boolean canExecute() {
+			boolean canExecute = super.canExecute();
+			if (!canExecute) {
+				return false;
+			}
+			Type pivotType = csElement.getReferredType();
+			if (pivotType == null) {
+				return false;
+			}
+			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
+				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
+					List<Property> ownedProperties = pivotClass.getOwnedProperties();
+					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
+					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
+					if ((keyProperty != null) && (valueProperty != null)) {
+						Type keyType = keyProperty.getType();
+						if (keyType == null) {
+							return false;
+						}
+						Type valueType = valueProperty.getType();
+						if (valueType == null) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		@Override
+		public BasicContinuation<?> execute() {
+			Type pivotType = csElement.getReferredType();
+			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
+				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
+					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
+					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
+					List<Property> ownedProperties = pivotClass.getOwnedProperties();
+					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
+					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
+					if ((keyProperty != null) && (valueProperty != null)) {
+						Type keyType = PivotUtil.getType(keyProperty);
+						boolean keysAreNullFree = keyProperty.isIsRequired();
+						Type valueType = PivotUtil.getType(valueProperty);
+						boolean valuesAreNullFree = valueProperty.isIsRequired();
+						MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+						mapType.setEntryClass(pivotClass);
+						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+						return null;
+					}
+				}
+			}
+			context.installPivotTypeWithMultiplicity(pivotType, csElement);
+			return null;
+		}
+	} */
 
 	protected static abstract class OperatorExpContinuation<T extends NamedElementCS> extends SingleContinuation<T>
 	{
@@ -448,8 +517,56 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 
 		@Override
+		public boolean canExecute() {
+			boolean canExecute = super.canExecute();
+			if (!canExecute) {
+				return false;
+			}
+			Type pivotType = csElement.getReferredType();
+			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
+				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
+					List<Property> ownedProperties = pivotClass.getOwnedProperties();
+					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
+					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
+					if ((keyProperty != null) && (valueProperty != null)) {
+						Type keyType = keyProperty.getType();
+						if (keyType == null) {
+							return false;
+						}
+						Type valueType = valueProperty.getType();
+						if (valueType == null) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		@Override
 		public BasicContinuation<?> execute() {
 			Type pivotType = csElement.getReferredType();
+			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
+				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
+					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
+					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
+					List<Property> ownedProperties = pivotClass.getOwnedProperties();
+					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
+					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
+					if ((keyProperty != null) && (valueProperty != null)) {
+						Type keyType = PivotUtil.getType(keyProperty);
+						boolean keysAreNullFree = keyProperty.isIsRequired();
+						Type valueType = PivotUtil.getType(valueProperty);
+						boolean valuesAreNullFree = valueProperty.isIsRequired();
+						MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+						mapType.setEntryClass(pivotClass);
+						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+						return null;
+					}
+				}
+			}
 			context.installPivotTypeWithMultiplicity(pivotType, csElement);
 			return null;
 		}

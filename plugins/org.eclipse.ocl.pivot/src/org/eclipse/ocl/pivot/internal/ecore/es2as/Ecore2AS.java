@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -795,6 +794,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		return pivotType;
 	}
 
+	/**
+	 * @since 1.7
+	 */
 	protected Type resolveGenericType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
 		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 		assert !eGenericType.getETypeArguments().isEmpty();
@@ -819,7 +821,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
-	private Type resolveMapType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EClass eClass) {
+	/*
+	protected MapType resolveMapType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EClass eClass) {
 		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
 		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
 		if (keyFeature == null) {
@@ -849,7 +852,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		return null;
-	}
+	} */
 
 	protected Type resolveSimpleType(@NonNull EClassifier eClassifier) {
 		return getASType(eClassifier);
@@ -881,10 +884,19 @@ public class Ecore2AS extends AbstractExternal2AS
 			assert eGenericType.getETypeArguments().isEmpty();
 			pivotType = resolveDataType((EDataType) eClassifier);
 		}
-		else if (eClassifier.getInstanceClass() == Map.Entry.class){
+		/*	else if (eClassifier.getInstanceClass() == Map.Entry.class){
 			assert eGenericType.getETypeArguments().isEmpty();
-			pivotType = resolveMapType(resolvedSpecializations, (EClass)eClassifier);
-		}
+			pivotType = resolveSimpleType(eClassifier);
+			EObject eContainer = eGenericType.eContainer();
+			if (eContainer instanceof ETypedElement) {
+				ETypedElement eTypedElement = (ETypedElement)eContainer;
+				if ((eTypedElement.getLowerBound() == 0) && (eTypedElement.getUpperBound() == -1)) {
+					MapType mapType = resolveMapType(resolvedSpecializations, (EClass)eClassifier);
+					mapType.setEntryClass((org.eclipse.ocl.pivot.Class) pivotType);
+					pivotType = mapType;
+				}
+			}
+		} */
 		else {
 			assert eGenericType.getETypeArguments().isEmpty();
 			pivotType = resolveSimpleType(eClassifier);

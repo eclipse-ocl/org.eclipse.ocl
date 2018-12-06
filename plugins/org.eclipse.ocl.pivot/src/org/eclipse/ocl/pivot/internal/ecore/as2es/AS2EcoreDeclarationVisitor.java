@@ -812,7 +812,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (ecoreCollectionType != null) {
 			type = ecoreCollectionType.getElementType();
 		}
-		if (type instanceof DataType) {
+		if (type instanceof MapType) {
+			EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+			eReference.setContainment(pivotProperty.isIsComposite());
+			eReference.setResolveProxies(pivotProperty.isIsResolveProxies());
+			eStructuralFeature = eReference;
+		}
+		else if (type instanceof DataType) {
 			EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 			eAttribute.setID(pivotProperty.isIsID());
 			eStructuralFeature = eAttribute;

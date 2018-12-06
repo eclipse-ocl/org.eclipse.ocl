@@ -24,12 +24,12 @@ import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 public class OclTypeConformsToOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclTypeConformsToOperation INSTANCE = new OclTypeConformsToOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**

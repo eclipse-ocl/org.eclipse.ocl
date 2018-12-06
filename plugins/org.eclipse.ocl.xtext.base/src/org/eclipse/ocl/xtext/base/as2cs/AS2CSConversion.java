@@ -32,6 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
@@ -516,7 +517,11 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		T csElement = refreshNamedElement(csClass, csEClass, object);
 		final Type type = object.getType();
 		final Type elementType;
-		if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+		boolean isEMap = (type instanceof MapType) && (((MapType)type).getEntryClass() != null);
+		if (isEMap) {
+			elementType = ((MapType)type).getEntryClass();
+		}
+		else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
 			PivotUtil.debugWellContainedness(type);
 			elementType = ((CollectionType)type).getElementType();
 		}
@@ -539,7 +544,16 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			boolean isNullFree ;
 			int lower;
 			int upper;
-			if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+			if (isEMap) {
+				isNullFree = true;
+				lower = 0;
+				upper = -1;
+				List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
+				//	refreshQualifiers(qualifiers, "composes", object.isIsComposite());
+				refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
+				refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
+			}
+			else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
 				lower = collectionType.getLower().intValue();

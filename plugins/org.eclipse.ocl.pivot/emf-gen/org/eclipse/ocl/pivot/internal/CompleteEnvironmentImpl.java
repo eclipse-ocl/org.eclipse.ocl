@@ -19,6 +19,7 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -704,6 +705,40 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			return orphanCompletePackage.getCompleteClass((CollectionType)pivotType);
 		}
 		else if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+			EObject esObject = pivotType.getESObject();
+			if (esObject instanceof EClass) {
+				EClass eClass = (EClass)esObject;
+				/*				if (eClass.getInstanceClass() == Map.Entry.class) {
+					EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
+					EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
+					if (keyFeature == null) {
+					//	error("Missing 'key' feature for map '" + eClass.getName() + "");
+					}
+					else if (valueFeature == null) {
+					//	error("Missing 'value' feature for map '" + eClass.getName() + "");
+					}
+					else {
+						EGenericType keyGenericType = keyFeature.getEGenericType();
+						EGenericType valueGenericType = valueFeature.getEGenericType();
+						if (keyGenericType == null) {
+					//		error("No 'key' EGenericType for map '" + eClass.getName() + "");
+						}
+						else if (valueGenericType == null) {
+					//		error("No 'value' EGenericType for map '" + eClass.getName() + "");
+						}
+						else {
+							Type keyType = resolveType(resolvedSpecializations, keyGenericType);
+							Type valueType = resolveType(resolvedSpecializations, valueGenericType);
+							if ((keyType != null) && (valueType != null)) {
+								boolean keysAreNullFree = keyFeature.isRequired();
+								boolean valuesAreNullFree = valueFeature.isRequired();
+								org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
+								return completeEnvironment.getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+							}
+						}
+					}
+				} */
+			}
 			org.eclipse.ocl.pivot.Package pivotPackage = ((org.eclipse.ocl.pivot.Class)pivotType).getOwningPackage();
 			if (pivotPackage == null) {
 				throw new IllegalStateException("type has no package");

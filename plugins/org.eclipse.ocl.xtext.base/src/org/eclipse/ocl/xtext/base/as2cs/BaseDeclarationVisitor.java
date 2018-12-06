@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
@@ -263,7 +264,14 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		if (type instanceof CollectionType) {
 			type = ((CollectionType)type).getElementType();
 		}
-		if (type instanceof DataType) {
+		if (type instanceof MapType) {
+			ReferenceCS csReference = context.refreshStructuralFeature(ReferenceCS.class, BaseCSPackage.Literals.REFERENCE_CS, object);
+			List<@NonNull String> qualifiers = ClassUtil.nullFree(csReference.getQualifiers());
+			context.refreshQualifiers(qualifiers, "composes", object.isIsComposite());
+			context.refreshQualifiers(qualifiers, "resolve", "!resolve", object.isIsResolveProxies() ? null : Boolean.FALSE);
+			csElement = csReference;
+		}
+		else if (type instanceof DataType) {
 			AttributeCS csAttribute = context.refreshStructuralFeature(AttributeCS.class, BaseCSPackage.Literals.ATTRIBUTE_CS, object);
 			context.refreshQualifiers(csAttribute.getQualifiers(), "id", object.isIsID());
 			csElement = csAttribute;

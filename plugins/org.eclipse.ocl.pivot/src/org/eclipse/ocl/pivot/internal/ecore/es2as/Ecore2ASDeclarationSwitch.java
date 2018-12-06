@@ -631,7 +631,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		copyNamedElement(pivotElement, eClassifier);
 		copyAnnotatedElement(pivotElement, eClassifier, excludedAnnotations);
 		if (eClassifier.eIsSet(EcorePackage.Literals.ECLASSIFIER__INSTANCE_CLASS_NAME)) {
-			pivotElement.setInstanceClassName(eClassifier.getInstanceClassName());
+			String instanceClassName = eClassifier.getInstanceClassName();
+			//	if (java.util.Map.Entry.class.getName().equals(instanceClassName)) {
+			//		pivotElement.setResolvedClass(environmentFactory.getStandardLibrary().getMapType());
+			//	}
+			pivotElement.setInstanceClassName(instanceClassName);
 		}
 		else {
 			pivotElement.eUnset(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME);

@@ -279,6 +279,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	 * @since 1.3
 	 */
 	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
+		if (pivotType instanceof MapType) {
+			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
+			if (entryClass != null) {
+				setEType(eTypedElement, entryClass, isRequired);
+				eTypedElement.setOrdered(true);		// sic; Ecore idiom
+				eTypedElement.setUnique(true);
+				eTypedElement.setLowerBound(0);
+				eTypedElement.setUpperBound(-1);
+				return;
+			}
+		}
 		EObject eObject = (isRequired ? requiredTypeRefVisitor : typeRefVisitor).safeVisit(pivotType);
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);

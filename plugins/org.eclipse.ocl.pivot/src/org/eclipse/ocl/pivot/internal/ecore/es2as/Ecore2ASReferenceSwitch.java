@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -491,9 +492,63 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					boolean isOrdered = eObject.isOrdered();
 					boolean isUnique = eObject.isUnique();
 					if (pivotType != null) {
+						boolean isMap = false;
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						EClassifier eClassifier = eType.getERawType();
+						if ((eClassifier instanceof EClass) && (eClassifier.getInstanceClass() == java.util.Map.Entry.class)) {
+							EClass eClass = (EClass)eClassifier;
+							EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
+							EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
+							if (keyFeature == null) {
+								converter.error("Missing 'key' feature for map '" + eClass.getName() + "");
+							}
+							else if (valueFeature == null) {
+								converter.error("Missing 'value' feature for map '" + eClass.getName() + "");
+							}
+							else {
+								EGenericType keyGenericType = keyFeature.getEGenericType();
+								EGenericType valueGenericType = valueFeature.getEGenericType();
+								if (keyGenericType == null) {
+									converter.error("No 'key' EGenericType for map '" + eClass.getName() + "");
+								}
+								else if (valueGenericType == null) {
+									converter.error("No 'value' EGenericType for map '" + eClass.getName() + "");
+								}
+								else {
+									Type keyType = (Type)converter.getCreated(keyGenericType);
+									Type valueType = (Type)converter.getCreated(valueGenericType);
+									if ((keyType != null) && (valueType != null)) {
+										boolean keysAreNullFree = keyFeature.isRequired();
+										boolean valuesAreNullFree = valueFeature.isRequired();
+										org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
+										MapType mapType = metamodelManager.getCompleteEnvironment().getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+										mapType.setEntryClass((org.eclipse.ocl.pivot.Class) pivotType);
+										pivotType = mapType;
+										isMap = true;
+									}
+								}
+							}
+
+
+							/*		if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+										org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)pivotType;
+							if (java.util.Map.Entry.class.getName().equals(asClass.getInstanceClassName())) {
+								Iterable<@NonNull Property> asProperties = PivotUtil.getOwnedProperties(asClass);
+								Property asKeyProperty = NameUtil.getNameable(asProperties, "key");
+								Property asValueProperty = NameUtil.getNameable(asProperties, "value");
+								if ((asKeyProperty != null) && (asValueProperty != null)) {
+									Type asKeyType = PivotUtil.getType(asKeyProperty);
+									boolean keysAreNullFree = asKeyProperty.isIsRequired();
+									Type asValueType = PivotUtil.getType(asValueProperty);
+									boolean valuesAreNullFree = asValueProperty.isIsRequired();
+									pivotType = metamodelManager.getMapType("Map", asKeyType, keysAreNullFree, asValueType, valuesAreNullFree);
+									isMap = true;
+								} */
+						}
+						if (!isMap) {
+							pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						}
 					}
 				}
 			}
