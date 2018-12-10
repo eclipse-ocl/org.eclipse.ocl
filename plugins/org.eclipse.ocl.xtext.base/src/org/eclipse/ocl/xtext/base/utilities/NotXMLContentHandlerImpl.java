@@ -13,9 +13,12 @@ package org.eclipse.ocl.xtext.base.utilities;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.impl.ContentHandlerImpl;
+import org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -24,6 +27,27 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class NotXMLContentHandlerImpl extends ContentHandlerImpl
 {
+	/**
+	 * A describer that {@link #createContentHandler(Map) creates} a {@link RootXMLContentHandlerImpl} instance.
+	 */
+	public static class Describer extends ContentHandlerImpl.Describer
+	{
+		/**
+		 * Creates a {@link NotXMLContentHandlerImpl} instance.
+		 */
+		@Override
+		protected ContentHandler createContentHandler(Map<String, String> parameters) {
+			String rawExtensions = parameters.get(RootXMLContentHandlerImpl.EXTENSIONS);
+			return new NotXMLContentHandlerImpl(rawExtensions != null ? rawExtensions.split(" ") : new @NonNull String [0]);
+		}
+
+		@Override
+		public void setInitializationData(IConfigurationElement configurationElement, String propertyName, Object data) throws CoreException {
+			String fileExtensions = configurationElement.getAttribute("file-extensions");
+			contentHandler = new NotXMLContentHandlerImpl(fileExtensions != null ? fileExtensions.split(",") : new @NonNull String [0]);
+		}
+	}
+
 	/**
 	 * The file extensions for which this handler applies.
 	 */

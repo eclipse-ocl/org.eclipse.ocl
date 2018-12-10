@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.utilities;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ContentHandler;
@@ -46,10 +47,11 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 		return INSTANCE;
 	}
 
-	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.OCLINECORE_FILE_EXTENSION});
-
 	static {
-		installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY, PIVOT_CONTENT_HANDLER);
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY,
+				new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.OCLINECORE_FILE_EXTENSION}));
+		}
 	}
 
 	public OCLinEcoreASResourceFactory() {

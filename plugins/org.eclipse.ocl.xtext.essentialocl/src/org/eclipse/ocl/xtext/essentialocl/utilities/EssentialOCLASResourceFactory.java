@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.utilities;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,10 +40,11 @@ public class EssentialOCLASResourceFactory extends AbstractASResourceFactory
 		return INSTANCE;
 	}
 
-	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION});
-
 	static {
-		installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY, PIVOT_CONTENT_HANDLER);
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY,
+				new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION}));
+		}
 	}
 
 	public EssentialOCLASResourceFactory() {
