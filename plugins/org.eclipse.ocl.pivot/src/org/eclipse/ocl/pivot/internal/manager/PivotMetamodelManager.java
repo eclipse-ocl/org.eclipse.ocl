@@ -1532,6 +1532,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
 			return pivotProperty;
 		}
+		if (pivotProperty.isIsImplicit()) {
+			Property opposite = pivotProperty.getOpposite();
+			if ((opposite != null) && !opposite.isIsImplicit()) {
+				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
+			}
+		}
 		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary);
 		if (owningInheritance == null) {
 			return pivotProperty;
