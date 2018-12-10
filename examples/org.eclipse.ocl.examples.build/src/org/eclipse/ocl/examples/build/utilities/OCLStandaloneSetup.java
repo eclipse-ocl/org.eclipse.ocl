@@ -25,14 +25,14 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 public class OCLStandaloneSetup
 {
 	private Logger log = Logger.getLogger(getClass());
-	private ResourceSet resourceSet = null;	
+	private ResourceSet resourceSet = null;
 
 	public OCLStandaloneSetup() {
 		log.info("Registering OCL Resources");
-//		OCLstdlib.install();
-//		PivotPackage.eINSTANCE.getClass();
-//		Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("pivot", PivotResourceFactoryImpl.INSTANCE);
-		URIConverter.URI_MAP.put(URI.createURI(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI), URI.createURI("no-such-protocol://this/does/not/exist", true));
+		//		OCLstdlib.install();
+		//		PivotPackage.eINSTANCE.getClass();
+		//		Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("pivot", PivotResourceFactoryImpl.INSTANCE);
+		URIConverter.URI_MAP.put(URI.createURI(EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI), null);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class OCLStandaloneSetup
 		}
 		return resourceSet;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}
