@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.oclinecore.utilities;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,6 +22,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.RootPackageCS;
 
@@ -42,6 +44,12 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 		}
 		assert INSTANCE != null;
 		return INSTANCE;
+	}
+
+	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.OCLINECORE_FILE_EXTENSION});
+
+	static {
+		installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY, PIVOT_CONTENT_HANDLER);
 	}
 
 	public OCLinEcoreASResourceFactory() {

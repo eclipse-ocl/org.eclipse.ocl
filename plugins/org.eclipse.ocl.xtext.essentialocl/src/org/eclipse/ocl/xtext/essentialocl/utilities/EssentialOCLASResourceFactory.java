@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.utilities;
 
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl;
 
 public class EssentialOCLASResourceFactory extends AbstractASResourceFactory
 {
@@ -23,18 +25,24 @@ public class EssentialOCLASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull EssentialOCLASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.ESSENTIALOCL_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (EssentialOCLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new EssentialOCLASResourceFactory();											// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.ESSENTIALOCL_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (EssentialOCLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new EssentialOCLASResourceFactory();											// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION, null);
 		}
 		assert INSTANCE != null;
 		return INSTANCE;
+	}
+
+	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION});
+
+	static {
+		installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY, PIVOT_CONTENT_HANDLER);
 	}
 
 	public EssentialOCLASResourceFactory() {

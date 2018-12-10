@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl;
 
 public final class OCLstdlibASResourceFactory extends AbstractASResourceFactory
 {
@@ -23,18 +25,24 @@ public final class OCLstdlibASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull OCLstdlibASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.OCLSTDLIB_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (OCLstdlibASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new OCLstdlibASResourceFactory();										// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.OCLSTDLIB_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (OCLstdlibASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new OCLstdlibASResourceFactory();										// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install(PivotConstants.OCLSTDLIB_FILE_EXTENSION, null);
 		}
 		assert INSTANCE != null;
 		return INSTANCE;
+	}
+
+	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new NotXMLContentHandlerImpl(new @NonNull String[]{PivotConstants.OCLSTDLIB_FILE_EXTENSION});
+
+	static {
+		installContentHandler(ContentHandler.Registry.NORMAL_PRIORITY, PIVOT_CONTENT_HANDLER);
 	}
 
 	public OCLstdlibASResourceFactory() {
