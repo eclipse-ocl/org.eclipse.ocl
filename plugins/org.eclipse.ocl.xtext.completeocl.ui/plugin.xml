@@ -13,6 +13,7 @@
               icon="icons/OCLModelFile.gif"
               id="org.eclipse.ocl.xtext.completeocl.CompleteOCL"
               name="%MF_CompleteOCLEditor">
+           <contentTypeBinding contentTypeId="org.eclipse.ocl.xtext.CompleteOCL"/>
         </editor>
     </extension>
     <extension

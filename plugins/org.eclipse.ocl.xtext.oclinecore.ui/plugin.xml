@@ -12,6 +12,7 @@
               icon="icons/OCLModelFile.gif"
               id="org.eclipse.ocl.xtext.oclinecore.OCLinEcore"
               name="%MF_OCLinEcoreEditor">
+           <contentTypeBinding contentTypeId="org.eclipse.ocl.xtext.OCLinEcore"/>
         </editor>
     </extension>
     <extension

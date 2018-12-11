@@ -3,7 +3,7 @@
 
 <plugin>
   <extension point="org.eclipse.core.contenttype.contentTypes">
-	<content-type id="org.eclipse.ocl.examples.completeOCL" name="%completeOCLName" 
+	<content-type id="org.eclipse.ocl.xtext.CompleteOCL" name="%completeOCLName" 
 		base-type="org.eclipse.core.runtime.text"
 		file-extensions="ocl"
         default-charset="UTF-8">
