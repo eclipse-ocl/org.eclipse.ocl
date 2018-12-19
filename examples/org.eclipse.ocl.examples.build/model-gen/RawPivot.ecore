@@ -263,7 +263,11 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A DataType is a type whose instances are identified only by their value."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="behavioralClass" eType="#//Class"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="behavioralClass" eType="#//Class">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSerializable" lowerBound="1" eType="#//Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="#//String" changeable="false" volatile="true"
         transient="true" defaultValueLiteral="" derived="true">
@@ -455,6 +459,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedValue" lowerBound="1" eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//IterableType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryClass" eType="#//Class">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A type for an entry that may allow an external syntax serialization as a set-of-entryClass."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1" eType="#//Type" volatile="true" transient="true" derived="true"
         resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keysAreNullFree" lowerBound="1" eType="#//Boolean" defaultValueLiteral="true"/>

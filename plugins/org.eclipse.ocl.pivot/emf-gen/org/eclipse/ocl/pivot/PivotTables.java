@@ -22,6 +22,9 @@
 package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
@@ -2011,7 +2014,8 @@ public class PivotTables
 		public static final @NonNull ExecutorProperty _Class__CompleteClass__partialClasses = new ExecutorPropertyWithImplementation("CompleteClass", Types._Class, 12, new EcoreLibraryOppositeProperty(PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES));
 		public static final @NonNull ExecutorProperty _Class__DataType__behavioralClass = new ExecutorPropertyWithImplementation("DataType", Types._Class, 13, new EcoreLibraryOppositeProperty(PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS));
 		public static final @NonNull ExecutorProperty _Class__InstanceSpecification__classes = new ExecutorPropertyWithImplementation("InstanceSpecification", Types._Class, 14, new EcoreLibraryOppositeProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES));
-		public static final @NonNull ExecutorProperty _Class__TemplateParameter__constrainingClasses = new ExecutorPropertyWithImplementation("TemplateParameter", Types._Class, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES));
+		public static final @NonNull ExecutorProperty _Class__MapType__entryClass = new ExecutorPropertyWithImplementation("MapType", Types._Class, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS));
+		public static final @NonNull ExecutorProperty _Class__TemplateParameter__constrainingClasses = new ExecutorPropertyWithImplementation("TemplateParameter", Types._Class, 16, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES));
 
 		public static final @NonNull ExecutorProperty _CollectionItem__ownedItem = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, Types._CollectionItem, 0);
 
@@ -2165,10 +2169,11 @@ public class PivotTables
 		public static final @NonNull ExecutorProperty _MapLiteralPart__ownedValue = new EcoreExecutorProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, Types._MapLiteralPart, 1);
 		public static final @NonNull ExecutorProperty _MapLiteralPart__MapLiteralExp__ownedParts = new ExecutorPropertyWithImplementation("MapLiteralExp", Types._MapLiteralPart, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS));
 
-		public static final @NonNull ExecutorProperty _MapType__keyType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEY_TYPE, Types._MapType, 0);
-		public static final @NonNull ExecutorProperty _MapType__keysAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, Types._MapType, 1);
-		public static final @NonNull ExecutorProperty _MapType__valueType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, Types._MapType, 2);
-		public static final @NonNull ExecutorProperty _MapType__valuesAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, Types._MapType, 3);
+		public static final @NonNull ExecutorProperty _MapType__entryClass = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._MapType, 0);
+		public static final @NonNull ExecutorProperty _MapType__keyType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEY_TYPE, Types._MapType, 1);
+		public static final @NonNull ExecutorProperty _MapType__keysAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, Types._MapType, 2);
+		public static final @NonNull ExecutorProperty _MapType__valueType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, Types._MapType, 3);
+		public static final @NonNull ExecutorProperty _MapType__valuesAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, Types._MapType, 4);
 
 		public static final @NonNull ExecutorProperty _MessageExp__ownedArguments = new EcoreExecutorProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, Types._MessageExp, 0);
 		public static final @NonNull ExecutorProperty _MessageExp__ownedCalledOperation = new EcoreExecutorProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, Types._MessageExp, 1);
@@ -11732,6 +11737,7 @@ public class PivotTables
 		private static final @NonNull ExecutorProperty @NonNull [] _MapType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._DataType__behavioralClass,
+			PivotTables.Properties._MapType__entryClass,
 			PivotTables.Properties._Class__extenders,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,

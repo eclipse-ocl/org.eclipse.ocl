@@ -89,6 +89,7 @@
       <ownedProperties xmi:id=",UeqX" isImplicit="true" name="CompleteClass" opposite="#tpc+a" type="#q6ECS"/>
       <ownedProperties xmi:id="epBrF" isImplicit="true" name="DataType" opposite="#0zbos" type="#nrqci"/>
       <ownedProperties xmi:id="1kkgY" isImplicit="true" name="InstanceSpecification" opposite="#hMuKl" type="#B2y2s"/>
+      <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#JK5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#6yjmF"/>
     </ownedClasses>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
@@ -217,7 +218,9 @@
     </ownedClasses>
     <ownedClasses xmi:id="1mHCJ" name="DataType" superClasses="#pDcbe">
       <ownedComments body="A DataType is a type whose instances are identified only by their value."/>
-      <ownedProperties xmi:id="0zbos" isRequired="false" name="behavioralClass" type="#pDcbe"/>
+      <ownedProperties xmi:id="0zbos" isRequired="false" name="behavioralClass" type="#pDcbe">
+        <ownedComments body="An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior."/>
+      </ownedProperties>
       <ownedProperties xmi:id="Crwo5" defaultValueString="true" name="isSerializable" type="#ZuwnB"/>
       <ownedProperties xmi:id="qDlX6" defaultValueString="" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="value"
           type="#CPVxu">
@@ -532,6 +535,9 @@
       <ownedProperties xmi:id="aqXmL" isImplicit="true" isRequired="false" name="MapLiteralExp" opposite="#C1zzW" type="#bTDI1"/>
     </ownedClasses>
     <ownedClasses xmi:id="nozov" name="MapType" superClasses="#9ppvF">
+      <ownedProperties xmi:id="J5GM0" isRequired="false" name="entryClass" type="#pDcbe">
+        <ownedComments body="A type for an entry that may allow an external syntax serialization as a set-of-entryClass."/>
+      </ownedProperties>
       <ownedProperties xmi:id="cBKS6" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="keyType" type="#rrwsa"/>
       <ownedProperties xmi:id="W6bzu" defaultValueString="true" name="keysAreNullFree" type="#ZuwnB"/>
       <ownedProperties xmi:id="up7P9" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="valueType"

@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getEntryClass <em>Entry Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getKeyType <em>Key Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#isKeysAreNullFree <em>Keys Are Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getValueType <em>Value Type</em>}</li>
@@ -54,6 +56,15 @@ import org.eclipse.ocl.pivot.util.Visitor;
  */
 public class MapTypeImpl extends IterableTypeImpl implements MapType
 {
+	/**
+	 * The cached value of the '{@link #getEntryClass() <em>Entry Class</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEntryClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected org.eclipse.ocl.pivot.Class entryClass;
 	/**
 	 * The default value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -124,6 +135,51 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	 * @generated
 	 */
 	@Override
+	public org.eclipse.ocl.pivot.Class getEntryClass()
+	{
+		if (entryClass != null && entryClass.eIsProxy())
+		{
+			InternalEObject oldEntryClass = (InternalEObject)entryClass;
+			entryClass = (org.eclipse.ocl.pivot.Class)eResolveProxy(oldEntryClass);
+			if (entryClass != oldEntryClass)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.MAP_TYPE__ENTRY_CLASS, oldEntryClass, entryClass));
+			}
+		}
+		return entryClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public org.eclipse.ocl.pivot.Class basicGetEntryClass()
+	{
+		return entryClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setEntryClass(org.eclipse.ocl.pivot.Class newEntryClass)
+	{
+		org.eclipse.ocl.pivot.Class oldEntryClass = entryClass;
+		entryClass = newEntryClass;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__ENTRY_CLASS, oldEntryClass, entryClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID)
@@ -175,6 +231,9 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				return isIsSerializable();
 			case PivotPackage.MAP_TYPE__VALUE:
 				return getValue();
+			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+				if (resolve) return getEntryClass();
+				return basicGetEntryClass();
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				return getKeyType();
 			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
@@ -276,6 +335,9 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
 				setIsSerializable((Boolean)newValue);
 				return;
+			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
+				return;
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				setKeyType((Type)newValue);
 				return;
@@ -368,6 +430,9 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
+			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+				setEntryClass((org.eclipse.ocl.pivot.Class)null);
+				return;
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				setKeyType((Type)null);
 				return;
@@ -440,6 +505,8 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case PivotPackage.MAP_TYPE__VALUE:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
+			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+				return entryClass != null;
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				return getKeyType() != null;
 			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:

@@ -2023,6 +2023,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Class_CompleteClass_partialClasses = createProperty("CompleteClass", _Bag_CompleteClass);
 		private final @NonNull Property pr_Class_DataType_behavioralClass = createProperty("DataType", _Bag_DataType);
 		private final @NonNull Property pr_Class_InstanceSpecification_classes = createProperty("InstanceSpecification", _Bag_InstanceSpecification);
+		private final @NonNull Property pr_Class_MapType_entryClass = createProperty("MapType", _Bag_MapType);
 		private final @NonNull Property pr_Class_TemplateParameter_constrainingClasses = createProperty("TemplateParameter", _Bag_TemplateParameter);
 		private final @NonNull Property pr_CollectionItem_ownedItem = createProperty(PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, _OCLExpression);
 		private final @NonNull Property pr_CollectionLiteralExp_kind = createProperty(PivotPackage.Literals.COLLECTION_LITERAL_EXP__KIND, _CollectionKind);
@@ -2138,6 +2139,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_MapLiteralPart_ownedKey = createProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY, _OCLExpression);
 		private final @NonNull Property pr_MapLiteralPart_ownedValue = createProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, _OCLExpression);
 		private final @NonNull Property pr_MapLiteralPart_MapLiteralExp_ownedParts = createProperty("MapLiteralExp", _MapLiteralExp);
+		private final @NonNull Property pr_MapType_entryClass = createProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, _Class);
 		private final @NonNull Property pr_MapType_keyType = createProperty(PivotPackage.Literals.MAP_TYPE__KEY_TYPE, _Type);
 		private final @NonNull Property pr_MapType_keysAreNullFree = createProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, _Boolean);
 		private final @NonNull Property pr_MapType_valueType = createProperty(PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, _Type);
@@ -2518,6 +2520,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_InstanceSpecification_classes);
+			ownedProperties.add(property = pr_Class_MapType_entryClass);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_MapType_entryClass);
 			ownedProperties.add(property = pr_Class_TemplateParameter_constrainingClasses);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -3032,6 +3038,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_MapLiteralExp_ownedParts);
 
 			ownedProperties = _MapType.getOwnedProperties();
+			ownedProperties.add(property = pr_MapType_entryClass);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Class_MapType_entryClass);
 			ownedProperties.add(property = pr_MapType_keyType);
 			property.setIsDerived(true);
 			property.setIsTransient(true);
@@ -4326,6 +4336,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Constraint_constrainedElements, "The ordered set of Elements referenced by this Constraint.");
 			installComment(pr_Constraint_ownedSpecification, "A condition that must be true when evaluated in order for the Constraint to be satisfied.");
 			installComment(_DataType, "A DataType is a type whose instances are identified only by their value.");
+			installComment(pr_DataType_behavioralClass, "An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior.");
 			installComment(pr_DataType_value, "The value pseudo-property accesses a String-valued representation of the DataType.");
 			installComment(_Element, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
 			installComment(op_Element_allOwnedElements, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
@@ -4342,6 +4353,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_InstanceSpecification_classes, "The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.");
 			installComment(pr_InstanceSpecification_ownedSlots, "A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.");
 			installComment(pr_InstanceSpecification_ownedSpecification, "A specification of how to compute, derive, or construct the instance.");
+			installComment(pr_MapType_entryClass, "A type for an entry that may allow an external syntax serialization as a set-of-entryClass.");
 			installComment(_Model, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
 			installComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
 			installComment(pr_NamedElement_name, "The name of the NamedElement.");

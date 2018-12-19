@@ -20,6 +20,7 @@ package org.eclipse.ocl.pivot;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.MapType#getEntryClass <em>Entry Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.MapType#getKeyType <em>Key Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.MapType#isKeysAreNullFree <em>Keys Are Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.MapType#getValueType <em>Value Type</em>}</li>
@@ -31,6 +32,30 @@ package org.eclipse.ocl.pivot;
  */
 public interface MapType extends IterableType
 {
+	/**
+	 * Returns the value of the '<em><b>Entry Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A type for an entry that may allow an external syntax serialization as a set-of-entryClass.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Entry Class</em>' reference.
+	 * @see #setEntryClass(org.eclipse.ocl.pivot.Class)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getMapType_EntryClass()
+	 * @generated
+	 */
+	org.eclipse.ocl.pivot.Class getEntryClass();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.MapType#getEntryClass <em>Entry Class</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Entry Class</em>' reference.
+	 * @see #getEntryClass()
+	 * @generated
+	 */
+	void setEntryClass(org.eclipse.ocl.pivot.Class value);
+
 	/**
 	 * Returns the value of the '<em><b>Key Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
