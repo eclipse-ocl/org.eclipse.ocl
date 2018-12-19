@@ -97,6 +97,9 @@
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N837VEeOu79LxSz8Ylw" value="true"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-DataType-behavioralType" name="behavioralClass" type="MDTOCL-MDT_OCL_Ecore-Class">
+          <ownedComment xmi:id="__XQDwAOVEemKbJ6JZqpkDw">
+            <body>An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior.</body>
+          </ownedComment>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9H7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
@@ -111,6 +114,14 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Ecore-Integer" name="Integer"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-MapType" name="MapType">
+        <ownedAttribute xmi:id="_dfFYMPoNEeiv04rhMgbfqQ" name="entryClass" type="MDTOCL-MDT_OCL_Ecore-Class">
+          <ownedComment xmi:id="_i8JMkAK6EemhT48WaacTyA">
+            <body>A type for an entry that may allow an external syntax serialization as a set-of-entryClass.</body>
+          </ownedComment>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_g-SqAPoNEeiv04rhMgbfqQ"/>
+        </ownedAttribute>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-Property" name="Property">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-isID" name="isID" type="MDTOCL-MDT_OCL_Ecore-Boolean">
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N937VEeOu79LxSz8Ylw"/>
