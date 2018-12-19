@@ -59,6 +59,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	/**
 	 * The cached value of the '{@link #getEntryClass() <em>Entry Class</em>}' reference.
 	 * <!-- begin-user-doc -->
+	 * @since 1.7
 	 * <!-- end-user-doc -->
 	 * @see #getEntryClass()
 	 * @generated
@@ -152,6 +153,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.7
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

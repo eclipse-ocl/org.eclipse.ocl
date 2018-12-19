@@ -35,6 +35,7 @@ public interface MapType extends IterableType
 	/**
 	 * Returns the value of the '<em><b>Entry Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
+	 * @since 1.7
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * A type for an entry that may allow an external syntax serialization as a set-of-entryClass.
@@ -49,6 +50,7 @@ public interface MapType extends IterableType
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.MapType#getEntryClass <em>Entry Class</em>}' reference.
 	 * <!-- begin-user-doc -->
+	 * @since 1.7
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Entry Class</em>' reference.
 	 * @see #getEntryClass()

@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.executor;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -75,6 +76,11 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
+	public Class getEntryClass() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull Type getKeyType() {
 		return keyType;
 	}
@@ -125,6 +131,11 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 
 	@Override
 	public boolean isValuesAreNullFree() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setEntryClass(Class value) {
 		throw new UnsupportedOperationException();
 	}
 
