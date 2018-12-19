@@ -413,8 +413,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 			org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
 			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-			Type referenceType = referenceClass != null ? PivotUtilInternal.getType(referenceClass) : null;
-			Type candidateType = candidateClass != null ? PivotUtilInternal.getType(candidateClass) : null;
+			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
+			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
 			Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
 			Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
 			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
@@ -442,8 +442,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				candidateConformsToReference = false;
 			}
 			else {
-				Type referenceType = ClassUtil.nonNullState(PivotUtilInternal.getBehavioralType(referenceParameter));
-				Type candidateType = ClassUtil.nonNullState(PivotUtilInternal.getBehavioralType(candidateParameter));
+				Type referenceType = ClassUtil.nonNullState(PivotUtil.getBehavioralType(referenceParameter));
+				Type candidateType = ClassUtil.nonNullState(PivotUtil.getBehavioralType(candidateParameter));
 				Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
 				Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
 				if (referenceType != candidateType) {

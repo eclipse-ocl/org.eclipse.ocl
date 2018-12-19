@@ -81,6 +81,7 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -498,9 +499,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		Object result = null;
 		try {
 			IterationManager iterationManager;
-			OCLExpression body = iteratorExp.getOwnedBody();
-			Type iterationType = PivotUtilInternal.getType(ClassUtil.nonNullModel(iteratorExp.getType()));
-			Type bodyType = PivotUtilInternal.getType(ClassUtil.nonNullModel(body.getType()));
+			OCLExpression body = PivotUtil.getOwnedBody(iteratorExp);
+			Type iterationType = PivotUtil.getBehavioralType(PivotUtil.getType(iteratorExp));
+			Type bodyType = PivotUtil.getBehavioralType(PivotUtil.getType(body));
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iteratorExp);
 			int iSize = iterators.size();

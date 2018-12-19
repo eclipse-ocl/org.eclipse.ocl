@@ -635,9 +635,10 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated /* @deprecated not used -doesn't set behavioral type */
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtilInternal.getBehavioralType(sourceElement);
+			Type type = PivotUtil.getBehavioralType(sourceElement);
 			if ((type != null) && type.eIsProxy()) {
 				type = null;
 			}

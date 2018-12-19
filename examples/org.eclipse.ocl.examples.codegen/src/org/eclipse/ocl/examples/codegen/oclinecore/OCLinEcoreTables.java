@@ -65,8 +65,8 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
@@ -602,7 +602,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					if (i > 0) {
 						s.append(", ");
 					}
-					Type type = PivotUtilInternal.getType(types.get(i));
+					Type type = PivotUtil.getBehavioralReturnType(types.get(i));
 					type.accept(declareParameterTypeVisitor);
 				}
 				s.append(");\n");

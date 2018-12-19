@@ -758,9 +758,9 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				if (!sharedURI.equals(nsURI)) {
 					((PackageImpl)pivotElement).setPackageId(IdManager.getRootPackageId(sharedURI));
 				}
-//				else {
-//					((PackageImpl)pivotElement).setPackageId(IdManager.getNsURIPackageId(sharedURI, pivotElement.getNsPrefix(), null));
-//				}
+				//				else {
+				//					((PackageImpl)pivotElement).setPackageId(IdManager.getNsURIPackageId(sharedURI, pivotElement.getNsPrefix(), null));
+				//				}
 			}
 		}
 		pivotElement.setURI(nsURI != null ? nsURI.toString() : null);

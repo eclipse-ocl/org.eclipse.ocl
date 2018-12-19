@@ -871,6 +871,35 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getBehavioralReturnType(@NonNull Type type) {
+		return getBehavioralType(getReturnType(type));
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getBehavioralType(@NonNull Type type) {
+		if (type instanceof DataType) {
+			DataType asDataType = (DataType)type;
+			Type resolvedClass = asDataType.getBehavioralClass();
+			if (resolvedClass != null) {
+				return resolvedClass;
+			}
+		}
+		return type;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
+		Type type = PivotUtilInternal.getType(element);
+		return type != null ? getBehavioralType(type) : null;
+	}
+
+	/**
 	 * Return the type of a TypedElement, exploiting the known non-null and non-TypeParameter characteristics.
 	 * @throws IllegalStateException for a null type
 	 * @throws ClassCastException for a TypeParameter
@@ -1557,6 +1586,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eResource());
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getReturnType(@NonNull Type type) {
+		return PivotUtilInternal.getNonLambdaType(type);
 	}
 
 	/**

@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.validation.ValidationWarning;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -140,7 +141,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				boolean isOk = false;
 				if (bodyType != null) {
 					PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-					specializedBodyType = specializedBodyType != null ? PivotUtilInternal.getBehavioralType(specializedBodyType) : null;
+					specializedBodyType = specializedBodyType != null ? PivotUtil.getBehavioralType(specializedBodyType) : null;
 					if ((specializedBodyType != null) && metamodelManager.conformsTo(specializedBodyType, TemplateParameterSubstitutions.EMPTY, oclComparableType, TemplateParameterSubstitutions.EMPTY)) {
 						isOk = true;
 					}

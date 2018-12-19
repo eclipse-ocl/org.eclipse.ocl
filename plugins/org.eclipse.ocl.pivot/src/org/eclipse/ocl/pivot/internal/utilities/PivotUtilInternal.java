@@ -34,7 +34,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -80,6 +79,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class PivotUtilInternal //extends PivotUtil
@@ -231,20 +231,15 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 	}
 
-	public static @NonNull Type getBehavioralType(@NonNull Type type) {		// FIXME fold this into normal code
-		if (type instanceof DataType) {
-			DataType dataType = (DataType)type;
-			Type behavioralType = dataType.getBehavioralClass();
-			if (behavioralType != null) {
-				return behavioralType;
-			}
-		}
-		return type;
+	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */
+	public static @NonNull Type getBehavioralType(@NonNull Type type) {
+		return PivotUtil.getBehavioralType(type);
 	}
 
+	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */
 	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
 		Type type = getType(element);
-		return type != null ? getBehavioralType(type) : null;
+		return type != null ? PivotUtil.getBehavioralType(type) : null;
 	}
 
 	/**
@@ -657,10 +652,13 @@ public class PivotUtilInternal //extends PivotUtil
 		return type;
 	}
 
+	@Deprecated /* @deprecated not used, use getReturnType or getBehavioralType or getBehavioralReturnType */
 	public static @NonNull Type getType(@NonNull Type type) {
-		type = getNonLambdaType(type);
-		type = getBehavioralType(type);
-		return type;
+		assert !(type instanceof LambdaType);
+		Type type1 = getNonLambdaType(type);
+		assert type1 == type;
+		Type type2 = PivotUtil.getBehavioralType(type1);
+		return type2;
 	}
 
 	public static boolean isASURI(@Nullable String uri) {

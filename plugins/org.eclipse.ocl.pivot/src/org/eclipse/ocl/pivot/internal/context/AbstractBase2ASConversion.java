@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -87,7 +86,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	@Deprecated
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtilInternal.getBehavioralType(sourceElement);
+			Type type = PivotUtil.getBehavioralType(sourceElement);
 			if ((type != null) && type.eIsProxy()) {
 				type = null;
 			}

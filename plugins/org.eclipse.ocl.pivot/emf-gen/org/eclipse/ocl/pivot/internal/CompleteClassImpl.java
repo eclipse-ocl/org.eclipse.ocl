@@ -420,6 +420,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					return behavioralClass;
 				}
 			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
 			return partialClass;
 		}
 		throw new IllegalStateException();

@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.attributes.ImportCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -182,7 +181,7 @@ public class EssentialOCLScoping
 					sourceType = source.getType();
 				}
 				if (sourceType != null) {
-					sourceType = PivotUtilInternal.getType(sourceType);
+					sourceType = PivotUtil.getBehavioralType(sourceType);
 					OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
 					if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
 						typeText = "Set(" + sourceType.toString() + ")";
