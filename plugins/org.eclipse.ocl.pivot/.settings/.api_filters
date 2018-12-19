@@ -1,96 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/MapType.java" type="org.eclipse.ocl.pivot.MapType">
-        <filter id="403804204">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
-                <message_argument value="getEntryClass()"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
-                <message_argument value="setEntryClass(Class)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE_FEATURE_COUNT"/>
-                <message_argument value="27"/>
-            </message_arguments>
-        </filter>
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__KEYS_ARE_NULL_FREE"/>
-                <message_argument value="24"/>
-            </message_arguments>
-        </filter>
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__KEY_TYPE"/>
-                <message_argument value="23"/>
-            </message_arguments>
-        </filter>
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__VALUES_ARE_NULL_FREE"/>
-                <message_argument value="26"/>
-            </message_arguments>
-        </filter>
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__VALUE_TYPE"/>
-                <message_argument value="25"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="getMapType_EntryClass()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getMapType_EntryClass()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
-                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/MapTypeImpl.java" type="org.eclipse.ocl.pivot.internal.MapTypeImpl">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.MapTypeImpl"/>
-                <message_argument value="entryClass"/>
+                <message_argument value="1.7.0"/>
+                <message_argument value="1.6.0"/>
             </message_arguments>
         </filter>
     </resource>
