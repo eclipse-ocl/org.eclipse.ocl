@@ -86,7 +86,7 @@ public class ValidateTests extends AbstractValidateTests
 			Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
-		return assertDiagnostics(prefix, diagnostics, messages);
+		return assertDiagnostics(prefix, resource, diagnostics, messages);
 	}
 
 	public Resource doLoadEcore(@NonNull OCL ocl, @NonNull URI ecoreURI) throws IOException {

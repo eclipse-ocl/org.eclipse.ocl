@@ -63,7 +63,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 			Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
-		return assertDiagnostics(prefix, diagnostics, messages);
+		return assertDiagnostics(prefix, resource, diagnostics, messages);
 	}
 
 	public static void checkValidationDiagnostics(@NonNull EObject testInstance, int severity, @NonNull String... expectedMessage) {

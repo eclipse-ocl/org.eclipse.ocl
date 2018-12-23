@@ -202,7 +202,12 @@ public class PivotTestCase extends TestCase
 		return ecoreResource;
 	}
 
+	@Deprecated /* @deprecated provide resource argument */
 	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
+		return assertDiagnostics(prefix, null, diagnostics, messages);
+	}
+
+	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @Nullable Resource resource, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
 		Map<String, Integer> expected = new HashMap<String, Integer>();
 		for (@NonNull String message : messages) {
 			Integer count = expected.get(message);
@@ -217,6 +222,11 @@ public class PivotTestCase extends TestCase
 				if (s1 == null) {
 					s1 = new StringBuilder();
 					s1.append("\nUnexpected errors");
+					if (resource != null) {
+						s1.append(" in '");
+						s1.append(resource.getURI());
+						s1.append("'");
+					}
 				}
 				s1.append("\n");
 				s1.append(actual);
@@ -233,6 +243,11 @@ public class PivotTestCase extends TestCase
 				if (s2 == null) {
 					s2 = new StringBuilder();
 					s2.append("\nMissing errors");
+					if (resource != null) {
+						s2.append(" in '");
+						s2.append(resource.getURI());
+						s2.append("'");
+					}
 				}
 				s2.append("\n");
 				s2.append(key);
@@ -408,7 +423,7 @@ public class PivotTestCase extends TestCase
 			Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
-		return messages != null ? assertDiagnostics(prefix, diagnostics, messages) : Collections.emptyList();
+		return messages != null ? assertDiagnostics(prefix, resource, diagnostics, messages) : Collections.emptyList();
 	}
 
 	public static @Nullable StandaloneProjectMap basicGetProjectMap() {

@@ -238,7 +238,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlClass1, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
-		assertDiagnostics("Loading", diagnostics,
+		assertDiagnostics("Loading", umlResource, diagnostics,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 		//
 		//		disposeResourceSet(resourceSet);
@@ -492,7 +492,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlModel, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
-		assertDiagnostics("Loading", diagnostics); //,
+		assertDiagnostics("Loading", umlResource, diagnostics); //,
 		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlModel)));
 
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
