@@ -47,14 +47,12 @@ import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
-import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.PackageOwnerCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
-import org.eclipse.ocl.xtext.basecs.StructuralFeatureCS;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
@@ -63,6 +61,7 @@ import org.eclipse.ocl.xtext.basecs.TuplePartCS;
 import org.eclipse.ocl.xtext.basecs.TupleTypeCS;
 import org.eclipse.ocl.xtext.basecs.TypeParameterCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
+import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
@@ -161,23 +160,10 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class ParameterContinuation extends SingleContinuation<ParameterCS>
+	protected static class ParameterContinuation extends TypedElementContinuation
 	{
 		public ParameterContinuation(@NonNull CS2ASConversion context, @NonNull ParameterCS csElement) {
-			super(context, null, null, csElement);
-		}
-
-		@Override
-		public boolean canExecute() {
-			if (!super.canExecute()) {
-				return false;
-			}
-			TypedRefCS ownedType = csElement.getOwnedType();
-			Element pivot = ownedType != null ? ownedType.getPivot() : null;
-			if (pivot == null) {
-				return false;
-			}
-			return true;
+			super(context, csElement);
 		}
 
 		@Override
@@ -415,6 +401,38 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
+	protected static class TypedElementContinuation extends SingleContinuation<TypedElementCS>
+	{
+		public TypedElementContinuation(@NonNull CS2ASConversion context, @NonNull TypedElementCS csElement) {
+			super(context, null, null, csElement);
+		}
+
+		@Override
+		public boolean canExecute() {
+			if (!super.canExecute()) {
+				return false;
+			}
+			TypedRefCS ownedType = csElement.getOwnedType();
+			if (ownedType == null) {		// No type may be bad CS but we can compute the null anyway
+				return true;
+			}
+			Element pivot = ownedType.getPivot();
+			if (pivot == null) {
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		public BasicContinuation<?> execute() {
+			TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csElement);
+			if (pivotElement != null) {
+				context.refreshRequiredType(pivotElement, csElement);
+			}
+			return null;
+		}
+	}
+
 	protected static abstract class TypedRefContinuation<T extends TypedRefCS> extends SingleContinuation<T>
 	{
 		public TypedRefContinuation(@NonNull CS2ASConversion context, @NonNull T csElement, Dependency... dependencies) {
@@ -522,11 +540,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	}
 
 	@Override
-	public Continuation<?> visitOperationCS(@NonNull OperationCS csOperation) {
-		return null;
-	}
-
-	@Override
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
 		return null;
 	}
@@ -576,11 +589,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	}
 
 	@Override
-	public Continuation<?> visitStructuralFeatureCS(@NonNull StructuralFeatureCS csStructuralFeature) {
-		return null;
-	}
-
-	@Override
 	public Continuation<?> visitTemplateBindingCS(@NonNull TemplateBindingCS csTemplateBinding) {
 		return null;
 	}
@@ -608,6 +616,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			pivotElement.getConstrainingClasses().clear();
 			return null;
 		}
+	}
+
+	@Override
+	public BasicContinuation<?> visitTypedElementCS(@NonNull TypedElementCS csTypedElement) {
+		TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csTypedElement);
+		if (pivotElement != null) {
+			return new TypedElementContinuation(context, csTypedElement);
+		}
+		return null;
 	}
 
 	@Override

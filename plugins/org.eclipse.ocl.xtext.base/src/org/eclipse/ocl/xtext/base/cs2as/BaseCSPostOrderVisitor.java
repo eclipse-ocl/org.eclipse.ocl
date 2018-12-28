@@ -343,7 +343,6 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csTypedElement);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csTypedElement, pivotElement);
-			context.refreshRequiredType(pivotElement, csTypedElement);
 		}
 		return null;
 	}

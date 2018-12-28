@@ -41,7 +41,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 				pivotCoercion.setImplementationClass(implementation.getName());
 			}
 		}
-		return null;
+		return super.visitLibCoercionCS(csCoercion);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 				pivotIteration.setImplementationClass(implementation.getName());
 			}
 		}
-		return null;
+		return super.visitLibIterationCS(csIteration);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 				pivotElement.setImplementationClass(implementation.getName());
 			}
 		}
-		return null;
+		return super.visitLibOperationCS(csOperation);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 				pivotElement.setImplementationClass(implementation.getName());
 			}
 		}
-		return null;
+		return super.visitLibPropertyCS(csProperty);
 	}
 
 	@Override
