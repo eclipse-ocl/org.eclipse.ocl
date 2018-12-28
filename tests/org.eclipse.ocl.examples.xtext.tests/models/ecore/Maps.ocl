@@ -1,0 +1,8 @@
+import 'Maps.ecore'
+
+package maps
+
+context Mapped::keys : Set(String)
+init: let theMap : Map(String,Integer) = string2integer/*.oclAsType(Map(String,Integer))*/ in theMap->keys()
+
+endpackage

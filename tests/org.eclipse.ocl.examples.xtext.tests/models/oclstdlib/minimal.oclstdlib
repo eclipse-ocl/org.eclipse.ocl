@@ -6,6 +6,7 @@ library lib : lib = 'http://minimal.oclstdlib'
 	type Collection(T) : CollectionType conformsTo OclAny {}
 	type Enumeration conformsTo OclAny {}
 	type Integer : PrimitiveType conformsTo Real {}
+	type Map(K,V) : MapType conformsTo OclAny {}
 	type Metaclass(T) : Metaclass conformsTo OclAny {}
 	type OclAny : AnyType {
 		operation "="(object2 : OclAny) : Boolean;
@@ -14,10 +15,12 @@ library lib : lib = 'http://minimal.oclstdlib'
 		operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';	
 	}
 	type OclElement conformsTo OclAny {}	
+	abstract type OclEnumeration conformsTo OclType {}
 	type OclInvalid : InvalidType conformsTo OclVoid {}
 	type OclLambda conformsTo OclAny {}	
 	type OclSelf : SelfType conformsTo OclAny {}
 	type OclTuple conformsTo OclAny {}	
+	abstract type OclType conformsTo OclElement {}
 	type OclVoid : VoidType conformsTo OclAny {}
 	type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}
 	type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}

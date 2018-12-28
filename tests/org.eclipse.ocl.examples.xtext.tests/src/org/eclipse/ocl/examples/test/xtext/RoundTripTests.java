@@ -669,6 +669,14 @@ public class RoundTripTests extends XtextTestCase
 	//		ocl.dispose();
 	//	}
 
+	public void testCompleteOCLRoundTrip_Maps() throws IOException, InterruptedException {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		getTestFileURI("Maps.ecore", ocl, getTestModelURI("models/ecore/Maps.ecore"));
+		URI inputURI = getTestFileURI("Maps.ocl", ocl, getTestModelURI("models/ecore/Maps.ocl"));
+		doRoundTripFromCompleteOCL(ocl, inputURI);
+		ocl.dispose();
+	}
+
 	public void testCompleteOCLRoundTrip_Names() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));

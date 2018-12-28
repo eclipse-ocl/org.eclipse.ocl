@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -818,6 +819,38 @@ public class Ecore2AS extends AbstractExternal2AS
 		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
+	private Type resolveMapType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EClass eClass) {
+		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
+		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
+		if (keyFeature == null) {
+			error("Missing 'key' feature for map '" + eClass.getName() + "");
+		}
+		else if (valueFeature == null) {
+			error("Missing 'value' feature for map '" + eClass.getName() + "");
+		}
+		else {
+			EGenericType keyGenericType = keyFeature.getEGenericType();
+			EGenericType valueGenericType = valueFeature.getEGenericType();
+			if (keyGenericType == null) {
+				error("No 'key' EGenericType for map '" + eClass.getName() + "");
+			}
+			else if (valueGenericType == null) {
+				error("No 'value' EGenericType for map '" + eClass.getName() + "");
+			}
+			else {
+				Type keyType = resolveType(resolvedSpecializations, keyGenericType);
+				Type valueType = resolveType(resolvedSpecializations, valueGenericType);
+				if ((keyType != null) && (valueType != null)) {
+					boolean keysAreNullFree = keyFeature.isRequired();
+					boolean valuesAreNullFree = valueFeature.isRequired();
+					org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
+					return completeEnvironment.getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+				}
+			}
+		}
+		return null;
+	}
+
 	protected Type resolveSimpleType(@NonNull EClassifier eClassifier) {
 		return getASType(eClassifier);
 	}
@@ -847,6 +880,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		else if (eClassifier instanceof EDataType) {
 			assert eGenericType.getETypeArguments().isEmpty();
 			pivotType = resolveDataType((EDataType) eClassifier);
+		}
+		else if (eClassifier.getInstanceClass() == Map.Entry.class){
+			assert eGenericType.getETypeArguments().isEmpty();
+			pivotType = resolveMapType(resolvedSpecializations, (EClass)eClassifier);
 		}
 		else {
 			assert eGenericType.getETypeArguments().isEmpty();
