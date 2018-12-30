@@ -546,7 +546,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			int upper;
 			if (isEMap) {
 				isNullFree = true;
-				lower = 0;
+				lower = object.isIsRequired() ? 1 : 0;
 				upper = -1;
 				List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
 				//	refreshQualifiers(qualifiers, "composes", object.isIsComposite());

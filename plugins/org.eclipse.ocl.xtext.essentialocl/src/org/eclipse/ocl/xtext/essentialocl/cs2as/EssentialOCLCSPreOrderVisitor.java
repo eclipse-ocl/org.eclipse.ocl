@@ -141,14 +141,6 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if ((csKeyType != null) && (csValueType != null)) {
 				Boolean keysAreNullFree = context.isRequired(csKeyType);
 				Boolean valuesAreNullFree = context.isRequired(csValueType);
-				//	MultiplicityCS csKeyMultiplicity = csKeyType.getOwnedMultiplicity();
-				//	if (csKeyMultiplicity != null) {
-				//		keysAreNullFree = csKeyMultiplicity.getLower() > 0;
-				//	}
-				//	MultiplicityCS csValueMultiplicity = csValueType.getOwnedMultiplicity();
-				//	if (csValueMultiplicity != null) {
-				//		valuesAreNullFree = csValueMultiplicity.getLower() > 0;
-				//	}
 				Type keyType = PivotUtil.getPivot(Type.class, csKeyType);
 				Type valueType = PivotUtil.getPivot(Type.class, csValueType);
 				if ((keyType != null) && (valueType != null)) {
@@ -158,7 +150,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if (type == null) {
 				type = metamodelManager.getStandardLibrary().getLibraryType(name);
 			}
-			csElement.setPivot(type);
+			context.installPivotTypeWithMultiplicity(type, csElement);
 			return null;
 		}
 	}

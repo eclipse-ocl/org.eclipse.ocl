@@ -28,6 +28,12 @@ public interface PivotConstants
 	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
 
 	/**
+	 * The annotated class is an implicit entry class for Ecore serialization of an OCL Map as an EMap.
+	 * @since 1.7
+	 */
+	static final @NonNull String ENTRY_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryClass";
+
+	/**
 	 * The Package name of the shared metamodel.
 	 */
 	static final @NonNull String METAMODEL_NAME = "$metamodel$";

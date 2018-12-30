@@ -203,7 +203,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * Set of all converters used during session.
 	 */
-	private Set<@NonNull Ecore2AS> allConverters = new HashSet<@NonNull Ecore2AS>();
+	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
 
 	/**
 	 * List of all generic types.
@@ -301,7 +301,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	@Override
 	public void error(@Nullable String message) {
 		if (errors == null) {
-			errors = new ArrayList<Resource.@NonNull Diagnostic>();
+			errors = new ArrayList<>();
 		}
 		errors.add(new XMIException(message));
 	}
@@ -432,7 +432,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @NonNull Map<EClassifier, Type> getEcore2ASMap() {
 		HashMap</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap2 = ecore2asMap;
 		if (ecore2asMap2 == null) {
-			ecore2asMap2 = ecore2asMap = new HashMap<@NonNull EClassifier, @NonNull Type>();
+			ecore2asMap2 = ecore2asMap = new HashMap<>();
 			initializeEcore2ASMap();
 		}
 		return ecore2asMap2;
@@ -455,7 +455,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @NonNull Model importObjects(@NonNull Collection<EObject> ecoreContents, @NonNull URI pivotURI) {
 		EPackage libraryEPackage = isLibrary(ecoreContents);
 		if (libraryEPackage != null) {
-			newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
+			newCreateMap = new HashMap<>();
 			org.eclipse.ocl.pivot.Package asLibrary = standardLibrary.getPackage();
 			newCreateMap.put(libraryEPackage, asLibrary);
 			List<org.eclipse.ocl.pivot.Class> ownedType = asLibrary.getOwnedClasses();
@@ -514,7 +514,7 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	private @Nullable Map<@NonNull EObject, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
 		if (asResource instanceof OCLmetamodel) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
+			Map<@NonNull EObject, @NonNull Element> newCreateMap = new HashMap<>();
 			for (TreeIterator<EObject> tit = pivotModel.eAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				if (eObject instanceof Element) {
@@ -646,7 +646,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void loadImports(@NonNull EPackage ePackage, @Nullable URI baseURI) {
 		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
 			if (asMetamodels == null) {
-				asMetamodels = new HashSet<EPackage>();
+				asMetamodels = new HashSet<>();
 			}
 			asMetamodels.add(ePackage);
 		}
@@ -673,7 +673,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 				if (importedEObject != null) {
 					if (importedEObjects == null) {
-						importedEObjects = new HashSet<EObject>();
+						importedEObjects = new HashSet<>();
 					}
 					if (importedEObjects.add(importedEObject) && (importedEObject instanceof EPackage)) {
 						Resource importedResource = importedEObject.eResource();
@@ -807,7 +807,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (unspecializedPivotType == null) {
 			return null;
 		}
-		List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>();
+		List<@NonNull Type> templateArguments = new ArrayList<>();
 		for (EGenericType eTypeArgument : eTypeArguments) {
 			if (eTypeArgument != null) {
 				Type typeArgument = resolveType(resolvedSpecializations, eTypeArgument);
@@ -820,39 +820,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert unspecializedPivotClass != null;			// FIXME
 		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
-
-	/*
-	protected MapType resolveMapType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EClass eClass) {
-		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
-		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
-		if (keyFeature == null) {
-			error("Missing 'key' feature for map '" + eClass.getName() + "");
-		}
-		else if (valueFeature == null) {
-			error("Missing 'value' feature for map '" + eClass.getName() + "");
-		}
-		else {
-			EGenericType keyGenericType = keyFeature.getEGenericType();
-			EGenericType valueGenericType = valueFeature.getEGenericType();
-			if (keyGenericType == null) {
-				error("No 'key' EGenericType for map '" + eClass.getName() + "");
-			}
-			else if (valueGenericType == null) {
-				error("No 'value' EGenericType for map '" + eClass.getName() + "");
-			}
-			else {
-				Type keyType = resolveType(resolvedSpecializations, keyGenericType);
-				Type valueType = resolveType(resolvedSpecializations, valueGenericType);
-				if ((keyType != null) && (valueType != null)) {
-					boolean keysAreNullFree = keyFeature.isRequired();
-					boolean valuesAreNullFree = valueFeature.isRequired();
-					org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
-					return completeEnvironment.getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
-				}
-			}
-		}
-		return null;
-	} */
 
 	protected Type resolveSimpleType(@NonNull EClassifier eClassifier) {
 		return getASType(eClassifier);
@@ -884,19 +851,6 @@ public class Ecore2AS extends AbstractExternal2AS
 			assert eGenericType.getETypeArguments().isEmpty();
 			pivotType = resolveDataType((EDataType) eClassifier);
 		}
-		/*	else if (eClassifier.getInstanceClass() == Map.Entry.class){
-			assert eGenericType.getETypeArguments().isEmpty();
-			pivotType = resolveSimpleType(eClassifier);
-			EObject eContainer = eGenericType.eContainer();
-			if (eContainer instanceof ETypedElement) {
-				ETypedElement eTypedElement = (ETypedElement)eContainer;
-				if ((eTypedElement.getLowerBound() == 0) && (eTypedElement.getUpperBound() == -1)) {
-					MapType mapType = resolveMapType(resolvedSpecializations, (EClass)eClassifier);
-					mapType.setEntryClass((org.eclipse.ocl.pivot.Class) pivotType);
-					pivotType = mapType;
-				}
-			}
-		} */
 		else {
 			assert eGenericType.getETypeArguments().isEmpty();
 			pivotType = resolveSimpleType(eClassifier);
@@ -959,11 +913,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void update(@NonNull Resource asResource, @NonNull Collection<EObject> ecoreContents) {
-		newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
-		referencers = new HashSet<@NonNull EObject>();
-		genericTypes = new ArrayList<@NonNull EGenericType>();
+		newCreateMap = new HashMap<>();
+		referencers = new HashSet<>();
+		genericTypes = new ArrayList<>();
 		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.nonNull(pivotModel)));
-		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
+		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
 		for (EObject eObject : ecoreContents) {
 			EClass eClass = eObject.eClass();
 			if (eClass.getEPackage() != EcorePackage.eINSTANCE) {
@@ -992,15 +946,30 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		metamodelManager.installResource(asResource);
-		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<@NonNull String, @NonNull Type>();
+		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
 		for (@NonNull EGenericType eGenericType : genericTypes) {
 			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
 			if (pivotType != null) {
 				newCreateMap.put(eGenericType, pivotType);
 			}
 		}
-		for (EObject eObject : referencers) {
-			referencePass.doInPackageSwitch(eObject);
+		Type oclInvalidType = standardLibrary.getOclInvalidType();
+		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();
+		Set<EObject> theReferencers = referencers;
+		while (theReferencers != null) {
+			Set<EObject> moreReferencers = null;
+			for (EObject eObject : theReferencers) {
+				Object asElement = referencePass.doInPackageSwitch(eObject);
+				if ((asElement == referencePass) || (asElement == oclInvalidProperty) || (asElement == oclInvalidType)) {
+					if (moreReferencers == null) {
+						moreReferencers = new HashSet<>();
+					}
+					moreReferencers.add(eObject);
+				}
+			}
+			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
+				theReferencers = moreReferencers;
+			}
 		}
 		for (EObject eObject : referencers) {
 			if (eObject instanceof EReference) {
@@ -1015,7 +984,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		referencers = null;
 		genericTypes = null;
-		oldIdMap = new HashMap<@NonNull String, @NonNull Element>();
+		oldIdMap = new HashMap<>();
 		for (EObject ecoreContent : ecoreContents) {
 			Resource resource = ecoreContent.eResource();
 			if (resource instanceof XMLResource) {

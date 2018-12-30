@@ -156,6 +156,13 @@ public class TypeUtil
 		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(entryClass);
+	}
+
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
 		return new ParameterTypesImpl(parameterTypes);
 	}

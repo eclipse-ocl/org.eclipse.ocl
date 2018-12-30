@@ -265,16 +265,6 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 
 	@Override
 	public EObject visitMapType(@NonNull MapType mapType) {
-		/*	org.eclipse.ocl.pivot.Class entryClass = mapType.getEntryClass();
-		if (entryClass != null) {
-			EObject entryEClass = safeVisit(entryClass);
-			if (entryEClass instanceof EClassifier) {
-				EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-				eGenericType.setEClassifier((EClassifier) entryEClass);
-				eGenericType.setELowerBound(0);
-				return eGenericType;
-			}
-		} */
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EClassifier eClassifier = getOclStdlibEClassifier(mapType.getName());
 		eGenericType.setEClassifier(eClassifier);

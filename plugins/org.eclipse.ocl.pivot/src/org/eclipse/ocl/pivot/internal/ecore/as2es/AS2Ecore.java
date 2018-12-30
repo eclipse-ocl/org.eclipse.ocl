@@ -77,7 +77,7 @@ public class AS2Ecore extends AbstractConversion
 		protected final @NonNull Resource ecoreResource;
 
 		/**
-		 * Mapping of E elements to the oriinating AS elements.
+		 * Mapping of E elements to the originating AS elements.
 		 */
 		private final @NonNull Map<@NonNull EObject, @NonNull Element> inverseCreateMap = new HashMap<>();
 

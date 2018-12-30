@@ -13,7 +13,12 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 public class MapTypeParametersImpl<K extends Type, V extends Type> implements MapTypeParameters<K, V>
@@ -43,6 +48,7 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	}
 
 	private final int hashCode;
+	private final org.eclipse.ocl.pivot.@Nullable Class entryClass;
 	private final @NonNull K keyType;
 	private final boolean keysAreNullFree;
 	private final @NonNull V valueType;
@@ -57,11 +63,31 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	 * @since 1.6
 	 */
 	public MapTypeParametersImpl(@NonNull K keyType, boolean keysAreNullFree, @NonNull V valueType, boolean valuesAreNullFree) {
+		this.entryClass = null;
 		this.keyType = keyType;
 		this.keysAreNullFree = keysAreNullFree;
 		this.valueType = valueType;
 		this.valuesAreNullFree = valuesAreNullFree;
 		hashCode = 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public MapTypeParametersImpl(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		this.entryClass = entryClass;
+		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+		Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
+		Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
+		@SuppressWarnings("unchecked")
+		K castKeyType = (K) PivotUtil.getType(keyProperty);
+		this.keyType = castKeyType;
+		this.keysAreNullFree = keyProperty.isIsRequired();
+		@SuppressWarnings("unchecked")
+		V castValueType = (V) PivotUtil.getType(valueProperty);
+		this.valueType = castValueType;
+		this.valuesAreNullFree = valueProperty.isIsRequired();
+		hashCode = entryClass.hashCode() + 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
 	}
 
 	@Override
@@ -71,6 +97,9 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		}
 		MapTypeParametersImpl<?,?> that = (MapTypeParametersImpl<?,?>)o;
 		if (this.hashCode != that.hashCode){
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.entryClass, that.entryClass)) {
 			return false;
 		}
 		if (!this.keyType.equals(that.keyType)) {
@@ -86,6 +115,11 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class getEntryClass() {
+		return entryClass;
 	}
 
 	@Override
@@ -126,13 +160,18 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append('(');
-		s.append(keyType);
-		s.append(',');
-		s.append(keysAreNullFree);
-		s.append(',');
-		s.append(valueType);
-		s.append(',');
-		s.append(valuesAreNullFree);
+		if (entryClass != null) {
+			s.append(entryClass);
+		}
+		else {
+			s.append(keyType);
+			s.append(',');
+			s.append(keysAreNullFree);
+			s.append(',');
+			s.append(valueType);
+			s.append(',');
+			s.append(valuesAreNullFree);
+		}
 		s.append(')');
 		return s.toString();
 	}

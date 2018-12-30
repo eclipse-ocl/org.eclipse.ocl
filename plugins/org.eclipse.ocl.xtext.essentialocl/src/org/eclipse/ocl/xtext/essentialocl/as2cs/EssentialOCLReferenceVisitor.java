@@ -94,34 +94,32 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		MapTypeCS csRef = EssentialOCLCSFactory.eINSTANCE.createMapTypeCS();
 		csRef.setPivot(object);
 		csRef.setName(object.getName());
-		Type keyType = object.getKeyType();
-		Type valueType = object.getValueType();
-		if ((keyType != null) && (valueType != null)) {
-			TypedRefCS csKeyType = (TypedRefCS) keyType.accept(this);
-			TypedRefCS csValueType = (TypedRefCS) valueType.accept(this);
-			if (!object.isKeysAreNullFree()) {
-				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
-				csMultiplicity.setStringBounds("?");
-				csKeyType.setOwnedMultiplicity(csMultiplicity);
+		Type keyType = PivotUtil.getKeyType(object);
+		Type valueType = PivotUtil.getValueType(object);
+		TypedRefCS csKeyType = (TypedRefCS) keyType.accept(this);
+		TypedRefCS csValueType = (TypedRefCS) valueType.accept(this);
+		if (!object.isKeysAreNullFree()) {
+			MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+			csMultiplicity.setStringBounds("?");
+			csKeyType.setOwnedMultiplicity(csMultiplicity);
+		}
+		if (!object.isValuesAreNullFree()) {
+			MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+			csMultiplicity.setStringBounds("?");
+			csValueType.setOwnedMultiplicity(csMultiplicity);
+		}
+		csRef.setOwnedKeyType(csKeyType);
+		csRef.setOwnedValueType(csValueType);
+		if (keyType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)keyType).getOwningPackage();
+			if (typePackage != null) {
+				context.importNamespace(typePackage, null);
 			}
-			if (!object.isValuesAreNullFree()) {
-				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
-				csMultiplicity.setStringBounds("?");
-				csValueType.setOwnedMultiplicity(csMultiplicity);
-			}
-			csRef.setOwnedKeyType(csKeyType);
-			csRef.setOwnedValueType(csValueType);
-			if (keyType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)keyType).getOwningPackage();
-				if (typePackage != null) {
-					context.importNamespace(typePackage, null);
-				}
-			}
-			if (valueType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)valueType).getOwningPackage();
-				if (typePackage != null) {
-					context.importNamespace(typePackage, null);
-				}
+		}
+		if (valueType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)valueType).getOwningPackage();
+			if (typePackage != null) {
+				context.importNamespace(typePackage, null);
 			}
 		}
 		return csRef;

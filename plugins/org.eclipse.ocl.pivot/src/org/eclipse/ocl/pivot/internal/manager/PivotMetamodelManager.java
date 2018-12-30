@@ -1357,6 +1357,16 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return getMapType(mapTypeName, keyType, true, valueType, true);
 	}
 
+	/**
+	 * @since 1.7
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		if (entryClass.eIsProxy()) {
+			return standardLibrary.getOclInvalidType();
+		}
+		return completeEnvironment.getMapType(standardLibrary.getMapType(), entryClass);
+	}
+
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
 		type = PivotUtil.getUnspecializedTemplateableElement(type);
 		return new CompleteTypeOperationsIterable(getAllTypes(type), selectStatic);
@@ -1571,6 +1581,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
+			return type;
+		}
+		String instanceClassName = type.getInstanceClassName();
+		if ((instanceClassName != null) && instanceClassName.equals(java.util.Map.Entry.class.getName())) {		// FIXME a fudge to avoid UML's profile for EStringToStringMapEntry being used
 			return type;
 		}
 		return getCompleteClass(type).getPrimaryClass();

@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
@@ -81,6 +82,27 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	}
 
 	public abstract void error(@NonNull String message);
+
+	/**
+	 * Return true if eClassifier is annotated to indicate that it is a Map Entry class that is required in
+	 * Ecore but is not required by the Pivot; i.e. it is only ever used to represent the Entry(K,V) underlying
+	 * a Map(K,V).
+	 *
+	 * @since 1.7
+	 */
+	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
+		return (eClassifier != null) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE) != null);
+	}
+
+	/**
+	 * Return true if eClassifier is an EClass whose instanceClass is set to java.util.Map.Entry.class
+	 * identifying its use as the Entry(K,V) for the Ecore Collection(Entry(K,V)) == Map(K,V) idiom.
+	 *
+	 * @since 1.7
+	 */
+	public boolean isEntryClass(@Nullable EClassifier eClassifier) {
+		return (eClassifier instanceof EClass) && (eClassifier.getInstanceClass() == java.util.Map.Entry.class);
+	}
 
 	/**
 	 * Return true if eOperation can be handled as an OCL invariant. In addition to the EcoreUtil.isInvariant()

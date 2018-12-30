@@ -1050,6 +1050,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
+		return ClassUtil.nonNullState(mapType.getKeyType());
+	}
+
+	/**
 	 * Return the Model at the root of asResource.
 	 *
 	 * @throws IllegalStateException if none.
@@ -1656,6 +1663,13 @@ public class PivotUtil
 		@SuppressWarnings("unchecked")
 		T castUnspecializedElement = (T) unspecializedElement;
 		return castUnspecializedElement;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getValueType(@NonNull MapType mapType) {
+		return ClassUtil.nonNullState(mapType.getValueType());
 	}
 
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {

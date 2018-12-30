@@ -63,7 +63,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	}
 
 	@Override
-	public Object caseAssociation(org.eclipse.uml2.uml.Association umlAssociation) {
+	public @NonNull Object caseAssociation(org.eclipse.uml2.uml.Association umlAssociation) {
 		assert umlAssociation != null;
 		AssociationClass asAssociationClass = createAssociationClassProperties(umlAssociation);
 		List<org.eclipse.ocl.pivot.Class> asSuperClasses = asAssociationClass.getSuperClasses();
@@ -74,52 +74,54 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	}
 
 	@Override
-	public Object caseAssociationClass(org.eclipse.uml2.uml.AssociationClass umlAssociationClass) {
+	public @NonNull Object caseAssociationClass(org.eclipse.uml2.uml.AssociationClass umlAssociationClass) {
 		assert umlAssociationClass != null;
 		createAssociationClassProperties(umlAssociationClass);
 		return caseClass(umlAssociationClass);
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.Class caseClass(org.eclipse.uml2.uml.Class umlClass) {
+	public org.eclipse.ocl.pivot.@NonNull Class caseClass(org.eclipse.uml2.uml.Class umlClass) {
 		assert umlClass != null;
 		org.eclipse.ocl.pivot.Class asClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClass);
-		if (asClass != null) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = ClassUtil.nullFree(asClass.getSuperClasses());
-			doSwitchAll(org.eclipse.ocl.pivot.Class.class, asSuperClasses, umlClass.getSuperClasses());
-			if (asSuperClasses.isEmpty()) {
-				asSuperClasses.add(standardLibrary.getOclElementType());
-			}
+		if (asClass == null) {
+			return standardLibrary.getOclInvalidType();
+		}
+		List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = ClassUtil.nullFree(asClass.getSuperClasses());
+		doSwitchAll(org.eclipse.ocl.pivot.Class.class, asSuperClasses, umlClass.getSuperClasses());
+		if (asSuperClasses.isEmpty()) {
+			asSuperClasses.add(standardLibrary.getOclElementType());
 		}
 		return asClass;
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.Class caseClassifier(org.eclipse.uml2.uml.Classifier umlClassifier) {
+	public org.eclipse.ocl.pivot.@NonNull Class caseClassifier(org.eclipse.uml2.uml.Classifier umlClassifier) {
 		assert umlClassifier != null;
 		org.eclipse.ocl.pivot.Class asClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
 		List<org.eclipse.ocl.pivot.Class> asSuperClasses = new ArrayList<org.eclipse.ocl.pivot.Class>();
-		if (asClass != null) {
-			for (org.eclipse.uml2.uml.Generalization umlGeneralization : umlClassifier.getGeneralizations()) {
-				org.eclipse.uml2.uml.Classifier umlGeneral = umlGeneralization.getGeneral();
-				if (umlGeneral != null) {
-					org.eclipse.ocl.pivot.Class asGeneral = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlGeneral);
-					if ((asGeneral != null) && !asSuperClasses.contains(asGeneral)) {
-						asSuperClasses.add(asGeneral);
-					}
+		if (asClass == null) {
+			return standardLibrary.getOclInvalidType();
+		}
+		for (org.eclipse.uml2.uml.Generalization umlGeneralization : umlClassifier.getGeneralizations()) {
+			org.eclipse.uml2.uml.Classifier umlGeneral = umlGeneralization.getGeneral();
+			if (umlGeneral != null) {
+				org.eclipse.ocl.pivot.Class asGeneral = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlGeneral);
+				if ((asGeneral != null) && !asSuperClasses.contains(asGeneral)) {
+					asSuperClasses.add(asGeneral);
 				}
 			}
-			if (asSuperClasses.isEmpty()) {
-				org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
-				asSuperClasses.add(oclElementType);
-			}
-			converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
 		}
+		if (asSuperClasses.isEmpty()) {
+			org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
+			asSuperClasses.add(oclElementType);
+		}
+		converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
 		return asClass;
 	}
 
 	@Override
-	public Object caseExtension(org.eclipse.uml2.uml.Extension umlExtension) {
+	public @NonNull Object caseExtension(org.eclipse.uml2.uml.Extension umlExtension) {
 		assert umlExtension != null;
 		List<org.eclipse.uml2.uml.Property> memberEnds = umlExtension.getMemberEnds();		// FIXME re-implement using/emulating createAssociationClassProperties
 		if (memberEnds.size() == 2) {
@@ -135,122 +137,128 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			}
 		}
 		StereotypeExtender asTypeExtension = converter.getCreated(StereotypeExtender.class, umlExtension);
-		if (asTypeExtension != null) {
-			org.eclipse.uml2.uml.Class umlMetaclass = umlExtension.getMetaclass();
-			org.eclipse.uml2.uml.Stereotype umlStereotype = umlExtension.getStereotype();
-			if ((umlMetaclass != null) && (umlStereotype != null)) {
-				org.eclipse.ocl.pivot.Class asMetaclass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlMetaclass);
-				Stereotype asStereotype = converter.getCreated(Stereotype.class, umlStereotype);
-				if ((asMetaclass != null) && (asStereotype != null)) {
-					asTypeExtension.setOwningStereotype(asStereotype);
-					asTypeExtension.setClass(asMetaclass);
-					if (UML2AS.ADD_TYPE_EXTENSION.isActive()) {
-						UML2AS.ADD_TYPE_EXTENSION.println(asTypeExtension.toString());
-					}
-					converter.addTypeExtension(asTypeExtension);
+		if (asTypeExtension == null) {
+			return this;
+		}
+		org.eclipse.uml2.uml.Class umlMetaclass = umlExtension.getMetaclass();
+		org.eclipse.uml2.uml.Stereotype umlStereotype = umlExtension.getStereotype();
+		if ((umlMetaclass != null) && (umlStereotype != null)) {
+			org.eclipse.ocl.pivot.Class asMetaclass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlMetaclass);
+			Stereotype asStereotype = converter.getCreated(Stereotype.class, umlStereotype);
+			if ((asMetaclass != null) && (asStereotype != null)) {
+				asTypeExtension.setOwningStereotype(asStereotype);
+				asTypeExtension.setClass(asMetaclass);
+				if (UML2AS.ADD_TYPE_EXTENSION.isActive()) {
+					UML2AS.ADD_TYPE_EXTENSION.println(asTypeExtension.toString());
 				}
+				converter.addTypeExtension(asTypeExtension);
 			}
 		}
-		return this;
+		return asTypeExtension;
 	}
 
 	@Override
-	public Object caseProfileApplication(org.eclipse.uml2.uml.ProfileApplication umlProfileApplication) {
+	public @NonNull Object caseProfileApplication(org.eclipse.uml2.uml.ProfileApplication umlProfileApplication) {
 		assert umlProfileApplication != null;
 		ProfileApplication asProfileApplication = converter.getCreated(ProfileApplication.class, umlProfileApplication);
-		if (asProfileApplication != null) {
-			org.eclipse.uml2.uml.Profile umlProfile = umlProfileApplication.getAppliedProfile();
-			if (umlProfile != null) {
-				Profile asProfile = converter.getCreated(Profile.class, umlProfile);
-				asProfileApplication.setAppliedProfile(asProfile);
-				converter.addProfileApplication(asProfileApplication);
-			}
+		if (asProfileApplication == null) {
+			return this;
 		}
-		return this;
+		org.eclipse.uml2.uml.Profile umlProfile = umlProfileApplication.getAppliedProfile();
+		if (umlProfile != null) {
+			Profile asProfile = converter.getCreated(Profile.class, umlProfile);
+			asProfileApplication.setAppliedProfile(asProfile);
+			converter.addProfileApplication(asProfileApplication);
+		}
+		return asProfileApplication;
 	}
 
 	@Override
-	public Object caseProperty(org.eclipse.uml2.uml.Property umlProperty) {
+	public @NonNull Object caseProperty(org.eclipse.uml2.uml.Property umlProperty) {
 		assert umlProperty != null;
 		org.eclipse.uml2.uml.Association umlAssociation = umlProperty.getAssociation();
 		assert (umlAssociation == null) || (umlAssociation instanceof org.eclipse.uml2.uml.Extension);
 		caseTypedElement(umlProperty);
 		Property asProperty = converter.getCreated(Property.class, umlProperty);
-		if (asProperty != null) {
-			if (asProperty.getName() == null) {
-				org.eclipse.uml2.uml.Type umlTargetType = umlProperty.getType();
-				if (umlTargetType != null) {
-					Type asTargetType = converter.getCreated(Type.class, umlTargetType);
-					if (asTargetType != null) {
-						asProperty.setName(asTargetType.getName());
-					}
+		if (asProperty == null) {
+			return this;
+		}
+		if (asProperty.getName() == null) {
+			org.eclipse.uml2.uml.Type umlTargetType = umlProperty.getType();
+			if (umlTargetType != null) {
+				Type asTargetType = converter.getCreated(Type.class, umlTargetType);
+				if (asTargetType != null) {
+					asProperty.setName(asTargetType.getName());
 				}
 			}
-			org.eclipse.ocl.pivot.Class pivotType = null;
-			if (umlAssociation != null) {
-				if (umlProperty.getOwningAssociation() != null) {
-					asProperty.setIsImplicit(true);
-				}
-				org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
-				if (opposite != null) {
-					org.eclipse.uml2.uml.Type oppositeType = opposite.getType();
-					if (oppositeType != null) {
-						pivotType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, oppositeType);
-					}
-				}
+		}
+		org.eclipse.ocl.pivot.Class pivotType = null;
+		if (umlAssociation != null) {
+			if (umlProperty.getOwningAssociation() != null) {
+				asProperty.setIsImplicit(true);
 			}
-			if (pivotType == null) {
-				EObject eContainer = umlProperty.eContainer();
-				if (eContainer != null) {
-					pivotType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eContainer);
+			org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
+			if (opposite != null) {
+				org.eclipse.uml2.uml.Type oppositeType = opposite.getType();
+				if (oppositeType != null) {
+					pivotType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, oppositeType);
 				}
 			}
-			if (pivotType != null) {
-				converter.addProperty(pivotType, asProperty);
+		}
+		if (pivotType == null) {
+			EObject eContainer = umlProperty.eContainer();
+			if (eContainer != null) {
+				pivotType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eContainer);
 			}
-			else {
-				//				System.err.println("Failed to find parent for " + umlProperty);
-			}
+		}
+		if (pivotType != null) {
+			converter.addProperty(pivotType, asProperty);
+		}
+		else {
+			//				System.err.println("Failed to find parent for " + umlProperty);
 		}
 		return asProperty;
 	}
 
 	@Override
-	public Object caseSlot(org.eclipse.uml2.uml.Slot umlSlot) {
+	public @NonNull Object caseSlot(org.eclipse.uml2.uml.Slot umlSlot) {
 		assert umlSlot != null;
 		Slot asSlot = converter.getCreated(Slot.class, umlSlot);
-		if (asSlot != null) {
-			org.eclipse.uml2.uml.StructuralFeature umlDefiningFeature = umlSlot.getDefiningFeature();
-			Property asProperty = umlDefiningFeature != null ? converter.getCreated(Property.class, umlDefiningFeature) : null;
-			asSlot.setDefiningProperty(asProperty);
+		if (asSlot == null) {
+			return this;
 		}
-		return this;
+		org.eclipse.uml2.uml.StructuralFeature umlDefiningFeature = umlSlot.getDefiningFeature();
+		Property asProperty = umlDefiningFeature != null ? converter.getCreated(Property.class, umlDefiningFeature) : null;
+		asSlot.setDefiningProperty(asProperty);
+		return asSlot;
 	}
 
 	@Override
-	public Object caseStereotype(org.eclipse.uml2.uml.Stereotype umlStereotype) {
+	public @NonNull Object caseStereotype(org.eclipse.uml2.uml.Stereotype umlStereotype) {
 		assert umlStereotype != null;
 		//		caseClass(umlStereotype);
 		Stereotype asStereotype = converter.getCreated(Stereotype.class, umlStereotype);
-		if (asStereotype != null) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = ClassUtil.nullFree(asStereotype.getSuperClasses());
-			doSwitchAll(org.eclipse.ocl.pivot.Class.class, asSuperClasses, umlStereotype.getSuperClasses());
-			org.eclipse.ocl.pivot.Class oclStereotype = standardLibrary.getOclStereotypeType();
-			if (!asSuperClasses.contains(oclStereotype)) {
-				asSuperClasses.add(oclStereotype);
-			}
-			converter.addStereotype(asStereotype);
+		if (asStereotype == null) {
+			return this;
 		}
+		List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = ClassUtil.nullFree(asStereotype.getSuperClasses());
+		doSwitchAll(org.eclipse.ocl.pivot.Class.class, asSuperClasses, umlStereotype.getSuperClasses());
+		org.eclipse.ocl.pivot.Class oclStereotype = standardLibrary.getOclStereotypeType();
+		if (!asSuperClasses.contains(oclStereotype)) {
+			asSuperClasses.add(oclStereotype);
+		}
+		converter.addStereotype(asStereotype);
 		return asStereotype;
 	}
 
 	@Override
-	public EObject caseTypedElement(org.eclipse.uml2.uml.TypedElement umlTypedElement) {
+	public @NonNull EObject caseTypedElement(org.eclipse.uml2.uml.TypedElement umlTypedElement) {
 		assert umlTypedElement != null;
 		TypedElement pivotElement = converter.getCreated(TypedElement.class, umlTypedElement);
-		if (pivotElement != null) {
-			converter.resolveMultiplicity(pivotElement, umlTypedElement);
+		if (pivotElement == null) {
+			return standardLibrary.getOclInvalidType();
 		}
+		converter.resolveMultiplicity(pivotElement, umlTypedElement);
 		return pivotElement;
 	}
 

@@ -692,6 +692,36 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testMaps_oclinecore() throws IOException, InterruptedException {
+		String testFileContents =
+				"package any : any = 'http:/any'\n" +
+						"{\n" +
+						"	class Maps\n" +
+						"	{\n" +
+						//			"		property eMap1 : OrderedSet(KeyToValue);\n" +
+						"		property eMap2 : KeyToValue[*|1] { ordered, unique };\n" +
+						"		property eMap2o : KeyToValue[*|?] { ordered, unique };\n" +
+						"		property oMap1 : Map(String[1],Integer[?]);\n" +
+						"		property oMap2 : Map(String[1],Integer[1]);\n" +
+						"		property oMap3 : Map(String[?],Integer[?]);\n" +
+						"		property oMap4 : Map(String[?],Integer[1]);\n" +
+						"		property oMap5 : Map(String[1],Integer[?])[1];\n" +
+						"		property oMap6 : Map(String[1],Integer[1])[1];\n" +
+						"		property oMap7 : Map(String[?],Integer[?])[1];\n" +
+						"		property oMap8 : Map(String[?],Integer[1])[1];\n" +
+						"	}\n" +
+						"	class KeyToValue : 'java.util.Map$Entry'\n" +
+						"	{\n" +
+						"		property key : String[1];\n" +
+						"		property value : Integer[1];\n" +
+						"	}\n" +
+						"}\n";
+		TestFile testFile = createOCLinEcoreFile("Maps.oclinecore", testFileContents);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, testFile);
+		ocl.dispose();
+	}
+
 	public void testMultiplicitiesRoundTrip_540244() throws IOException, InterruptedException {
 		String testFileContents =
 				"package p : p = 'p'\n" +

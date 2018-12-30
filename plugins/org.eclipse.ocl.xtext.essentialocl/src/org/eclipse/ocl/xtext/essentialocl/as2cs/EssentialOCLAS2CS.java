@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
@@ -40,8 +41,16 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 		}
 
 		@Override
+		public @NonNull EssentialOCLReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
+			return new EssentialOCLReferenceVisitor(converter, scope);
+		}
+
+		@SuppressWarnings("null")
+		@Override
 		public @NonNull EClass @NonNull [] getEClasses() {
-			return new @NonNull EClass @NonNull []{};
+			return new EClass @NonNull [] {
+				PivotPackage.Literals.MAP_TYPE
+			};
 		}
 	}
 

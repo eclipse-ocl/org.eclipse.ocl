@@ -194,6 +194,25 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return specializedType;
 	}
 
+	@Override
+	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
+		ExecutorMapType specializedType = null;
+		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>> map = mapSpecializations.get(genericType);
+		if (map == null) {
+			map = new WeakHashMap<>();
+			mapSpecializations.put(genericType, map);
+		}
+		else {
+			specializedType = weakGet(map, typeParameters);
+		}
+		if (specializedType == null) {
+			specializedType = new ExecutorMapType(ClassUtil.nonNullModel(genericType.getName()), genericType, typeParameters.getKeyType(), typeParameters.getValueType());
+			map.put(typeParameters, new WeakReference<>(specializedType));
+		}
+		return specializedType;
+	}
+
 	// FIXME cf MetamodelManager
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {

@@ -11,10 +11,18 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 
 public interface MapTypeParameters<K extends Type, V extends Type> extends Iterable<Object>
 {
+	/**
+	 * @since 1.7
+	 */
+	default org.eclipse.ocl.pivot.@Nullable Class getEntryClass() {
+		return null;
+	}
+
 	@NonNull K getKeyType();
 	@NonNull V getValueType();
 	/**
@@ -23,6 +31,7 @@ public interface MapTypeParameters<K extends Type, V extends Type> extends Itera
 	default boolean isKeysAreNullFree() {
 		return true;
 	}
+
 	/**
 	 * @since 1.6
 	 */

@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -756,7 +757,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			pivotType = getStandardLibrary().getOclInvalidType();
 		}
 		boolean isNullFree = false;
-		int lower = 0;;
+		int lower = pivotType instanceof MapType ? 1 : 0;			// Optional EMaps are impossible and so optional Maps are not supported.
 		int upper = 1;
 		MultiplicityCS multiplicity = csElement.getOwnedMultiplicity();
 		if (multiplicity != null) {
@@ -1068,16 +1069,25 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		boolean isRequired = false;
 		if (ownedType != null) {
 			pivotType = PivotUtil.getPivot(Type.class, ownedType);
-			int lower = ElementUtil.getLower(csTypedElement);
-			int upper = ElementUtil.getUpper(csTypedElement);
-			if (upper == 1) {
-				isRequired = lower == 1;
+			int lower;
+			int upper;
+			if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
+				lower = 1;
+				upper = 1;
+				isRequired = true;
 			}
 			else {
-				isRequired = true;
-				//				if (pivotType != null) {
-				//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
-				//				}
+				lower = ElementUtil.getLower(csTypedElement);
+				upper = ElementUtil.getUpper(csTypedElement);
+				if (upper == 1) {
+					isRequired = lower == 1;
+				}
+				else {
+					isRequired = true;
+					//				if (pivotType != null) {
+					//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
+					//				}
+				}
 			}
 		}
 		if (pivotType == null) {

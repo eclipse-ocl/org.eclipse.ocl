@@ -195,6 +195,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
 			Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
 			specializedMapType.setOwningPackage(orphanage);
+			specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;
 		}
 

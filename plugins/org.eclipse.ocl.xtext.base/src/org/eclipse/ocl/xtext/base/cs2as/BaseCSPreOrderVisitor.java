@@ -149,72 +149,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	/*	protected static class MapTypeRefCompletion extends TypedRefContinuation<TypedTypeRefCS>
-	{
-		public MapTypeRefCompletion(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
-			super(context, csElement, context.getTypesHaveSignaturesInterDependency());
-			assert csElement.getOwnedBinding() == null;
-		}
-
-		@Override
-		public boolean canExecute() {
-			boolean canExecute = super.canExecute();
-			if (!canExecute) {
-				return false;
-			}
-			Type pivotType = csElement.getReferredType();
-			if (pivotType == null) {
-				return false;
-			}
-			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
-				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
-					List<Property> ownedProperties = pivotClass.getOwnedProperties();
-					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
-					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
-					if ((keyProperty != null) && (valueProperty != null)) {
-						Type keyType = keyProperty.getType();
-						if (keyType == null) {
-							return false;
-						}
-						Type valueType = valueProperty.getType();
-						if (valueType == null) {
-							return false;
-						}
-					}
-				}
-			}
-			return true;
-		}
-
-		@Override
-		public BasicContinuation<?> execute() {
-			Type pivotType = csElement.getReferredType();
-			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
-				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
-					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
-					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
-					List<Property> ownedProperties = pivotClass.getOwnedProperties();
-					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
-					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
-					if ((keyProperty != null) && (valueProperty != null)) {
-						Type keyType = PivotUtil.getType(keyProperty);
-						boolean keysAreNullFree = keyProperty.isIsRequired();
-						Type valueType = PivotUtil.getType(valueProperty);
-						boolean valuesAreNullFree = valueProperty.isIsRequired();
-						MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, keyType, keysAreNullFree, valueType, valuesAreNullFree);
-						mapType.setEntryClass(pivotClass);
-						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
-						return null;
-					}
-				}
-			}
-			context.installPivotTypeWithMultiplicity(pivotType, csElement);
-			return null;
-		}
-	} */
-
 	protected static abstract class OperatorExpContinuation<T extends NamedElementCS> extends SingleContinuation<T>
 	{
 		public OperatorExpContinuation(@NonNull CS2ASConversion context, @NonNull T csElement) {
@@ -548,23 +482,14 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		public BasicContinuation<?> execute() {
 			Type pivotType = csElement.getReferredType();
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
-				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
+				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
+				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
 					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
 					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
-					List<Property> ownedProperties = pivotClass.getOwnedProperties();
-					Property keyProperty = NameUtil.getNameable(ownedProperties, "key");
-					Property valueProperty = NameUtil.getNameable(ownedProperties, "value");
-					if ((keyProperty != null) && (valueProperty != null)) {
-						Type keyType = PivotUtil.getType(keyProperty);
-						boolean keysAreNullFree = keyProperty.isIsRequired();
-						Type valueType = PivotUtil.getType(valueProperty);
-						boolean valuesAreNullFree = valueProperty.isIsRequired();
-						MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, keyType, keysAreNullFree, valueType, valuesAreNullFree);
-						mapType.setEntryClass(pivotClass);
-						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
-						return null;
-					}
+					MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, entryClass);
+					mapType.setEntryClass(entryClass);
+					context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+					return null;
 				}
 			}
 			context.installPivotTypeWithMultiplicity(pivotType, csElement);

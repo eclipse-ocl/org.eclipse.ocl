@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="META-INF/MANIFEST.MF">
-        <filter id="926941240">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteEnvironment.java" type="org.eclipse.ocl.pivot.CompleteEnvironment">
+        <filter id="403804204">
             <message_arguments>
-                <message_argument value="1.7.0"/>
-                <message_argument value="1.6.0"/>
+                <message_argument value="org.eclipse.ocl.pivot.CompleteEnvironment"/>
+                <message_argument value="getMapType(Class, Class)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -157,6 +157,14 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/values/MapTypeParameters.java" type="org.eclipse.ocl.pivot.values.MapTypeParameters">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.MapTypeParameters"/>
+                <message_argument value="getEntryClass()"/>
             </message_arguments>
         </filter>
     </resource>

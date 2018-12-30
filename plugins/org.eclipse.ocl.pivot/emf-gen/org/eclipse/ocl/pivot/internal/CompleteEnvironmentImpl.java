@@ -19,7 +19,6 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -705,40 +704,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			return orphanCompletePackage.getCompleteClass((CollectionType)pivotType);
 		}
 		else if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-			EObject esObject = pivotType.getESObject();
-			if (esObject instanceof EClass) {
-				EClass eClass = (EClass)esObject;
-				/*				if (eClass.getInstanceClass() == Map.Entry.class) {
-					EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
-					EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
-					if (keyFeature == null) {
-					//	error("Missing 'key' feature for map '" + eClass.getName() + "");
-					}
-					else if (valueFeature == null) {
-					//	error("Missing 'value' feature for map '" + eClass.getName() + "");
-					}
-					else {
-						EGenericType keyGenericType = keyFeature.getEGenericType();
-						EGenericType valueGenericType = valueFeature.getEGenericType();
-						if (keyGenericType == null) {
-					//		error("No 'key' EGenericType for map '" + eClass.getName() + "");
-						}
-						else if (valueGenericType == null) {
-					//		error("No 'value' EGenericType for map '" + eClass.getName() + "");
-						}
-						else {
-							Type keyType = resolveType(resolvedSpecializations, keyGenericType);
-							Type valueType = resolveType(resolvedSpecializations, valueGenericType);
-							if ((keyType != null) && (valueType != null)) {
-								boolean keysAreNullFree = keyFeature.isRequired();
-								boolean valuesAreNullFree = valueFeature.isRequired();
-								org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
-								return completeEnvironment.getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
-							}
-						}
-					}
-				} */
-			}
 			org.eclipse.ocl.pivot.Package pivotPackage = ((org.eclipse.ocl.pivot.Class)pivotType).getOwningPackage();
 			if (pivotPackage == null) {
 				throw new IllegalStateException("type has no package");
@@ -792,6 +757,15 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), keysAreNullFree, metamodelManager.getPrimaryType(valueType), valuesAreNullFree);
 	}
 
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryClass(entryClass));
+	}
+
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, @NonNull Type valueType) {
 		return getMapType(containerType, keyType, true, valueType, true);
@@ -817,6 +791,29 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
+		return specializedType;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public @NonNull MapType getMapType(@NonNull MapType containerType, org.eclipse.ocl.pivot.@NonNull Class entryType) {
+		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
+		TemplateSignature templateSignature = containerType.getOwnedSignature();
+		if (templateSignature == null) {
+			throw new IllegalArgumentException("Map type must have a template signature");
+		}
+		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		if (templateParameters.size() != 2) {
+			throw new IllegalArgumentException("Map type must have exactly two template parameter");
+		}
+		//	boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
+		//	if (isUnspecialized) {
+		//		return containerType;
+		//	}
+		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
 		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
 		return specializedType;
 	}
