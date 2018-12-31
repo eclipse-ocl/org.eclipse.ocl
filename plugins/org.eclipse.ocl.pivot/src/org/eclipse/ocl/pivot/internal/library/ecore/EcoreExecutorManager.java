@@ -45,7 +45,7 @@ public class EcoreExecutorManager extends ExecutorManager
 	private final @Nullable Object contextObject;
 	private ModelManager modelManager = null;
 	private /*@LazyNonNull*/ IdResolver idResolver = null;
-	
+
 	/**
 	 * Construct an EMF to OCL execution bridge.
 	 * <p>
@@ -57,7 +57,7 @@ public class EcoreExecutorManager extends ExecutorManager
 	 * <p>
 	 * Since determination of the domain of user models and meta-models can be expensive, the EcoreExecutorManager
 	 * is cached for re-use as an adapter on the contextObject's ResourceSet.
-	 *  
+	 *
 	 * @param contextObject a user object from which the user objects and their meta-models will be deduced
 	 * @param standardLibrary the OCL facilities
 	 */
@@ -157,7 +157,7 @@ public class EcoreExecutorManager extends ExecutorManager
 								Type elementType = idResolver.getInheritance(eClass).getPivotClass();
 								return elementType.conformsTo(standardLibrary, type);
 							}
-							
+
 						};
 					}
 					else {
@@ -191,7 +191,7 @@ public class EcoreExecutorManager extends ExecutorManager
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		IdResolver idResolver2 = idResolver;
 		if (idResolver2 == null) {
 			idResolver = idResolver2 = createIdResolver();

@@ -74,82 +74,82 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  */
 public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVisitor> extends AbstractExtendingVisitor<Object, Object> implements EvaluationVisitor {
 
-    protected final @NonNull EV delegate;
-    
-    protected AbstractEvaluationVisitorDecorator(@NonNull EV decorated) {
-        super(Object.class);						// Useless dummy object as context
-        assert decorated != null : "cannot decorate a null visitor"; //$NON-NLS-1$
-        
-        this.delegate = decorated;
-        
-        decorated.setUndecoratedVisitor(this);
-    }
-	
+	protected final @NonNull EV delegate;
+
+	protected AbstractEvaluationVisitorDecorator(@NonNull EV decorated) {
+		super(Object.class);						// Useless dummy object as context
+		assert decorated != null : "cannot decorate a null visitor"; //$NON-NLS-1$
+
+		this.delegate = decorated;
+
+		decorated.setUndecoratedVisitor(this);
+	}
+
 	/** @deprecated Evaluator no longer nests */
 	@Deprecated
-	@Override	
+	@Override
 	public @NonNull EvaluationVisitor createNestedEvaluator() {
 		return delegate.createNestedEvaluator();
 	}
-	
-	/** @deprecated Evaluator no longer nests 
+
+	/** @deprecated Evaluator no longer nests
 	 * @since 1.1*/
 	@Deprecated
-	@Override	
+	@Override
 	public void dispose() {
 		delegate.dispose();
 	}
-	
+
 	/**
-     * Delegates to my decorated visitor.
+	 * Delegates to my decorated visitor.
 	 * @since 1.1
-     */
+	 */
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return delegate.evaluate(body);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return delegate.getCompleteEnvironment();
 	}
-  
-    /**
-     * Obtains the visitor that I decorate.
-     * 
-     * @return my decorated visitor
-     */
+
+	/**
+	 * Obtains the visitor that I decorate.
+	 *
+	 * @return my decorated visitor
+	 */
 	protected final @NonNull EV getDelegate() {
-        return delegate;
-    }
+		return delegate;
+	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
 	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
-        return delegate.getDiagnosticSeverity(severityPreference, resultValue);
+		return delegate.getDiagnosticSeverity(severityPreference, resultValue);
 	}
-    
-    /**
-     * Obtains my delegate's environment.
-     */
-    @Override
+
+	/**
+	 * Obtains my delegate's environment.
+	 */
+	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-        return delegate.getEnvironmentFactory();
-    }
+		return delegate.getEnvironmentFactory();
+	}
 
-    /**
-     * Obtains my delegate's evaluation environment.
-     */
-    @Override
+	/**
+	 * Obtains my delegate's evaluation environment.
+	 */
+	@Override
 	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
-        return delegate.getEvaluationEnvironment();
-    }
+		return delegate.getEvaluationEnvironment();
+	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
@@ -157,30 +157,30 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 		return delegate.getEvaluator();
 	}
 
-//	@Override
-//	public @NonNull Executor getExecutor() {
-//		return delegate.getExecutor();
-//	}
+	//	@Override
+	//	public @NonNull Executor getExecutor() {
+	//		return delegate.getExecutor();
+	//	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull IdResolver getIdResolver() {
 		return delegate.getIdResolver();
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
-    @Override
+	@Override
 	public @Nullable EvaluationLogger getLogger() {
 		return delegate.getLogger();
 	}
 
-    /** @deprecated moved to Executor 
-     * @since 1.1*/
-    @Override
+	/** @deprecated moved to Executor
+	 * @since 1.1*/
+	@Override
 	@Deprecated
 	public @NonNull MetamodelManager getMetamodelManager() {
 		return delegate.getMetamodelManager();
@@ -188,10 +188,10 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull ModelManager getModelManager() {
-        return delegate.getModelManager();
-    }
+		return delegate.getModelManager();
+	}
 
 	/**
 	 * @since 1.1
@@ -201,38 +201,38 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 		return delegate.getMonitor();
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
-    @Override
+	@Override
 	public @NonNull Pattern getRegexPattern(@NonNull String regex) {
-        return delegate.getRegexPattern(regex);
+		return delegate.getRegexPattern(regex);
 	}
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
-        return delegate.getSeverity(validationKey);
+		return delegate.getSeverity(validationKey);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {	
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
 		return delegate.getStaticTypeOf(value);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		return delegate.getStaticTypeOf(value, values);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
@@ -240,7 +240,7 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 		return delegate.getStaticTypeOf(value, values);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
@@ -249,24 +249,24 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 	}
 
 	/**
-     * Delegates to my decorated visitor.
+	 * Delegates to my decorated visitor.
 	 * @since 1.1
-     */
+	 */
 	@Override
 	public boolean isCanceled() {
 		return delegate.isCanceled();
 	}
 
 	/**
-     * Delegates to my decorated visitor.
+	 * Delegates to my decorated visitor.
 	 * @since 1.1
-     */
+	 */
 	@Override
 	public void setCanceled(boolean isCanceled) {
 		delegate.setCanceled(isCanceled);
 	}
 
-	/** @deprecated moved to Evaluator 
+	/** @deprecated moved to Evaluator
 	 * @since 1.1*/
 	@Deprecated
 	@Override
@@ -282,261 +282,261 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 		delegate.setMonitor(monitor);
 	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
+	/**
+	 * Delegates to my decorated visitor.
+	 */
 	@Override
 	public void setUndecoratedVisitor(@NonNull EvaluationVisitor evaluationVisitor) {
-        delegate.setUndecoratedVisitor(evaluationVisitor);
+		delegate.setUndecoratedVisitor(evaluationVisitor);
 	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitConstraint(@NonNull Constraint constraint) {
-        return delegate.visitConstraint(constraint);
-    }
+		return delegate.visitConstraint(constraint);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitAssociationClassCallExp(
-            @NonNull AssociationClassCallExp callExp) {
-        return delegate.visitAssociationClassCallExp(callExp);
-    }
+			@NonNull AssociationClassCallExp callExp) {
+		return delegate.visitAssociationClassCallExp(callExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitBooleanLiteralExp(@NonNull BooleanLiteralExp literalExp) {
-        return delegate.visitBooleanLiteralExp(literalExp);
-    }
+		return delegate.visitBooleanLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitCollectionItem(@NonNull CollectionItem item) {
-        return delegate.visitCollectionItem(item);
-    }
+		return delegate.visitCollectionItem(item);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp literalExp) {
-        return delegate.visitCollectionLiteralExp(literalExp);
-    }
+		return delegate.visitCollectionLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitCollectionRange(@NonNull CollectionRange range) {
-        return delegate.visitCollectionRange(range);
-    }
+		return delegate.visitCollectionRange(range);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitEnumLiteralExp(@NonNull EnumLiteralExp literalExp) {
-        return delegate.visitEnumLiteralExp(literalExp);
-    }
+		return delegate.visitEnumLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitExpressionInOCL(@NonNull ExpressionInOCL expression) {
-        return delegate.visitExpressionInOCL(expression);
-    }
+		return delegate.visitExpressionInOCL(expression);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitIfExp(@NonNull IfExp ifExp) {
-        return delegate.visitIfExp(ifExp);
-    }
+		return delegate.visitIfExp(ifExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitIntegerLiteralExp(@NonNull IntegerLiteralExp literalExp) {
-        return delegate.visitIntegerLiteralExp(literalExp);
-    }
+		return delegate.visitIntegerLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp literalExp) {
-        return delegate.visitInvalidLiteralExp(literalExp);
-    }
+		return delegate.visitInvalidLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitLetExp(@NonNull LetExp letExp) {
-        return delegate.visitLetExp(letExp);
-    }
+		return delegate.visitLetExp(letExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
-    public @Nullable Object visitMapLiteralExp(@NonNull MapLiteralExp literalExp) {
-        return delegate.visitMapLiteralExp(literalExp);
-    }
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
+	public @Nullable Object visitMapLiteralExp(@NonNull MapLiteralExp literalExp) {
+		return delegate.visitMapLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
-    public @Nullable Object visitMapLiteralPart(@NonNull MapLiteralPart range) {
-        return delegate.visitMapLiteralPart(range);
-    }
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
+	public @Nullable Object visitMapLiteralPart(@NonNull MapLiteralPart range) {
+		return delegate.visitMapLiteralPart(range);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitMessageExp(@NonNull MessageExp messageExp) {
-        return delegate.visitMessageExp(messageExp);
-    }
+		return delegate.visitMessageExp(messageExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitNullLiteralExp(@NonNull NullLiteralExp literalExp) {
-        return delegate.visitNullLiteralExp(literalExp);
-    }
+		return delegate.visitNullLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp callExp) {
-        return delegate.visitOperationCallExp(callExp);
-    }
+		return delegate.visitOperationCallExp(callExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp callExp) {
-        return delegate.visitOppositePropertyCallExp(callExp);
-    }
+		return delegate.visitOppositePropertyCallExp(callExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitPropertyCallExp(@NonNull PropertyCallExp callExp) {
-        return delegate.visitPropertyCallExp(callExp);
-    }
+		return delegate.visitPropertyCallExp(callExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitRealLiteralExp(@NonNull RealLiteralExp literalExp) {
-        return delegate.visitRealLiteralExp(literalExp);
-    }
+		return delegate.visitRealLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitShadowExp(@NonNull ShadowExp shadowExp) {
-        return delegate.visitShadowExp(shadowExp);
-    }
+		return delegate.visitShadowExp(shadowExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitStateExp(@NonNull StateExp stateExp) {
-        return delegate.visitStateExp(stateExp);
-    }
+		return delegate.visitStateExp(stateExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitStringLiteralExp(@NonNull StringLiteralExp literalExp) {
-        return delegate.visitStringLiteralExp(literalExp);
-    }
+		return delegate.visitStringLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitTupleLiteralExp(@NonNull TupleLiteralExp literalExp) {
-        return delegate.visitTupleLiteralExp(literalExp);
-    }
+		return delegate.visitTupleLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitTupleLiteralPart(@NonNull TupleLiteralPart part) {
-        return delegate.visitTupleLiteralPart(part);
-    }
+		return delegate.visitTupleLiteralPart(part);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitTypeExp(@NonNull TypeExp typeExp) {
-        return delegate.visitTypeExp(typeExp);
-    }
+		return delegate.visitTypeExp(typeExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitUnlimitedNaturalLiteralExp(
-            @NonNull UnlimitedNaturalLiteralExp literalExp) {
-        return delegate.visitUnlimitedNaturalLiteralExp(literalExp);
-    }
+			@NonNull UnlimitedNaturalLiteralExp literalExp) {
+		return delegate.visitUnlimitedNaturalLiteralExp(literalExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitUnspecifiedValueExp(@NonNull UnspecifiedValueExp unspecExp) {
-        return delegate.visitUnspecifiedValueExp(unspecExp);
-    }
+		return delegate.visitUnspecifiedValueExp(unspecExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitVariable(@NonNull Variable variable) {
-        return delegate.visitVariable(variable);
-    }
+		return delegate.visitVariable(variable);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
-    @Override
+	/**
+	 * Delegates to my decorated visitor.
+	 */
+	@Override
 	public Object visitVariableExp(@NonNull VariableExp variableExp) {
-        return delegate.visitVariableExp(variableExp);
-    }
+		return delegate.visitVariableExp(variableExp);
+	}
 
-    /**
-     * Delegates to my decorated visitor.
-     */
+	/**
+	 * Delegates to my decorated visitor.
+	 */
 	@Override
 	public Object visiting(@NonNull Visitable visitable) {
-        return delegate.visiting(visitable);
+		return delegate.visiting(visitable);
 	}
 }

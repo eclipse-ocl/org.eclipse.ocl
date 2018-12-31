@@ -46,25 +46,25 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * </p>
  */
 public abstract class AbstractEvaluationVisitor
-	extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull ExecutorInternalExtension> implements EvaluationVisitor.EvaluationVisitorExtension
+extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull ExecutorInternalExtension> implements EvaluationVisitor.EvaluationVisitorExtension
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	/** @deprecated Use environmentFactory.getMetamodelManager() */
 	@Deprecated
-	protected final @NonNull PivotMetamodelManager metamodelManager;	
+	protected final @NonNull PivotMetamodelManager metamodelManager;
 	/**
 	 * @since 1.1
 	 */
-	protected final @NonNull IdResolver idResolver;	
+	protected final @NonNull IdResolver idResolver;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 
-    protected @NonNull EvaluationVisitor undecoratedVisitor;
+	protected @NonNull EvaluationVisitor undecoratedVisitor;
 
-    /**
-     * Set non-null by {@link #setMonitor} to terminate execution at next iteration/operation call.
-     */
+	/**
+	 * Set non-null by {@link #setMonitor} to terminate execution at next iteration/operation call.
+	 */
 	protected @Nullable Monitor monitor = null;
-	
+
 	/** @deprecated Use getExecutor().getEvaluationEnvirinment() */
 	@Deprecated
 	protected final @NonNull EvaluationEnvironment evaluationEnvironment;
@@ -74,28 +74,28 @@ public abstract class AbstractEvaluationVisitor
 	/** @deprecated Use getExecutor().getModelManager() */
 	@Deprecated
 	protected final @NonNull ModelManager modelManager;
-	
+
 	/** @deprecated Use ExecutorInternal */
 	@Deprecated
 	protected AbstractEvaluationVisitor(@NonNull EvaluationEnvironment evaluationEnvironment) {
 		this(((EvaluationEnvironment.EvaluationEnvironmentExtension)evaluationEnvironment).getExecutor());
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
 	protected AbstractEvaluationVisitor(@NonNull ExecutorInternal executor) {
-        super((ExecutorInternal.ExecutorInternalExtension) executor);
-        this.environmentFactory = executor.getEnvironmentFactory();
-        this.metamodelManager = environmentFactory.getMetamodelManager();
-        this.idResolver = environmentFactory.getIdResolver();
+		super((ExecutorInternal.ExecutorInternalExtension) executor);
+		this.environmentFactory = executor.getEnvironmentFactory();
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.idResolver = environmentFactory.getIdResolver();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
-        this.undecoratedVisitor = this;  // assume I have no decorator
-        this.evaluationEnvironment = executor.getRootEvaluationEnvironment();
-        this.completeEnvironment = environmentFactory.getCompleteEnvironment();
-        this.modelManager = executor.getModelManager();
-    }
-	
+		this.undecoratedVisitor = this;  // assume I have no decorator
+		this.evaluationEnvironment = executor.getRootEvaluationEnvironment();
+		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
+		this.modelManager = executor.getModelManager();
+	}
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	protected @NonNull Map<String, Pattern> createRegexCache() {
@@ -108,7 +108,7 @@ public abstract class AbstractEvaluationVisitor
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return context.getCompleteEnvironment();
 	}
-	
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
@@ -116,11 +116,11 @@ public abstract class AbstractEvaluationVisitor
 		return context.getDiagnosticSeverity(severityPreference, resultValue);
 	}
 
-    @Override
+	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
-    
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
@@ -157,14 +157,14 @@ public abstract class AbstractEvaluationVisitor
 	public @Nullable EvaluationLogger getLogger() {
 		return context.getLogger();
 	}
-	
+
 	/** @deprecated moved to Evaluator */
 	@Override
 	@Deprecated
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return (PivotMetamodelManager) context.getMetamodelManager();
 	}
-	
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
@@ -211,29 +211,29 @@ public abstract class AbstractEvaluationVisitor
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		return context.getStaticTypeOf(value, values);
 	}
- 
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
 		return context.getStaticTypeOf(value, values);
 	}
- 
-    /**
-     * Obtains the visitor on which I perform nested
-     * {@link Visitable#accept(Visitor)} calls.  This
-     * handles the case in which I am decorated by another visitor that must
-     * intercept every <tt>visitXxx()</tt> method.  If I internally just
-     * recursively visit myself, then this decorator is cut out of the picture.
-     * 
-     * @return my delegate visitor, which may be my own self or some other
-     */
+
+	/**
+	 * Obtains the visitor on which I perform nested
+	 * {@link Visitable#accept(Visitor)} calls.  This
+	 * handles the case in which I am decorated by another visitor that must
+	 * intercept every <tt>visitXxx()</tt> method.  If I internally just
+	 * recursively visit myself, then this decorator is cut out of the picture.
+	 *
+	 * @return my delegate visitor, which may be my own self or some other
+	 */
 	protected final @NonNull EvaluationVisitor getUndecoratedVisitor() {
-        return undecoratedVisitor;
-    }
+		return undecoratedVisitor;
+	}
 
 	@Override
 	public boolean isCanceled() {
@@ -263,21 +263,21 @@ public abstract class AbstractEvaluationVisitor
 		this.monitor = monitor;
 	}
 
-    /**
-     * Sets the visitor on which I perform nested
-     * {@link Visitable#accept(Visitor)} calls.
-     * 
-     * @param evaluationVisitor my delegate visitor
-     * 
-     * @see #getUndecoratedVisitor()
-     */
+	/**
+	 * Sets the visitor on which I perform nested
+	 * {@link Visitable#accept(Visitor)} calls.
+	 *
+	 * @param evaluationVisitor my delegate visitor
+	 *
+	 * @see #getUndecoratedVisitor()
+	 */
 	@Override
 	public void setUndecoratedVisitor(@NonNull EvaluationVisitor evaluationVisitor) {
-        this.undecoratedVisitor = evaluationVisitor;
+		this.undecoratedVisitor = evaluationVisitor;
 	}
-	
+
 	@Override
-    public String toString() {
+	public String toString() {
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (evaluation environment: ");//$NON-NLS-1$
 		result.append(getEvaluationEnvironment());
@@ -289,7 +289,7 @@ public abstract class AbstractEvaluationVisitor
 	public @Nullable Object visit(@NonNull Visitable visitable) {
 		return visitable.accept(undecoratedVisitor);
 	}
-	
+
 	/**
 	 * This default implementation asserts that the <tt>constraint</tt> is
 	 * boolean-valued if it is an invariant, pre-condition, or post-condition
@@ -297,30 +297,30 @@ public abstract class AbstractEvaluationVisitor
 	 * {@link Visitable#accept(Visitor)}.
 	 */
 	@Override
-    public Object visitConstraint(@NonNull Constraint constraint) {
+	public Object visitConstraint(@NonNull Constraint constraint) {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		if (!(specification instanceof ExpressionInOCL)) {
 			return null;
 		}
 		OCLExpression body = ((ExpressionInOCL)specification).getOwnedBody();
-//		boolean isBoolean = BOOLEAN_CONSTRAINTS.contains(constraint.getStereotype());
-		
+		//		boolean isBoolean = BOOLEAN_CONSTRAINTS.contains(constraint.getStereotype());
+
 		if (body == null) {
 			throw new IllegalArgumentException("constraint has no body expression"); //$NON-NLS-1$
 		}
-		
-//		if (isBoolean && !(body.getType() != metamodelManager.getBooleanType())) {
-//			throw new IllegalArgumentException("constraint is not boolean"); //$NON-NLS-1$
-//		}
-		
+
+		//		if (isBoolean && !(body.getType() != metamodelManager.getBooleanType())) {
+		//			throw new IllegalArgumentException("constraint is not boolean"); //$NON-NLS-1$
+		//		}
+
 		Object result = body.accept(undecoratedVisitor);
-//		try {
-//			if (result == null) {
-//				return evaluationEnvironment.throwInvalidEvaluation("null constraint result");
-//			}
-			return ValueUtil.asBoolean(result);
-//		} catch (InvalidValueException e) {
-//			return e.getValue();
-//		}
+		//		try {
+		//			if (result == null) {
+		//				return evaluationEnvironment.throwInvalidEvaluation("null constraint result");
+		//			}
+		return ValueUtil.asBoolean(result);
+		//		} catch (InvalidValueException e) {
+		//			return e.getValue();
+		//		}
 	}
 } //EvaluationVisitorImpl

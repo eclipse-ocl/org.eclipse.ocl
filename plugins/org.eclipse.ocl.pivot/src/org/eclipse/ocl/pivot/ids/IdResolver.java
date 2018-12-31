@@ -63,7 +63,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull BagValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
+	@NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
 	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues);
 
@@ -75,15 +75,15 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
+	@NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
 	@NonNull SequenceValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
+	@NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
 	@NonNull SetValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues);
+	@NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
 	void dispose();
 
@@ -104,7 +104,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	/** @deprecated no longer used */
 	@Deprecated
-	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object... values);
+	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object @NonNull ... values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context);
 
@@ -138,7 +138,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value);
 
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, Object... values);
+	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 
@@ -158,5 +158,5 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull EList<Object> unboxedValuesOfAll(@NonNull Collection<? extends Object> boxedValues);
 
-	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object... boxedValues);
+	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object @NonNull ... boxedValues);
 }

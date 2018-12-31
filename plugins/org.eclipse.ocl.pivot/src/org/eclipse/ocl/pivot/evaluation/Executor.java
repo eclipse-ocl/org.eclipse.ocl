@@ -61,7 +61,7 @@ public interface Executor extends Evaluator
 	@Override
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value);
 	@Override
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values);
+	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
 	@Override
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 	void popEvaluationEnvironment();

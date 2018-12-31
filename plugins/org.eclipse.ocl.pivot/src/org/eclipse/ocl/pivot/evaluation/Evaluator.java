@@ -44,14 +44,14 @@ public interface Evaluator
 	 */
 	@Deprecated
 	int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue);
-	
+
 	/** @deprecated use Executor or EvaluationVisitor. */
 	@Deprecated
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 
-//	/** @deprecated use Executor or EvaluationVisitor. */
-//	@Deprecated
-//	@NonNull Executor getExecutor();
+	//	/** @deprecated use Executor or EvaluationVisitor. */
+	//	@Deprecated
+	//	@NonNull Executor getExecutor();
 
 	/** @deprecated use Executor or EvaluationVisitor. */
 	@Deprecated
@@ -63,7 +63,7 @@ public interface Evaluator
 	 */
 	@Deprecated
 	@Nullable EvaluationLogger getLogger();
-	
+
 	/**
 	 * Return the manager of all model instances for use by allInstances() and hidden opposite support.
 	 * @deprecated use Executor or EvaluationVisitor.
@@ -101,23 +101,23 @@ public interface Evaluator
 
 	/** @deprecated use Executor or EvaluationVisitor. */
 	@Deprecated
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values);
+	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
 
 	/** @deprecated use Executor or EvaluationVisitor. */
 	@Deprecated
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
-	
+
 	/**
 	 * Return true if the evaluation has been canceled.
 	 * @deprecated use Executor or EvaluationVisitor.
 	 */
 	@Deprecated
 	boolean isCanceled();
-	
+
 	/**
 	 * Request cancelation of the current the evaluation, or reset the request for a new evaluation.
 	 * Cancelation occurs by throwing an {@link EvaluationHaltedException} when an expression,
-	 * operation or iteration is next invoked. 
+	 * operation or iteration is next invoked.
 	 * @deprecated use Executor or EvaluationVisitor.
 	 */
 	@Deprecated

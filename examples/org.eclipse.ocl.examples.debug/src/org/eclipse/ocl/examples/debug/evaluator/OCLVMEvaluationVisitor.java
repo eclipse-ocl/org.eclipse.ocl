@@ -166,7 +166,7 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		return context.getStaticTypeOf(value, values);
 	}
 

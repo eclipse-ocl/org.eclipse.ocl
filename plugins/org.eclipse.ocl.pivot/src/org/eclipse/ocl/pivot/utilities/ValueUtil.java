@@ -553,7 +553,7 @@ public abstract class ValueUtil
 		return MapValueImpl.createMapValueOfEach(typeId, mapEntries);
 	}
 
-	public static @NonNull MapEntry createMapEntry(@NonNull Object key, @NonNull Object value) {
+	public static @NonNull MapEntry createMapEntry(@Nullable Object key, @Nullable Object value) {
 		return new MapEntryImpl(key, value);
 	}
 
