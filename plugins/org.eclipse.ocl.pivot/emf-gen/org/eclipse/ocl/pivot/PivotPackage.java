@@ -15860,13 +15860,22 @@ extends EPackage
 	int MAP_TYPE__VALUE = ITERABLE_TYPE__VALUE;
 
 	/**
+	 * The feature id for the '<em><b>Entry Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_TYPE__ENTRY_CLASS = ITERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Key Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__KEY_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 0;
+	int MAP_TYPE__KEY_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Keys Are Null Free</b></em>' attribute.
@@ -15875,7 +15884,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__KEYS_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 1;
+	int MAP_TYPE__KEYS_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Value Type</b></em>' reference.
@@ -15884,7 +15893,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__VALUE_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 2;
+	int MAP_TYPE__VALUE_TYPE = ITERABLE_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Values Are Null Free</b></em>' attribute.
@@ -15893,7 +15902,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE__VALUES_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 3;
+	int MAP_TYPE__VALUES_ARE_NULL_FREE = ITERABLE_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Map Type</em>' class.
@@ -15902,7 +15911,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int MAP_TYPE_FEATURE_COUNT = ITERABLE_TYPE_FEATURE_COUNT + 4;
+	int MAP_TYPE_FEATURE_COUNT = ITERABLE_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -27896,6 +27905,17 @@ extends EPackage
 	EClass getMapType();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.MapType#getEntryClass <em>Entry Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Entry Class</em>'.
+	 * @see org.eclipse.ocl.pivot.MapType#getEntryClass()
+	 * @see #getMapType()
+	 * @generated
+	 */
+	EReference getMapType_EntryClass();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.MapType#getKeyType <em>Key Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -31625,9 +31645,9 @@ extends EPackage
 	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Boolean is used for logical expressions, consisting of the predefined values true and false.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Boolean is used for logical expressions, consisting of the predefined values true and false.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @generated
 	 */
@@ -31637,9 +31657,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Integer is a primitive type representing integer values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Integer is a primitive type representing integer values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31670,9 +31690,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Real is a primitive type representing the mathematical concept of real.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Real is a primitive type representing the mathematical concept of real.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31683,9 +31703,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -31706,9 +31726,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * UnlimitedNatural is a primitive type representing unlimited natural values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * UnlimitedNatural is a primitive type representing unlimited natural values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -33240,6 +33260,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass MAP_TYPE = eINSTANCE.getMapType();
+
+		/**
+		 * The meta object literal for the '<em><b>Entry Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAP_TYPE__ENTRY_CLASS = eINSTANCE.getMapType_EntryClass();
 
 		/**
 		 * The meta object literal for the '<em><b>Key Type</b></em>' reference feature.

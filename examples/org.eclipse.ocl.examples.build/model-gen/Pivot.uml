@@ -687,6 +687,9 @@
     <ownedAttribute xmi:id="Ppivot.TMapType.PvaluesAreNullFree" name="valuesAreNullFree" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TMapType.PvaluesAreNullFree.dlV" value="true"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="Ppivot.TMapType.PentryClass" name="entryClass" type="Ppivot.TClass" isOrdered="true" association="Ppivot.A_entryClass_MapType">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMapType.PentryClass.lV"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TMapType.PkeyType" name="keyType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_keyType_MapType"/>
     <ownedAttribute xmi:id="Ppivot.TMapType.PvalueType" name="valueType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_valueType_MapType"/>
   </packagedElement>
@@ -1526,6 +1529,9 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_entries_ConnectionPointReference" name="A_entries_ConnectionPointReference"
       memberEnd="Ppivot.TConnectionPointReference.Pentries Ppivot.A_entries_ConnectionPointReference.Pnull">
     <ownedEnd xmi:id="Ppivot.A_entries_ConnectionPointReference.Pnull" type="Ppivot.TConnectionPointReference" association="Ppivot.A_entries_ConnectionPointReference"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_entryClass_MapType" name="A_entryClass_MapType" memberEnd="Ppivot.TMapType.PentryClass Ppivot.A_entryClass_MapType.Pnull">
+    <ownedEnd xmi:id="Ppivot.A_entryClass_MapType.Pnull" type="Ppivot.TMapType" association="Ppivot.A_entryClass_MapType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_exits_ConnectionPointReference" name="A_exits_ConnectionPointReference"
       memberEnd="Ppivot.TConnectionPointReference.Pexits Ppivot.A_exits_ConnectionPointReference.Pnull">

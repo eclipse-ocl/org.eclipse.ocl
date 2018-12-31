@@ -573,7 +573,11 @@
       <details key="documentation" value="A DataType is a type whose instances are identified only by their value."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-DataType-behavioralClass"
-        name="behavioralClass" eType="#T-pivot-Class"/>
+        name="behavioralClass" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-isSerializable"
         name="isSerializable" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-value"
@@ -1552,6 +1556,12 @@
         name="ownedValue" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-IterableType">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-entryClass"
+        name="entryClass" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A type for an entry that may allow an external syntax serialization as a set-of-entryClass."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-keyType"
         name="keyType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>

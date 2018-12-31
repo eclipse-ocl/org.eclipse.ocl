@@ -72,6 +72,9 @@ extends org.eclipse.ocl.pivot.Class {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Behavioral Class</em>' reference.
 	 * @see #setBehavioralClass(org.eclipse.ocl.pivot.Class)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getDataType_BehavioralClass()

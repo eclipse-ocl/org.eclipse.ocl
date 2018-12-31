@@ -3151,7 +3151,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getMapType_KeyType()
+	public EReference getMapType_EntryClass()
 	{
 		return (EReference)mapTypeEClass.getEStructuralFeatures().get(0);
 	}
@@ -3162,9 +3162,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EReference getMapType_KeyType()
+	{
+		return (EReference)mapTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EAttribute getMapType_KeysAreNullFree()
 	{
-		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3175,7 +3186,7 @@ implements PivotPackage  {
 	@Override
 	public EReference getMapType_ValueType()
 	{
-		return (EReference)mapTypeEClass.getEStructuralFeatures().get(2);
+		return (EReference)mapTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3186,7 +3197,7 @@ implements PivotPackage  {
 	@Override
 	public EAttribute getMapType_ValuesAreNullFree()
 	{
-		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -7349,6 +7360,7 @@ implements PivotPackage  {
 		createEReference(mapLiteralPartEClass, MAP_LITERAL_PART__OWNED_VALUE);
 
 		mapTypeEClass = createEClass(MAP_TYPE);
+		createEReference(mapTypeEClass, MAP_TYPE__ENTRY_CLASS);
 		createEReference(mapTypeEClass, MAP_TYPE__KEY_TYPE);
 		createEAttribute(mapTypeEClass, MAP_TYPE__KEYS_ARE_NULL_FREE);
 		createEReference(mapTypeEClass, MAP_TYPE__VALUE_TYPE);
@@ -8676,6 +8688,7 @@ implements PivotPackage  {
 		initEReference(getMapLiteralPart_OwnedValue(), this.getOCLExpression(), null, "ownedValue", null, 1, 1, MapLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mapTypeEClass, MapType.class, "MapType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getMapType_EntryClass(), this.getClass_(), null, "entryClass", null, 0, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMapType_KeyType(), this.getType(), null, "keyType", null, 1, 1, MapType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getMapType_KeysAreNullFree(), this.getBoolean(), "keysAreNullFree", "true", 1, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getMapType_ValueType(), this.getType(), null, "valueType", null, 1, 1, MapType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
