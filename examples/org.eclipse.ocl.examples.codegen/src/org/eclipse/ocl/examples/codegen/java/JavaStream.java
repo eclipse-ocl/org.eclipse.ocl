@@ -528,7 +528,9 @@ public class JavaStream
 			}
 			else if (className.contains(".")){
 				s.append(ImportUtils.getAffixedName(className));
-				cg2java.addImport(className);
+				if (isRequired == null) {
+					cg2java.addImport(className);
+				}
 			}
 			else {
 				s.append(className);
@@ -541,7 +543,7 @@ public class JavaStream
 				Class<? extends Annotation> annotationClass = isRequired ? NonNull.class : Nullable.class;
 				String annotationClassName = annotationClass.getName();
 				assert annotationClassName != null;
-				cg2java.addImport(annotationClassName);
+				//	cg2java.addImport(annotationClassName);
 				String annotation = "@" + annotationClass.getName() + " ";
 				int index = resolvedClassName.lastIndexOf(".");
 				if (index < 0) {
