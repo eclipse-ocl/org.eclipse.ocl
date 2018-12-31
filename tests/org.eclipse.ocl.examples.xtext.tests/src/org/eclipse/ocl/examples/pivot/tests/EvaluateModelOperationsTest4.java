@@ -11,8 +11,6 @@
 
 package org.eclipse.ocl.examples.pivot.tests;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -69,9 +68,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		super(useCodeGen);
 	}
 
-	@Override
-	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+	protected @NonNull TestOCL createOCLWithProjectMap() {
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap());
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	/**
 	 * Test that Ecore Data Types can be used. Inspired by Bug 358713.
 	 */
-	@Test public void test_ecoreDataTypes() throws IOException {
+	@Test public void test_ecoreDataTypes() throws Exception {
 		TestOCL ocl = createOCL();
 		String metamodelText =
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
@@ -276,7 +274,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	/**
 	 * Test implicit collect and oclAsSet() therein. Inspired by Bug 351512.
 	 */
-	@Test public void test_oclAsSet_351512() throws IOException {
+	@Test public void test_oclAsSet_351512() throws Exception {
 		TestOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		String metamodelText =
@@ -333,7 +331,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	/**
 	 * Test container/containment navigation.
 	 */
-	@Test public void test_containment_navigation() throws IOException {
+	@Test public void test_containment_navigation() throws Exception {
 		TestOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		String metamodelText =
@@ -437,7 +435,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	/**
 	 * Tests that boxed Enumerations are navigable
 	 */
-	@Test public void test_enumeration_navigation() throws InvocationTargetException {
+	@Test public void test_enumeration_navigation() throws Exception {
 		TestOCL ocl = createOCL();
 		if (!useCodeGen) {			// FIXME BUG 458359
 			ocl.assertQueryResults(CompanyPackage.Literals.COMPANY_SIZE_KIND, "Sequence{'small','medium','large'}", "self.eLiterals.name");
@@ -449,9 +447,24 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	}
 
 	/**
+	 * Test that Ecore Maps are loaded for MapValue evaluation.
+	 */
+	@Test public void test_maps() throws Exception {
+		TestOCL ocl = createOCLWithProjectMap();
+		URI uri = URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/Ecore.ecore", true);
+		EObject ePackage = ocl.getResourceSet().getEObject(uri.appendFragment("/"), true);
+		//
+		ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name'}",
+				"self.eClassifiers.eAnnotations.details->collect(m | m->collect(k <- v | k))->asSet()");
+		//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name','suppressedIsSetVisibility','suppressedUnsetVisibility'}",
+		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k <- v | k))->asSet()");
+		ocl.dispose();
+	}
+
+	/**
 	 * Test multi-container navigation inspired by Bug 394152.
 	 */
-	@Test public void test_multi_container_394152() throws IOException {
+	@Test public void test_multi_container_394152() throws Exception {
 		TestOCL ocl = createOCL();
 		String metamodelText =
 				"package bug394152 : pfx = 'http://bug394152'\n" +
@@ -484,7 +497,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test public void test_unified_types_411441() {
+	@Test public void test_unified_types_411441() throws Exception {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
@@ -499,7 +512,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	}
 
 	@Test
-	public void test_ecore_collection_equality() {
+	public void test_ecore_collection_equality() throws Exception {
 		TestOCL ocl = createOCL();
 		//
 		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
@@ -542,7 +555,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	}
 
 	@Test
-	public void test_ecore_number_equality() {
+	public void test_ecore_number_equality() throws Exception {
 		TestOCL ocl = createOCL();
 		//
 		ocl.assertQueryOCLEquals(null, Byte.valueOf((byte)255), "-1");

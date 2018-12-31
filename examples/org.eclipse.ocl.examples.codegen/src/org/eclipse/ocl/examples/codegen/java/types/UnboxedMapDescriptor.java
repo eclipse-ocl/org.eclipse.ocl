@@ -4,22 +4,26 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
 
-import java.util.List;
-
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
+import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -33,7 +37,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull Type keyType;
 	protected final @NonNull Type valueType;
-	
+
 	public UnboxedMapDescriptor(@NonNull MapTypeId mapTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type keyType, @NonNull Type valueType) {
 		super(mapTypeId);
 		this.standardLibrary = standardLibrary;
@@ -42,8 +46,39 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public void append(@NonNull JavaStream javaStream, @Nullable Boolean isRequired) {
-		javaStream.appendClassReference(List.class, true, Object.class);
+	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
+		if (isRequired != null) {
+			js.appendIsRequired(isRequired);
+			js.append(" ");
+		}
+		js.appendClassReference(EMap.class, true, Object.class, Object.class);
+	}
+
+	@Override
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+		TypeId typeId = unboxedValue.getASTypeId();
+		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;;
+		js.appendDeclaration(cgBoxExp);
+		js.append(" = ");
+		if (!unboxedValue.isNonNull()) {
+			js.appendReferenceTo(unboxedValue);
+			js.append(" == null ? null : ");
+		}
+		js.appendReferenceTo(localContext.getIdResolverVariable(cgBoxExp));
+		js.append(".createMapOfAll(");
+		js.appendIdReference(mapTypeId != null ? mapTypeId.getKeyTypeId() : null);
+		js.append(", ");
+		js.appendIdReference(mapTypeId != null ? mapTypeId.getValueTypeId() : null);
+		js.append(", ");
+		js.appendAtomicReferenceTo(null, EMap.class, true, unboxedValue, Object.class, Object.class);
+		js.append(".map());\n");
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
+		// FIXME It seems unliklely that weshould ever want to create an EMap. Rather we might want to unbox a MapValue into an existing EMap.
+		return super.appendEcore(js, localContext, cgEcoreExp, nonEcoreValue);
 	}
 
 	@Override
@@ -100,6 +135,6 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	@Override
 	public void append(@NonNull JavaStream javaStream, boolean reClass) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

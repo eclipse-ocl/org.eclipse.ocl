@@ -489,7 +489,7 @@ public abstract class ValueUtil
 		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
-	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
+	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... values) {
 		Bag<Object> allValues = new BagImpl<Object>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -577,7 +577,7 @@ public abstract class ValueUtil
 		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... values) {
 		OrderedSet<Object> allValues = new OrderedSetImpl<Object>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -610,7 +610,7 @@ public abstract class ValueUtil
 		return new RangeSequenceValueImpl(typeId, range);
 	}
 
-	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... values) {
 		List<Object> allValues = new ArrayList<Object>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -642,7 +642,7 @@ public abstract class ValueUtil
 		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
 
-	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... values) {
 		Set<Object> allValues = new HashSet<Object>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {

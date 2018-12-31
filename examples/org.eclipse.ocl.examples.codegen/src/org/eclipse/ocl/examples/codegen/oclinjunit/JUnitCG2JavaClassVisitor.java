@@ -49,7 +49,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		js.appendCommentWithOCL(title, expInOcl);
 		String className = cgClass.getName();
 		assert className != null;
-		js.append("@SuppressWarnings(\"nls\")\n");
+		//	js.append("@SuppressWarnings(\"nls\")\n");
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(baseClass);
 		js.pushClassBody(className);

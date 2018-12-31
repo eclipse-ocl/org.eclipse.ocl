@@ -198,6 +198,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	 */
 	protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
+		String name = asProperty.getName();
+		if ("details".equals(name)) {
+			getClass();
+		}
 		assert getESObject(asProperty) == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
 		//
 		if (source == null) {

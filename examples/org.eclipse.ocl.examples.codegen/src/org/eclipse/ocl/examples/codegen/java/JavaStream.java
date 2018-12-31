@@ -232,6 +232,26 @@ public class JavaStream
 		}
 	}
 
+	public void appendAtomicReferenceTo(@Nullable Boolean isRequired, @NonNull Class<?> requiredClass, boolean useExtends, @Nullable CGValuedElement cgValue, @NonNull Class<?>... typeParameters) {
+		if (cgValue == null) {
+			append("<<null-appendAtomicReferenceTo>>");
+		}
+		else {
+			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
+			Class<?> actualClass = actualTypeDescriptor.getJavaClass();
+			if (cgValue.getNamedValue().isCaught() || !requiredClass.isAssignableFrom(actualClass)) {
+				append("((");
+				appendClassReference(isRequired, requiredClass, useExtends, typeParameters);
+				append(")");
+				appendValueName(cgValue);
+				append(")");
+			}
+			else {
+				appendValueName(cgValue);
+			}
+		}
+	}
+
 	public void appendAtomicReferenceTo(@NonNull TypeDescriptor requiredTypeDescriptor, @Nullable CGValuedElement cgValue) {
 		if (cgValue == null) {
 			append("<<null-appendAtomicReferenceTo>>");

@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -458,6 +459,19 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			return createCollectionOfAll((CollectionTypeId)typeId, unboxedValues);
 		}
+		else if (typeId instanceof MapTypeId) {
+			MapTypeId mapTypeId = (MapTypeId)typeId;
+			@NonNull Map<?,?> unboxedMap;
+			if (unboxedValue instanceof EMap) {
+				@SuppressWarnings("null")
+				@NonNull Map<?, ?> map = ((@NonNull EMap<?,?>)unboxedValue).map();
+				unboxedMap = map;
+			}
+			else {
+				unboxedMap = (Map<?,?>)unboxedValue;
+			}
+			return createMapOfAll(mapTypeId.getKeyTypeId(), mapTypeId.getValueTypeId(), unboxedMap);
+		}
 		else {
 			return boxedValueOf(unboxedValue, eClassifier);
 		}
@@ -575,9 +589,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> unboxedValues) {
+	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<?, ?> unboxedValues) {
 		Map<Object, Object> boxedValues = new HashMap<Object, Object>();
-		for (Map.Entry<Object, Object> unboxedValue : unboxedValues.entrySet()) {
+		for (Map.Entry<?, ?> unboxedValue : unboxedValues.entrySet()) {
 			boxedValues.put(boxedValueOf(unboxedValue.getKey()), boxedValueOf(unboxedValue.getValue()));
 		}
 		return ValueUtil.createMapValue(keyTypeId, valueTypeId, boxedValues);
