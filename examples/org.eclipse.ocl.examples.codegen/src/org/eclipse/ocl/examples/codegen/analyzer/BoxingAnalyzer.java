@@ -226,10 +226,14 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if (cgChild == null) {
 			return cgChild;
 		}
-		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
-		CGUtil.wrap(cgCastExp, cgChild);
+		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgChild);
+		if (typeDescriptor.getJavaClass() == Object.class) {
+			return cgChild;
+		}
 		TypedElement pivot = (TypedElement) cgChild.getAst();
 		Type asType = pivot.getType();
+		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
+		CGUtil.wrap(cgCastExp, cgChild);
 		cgCastExp.setAst(pivot);
 		if (asType != null) {
 			CGExecutorType cgExecutorType = context.createExecutorType(asType);
