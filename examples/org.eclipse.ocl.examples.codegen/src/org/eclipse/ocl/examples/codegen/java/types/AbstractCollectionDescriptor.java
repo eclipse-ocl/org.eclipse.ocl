@@ -75,7 +75,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOfAll(");
 		//		js.appendIdReference(typeId);
-		js.appendClassReference(ecoreDescriptor);
+		js.appendClassReference(null, ecoreDescriptor);
 		js.append(".class, ");
 		js.appendReferenceTo(Iterable.class, nonEcoreValue);
 		js.append(")");

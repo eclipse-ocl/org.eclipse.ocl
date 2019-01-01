@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class DoublePrimitiveDescriptor extends AbstractPrimitiveDescriptor
 		}
 		else {
 			js.append("(");
-			js.appendClassReference(Double.class);
+			js.appendClassReference(null, Double.class);
 			js.append(")");
 			if (subStream != null) {
 				subStream.append();

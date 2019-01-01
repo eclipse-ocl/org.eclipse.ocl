@@ -26,20 +26,16 @@ public class LookupQualifiedCG2JavaVisitor  extends LookupVisitorsCG2JavaVisitor
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
-	
+
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("protected ");
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(context.getVisitorResultClass());
+		js.appendClassReference(false, context.getVisitorResultClass());
 		js.append(" doVisiting(");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.appendClassReference(context.getVisitableClass());
+		js.appendClassReference(true, context.getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("return context;\n");

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,7 +32,7 @@ public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor impl
 {
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull Type type;
-	
+
 	public UnboxedElementsDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		super(collectionTypeId);
 		this.standardLibrary = standardLibrary;
@@ -40,8 +40,8 @@ public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor impl
 	}
 
 	@Override
-	public void append(@NonNull JavaStream javaStream, @Nullable Boolean isRequired) {
-		javaStream.appendClassReference(List.class, true, Object.class);
+	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
+		js.appendClassReference(isRequired, List.class, true, Object.class);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor impl
 
 	@Override
 	public void appendElement(@NonNull JavaStream javaStream, boolean reClass) {
-		javaStream.appendClassReference(getJavaClass());
+		javaStream.appendClassReference(null, getJavaClass());
 	}
 
 	@Override

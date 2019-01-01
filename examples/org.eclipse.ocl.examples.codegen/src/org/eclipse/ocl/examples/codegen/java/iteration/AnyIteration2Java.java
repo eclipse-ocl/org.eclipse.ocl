@@ -32,7 +32,7 @@ public class AnyIteration2Java extends AbstractIteration2Java
 			js.append("if (");
 			js.appendValueName(cgBody);
 			js.append(" != ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".FALSE_VALUE) {			// Carry on till something found\n");
 			js.pushIndentation(null);
 			js.appendValueName(cgIterationCallExp);
@@ -52,7 +52,7 @@ public class AnyIteration2Java extends AbstractIteration2Java
 	@Override
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		js.append("throw new ");
-		js.appendClassReference(InvalidValueException.class);
+		js.appendClassReference(null, InvalidValueException.class);
 		js.append("(\"Nothing to return for ''any''\");\n");
 		return false;
 	}

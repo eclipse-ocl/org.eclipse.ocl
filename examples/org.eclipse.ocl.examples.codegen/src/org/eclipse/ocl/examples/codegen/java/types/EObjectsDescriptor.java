@@ -48,12 +48,12 @@ public class EObjectsDescriptor extends AbstractCollectionDescriptor implements 
 
 	@Override
 	public void append(@NonNull JavaStream javaStream, boolean reClass) {
-		javaStream.appendClassReference(List.class, javaClass != oldJavaClass, reClass ? javaClass : oldJavaClass);
+		javaStream.appendClassReference(null, List.class, javaClass != oldJavaClass, reClass ? javaClass : oldJavaClass);
 	}
 
 	@Override
 	public void appendElement(@NonNull JavaStream javaStream, boolean reClass) {
-		javaStream.appendClassReference(reClass ? javaClass : oldJavaClass);
+		javaStream.appendClassReference(null, reClass ? javaClass : oldJavaClass);
 	}
 
 	@Override

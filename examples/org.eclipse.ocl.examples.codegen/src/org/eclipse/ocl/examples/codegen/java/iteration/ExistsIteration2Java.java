@@ -30,7 +30,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 
 	@Override
 	public void appendAccumulatorInit(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".FALSE_VALUE");
 	}
 
@@ -52,19 +52,19 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 		js.append("if (");
 		js.appendValueName(cgAccumulator);
 		js.append(" == ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".FALSE_VALUE) {\n");
 		js.pushIndentation(null);
 		js.appendValueName(cgIterationCallExp);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".FALSE_VALUE;\n");
 		js.popIndentation();
 		js.append("}\n");
 		js.append("else {\n");
 		js.pushIndentation(null);
 		js.append("throw (");
-		js.appendClassReference(InvalidValueException.class);
+		js.appendClassReference(null, InvalidValueException.class);
 		js.append(")");
 		js.appendValueName(cgAccumulator);
 		js.append(";\n");
@@ -82,14 +82,14 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 		if (cgBody.isTrue()) {
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".TRUE_VALUE;\n");
 			js.append("break;\n");
 		}
 		else if (cgBody.isFalse()) {
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".FALSE_VALUE;\n");
 			js.append("break;\n");
 		}
@@ -111,12 +111,12 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.append("if (");
 			js.appendValueName(cgBody);
 			js.append(" == ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".TRUE_VALUE) {					// Normal successful body evaluation result\n");
 			js.pushIndentation(null);
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".TRUE_VALUE;\n");
 			js.append("break;														// Stop immediately \n");
 			js.popIndentation();
@@ -125,7 +125,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.append("else if (");
 			js.appendValueName(cgBody);
 			js.append(" == ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".FALSE_VALUE) {				// Normal unsuccessful body evaluation result\n");
 			js.pushIndentation(null);
 			js.append(";															// Carry on\n");
@@ -140,7 +140,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 				js.append("if (");
 				js.appendValueName(cgAccumulator);
 				js.append(" == ");
-				js.appendClassReference(ValueUtil.class);
+				js.appendClassReference(null, ValueUtil.class);
 				js.append(".FALSE_VALUE) {\n");
 				js.pushIndentation(null);
 				js.appendValueName(cgAccumulator);
@@ -155,7 +155,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 				js.append("else if (");
 				js.appendValueName(cgBody);
 				js.append(" instanceof ");
-				js.appendClassReference(InvalidValueException.class);
+				js.appendClassReference(null, InvalidValueException.class);
 				js.append(") {		// Abnormal exception evaluation result\n");
 				js.pushIndentation(null);
 				js.appendValueName(cgAccumulator);
@@ -170,9 +170,9 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.pushIndentation(null);
 			js.appendValueName(cgAccumulator);
 			js.append(" = new ");
-			js.appendClassReference(InvalidValueException.class);
+			js.appendClassReference(null, InvalidValueException.class);
 			js.append("(");
-			js.appendClassReference(PivotMessages.class);
+			js.appendClassReference(null, PivotMessages.class);
 			js.append(".NonBooleanBody, \"exists\");\n");
 			js.popIndentation();
 			js.append("}\n");

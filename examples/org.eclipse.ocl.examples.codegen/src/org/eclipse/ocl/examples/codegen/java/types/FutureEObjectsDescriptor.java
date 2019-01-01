@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,7 +32,7 @@ public class FutureEObjectsDescriptor extends AbstractCollectionDescriptor imple
 {
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull String className;
-	
+
 	public FutureEObjectsDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull EClassifier eClassifier, @NonNull String className) {
 		super(collectionTypeId);
 		this.eClassifier = eClassifier;
@@ -41,14 +41,14 @@ public class FutureEObjectsDescriptor extends AbstractCollectionDescriptor imple
 
 	@Override
 	public void append(@NonNull JavaStream javaStream, @Nullable Boolean isRequired) {
-		javaStream.appendClassReference(List.class, false, className);
+		javaStream.appendClassReference(isRequired, List.class, false, className);
 	}
 
 	@Override
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass) {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull String getClassName() {
 		return className;

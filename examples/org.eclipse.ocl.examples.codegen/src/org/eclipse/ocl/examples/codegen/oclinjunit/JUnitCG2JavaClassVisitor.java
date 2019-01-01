@@ -51,7 +51,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
 		js.append("public class " + className + " extends ");
-		js.appendClassReference(baseClass);
+		js.appendClassReference(null, baseClass);
 		js.pushClassBody(className);
 		if (sortedGlobals != null) {
 			generateGlobals(sortedGlobals);

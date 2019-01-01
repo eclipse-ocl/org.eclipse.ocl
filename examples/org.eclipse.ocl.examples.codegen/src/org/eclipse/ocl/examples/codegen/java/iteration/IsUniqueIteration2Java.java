@@ -31,7 +31,7 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 	public void appendAccumulatorInit(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGTypeId cgAccumulatorId = cgIterationCallExp.getSource().getTypeId();
 		ElementId elementId = cgAccumulatorId.getElementId();			// MapTypeId or CollectionTypeId
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".createSetAccumulatorValue(");
 		js.appendIdReference(elementId != null ? elementId : TypeId.OCL_VOID);
 		js.append(")");
@@ -51,13 +51,13 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 		js.append(".includes(");
 		js.appendValueName(cgBody);
 		js.append(") == ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".TRUE_VALUE) {\n");
 		{
 			js.pushIndentation(null);
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".FALSE_VALUE;			// Abort after second find\n");
 			js.append("break;\n");
 			js.popIndentation();

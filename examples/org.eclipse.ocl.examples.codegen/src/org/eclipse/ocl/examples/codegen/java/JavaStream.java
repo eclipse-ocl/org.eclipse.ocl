@@ -193,7 +193,7 @@ public class JavaStream
 		if (cgInvalidValue != null) {
 			append("throw ");
 			//			append("(");
-			//			appendClassReference(InvalidValueException.class);
+			//			appendClassReference(null, InvalidValueException.class);
 			//			append(")");
 			appendValueName(cgInvalidValue);
 			append(";\n");
@@ -221,7 +221,7 @@ public class JavaStream
 			Class<?> actualClass = actualTypeDescriptor.getJavaClass();
 			if (cgValue.getNamedValue().isCaught() || !requiredClass.isAssignableFrom(actualClass)) {
 				append("((");
-				appendClassReference(requiredClass.getName());
+				appendClassReference(null, requiredClass.getName());
 				append(")");
 				appendValueName(cgValue);
 				append(")");
@@ -365,11 +365,7 @@ public class JavaStream
 			append("<<null->>");
 		}
 		else if (cgValue.getNamedValue().isCaught()) {
-			if (isRequired != null) {
-				appendIsRequired(isRequired);
-				append(" ");
-			}
-			appendClassReference(Object.class);
+			appendClassReference(isRequired, Object.class);
 		}
 		else {
 			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
@@ -383,10 +379,7 @@ public class JavaStream
 		}
 	}
 
-	/**
-	 * deprecated Provide isRequired argument.
-	 */
-	//@Deprecated
+	@Deprecated /* @deprecated not used, provide isRequired argument */
 	public void appendClassReference(@Nullable Class<?> javaClass) {
 		appendClassReference(null, javaClass);
 	}
@@ -410,14 +403,11 @@ public class JavaStream
 				appendIsRequired(isRequired);
 				append(" ");
 			}
-			appendClassReference(Object.class);
+			appendClassReference(null, Object.class);
 		}
 	}
 
-	/**
-	 * deprecated Provide isRequired argument.
-	 */
-	//@Deprecated
+	@Deprecated /* @deprecated not used, provide isRequired argument */
 	public void appendClassReference(@NonNull TypeDescriptor typeDescriptor) {
 		appendClassReference(null, typeDescriptor);
 	}
@@ -425,16 +415,14 @@ public class JavaStream
 		typeDescriptor.append(this, isRequired);
 	}
 
+	@Deprecated /* @deprecated not used, provide isRequired, useExtends arguments */
 	public void appendClassReference(@Nullable Class<?> javaClass, @NonNull Class<?>... typeParameters) {
-		if (javaClass != null) {
-			appendClassReference(javaClass.getName());
-			appendTypeParameters(false, typeParameters);
-		}
-		else {
-			appendClassReference(Object.class);
-		}
+		appendClassReference(null, javaClass, false, typeParameters);
 	}
-
+	@Deprecated /* @deprecated not used, provide isRequired argument */
+	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
+		appendClassReference(null, javaClass, useExtends, typeParameters);
+	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
@@ -445,23 +433,17 @@ public class JavaStream
 		}
 	}
 
-	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
-		if (javaClass != null) {
-			appendClassReference(javaClass.getName());
-			appendTypeParameters(useExtends, typeParameters);
-		}
-		else {
-			appendClassReference(Object.class);
-		}
-	}
-
+	@Deprecated /* @deprecated not used, provide isRequired argument */
 	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull String... typeParameters) {
+		appendClassReference(null, javaClass, useExtends, typeParameters);
+	}
+	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull String... typeParameters) {
 		if (javaClass != null) {
-			appendClassReference(javaClass.getName());
+			appendClassReference(isRequired, javaClass.getName());
 			appendTypeParameters(useExtends, typeParameters);
 		}
 		else {
-			appendClassReference(Object.class);
+			appendClassReference(isRequired, Object.class);
 		}
 	}
 
@@ -475,14 +457,11 @@ public class JavaStream
 		}
 	} */
 
-	/**
-	 * @deprecated Provide isRequired argument.
-	 */
-	@Deprecated
-	public void appendClassReference(Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor @NonNull ... typeDescriptors) {
+	@Deprecated /* @deprecated not used, provide isRequired argument */
+	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
 		appendClassReference(null, javaClass, useExtends, typeDescriptors);
 	}
-	public void appendClassReference(Boolean isRequired, Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
+	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
 			if (typeDescriptors != null) {
@@ -508,14 +487,14 @@ public class JavaStream
 			}
 		}
 		else {
-			appendClassReference(Object.class);
+			appendClassReference(null, Object.class);
 		}
 	}
 
+	@Deprecated /* @deprecated not used, provide isRequired argument */
 	public void appendClassReference(@Nullable String className) {
 		appendClassReference(null, className);
 	}
-
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		if (className != null) {
 			StringBuilder s = new StringBuilder();
@@ -562,7 +541,7 @@ public class JavaStream
 		if ((cgPackage != null) && (cgPackage.getName() != null)) {
 			appendQualifyingPackage(s, cgPackage);
 			s.append(cgClass.getName());
-			appendClassReference(s.toString());
+			appendClassReference(null, s.toString());
 			List<CGClass> cgTemplateParameters = cgClass.getTemplateParameters();
 			if (cgTemplateParameters.size() > 0) {
 				append("<");
@@ -641,7 +620,7 @@ public class JavaStream
 		}
 		else if (javaClass == null) {
 			append("(");
-			appendClassReference(returnClassName);
+			appendClassReference(null, returnClassName);
 			append(")");
 			appendValueName(cgValue);
 		}
@@ -654,13 +633,13 @@ public class JavaStream
 			}
 			else if (javaClass == Number.class) {						// Real or Integer or UnlimitedNatural (source isn't a Character but target may be)
 				if ("java.math.BigDecimal".equals(returnClassName)) {
-					appendClassReference(ValueUtil.class);
+					appendClassReference(null, ValueUtil.class);
 					append(".bigDecimalValueOf(");
 					appendValueName(cgValue);
 					append(")");
 				}
 				else if ("java.math.BigInteger".equals(returnClassName)) {
-					appendClassReference(ValueUtil.class);
+					appendClassReference(null, ValueUtil.class);
 					append(".bigIntegerValueOf(");
 					appendValueName(cgValue);
 					append(")");
@@ -671,7 +650,7 @@ public class JavaStream
 					append(".intValue()");
 				}
 				else if ("java.lang.Character".equals(returnClassName)) {
-					appendClassReference(Character.class);
+					appendClassReference(null, Character.class);
 					append(".valueOf((char)");
 					appendAtomicReferenceTo(cgValue);
 					append(".intValue())");
@@ -727,19 +706,19 @@ public class JavaStream
 					|| (javaClass == long.class)
 					|| (javaClass == short.class)) {
 				if ("java.math.BigDecimal".equals(returnClassName)) {
-					appendClassReference(ValueUtil.class);
+					appendClassReference(null, ValueUtil.class);
 					append(".bigDecimalValueOf(");
 					appendValueName(cgValue);
 					append(")");
 				}
 				else if ("java.math.BigInteger".equals(returnClassName)) {
-					appendClassReference(ValueUtil.class);
+					appendClassReference(null, ValueUtil.class);
 					append(".bigIntegerValueOf(");
 					appendValueName(cgValue);
 					append(")");
 				}
 				else if ("char".equals(returnClassName) || "java.lang.Character".equals(returnClassName)) {
-					appendClassReference(ValueUtil.class);
+					appendClassReference(null, ValueUtil.class);
 					append(".characterValueOf(");
 					appendValueName(cgValue);
 					append(")");
@@ -790,7 +769,7 @@ public class JavaStream
 			}
 			else {
 				append("(");
-				appendClassReference(returnClassName);
+				appendClassReference(null, returnClassName);
 				append(")");
 				appendValueName(cgValue);
 			}
@@ -801,7 +780,7 @@ public class JavaStream
 	}
 
 	public void appendFalse() {
-		appendClassReference(ValueUtil.class);
+		appendClassReference(null, ValueUtil.class);
 		append(".FALSE_VALUE");
 	}
 
@@ -839,7 +818,7 @@ public class JavaStream
 		}
 		else {
 			append("@");
-			appendClassReference(isRequired ? AbstractCodeGenerator.ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL
+			appendClassReference(null, isRequired ? AbstractCodeGenerator.ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL
 				: AbstractCodeGenerator.ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE);
 		}
 	}
@@ -864,7 +843,7 @@ public class JavaStream
 			if (genPackage != null) {
 				String qualifiedPackageName = genPackage.getQualifiedPackageName() + AbstractGenModelHelper.TABLES_PACKAGE_NAME;
 				String tablesClassName = genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
-				appendClassReference(qualifiedPackageName + "." + tablesClassName);
+				appendClassReference(null, qualifiedPackageName + "." + tablesClassName);
 				append(".Operations._" + type.getName() + "__" + AbstractGenModelHelper.encodeName(anOperation));
 			}
 		}
@@ -890,7 +869,7 @@ public class JavaStream
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			if (cgValue.getNamedValue().isCaught() || !actualTypeDescriptor.isAssignableTo(requiredClass)) {
 				append("(");
-				appendClassReference(requiredClass.getName());
+				appendClassReference(null, requiredClass.getName());
 				append(")");
 			}
 			appendValueName(cgValue);
@@ -956,7 +935,7 @@ public class JavaStream
 	}
 
 	public boolean appendThrowBooleanInvalidValueException(/*@NonNull*/ String message, @NonNull String... arguments) {
-		appendClassReference(ValueUtil.class);
+		appendClassReference(null, ValueUtil.class);
 		append(".throwBooleanInvalidValueException(");
 		appendString(ClassUtil.nonNullState(message));
 		for (String argument : arguments) {
@@ -969,7 +948,7 @@ public class JavaStream
 
 	public boolean appendThrowInvalidValueException(/*@NonNull*/ String message, @NonNull String... arguments) {
 		append("throw new ");
-		appendClassReference(InvalidValueException.class);
+		appendClassReference(null, InvalidValueException.class);
 		append("(");
 		appendString(ClassUtil.nonNullState(message));
 		for (String argument : arguments) {
@@ -981,7 +960,7 @@ public class JavaStream
 	}
 
 	public void appendTrue() {
-		appendClassReference(ValueUtil.class);
+		appendClassReference(null, ValueUtil.class);
 		append(".TRUE_VALUE");
 	}
 
@@ -1003,7 +982,7 @@ public class JavaStream
 				if (useExtends) {
 					append("? extends ");
 				}
-				appendClassReference(typeParameters[i]);
+				appendClassReference(null, typeParameters[i]);
 			}
 			append(">");
 		}
@@ -1019,7 +998,7 @@ public class JavaStream
 				if (useExtends) {
 					append("? extends ");
 				}
-				appendClassReference(typeParameters[i]);
+				appendClassReference(null, typeParameters[i]);
 			}
 			append(">");
 		}

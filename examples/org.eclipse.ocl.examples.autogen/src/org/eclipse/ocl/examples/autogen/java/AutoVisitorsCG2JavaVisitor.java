@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (University of York) - Lookup Environment/Visitor
@@ -25,7 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public abstract class AutoVisitorsCG2JavaVisitor<@NonNull CG extends AutoVisitorsCodeGenerator> extends AutoCG2JavaVisitor<CG>
 {
-	
+
 	public AutoVisitorsCG2JavaVisitor(@NonNull CG codeGenerator, @NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
@@ -38,7 +38,7 @@ public abstract class AutoVisitorsCG2JavaVisitor<@NonNull CG extends AutoVisitor
 			doVisiting(cgClass);
 		}
 	}
-	
+
 	/**
 	 * Derived classes might override
 	 * @param cgClass
@@ -47,13 +47,9 @@ public abstract class AutoVisitorsCG2JavaVisitor<@NonNull CG extends AutoVisitor
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("public ");
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(context.getVisitorResultClass());
+		js.appendClassReference(false, context.getVisitorResultClass());
 		js.append(" visiting(");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.appendClassReference(context.getVisitableClass());
+		js.appendClassReference(true, context.getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("throw new UnsupportedOperationException(\"");

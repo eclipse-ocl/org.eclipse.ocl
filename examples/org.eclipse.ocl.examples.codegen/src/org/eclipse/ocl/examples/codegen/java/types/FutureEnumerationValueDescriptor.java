@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,28 +32,28 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 {
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull String className;
-	
+
 	public FutureEnumerationValueDescriptor(@NonNull ElementId elementId, @NonNull EClassifier eClassifier, @NonNull String className) {
 		super(elementId, EnumerationLiteralId.class);
 		this.eClassifier = eClassifier;
 		this.className = className;
 	}
 
-//	@Override
-//	public void append(@NonNull JavaStream js) {
-//		js.appendClassReference(className);
-//	}
-	
+	//	@Override
+	//	public void append(@NonNull JavaStream js) {
+	//		js.appendClassReference(null, className);
+	//	}
+
 	@Override
 	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
-		js.appendClassReference(className);
+		js.appendClassReference(null, className);
 		js.append(")");
 		js.appendReferenceTo(localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOf(");
-		js.appendClassReference(Enumerator.class);
+		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
 		js.appendValueName(boxedValue);
 		js.append(");\n");
@@ -67,12 +67,12 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 		js.append(notEquals ? " != " : " == ");
 		js.appendValueName(thatValue);
 	}
-	
+
 	@Override
 	protected @NonNull EcoreDescriptor createEcoreDescriptor() {
 		return new FutureEnumerationObjectDescriptor(elementId, className);
 	}
-	
+
 	@Override
 	protected @NonNull UnboxedDescriptor createUnboxedDescriptor() {
 		return new FutureEnumerationObjectDescriptor(elementId, className);
@@ -89,28 +89,28 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 		return eClassifier;
 	}
 
-//	@Override
-//	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass) {
-//		return this;
-//	}
+	//	@Override
+	//	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass) {
+	//		return this;
+	//	}
 
 	@Override
 	public @NonNull Class<?> getJavaClass() {
 		return NamedFuture.class;
 	}
 
-//	@Override
-//	public @NonNull UnboxedDescriptor getUnboxedDescriptor(@NonNull CodeGenerator codeGenerator) {
-//		return this;
-//	}
+	//	@Override
+	//	public @NonNull UnboxedDescriptor getUnboxedDescriptor(@NonNull CodeGenerator codeGenerator) {
+	//		return this;
+	//	}
 
 	@Override
 	public @Nullable Class<?> hasJavaClass() {
 		return null;
 	}
 
-//	@Override
-//	public final boolean isAssignableFrom(@NonNull TypeDescriptor typeDescriptor) {
-//		return typeDescriptor == this;
-//	}
+	//	@Override
+	//	public final boolean isAssignableFrom(@NonNull TypeDescriptor typeDescriptor) {
+	//		return typeDescriptor == this;
+	//	}
 }

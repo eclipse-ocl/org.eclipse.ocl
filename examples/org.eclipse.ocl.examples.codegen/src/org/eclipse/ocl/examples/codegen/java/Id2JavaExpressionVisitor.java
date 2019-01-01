@@ -67,7 +67,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitCollectionTypeId(@NonNull CollectionTypeId id) {
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(null, TypeId.class);
 		CollectionTypeId generalizedId = id.getGeneralizedId();
 		String idName = generalizedId.getLiteralName();
 		if (idName == null) {
@@ -118,7 +118,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitInvalidId(@NonNull OclInvalidTypeId id) {
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(null, TypeId.class);
 		js.append(".");
 		js.append(id.getLiteralName());
 		return null;
@@ -132,7 +132,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitMapTypeId(@NonNull MapTypeId id) {
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(null, TypeId.class);
 		MapTypeId generalizedId = id.getGeneralizedId();
 		String idName = generalizedId.getLiteralName();
 		if (idName == null) {
@@ -168,7 +168,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		String nsURI = id.getNsURI();
 		String nsPrefix = id.getNsPrefix();
 		GenPackage genPackage = metamodelManager.getGenPackage(nsURI);
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getNsURIPackageId(");
 		js.appendString(nsURI);
 		js.append(", ");
@@ -180,7 +180,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		}
 		js.append(", ");
 		if (genPackage != null) {
-			js.appendClassReference(genPackage.getQualifiedPackageInterfaceName());
+			js.appendClassReference(null, genPackage.getQualifiedPackageInterfaceName());
 			js.append(".eINSTANCE");
 		}
 		else {
@@ -192,7 +192,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitNullId(@NonNull OclVoidTypeId id) {
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(null, TypeId.class);
 		js.append(".");
 		js.append(id.getLiteralName());
 		return null;
@@ -204,7 +204,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.append(".getOperationId(" + id.getTemplateParameters() + ", ");
 		js.appendString(id.getName());
 		js.append(", ");
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getParametersId(");
 		boolean isFirst = true;
 		for (@NonNull TypeId parameterId : id.getParametersId()) {
@@ -220,7 +220,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(null, TypeId.class);
 		js.append(".");
 		js.append(id.getLiteralName());
 		return null;
@@ -237,7 +237,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitRootPackageId(@NonNull RootPackageId id) {
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getRootPackageId(");
 		js.appendString(id.getName());
 		js.append(")");
@@ -252,7 +252,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getTemplateParameterId(" + id.getIndex() + ")");
 		return null;
 	}
@@ -265,7 +265,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitTuplePartId(@NonNull TuplePartId id) {
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getTuplePartId(" + id.getIndex() + ", ");
 		js.appendString(id.getName());
 		js.append(", ");
@@ -276,7 +276,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitTupleTypeId(@NonNull TupleTypeId id) {
-		js.appendClassReference(IdManager.class);
+		js.appendClassReference(null, IdManager.class);
 		js.append(".getTupleTypeId(");
 		js.appendString(id.getName());
 		for (TuplePartId partId : id.getPartIds()) {

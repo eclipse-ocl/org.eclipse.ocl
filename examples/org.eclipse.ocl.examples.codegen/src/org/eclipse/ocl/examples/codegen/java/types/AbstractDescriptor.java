@@ -91,7 +91,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 				|| isAssignableTo(short.class)
 				|| isAssignableTo(byte.class)
 				|| isAssignableTo(char.class)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".integerValueOf(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -104,7 +104,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 				|| isAssignableTo(Float.class)
 				|| isAssignableTo(double.class)
 				|| isAssignableTo(float.class)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".realValueOf(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -118,7 +118,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			}
 		}
 		else if (isAssignableTo(EEnumLiteral.class)) {
-			js.appendClassReference(IdManager.class);
+			js.appendClassReference(null, IdManager.class);
 			js.append(".getEnumerationLiteralId(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -127,7 +127,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be EnumerationObjectDescriptor");
 		}
 		else {//if (ObjectValue.class.isAssignableFrom(javaClass)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".createObjectValue(");
 			js.appendIdReference(typeId);
 			js.append(", ");
@@ -174,7 +174,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 				|| isAssignableTo(Short.class)
 				|| isAssignableTo(Byte.class)
 				|| isAssignableTo(Character.class)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".integerValueOf(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -185,7 +185,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		else if (isAssignableTo(BigDecimal.class)
 				|| isAssignableTo(Double.class)
 				|| isAssignableTo(Float.class)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".realValueOf(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -199,7 +199,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			}
 		}
 		else if (isAssignableTo(EEnumLiteral.class)) {
-			js.appendClassReference(IdManager.class);
+			js.appendClassReference(null, IdManager.class);
 			js.append(".getEnumerationLiteralId(");
 			js.appendReferenceTo(unboxedValue);
 			js.append(")");
@@ -208,7 +208,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be EnumerationObjectDescriptor");
 		}
 		else {//if (ObjectValue.class.isAssignableFrom(javaClass)) {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".createObjectValue(");
 			js.appendIdReference(typeId);
 			js.append(", ");

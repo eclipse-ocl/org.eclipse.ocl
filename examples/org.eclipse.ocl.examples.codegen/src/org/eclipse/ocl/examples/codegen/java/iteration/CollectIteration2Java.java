@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -21,14 +21,14 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class CollectIteration2Java extends AbstractAccumulation2Java
 {
 	public static final @NonNull CollectIteration2Java INSTANCE = new CollectIteration2Java();
-	
+
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
 		CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
-//		CGTypeId cgBodyTypeId = cgBody.getTypeId();
-//		ElementId elementId = cgBodyTypeId.getElementId();
-//		Class<?> boxedClass = elementId != null ? js.getCodeGenerator().getBoxedClass(elementId) : Object.class;
+		//		CGTypeId cgBodyTypeId = cgBody.getTypeId();
+		//		ElementId elementId = cgBodyTypeId.getElementId();
+		//		Class<?> boxedClass = elementId != null ? js.getCodeGenerator().getBoxedClass(elementId) : Object.class;
 		TypeDescriptor bodyTypeDescriptor = js.getCodeGenerator().getTypeDescriptor(cgBody);
 		if (bodyTypeDescriptor.isAssignableTo(CollectionValue.class)) {
 			js.append("for (Object value : ");
@@ -46,12 +46,12 @@ public class CollectIteration2Java extends AbstractAccumulation2Java
 			js.append("if (");
 			js.appendValueName(cgBody);
 			js.append(" instanceof ");
-			js.appendClassReference(CollectionValue.class);
+			js.appendClassReference(null, CollectionValue.class);
 			js.append(") {\n");
 			{
 				js.pushIndentation(null);
 				js.append("for (Object value : ((");
-				js.appendClassReference(CollectionValue.class);
+				js.appendClassReference(null, CollectionValue.class);
 				js.append(")");
 				js.appendValueName(cgBody);
 				js.append(").flatten().getElements()) {\n");
@@ -74,7 +74,7 @@ public class CollectIteration2Java extends AbstractAccumulation2Java
 				js.append(");\n");
 				js.popIndentation();
 			}
-			js.append("}\n");				
+			js.append("}\n");
 		}
 		else {
 			js.appendValueName(cgAccumulator);

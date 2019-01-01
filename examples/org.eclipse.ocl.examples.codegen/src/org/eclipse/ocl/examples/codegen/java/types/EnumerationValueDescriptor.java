@@ -42,11 +42,11 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
-		js.appendClassReference(ecoreJavaClass);
+		js.appendClassReference(null, ecoreJavaClass);
 		js.append(")");
 		js.appendReferenceTo(localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOf(");
-		js.appendClassReference(Enumerator.class);
+		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
 		js.appendValueName(boxedValue);
 		js.append(");\n");

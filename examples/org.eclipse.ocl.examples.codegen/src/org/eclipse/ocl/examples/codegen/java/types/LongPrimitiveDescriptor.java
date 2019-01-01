@@ -33,7 +33,7 @@ public class LongPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 		}
 		else {
 			js.append("(");
-			js.appendClassReference(Long.class);
+			js.appendClassReference(null, Long.class);
 			js.append(")");
 			if (subStream != null) {
 				subStream.append();

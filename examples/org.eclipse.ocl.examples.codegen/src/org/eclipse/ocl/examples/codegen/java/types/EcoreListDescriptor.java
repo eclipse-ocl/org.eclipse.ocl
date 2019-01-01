@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -31,7 +31,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 {
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull Type type;
-	
+
 	public EcoreListDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		super(collectionTypeId);
 		this.standardLibrary = standardLibrary;
@@ -57,7 +57,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public void appendElement(@NonNull JavaStream javaStream, boolean reClass) {
-		javaStream.appendClassReference(getJavaClass());
+		javaStream.appendClassReference(null, getJavaClass());
 	}
 
 	@Override

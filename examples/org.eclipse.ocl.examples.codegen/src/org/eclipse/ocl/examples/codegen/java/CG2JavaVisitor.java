@@ -259,7 +259,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	protected void appendGuardFailure(@NonNull CGGuardExp cgGuardExp) {
 		js.append("throw new ");
-		js.appendClassReference(InvalidValueException.class);
+		js.appendClassReference(null, InvalidValueException.class);
 		js.append("(");
 		js.appendString("Null " + cgGuardExp.getMessage());
 		js.append(");\n");
@@ -367,11 +367,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" * Implementation of the iterator body.\n");
 		js.append(" */\n");
 		js.append("final ");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.appendClassReference(operationClass);
+		js.appendClassReference(true, operationClass);
 		js.append(" " + bodyName + " = new ");
-		js.appendClassReference(operationClass);
+		js.appendClassReference(null, operationClass);
 		js.append("()");
 		js.pushClassBody(String.valueOf(operationClass));
 		js.appendCommentWithOCL(null, body.getAst());
@@ -380,18 +378,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendIsRequired(false);
 		js.append(" Object evaluate(");
 		js.append("final ");
-		js.appendIsRequired(true);
-		js.append(" ");
 		//		js.appendDeclaration(evaluatorParameter);
-		js.appendClassReference(Executor.class);
+		js.appendClassReference(true, Executor.class);
 		js.append(" ");
 		js.append(JavaConstants.EXECUTOR_NAME);
 		js.append(", ");
 		js.append("final ");
-		js.appendIsRequired(true);
-		js.append(" ");
 		//		js.appendDeclaration(localContext.getTypeIdParameter(cgIterateCallExp));
-		js.appendClassReference(TypeId.class);
+		js.appendClassReference(true, TypeId.class);
 		js.append(" ");
 		js.append(JavaConstants.TYPE_ID_NAME);
 		if (isMap || (arity > 1)) {
@@ -479,11 +473,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//	Dispatch: Create execution manager
 		//
 		js.append("final ");
-		js.appendIsRequired(true);
-		js.append("  ");
-		js.appendClassReference(managerClass);
+		js.appendClassReference(true, managerClass);
 		js.append(" " + managerName + " = new ");
-		js.appendClassReference(managerClass);
+		js.appendClassReference(null, managerClass);
 		js.append("(");
 		//		js.appendReferenceTo(evaluatorParameter);
 		js.append(JavaConstants.EXECUTOR_NAME);
@@ -502,7 +494,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(" = ");
 		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(ClassUtil.class);
+			js.appendClassReference(null, ClassUtil.class);
 			js.append(".nonNullState(");
 		}
 		js.appendClassCast(cgIterationCallExp, actualReturnClass);
@@ -588,25 +580,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("public ");
 		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(Object.class);
+		js.appendClassReference(false, Object.class);
 		js.append(" basicEvaluate(");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.appendClassReference(Executor.class);
+		js.appendClassReference(true, Executor.class);
 		js.append(" ");
 		js.append(JavaConstants.EXECUTOR_NAME);
 		js.append(", ");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.appendClassReference(TypedElement.class);
+		js.appendClassReference(true, TypedElement.class);
 		js.append(" ");
 		js.append("caller");
 		js.append(", ");
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(Object.class);
+		js.appendClassReference(false, Object.class);
 		js.append(" ");
 		js.appendIsRequired(true);
 		js.append(" [] ");
@@ -695,9 +679,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(")");
 		js.append(JavaConstants.EVALUATION_CACHE_NAME);
 		js.append(".getCachedEvaluationResult(this, caller, new ");
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(Object.class);
+		js.appendClassReference(false, Object.class);
 		js.append("[]{");
 		isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {
@@ -975,7 +957,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		if (cgSource.isNull()) {
 			js.append("throw new ");
-			js.appendClassReference(InvalidValueException.class);
+			js.appendClassReference(null, InvalidValueException.class);
 			js.append("();\n");
 		}
 		else {
@@ -1051,7 +1033,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendIsRequired(cgIterator.isRequired());
 		js.append(" ");
-		js.appendClassReference(Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
+		js.appendClassReference(null, Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
 		js.append(" " + iteratorName + " = ");
 		js.appendAtomicReferenceTo(cgSource);
 		js.append(".iterator();\n");
@@ -1145,7 +1127,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					js.append("protected class ");
 					js.append(operationClassName);
 					js.append(" extends ");
-					js.appendClassReference(AbstractDispatchOperation.class);
+					js.appendClassReference(null, AbstractDispatchOperation.class);
 					js.pushClassBody(operationClassName);
 					doCachedOperationDispatchInstaller(cgOperation);
 					js.append("\n");
@@ -1163,7 +1145,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					js.append("public class ");
 					js.append(operationClassName);
 					js.append(" extends ");
-					js.appendClassReference(AbstractEvaluationOperation.class);
+					js.appendClassReference(null, AbstractEvaluationOperation.class);
 					js.pushClassBody(operationClassName);
 					doCachedOperationBasicEvaluate(cgOperation);
 					js.append("\n");
@@ -1269,12 +1251,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.popIndentation();
 			js.append("}\n");
 			js.append("catch (");
-			js.appendClassReference(Exception.class);
+			js.appendClassReference(null, Exception.class);
 			js.append(" " + eName + ") {\n");
 			js.pushIndentation(null);
 			js.appendValueName(cgCatchExp);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".createInvalidValue(" + eName + ");\n");
 			js.popIndentation();
 			js.append("}\n");
@@ -1347,7 +1329,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgCollectionExp);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		String kind = ((CollectionLiteralExp)cgCollectionExp.getAst()).getKind().getName();
 		if (ranges > 0) {
 			js.append(".create" + kind + "Range(");
@@ -1387,7 +1369,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			js.appendDeclaration(cgCollectionPart);
 			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".createRange(");
 			js.appendValueName(first);
 			js.append(", ");
@@ -1472,11 +1454,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgShadowExp);
 		js.append(" = ");
 		js.append("(");
-		js.appendClassReference(javaClass);
+		js.appendClassReference(null, javaClass);
 		js.append(")");
-		js.appendClassReference(factoryClass);
+		js.appendClassReference(null, factoryClass);
 		js.append(".eINSTANCE.createFromString(");
-		js.appendClassReference(packageClass);
+		js.appendClassReference(null, packageClass);
 		js.append(".Literals." + dataTypeName + ", ");
 		js.appendValueName(init);
 		js.append(");\n");
@@ -1527,11 +1509,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				}
 				if (functionName != null) {
 					js.append("final ");
-					js.appendClassReference(ecoreClass);
+					js.appendClassReference(null, ecoreClass);
 					js.append(" ");
 					js.appendValueName(cgEcoreExp);
 					js.append(" = ");
-					js.appendClassReference(ValueUtil.class);
+					js.appendClassReference(null, ValueUtil.class);
 					js.append(".");
 					js.append(functionName);
 					js.append("(");
@@ -1797,7 +1779,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		if (cgSource.isNull()) {
 			js.append("throw new ");
-			js.appendClassReference(InvalidValueException.class);
+			js.appendClassReference(null, InvalidValueException.class);
 			js.append("();\n");
 		}
 		else {
@@ -1865,7 +1847,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGInteger(@NonNull CGInteger object) {
 		js.appendDeclaration(object);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".integerValueOf(");
 		Number integerValue = object.getNumericValue();
 		String valueString = integerValue.toString();
@@ -1888,7 +1870,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		String message = object.getMessageTemplate();
 		if (message != null) {
 			js.append("new ");
-			js.appendClassReference(InvalidValueException.class);
+			js.appendClassReference(null, InvalidValueException.class);
 			js.append("(");
 			js.appendString(message);
 			for (Object binding : object.getBindings()) {
@@ -1898,7 +1880,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(")");
 		}
 		else {
-			js.appendClassReference(ValueUtil.class);
+			js.appendClassReference(null, ValueUtil.class);
 			js.append(".INVALID_VALUE");
 		}
 		return true;
@@ -2097,7 +2079,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" = ");
 			js.appendValueName(cgSource);
 			js.append(" instanceof ");
-			js.appendClassReference(InvalidValueException.class);
+			js.appendClassReference(null, InvalidValueException.class);
 			js.append(";\n");
 		}
 		return true;
@@ -2145,7 +2127,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(" == null) || (");
 				js.appendValueName(cgSource);
 				js.append(" instanceof ");
-				js.appendClassReference(InvalidValueException.class);
+				js.appendClassReference(null, InvalidValueException.class);
 				js.append(")");
 			}
 			else if (!sourceIsNonNull && sourceIsNonInvalid) {
@@ -2155,7 +2137,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			else if (sourceIsNonNull && !sourceIsNonInvalid) {
 				js.appendValueName(cgSource);
 				js.append(" instanceof ");
-				js.appendClassReference(InvalidValueException.class);
+				js.appendClassReference(null, InvalidValueException.class);
 			}
 			js.append(";\n");
 		}
@@ -2196,7 +2178,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("public static class ");
 				js.append(operationName);
 				js.append(" extends ");
-				js.appendClassReference(genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
+				js.appendClassReference(null, genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
 				js.pushClassBody(operationName);
 				js.append("public static final ");
 				js.appendIsRequired(true);
@@ -2274,14 +2256,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(ClassUtil.class);
+			js.appendClassReference(null, ClassUtil.class);
 			js.append(".nonNullState(");
 		}
 		js.appendClassCast(cgOperationCallExp, actualReturnClass, new JavaStream.SubStream()
 		{
 			@Override
 			public void append() {
-				js.appendClassReference(libraryOperation.getClass());
+				js.appendClassReference(null, libraryOperation.getClass());
 				js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
 				if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 					//					js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
@@ -2332,11 +2314,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(ClassUtil.class);
+			js.appendClassReference(null, ClassUtil.class);
 			js.append(".nonNullState(");
 		}
 		js.appendClassCast(cgPropertyCallExp, actualReturnClass);
-		js.appendClassReference(libraryProperty.getClass());
+		js.appendClassReference(null, libraryProperty.getClass());
 		//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
 		js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
 		//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
@@ -2366,7 +2348,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgMapExp);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".createMapOfEach(");
 		//		CGTypeVariable typeVariable = localContext.getTypeVariable(cgMapExp.getTypeId());
 		js.appendIdReference(cgMapExp.getTypeId().getElementId());
@@ -2393,7 +2375,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgMapPart);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".createMapEntry(");
 		js.appendValueName(key);
 		js.append(", ");
@@ -2418,7 +2400,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("protected class ");
 				js.append(operationClassName);
 				js.append(" extends ");
-				js.appendClassReference(AbstractEvaluationOperation.class);
+				js.appendClassReference(null, AbstractEvaluationOperation.class);
 				js.pushClassBody(operationClassName);
 				doCachedOperationBasicEvaluate(cgOperation);
 				js.append("\n");
@@ -2610,7 +2592,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGReal(@NonNull CGReal object) {
 		js.appendDeclaration(object);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".realValueOf(");
 		Number realValue = object.getNumericValue();
 		String valueString = realValue.toString();
@@ -2649,9 +2631,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void appendToBody(@NonNull CodeGenText text) {
 //				text.append("(");
-//				text.appendClassReference(EObject.class);
+//				text.appendClassReference(null, EObject.class);
 //				text.append(")");
-//				text.appendClassReference(ObjectValue.class);
+//				text.appendClassReference(null, ObjectValue.class);
 //				text.append(")");
 		 */
 		CGExecutorType cgExecutorType = cgShadowExp.getExecutorType();
@@ -2744,7 +2726,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("if (");
 				js.appendValueName(cgSource);
 				js.append(" instanceof ");
-				js.appendClassReference(InvalidValueException.class);
+				js.appendClassReference(null, InvalidValueException.class);
 				js.append(") {\n");
 				js.pushIndentation(null);
 				js.append("throw ");
@@ -2767,7 +2749,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgTupleExp);
 		js.append(" = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".createTupleOfEach(");
 		js.appendIdReference(cgTupleExp.getTypeId().getElementId());
 		int iSize = Iterables.size(parts);
@@ -2807,7 +2789,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgTuplePartCallExp);
 		js.append(" = ");
-		js.appendClassReference(ClassUtil.class);
+		js.appendClassReference(null, ClassUtil.class);
 		js.append(".nonNullState(");
 		js.appendClassCast(cgTuplePartCallExp);
 		js.appendAtomicReferenceTo(TupleValue.class, source);
@@ -2851,7 +2833,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGUnlimited(@NonNull CGUnlimited object) {
-		js.appendClassReference(ValueUtil.class);
+		js.appendClassReference(null, ValueUtil.class);
 		js.append(".UNLIMITED_VALUE");
 		return true;
 	}

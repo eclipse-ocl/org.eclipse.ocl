@@ -47,11 +47,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
-		if (isRequired != null) {
-			js.appendIsRequired(isRequired);
-			js.append(" ");
-		}
-		js.appendClassReference(EMap.class, true, Object.class, Object.class);
+		js.appendClassReference(isRequired, EMap.class, true, Object.class, Object.class);
 	}
 
 	@Override
@@ -83,7 +79,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 
 	@Override
 	public void appendElement(@NonNull JavaStream javaStream, boolean reClass) {
-		javaStream.appendClassReference(getJavaClass());
+		javaStream.appendClassReference(null, getJavaClass());
 	}
 
 	@Override

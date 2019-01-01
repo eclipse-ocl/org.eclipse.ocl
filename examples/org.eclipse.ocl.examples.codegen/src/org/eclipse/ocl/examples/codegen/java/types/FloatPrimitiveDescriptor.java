@@ -33,7 +33,7 @@ public class FloatPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 		}
 		else {
 			js.append("(");
-			js.appendClassReference(Float.class);
+			js.appendClassReference(null, Float.class);
 			js.append(")");
 			if (subStream != null) {
 				subStream.append();

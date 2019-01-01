@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class FutureEnumerationObjectDescriptor extends UnboxedValueDescriptor
 {
 	protected final @NonNull String className;
-	
+
 	public FutureEnumerationObjectDescriptor(@NonNull ElementId elementId, @NonNull String className) {
 		super(elementId, Enumerator.class);
 		this.className = className;
@@ -50,7 +50,7 @@ public class FutureEnumerationObjectDescriptor extends UnboxedValueDescriptor
 		}
 		js.appendIdReference(typeId);
 		js.append(".getEnumerationLiteralId(");
-		js.appendClassReference(ClassUtil.class);
+		js.appendClassReference(null, ClassUtil.class);
 		js.append(".nonNullState(");
 		js.appendReferenceTo(unboxedValue);
 		js.append(".getName()))");
@@ -69,7 +69,7 @@ public class FutureEnumerationObjectDescriptor extends UnboxedValueDescriptor
 		}
 		js.appendIdReference(typeId);
 		js.append(".getEnumerationLiteralId(");
-		js.appendClassReference(ClassUtil.class);
+		js.appendClassReference(null, ClassUtil.class);
 		js.append(".nonNullState(");
 		js.appendReferenceTo(unboxedValue);
 		js.append(".getName()))");
