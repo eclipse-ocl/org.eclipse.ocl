@@ -251,6 +251,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
+	public @NonNull ImportNameManager createImportNameManager() {
+		return new JavaImportNameManager();
+	}
+
+	@Override
 	protected @NonNull NameManager createNameManager() {
 		return new NameManager();
 	}

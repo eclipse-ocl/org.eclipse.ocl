@@ -34,10 +34,10 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements GlobalContext
 {
 	protected final @NonNull NameManager nameManager;
+	protected final @NonNull ImportNameManager importNameManager;
 
 	private @NonNull Map<@NonNull CGElement, @NonNull JavaLocalContext<@NonNull ? extends CG>> localContexts = new HashMap<>();
 	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
-	private @NonNull Set<@NonNull String> imports = new HashSet<>();
 
 	protected final @NonNull String eName;
 	protected final @NonNull String evaluateName;
@@ -48,6 +48,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
 		super(codeGenerator);
 		this.nameManager = codeGenerator.getNameManager();
+		this.importNameManager = codeGenerator.createImportNameManager();
 		this.eName = nameManager.reserveName(JavaConstants.E_NAME, null);
 		this.evaluateName = nameManager.reserveName(JavaConstants.EVALUATE_NAME, null);
 		this.instanceName = nameManager.reserveName(JavaConstants.INSTANCE_NAME, null);
@@ -59,8 +60,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		globals.add(cgGlobal);
 	}
 
-	public void addImport(@NonNull String className) {
-		imports.add(className);
+	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
+		return importNameManager.addImport(isRequired, className);
 	}
 
 	protected @NonNull JavaLocalContext<@NonNull ? extends CG> createNestedContext(@NonNull CGElement cgScope) {
@@ -84,8 +85,13 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return globals;
 	}
 
+	public @NonNull ImportNameManager getImportNameManager() {
+		return importNameManager;
+	}
+
+	@Deprecated /* deprecated use getImportManager */
 	public @NonNull Set<String> getImports() {
-		return imports;
+		return importNameManager.getLong2ShortImportNames().keySet();
 	}
 
 	public @NonNull String getInstanceName() {

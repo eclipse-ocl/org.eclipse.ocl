@@ -188,8 +188,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		this.js = new JavaStream(codeGenerator, this);
 	}
 
-	protected void addImport(@NonNull String className) {
-		globalContext.addImport(className);
+	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
+		return globalContext.addImport(isRequired, className);
 	}
 
 	/**
@@ -726,8 +726,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
+	@Deprecated /* deprecated use getImportManager */
 	public @NonNull Set<String> getAllImports() {
-		return globalContext.getImports();
+		return getImportNameManager().getLong2ShortImportNames().keySet();
 	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
@@ -762,6 +763,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public @NonNull GenModelHelper getGenModelHelper() {
 		return genModelHelper;
+	}
+
+	public @NonNull ImportNameManager getImportNameManager() {
+		return globalContext.getImportNameManager();
 	}
 
 	private Method getJavaMethod(@NonNull LibraryIteration libraryIteration) {

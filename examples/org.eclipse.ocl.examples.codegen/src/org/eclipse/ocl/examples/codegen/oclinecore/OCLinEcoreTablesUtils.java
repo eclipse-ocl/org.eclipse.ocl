@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.common.NameQueries;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
+import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
@@ -220,11 +221,17 @@ public class OCLinEcoreTablesUtils
 
 	public static class CodeGenString
 	{
+		protected final boolean useNullAnnotations;
 		private final @NonNull StringBuilder s = new StringBuilder();
-		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<>();
+		//		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<>();
+		private @NonNull JavaImportNameManager importNameManager = new JavaImportNameManager();
 
 		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<>();
 		protected final @NonNull Set<String> typeNameUse = new HashSet<>();
+
+		public CodeGenString(boolean useNullAnnotations) {
+			this.useNullAnnotations = useNullAnnotations;
+		}
 
 		public void append(@Nullable String string) {
 			if (string != null) {
@@ -232,25 +239,36 @@ public class OCLinEcoreTablesUtils
 			}
 		}
 
-		public void addClassReference(@NonNull Class<?> referencedClass) {
-			@SuppressWarnings("null")@NonNull String simpleName = referencedClass.getSimpleName();
-			@SuppressWarnings("null")@NonNull String fullName = referencedClass.getName();
-			addClassReference(simpleName, fullName);
+		@Deprecated /* @deprecated use isRequired argument */
+		public @NonNull String addClassReference(@NonNull Class<?> referencedClass) {
+			return addClassReference(null, referencedClass);
+		}
+		public @NonNull String addClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
+			//	@NonNull String simpleName = referencedClass.getSimpleName();
+			@NonNull String fullName = referencedClass.getName();
+			//	addClassReference(simpleName, fullName);
+			return importNameManager.addImport(useNullAnnotations ? isRequired : null, fullName);
 		}
 
-		protected String addClassReference(@NonNull String simpleName, @NonNull String fullName) {
-			return classReferences.put(simpleName, fullName);
-		}
+		//	protected String addClassReference(@NonNull String simpleName, @NonNull String fullName) {
+		//		return classReferences.put(simpleName, fullName);
+		//	}
 
+		@Deprecated /* @deprecated use isRequired argument */
 		public void appendClassReference(@NonNull Class<?> referencedClass) {
-			//			s.append("<%");
-			s.append(referencedClass.getSimpleName());
-			//			s.append("%>");
-			addClassReference(referencedClass);
+			appendClassReference(null, referencedClass);
+		}
+		public void appendClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
+			String classReferenceText = addClassReference(isRequired, referencedClass);
+			s.append(classReferenceText);
 		}
 
+		@Deprecated /* @deprecated use isRequired argument */
 		public void appendClassReference(@NonNull String referencedClass) {
-			String key = referencedClass;
+			appendClassReference(null, referencedClass);
+		}
+		public void appendClassReference(@Nullable Boolean isRequired, @NonNull String referencedClass) {
+			/*	String key = referencedClass;
 			int i = referencedClass.lastIndexOf(".");
 			if (i > 0) {
 				@NonNull String trimmedKey = referencedClass.substring(i+1);
@@ -262,7 +280,8 @@ public class OCLinEcoreTablesUtils
 				s.append(referencedClass);
 				//				s.append("%>");
 			}
-			addClassReference(key, referencedClass);
+			//	addClassReference(key, referencedClass); */
+			s.append(importNameManager.addImport(isRequired, referencedClass));
 		}
 
 		public void appendName(@NonNull NamedElement namedElement) {
@@ -315,7 +334,8 @@ public class OCLinEcoreTablesUtils
 		}
 
 		public @NonNull List<String> getClassReferences() {
-			List<String> names = new ArrayList<>(classReferences.values());
+			//	List<String> names = new ArrayList<>(classReferences.values());
+			List<String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
 			Collections.sort(names);
 			return names;
 		}
@@ -326,9 +346,10 @@ public class OCLinEcoreTablesUtils
 		 * sessions, an import such as &lt;%x.y.@p.q z%&gt; is chnaged to x.y.@&lt;%p.q%&gt; z so that the @p.q gets handler by
 		 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
 		 */
+		@Deprecated /* no longer used; use ImportNameManager */
 		public @NonNull String rewriteManagedImports(@NonNull String source)
 		{
-			return ImportUtils.resolveImports(source, classReferences, true);
+			return ImportUtils.resolveImports(source, importNameManager.getLong2ShortImportNames(), true);
 			/*			int iMax = source.length();
 			int iStart = 0;
 			StringBuilder s = new StringBuilder();
@@ -719,33 +740,31 @@ public class OCLinEcoreTablesUtils
 		return resourceSetAdapter.getMetamodelManager();
 	}
 
-	protected final @NonNull CodeGenString s = new CodeGenString();
+	protected final boolean useNullAnnotations;
+	protected final @NonNull CodeGenString s;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @Nullable GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
-	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
-	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor = new EmitLiteralVisitor(s);
-	protected final @NonNull EmitQualifiedLiteralVisitor emitQualifiedLiteralVisitor = new EmitQualifiedLiteralVisitor(s);
+	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
+	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor;
+	protected final @NonNull EmitQualifiedLiteralVisitor emitQualifiedLiteralVisitor;
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
+		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
+		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
+		this.s = new CodeGenString(useNullAnnotations);
 		this.metamodelManager = getMetamodelManager(genPackage);
 		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.nonNullModel(getPivotPackage(genPackage));
-		activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
-	}
-
-	protected OCLinEcoreTablesUtils(@NonNull PivotMetamodelManager metamodelManager, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		this.metamodelManager = metamodelManager;
-		this.environmentFactory = metamodelManager.getEnvironmentFactory();
-		this.standardLibrary = environmentFactory.getStandardLibrary();
-		this.genPackage = null;
-		this.asPackage = asPackage;
+		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
+		this.emitLiteralVisitor = new EmitLiteralVisitor(s);
+		this.emitQualifiedLiteralVisitor = new EmitQualifiedLiteralVisitor(s);
 		activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
 

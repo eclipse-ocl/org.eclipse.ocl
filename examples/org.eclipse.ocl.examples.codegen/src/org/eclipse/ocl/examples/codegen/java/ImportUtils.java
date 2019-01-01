@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +33,17 @@ public class ImportUtils
 		assert !className.contains("@");
 		return IMPORTS_PREFIX + className + IMPORTS_SUFFIX;
 	}
-	
-	public static @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames(@NonNull Iterable<String> allImports) {
+
+	@Deprecated /* @depreacted use ImportNameManager */
+	public static @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames(@NonNull Iterable<@NonNull String> allImports) {
+		ImportNameManager importManager = new JavaImportNameManager();
+		for (String longName : allImports) {
+			importManager.addImport(null, longName);
+		}
+		return importManager.getLong2ShortImportNames();
+	}
+
+	/*	public static @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames(@NonNull Iterable<String> allImports) {
 		Map<String, String> long2shortNames = new HashMap<String, String>();
 		Map<String, String> shortables = new HashMap<String, String>();
 		for (String longName : allImports) {
@@ -60,7 +68,7 @@ public class ImportUtils
 			}
 		}
 		return long2short;
-	}
+	} */
 
 	/**
 	 * @deprecated add skipStartMarker
@@ -102,24 +110,24 @@ public class ImportUtils
 			}
 			s.append(source, iStart, iPrefix);
 			String longName = source.substring(iPrefix+IMPORTS_PREFIX.length(), iSuffix);
-			
-			
+
+
 			String annotatedName = longName;
-//			@Nullable String longAnnotationName = null;
-//			@Nullable String longTypeName = annotatedName;
+			//			@Nullable String longAnnotationName = null;
+			//			@Nullable String longTypeName = annotatedName;
 			int startIndex = annotatedName.indexOf("@");
 			int endIndex = annotatedName.indexOf(" ");
 			if ((0 <= startIndex) && (startIndex < endIndex)) {
-//				longTypeName = annotatedName.substring(0, startIndex) + annotatedName.substring(endIndex).trim();
-//				longAnnotationName = annotatedName.substring(startIndex+1, endIndex).trim();
-//				if (importManager != null) {
-//					importManager.addImport(longAnnotationName);
-//				}
+				//				longTypeName = annotatedName.substring(0, startIndex) + annotatedName.substring(endIndex).trim();
+				//				longAnnotationName = annotatedName.substring(startIndex+1, endIndex).trim();
+				//				if (importManager != null) {
+				//					importManager.addImport(longAnnotationName);
+				//				}
 			}
-//			if (importManager != null) {
-//				importManager.addImport(longTypeName);
-///			}
-/*			String shortTypeName = importManager != null ? importManager.getImportedName(longTypeName) : null;
+			//			if (importManager != null) {
+			//				importManager.addImport(longTypeName);
+			///			}
+			/*			String shortTypeName = importManager != null ? importManager.getImportedName(longTypeName) : null;
 			String shortAnnotationName = (longAnnotationName != null) && (importManager != null) ? importManager.getImportedName(longAnnotationName) : null;
 			if (longAnnotationName == null) {
 				s.append(IMPORTS_PREFIX);
@@ -143,11 +151,11 @@ public class ImportUtils
 				s.append(" ");
 				s.append(annotatedName.substring(endIndex).trim());
 			} */
-			
-			
-			
-			
-			
+
+
+
+
+
 			String shortname = long2short.get(longName);
 			s.append(shortname != null ? shortname : longName);
 			iStart = iSuffix + IMPORTS_SUFFIX.length();
@@ -159,7 +167,7 @@ public class ImportUtils
 	/**
 	 * Rewrite double imports to suit the EMF generators. If importManager is null, as is the case
 	 * since it is not obvious how to re-use the ImportManager between the OCL pre-generate and the Ecore generate
-	 * sessions, an import such as <%x.y.@p.q z%> is chnaged to x.y.@<%p.q%> z so that the @p.q gets handler by
+	 * sessions, an import such as <%x.y.@p.q z%> is changed to x.y.@<%p.q%> z so that the @p.q gets handler by
 	 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
 	 */
 	public static @NonNull String rewriteManagedImports(@NonNull String source, @Nullable ImportManager importManager)
@@ -193,7 +201,7 @@ public class ImportUtils
 				importManager.addImport(longTypeName);
 			}
 			String shortTypeName = importManager != null ? importManager.getImportedName(longTypeName) : null;
-//			String shortAnnotationName = (longAnnotationName != null) && (importManager != null) ? importManager.getImportedName(longAnnotationName) : null;
+			//			String shortAnnotationName = (longAnnotationName != null) && (importManager != null) ? importManager.getImportedName(longAnnotationName) : null;
 			if (longAnnotationName == null) {
 				s.append(IMPORTS_PREFIX);
 				s.append(shortTypeName != null ? shortTypeName : longTypeName);

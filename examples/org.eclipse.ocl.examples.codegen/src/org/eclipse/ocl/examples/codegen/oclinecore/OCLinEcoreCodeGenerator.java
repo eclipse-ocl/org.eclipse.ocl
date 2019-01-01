@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -389,6 +390,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull BoxingAnalyzer createBoxingAnalyzer() {
 		return new EcoreBoxingAnalyzer(cgAnalyzer);
+	}
+
+	@Override
+	public @NonNull ImportNameManager createImportNameManager() {
+		return new OCLinEcoreImportNameManager();
 	}
 
 	protected void generate(@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {

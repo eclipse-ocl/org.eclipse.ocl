@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -79,6 +80,8 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	protected abstract @NonNull GenModelHelper createGenModelHelper();
+
+	public abstract @NonNull ImportNameManager createImportNameManager();
 
 	protected abstract @NonNull NameManager createNameManager();
 

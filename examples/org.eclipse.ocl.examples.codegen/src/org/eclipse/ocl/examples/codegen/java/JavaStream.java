@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 import java.util.Stack;
@@ -496,43 +495,9 @@ public class JavaStream
 		appendClassReference(null, className);
 	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
-		if (className != null) {
-			StringBuilder s = new StringBuilder();
-			int dollar = className.indexOf("$");
-			if (dollar > 0) {
-				@NonNull String importClassName = className.substring(0, dollar);
-				s.append(ImportUtils.getAffixedName(importClassName));
-				cg2java.addImport(importClassName);
-				s.append(className.substring(dollar).replace('$',  '.'));
-			}
-			else if (className.contains(".")){
-				s.append(ImportUtils.getAffixedName(className));
-				if (isRequired == null) {
-					cg2java.addImport(className);
-				}
-			}
-			else {
-				s.append(className);
-			}
-			String resolvedClassName = s.toString();
-			if ((isRequired == null) || !useNullAnnotations) {
-				append(resolvedClassName);
-			}
-			else {
-				Class<? extends Annotation> annotationClass = isRequired ? NonNull.class : Nullable.class;
-				String annotationClassName = annotationClass.getName();
-				assert annotationClassName != null;
-				//	cg2java.addImport(annotationClassName);
-				String annotation = "@" + annotationClass.getName() + " ";
-				int index = resolvedClassName.lastIndexOf(".");
-				if (index < 0) {
-					append(annotation + resolvedClassName);
-				}
-				else {
-					append(resolvedClassName.substring(0, index+1) + annotation + resolvedClassName.substring(index+1));
-				}
-			}
-		}
+		assert className != null;
+		s.append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
+
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {
