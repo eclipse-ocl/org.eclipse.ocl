@@ -455,7 +455,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		EObject ePackage = ocl.getResourceSet().getEObject(uri.appendFragment("/"), true);
 		//
 		ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name'}",
-				"self.eClassifiers.eAnnotations.details->collect(m | m->collect(k <- v | k))->asSet()");
+				"self.eClassifiers->collect(c | c.eAnnotations)->collect(a | a.details)->collect(m | m->collect(k <- v | k))->asSet()");
 		//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name','suppressedIsSetVisibility','suppressedUnsetVisibility'}",
 		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k <- v | k))->asSet()");
 		ocl.dispose();

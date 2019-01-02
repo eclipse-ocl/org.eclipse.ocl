@@ -170,8 +170,6 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
-import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
-import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -588,7 +586,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLibraryIterateCallExp;
 	}
 
-	protected CGIterator getNullableIterator(@NonNull Variable iterator) {
+	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
 		CGIterator cgIterator = getIterator(iterator);
 		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
 		cgIterator.setRequired(iterator.isIsRequired());
@@ -605,6 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		boolean isRequired = element.isIsRequired();
 		if (iterationHelper != null) {
+			boolean isNonNullAccumulator = iterationHelper.isNonNullAccumulator(element);
 			CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 			cgBuiltInIterationCallExp.setReferredIteration(asIteration);
 			cgBuiltInIterationCallExp.setSource(cgSource);
@@ -629,15 +628,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGAccumulator cgAccumulator = CGModelFactory.eINSTANCE.createCGAccumulator();
 				cgAccumulator.setName("accumulator");
 				cgAccumulator.setTypeId(cgAccumulatorId);
-				//				cgAccumulator.setRequired(true);
-				if (asIteration.isIsRequired() || element.getOwnedBody().isIsRequired()) {
-					if ((libraryIteration != ExistsIteration.INSTANCE) && (libraryIteration != ForAllIteration.INSTANCE)) {		// FIXME Make generic
-						cgAccumulator.setNonNull();
-						cgBuiltInIterationCallExp.setNonNull();
-					}
-					else if (cgBuiltInIterationCallExp.getBody().isRequired()) {
-						cgBuiltInIterationCallExp.setNonNull();
-					}
+				if (isNonNullAccumulator) {
+					cgAccumulator.setNonNull();
 				}
 				if (!asIteration.isIsValidating()) {
 					cgAccumulator.setNonInvalid();

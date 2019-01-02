@@ -206,7 +206,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		}
 		else {
 			safeVisit(cgTypedElement.getTypeId());
-			if (!cgTypedElement.isRequired()) {
+			if (!cgTypedElement.isRequired()) {			// FIXME use CGVariable isNonNull too
 				append("[?]");
 			}
 		}

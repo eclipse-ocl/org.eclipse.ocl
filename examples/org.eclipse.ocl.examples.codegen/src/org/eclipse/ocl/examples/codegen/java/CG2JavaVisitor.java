@@ -167,6 +167,22 @@ import com.google.common.collect.Iterables;
  */
 public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CG>
 {
+	protected class ArgumentSubStream implements SubStream
+	{
+		private final int argIndex;
+
+		protected ArgumentSubStream(int argIndex) {
+			this.argIndex = argIndex;
+		}
+
+		@Override
+		public void append() {
+			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+			js.append("[" + argIndex);
+			js.append("]");
+		}
+	}
+
 	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
@@ -199,10 +215,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	 */
 	protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
-		String name = asProperty.getName();
-		if ("details".equals(name)) {
-			getClass();
-		}
 		assert getESObject(asProperty) == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
 		//
 		if (source == null) {
@@ -423,57 +435,42 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.pushIndentation(null);
 		if (isMap || (arity > 1)) {
 			int argIndex = 0;			// Skip source
+			Boolean isRequired = context.isRequired(source);
+			if (isRequired == Boolean.TRUE) {
+				js.appendSuppressWarningsNull(true);
+			}
 			js.append("final ");
 			js.appendTypeDeclaration(source);
 			js.append(" ");
 			js.appendValueName(source);
 			js.append(" = ");
-			final int argIndex1 = argIndex;
-			SubStream castBody1 = new SubStream() {
-				@Override
-				public void append() {
-					js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-					js.append("[" + argIndex1);
-					js.append("]");
-				}
-			};
-			js.appendClassCast(source, null, Object.class, castBody1);
+			js.appendClassCast(source, isRequired, Object.class, new ArgumentSubStream(argIndex));
 			js.append(";\n");
 			argIndex++;
 			for (int i = 0; i < arity; i++) {
 				CGParameter iterator = iterators.get(i);
+				isRequired = context.isRequired(iterator);
+				if (isRequired == Boolean.TRUE) {
+					js.appendSuppressWarningsNull(true);
+				}
 				js.append("final ");
 				js.appendDeclaration(iterator);
 				js.append(" = ");
-				final int argIndex2 = argIndex;
-				SubStream castBody2 = new SubStream() {
-					@Override
-					public void append() {
-						js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-						js.append("[" + argIndex2);
-						js.append("]");
-					}
-				};
-				js.appendClassCast(iterator, null, Object.class, castBody2);
+				js.appendClassCast(iterator, isRequired, Object.class, new ArgumentSubStream(argIndex));
 				js.append(";\n");
 				argIndex++;
 				if (i < coIterators.size()) {
 					CGIterator coIterator = coIterators.get(i);
 					Variable asCoIterator = CGUtil.getAST(coIterator);
 					if (!asCoIterator.isIsImplicit()) {
+						isRequired = context.isRequired(coIterator);
+						if (isRequired == Boolean.TRUE) {
+							js.appendSuppressWarningsNull(true);
+						}
 						js.append("final ");
 						js.appendDeclaration(coIterator);
 						js.append(" = ");
-						final int argIndex3 = argIndex;
-						SubStream castBody3 = new SubStream() {
-							@Override
-							public void append() {
-								js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-								js.append("[" + argIndex3);
-								js.append("]");
-							}
-						};
-						js.appendClassCast(coIterator, null, Object.class, castBody3);
+						js.appendClassCast(coIterator, isRequired, Object.class, new ArgumentSubStream(argIndex));
 						js.append(";\n");
 					}
 					argIndex++;
@@ -1055,6 +1052,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					return false;
 				}
 			}
+			cgAccumulator.toString();
 			js.appendDeclaration(cgAccumulator);
 			js.append(" = ");
 			iterationHelper.appendAccumulatorInit(js, cgIterationCallExp);
@@ -1063,9 +1061,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		//	Declare iterator
 		//
-		js.appendIsRequired(cgIterator.isRequired());
-		js.append(" ");
-		js.appendClassReference(null, Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
+		js.appendClassReference(cgIterator.isRequired(), Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
 		js.append(" " + iteratorName + " = ");
 		js.appendAtomicReferenceTo(cgSource);
 		js.append(".iterator();\n");
@@ -2329,6 +2325,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (!js.appendLocalStatements(cgArgument)) {
 				return false;
 			}
+		}
+		if (expectedIsNonNull && !actualIsNonNull) {
+			js.appendSuppressWarningsNull(true);
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");

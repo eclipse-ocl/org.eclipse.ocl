@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,6 +15,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.LoopExp;
 
 public class IterateIteration2Java extends AbstractAccumulation2Java
 {
@@ -35,5 +37,10 @@ public class IterateIteration2Java extends AbstractAccumulation2Java
 		js.appendValueName(cgBody);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public boolean isNonNullAccumulator(@NonNull LoopExp element) {
+		return ((IterateExp)element).getOwnedResult().isIsRequired();
 	}
 }

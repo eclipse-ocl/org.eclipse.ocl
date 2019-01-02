@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.prettyprint;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -23,7 +25,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -123,7 +127,28 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	public Object visitMapType(@NonNull MapType object) {
 		context.appendName(object);
 		context.appendTemplateParameters(object);
-		context.appendTemplateBindings(object);
+		//	context.appendTemplateBindings(object);
+		List<TemplateBinding> templateBindings = object.getOwnedBindings();
+		if (!templateBindings.isEmpty()) {
+			context.append("(");
+			String prefix = ""; //$NON-NLS-1$
+			int index = 0;
+			for (TemplateBinding templateBinding : templateBindings) {
+				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+					context.append(prefix);
+					safeVisit(templateParameterSubstitution.getActual());
+					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
+						context.append("[?]");
+					}
+					else { //if (SHOW_ALL_MULTIPLICITIES) {
+						context.append("[1]");
+					}
+					prefix = ",";
+					index++;
+				}
+			}
+			context.append(")");
+		}
 		return null;
 	}
 

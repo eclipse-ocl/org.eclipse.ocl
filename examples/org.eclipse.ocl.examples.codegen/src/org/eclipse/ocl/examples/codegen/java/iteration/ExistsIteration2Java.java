@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -183,5 +184,10 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		return analyzer.getTypeId(new JavaTypeId(Object.class));
+	}
+
+	@Override
+	public boolean isNonNullAccumulator(@NonNull LoopExp element) {
+		return element.isNonNull();
 	}
 }
