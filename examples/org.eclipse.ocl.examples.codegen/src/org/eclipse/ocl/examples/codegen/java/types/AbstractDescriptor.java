@@ -139,13 +139,11 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
+	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		js.append("(");
 		append(js, isRequired);
 		js.append(")");
-		if (subStream != null) {
-			subStream.append();
-		}
+		subStream.append();
 	}
 
 	@Override

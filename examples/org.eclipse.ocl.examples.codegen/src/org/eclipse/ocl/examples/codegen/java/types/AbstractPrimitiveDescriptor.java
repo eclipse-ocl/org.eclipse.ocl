@@ -27,7 +27,7 @@ public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor 
 
 	protected AbstractPrimitiveDescriptor(@NonNull ElementId elementId, @NonNull Class<?> primitiveJavaClass, @NonNull Class<?> nonPrimitiveJavaClass) {
 		super(elementId, primitiveJavaClass);
-		this.nonPrimitiveJavaClass =nonPrimitiveJavaClass;
+		this.nonPrimitiveJavaClass = nonPrimitiveJavaClass;
 	}
 
 	@Override
@@ -35,19 +35,18 @@ public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor 
 		js.append(javaClass.getName());			// Override avoids registration of int as an import
 	}
 
-	protected void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
-		if ((subStream != null) && (actualJavaClass == nonPrimitiveJavaClass)) {
+	protected void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
+		if (actualJavaClass == nonPrimitiveJavaClass) {
 			subStream.append();
 		}
 		else {
 			js.append("((");
 			js.appendClassReference(true, nonPrimitiveJavaClass);
 			js.append(")");
-			if (subStream != null) {
-				subStream.append();
-			}
+			subStream.append();
 			js.append(")");
 		}
+		// caller must append the derived variant of e.g. ".intValue()"
 	}
 
 	@Override

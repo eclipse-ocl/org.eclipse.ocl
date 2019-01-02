@@ -38,8 +38,8 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	}
 
 	@Override
-	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
-		appendCast(js, actualJavaClass,subStream);
+	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
+		appendCast(js, actualJavaClass, subStream);
 		js.append(".booleanValue()");
 	}
 }

@@ -102,6 +102,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
@@ -427,20 +428,34 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" ");
 			js.appendValueName(source);
 			js.append(" = ");
-			js.appendClassCast(source, null, Object.class);
-			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-			js.append("[" + argIndex);
-			js.append("];\n");
+			final int argIndex1 = argIndex;
+			SubStream castBody1 = new SubStream() {
+				@Override
+				public void append() {
+					js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+					js.append("[" + argIndex1);
+					js.append("]");
+				}
+			};
+			js.appendClassCast(source, null, Object.class, castBody1);
+			js.append(";\n");
 			argIndex++;
 			for (int i = 0; i < arity; i++) {
 				CGParameter iterator = iterators.get(i);
 				js.append("final ");
 				js.appendDeclaration(iterator);
 				js.append(" = ");
-				js.appendClassCast(iterator, null, Object.class);
-				js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-				js.append("[" + argIndex);
-				js.append("];\n");
+				final int argIndex2 = argIndex;
+				SubStream castBody2 = new SubStream() {
+					@Override
+					public void append() {
+						js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+						js.append("[" + argIndex2);
+						js.append("]");
+					}
+				};
+				js.appendClassCast(iterator, null, Object.class, castBody2);
+				js.append(";\n");
 				argIndex++;
 				if (i < coIterators.size()) {
 					CGIterator coIterator = coIterators.get(i);
@@ -449,10 +464,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 						js.append("final ");
 						js.appendDeclaration(coIterator);
 						js.append(" = ");
-						js.appendClassCast(coIterator, null, Object.class);
-						js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-						js.append("[" + argIndex);
-						js.append("];\n");
+						final int argIndex3 = argIndex;
+						SubStream castBody3 = new SubStream() {
+							@Override
+							public void append() {
+								js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+								js.append("[" + argIndex3);
+								js.append("]");
+							}
+						};
+						js.appendClassCast(coIterator, null, Object.class, castBody3);
+						js.append(";\n");
 					}
 					argIndex++;
 				}
@@ -497,11 +519,16 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.appendClassReference(null, ClassUtil.class);
 			js.append(".nonNullState(");
 		}
-		js.appendClassCast(cgIterationCallExp, null, actualReturnClass);
-		js.append(implementationName + ".evaluateIteration(" + managerName + ")");
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.append(")");
-		}
+		SubStream castBody4 = new SubStream() {
+			@Override
+			public void append() {
+				js.append(implementationName + ".evaluateIteration(" + managerName + ")");
+				if (expectedIsNonNull && !actualIsNonNull) {
+					js.append(")");
+				}
+			}
+		};
+		js.appendClassCast(cgIterationCallExp, null, actualReturnClass, castBody4);
 		js.append(";\n");
 		return true;
 	}
@@ -1069,8 +1096,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		appendSuppressWarningsNull(cgIterator, Boolean.FALSE);
 		js.appendDeclaration(cgIterator);
 		js.append(" = ");
-		js.appendClassCast(cgIterator);
-		js.append(iteratorName + ".next();\n");
+		SubStream castBody1 = new SubStream() {
+			@Override
+			public void append() {
+				js.append(iteratorName + ".next()");
+			}
+		};
+		js.appendClassCast(cgIterator, castBody1);
+		js.append(";\n");
 		//
 		// Declare coiterator/key access.
 		//
@@ -1079,11 +1112,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (!asCoIterator.isIsImplicit()) {
 				js.appendDeclaration(cgCoIterator);
 				js.append(" = ");
-				js.appendClassCast(cgCoIterator);
-				js.appendReferenceTo(cgSource);
-				js.append(".at(");
-				js.appendReferenceTo(cgIterator);
-				js.append(");\n");
+				SubStream castBody2 = new SubStream() {
+					@Override
+					public void append() {
+						js.appendReferenceTo(cgSource);
+						js.append(".at(");
+						js.appendReferenceTo(cgIterator);
+						js.append(")");
+					}
+				};
+				js.appendClassCast(cgCoIterator, castBody2);
+				js.append(";\n");
 			}
 		}
 		//
@@ -1705,26 +1744,32 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		js.appendClassCast(cgOperationCallExp);
-		js.appendReferenceTo(cgOperationCallExp.getExecutorOperation());
-		js.append(".evaluate(");
-		//		js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-		js.append(JavaConstants.EXECUTOR_NAME);
-		js.append(", ");
-		js.appendIdReference(cgOperationCallExp.getASTypeId());
-		js.append(", ");
-		js.appendValueName(source);
-		int iMax = Math.min(pParameters.size(), cgArguments.size());
-		for (int i = 0; i < iMax; i++) {
-			js.append(", ");
-			CGValuedElement cgArgument = cgArguments.get(i);
-			Parameter pParameter = pParameters.get(i);
-			CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
-			TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-			CGValuedElement argument = getExpression(cgArgument);
-			js.appendReferenceTo(parameterTypeDescriptor, argument);
-		}
-		js.append(");\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendReferenceTo(cgOperationCallExp.getExecutorOperation());
+				js.append(".evaluate(");
+				//		js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
+				js.append(JavaConstants.EXECUTOR_NAME);
+				js.append(", ");
+				js.appendIdReference(cgOperationCallExp.getASTypeId());
+				js.append(", ");
+				js.appendValueName(source);
+				int iMax = Math.min(pParameters.size(), cgArguments.size());
+				for (int i = 0; i < iMax; i++) {
+					js.append(", ");
+					CGValuedElement cgArgument = cgArguments.get(i);
+					Parameter pParameter = pParameters.get(i);
+					CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
+					TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+					CGValuedElement argument = getExpression(cgArgument);
+					js.appendReferenceTo(parameterTypeDescriptor, argument);
+				}
+				js.append(")");
+			}
+		};
+		js.appendClassCast(cgOperationCallExp, castBody);
+		js.append(";\n");
 		return true;
 	}
 
@@ -1738,16 +1783,22 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		js.appendClassCast(cgPropertyCallExp);
-		js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
-		js.append(".evaluate(");
-		//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-		js.append(JavaConstants.EXECUTOR_NAME);
-		js.append(", ");
-		js.appendIdReference(cgPropertyCallExp.getASTypeId());
-		js.append(", ");
-		js.appendValueName(source);
-		js.append(");\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
+				js.append(".evaluate(");
+				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
+				js.append(JavaConstants.EXECUTOR_NAME);
+				js.append(", ");
+				js.appendIdReference(cgPropertyCallExp.getASTypeId());
+				js.append(", ");
+				js.appendValueName(source);
+				js.append(")");
+			}
+		};
+		js.appendClassCast(cgPropertyCallExp, castBody);
+		js.append(";\n");
 		return true;
 	}
 
@@ -2343,25 +2394,31 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.appendClassReference(null, ClassUtil.class);
 			js.append(".nonNullState(");
 		}
-		js.appendClassCast(cgPropertyCallExp, null, actualReturnClass);
-		js.appendClassReference(null, libraryProperty.getClass());
-		//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
-		js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
-		//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
-		//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-		js.append(JavaConstants.EXECUTOR_NAME);
-		js.append(", ");
-		//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
-		//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
-		js.appendValueName(resultType);
-		js.append(", ");
-		//			}
-		//		}
-		js.appendValueName(source);
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.append(")");
-		}
-		js.append(");\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendClassReference(null, libraryProperty.getClass());
+				//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
+				js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
+				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
+				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
+				js.append(JavaConstants.EXECUTOR_NAME);
+				js.append(", ");
+				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
+				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
+				js.appendValueName(resultType);
+				js.append(", ");
+				//			}
+				//		}
+				js.appendValueName(source);
+				if (expectedIsNonNull && !actualIsNonNull) {
+					js.append(")");
+				}
+				js.append(")");
+			}
+		};
+		js.appendClassCast(cgPropertyCallExp, null, actualReturnClass, castBody);
+		js.append(";\n");
 		return true;
 	}
 
@@ -2521,10 +2578,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		js.appendClassCast(cgPropertyCallExp);
-		js.appendValueName(source);
-		js.append(".");
-		js.append(cgPropertyCallExp.getReferredProperty().getName());
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendValueName(source);
+				js.append(".");
+				js.append(cgPropertyCallExp.getReferredProperty().getName());
+			}
+		};
+		js.appendClassCast(cgPropertyCallExp, castBody);
 		js.append(";\n");
 		return true;
 	}
@@ -2666,9 +2728,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgShadowExp);
 		js.append(" = ");
-		js.appendClassCast(cgShadowExp);
-		js.appendValueName(cgExecutorType);
-		js.append(".createInstance();\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendValueName(cgExecutorType);
+				js.append(".createInstance()");
+			}
+		};
+		js.appendClassCast(cgShadowExp, castBody);
+		js.append(";\n");
 		for (CGShadowPart part : cgShadowExp.getParts()) {
 			part.accept(this);
 		}
@@ -2817,9 +2885,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" = ");
 		js.appendClassReference(null, ClassUtil.class);
 		js.append(".nonNullState(");
-		js.appendClassCast(cgTuplePartCallExp);
-		js.appendAtomicReferenceTo(TupleValue.class, source);
-		js.append(".getValue(" + partId.getIndex() + "/*" + partId.getName() + "*/));\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendAtomicReferenceTo(TupleValue.class, source);
+				js.append(".getValue(" + partId.getIndex() + "/*" + partId.getName() + "*/)");
+			}
+		};
+		js.appendClassCast(cgTuplePartCallExp, castBody);
+		js.append(");\n");
 		return true;
 	}
 

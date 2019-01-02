@@ -258,8 +258,13 @@ public class JavaStream
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			if (cgValue.getNamedValue().isCaught() || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 				append("(");
-				requiredTypeDescriptor.appendCast(this, null, null, null);
-				appendValueName(cgValue);
+				SubStream castBody = new SubStream() {
+					@Override
+					public void append() {
+						appendValueName(cgValue);
+					}
+				};
+				requiredTypeDescriptor.appendCast(this, null, null, castBody);
 				append(")");
 			}
 			else {
@@ -276,8 +281,13 @@ public class JavaStream
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			if (cgValue.getNamedValue().isCaught()) {
 				append("(");
-				actualTypeDescriptor.appendCast(this, null, null, null);
-				appendValueName(cgValue);
+				SubStream castBody = new SubStream() {
+					@Override
+					public void append() {
+						appendValueName(cgValue);
+					}
+				};
+				actualTypeDescriptor.appendCast(this, null, null, castBody);
 				append(")");
 			}
 			else {
@@ -305,27 +315,14 @@ public class JavaStream
 		}
 	}
 
-	public void appendClassCast(@Nullable CGValuedElement cgValue) {
+	public void appendClassCast(@Nullable CGValuedElement cgValue, @NonNull SubStream subStream) {
 		if (cgValue == null) {
 			append("<<null-appendClassCast>>");
 		}
 		else {
 			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			Boolean isRequired = codeGenerator.isRequired(cgValue);
-			typeDescriptor.appendCast(this, isRequired, null, null);
-		}
-	}
-
-	public void appendClassCast(@Nullable CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass) {
-		if (cgValue == null) {
-			append("<<null-appendClassCast>>");
-		}
-		else {
-			@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
-			if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
-				typeDescriptor.appendCast(this, isRequired, actualJavaClass, null);
-			}
+			typeDescriptor.appendCast(this, isRequired, null, subStream);
 		}
 	}
 
@@ -850,7 +847,14 @@ public class JavaStream
 				boolean isCaught = cgValue.getNamedValue().isCaught();
 				if (isCaught || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 					Boolean isRequired = null;
-					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), null);
+					SubStream castBody = new SubStream() {
+						@Override
+						public void append() {
+							appendValueName(cgValue);
+						}
+					};
+					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), castBody);
+					return;
 				}
 			}
 			appendValueName(cgValue);
