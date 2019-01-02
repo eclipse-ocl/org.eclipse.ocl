@@ -27,7 +27,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
@@ -259,7 +258,7 @@ public class JavaStream
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			if (cgValue.getNamedValue().isCaught() || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 				append("(");
-				requiredTypeDescriptor.appendCast(this, null, null);
+				requiredTypeDescriptor.appendCast(this, null, null, null);
 				appendValueName(cgValue);
 				append(")");
 			}
@@ -277,7 +276,7 @@ public class JavaStream
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			if (cgValue.getNamedValue().isCaught()) {
 				append("(");
-				actualTypeDescriptor.appendCast(this, null, null);
+				actualTypeDescriptor.appendCast(this, null, null, null);
 				appendValueName(cgValue);
 				append(")");
 			}
@@ -311,12 +310,13 @@ public class JavaStream
 			append("<<null-appendClassCast>>");
 		}
 		else {
-			@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			typeDescriptor.appendCast(this, null, null);
+			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
+			Boolean isRequired = codeGenerator.isRequired(cgValue);
+			typeDescriptor.appendCast(this, isRequired, null, null);
 		}
 	}
 
-	public void appendClassCast(@Nullable CGValuedElement cgValue, @Nullable Class<?> actualJavaClass) {
+	public void appendClassCast(@Nullable CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass) {
 		if (cgValue == null) {
 			append("<<null-appendClassCast>>");
 		}
@@ -324,16 +324,16 @@ public class JavaStream
 			@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
 			if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
-				typeDescriptor.appendCast(this, actualJavaClass, null);
+				typeDescriptor.appendCast(this, isRequired, actualJavaClass, null);
 			}
 		}
 	}
 
-	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
+	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 		Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
 		if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
-			typeDescriptor.appendCast(this, actualJavaClass, subStream);
+			typeDescriptor.appendCast(this, isRequired, actualJavaClass, subStream);
 		}
 		else {
 			subStream.append();
@@ -497,7 +497,6 @@ public class JavaStream
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
 		s.append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
-
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {
@@ -850,7 +849,8 @@ public class JavaStream
 			if (!cgValue.isNull()) {
 				boolean isCaught = cgValue.getNamedValue().isCaught();
 				if (isCaught || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
-					requiredTypeDescriptor.appendCast(this, isCaught ? null : actualTypeDescriptor.getJavaClass(), null);
+					Boolean isRequired = null;
+					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), null);
 				}
 			}
 			appendValueName(cgValue);
@@ -930,11 +930,10 @@ public class JavaStream
 	}
 
 	public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
-		boolean isPrimitive = isPrimitive(cgElement);
-		boolean isRequired = !isPrimitive && !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
+		Boolean isRequired = codeGenerator.isRequired(cgElement);
 		appendIsCaught(cgElement.isNonInvalid(), cgElement.isCaught());
 		append(" ");
-		appendClassReference(isPrimitive ? null : isRequired, cgElement);
+		appendClassReference(isRequired, cgElement);
 	}
 
 	public void appendTypeParameters(boolean useExtends, @NonNull Class<?>... typeParameters) {
@@ -1029,16 +1028,16 @@ public class JavaStream
 		}
 	}
 
-	public boolean isUseNullAnnotations() {
-		return useNullAnnotations;
-	}
-
 	/**
 	 * Return true is this is a built-in primitive type such as boolean or int.
 	 * Such types cannot have @NonNull annotations.
 	 */
 	public boolean isPrimitive(@NonNull CGValuedElement cgValue) {
 		return codeGenerator.isPrimitive(cgValue);
+	}
+
+	public boolean isUseNullAnnotations() {
+		return useNullAnnotations;
 	}
 
 	public int length() {

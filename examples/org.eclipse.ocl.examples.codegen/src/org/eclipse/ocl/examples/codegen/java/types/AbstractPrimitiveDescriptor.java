@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.pivot.ids.ElementId;
 
 /**
@@ -22,13 +23,31 @@ import org.eclipse.ocl.pivot.ids.ElementId;
  */
 public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor implements SimpleDescriptor
 {
-	public AbstractPrimitiveDescriptor(@NonNull ElementId elementId, @NonNull Class<?> javaClass) {
-		super(elementId, javaClass);
+	protected final @NonNull Class<?> nonPrimitiveJavaClass;
+
+	protected AbstractPrimitiveDescriptor(@NonNull ElementId elementId, @NonNull Class<?> primitiveJavaClass, @NonNull Class<?> nonPrimitiveJavaClass) {
+		super(elementId, primitiveJavaClass);
+		this.nonPrimitiveJavaClass =nonPrimitiveJavaClass;
 	}
 
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
 		js.append(javaClass.getName());			// Override avoids registration of int as an import
+	}
+
+	protected void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
+		if ((subStream != null) && (actualJavaClass == nonPrimitiveJavaClass)) {
+			subStream.append();
+		}
+		else {
+			js.append("((");
+			js.appendClassReference(true, nonPrimitiveJavaClass);
+			js.append(")");
+			if (subStream != null) {
+				subStream.append();
+			}
+			js.append(")");
+		}
 	}
 
 	@Override
@@ -55,6 +74,6 @@ public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor 
 		js.appendValueName(thisValue);
 		js.append(notEquals ? " != " : " == ");
 		js.appendValueName(thatValue);
-//		super.appendEqualsValue(js, thisValue, thatValue, notEquals);
+		//		super.appendEqualsValue(js, thisValue, thatValue, notEquals);
 	}
 }

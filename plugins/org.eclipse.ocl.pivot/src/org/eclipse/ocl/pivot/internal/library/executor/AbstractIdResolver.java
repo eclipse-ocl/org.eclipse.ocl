@@ -515,7 +515,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
+	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
 		Bag<Object> boxedValues = new BagImpl<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -607,7 +607,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
+	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
 		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -625,7 +625,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
+	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
 		List<Object> boxedValues = new ArrayList<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -643,7 +643,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object... unboxedValues) {
+	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
 		Set<Object> boxedValues = new HashSet<Object>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -746,7 +746,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	/** @deprecated no longer used */
 	@Deprecated
 	@Override
-	public @NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object... values) {
+	public @NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object @NonNull ... values) {
 		Object[] ecoreValues = new Object[values.length];
 		int i= 0;
 		for (Object value : values) {
@@ -1047,7 +1047,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, Object... values) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		Object bestTypeId = getTypeKeyOf(value);
 		org.eclipse.ocl.pivot.Class bestType = key2type.get(bestTypeId);
 		assert bestType != null;
@@ -1576,7 +1576,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull EList<Object> unboxedValuesOfEach(@Nullable Object... boxedValues) {
+	public @NonNull EList<Object> unboxedValuesOfEach(@Nullable Object @NonNull ... boxedValues) {
 		Object[] unboxedValues = new Object[boxedValues.length];
 		int i= 0;
 		for (Object boxedValue : boxedValues) {

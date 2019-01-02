@@ -22,22 +22,12 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 public class ShortPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 {
 	public ShortPrimitiveDescriptor(@NonNull ElementId elementId) {
-		super(elementId, short.class);
+		super(elementId, short.class, Short.class);
 	}
 
 	@Override
-	public void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
-		if ((subStream != null) && (actualJavaClass == Short.class)) {
-			subStream.append();
-			js.append(".shortValue()");
-		}
-		else {
-			js.append("(");
-			js.appendClassReference(null, Short.class);
-			js.append(")");
-			if (subStream != null) {
-				subStream.append();
-			}
-		}
+	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
+		appendCast(js, actualJavaClass,subStream);
+		js.append(".shortValue()");
 	}
 }

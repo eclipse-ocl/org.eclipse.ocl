@@ -69,11 +69,14 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 	}
 
 	protected @Nullable EcoreDescriptor createPrimitiveTypeEcoreDescriptor(@NonNull Class<?> instanceClass) {
-		if (byte.class == instanceClass) {
-			return new UnboxedValueDescriptor(elementId, byte.class);
+		if (boolean.class == instanceClass) {
+			return new BooleanPrimitiveDescriptor(elementId);
+		}
+		else if (byte.class == instanceClass) {
+			return new BytePrimitiveDescriptor(elementId);
 		}
 		else if (char.class == instanceClass) {
-			return new UnboxedValueDescriptor(elementId, char.class);
+			return new CharPrimitiveDescriptor(elementId);
 		}
 		else if (double.class == instanceClass) {
 			return new DoublePrimitiveDescriptor(elementId);
@@ -96,11 +99,14 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 	}
 
 	protected @Nullable UnboxedDescriptor createPrimitiveTypeUnboxedDescriptor(@NonNull Class<?> instanceClass) {
-		if (byte.class == instanceClass) {
-			return new UnboxedValueDescriptor(elementId, byte.class);
+		if (boolean.class == instanceClass) {
+			return new BooleanPrimitiveDescriptor(elementId);
+		}
+		else if (byte.class == instanceClass) {
+			return new BytePrimitiveDescriptor(elementId);
 		}
 		else if (char.class == instanceClass) {
-			return new UnboxedValueDescriptor(elementId, char.class);
+			return new CharPrimitiveDescriptor(elementId);
 		}
 		else if (double.class == instanceClass) {
 			return new DoublePrimitiveDescriptor(elementId);

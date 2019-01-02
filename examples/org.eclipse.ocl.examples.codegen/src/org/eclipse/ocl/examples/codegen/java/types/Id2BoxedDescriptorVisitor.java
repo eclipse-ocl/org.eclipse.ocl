@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -68,9 +68,9 @@ import org.eclipse.ocl.pivot.values.TupleValue;
  */
 public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 {
-/*	private static @NonNull Map<String, BoxedValueDescriptor> classDescriptors = new HashMap<String, BoxedValueDescriptor>();
-	
-	static {	
+	/*	private static @NonNull Map<String, BoxedValueDescriptor> classDescriptors = new HashMap<String, BoxedValueDescriptor>();
+
+	static {
 		classDescriptors.put(BigDecimal.class.getName(),  new PrimitiveValueDescriptor(IdManager.getDataTypeId(aType), RealValue.class, BigDecimal.class));
 		classDescriptors.put(BigInteger.class.getName(),  new PrimitiveValueDescriptor(id, IntegerValue.class, BigInteger.class));
 		classDescriptors.put(Byte.class.getName(),  new PrimitiveValueDescriptor(id, IntegerValue.class, Byte.class));
@@ -87,14 +87,14 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		classDescriptors.put(long.class.getName(),  new PrimitiveValueDescriptor(id, IntegerValue.class, long.class));
 		classDescriptors.put(short.class.getName(),  new PrimitiveValueDescriptor(id, IntegerValue.class, short.class));
 	} */
-	
+
 	protected final @NonNull JavaCodeGenerator javaCodeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull IdResolver idResolver;
-//	private /*@LazyNonNull*/ Id2BoxedJavaClassVisitor id2BoxedJavaClassVisitor = null;
-//	private /*@LazyNonNull*/ Id2UnboxedJavaClassVisitor id2UnboxedJavaClassVisitor = null;
-	
+	//	private /*@LazyNonNull*/ Id2BoxedJavaClassVisitor id2BoxedJavaClassVisitor = null;
+	//	private /*@LazyNonNull*/ Id2UnboxedJavaClassVisitor id2UnboxedJavaClassVisitor = null;
+
 	public Id2BoxedDescriptorVisitor(@NonNull JavaCodeGenerator javaCodeGenerator) {
 		this.javaCodeGenerator = javaCodeGenerator;
 		this.genModelHelper = javaCodeGenerator.getGenModelHelper();
@@ -134,7 +134,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 				}
 			}
 		}
-/*		EClass eClass = (EClass) type.getETarget();
+		/*		EClass eClass = (EClass) type.getETarget();
 		if (eClass != null) {
 			try {
 				Class<?> javaClass = genModelHelper.getEcoreInterfaceClassifier(eClass);
@@ -144,19 +144,19 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			}
 			catch (Exception e) {}
 		} */
-//		if (type instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-			if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
-				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
-			}
-//		}
+		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
+		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
+		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
+			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+		}
+		//		}
 		return new RootObjectDescriptor(id);
 	}
-	
+
 	@Override
 	public @NonNull BoxedDescriptor visitCollectionTypeId(@NonNull CollectionTypeId id) {
 		TypeId generalizedId = id.getGeneralizedId();
-/*		org.eclipse.ocl.pivot.Class type;
+		/*		org.eclipse.ocl.pivot.Class type;
 		if (generalizedId == id) {
 			type = idResolver.getClass(id, null);
 		}
@@ -241,9 +241,9 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			else if (Short.class.getName().equals(instanceClassName)) {
 				return new PrimitiveValueDescriptor(id, IntegerValue.class, Short.class);
 			}
-//			else if (boolean.class.getName().equals(instanceClassName)) {
-//				return new PrimitiveValueDescriptor(id, Boolean.class, boolean.class);
-//			}
+			else if (boolean.class.getName().equals(instanceClassName)) {
+				return new PrimitiveValueDescriptor(id, Boolean.class, boolean.class);
+			}
 			else if (byte.class.getName().equals(instanceClassName)) {
 				return new PrimitiveValueDescriptor(id, IntegerValue.class, byte.class);
 			}
@@ -289,7 +289,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 				if (instanceClassName != null) {
 					return new FutureEnumerationValueDescriptor(id, eClassifier, instanceClassName);
 				}
-			else {
+				else {
 					return new EnumerationValueDescriptor(id, eClassifier, Enumerator.class);
 				}
 			}
@@ -316,7 +316,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	public @NonNull BoxedDescriptor visitLambdaTypeId(@NonNull LambdaTypeId id) {
 		return new SimpleValueDescriptor(id, LambdaType.class);
 	}
-	
+
 	@Override
 	public @NonNull BoxedDescriptor visitMapTypeId(@NonNull MapTypeId id) {
 		TypeId generalizedId = id.getGeneralizedId();
@@ -339,9 +339,9 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			valueType = idResolver.getClass(valueTypeId, null);
 		}
 		MapDescriptor unboxedDescriptor = null;
-//		EClassifier eTypeClassifier = getEClassifier(keyType);
-//		EClassifier eValueClassifier = getEClassifier(valueType);
-/*		if (eTypeClassifier != null) {
+		//		EClassifier eTypeClassifier = getEClassifier(keyType);
+		//		EClassifier eValueClassifier = getEClassifier(valueType);
+		/*		if (eTypeClassifier != null) {
 			try {
 				Class<?> javaClass = genModelHelper.getEcoreInterfaceClassifier(eTypeClassifier);
 				unboxedDescriptor = new EObjectsDescriptor(id, eClassifier, javaClass);
@@ -356,9 +356,9 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 				}
 			}
 		} */
-//		if (unboxedDescriptor == null) {
-			unboxedDescriptor = new UnboxedMapDescriptor(id, metamodelManager.getStandardLibrary(), valueType, keyType);
-//		}
+		//		if (unboxedDescriptor == null) {
+		unboxedDescriptor = new UnboxedMapDescriptor(id, metamodelManager.getStandardLibrary(), valueType, keyType);
+		//		}
 		Class<?> boxedClass = MapValue.class;
 		return new BoxedMapDescriptor(id, boxedClass, unboxedDescriptor);
 	}
@@ -424,16 +424,16 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		else if (id == TypeId.UNLIMITED_NATURAL) {
 			return new UnlimitedNaturalValueDescriptor(id);
 		}
-//		else {
-//			try {
-//				javaClass = Class.forName(id.getName());
-//				if (javaClass != null) {
-//					return javaClass;
-//				}
-//			} catch (ClassNotFoundException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		//		else {
+		//			try {
+		//				javaClass = Class.forName(id.getName());
+		//				if (javaClass != null) {
+		//					return javaClass;
+		//				}
+		//			} catch (ClassNotFoundException e) {
+		//				e.printStackTrace();
+		//			}
+		//		}
 		return visiting(id);
 	}
 
@@ -476,12 +476,12 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	public @NonNull BoxedDescriptor visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		return visiting(id);
 	}
-	
+
 	public @NonNull BoxedDescriptor visiting(@NonNull ElementId id) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 	}
 
-/*	private @NonNull BoxedDescriptor visiting2(@NonNull ElementId elementId) {
+	/*	private @NonNull BoxedDescriptor visiting2(@NonNull ElementId elementId) {
 		Id2BoxedJavaClassVisitor id2BoxedJavaClassVisitor2 = id2BoxedJavaClassVisitor;
 		if (id2BoxedJavaClassVisitor2 == null) {
 			id2BoxedJavaClassVisitor = id2BoxedJavaClassVisitor2 = new Id2BoxedJavaClassVisitor(genModelHelper);

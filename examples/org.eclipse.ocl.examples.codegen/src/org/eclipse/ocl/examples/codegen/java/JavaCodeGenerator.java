@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
@@ -525,6 +526,21 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Return the null-ness of cgElement.
+	 * - true for @NonNull
+	 * - false for @Nullable
+	 * - null for neither
+	 */
+	public @Nullable Boolean isRequired(@NonNull CGValuedElement cgElement) {
+		//		boolean isPrimitive = isPrimitive(cgElement);
+		//		boolean isRequired = !isPrimitive && !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
+		//		Boolean isJavaRequired = isPrimitive ? null : isRequired;			// FIXME migrate isPrimitove to recipients
+		//		return isJavaRequired;
+		boolean isRequired = !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
+		return isRequired;
 	}
 
 	@Override

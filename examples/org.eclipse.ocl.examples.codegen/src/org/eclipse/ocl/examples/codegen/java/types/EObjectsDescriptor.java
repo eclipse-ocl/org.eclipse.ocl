@@ -57,7 +57,6 @@ public class EObjectsDescriptor extends AbstractCollectionDescriptor implements 
 	}
 
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull String getClassName() {
 		return javaClass.getName();
 	}

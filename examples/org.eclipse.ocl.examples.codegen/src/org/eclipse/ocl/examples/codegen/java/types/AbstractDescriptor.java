@@ -68,7 +68,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		this.elementId = elementId;
 	}
 
-	@Override
+	@Override			// FIXME why isn't most of this in derived Descriptors?
 	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
@@ -139,9 +139,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
+	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
 		js.append("(");
-		append(js, null);
+		append(js, isRequired);
 		js.append(")");
 		if (subStream != null) {
 			subStream.append();

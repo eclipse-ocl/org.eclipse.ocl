@@ -45,7 +45,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the actualJavaClass subStream to js wrapped in a cast to this type.g. "(typename)subStream"
 	 */
-	void appendCast(@NonNull JavaStream js, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream);
+	void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream);
 
 	/**
 	 * Append a conversion to an Ecore value.

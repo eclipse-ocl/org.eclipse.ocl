@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
-import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * A PrimitiveValueDescriptor describes primitive value that has one type when boxed and another as Ecore.
@@ -21,8 +20,7 @@ public class PrimitiveValueDescriptor extends BoxedValueDescriptor
 {
 	private @NonNull Class<?> primitiveClass;
 
-	public PrimitiveValueDescriptor(@NonNull DataTypeId typeId, @NonNull Class<? extends Value> boxedClass,
-			@NonNull Class<?> primitiveClass) {
+	public PrimitiveValueDescriptor(@NonNull DataTypeId typeId, @NonNull Class<?> boxedClass, @NonNull Class<?> primitiveClass) {
 		super(typeId, boxedClass);
 		this.primitiveClass = primitiveClass;
 	}
