@@ -41,45 +41,47 @@ public class JavaImportNameManager extends AbstractImportNameManager
 
 	/**
 	 * Register the new fully qualified name of a class (optionally including a $suffix) and return the non-null
-	 * text by which an optionally NonNUll/Nullable qualified class may be referenced within Java source.
+	 * text by which an optionally NonNull/Nullable qualified class may be referenced within Java source.
 	 */
 	@Override
-	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String longName) {
-		if (longName.indexOf('$') >= 0) {
-			longName = longName.replace('$', '.');
+	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String fullyQualifiedClassName) {
+		String dollarPrefix = fullyQualifiedClassName;
+		String dollarSuffix = "";
+		int dollarIndex = fullyQualifiedClassName.indexOf('$');
+		if (dollarIndex >= 0) {
+			dollarPrefix = fullyQualifiedClassName.substring(0, dollarIndex);
+			dollarSuffix = fullyQualifiedClassName.substring(dollarIndex+1, fullyQualifiedClassName.length()).replace('$',  '.');
 		}
+		String shortName = addImport(dollarPrefix);
+		String importName = (shortName != null ? shortName : dollarPrefix) + (dollarSuffix .length() > 0 ? "." + dollarSuffix : "");
 		if (isRequired == null) {
-			String shortName = addImport(longName, true);
-			return shortName != null ? shortName : longName;
+			return importName;
 		}
-		String shortName = addImport(longName, false);
-		String annotationName = addImport((isRequired ? NonNull.class : Nullable.class).getName(), true);
+		String annotationName = addImport((isRequired ? NonNull.class : Nullable.class).getName());
+		String dotPrefix = "";
+		String dotSuffix = importName;
+		int dotIndex = importName.lastIndexOf('.');
+		if (dotIndex >= 0) {
+			dotPrefix = importName.substring(0, dotIndex);
+			dotSuffix = importName.substring(dotIndex+1, importName.length());
+		}
 		StringBuilder s = new StringBuilder();
-		if (shortName != null) {
-			s.append("@");
-			s.append(annotationName);
-			s.append(" ");
-			s.append(shortName);
+		if (dotPrefix.length() > 0) {
+			s.append(dotPrefix);
+			s.append(".");
 		}
-		else {
-			int index = longName.lastIndexOf(".");
-			if (index >= 0) {
-				s.append(longName.substring(0, index+1));
-				s.append("@");
-			}
-			s.append(annotationName);
-			s.append(" ");
-			if (index >= 0) {
-				s.append(longName.substring(index+1));
-			}
-			else {
-				s.append(longName);
-			}
-		}
+		s.append("@");
+		s.append(annotationName);
+		s.append(" ");
+		s.append(dotSuffix);
 		return s.toString();
 	}
 
-	protected @Nullable String addImport(@NonNull String newLongName, boolean keepConflicts) {
+	/**
+	 * Reserve and return the short class name for the oot-separate newLongName.
+	 * Returns null if no short name can be allocated - reserved for a primitive/important class or another user class.
+	 */
+	private @Nullable String addImport(@NonNull String newLongName) {
 		int index = newLongName.lastIndexOf(".");
 		String shortName = index >= 0 ? newLongName.substring(index+1) : newLongName;
 		String oldLongName = short2longName.get(shortName);
@@ -88,17 +90,15 @@ public class JavaImportNameManager extends AbstractImportNameManager
 			short2longName.put(shortName, newLongName);
 			return shortName;
 		}
-		else {
-			if (newLongName.equals(oldLongName)) {			// Long-name re-use => re-use shortName
-				long2short.put(newLongName, shortName);		// -- ensure reserved name is known to be used
-				return shortName;
-			}
-			else {											// New conflicting class => allocate 'null'
-				if (keepConflicts) {
-					long2short.put(newLongName, null);
-				}
-				return null;
-			}
+		else if (newLongName.equals(shortName) && (long2short.get(newLongName) == null)) {	// Matching primitive/reserved name
+			return shortName;								//  avoid a long2short key that would lead to a real import
+		}
+		else if (newLongName.equals(oldLongName)) {			// Long-name re-use => re-use shortName
+			long2short.put(newLongName, shortName);			// -- ensure reserved name is known to be used
+			return shortName;
+		}
+		else {												// New conflicting class => just return null
+			return null;
 		}
 	}
 
@@ -114,18 +114,38 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	}
 
 	/**
-	 * Prepopulate the shortNames with some that are at best confusing if re-used for user-defined classes.
+	 * Prepopulate the shortNames with some that are confusing or worse if re-used for user-defined classes.
 	 */
 	protected void reserveImportNames() {
+		reserveImportName(Byte.class);
+		reserveImportName(Character.class);
 		reserveImportName(Class.class);
+		reserveImportName(Double.class);
+		reserveImportName(Enum.class);
+		reserveImportName(Error.class);
+		reserveImportName(Exception.class);
+		reserveImportName(Float.class);
+		reserveImportName(Integer.class);
 		reserveImportName(Iterable.class);
 		reserveImportName(Iterator.class);
 		reserveImportName(List.class);
+		reserveImportName(Long.class);
 		reserveImportName(Map.class);
+		reserveImportName(Math.class);
 		reserveImportName(NonNull.class);
 		reserveImportName(Nullable.class);
 		reserveImportName(Object.class);
 		reserveImportName(Package.class);
+		reserveImportName(Process.class);
 		reserveImportName(Set.class);
+		reserveImportName(Short.class);
+		reserveImportName(String.class);
+		reserveImportName(byte.class);
+		reserveImportName(char.class);
+		reserveImportName(double.class);
+		reserveImportName(float.class);
+		reserveImportName(int.class);
+		reserveImportName(long.class);
+		reserveImportName(short.class);
 	}
 }

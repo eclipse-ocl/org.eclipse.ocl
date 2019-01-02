@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -53,7 +54,10 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	@Override
 	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
-		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;;
+		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;
+		if (((JavaCodeGenerator)js.getCodeGenerator()).isRequired(cgBoxExp) == Boolean.TRUE) {
+			js.appendSuppressWarningsNull(true);
+		}
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
 		if (!unboxedValue.isNonNull()) {

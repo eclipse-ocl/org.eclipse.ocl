@@ -512,20 +512,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(" = ");
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(null, ClassUtil.class);
-			js.append(".nonNullState(");
-		}
+		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		//		if (isRequiredNullCast) {
+		//			js.appendClassReference(null, ClassUtil.class);
+		//			js.append(".nonNullState(");
+		//		}
 		SubStream castBody4 = new SubStream() {
 			@Override
 			public void append() {
 				js.append(implementationName + ".evaluateIteration(" + managerName + ")");
-				if (expectedIsNonNull && !actualIsNonNull) {
-					js.append(")");
-				}
+				//				if (isRequiredNullCast) {
+				//					js.append(")");
+				//				}
 			}
 		};
-		js.appendClassCast(cgIterationCallExp, null, actualReturnClass, castBody4);
+		js.appendClassCast(cgIterationCallExp, isRequiredNullCast, actualReturnClass, castBody4);
 		js.append(";\n");
 		return true;
 	}
@@ -1106,6 +1107,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (cgCoIterator != null) {		// && !isImplicit
 			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
 			if (!asCoIterator.isIsImplicit()) {
+				if (cgCoIterator.isRequired()) {
+					js.appendSuppressWarningsNull(true);
+				}
 				js.appendDeclaration(cgCoIterator);
 				js.append(" = ");
 				SubStream castBody2 = new SubStream() {
@@ -2331,11 +2335,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(null, ClassUtil.class);
-			js.append(".nonNullState(");
-		}
-		js.appendClassCast(cgOperationCallExp, null, actualReturnClass, new JavaStream.SubStream()
+		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		//		if (expectedIsNonNull && !actualIsNonNull) {
+		//			js.appendClassReference(null, ClassUtil.class);
+		//			js.append(".nonNullState(");
+		//		}
+		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
 		{
 			@Override
 			public void append() {
@@ -2365,9 +2370,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(")");
 			}
 		});
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.append(")");
-		}
+		//		if (expectedIsNonNull && !actualIsNonNull) {
+		//			js.append(")");
+		//		}
 		js.append(";\n");
 		return true;
 	}
@@ -2389,10 +2394,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendClassReference(null, ClassUtil.class);
-			js.append(".nonNullState(");
-		}
+		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		//		if (expectedIsNonNull && !actualIsNonNull) {
+		//			js.appendClassReference(null, ClassUtil.class);
+		//			js.append(".nonNullState(");
+		//		}
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
@@ -2410,13 +2416,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				//			}
 				//		}
 				js.appendValueName(source);
-				if (expectedIsNonNull && !actualIsNonNull) {
-					js.append(")");
-				}
+				//				if (expectedIsNonNull && !actualIsNonNull) {
+				//					js.append(")");
+				//				}
 				js.append(")");
 			}
 		};
-		js.appendClassCast(cgPropertyCallExp, null, actualReturnClass, castBody);
+		js.appendClassCast(cgPropertyCallExp, isRequiredNullCast, actualReturnClass, castBody);
 		js.append(";\n");
 		return true;
 	}
@@ -2882,8 +2888,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgTuplePartCallExp);
 		js.append(" = ");
-		js.appendClassReference(null, ClassUtil.class);
-		js.append(".nonNullState(");
+		//		js.appendClassReference(null, ClassUtil.class);
+		//		js.append(".nonNullState(");
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
@@ -2892,7 +2898,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		};
 		js.appendClassCast(cgTuplePartCallExp, castBody);
-		js.append(");\n");
+		//		js.append(")");
+		js.append(";\n");
 		return true;
 	}
 

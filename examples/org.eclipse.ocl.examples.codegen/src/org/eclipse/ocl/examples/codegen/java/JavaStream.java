@@ -493,7 +493,7 @@ public class JavaStream
 	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
-		s.append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
+		append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {

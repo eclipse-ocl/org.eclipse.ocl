@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -1241,7 +1242,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Variable asVariable = asClone.getOwnedContext();
 		asClone.setOwnedContext(null);				// Defeat child-stealing detector
 		asExpression = createLetExp(asVariable, callExp.getOwnedSource(), asExpression);
-		return doVisit(CGValuedElement.class, asExpression);
+		Resource eResource = specification.eResource();
+		try {
+			eResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
+			return doVisit(CGValuedElement.class, asExpression);
+		}
+		finally {
+			eResource.getContents().remove(asExpression);
+		}
 	}
 
 	protected boolean isEcoreProperty(@NonNull LibraryProperty libraryProperty) {

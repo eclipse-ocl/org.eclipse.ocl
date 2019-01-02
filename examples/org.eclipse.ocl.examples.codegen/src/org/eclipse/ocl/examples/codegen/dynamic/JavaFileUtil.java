@@ -113,7 +113,7 @@ public abstract class JavaFileUtil
 			}
 			StringBuilder s = new StringBuilder();
 			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
-				s.append("\n" + diagnostic.getMessage(null));
+				s.append("\n" + diagnostic.getLineNumber() + ":" + diagnostic.getColumnNumber() + " " + diagnostic.getMessage(null));
 			}
 			String message;
 			if (s.length() > 0) {

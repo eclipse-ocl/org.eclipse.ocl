@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 Willink Transformations and others.
+ * Copyright (c) 2010, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -388,6 +388,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Map_collect_V2 = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T);
@@ -415,6 +416,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_collect_V2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_includesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_K = createCollectionType(_Collection_Collection_T);
@@ -528,7 +530,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_K_Map_collectBy_V2 = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_K_Map_collectNested_V2 = createMapType(_Map_Map_K_Map_V);
-		private final @NonNull MapType _Map_Map_K_Map_collect_V2 = createMapType(_Map_Map_K_Map_V);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -686,6 +687,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Bag_Enumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Enumeration);
+			ownedClasses.add(type = _Bag_Map_collect_V2);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Map_collect_V2);
 			ownedClasses.add(type = _Bag_Map_V_NullFree);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -777,6 +781,9 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Enumeration);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_Map_collect_V2);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Map_excludesAll_K2_NullFree);
@@ -1174,9 +1181,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Map_Map_K_Map_collectNested_V2);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type = _Map_Map_K_Map_collect_V2);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 		}
@@ -2018,27 +2022,23 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_excludesAll_K2_NullFree, true));
 			ownedOperations.add(operation = op_Map_excludesMap);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludesMap_K2_Map_excludesMap_V2, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludesMap_K2_Map_excludesMap_V2, true));
 			ownedOperations.add(operation = op_Map_excludesValue);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
 			ownedOperations.add(operation = op_Map_excluding);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
 			ownedOperations.add(operation = op_Map_excluding_1);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
 			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
 			ownedOperations.add(operation = op_Map_excludingAll);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("keys", _Collection_OclAny_NullFree, true));
 			ownedOperations.add(operation = op_Map_excludingMap);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludingMap_K2_Map_excludingMap_V2, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludingMap_K2_Map_excludingMap_V2, true));
 			ownedOperations.add(operation = op_Map_includes);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
@@ -2051,19 +2051,17 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_includesAll_K2_NullFree, true));
 			ownedOperations.add(operation = op_Map_includesMap);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_Map_includesMap_K2_Map_includesMap_V2, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_includesMap_K2_Map_includesMap_V2, true));
 			ownedOperations.add(operation = op_Map_includesValue);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
 			ownedOperations.add(operation = op_Map_including);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
 			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_includingMap);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_Map_includingMap_K2_Map_includingMap_V2, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_includingMap_K2_Map_includingMap_V2, true));
 			ownedOperations.add(operation = op_Map_isEmpty);
 			ownedOperations.add(operation = op_Map_keys);
 			ownedOperations.add(operation = op_Map_notEmpty);
@@ -2452,7 +2450,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Map_any = createIteration("any", tp_Map_K, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_collectBy = createIteration("collectBy", _Map_Map_K_Map_collectBy_V2, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_V2);
 		private final @NonNull Iteration it_Map_collectNested = createIteration("collectNested", _Map_Map_K_Map_collectNested_V2, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Map_collectNested_V2);
-		private final @NonNull Iteration it_Map_collect = createIteration("collect", _Map_Map_K_Map_collect_V2, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_V2);
+		private final @NonNull Iteration it_Map_collect = createIteration("collect", _Bag_Map_collect_V2, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_V2);
 		private final @NonNull Iteration it_Map_exists = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_exists_1 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_forAll = createIteration("forAll", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
@@ -2625,13 +2623,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Map_K_1, false));
 			ownedIterations.add(iteration = it_Map_collectNested);
-			iteration.setIsRequired(false);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("k", tp_Map_K, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Map_K_2, false));
 			ownedIterations.add(iteration = it_Map_collect);
-			iteration.setIsRequired(false);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("k", tp_Map_K, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -2930,6 +2926,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Collection_T_NullFree, tp_Collection_T);
 			addBinding(_Bag_Enumeration, _Enumeration);
 			addBinding(_Bag_Map_V_NullFree, tp_Map_V);
+			addBinding(_Bag_Map_collect_V2, tp_Map_collect_V2);
 			addBinding(_Bag_OclElement, _OclElement);
 			addBinding(_Bag_OclEnumeration, _OclEnumeration);
 			addBinding(_Bag_OclInvalid, _OclInvalid);
@@ -2956,6 +2953,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_Integer, _Integer);
 			addBinding(_Collection_Map_K, tp_Map_K);
 			addBinding(_Collection_Map_V, tp_Map_V);
+			addBinding(_Collection_Map_collect_V2, tp_Map_collect_V2);
 			addBinding(_Collection_Map_excludesAll_K2_NullFree, tp_Map_excludesAll_K2);
 			addBinding(_Collection_Map_includesAll_K2_NullFree, tp_Map_includesAll_K2);
 			addBinding(_Collection_OclAny, _OclAny);
@@ -2996,8 +2994,6 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Map_Map_K_Map_collectBy_V2, tp_Map_collectBy_V2);
 			addBinding(_Map_Map_K_Map_collectNested_V2, tp_Map_K);
 			addBinding(_Map_Map_K_Map_collectNested_V2, tp_Map_collectNested_V2);
-			addBinding(_Map_Map_K_Map_collect_V2, tp_Map_K);
-			addBinding(_Map_Map_K_Map_collect_V2, tp_Map_collect_V2);
 			addBinding(_Map_Map_excludesMap_K2_Map_excludesMap_V2, tp_Map_excludesMap_K2);
 			addBinding(_Map_Map_excludesMap_K2_Map_excludesMap_V2, tp_Map_excludesMap_V2);
 			addBinding(_Map_Map_excludingMap_K2_Map_excludingMap_V2, tp_Map_excludingMap_K2);
