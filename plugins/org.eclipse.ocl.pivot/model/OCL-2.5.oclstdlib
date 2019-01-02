@@ -686,7 +686,7 @@ type Map(K,V) : MapType conformsTo OclAny {
 	The Map of key and values that results from applying body to every value of the source map.
 	The result is flattened. 
 	**/
-	iteration collect(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Map(K[?],V2[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Bag(V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/**
 	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
 	The result is not flattened. 
@@ -695,7 +695,7 @@ type Map(K,V) : MapType conformsTo OclAny {
 	/**
 	The Map of key and values which results from applying body to every value of the source map.
 	**/
-	iteration collectNested(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Map(K[?],V2[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Map(K[?],V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/**
 	Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.
 	**/
