@@ -466,12 +466,12 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_RYH9EMXKEeS34PyjCbzxBg" name="PropertyCallExp">
         <ownedOperation xmi:id="_U2dFIMXKEeS34PyjCbzxBg" name="getSpecializedReferredPropertyOwningType">
-          <ownedParameter xmi:id="_U2dFIcXKEeS34PyjCbzxBg" name="result" type="_ndBCgMXIEeS34PyjCbzxBg" direction="return">
+          <ownedParameter xmi:id="_U2dFIcXKEeS34PyjCbzxBg" name="result" type="_ZHWkgMXIEeS34PyjCbzxBg" direction="return">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_U2dFIsXKEeS34PyjCbzxBg" value="1"/>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:id="_VASWkMXKEeS34PyjCbzxBg" name="getSpecializedReferredPropertyType">
-          <ownedParameter xmi:id="_VASWkcXKEeS34PyjCbzxBg" name="result" type="_ndBCgMXIEeS34PyjCbzxBg" direction="return">
+          <ownedParameter xmi:id="_VASWkcXKEeS34PyjCbzxBg" name="result" type="_ZHWkgMXIEeS34PyjCbzxBg" direction="return">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VASWksXKEeS34PyjCbzxBg" value="1"/>
           </ownedParameter>
         </ownedOperation>
