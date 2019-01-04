@@ -93,14 +93,14 @@ public class TemplateSpecialisation
 	}
 
 	protected final @NonNull CompleteEnvironment environment;
-//	protected final @NonNull DomainStandardLibrary standardLibrary;
+	//	protected final @NonNull DomainStandardLibrary standardLibrary;
 	protected /*@LazyNonNull*/ Map<TemplateParameter, Type> bindings = null;
 
 	public TemplateSpecialisation(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
-//		this.standardLibrary = environment.getStandardLibrary();
+		//		this.standardLibrary = environment.getStandardLibrary();
 	}
-	
+
 	/**
 	 * Return the specialisation of referencedType if distinct from referencedType.
 	 * Returns null if specialisation not available or not distinct from referencedType.
@@ -122,21 +122,24 @@ public class TemplateSpecialisation
 			return environment.getCollectionType(containerType, elementType, false, collectionType.getLowerValue(), collectionType.getUpperValue());	// FIXME isNullFree
 		}
 		if (referencedType instanceof TupleType) {
-//			DomainTupleType tupleType = (DomainTupleType)referencedType;
+			//			DomainTupleType tupleType = (DomainTupleType)referencedType;
 			throw new UnsupportedOperationException();
 		}
 		if (referencedType instanceof LambdaType) {
-//			DomainLambdaType lambdaType = (DomainLambdaType)referencedType;
+			//			DomainLambdaType lambdaType = (DomainLambdaType)referencedType;
 			throw new UnsupportedOperationException();
 		}
 		return null;
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getSpecialisation(@NonNull Type referredType) {
+	/**
+	 * @since 1.7
+	 */
+	public @NonNull Type getSpecialisation(@NonNull Type referredType) {
 		Type specialisation = getResolution(referredType);
-		return (org.eclipse.ocl.pivot.Class) (specialisation != null ? specialisation : referredType);	// FIXME cast
+		return specialisation != null ? specialisation : referredType;
 	}
-	
+
 	public void installEquivalence(@Nullable Type resolvedType, @Nullable Type referencedType) {
 		if (resolvedType == null) {
 			return;

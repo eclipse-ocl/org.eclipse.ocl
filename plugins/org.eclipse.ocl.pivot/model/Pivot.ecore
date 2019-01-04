@@ -2139,12 +2139,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PropertyCallExp" name="PropertyCallExp"
       eSuperTypes="#T-pivot-NavigationCallExp #T-pivot-ReferringElement">
-    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#T-pivot-Class">
+    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="referredProperty?.owningClass "/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#T-pivot-Class">
+    <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="referredProperty?.type.oclAsType(Class) "/>
       </eAnnotations>

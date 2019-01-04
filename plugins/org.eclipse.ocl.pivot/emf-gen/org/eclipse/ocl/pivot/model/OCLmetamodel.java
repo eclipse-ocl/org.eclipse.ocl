@@ -1889,8 +1889,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Operation op_OCLExpression_isNonNull = createOperation("isNonNull", _Boolean, null, null);
 		private final @NonNull Operation op_OCLExpression_isNull = createOperation("isNull", _Boolean, null, null);
 		private final @NonNull Operation op_Property_isAttribute = createOperation("isAttribute", _Boolean, null, null);
-		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation("getSpecializedReferredPropertyOwningType", _Class, null, null);
-		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation("getSpecializedReferredPropertyType", _Class, null, null);
+		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation("getSpecializedReferredPropertyOwningType", _Type, null, null);
+		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation("getSpecializedReferredPropertyType", _Type, null, null);
 		private final @NonNull Operation op_ReferringElement_getReferredElement = createOperation("getReferredElement", _Element, null, null);
 		private final @NonNull Operation op_SelfType_specializeIn = createOperation("specializeIn", _Type, null, null);
 		private final @NonNull Operation op_Type_flattenedType = createOperation("flattenedType", _Type, null, null);
@@ -1945,9 +1945,9 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _PropertyCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType);
-			operation.setBodyExpression(createExpressionInOCL(_Class, "referredProperty?.owningClass"));
+			operation.setBodyExpression(createExpressionInOCL(_Type, "referredProperty?.owningClass"));
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyType);
-			operation.setBodyExpression(createExpressionInOCL(_Class, "referredProperty?.type.oclAsType(Class)"));
+			operation.setBodyExpression(createExpressionInOCL(_Type, "referredProperty?.type.oclAsType(Class)"));
 
 			ownedOperations = _ReferringElement.getOwnedOperations();
 			ownedOperations.add(operation = op_ReferringElement_getReferredElement);

@@ -1031,11 +1031,11 @@
         contract="Ppivot.TReferringElement"/>
     <ownedOperation xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType" name="getSpecializedReferredPropertyOwningType"
         visibility="public">
-      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType.Pnull" type="Ppivot.TClass" isOrdered="true"
+      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType.Pnull" type="Ppivot.TType" isOrdered="true"
           direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType" name="getSpecializedReferredPropertyType" visibility="public">
-      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType.Pnull" type="Ppivot.TClass" isOrdered="true"
+      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType.Pnull" type="Ppivot.TType" isOrdered="true"
           direction="return"/>
     </ownedOperation>
   </packagedElement>

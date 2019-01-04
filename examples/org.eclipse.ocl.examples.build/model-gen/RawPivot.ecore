@@ -727,8 +727,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyCallExp" eSuperTypes="#//NavigationCallExp #//ReferringElement">
-    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#//Class"/>
-    <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#//Class"/>
+    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#//Type"/>
+    <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pseudostate" eSuperTypes="#//Vertex">
