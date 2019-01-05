@@ -673,17 +673,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
-		for (int recursions = 0; pivotType instanceof TemplateParameter; recursions++) {
-			List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = ((TemplateParameter)pivotType).getConstrainingClasses();
-			if (asConstrainingClasses.size() > 0) {
-				pivotType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
-			}
-			else {
-				pivotType = getOwnedStandardLibrary().getOclAnyType();
-			}
-			if (recursions > 100) {
-				pivotType = getOwnedStandardLibrary().getOclAnyType();
-			}
+		if (pivotType instanceof TemplateParameter) {
+			Type lowerBound = PivotUtil.getLowerBound((TemplateParameter) pivotType);
+			pivotType = lowerBound != null ? lowerBound : getOwnedStandardLibrary().getOclAnyType();
 		}
 		if (pivotType instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();

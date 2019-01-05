@@ -1742,6 +1742,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			return;
 		}
 		org.eclipse.ocl.pivot.Class thatClass = thatType.isClass();
+		if (thatClass == null) {
+			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
+			if (thatTemplateParameter != null) {
+				Type lowerBound = PivotUtil.getLowerBound(thatTemplateParameter);
+				if (lowerBound != null) {
+					thatClass = lowerBound.isClass();
+				}
+			}
+		}
 		if ((thatClass == null) || (thatClass instanceof DataType)) {
 			return;
 		}

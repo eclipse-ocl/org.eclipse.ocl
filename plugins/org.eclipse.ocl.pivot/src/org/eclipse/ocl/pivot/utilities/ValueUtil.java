@@ -1253,6 +1253,7 @@ public abstract class ValueUtil
 	 * Add a validation failed diagnostic to the diagnostics in a context. The e failure occurs for the constraintName check of object.
 	 *
 	 * (See Bug 543178.)
+	 * @since 1.7
 	 */
 	public static boolean validationFailedDiagnostic(@NonNull Object constraintName, @NonNull Object object, @Nullable Object diagnostics, @Nullable Object context, @NonNull Throwable e) {
 		if (diagnostics != null) {

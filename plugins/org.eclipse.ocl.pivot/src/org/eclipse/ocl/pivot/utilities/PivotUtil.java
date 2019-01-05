@@ -1057,6 +1057,24 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.7
+	 */
+	public static @Nullable Type getLowerBound(@NonNull TemplateParameter templateParameter) {
+		for (int recursions = 0; recursions < 100; recursions++) {
+			List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = templateParameter.getConstrainingClasses();
+			if (asConstrainingClasses.size() <= 0) {
+				return null;
+			}
+			Type pivotType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
+			if (!(pivotType instanceof TemplateParameter)) {
+				return pivotType;
+			}
+			templateParameter = (TemplateParameter) pivotType;
+		}
+		return null;
+	}
+
+	/**
 	 * Return the Model at the root of asResource.
 	 *
 	 * @throws IllegalStateException if none.

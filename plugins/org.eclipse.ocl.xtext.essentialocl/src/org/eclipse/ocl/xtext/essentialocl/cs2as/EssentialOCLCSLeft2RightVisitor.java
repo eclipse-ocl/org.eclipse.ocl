@@ -427,9 +427,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else if (asSourceType != null) {								// Search for a.b() candidates in type of a
 			TemplateParameter asTemplateParameter = asSourceType.isTemplateParameter();
 			if (asTemplateParameter != null) {
-				List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = asTemplateParameter.getConstrainingClasses();
-				if (asConstrainingClasses.size() > 0) {
-					asSourceType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
+				Type lowerBound = PivotUtil.getLowerBound(asTemplateParameter);
+				if (lowerBound != null) {		// ?? OclAny for null
+					asSourceType = lowerBound;
 				}
 			}
 			Invocations invocations = getInvocations(asSourceType, asSourceTypeValue, name, iteratorCount, expressionCount);
@@ -464,9 +464,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
 		TemplateParameter asTemplateParameter = asType.isTemplateParameter();
 		if (asTemplateParameter != null) {
-			List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = asTemplateParameter.getConstrainingClasses();
-			if (asConstrainingClasses.size() > 0) {
-				asType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
+			Type lowerBound = PivotUtil.getLowerBound(asTemplateParameter);
+			if (lowerBound != null) {
+				asType = lowerBound;
 			}
 			else {
 				asType = standardLibrary.getOclAnyType();
