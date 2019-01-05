@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="bug543173" nsURI="http://Bug543173" nsPrefix="bug543173">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reference" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" defaultValueLiteral="false" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="&#xA;               Mapping.allInstances()->select(m : Mapping | m.to = self)->notEmpty()"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link" abstract="true">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//ModelElement"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1">
+      <eGenericType eTypeParameter="#//Link/T"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mapping">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//ModelElement"/>
+    </eTypeParameters>
+    <eGenericSuperTypes eClassifier="#//Link">
+      <eTypeArguments eTypeParameter="#//Mapping/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+</ecore:EPackage>
