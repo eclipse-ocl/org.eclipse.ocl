@@ -135,53 +135,58 @@ public class EnumLiteralExpImpl
 	@Override
 	public boolean validateTypeIsEnumerationType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv TypeIsEnumerationType:
-		 *   let
-		 *     severity : Integer[1] = 'EnumLiteralExp::TypeIsEnumerationType'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[1] = self.type = referredLiteral?.owningEnumeration
-		 *       in
-		 *         'EnumLiteralExp::TypeIsEnumerationType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			/*@Caught*/ @NonNull Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-				final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
-				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Enumeration safe_owningEnumeration_source;
-				if (owningEnumeration == Boolean.TRUE) {
-					safe_owningEnumeration_source = null;
-				}
-				else {
-					assert referredLiteral != null;
-					@SuppressWarnings("null")
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
-					safe_owningEnumeration_source = owningEnumeration_0;
-				}
-				final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
-				CAUGHT_result = result;
+		try {
+			/**
+			 *
+			 * inv TypeIsEnumerationType:
+			 *   let
+			 *     severity : Integer[1] = 'EnumLiteralExp::TypeIsEnumerationType'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[1] = self.type = referredLiteral?.owningEnumeration
+			 *       in
+			 *         'EnumLiteralExp::TypeIsEnumerationType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
+			else {
+				/*@Caught*/ @NonNull Object CAUGHT_result;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
+					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
+					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Enumeration safe_owningEnumeration_source;
+					if (owningEnumeration == Boolean.TRUE) {
+						safe_owningEnumeration_source = null;
+					}
+					else {
+						assert referredLiteral != null;
+						@SuppressWarnings("null")
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
+						safe_owningEnumeration_source = owningEnumeration_0;
+					}
+					final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
+					CAUGHT_result = result;
+				}
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("EnumLiteralExp::TypeIsEnumerationType", this, diagnostics, context, e);
+		}
 	}
 
 	/**

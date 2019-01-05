@@ -125,35 +125,40 @@ public class IntegerLiteralExpImpl
 	@Override
 	public boolean validateTypeIsInteger(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv TypeIsInteger:
-		 *   let severity : Integer[1] = 'IntegerLiteralExp::TypeIsInteger'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[1] = self.type = Integer
-		 *       in
-		 *         'IntegerLiteralExp::TypeIsInteger'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_IntegerLiteralExp_c_c_TypeIsInteger);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
+		try {
+			/**
+			 *
+			 * inv TypeIsInteger:
+			 *   let severity : Integer[1] = 'IntegerLiteralExp::TypeIsInteger'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[1] = self.type = Integer
+			 *       in
+			 *         'IntegerLiteralExp::TypeIsInteger'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_IntegerLiteralExp_c_c_TypeIsInteger);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
+			}
+			else {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Integer = idResolver.getClass(TypeId.INTEGER, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Integer.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IntegerLiteralExp_c_c_TypeIsInteger, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
+			}
+			return Boolean.TRUE == symbol_0;
 		}
-		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Integer = idResolver.getClass(TypeId.INTEGER, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Integer.getTypeId()) : false;
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IntegerLiteralExp_c_c_TypeIsInteger, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("IntegerLiteralExp::TypeIsInteger", this, diagnostics, context, e);
 		}
-		return Boolean.TRUE == symbol_0;
 	}
 
 	/**

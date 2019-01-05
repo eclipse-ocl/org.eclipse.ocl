@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -300,48 +299,53 @@ public class MessageExpImpl
 	@Override
 	public boolean validateOneCallOrOneSend(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv OneCallOrOneSend:
-		 *   let severity : Integer[1] = 'MessageExp::OneCallOrOneSend'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let
-		 *         result : Boolean[1] = ownedCalledOperation->size() +
-		 *         ownedSentSignal->size() = 1
-		 *       in
-		 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			/*@Caught*/ @NonNull Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue sum = (IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
-				final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
-				CAUGHT_result = result;
+		try {
+			/**
+			 *
+			 * inv OneCallOrOneSend:
+			 *   let severity : Integer[1] = 'MessageExp::OneCallOrOneSend'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let
+			 *         result : Boolean[1] = ownedCalledOperation->size() +
+			 *         ownedSentSignal->size() = 1
+			 *       in
+			 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
+			else {
+				/*@Caught*/ @NonNull Object CAUGHT_result;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue sum = (org.eclipse.ocl.pivot.values.@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
+					final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
+					CAUGHT_result = result;
+				}
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("MessageExp::OneCallOrOneSend", this, diagnostics, context, e);
+		}
 	}
 
 	/**
@@ -352,47 +356,52 @@ public class MessageExpImpl
 	@Override
 	public boolean validateTargetIsNotACollection(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv TargetIsNotACollection:
-		 *   let
-		 *     severity : Integer[1] = 'MessageExp::TargetIsNotACollection'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let
-		 *         result : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
-		 *       in
-		 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedTarget = this.getOwnedTarget();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedTarget.getType();
-				final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
-				CAUGHT_oclIsKindOf = oclIsKindOf;
+		try {
+			/**
+			 *
+			 * inv TargetIsNotACollection:
+			 *   let
+			 *     severity : Integer[1] = 'MessageExp::TargetIsNotACollection'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let
+			 *         result : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
+			 *       in
+			 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
-			catch (Exception e) {
-				CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+			else {
+				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedTarget = this.getOwnedTarget();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedTarget.getType();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
+					CAUGHT_oclIsKindOf = oclIsKindOf;
+				}
+				catch (Exception e) {
+					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean result = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			final /*@NonInvalid*/ java.lang.@Nullable Boolean result = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("MessageExp::TargetIsNotACollection", this, diagnostics, context, e);
+		}
 	}
 
 	/**

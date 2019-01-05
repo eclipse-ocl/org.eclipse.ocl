@@ -143,62 +143,67 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	@Override
 	public boolean validateSafeSourceCanBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv SafeSourceCanBeNull:
-		 *   let
-		 *     severity : Integer[1] = 'OppositePropertyCallExp::SafeSourceCanBeNull'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
-		 *         not ownedSource.isNonNull()
-		 *       in
-		 *         'OppositePropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-			final /*@NonInvalid*/ boolean ne = ownedSource != null;
-			/*@NonInvalid*/ boolean and;
-			if (ne) {
-				final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-				and = isSafe;
+		try {
+			/**
+			 *
+			 * inv SafeSourceCanBeNull:
+			 *   let
+			 *     severity : Integer[1] = 'OppositePropertyCallExp::SafeSourceCanBeNull'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
+			 *         not ownedSource.isNonNull()
+			 *       in
+			 *         'OppositePropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				and = ValueUtil.FALSE_VALUE;
-			}
-			/*@NonInvalid*/ java.lang.@Nullable Boolean result;
-			if (and) {
-				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
-				try {
-					if (ownedSource == null) {
-						throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+				final /*@NonInvalid*/ boolean ne = ownedSource != null;
+				/*@NonInvalid*/ boolean and;
+				if (ne) {
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					and = isSafe;
+				}
+				else {
+					and = ValueUtil.FALSE_VALUE;
+				}
+				/*@NonInvalid*/ java.lang.@Nullable Boolean result;
+				if (and) {
+					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+					try {
+						if (ownedSource == null) {
+							throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+						}
+						final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+						CAUGHT_isNonNull = isNonNull;
 					}
-					final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
-					CAUGHT_isNonNull = isNonNull;
+					catch (Exception e) {
+						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
+					result = not;
 				}
-				catch (Exception e) {
-					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
+				else {
+					result = ValueUtil.TRUE_VALUE;
 				}
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
-				result = not;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			else {
-				result = ValueUtil.TRUE_VALUE;
-			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("OppositePropertyCallExp::SafeSourceCanBeNull", this, diagnostics, context, e);
+		}
 	}
 
 	/**
@@ -209,63 +214,68 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	@Override
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv UnsafeSourceCanNotBeNull:
-		 *   let
-		 *     severity : Integer[1] = 'OppositePropertyCallExp::UnsafeSourceCanNotBeNull'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[?] = ownedSource <> null and not isSafe implies
-		 *         ownedSource.isNonNull()
-		 *       in
-		 *         'OppositePropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			/*@Caught*/ @Nullable Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-				final /*@NonInvalid*/ boolean ne = ownedSource != null;
-				/*@NonInvalid*/ java.lang.@Nullable Boolean and;
-				if (ne) {
-					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
-					and = not;
-				}
-				else {
-					and = ValueUtil.FALSE_VALUE;
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+		try {
+			/**
+			 *
+			 * inv UnsafeSourceCanNotBeNull:
+			 *   let
+			 *     severity : Integer[1] = 'OppositePropertyCallExp::UnsafeSourceCanNotBeNull'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[?] = ownedSource <> null and not isSafe implies
+			 *         ownedSource.isNonNull()
+			 *       in
+			 *         'OppositePropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
+			}
+			else {
+				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					if (ownedSource == null) {
-						throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ boolean ne = ownedSource != null;
+					/*@NonInvalid*/ java.lang.@Nullable Boolean and;
+					if (ne) {
+						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+						final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
+						and = not;
 					}
-					final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
-					CAUGHT_isNonNull = isNonNull;
+					else {
+						and = ValueUtil.FALSE_VALUE;
+					}
+					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+					try {
+						if (ownedSource == null) {
+							throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+						}
+						final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+						CAUGHT_isNonNull = isNonNull;
+					}
+					catch (Exception e) {
+						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
+					CAUGHT_result = result;
 				}
 				catch (Exception e) {
-					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
-				CAUGHT_result = result;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
-			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("OppositePropertyCallExp::UnsafeSourceCanNotBeNull", this, diagnostics, context, e);
+		}
 	}
 
 	/**

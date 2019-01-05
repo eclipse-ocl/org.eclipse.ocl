@@ -41,9 +41,7 @@ import org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -213,12 +211,12 @@ public abstract class ElementImpl
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element_0 = idResolver.getClass(PivotTables.CLSSid_Element, null);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Element symbol_0 = (Element)_1;
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, symbol_0);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue selectByKind = (SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue selectByKind = (org.eclipse.ocl.pivot.values.@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
 				return selectByKind;
 			}
 		};
 		final org.eclipse.ocl.pivot.internal.library.executor.@NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY_closure_0, oclAsSet, ACC_closure_0);
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = ClassUtil.nonNullState((SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
+		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = (org.eclipse.ocl.pivot.values.@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ java.util.@NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
 		return ECORE_closure;
 	}

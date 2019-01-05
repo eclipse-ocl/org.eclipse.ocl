@@ -151,76 +151,81 @@ implements TupleLiteralPart {
 	@Override
 	public boolean validateCompatibleInitialiserType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv CompatibleInitialiserType:
-		 *   let
-		 *     severity : Integer[1] = 'TupleLiteralPart::CompatibleInitialiserType'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[?] = ownedInit <> null and ownedInit.type <> null implies
-		 *         ownedInit.type.conformsTo(type)
-		 *       in
-		 *         'TupleLiteralPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_TupleLiteralPart_c_c_CompatibleInitialiserType);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			/*@Caught*/ @Nullable Object CAUGHT_result;
-			try {
-				/*@Caught*/ @NonNull Object CAUGHT_and;
+		try {
+			/**
+			 *
+			 * inv CompatibleInitialiserType:
+			 *   let
+			 *     severity : Integer[1] = 'TupleLiteralPart::CompatibleInitialiserType'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[?] = ownedInit <> null and ownedInit.type <> null implies
+			 *         ownedInit.type.conformsTo(type)
+			 *       in
+			 *         'TupleLiteralPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_TupleLiteralPart_c_c_CompatibleInitialiserType);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
+			}
+			else {
+				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ boolean ne = ownedInit != null;
-					/*@Thrown*/ boolean and;
-					if (ne) {
-						if (ownedInit == null) {
+					/*@Caught*/ @NonNull Object CAUGHT_and;
+					try {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
+						final /*@NonInvalid*/ boolean ne = ownedInit != null;
+						/*@Thrown*/ boolean and;
+						if (ne) {
+							if (ownedInit == null) {
+								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+							}
+							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
+							final /*@Thrown*/ boolean ne_0 = type != null;
+							and = ne_0;
+						}
+						else {
+							and = ValueUtil.FALSE_VALUE;
+						}
+						CAUGHT_and = and;
+					}
+					catch (Exception e) {
+						CAUGHT_and = ValueUtil.createInvalidValue(e);
+					}
+					/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+					try {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
+						if (ownedInit_1 == null) {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
-						final /*@Thrown*/ boolean ne_0 = type != null;
-						and = ne_0;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedInit_1.getType();
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_1 = this.getType();
+						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
+						CAUGHT_conformsTo = conformsTo;
 					}
-					else {
-						and = ValueUtil.FALSE_VALUE;
+					catch (Exception e) {
+						CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 					}
-					CAUGHT_and = and;
+					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_conformsTo);
+					CAUGHT_result = result;
 				}
 				catch (Exception e) {
-					CAUGHT_and = ValueUtil.createInvalidValue(e);
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
-				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
-					if (ownedInit_1 == null) {
-						throw new InvalidValueException("Null source for \'TypedElement::type\'");
-					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedInit_1.getType();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_1 = this.getType();
-					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
-					CAUGHT_conformsTo = conformsTo;
-				}
-				catch (Exception e) {
-					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
-				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_conformsTo);
-				CAUGHT_result = result;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_TupleLiteralPart_c_c_CompatibleInitialiserType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
-			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_TupleLiteralPart_c_c_CompatibleInitialiserType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			return Boolean.TRUE == symbol_0;
 		}
-		return Boolean.TRUE == symbol_0;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("TupleLiteralPart::CompatibleInitialiserType", this, diagnostics, context, e);
+		}
 	}
 
 	/**
@@ -231,36 +236,41 @@ implements TupleLiteralPart {
 	@Override
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		/**
-		 *
-		 * inv TypeIsNotInvalid:
-		 *   let
-		 *     severity : Integer[1] = 'TupleLiteralPart::TypeIsNotInvalid'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let result : Boolean[1] = type <> OclInvalid
-		 *       in
-		 *         'TupleLiteralPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
-		 *     endif
-		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_TupleLiteralPart_c_c_TypeIsNotInvalid);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
+		try {
+			/**
+			 *
+			 * inv TypeIsNotInvalid:
+			 *   let
+			 *     severity : Integer[1] = 'TupleLiteralPart::TypeIsNotInvalid'.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[1] = type <> OclInvalid
+			 *       in
+			 *         'TupleLiteralPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_TupleLiteralPart_c_c_TypeIsNotInvalid);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = ValueUtil.TRUE_VALUE;
+			}
+			else {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_TupleLiteralPart_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
+			}
+			return Boolean.TRUE == symbol_0;
 		}
-		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_TupleLiteralPart_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic("TupleLiteralPart::TypeIsNotInvalid", this, diagnostics, context, e);
 		}
-		return Boolean.TRUE == symbol_0;
 	}
 
 	/**
