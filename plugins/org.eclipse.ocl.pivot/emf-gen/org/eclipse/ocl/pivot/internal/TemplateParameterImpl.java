@@ -353,15 +353,9 @@ public class TemplateParameterImpl
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		CompleteInheritance thisInheritance = standardLibrary.getOclAnyType().getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.isSubInheritanceOf(thatInheritance);
-	}
-
-	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return standardLibrary.getInheritance(standardLibrary.getOclAnyType());		// FIXME loaer bound
+		org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.getLowerBound(this, standardLibrary.getOclAnyType());
+		return standardLibrary.getInheritance(lowerBound);
 	}
 
 	@Override

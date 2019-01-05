@@ -151,6 +151,16 @@ implements Type {
 		return visitor.visitType(this);
 	}
 
+	@Override
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+		if (this == type) {
+			return true;
+		}
+		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
+		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
+		return thisInheritance.isSubInheritanceOf(thatInheritance);
+	}
+
 	/**
 	 * Create and return an instance of this type.
 	 *

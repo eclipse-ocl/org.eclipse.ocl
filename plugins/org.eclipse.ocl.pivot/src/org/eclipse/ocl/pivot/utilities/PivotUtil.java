@@ -191,6 +191,24 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.7
+	 */
+	public static org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter templateParameter) {
+		for (int recursions = 0; recursions < 100; recursions++) {
+			List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = templateParameter.getConstrainingClasses();
+			if (asConstrainingClasses.size() <= 0) {
+				return null;
+			}
+			org.eclipse.ocl.pivot.Class pivotType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
+			if (!(pivotType instanceof TemplateParameter)) {
+				return pivotType;
+			}
+			templateParameter = (TemplateParameter) pivotType;
+		}
+		return null;
+	}
+
+	/**
 	 * Check that expressionInOCL was successfully compiled. Throws an InvalidValueException explaining the problem
 	 * if expressionInOCL has no contextVariable and has a StringLiteralExp bodyExpression.
 	 */
@@ -1059,19 +1077,9 @@ public class PivotUtil
 	/**
 	 * @since 1.7
 	 */
-	public static @Nullable Type getLowerBound(@NonNull TemplateParameter templateParameter) {
-		for (int recursions = 0; recursions < 100; recursions++) {
-			List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = templateParameter.getConstrainingClasses();
-			if (asConstrainingClasses.size() <= 0) {
-				return null;
-			}
-			Type pivotType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
-			if (!(pivotType instanceof TemplateParameter)) {
-				return pivotType;
-			}
-			templateParameter = (TemplateParameter) pivotType;
-		}
-		return null;
+	public static org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter templateParameter, org.eclipse.ocl.pivot.@NonNull Class oclAnyType) {
+		org.eclipse.ocl.pivot.Class lowerBound = basicGetLowerBound(templateParameter);
+		return lowerBound != null ? lowerBound : oclAnyType;
 	}
 
 	/**

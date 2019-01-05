@@ -1745,9 +1745,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (thatClass == null) {
 			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
 			if (thatTemplateParameter != null) {
-				Type lowerBound = PivotUtil.getLowerBound(thatTemplateParameter);
+				org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(thatTemplateParameter);
 				if (lowerBound != null) {
-					thatClass = lowerBound.isClass();
+					thatClass = lowerBound;
 				}
 			}
 		}
