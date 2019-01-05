@@ -1018,10 +1018,12 @@ public class EcoreOCLEValidator implements EValidator
 				String role = PivotUtilInternal.getSpecificationRole(asSpecification);
 				String contextName = NameUtil.qualifiedNameFor(eNamedElement);
 				StringBuilder s = new StringBuilder();
-				s.append("\"" + expressionInOCL.getBody() + "\"");
+				String body = expressionInOCL.getBody();
+				String trimmedBody = body.replace("\\w*", " ").trim();
+				s.append("\"" + StringUtil.convertToOCLString(trimmedBody) + "\"");
 				for (Diagnostic childDiagnostic : nestedDiagnostic.getChildren()) {
 					if (childDiagnostic != null) {
-						// ProblemsView needs a multiline to show per-line errors
+						// Problems View needs a multiline to show per-line errors
 						s.append("\n\t");
 						s.append(childDiagnostic.getMessage());
 					}
