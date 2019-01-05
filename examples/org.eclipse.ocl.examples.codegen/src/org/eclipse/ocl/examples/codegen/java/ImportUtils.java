@@ -78,6 +78,7 @@ public class ImportUtils
 		return resolveImports(source, long2short, false);
 	}
 
+	// FIXME with the advent of ImportNameManager there are no IMPORTS_PREFIX...IMPORTS_SUFFIX to replace just IMPORTS_MARKER
 	public static @NonNull String resolveImports(@NonNull String source, @NonNull Map<@NonNull String, @Nullable String> long2short, boolean skipStartMarker)
 	{
 		StringBuilder s = new StringBuilder();
@@ -207,22 +208,22 @@ public class ImportUtils
 				s.append(shortTypeName != null ? shortTypeName : longTypeName);
 				s.append(IMPORTS_SUFFIX);
 			}
-			else if ((shortTypeName != null) && !shortTypeName.equals(longTypeName)) {
+			/*	else if ((shortTypeName != null) && !shortTypeName.equals(longTypeName)) {
 				s.append("@");
 				s.append(IMPORTS_PREFIX);
 				s.append(longAnnotationName);
 				s.append(IMPORTS_SUFFIX);
 				s.append(" ");
 				s.append(shortTypeName);
-			}
+			} */
 			else {
+				s.append(IMPORTS_PREFIX);
 				s.append(annotatedName.substring(0, startIndex));
 				s.append("@");
-				s.append(IMPORTS_PREFIX);
 				s.append(longAnnotationName);
-				s.append(IMPORTS_SUFFIX);
 				s.append(" ");
 				s.append(annotatedName.substring(endIndex).trim());
+				s.append(IMPORTS_SUFFIX);
 			}
 			iStart = iSuffix + IMPORTS_SUFFIX.length();
 		}
