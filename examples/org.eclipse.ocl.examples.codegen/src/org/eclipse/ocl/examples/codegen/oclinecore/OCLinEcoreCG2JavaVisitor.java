@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -32,10 +33,13 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * An OCLinEcoreCG2JavaVisitor supports generation of the OCL embedded in an Ecore model
@@ -138,10 +142,26 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	protected @NonNull String generateValidatorBody(@NonNull CGValuedElement cgBody, @NonNull Constraint asConstraint, org.eclipse.ocl.pivot.@NonNull Class asType) {
 		js.resetStream();
+		boolean isBombproof = false;
+		if (cgBody.isTrue() || cgBody.isFalse()) {				// FIXME Deeper bombproof analysis
+			isBombproof = true;
+		}
+		if (!isBombproof) {
+			js.append("try {\n");  								// See Bug 543178 for design rationale
+			js.pushIndentation(null);
+		}
 		GenClassifier genClassifier = genModelHelper.getGenClassifier(asType);
 		String genClassifierName = genClassifier != null ? genClassifier.getName() : null;
 		if (genClassifierName == null) {
 			genClassifierName = "";
+		}
+		String constraintName = PivotUtil.getName(asConstraint);
+		EObject eContainer = asConstraint.eContainer();
+		if (eContainer instanceof NamedElement) {
+			String containerName = ((NamedElement)eContainer).getName();
+			if (containerName != null) {
+				constraintName = containerName + "::" + constraintName;
+			}
 		}
 		js.appendCommentWithOCL(null, asConstraint);
 		js.appendLocalStatements(cgBody);
@@ -150,7 +170,22 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.append("Boolean.TRUE == ");
 		}
 		js.appendValueName(cgBody);
-		js.append(";");
+		js.append(";\n");
+		if (!isBombproof) {
+			js.popIndentation();
+			js.append("}\n");
+			js.append("catch (");
+			js.appendClassReference(null, Throwable.class);
+			js.append(" e) {\n");
+			js.pushIndentation(null);
+			js.append("return ");
+			js.appendClassReference(null, ValueUtil.class);
+			js.append(".validationFailedDiagnostic(");
+			js.appendString(constraintName);
+			js.append(", this, diagnostics, context, e);\n");
+			js.popIndentation();
+			js.append("}\n");
+		}
 		return toString();
 	}
 

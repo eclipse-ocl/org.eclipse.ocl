@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
@@ -67,6 +70,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
+import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -1243,5 +1247,19 @@ public abstract class ValueUtil
 		catch (NumberFormatException e) {
 			throw new InvalidValueException(e, PivotMessages.InvalidInteger, aValue);
 		}
+	}
+
+	/**
+	 * Add a validation failed diagnostic to the diagnostics in a context. The e failure occurs for the constraintName check of object.
+	 *
+	 * (See Bug 543178.)
+	 */
+	public static boolean validationFailedDiagnostic(@NonNull Object constraintName, @NonNull Object object, @Nullable Object diagnostics, @Nullable Object context, @NonNull Throwable e) {
+		if (diagnostics != null) {
+			String emfMessage = StringUtil.bind(PivotMessages.ValidationEvaluationFailed_ERROR_, new Object[]{constraintName, e.getMessage()});
+			Object emfData[] = new Object [] { object, e };
+			((DiagnosticChain) diagnostics).add(new BasicDiagnostic(Diagnostic.ERROR, PivotValidator.DIAGNOSTIC_SOURCE, 0, emfMessage, emfData));
+		}
+		return false;
 	}
 }
