@@ -215,6 +215,22 @@ public class ValidateTests extends AbstractValidateTests
 		ocl.dispose();
 	}
 
+	public void testValidate_Bug543187_ecore() throws IOException, InterruptedException {
+		//
+		//	Create model
+		//
+		OCL ocl = OCL.newInstance(getProjectMap());
+		URI ecoreURI = getTestModelURI("models/ecore//Bug543187.ecore");
+		Resource ecoreResource = ocl.getResourceSet().getResource(ecoreURI, true);
+		assert ecoreResource != null;
+		//
+		//	Check EObjectValidator errors
+		//
+		assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource);
+		//
+		ocl.dispose();
+	}
+
 	public void testValidate_Pivot_ecore() throws IOException, InterruptedException {
 		//
 		//	Create model
