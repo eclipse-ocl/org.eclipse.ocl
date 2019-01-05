@@ -220,7 +220,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl = OCL.newInstance(getProjectMap());
-		URI ecoreURI = getTestModelURI("models/ecore//Bug543187.ecore");
+		URI ecoreURI = getTestModelURI("models/ecore/Bug543187.ecore");
 		Resource ecoreResource = ocl.getResourceSet().getResource(ecoreURI, true);
 		assert ecoreResource != null;
 		//
@@ -229,6 +229,14 @@ public class ValidateTests extends AbstractValidateTests
 		assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource);
 		//
 		ocl.dispose();
+	}
+
+	public void testValidate_Bug543187_xmi() throws IOException, InterruptedException {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		getProjectMap().initializeResourceSet(resourceSet);
+		URI xmiURI = getTestModelURI("models/ecore/Bug543187.xmi");
+		Resource resource = resourceSet.getResource(xmiURI, true);
+		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 	}
 
 	public void testValidate_Pivot_ecore() throws IOException, InterruptedException {

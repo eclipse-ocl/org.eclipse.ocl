@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bug543187:Root
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:bug543187="http://Bug543187"
+    xsi:schemaLocation="http://Bug543187 Bug543187.ecore">
+  <elements
+      xsi:type="bug543187:MyMapping"
+      name="m1"
+      to="//@elements.3"/>
+  <elements
+      xsi:type="bug543187:MyMapping"
+      name="m2"
+      to="//@elements.4"/>
+  <elements
+      xsi:type="bug543187:MyMapping"
+      name="m3"
+      to="//@elements.4"/>
+  <elements
+      xsi:type="bug543187:MyElement"
+      name="e1"/>
+  <elements
+      xsi:type="bug543187:MyElement"
+      name="e2"/>
+  <elements
+      xsi:type="bug543187:MyElement"
+      name="e3"/>
+  <elements
+      xsi:type="bug543187:MyElement"
+      name="e4"/>
+</bug543187:Root>
