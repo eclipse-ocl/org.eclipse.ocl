@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -52,9 +52,9 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
-//	protected @NonNull Map<ElementId, DomainElement> id2element = new HashMap<ElementId, DomainElement>();
-	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<EClassifier, WeakReference<CompleteInheritance>>();
-	
+	//	protected @NonNull Map<ElementId, DomainElement> id2element = new HashMap<>();
+	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
+
 	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {
 		super(standardLibrary);
 		for (@SuppressWarnings("null")@NonNull EObject root : roots) {
@@ -97,10 +97,10 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 				}
 			}
 			if (execPackage != null) {
-				org.eclipse.ocl.pivot.Class domainType = execPackage.getOwnedClass(eClassifier.getName());	
+				org.eclipse.ocl.pivot.Class domainType = execPackage.getOwnedClass(eClassifier.getName());
 				if (domainType != null) {
 					type = standardLibrary.getInheritance(domainType);
-					typeMap.put(eClassifier, new WeakReference<CompleteInheritance>(type));
+					typeMap.put(eClassifier, new WeakReference<>(type));
 				}
 			}
 		}
@@ -108,9 +108,9 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public @NonNull Class getStaticTypeOf(@Nullable Object value) {
+	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
 		if (value instanceof AbstractExecutorType) {	// The direct CGed Executor has no eClass() so use getMetaclass()
-			org.eclipse.ocl.pivot.Class type = key2type.get(value);
+			Type type = key2type.get(value);
 			if (type == null) {
 				type = standardLibrary.getMetaclass((AbstractExecutorType) value);
 				assert type != null;
@@ -119,7 +119,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			return type;
 		}
 		else {
-			return super.getStaticTypeOf(value);
+			return super.getStaticTypeOfValue(staticType, value);
 		}
 	}
 
@@ -132,10 +132,10 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
 		return ((ExecutableStandardLibrary)standardLibrary).getTupleType(typeId);
 	}
-	
+
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
 		int iSize = parts.length;
-		List<@NonNull TuplePartId> partsList = new ArrayList<@NonNull TuplePartId>(iSize);
+		List<@NonNull TuplePartId> partsList = new ArrayList<>(iSize);
 		for (int i = 0; i < iSize; i++) {
 			TypedElement part = parts[i];
 			String partName = NameUtil.getSafeName(part);
@@ -159,6 +159,6 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public void setTarget(Notifier newTarget) {
-//			assert newTarget == resource;
+		//			assert newTarget == resource;
 	}
 }

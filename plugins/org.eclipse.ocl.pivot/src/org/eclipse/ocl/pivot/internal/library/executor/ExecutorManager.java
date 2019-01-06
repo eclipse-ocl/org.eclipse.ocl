@@ -320,6 +320,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	}
 
 	@Override
+	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
 		return getIdResolver().getStaticTypeOf(value);
 	}
@@ -332,6 +333,14 @@ public abstract class ExecutorManager implements ExecutorExtension
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
 		return getIdResolver().getStaticTypeOf(value, values);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+		return getIdResolver().getStaticTypeOfValue(staticType, value);
 	}
 
 	//	public @NonNull ValueFactory getValueFactory() {

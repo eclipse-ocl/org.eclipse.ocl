@@ -52,7 +52,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
@@ -559,6 +561,13 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<@NonNull Property> getOwnedPropertiesList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedProperties());
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull  List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateBinding asTemplateBinding) {
+		return ClassUtil.nullFree(asTemplateBinding.getOwnedSubstitutions());
 	}
 
 	public static @NonNull String getSpecificationRole(@NonNull LanguageExpression asSpecification) {

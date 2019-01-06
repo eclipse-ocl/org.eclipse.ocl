@@ -157,5 +157,12 @@ public interface TypeId extends ElementId
 	@NonNull TemplateParameterId getTemplateParameterId(int index);
 	int getTemplateParameters();
 
+	/**
+	 * @since 1.7
+	 */
+	default boolean isTemplated() {
+		return false;
+	}
+
 	@NonNull ElementId specialize(@NonNull BindingsId templateBindings);
 }

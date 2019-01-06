@@ -44,8 +44,16 @@ public class SpecializedCollectionTypeIdImpl extends AbstractSpecializedIdImpl<C
 		return elementTypeId2;
 	}
 
-    @Override
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public boolean isTemplated() {
+		return true;
+	}
+
+	@Override
 	public @NonNull CollectionTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
+		return createSpecializedId(templateBindings);
 	}
 }

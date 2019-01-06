@@ -19,14 +19,14 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 
 public abstract class GeneralizedTypeIdImpl<T extends TemplateableId> extends AbstractGeneralizedIdImpl<T> implements TemplateableTypeId
-{		
+{
 	/**
-	 * Map from the operation hashCode to the operationIds with the same hash. 
+	 * Map from the operation hashCode to the operationIds with the same hash.
 	 */
 	private @Nullable OperationIdsMap memberOperations = null;
 
 	/**
-	 * Map from the property name to the propertyIds. 
+	 * Map from the property name to the propertyIds.
 	 */
 	private @Nullable PropertyIdsMap memberProperties = null;
 
@@ -36,16 +36,16 @@ public abstract class GeneralizedTypeIdImpl<T extends TemplateableId> extends Ab
 
 	@Override
 	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-//		System.out.println("getOperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));		
+		//		System.out.println("getOperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));
 		OperationIdsMap memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {
-    		synchronized (this) {
-    			memberOperations2 = memberOperations;
-    	    	if (memberOperations2 == null) {
-	    			memberOperations = memberOperations2 = new OperationIdsMap(this);
-    	    	}
-    		}
-    	}
+			synchronized (this) {
+				memberOperations2 = memberOperations;
+				if (memberOperations2 == null) {
+					memberOperations = memberOperations2 = new OperationIdsMap(this);
+				}
+			}
+		}
 		return memberOperations2.getId(templateParameters, name, parametersId);
 	}
 
@@ -53,13 +53,21 @@ public abstract class GeneralizedTypeIdImpl<T extends TemplateableId> extends Ab
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
 		PropertyIdsMap memberProperties2 = memberProperties;
 		if (memberProperties2 == null) {
-    		synchronized (this) {
-    			memberProperties2 = memberProperties;
-    	    	if (memberProperties2 == null) {
-    	    		memberProperties = memberProperties2 = new PropertyIdsMap(this);
-    	    	}
-    		}
-    	}
+			synchronized (this) {
+				memberProperties2 = memberProperties;
+				if (memberProperties2 == null) {
+					memberProperties = memberProperties2 = new PropertyIdsMap(this);
+				}
+			}
+		}
 		return memberProperties2.getId(name);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public boolean isTemplated() {
+		return true;
 	}
 }

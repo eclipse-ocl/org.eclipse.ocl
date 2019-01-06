@@ -32,8 +32,8 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLQueryDelegateFactory;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -98,8 +98,8 @@ public class OCLQueryDelegate implements QueryDelegate
 			OCL ocl = delegateDomain.getOCL();
 			IdResolver idResolver = ocl.getIdResolver();
 			Object targetValue = idResolver.boxedValueOf(target);
-			org.eclipse.ocl.pivot.Class targetType = idResolver.getStaticTypeOf(targetValue);
-			Type requiredType = nonNullSpecification.getOwnedContext().getType();
+			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));
+			Type targetType = idResolver.getStaticTypeOfValue(requiredType, targetValue);
 			if ((requiredType == null) || !targetType.conformsTo(ocl.getStandardLibrary(), requiredType)) {
 				String message = StringUtil.bind(PivotMessagesInternal.WrongContextClassifier_ERROR_, targetType, requiredType);
 				throw new OCLDelegateException(new SemanticException(message));
@@ -121,8 +121,8 @@ public class OCLQueryDelegate implements QueryDelegate
 					throw new OCLDelegateException(new SemanticException(message));
 				}
 				Object value = idResolver.boxedValueOf(object);
-				targetType = idResolver.getStaticTypeOf(value);
-				requiredType = ClassUtil.nonNullModel(parameterVariable.getType());
+				requiredType = PivotUtil.getType(parameterVariable);
+				targetType = idResolver.getStaticTypeOfValue(requiredType, value);
 				if (!targetType.conformsTo(ocl.getStandardLibrary(), requiredType)) {
 					String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
 					throw new OCLDelegateException(new SemanticException(message));

@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
@@ -145,7 +146,7 @@ public class UMLIdResolver extends PivotIdResolver
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
+	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof org.eclipse.uml2.uml.Element) {
 			// FIXME Find a more efficient way to ensure Profiles are imported and applied
 			org.eclipse.uml2.uml.Element umlElement = (org.eclipse.uml2.uml.Element)value;
@@ -169,7 +170,7 @@ public class UMLIdResolver extends PivotIdResolver
 			return asStereotype != null ? asStereotype : environmentFactory.getStandardLibrary().getOclInvalidType();
 			//			return ((UMLElementExtension)value).getStaticType();
 		}
-		return super.getStaticTypeOf(value);
+		return super.getStaticTypeOfValue(staticType, value);
 	}
 
 	@Override

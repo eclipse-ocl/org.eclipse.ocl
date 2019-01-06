@@ -22,6 +22,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.EList;
@@ -52,6 +53,9 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -82,10 +86,12 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -240,32 +246,39 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
-	private final @NonNull Set<EObject> directRoots = new HashSet<EObject>();
+	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
 	private boolean crossReferencedRootsProcessed = false;
 	/**
 	 * @since 1.1
 	 */
-	protected final @NonNull Map<Object, org.eclipse.ocl.pivot.Class> key2type = new HashMap<Object, org.eclipse.ocl.pivot.Class>();	// Concurrent puts are duplicates
-	private /*@LazyNonNull*/ Map<EnumerationLiteralId, Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
-	private /*@LazyNonNull*/ Map<Enumerator, EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
+	protected final @NonNull Map<@NonNull Object, @NonNull Type> key2type = new HashMap<>();	// Concurrent puts are duplicates
+	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
+	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
 
 	/**
 	 * Mapping from name to list of correspondingly named types for definition of tuple parts. This cache is used to provide the
 	 * required part definitions to construct a tuple type in the lightweight execution environment. This cache may remain
 	 * unused when using the full pivot environment.
 	 */
-	private Map<String, Map<Type, WeakReference<TypedElement>>> tupleParts = null;		// Lazily created
+	private Map<@NonNull String, @NonNull Map<@NonNull Type, @NonNull WeakReference<@NonNull TypedElement>>> tupleParts = null;		// Lazily created
 
 	/**
 	 * Mapping from package URI to corresponding Pivot Package. (used to resolve NsURIPackageId).
 	 */
-	protected final @NonNull  Map<String, org.eclipse.ocl.pivot.Package> nsURI2package = new HashMap<String, org.eclipse.ocl.pivot.Package>();
+	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> nsURI2package = new HashMap<>();
 
 	/**
 	 * Mapping from root package name to corresponding Pivot Package. (used to resolve RootPackageId).
 	 */
-	protected final @NonNull  Map<String, org.eclipse.ocl.pivot.Package> roots2package = new HashMap<String, org.eclipse.ocl.pivot.Package>();
+	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> roots2package = new HashMap<>();
+
+	/**
+	 * Push-down stack of static types that may be used to resolve TemplateParameterIds.
+	 *
+	 * @since 1.7
+	 */
+	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
 	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
@@ -449,7 +462,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (typeId instanceof CollectionTypeId) {
 			Collection<?> unboxedValues = (Collection<?>) unboxedValue;
 			if (eClassifier instanceof EDataType) {
-				ArrayList<Object> values = new ArrayList<Object>(unboxedValues.size());
+				ArrayList<Object> values = new ArrayList<>(unboxedValues.size());
 				for (Object eVal : unboxedValues) {
 					if (eVal != null) {
 						values.add(boxedValueOf(eVal, eClassifier));
@@ -478,12 +491,12 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	public @Nullable Object boxedValueOfEnumerator(@NonNull Enumerator unboxedValue) {
-		Map<Enumerator, EnumerationLiteralId> enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
+		Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 		if (enumerator2enumerationLiteralId2 == null) {
 			synchronized (this) {
 				enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 				if (enumerator2enumerationLiteralId2 == null) {
-					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<Enumerator, EnumerationLiteralId>();
+					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<>();
 					for (@NonNull CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
 						for (org.eclipse.ocl.pivot.Class dType : dPackage.getAllClasses()) {
 							if (dType instanceof Enumeration) {
@@ -507,7 +520,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull BagValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		Bag<Object> boxedValues = new BagImpl<Object>();
+		Bag<Object> boxedValues = new BagImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -516,7 +529,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
-		Bag<Object> boxedValues = new BagImpl<Object>();
+		Bag<Object> boxedValues = new BagImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -590,7 +603,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<?, ?> unboxedValues) {
-		Map<Object, Object> boxedValues = new HashMap<Object, Object>();
+		Map<Object, Object> boxedValues = new HashMap<>();
 		for (Map.Entry<?, ?> unboxedValue : unboxedValues.entrySet()) {
 			boxedValues.put(boxedValueOf(unboxedValue.getKey()), boxedValueOf(unboxedValue.getValue()));
 		}
@@ -599,7 +612,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
+		OrderedSet<Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -608,7 +621,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
-		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
+		OrderedSet<Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -617,7 +630,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SequenceValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		List<Object> boxedValues = new ArrayList<Object>();
+		List<Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -626,7 +639,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
-		List<Object> boxedValues = new ArrayList<Object>();
+		List<Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -635,7 +648,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SetValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		Set<Object> boxedValues = new HashSet<Object>();
+		Set<Object> boxedValues = new HashSet<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -644,7 +657,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues) {
-		Set<Object> boxedValues = new HashSet<Object>();
+		Set<Object> boxedValues = new HashSet<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -727,7 +740,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		for (Object value : values) {
 			ecoreValues[i++] = ecoreValueOf(instanceClass, value);
 		}
-		return new EcoreEList.UnmodifiableEList<T>(null, null, ecoreValues.length, ecoreValues);
+		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
 	}
 
 	/** @deprecated no longer used */
@@ -740,7 +753,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		for (Object value : values) {
 			ecoreValues[i++] = ecoreValueOf(instanceClass, value);
 		}
-		return new EcoreEList.UnmodifiableEList<Object>(null, null, ecoreValues.length, ecoreValues);
+		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
 	}
 
 	/** @deprecated no longer used */
@@ -752,7 +765,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		for (Object value : values) {
 			ecoreValues[i++] = ecoreValueOf(instanceClass, value);
 		}
-		return new EcoreEList.UnmodifiableEList<Object>(null, null, ecoreValues.length, ecoreValues);
+		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
 	}
 
 	@Override
@@ -898,9 +911,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass) {
-		org.eclipse.ocl.pivot.Class type = key2type.get(javaClass);
-		if (type != null) {
-			return type;
+		Type type = key2type.get(javaClass);
+		if (type instanceof JavaType) {
+			return (JavaType)type;
 		}
 		/*		if (javaClass == Boolean.class) {
 			type = standardLibrary.getBooleanType();
@@ -909,10 +922,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			type = standardLibrary.getStringType();
 		}
 		else { */
-		type = new JavaType(javaClass);
+		JavaType javaType = new JavaType(javaClass);
 		//		}
-		key2type.put(javaClass, type);
-		return type;
+		key2type.put(javaClass, javaType);
+		return javaType;
 	}
 
 	@Override
@@ -995,11 +1008,85 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
+	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
+		Type staticType = getStaticTypeOfValue(null, value);
+		org.eclipse.ocl.pivot.Class asClass = staticType.isClass();
+		if (asClass != null) {
+			return asClass;
+		}
+		TemplateParameter templateParameter = staticType.isTemplateParameter();
+		if (templateParameter != null) {
+			return PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
+		Object bestTypeId = getTypeKeyOf(value);
+		Type bestType = key2type.get(bestTypeId);
+		assert bestType != null;
+		Collection<Object> assessedTypeKeys = null;
+		int count = 0;
+		for (Object anotherValue : values) {
+			Object anotherTypeId = getTypeKeyOf(anotherValue);
+			if ((assessedTypeKeys == null) ? (anotherTypeId != bestTypeId) : !assessedTypeKeys.contains(anotherTypeId)) {
+				Type anotherType = key2type.get(anotherTypeId);
+				assert anotherType != null;
+				Type commonType = bestType.getCommonType(this, anotherType);
+				if ((commonType != bestType) && (commonType instanceof org.eclipse.ocl.pivot.Class)) {
+					if (assessedTypeKeys == null) {
+						assessedTypeKeys = new ArrayList<>();
+						assessedTypeKeys.add(bestTypeId);
+					}
+					else if (count++ == 4) {
+						assessedTypeKeys = new HashSet<>(assessedTypeKeys);
+					}
+					assessedTypeKeys.add(anotherTypeId);
+					bestType = commonType;
+					bestTypeId = anotherTypeId;
+				}
+			}
+		}
+		return (org.eclipse.ocl.pivot.Class)bestType;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
+		Object bestTypeKey = getTypeKeyOf(value);
+		Type bestType = key2type.get(bestTypeKey);
+		assert bestType != null;
+		Collection<Object> assessedTypeKeys = null;
+		int count = 0;
+		for (Object anotherValue : values) {
+			assert anotherValue != null;
+			Object anotherTypeKey = getTypeKeyOf(anotherValue);
+			if ((assessedTypeKeys == null) ? (anotherTypeKey != bestTypeKey) : !assessedTypeKeys.contains(anotherTypeKey)) {
+				Type anotherType = key2type.get(anotherTypeKey);
+				assert anotherType != null;
+				Type commonType = bestType.getCommonType(this, anotherType);
+				if (commonType != bestType) {
+					if (assessedTypeKeys == null) {
+						assessedTypeKeys = new ArrayList<>();
+						assessedTypeKeys.add(bestTypeKey);
+					}
+					else if (count++ == 4) {
+						assessedTypeKeys = new HashSet<>(assessedTypeKeys);
+					}
+					assessedTypeKeys.add(anotherTypeKey);
+				}
+			}
+		}
+		return (org.eclipse.ocl.pivot.Class)bestType;
+	}
+
+	@Override
+	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof EObject) {
 			EClass eClass = ((EObject)value).eClass();
 			assert eClass != null;
-			org.eclipse.ocl.pivot.Class type = key2type.get(eClass);
+			Type type = key2type.get(eClass);
 			if (type == null) {
 				type = getInheritance(eClass).getPivotClass();
 				assert type != null;
@@ -1009,10 +1096,24 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else if (value instanceof Value) {
 			TypeId typeId = ((Value)value).getTypeId();
-			org.eclipse.ocl.pivot.Class type = key2type.get(typeId);
+			Type type = key2type.get(typeId);
 			if (type == null) {
-				type = (org.eclipse.ocl.pivot.Class) typeId.accept(this);
-				assert type != null;
+				boolean isTemplated = typeId.isTemplated();
+				if (isTemplated) {
+					staticTypeStack.push(staticType);
+					try {
+						type = (Type)typeId.accept(this);
+					}
+					finally {
+						staticTypeStack.pop();
+					}
+				}
+				else {
+					type = (Type)typeId.accept(this);
+				}
+				if (type ==  null) {
+					type = standardLibrary.getOclAnyType();
+				}
 				key2type.put(typeId, type);
 			}
 			return type;
@@ -1047,82 +1148,23 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
-		Object bestTypeId = getTypeKeyOf(value);
-		org.eclipse.ocl.pivot.Class bestType = key2type.get(bestTypeId);
-		assert bestType != null;
-		Collection<Object> assessedTypeKeys = null;
-		int count = 0;
-		for (Object anotherValue : values) {
-			Object anotherTypeId = getTypeKeyOf(anotherValue);
-			if ((assessedTypeKeys == null) ? (anotherTypeId != bestTypeId) : !assessedTypeKeys.contains(anotherTypeId)) {
-				org.eclipse.ocl.pivot.Class anotherType = key2type.get(anotherTypeId);
-				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
-				if ((commonType != bestType) && (commonType instanceof org.eclipse.ocl.pivot.Class)) {
-					if (assessedTypeKeys == null) {
-						assessedTypeKeys = new ArrayList<Object>();
-						assessedTypeKeys.add(bestTypeId);
-					}
-					else if (count++ == 4) {
-						assessedTypeKeys = new HashSet<Object>(assessedTypeKeys);
-					}
-					assessedTypeKeys.add(anotherTypeId);
-					bestType = (org.eclipse.ocl.pivot.Class)commonType;
-					bestTypeId = anotherTypeId;
-				}
-			}
-		}
-		return bestType;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		Object bestTypeKey = getTypeKeyOf(value);
-		org.eclipse.ocl.pivot.Class bestType = key2type.get(bestTypeKey);
-		assert bestType != null;
-		Collection<Object> assessedTypeKeys = null;
-		int count = 0;
-		for (Object anotherValue : values) {
-			assert anotherValue != null;
-			Object anotherTypeKey = getTypeKeyOf(anotherValue);
-			if ((assessedTypeKeys == null) ? (anotherTypeKey != bestTypeKey) : !assessedTypeKeys.contains(anotherTypeKey)) {
-				org.eclipse.ocl.pivot.Class anotherType = key2type.get(anotherTypeKey);
-				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
-				if (commonType != bestType) {
-					if (assessedTypeKeys == null) {
-						assessedTypeKeys = new ArrayList<Object>();
-						assessedTypeKeys.add(bestTypeKey);
-					}
-					else if (count++ == 4) {
-						assessedTypeKeys = new HashSet<Object>(assessedTypeKeys);
-					}
-					assessedTypeKeys.add(anotherTypeKey);
-				}
-			}
-		}
-		return bestType;
-	}
-
-	@Override
 	public @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId) {
 		return getTuplePart(name, getType(typeId, null));
 	}
 
 	public synchronized @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull Type type) {
 		if (tupleParts == null) {
-			tupleParts = new WeakHashMap<String, Map<Type, WeakReference<TypedElement>>>();
+			tupleParts = new WeakHashMap<>();
 		}
-		Map<Type, WeakReference<TypedElement>> typeMap = tupleParts.get(name);
+		Map<@NonNull Type, @NonNull WeakReference<@NonNull TypedElement>> typeMap = tupleParts.get(name);
 		if (typeMap == null) {
-			typeMap = new WeakHashMap<Type, WeakReference<TypedElement>>();
+			typeMap = new WeakHashMap<>();
 			tupleParts.put(name, typeMap);
 		}
 		TypedElement tupleProperty = weakGet(typeMap, type);
 		if (tupleProperty == null) {
 			tupleProperty = new ExecutorTuplePart(type, name);
-			typeMap.put(type, new WeakReference<TypedElement>(tupleProperty));
+			typeMap.put(type, new WeakReference<>(tupleProperty));
 		}
 		return tupleProperty;
 	}
@@ -1150,7 +1192,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else*/ if (value instanceof EObject) {
 			EClass typeKey = ((EObject)value).eClass();
 			assert typeKey != null;
-			org.eclipse.ocl.pivot.Class type = key2type.get(typeKey);
+			Type type = key2type.get(typeKey);
 			if (type == null) {
 				type = getInheritance(typeKey).getPivotClass();
 				assert type != null;
@@ -1160,7 +1202,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else if (value instanceof Value) {
 			TypeId typeKey = ((Value)value).getTypeId();
-			org.eclipse.ocl.pivot.Class type = key2type.get(typeKey);
+			Type type = key2type.get(typeKey);
 			if (type == null) {
 				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);
 				assert type != null;
@@ -1176,7 +1218,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else {
 			Class<?> typeKey = value.getClass();
 			assert typeKey != null;
-			org.eclipse.ocl.pivot.Class type = key2type.get(typeKey);
+			Type type = key2type.get(typeKey);
 			if (type != null) {
 				return typeKey;
 			}
@@ -1380,7 +1422,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		//
 		//	Build a hash to element map from all the smallerIterator elements.
 		//
-		Map<Integer, Object> map = new HashMap<Integer, Object>();
+		Map<Integer, Object> map = new HashMap<>();
 		while (smallerIterator.hasNext()) {
 			Object smallerElement = smallerIterator.next();
 			Integer hashCode = oclHashCode(smallerElement);
@@ -1482,7 +1524,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		{
 			private static final long serialVersionUID = 1L;
 
-			private Set<EObject> moreRoots = new HashSet<EObject>();
+			private Set<EObject> moreRoots = new HashSet<>();
 
 			{ findExternalCrossReferences(); }
 
@@ -1507,7 +1549,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return;
 		}
 		directRootsProcessed = true;
-		Set<EPackage> ePackages = new HashSet<EPackage>();
+		Set<EPackage> ePackages = new HashSet<>();
 		for (EObject eObject : directRoots) {
 			if (eObject instanceof Model) {
 				addPackages(((Model)eObject).getOwnedPackages());
@@ -1542,7 +1584,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (enumerationLiteral2enumerator == null) {
 			synchronized (this) {
 				if (enumerationLiteral2enumerator == null) {
-					enumerationLiteral2enumerator = new HashMap<EnumerationLiteralId, Enumerator>();
+					enumerationLiteral2enumerator = new HashMap<>();
 				}
 			}
 		}
@@ -1572,7 +1614,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		for (Object boxedValue : boxedValues) {
 			unboxedValues[i++] = unboxedValueOf(boxedValue);
 		}
-		return new EcoreEList.UnmodifiableEList<Object>(null, null, i, unboxedValues);
+		return new EcoreEList.UnmodifiableEList<>(null, null, i, unboxedValues);
 	}
 
 	@Override
@@ -1582,7 +1624,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		for (Object boxedValue : boxedValues) {
 			unboxedValues[i++] = unboxedValueOf(boxedValue);
 		}
-		return new EcoreEList.UnmodifiableEList<Object>(null, null, boxedValues.length, unboxedValues);
+		return new EcoreEList.UnmodifiableEList<>(null, null, boxedValues.length, unboxedValues);
 	}
 
 	@Override
@@ -1822,6 +1864,32 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
+		if (!staticTypeStack.isEmpty()) {
+			Type staticType = staticTypeStack.peek();
+			if (staticType != null) {
+				int globalIndex = id.getIndex();
+				List<@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull TemplateBinding>> templateBindingsList = new ArrayList<>();
+				for (EObject eObject = staticType; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof TemplateableElement) {
+						templateBindingsList.add(0, PivotUtil.getOwnedBindings((TemplateableElement) eObject));
+					}
+					int firstIndex = 0;
+					for (@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull TemplateBinding> templateBindings :  templateBindingsList) {
+						for (org.eclipse.ocl.pivot.@NonNull TemplateBinding templateBinding :  templateBindings) {
+							List<@NonNull TemplateParameterSubstitution> ownedSubstitutions = PivotUtilInternal.getOwnedSubstitutionsList(templateBinding);
+							int localIndexes = ownedSubstitutions.size();
+							int localIndex = globalIndex - firstIndex;
+							if (localIndex < localIndexes) {
+								TemplateParameterSubstitution templateParameterSubstitution = ownedSubstitutions.get(localIndex);
+								assert templateParameterSubstitution != null;
+								return PivotUtil.getActual(templateParameterSubstitution);
+							}
+							firstIndex += localIndexes;
+						}
+					}
+				}
+			}
+		}
 		throw new UnsupportedOperationException();
 	}
 

@@ -136,11 +136,19 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull StandardLibrary getStandardLibrary();
 
+	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value);
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
+
+	/**
+	 * @since 1.7
+	 */
+	default @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+		return getStaticTypeOf(value);
+	}
 
 	@NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId);
 

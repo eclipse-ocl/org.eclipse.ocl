@@ -80,6 +80,19 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<Lambd
 		return this;
 	}
 
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public boolean isTemplated() {
+		for (TypeId typeId : parametersId) {
+			if (typeId.isTemplated()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return TypeId.LAMBDA_TYPE_NAME;

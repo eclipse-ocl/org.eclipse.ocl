@@ -22,7 +22,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	protected final @NonNull Integer hashCode;
 	protected final @NonNull String name;
 	protected final @NonNull TuplePartId @NonNull [] partIds;
-	
+
 	public GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
 		this.hashCode = hashCode;
 		this.name = name;
@@ -55,7 +55,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	public @NonNull TupleTypeId getGeneralizedId() {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return TUPLE_TYPE_NAME;
@@ -75,7 +75,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @NonNull TuplePartId @NonNull [] getPartIds() {
 		return partIds;
@@ -84,6 +84,19 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	@Override
 	public final int hashCode() {
 		return hashCode;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public boolean isTemplated() {
+		for (TuplePartId partId : partIds) {
+			if (partId.getTypeId().isTemplated()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

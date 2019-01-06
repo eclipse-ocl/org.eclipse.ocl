@@ -32,6 +32,8 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -49,6 +52,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NullValue;
 
@@ -321,6 +325,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
+	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
 		return idResolver.getStaticTypeOf(value);
 	}
@@ -333,6 +338,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
 		return idResolver.getStaticTypeOf(value, values);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+		return idResolver.getStaticTypeOfValue(staticType, value);
 	}
 
 	@Override
@@ -382,24 +395,39 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		//
 		//	Resolve source type.
 		//
-		org.eclipse.ocl.pivot.Class actualSourceType = null;
+		Type actualSourceType = null;
 		if (!apparentOperation.isIsStatic()) {
-			actualSourceType = idResolver.getStaticTypeOf(sourceAndArgumentValues[0]);
+			Type sourceType = operationCallExp.getOwnedSource().getType();
+			actualSourceType = idResolver.getStaticTypeOfValue(sourceType, sourceAndArgumentValues[0]);
 		}
 		//
 		//	Refine source type to common type of source and a first OclSelf argument.
 		//
 		List<Parameter> asParameters = apparentOperation.getOwnedParameters();
-		if ((asParameters.size() == 1) && (asParameters.get(0).getType() instanceof SelfType) && (actualSourceType != null)) {
-			org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOf(sourceAndArgumentValues[1]);
-			actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+		if (asParameters.size() == 1) {
+			Type parameterType = asParameters.get(0).getType();
+			if ((parameterType instanceof SelfType) && (actualSourceType != null)) {
+				Type actualArgType = idResolver.getStaticTypeOfValue(parameterType, sourceAndArgumentValues[1]);
+				actualSourceType = actualSourceType.getCommonType(idResolver, actualArgType);
+			}
 		}
 		//
 		//	Resolve dynamic/actual operation and implementation
 		//
 		Operation actualOperation;
+		org.eclipse.ocl.pivot.Class actualSourceClass = null;
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		if (actualSourceType != null) {
-			actualOperation = actualSourceType.lookupActualOperation(environmentFactory.getStandardLibrary(), apparentOperation);
+			actualSourceClass = actualSourceType.isClass();
+			if (actualSourceClass == null)  {
+				TemplateParameter templateParameter = actualSourceType.isTemplateParameter();
+				if (templateParameter != null) {
+					actualSourceClass = PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+				}
+			}
+		}
+		if (actualSourceClass != null) {
+			actualOperation = actualSourceClass.lookupActualOperation(standardLibrary, apparentOperation);
 		}
 		else {
 			actualOperation = apparentOperation;

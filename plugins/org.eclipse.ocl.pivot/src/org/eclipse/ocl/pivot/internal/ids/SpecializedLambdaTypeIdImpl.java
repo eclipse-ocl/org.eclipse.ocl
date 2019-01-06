@@ -37,8 +37,16 @@ public class SpecializedLambdaTypeIdImpl extends AbstractSpecializedIdImpl<Lambd
 		return generalizedId.getParametersId();
 	}
 
-    @Override
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public boolean isTemplated() {
+		return generalizedId.isTemplated();
+	}
+
+	@Override
 	public @NonNull LambdaTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
+		return createSpecializedId(templateBindings);
 	}
 }

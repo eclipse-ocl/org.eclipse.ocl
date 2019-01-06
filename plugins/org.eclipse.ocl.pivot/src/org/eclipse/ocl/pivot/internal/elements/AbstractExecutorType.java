@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
@@ -87,7 +86,7 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance( @NonNull StandardLibrary standardLibrary) {
-//		return standardLibrary.getInheritance(this);
+		//		return standardLibrary.getInheritance(this);
 		throw new UnsupportedOperationException();
 	}
 
@@ -127,7 +126,7 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	}
 
 	@Override
-	public @Nullable Class isClass() {
+	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
 		throw new UnsupportedOperationException();
 	}
 

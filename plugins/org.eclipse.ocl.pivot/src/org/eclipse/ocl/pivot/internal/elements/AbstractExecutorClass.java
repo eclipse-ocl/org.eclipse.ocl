@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -138,6 +139,11 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
+		return this;
+	}
+
+	@Override
 	public boolean isIsAbstract() {
 		return (flags & ABSTRACT) != 0;
 	}
@@ -155,13 +161,16 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	@Override
 	public boolean isOrdered() {
 		return false;
-		//		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable TemplateParameter isTemplateParameter() {
+		return null;
 	}
 
 	@Override
 	public boolean isUnique() {
 		return false;
-		//		throw new UnsupportedOperationException();
 	}
 
 	//	@Override
