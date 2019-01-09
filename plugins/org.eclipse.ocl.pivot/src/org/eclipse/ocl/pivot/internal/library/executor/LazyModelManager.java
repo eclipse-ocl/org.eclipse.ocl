@@ -15,15 +15,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A self-populating map that lazily creates the extent of a class when asked
@@ -44,9 +50,21 @@ import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
  * no way to distinguish this behaviour from concurrent updates.
  * </p>
  */
-public abstract class LazyModelManager extends AbstractModelManager {
+public abstract class LazyModelManager extends AbstractModelManager implements ModelManager.ModelManagerExtension2
+{
+	/**
+	 * Map from a Type to allInstances() of exactly that type and its subtypes.
+	 */
+	private final @NonNull Map<@NonNull Type, @NonNull Set<@NonNull EObject>> type2instances = new HashMap<>();
 
-	private final @NonNull Map<@NonNull Type, @NonNull Set<@NonNull EObject>> modelManager = new HashMap<@NonNull Type, @NonNull Set<@NonNull EObject>>();
+	/**
+	 * Map from an (opposite) Property to a Map from an object to the targets of that unnavigable (opposite) Property.
+	 */
+	private final @NonNull Map<@NonNull Property, @NonNull Map<@NonNull Object, @NonNull Set<@NonNull Object>>> oppositeProperty2opposite2objects = new HashMap<>();
+
+	/**
+	 * The EObjects that together with their transitive containment descendants comprise allInstances() of all non-DataType types.
+	 */
 	private final @NonNull Collection<@NonNull EObject> roots;
 
 	/**
@@ -74,13 +92,13 @@ public abstract class LazyModelManager extends AbstractModelManager {
 	@Override
 	public @NonNull Set<@NonNull ? extends Object> get(org.eclipse.ocl.pivot.@NonNull Class type) {
 		// TODO: Optimize by parsing ahead of time to find all EClasses that we will query
-		Set<@NonNull EObject> result = modelManager.get(type);
+		Set<@NonNull EObject> result = type2instances.get(type);
 		if (result == null) {
-			synchronized (modelManager) {
-				result = modelManager.get(type);
+			synchronized (type2instances) {
+				result = type2instances.get(type);
 				if (result == null) {
 					result = new HashSet<@NonNull EObject>();
-					modelManager.put(type, result);
+					type2instances.put(type, result);
 					for (Iterator<EObject> iter = EcoreUtil.getAllContents(roots); iter.hasNext();) {
 						EObject next = iter.next();
 						if ((next != null) && isInstance(type, next)) {
@@ -92,6 +110,61 @@ public abstract class LazyModelManager extends AbstractModelManager {
 		}
 		// FIXME subclasses
 		return result;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public @NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject) {
+		Map<@NonNull Object, @NonNull Set<@NonNull Object>> opposite2objects = oppositeProperty2opposite2objects.get(target2sourceProperty);
+		if (opposite2objects == null) {
+			synchronized (oppositeProperty2opposite2objects) {
+				opposite2objects = oppositeProperty2opposite2objects.get(target2sourceProperty);
+				if (opposite2objects == null) {
+					opposite2objects = new HashMap<>();
+					oppositeProperty2opposite2objects.put(target2sourceProperty, opposite2objects);
+					Property source2targetProperty = target2sourceProperty.getOpposite();
+					if (source2targetProperty != null) {					// Never null
+						org.eclipse.ocl.pivot.Class targetClass = PivotUtil.getOwningClass(source2targetProperty);
+						EObject esProperty = source2targetProperty.getESObject();
+						EStructuralFeature eStructuralFeature = esProperty instanceof EStructuralFeature ? (EStructuralFeature)esProperty : null;
+						for (@NonNull Object eTargetObject : get(targetClass)) {
+							EClass eClass = eClass(eTargetObject);
+							EStructuralFeature eFeature = eStructuralFeature != null ? eStructuralFeature :  eClass.getEStructuralFeature(source2targetProperty.getName());
+							assert eFeature != null;
+							Object sourceCandidateOrCandidates = eGet(eTargetObject, eFeature);
+							if (eFeature.isMany()) {
+								assert sourceCandidateOrCandidates != null;
+								for (Object sourceCandidate : (List<?>)sourceCandidateOrCandidates) {
+									if (sourceCandidate != null) {						// ?? Never null
+										Set<@NonNull Object> objects = opposite2objects.get(sourceCandidate);
+										if (objects == null) {
+											objects = new HashSet<>();
+											opposite2objects.put(sourceCandidate, objects);
+										}
+										objects.add(eTargetObject);
+									}
+								}
+							}
+							else if (sourceCandidateOrCandidates != null) {
+								Set<@NonNull Object> objects = opposite2objects.get(sourceCandidateOrCandidates);
+								if (objects == null) {
+									objects = new HashSet<>();
+									opposite2objects.put(sourceCandidateOrCandidates, objects);
+								}
+								objects.add(eTargetObject);
+							}
+						}
+					}
+				}
+			}
+		}
+		Set<@NonNull Object> objects = opposite2objects.get(sourceObject);
+		if (objects == null) {
+			objects = Collections.emptySet();
+		}
+		return objects;
 	}
 
 	/**
@@ -108,6 +181,6 @@ public abstract class LazyModelManager extends AbstractModelManager {
 
 	@Override
 	public String toString() {
-		return modelManager.toString();
+		return type2instances.toString();
 	}
 }

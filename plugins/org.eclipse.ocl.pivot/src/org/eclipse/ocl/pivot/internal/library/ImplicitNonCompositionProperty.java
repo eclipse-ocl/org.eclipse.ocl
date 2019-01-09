@@ -10,24 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+
+import com.google.common.collect.Iterables;
 
 /**
  * An instance of ImplicitNonCompositionProperty supports evaluation of an implicit (unnavigable opposite) property
@@ -45,45 +38,21 @@ public class ImplicitNonCompositionProperty extends AbstractProperty
 
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		ModelManager.ModelManagerExtension modelManager = (ModelManager.ModelManagerExtension)executor.getModelManager();
-		Property thatProperty = property.getOpposite();
-		Type thatType = ClassUtil.nonNullModel(property.getType());
-		boolean isMany = thatType instanceof CollectionType;
-		if (isMany) {
-			thatType = ((CollectionType)thatType).getElementType();
+		if (sourceValue == null) {
+			return null;
 		}
-		List<Object> results = new ArrayList<Object>();
-		if (thatType instanceof org.eclipse.ocl.pivot.Class) {
-			for (@NonNull Object eObject : modelManager.get((org.eclipse.ocl.pivot.Class)thatType)) {
-				EClass eClass = modelManager.eClass(eObject);
-				EObject esProperty = thatProperty.getESObject();
-				EStructuralFeature eFeature = esProperty instanceof EStructuralFeature ? (EStructuralFeature)esProperty :  eClass.getEStructuralFeature(thatProperty.getName());
-				assert eFeature != null;
-				Object eGet = modelManager.eGet(eObject, eFeature);
-				if (eFeature.isMany()) {
-					assert eGet != null;
-					for (Object eReference : (List<?>)eGet) {
-						if (eReference == sourceValue) {
-							results.add(eObject);
-						}
-					}
-				}
-				else {
-					if (eGet == sourceValue) {
-						results.add(eObject);
-					}
-				}
-			}
-		}
-		if (isMany) {
+		ModelManager.ModelManagerExtension2 modelManager = (ModelManager.ModelManagerExtension2)executor.getModelManager();
+		Iterable<@NonNull Object> results = modelManager.getOpposite(property, sourceValue);
+		if (property.isIsMany()) {
 			return executor.getIdResolver().createCollectionOfAll(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE, returnTypeId, results);
 		}
-		else if (results.size() == 0) {
+		int size = Iterables.size(results);
+		if (size == 0) {
 			return null;
 		}
-		else if (results.size() == 1) {
-			return results.get(0);
+		else if (size == 1) {
+			return results.iterator().next();
 		}
 		else {
 			throw new InvalidValueException("Multiple opposites for " + property);

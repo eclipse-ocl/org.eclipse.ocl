@@ -4,12 +4,11 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.evaluation;
-
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
@@ -21,11 +20,11 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * The abstract implementation of the ModelManager API for Objects supports use of EObject as the basis of models.
  * Derived or future implementations may support plain Java Objects or optimized object representations.
- * 
+ *
  * @since 1.1
  */
 public abstract class AbstractModelManager implements ModelManager.ModelManagerExtension
-{	
+{
 	@Override
 	public void dispose() {}
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 
 /**
  * ModelManager provides the models to be used during evaluation. In particular
@@ -37,7 +38,15 @@ public interface ModelManager
 		@Nullable Object eContainer(@NonNull Object object);
 		@Nullable Object eGet(@NonNull Object object, @NonNull EStructuralFeature eFeature);
 	}
-	
+
+	/**
+	 * @since 1.7
+	 */
+	public interface ModelManagerExtension2 extends ModelManagerExtension
+	{
+		@NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject);
+	}
+
 	@NonNull ModelManager NULL = new ModelManager()
 	{
 		@Override
