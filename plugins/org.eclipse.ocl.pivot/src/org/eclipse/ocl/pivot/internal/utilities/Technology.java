@@ -28,13 +28,14 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  * Technology instances encapsulate behaviour that varies according to the metamodel technologies in use.
  * At present this means just-Ecore supported by an EcoreTechnology or Ecore-and-UML supported
  * by a UMLEcoreTechnology.
- * 
+ *
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface Technology
 {
 	@NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property);
 
+	// See Bug 458394 for the need for the asNavigationExp argument.
 	@NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
 

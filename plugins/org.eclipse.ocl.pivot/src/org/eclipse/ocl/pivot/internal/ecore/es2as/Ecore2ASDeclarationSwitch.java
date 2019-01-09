@@ -77,7 +77,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
-import org.eclipse.ocl.pivot.internal.ecore.EObjectProperty;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
@@ -756,13 +755,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				String value = bestEntry.getValue();
 				ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
 				specification.setBody(value);
-				//					constraint.setExprString(entry.getValue());
 				pivotElement.setOwnedExpression(specification);
-				pivotElement.setImplementation(new EObjectProperty(eObject, specification));
 			}
-			else {
-				pivotElement.setImplementation(new EObjectProperty(eObject, null));
-			}
+			pivotElement.setImplementation(null);			// Computed lazily with more context.
 		}
 		copyTypedElement(pivotElement, eObject, excludedAnnotations);
 		pivotElement.setIsReadOnly(!eObject.isChangeable());
