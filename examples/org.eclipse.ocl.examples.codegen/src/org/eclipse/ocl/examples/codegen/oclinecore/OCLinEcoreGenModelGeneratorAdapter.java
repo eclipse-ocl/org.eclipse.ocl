@@ -556,9 +556,9 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pOperation != null ? AS2Moniker.toString(pOperation) : "");
 			}
 			addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
-			removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
-			removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
-			removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
+			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
+			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
+			//	removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
 			removeEAnnotation(eOperation.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
 		}
 
