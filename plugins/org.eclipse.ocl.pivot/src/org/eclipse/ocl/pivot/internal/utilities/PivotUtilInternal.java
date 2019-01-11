@@ -285,6 +285,7 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated promoted to PivotUtil */
 	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
 		Resource asResource = eObject.eResource();
 		if (asResource != null) {

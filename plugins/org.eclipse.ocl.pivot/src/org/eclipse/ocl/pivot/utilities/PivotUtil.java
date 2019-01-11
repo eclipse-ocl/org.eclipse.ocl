@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -75,6 +76,7 @@ import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -99,9 +101,12 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
+import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -1065,6 +1070,55 @@ public class PivotUtil
 			assert elementType != null;
 		}
 		return elementType;
+	}
+
+	/**
+	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 *
+	 * @since 1.7
+	 */
+	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
+		Resource asResource = eObject.eResource();
+		if (asResource != null) {
+			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
+			if (environmentFactory != null) {
+				return new PivotExecutorManager(environmentFactory, eObject);
+			}
+		}
+		return new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+	}
+
+	/**
+	 * Locate an OCL Executor from the Executor.class slot in validationContext, else
+	 * from the Resource containing an eObject, else create a default one.
+	 *
+	 * The returned executor is cached at the Executor.class slot in validationContext for re-use.
+	 *
+	 * @since 1.7
+	 */
+	public static @NonNull Executor getExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
+		if (validationContext != null) {
+			Executor executor = (Executor) validationContext.get(Executor.class);
+			if (executor != null) {
+				return executor;
+			}
+		}
+		Resource asResource = eObject.eResource();
+		if (asResource != null) {
+			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
+			if (environmentFactory != null) {
+				Executor executor = new PivotExecutorManager(environmentFactory, eObject);
+				if (validationContext != null) {
+					validationContext.put(Executor.class, executor);
+				}
+				return executor;
+			}
+		}
+		Executor executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+		if (validationContext != null) {
+			validationContext.put(Executor.class, executor);
+		}
+		return executor;
 	}
 
 	/**
