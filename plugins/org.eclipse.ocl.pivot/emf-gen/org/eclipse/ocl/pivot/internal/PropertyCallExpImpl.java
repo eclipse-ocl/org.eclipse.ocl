@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -450,7 +450,7 @@ implements PropertyCallExp {
 		Property referredProperty = getReferredProperty();
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
 		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtil.getExecutor(this);
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
 			Type resultType = getType();
 			//			if (resultType instanceof DomainMetaclass) {
@@ -465,7 +465,7 @@ implements PropertyCallExp {
 			return referencedType;
 		}
 		else {
-			Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtil.getExecutor(this);
 			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
 		}
 	}
@@ -482,7 +482,7 @@ implements PropertyCallExp {
 		Type referencedType = referredProperty.getType();
 		Type specializedType = referencedType;
 		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtil.getExecutor(this);
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
 			Type resultType = getType();
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
@@ -492,7 +492,7 @@ implements PropertyCallExp {
 			return /*(org.eclipse.ocl.pivot.Class)*/specializedType;
 		}
 		else {
-			Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtil.getExecutor(this);
 			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
 		}
 	}
@@ -522,7 +522,7 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::NonStaticSourceTypeIsConformant'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
@@ -611,7 +611,7 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
@@ -682,7 +682,7 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
@@ -753,7 +753,7 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::CompatibleResultType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;

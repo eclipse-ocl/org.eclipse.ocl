@@ -29,9 +29,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -178,7 +178,7 @@ implements TypedElement {
 		/**
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
 		final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;

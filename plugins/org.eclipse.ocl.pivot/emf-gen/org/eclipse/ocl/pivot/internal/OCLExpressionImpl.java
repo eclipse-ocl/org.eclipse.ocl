@@ -32,12 +32,12 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -134,7 +134,7 @@ implements OCLExpression {
 			 *         'OCLExpression::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
@@ -343,7 +343,7 @@ implements OCLExpression {
 	 */
 	@Override
 	public boolean isNonNull() {
-		Executor executor = PivotUtilInternal.getExecutor(this);
+		Executor executor = PivotUtil.getExecutor(this);
 		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
 		return flowAnalysis.isNonNull(this);
@@ -360,7 +360,7 @@ implements OCLExpression {
 	 */
 	@Override
 	public boolean isNull() {
-		Executor executor = PivotUtilInternal.getExecutor(this);
+		Executor executor = PivotUtil.getExecutor(this);
 		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
 		return flowAnalysis.isNull(this);
