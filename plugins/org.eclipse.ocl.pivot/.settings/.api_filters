@@ -78,6 +78,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/AbstractModelManager.java" type="org.eclipse.ocl.pivot.evaluation.AbstractModelManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.AbstractModelManager"/>
+                <message_argument value="CONSTRUCTION_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/evaluation/EvaluationVisitor.java" type="org.eclipse.ocl.pivot.evaluation.EvaluationVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -154,6 +162,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/AbstractExecutor.java" type="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
+                <message_argument value="CONSTRUCTION_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -175,6 +191,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver"/>
                 <message_argument value="staticTypeStack"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/executor/ExecutorManager.java" type="org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager"/>
+                <message_argument value="CONSTRUCTION_COUNT"/>
             </message_arguments>
         </filter>
     </resource>
@@ -231,6 +255,14 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/AbstractEnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory"/>
+                <message_argument value="CONSTRUCTION_COUNT"/>
             </message_arguments>
         </filter>
     </resource>

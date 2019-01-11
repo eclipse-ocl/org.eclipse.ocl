@@ -181,7 +181,7 @@ implements DelegatedBehavior<E, R, F> {
 		return getName() + " => " + getFactoryClass().getName(); //$NON-NLS-1$
 	}
 
-	public void validate(EObject eObject) {
+	public void validate(@NonNull EObject eObject) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
 		if (!Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext)) {

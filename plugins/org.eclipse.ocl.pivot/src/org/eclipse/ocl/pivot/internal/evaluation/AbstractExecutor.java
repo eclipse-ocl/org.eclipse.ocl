@@ -100,7 +100,13 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 */
 	private /*@LazyNonNull*/ ShadowCache shadowCache = null;
 
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
+
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = null;
 		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
@@ -111,6 +117,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 */
 	@Deprecated
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = modelManager;
 		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();

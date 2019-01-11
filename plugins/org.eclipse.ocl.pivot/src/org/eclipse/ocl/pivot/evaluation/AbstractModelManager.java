@@ -25,6 +25,15 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class AbstractModelManager implements ModelManager.ModelManagerExtension
 {
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
+
+	public AbstractModelManager() {
+		CONSTRUCTION_COUNT++;
+	}
+
 	@Override
 	public void dispose() {}
 

@@ -131,9 +131,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
 	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
+
+	/**
 	 * @param projectManager
 	 */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+		CONSTRUCTION_COUNT++;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}

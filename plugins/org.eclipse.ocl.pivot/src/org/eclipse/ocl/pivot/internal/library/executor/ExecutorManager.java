@@ -158,7 +158,13 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	private /*@LazyNonNull*/ Map<String, Pattern> regexPatterns = null;
 
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
+
 	public ExecutorManager(@NonNull CompleteEnvironment environment) {
+		CONSTRUCTION_COUNT++;
 		this.environment = environment;
 		this.standardLibrary = environment.getOwnedStandardLibrary();
 	}
