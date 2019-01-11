@@ -57,6 +57,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.Property;
@@ -157,22 +158,34 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return codeGenerator;
 	}
 
+	/**
+	 * Return the non-null name of a validation contrext if there is one available for cgValuedElement.
+	 */
+	private @Nullable String getContextName(@NonNull CGValuedElement cgValuedElement) {
+		CGConstraint cgConstraint = CGUtil.getContainingConstraint(cgValuedElement);
+		if (cgConstraint == null) {
+			return null;
+		}
+		return "context";
+	}
+
 	protected @Nullable CGValuedElement installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement executorVariable = localContext.createExecutorVariable();
+		CGValuedElement executorVariable = localContext.createExecutorVariable(getContextName(cgValuedElement));
 		if (executorVariable != null) {
 			cgValuedElement.getOwns().add(executorVariable);
 		}
 		return executorVariable;
 	}
 
+
 	protected @Nullable CGValuedElement installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement idResolverVariable = localContext.createIdResolverVariable();
+		CGValuedElement idResolverVariable = localContext.createIdResolverVariable(getContextName(cgValuedElement));
 		cgValuedElement.getOwns().add(idResolverVariable);
 		return idResolverVariable;
 	}
 
 	protected @NonNull CGText installStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGText standardLibraryVariable = localContext.createStandardLibraryVariable();
+		CGText standardLibraryVariable = localContext.createStandardLibraryVariable(getContextName(cgValuedElement));
 		cgValuedElement.getOwns().add(standardLibraryVariable);
 		installIdResolverVariable(standardLibraryVariable);
 		return standardLibraryVariable;

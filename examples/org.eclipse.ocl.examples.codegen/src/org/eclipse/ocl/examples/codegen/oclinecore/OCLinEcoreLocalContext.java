@@ -21,7 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of code from a CGOperation.
@@ -55,18 +55,26 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcore
 	}
 
 	@Override
-	public @Nullable CGValuedElement createExecutorVariable() {
+	public @Nullable CGValuedElement createExecutorVariable(@Nullable String contextName) {
 		CGText evaluator = CGModelFactory.eINSTANCE.createCGText();
 		setNames2(evaluator, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
-		String utilClassName = ImportUtils.getAffixedName(PivotUtilInternal.class);
-		evaluator.setTextValue(utilClassName + ".getExecutor(this)");
+		String utilClassName = ImportUtils.getAffixedName(PivotUtil.class);
+		StringBuilder s = new StringBuilder();
+		s.append(utilClassName);
+		s.append(".getExecutor(this");
+		if (contextName != null) {
+			s.append(", ");
+			s.append(contextName);
+		}
+		s.append(")");
+		evaluator.setTextValue(s.toString());
 		return evaluator;
 	}
 
 	@Override
-	public @NonNull CGValuedElement createIdResolverVariable() {
-		CGValuedElement evaluator = createExecutorVariable();
-		CGValuedElement idResolverVariable = super.createIdResolverVariable();
+	public @NonNull CGValuedElement createIdResolverVariable(@Nullable String contextName) {
+		CGValuedElement evaluator = createExecutorVariable(contextName);
+		CGValuedElement idResolverVariable = super.createIdResolverVariable(contextName);
 		idResolverVariable.getOwns().add(evaluator);
 		return idResolverVariable;
 	}

@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -178,6 +179,15 @@ public class CGUtil
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGClass) {
 				return (CGClass) cgElement;
+			}
+		}
+		return null;
+	}
+
+	public static @Nullable CGConstraint getContainingConstraint(@NonNull CGElement cgExpression) {
+		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGConstraint) {
+				return (CGConstraint) cgElement;
 			}
 		}
 		return null;

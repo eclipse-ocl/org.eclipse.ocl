@@ -51,11 +51,11 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return evaluatorParameter;
 	}
 
-	public @Nullable CGValuedElement createExecutorVariable() {
+	public @Nullable CGValuedElement createExecutorVariable(@Nullable String contextName) {
 		return null;
 	}
 
-	public @NonNull CGValuedElement createIdResolverVariable() {
+	public @NonNull CGValuedElement createIdResolverVariable(@Nullable String contextName) {
 		//		CGValuedElement evaluatorParameter = createEvaluatorParameter();
 		CGText idResolver = CGModelFactory.eINSTANCE.createCGText();
 		setNames2(idResolver, JavaConstants.ID_RESOLVER_NAME, JavaConstants.ID_RESOLVER_TYPE_ID);
@@ -65,8 +65,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return idResolver;
 	}
 
-	public @NonNull CGText createStandardLibraryVariable() {
-		CGValuedElement idResolverVariable = createIdResolverVariable();
+	public @NonNull CGText createStandardLibraryVariable(@Nullable String contextName) {
+		CGValuedElement idResolverVariable = createIdResolverVariable(contextName);
 		CGText standardLibrary = CGModelFactory.eINSTANCE.createCGText();
 		setNames2(standardLibrary, JavaConstants.STANDARD_LIBRARY_NAME, JavaConstants.STANDARD_LIBRARY_TYPE_ID);
 		standardLibrary.setTextValue(JavaConstants.ID_RESOLVER_NAME + ".getStandardLibrary()");
