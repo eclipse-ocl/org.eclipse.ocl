@@ -1144,7 +1144,7 @@ public class PivotUtil
 	 *
 	 * @since 1.7
 	 */
-	public static @NonNull Executor getExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
+	public static @NonNull Executor getExecutor(@NonNull EObject eObject, @Nullable Map<Object, Object> validationContext) {
 		if (validationContext != null) {
 			Executor executor = (Executor) validationContext.get(Executor.class);
 			if (executor != null) {
@@ -1879,6 +1879,22 @@ public class PivotUtil
 		else {
 			PivotUtilInternal.resetContainer(oldChild);
 			eContainer.eSet(eContainmentFeature, newChild);
+		}
+	}
+
+	/**
+	 * Remove any OCL Executor from the ResourceSet containing an eObject. This may be necessary to prevent
+	 * re-use of the cached context of an earlier executor after a change to the models.
+	 *
+	 * @since 1.7
+	 */
+	public static void removeExecutor(@NonNull EObject eObject) {
+		Resource eResource = eObject.eResource();
+		if (eResource != null) {
+			ResourceSet resourceSet = eResource.getResourceSet();
+			if (resourceSet != null) {
+				PivotExecutorManager.removeAdapter(resourceSet);
+			}
 		}
 	}
 

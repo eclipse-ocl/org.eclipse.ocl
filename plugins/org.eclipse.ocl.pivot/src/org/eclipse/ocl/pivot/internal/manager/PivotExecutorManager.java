@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -64,6 +65,24 @@ public class PivotExecutorManager extends ExecutorManager
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Remove any OCL Executor from the ResourceSet containing an eObject. This may be necessary to prevent
+	 * re-use of the cached context of an earlier executor after a change to the models.
+	 *
+	 * @since 1.7
+	 */
+	public static void removeAdapter(@NonNull ResourceSet resourceSet) {
+		EList<org.eclipse.emf.common.notify.Adapter> eAdapters = resourceSet.eAdapters();
+		synchronized (eAdapters) {
+			for (int i = eAdapters.size(); --i >= 0; ) {		// Should be at most one, but code to handle more
+				org.eclipse.emf.common.notify.Adapter adapter = eAdapters.get(i);
+				if (adapter instanceof PivotExecutorManager) {
+					eAdapters.remove(i);
+				}
+			}
+		}
 	}
 
 	private static class Adapter extends PivotExecutorManager implements org.eclipse.emf.common.notify.Adapter
