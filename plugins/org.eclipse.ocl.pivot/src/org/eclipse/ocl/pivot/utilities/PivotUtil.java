@@ -215,6 +215,35 @@ public class PivotUtil
 	}
 
 	/**
+	 * Locate an OCL Executor from the Executor.class slot in validationContext, else
+	 * from the Resource containing an eObject, else return null.
+	 *
+	 * The returned executor is cached at the Executor.class slot in validationContext for re-use.
+	 *
+	 * @since 1.7
+	 */
+	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
+		if (validationContext != null) {
+			Executor executor = (Executor) validationContext.get(Executor.class);
+			if (executor != null) {
+				return executor;
+			}
+		}
+		Resource asResource = eObject.eResource();
+		if (asResource != null) {
+			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
+			if (environmentFactory != null) {
+				Executor executor = PivotExecutorManager.createAdapter(environmentFactory, eObject);
+				if (validationContext != null) {
+					validationContext.put(Executor.class, executor);
+				}
+				return executor;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter templateParameter) {
@@ -1097,9 +1126,9 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
-		Resource asResource = eObject.eResource();
-		if (asResource != null) {
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
+		Resource eResource = eObject.eResource();
+		if (eResource != null) {
+			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
 			if (environmentFactory != null) {
 				return new PivotExecutorManager(environmentFactory, eObject);
 			}

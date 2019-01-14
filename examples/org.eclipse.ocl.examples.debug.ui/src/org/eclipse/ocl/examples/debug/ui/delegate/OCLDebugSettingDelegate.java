@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -12,10 +12,6 @@ package org.eclipse.ocl.examples.debug.ui.delegate;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
-
-
 
 //import org.eclipse.core.filesystem.EFS;
 //import org.eclipse.core.filesystem.IFileStore;
@@ -34,6 +30,7 @@ import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -41,10 +38,11 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.debug.ui.OCLDebugUIPlugin;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
+import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLSettingDelegate;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
@@ -55,24 +53,24 @@ import org.eclipse.ui.PlatformUI;
  */
 public class OCLDebugSettingDelegate extends OCLSettingDelegate
 {
-    /**
-     * The DebugStarter sequences the start up of the debugger off the thread.
-     */
-    protected static class DebugStarter implements IRunnableWithProgress
+	/**
+	 * The DebugStarter sequences the start up of the debugger off the thread.
+	 */
+	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Display display;
-    	protected final @NonNull MetamodelManager metamodelManager;
-    	protected final @Nullable Object contextObject;
-    	protected final @NonNull ExpressionInOCL constraint;
-    	private @Nullable ILaunch launch = null;
+		//	protected final @NonNull MetamodelManager metamodelManager;
+		protected final @Nullable Object contextObject;
+		protected final @NonNull ExpressionInOCL constraint;
+		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Display display, @NonNull MetamodelManager metamodelManager, @Nullable Object contextObject, @NonNull ExpressionInOCL constraint) {
+		public DebugStarter(@NonNull Display display, /*@NonNull MetamodelManager metamodelManager,*/ @Nullable Object contextObject, @NonNull ExpressionInOCL constraint) {
 			this.display = display;
-			this.metamodelManager = metamodelManager;
+			//		this.metamodelManager = metamodelManager;
 			this.contextObject = contextObject;
 			this.constraint = constraint;
 		}
-		
+
 		public ILaunch getLaunch() {
 			return launch;
 		}
@@ -120,22 +118,27 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 			}
 		}
 	}
-    
+
 	public OCLDebugSettingDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EStructuralFeature structuralFeature) {
 		super(delegateDomain, structuralFeature);
 	}
 
-	@Override
-	protected @Nullable Object evaluateEcore(@NonNull OCL ocl, @NonNull ExpressionInOCL query, @Nullable Object contextObject) {
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+	//	@Override
+	//	protected @Nullable Object evaluateEcore(@NonNull OCL ocl, @NonNull ExpressionInOCL query, @Nullable Object contextObject) {
+	//		return evaluateEcore(query, contextObject);
+	//	}
+
+	//	@Override
+	protected @Nullable Object evaluateEcore(/*@NonNull OCL ocl,*/ @NonNull ExpressionInOCL query, @Nullable Object contextObject) {
+		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		@SuppressWarnings("null")@NonNull Display display = Display.getCurrent();
-		DebugStarter runnable = new DebugStarter(display, metamodelManager, contextObject, query);
+		DebugStarter runnable = new DebugStarter(display, /*metamodelManager,*/ contextObject, query);
 		runnable.run(new NullProgressMonitor());
 		ILaunch launch = runnable.getLaunch();
 		if (launch != null) {
 			try {
 				waitForLaunchToTerminate(launch);
-//				launch.
+				//				launch.
 			} catch (DebugException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,7 +156,47 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 			while (workbench.getDisplay().readAndDispatch());
 		}
 	}
-	
+
+	@Override
+	protected Object get(InternalEObject owner, boolean resolve, boolean coreType) {
+		try {
+			ExpressionInOCL query2 = getQuery();
+
+
+
+			//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			@SuppressWarnings("null")@NonNull Display display = Display.getCurrent();
+			DebugStarter runnable = new DebugStarter(display, /*metamodelManager,*/ owner, query2);
+			runnable.run(new NullProgressMonitor());
+			ILaunch launch = runnable.getLaunch();
+			if (launch != null) {
+				try {
+					waitForLaunchToTerminate(launch);
+					//					launch.
+				} catch (DebugException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return launch != null;
+
+
+
+
+
+
+			//	OCL ocl = delegateDomain.getOCL();
+			//	QueryImpl2 query3 = new QueryImpl2(ocl.getEnvironmentFactory(), ocl.getModelManager(), query2);
+			//	return query3.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), owner);
+		}
+		catch (EvaluationException e) {
+			throw new OCLDelegateException(new EvaluationException(e, PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, basicGetProperty()));
+		}
+	}
+
 	protected void waitForLaunchToTerminate(@NonNull ILaunch launch) throws InterruptedException, DebugException {
 		while (true) {
 			for (int i = 0; i < 10; i++){

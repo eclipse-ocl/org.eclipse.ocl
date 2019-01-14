@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -19,13 +19,23 @@ import org.eclipse.emf.ecore.util.BasicSettingDelegate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
+import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.Query;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -36,7 +46,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	/**
 	 * An implementation of a setting delegate that computes OCL derived features
 	 * and caches explicitly changed values.
-	 * 
+	 *
 	 * @since 3.5
 	 */
 	public static class Changeable extends OCLSettingDelegate
@@ -77,14 +87,14 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 			}
 		}
 	}
-	
+
 	protected final @NonNull OCLDelegateDomain delegateDomain;
 	private Property property;
 	private ExpressionInOCL query;
 
 	/**
 	 * Initializes me with my structural feature.
-	 * 
+	 *
 	 * @param structuralFeature
 	 *            the structural feature that I handle
 	 */
@@ -93,24 +103,58 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		this.delegateDomain = delegateDomain;
 	}
 
-	protected @Nullable Object evaluateEcore(@NonNull OCL ocl, @NonNull ExpressionInOCL query, @Nullable Object target) {
-		Query query2 = ocl.createQuery(query);
-		return query2.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), target);
+	/**
+	 * @since 1.7
+	 */
+	protected @Nullable Property basicGetProperty() {
+		return property;
+	}
+
+	@Deprecated /* @deprecated not used any more */
+	protected @Nullable Object evaluateEcore(@NonNull OCL ocl, @NonNull ExpressionInOCL query, @Nullable Object unboxedObject) {
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		ModelManager modelManager = ocl.getModelManager();
+		if (modelManager == null) {
+			modelManager = environmentFactory.createModelManager(unboxedObject);
+		}
+		QueryImpl query2 = new QueryImpl(ocl, query);
+		return query2.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), unboxedObject);
 	}
 
 	@Override
-	protected Object get(InternalEObject owner, boolean resolve, boolean coreType) {
+	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
+		assert ecoreObject != null;
 		try {
-			OCL ocl = delegateDomain.getOCL();
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			ExpressionInOCL query2 = query;
-			if (query2 == null) {
-				Property property2 = getProperty();
-				query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(metamodelManager, property2);
-				SettingBehavior.INSTANCE.validate(property2);
+			EnvironmentFactory environmentFactory = null;
+			ModelManager modelManager = null;
+			Executor executor = PivotUtil.basicGetExecutor(ecoreObject);
+			if (executor != null) {
+				environmentFactory = executor.getEnvironmentFactory();
+				modelManager = executor.getModelManager();
 			}
-			Object ecoreResult = evaluateEcore(ocl, query2, owner);
-			return ecoreResult;
+			else {
+				OCL ocl = delegateDomain.getOCL();
+				environmentFactory = ocl.getEnvironmentFactory();
+				modelManager = ocl.getModelManager();
+				if (modelManager == null) {
+					modelManager = environmentFactory.createModelManager(ecoreObject);
+				}
+			}
+			ExpressionInOCL query = getQuery();
+			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
+			OCLExpression expression = PivotUtil.getOwnedBody(query);
+			Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			Object boxedValue = idResolver.boxedValueOf(ecoreObject);
+			EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query, modelManager);
+			evaluationEnvironment.add(contextVariable, boxedValue);
+			EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+			try {
+				Object boxedResult = expression.accept(ev);
+				return idResolver.ecoreValueOf(instanceClass, boxedResult);
+			} catch (EvaluationHaltedException e) {
+				throw e;
+			}
 		}
 		catch (EvaluationException e) {
 			throw new OCLDelegateException(new EvaluationException(e, PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
@@ -128,6 +172,21 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		return property2;
 	}
 
+	/**
+	 * @since 1.7
+	 */
+	protected @NonNull ExpressionInOCL getQuery() {
+		ExpressionInOCL query2 = query;
+		if (query2 == null) {
+			OCL ocl = delegateDomain.getOCL();
+			MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			Property property2 = getProperty();
+			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(metamodelManager, property2);
+			SettingBehavior.INSTANCE.validate(property2);
+		}
+		return query2;
+	}
+
 	@Override
 	protected boolean isSet(InternalEObject owner) {
 		return false; // derived features are, implicitly, never set
@@ -140,8 +199,8 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		}
 		else {
 			String name = eStructuralFeature.getEContainingClass().getEPackage().getName()
-			+ "::" + eStructuralFeature.getEContainingClass().getName()
-			+ "." + eStructuralFeature.getName();
+					+ "::" + eStructuralFeature.getEContainingClass().getName()
+					+ "." + eStructuralFeature.getName();
 			return "<" + delegateDomain.getURI() + ":setting> " + name; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
