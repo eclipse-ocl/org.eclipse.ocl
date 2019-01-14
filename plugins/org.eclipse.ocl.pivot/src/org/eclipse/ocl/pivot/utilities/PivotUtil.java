@@ -196,6 +196,25 @@ public class PivotUtil
 	}
 
 	/**
+	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 *
+	 * @since 1.7
+	 */
+	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject) {
+		Resource eResource = eObject.eResource();
+		if (eResource != null) {
+			ResourceSet resourceSet = eResource.getResourceSet();
+			if (resourceSet != null) {
+				Executor executor = PivotExecutorManager.findAdapter(resourceSet);
+				if (executor != null) {
+					return executor;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter templateParameter) {

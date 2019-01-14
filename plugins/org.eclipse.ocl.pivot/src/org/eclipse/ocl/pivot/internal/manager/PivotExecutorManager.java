@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -30,9 +34,65 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  * and the richer OCL Pivot concepts. Since the OCL concepts are not needed for simple expressions
  * that make no use of types, the default construction is lightweight deferring construction costs
  * until actually needed.
+ *
+ * A PivotExecutorManager and its associated caches may be attacjed to a ResourceSet for re-use by other OCL evaluations using the same ResojrceSet.
  */
 public class PivotExecutorManager extends ExecutorManager
 {
+	/**
+	 * @since 1.7
+	 */
+	public static @Nullable Adapter createAdapter(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject ecoreObject) {
+		Resource eResource = ecoreObject.eResource();
+		if (eResource == null) {
+			return null;
+		}
+		ResourceSet resourceSet = eResource.getResourceSet();
+		if (resourceSet == null) {
+			return null;
+		}
+		return new Adapter(environmentFactory, resourceSet, ecoreObject);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @Nullable Adapter findAdapter(@NonNull ResourceSet resourceSet) {
+		for (org.eclipse.emf.common.notify.Adapter adapter : resourceSet.eAdapters()) {
+			if (adapter instanceof Adapter) {
+				return (Adapter)adapter;
+			}
+		}
+		return null;
+	}
+
+	private static class Adapter extends PivotExecutorManager implements org.eclipse.emf.common.notify.Adapter
+	{
+		private @NonNull ResourceSet resourceSet;
+
+		private Adapter(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet resourceSet, @NonNull EObject contextObject) {
+			super(environmentFactory, contextObject);
+			this.resourceSet = resourceSet;
+			resourceSet.eAdapters().add(this);
+		}
+
+		@Override
+		public ResourceSet getTarget() {
+			return resourceSet;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == Adapter.class;
+		}
+
+		@Override
+		public void notifyChanged(Notification notification) {}
+
+		@Override
+		public void setTarget(Notifier newTarget) {}
+	}
+
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull IdResolver idResolver;
 	protected final @NonNull EObject contextObject;

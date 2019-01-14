@@ -266,7 +266,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	/**
 	 * Mapping from package URI to corresponding Pivot Package. (used to resolve NsURIPackageId).
 	 */
-	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> nsURI2package = new HashMap<>();
+	protected final @NonNull Map<@Nullable String, org.eclipse.ocl.pivot.@NonNull Package> nsURI2package = new HashMap<>();
 
 	/**
 	 * Mapping from root package name to corresponding Pivot Package. (used to resolve RootPackageId).
