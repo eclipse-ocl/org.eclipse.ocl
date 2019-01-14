@@ -18,23 +18,30 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicInvocationDelegate;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.Query;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -43,9 +50,9 @@ import org.eclipse.ocl.pivot.utilities.SemanticException;
  */
 public class OCLInvocationDelegate extends BasicInvocationDelegate
 {
-	protected final OCLDelegateDomain delegateDomain;
-	private Operation operation;
-	private ExpressionInOCL query;
+	protected final @NonNull OCLDelegateDomain delegateDomain;
+	private Operation operation = null;
+	private @Nullable ExpressionInOCL query = null;
 
 	/**
 	 * Initializes me with my operation.
@@ -60,9 +67,24 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 
 	@Override
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
+		assert target != null;
 		try {
-			OCL ocl = delegateDomain.getOCL();
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			EnvironmentFactory environmentFactory = null;
+			ModelManager modelManager = null;
+			Executor executor = PivotUtil.basicGetExecutor(target);
+			if (executor != null) {
+				environmentFactory = executor.getEnvironmentFactory();
+				modelManager = executor.getModelManager();
+			}
+			else {
+				OCL ocl = delegateDomain.getOCL();
+				environmentFactory = ocl.getEnvironmentFactory();
+				modelManager = ocl.getModelManager();
+				if (modelManager == null) {
+					modelManager = environmentFactory.createModelManager(target);
+				}
+			}
+			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query2 = query;
 			if (query2 == null) {
 				Operation operation2 = operation;
@@ -84,31 +106,52 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 					throw new OCLDelegateException(new SemanticException("Unsupported InvocationDelegate for a null")) ;
 				}
 			}
-			return evaluate(ocl, query2, target, arguments);
+			return evaluate(environmentFactory, modelManager, target, arguments);
 		}
 		catch (EvaluationException e) {
 			throw new OCLDelegateException(new EvaluationException(e, PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
 		}
 	}
 
-	protected Object evaluate(@NonNull OCL ocl, @NonNull ExpressionInOCL query2, InternalEObject target, List<?> arguments) {
-		IdResolver idResolver = ocl.getIdResolver();
-		Query query = ocl.createQuery(query2);
-		EvaluationEnvironment env = query.getEvaluationEnvironment(target);
-		Object object = target;
-		Object value = idResolver.boxedValueOf(target);
-		env.add(ClassUtil.nonNullModel( query2.getOwnedContext()), value);
+	@Deprecated /* @deprecated not usedc */
+	protected Object evaluate(@NonNull OCL ocl, @NonNull ExpressionInOCL query2, InternalEObject ecoreObject, List<?> arguments) {
+		return null;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	protected Object evaluate(@NonNull EnvironmentFactory environmentFactory, @NonNull ModelManager modelManager, InternalEObject ecoreObject, List<?> arguments) {
+		ExpressionInOCL query2 = query;
+		assert query2 != null;
+		IdResolver idResolver = environmentFactory.getIdResolver();
+		EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query2, modelManager);
+		Object value = idResolver.boxedValueOf(ecoreObject);
+		evaluationEnvironment.add(ClassUtil.nonNullModel( query2.getOwnedContext()), value);
 		List<Variable> parms =  query2.getOwnedParameters();
 		if (!parms.isEmpty()) {
 			// bind arguments to parameter names
 			for (int i = 0; i < parms.size(); i++) {
-				object = arguments.get(i);
+				Object object = arguments.get(i);
 				value = idResolver.boxedValueOf(object);
-				env.add(ClassUtil.nonNullModel(parms.get(i)), value);
+				evaluationEnvironment.add(ClassUtil.nonNullModel(parms.get(i)), value);
 			}
 		}
-		Object ecoreResult = query.evaluateEcore(eOperation.getEType().getInstanceClass(), target);
-		return ecoreResult;
+		Object boxedValue = idResolver.boxedValueOf(ecoreObject);
+		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query2);
+		OCLExpression expression = PivotUtil.getOwnedBody(query2);
+		evaluationEnvironment.add(contextVariable, boxedValue);
+		//			Variable resultVariable = specification.getResultVariable();
+		//			if (resultVariable != null) {
+		//				myEnv.add(resultVariable, null);
+		//			}
+		EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+		//	try {
+		Object boxedResult = expression.accept(ev);
+		return idResolver.ecoreValueOf(eOperation.getEType().getInstanceClass(), boxedResult);
+		//	} catch (EvaluationHaltedException e) {
+		//		throw e;
+		//	}
 	}
 
 	public @NonNull Operation getOperation() {
