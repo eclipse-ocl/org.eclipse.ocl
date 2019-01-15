@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -244,7 +243,7 @@ public abstract class TemplateParameterSubstitutionHelper
 		}
 	}
 
-	//
+	/*
 	//	Special case processing for an any(true) return from a null-free collection.
 	//
 	private static class CollectionAnyHelper extends CollectionSourceHelper
@@ -266,7 +265,7 @@ public abstract class TemplateParameterSubstitutionHelper
 			}
 			return returnIsRequired;
 		}
-	}
+	} */
 
 	//
 	//	Special case processing for including() that deduces nullFree both source and argument.
@@ -383,7 +382,7 @@ public abstract class TemplateParameterSubstitutionHelper
 
 	static
 	{
-		addHelper(AnyIteration.class, new CollectionAnyHelper());
+		addHelper(AnyIteration.class, new CollectionSourceElementHelper());
 		addHelper(ClosureIteration.class, new CollectionClosureHelper());
 		addHelper(CollectIteration.class, new CollectionCollectHelper());
 		addHelper(CollectionAsBagOperation.class, new CollectionAsCollectionHelper());
