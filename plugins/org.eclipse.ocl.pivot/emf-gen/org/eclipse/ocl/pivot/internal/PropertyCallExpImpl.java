@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -472,6 +473,8 @@ implements PropertyCallExp {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Reference types used by the auto-generated overridden body. - Bug 543180
+	 * {@link OclAnyOclAsTypeOperation}
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */

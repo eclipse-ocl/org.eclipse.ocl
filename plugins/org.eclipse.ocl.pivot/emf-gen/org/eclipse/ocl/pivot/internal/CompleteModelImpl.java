@@ -21,6 +21,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -646,6 +648,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Reference types used by the auto-generated overridden body. - Bug 543180
+	 * {@link EObjectResolvingEList}, {@link EObjectContainmentWithInverseEList}
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
