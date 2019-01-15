@@ -39,7 +39,7 @@ public final class OCL_MetaAnnotation_AnnotationValidator extends BasicEAnnotati
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
 	public OCL_MetaAnnotation_AnnotationValidator() {
-		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE, PivotAnnotationsPackage.Literals.IMPORT_EPACKAGE);
+		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE, PivotAnnotationsPackage.Literals.META_ANNOTATION_EANNOTATION);
 	}
 
 	/**
@@ -71,6 +71,28 @@ public final class OCL_MetaAnnotation_AnnotationValidator extends BasicEAnnotati
 	@Override
 	protected boolean validateDetail(EAnnotation eAnnotation, EModelElement eModelElement, Entry<String, String> entry,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean allOk = true;
+		for (EObject eReference : eAnnotation.getReferences()) {
+			if (!(eReference instanceof EModelElement)) {
+				allOk = false;
+				if (diagnostics != null) {
+					diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+							//					DIAGNOSTIC_SOURCE,
+							0,
+								"MetaAnnotation reference must be an EModelElement"));//,
+					//					new Object[] { "ResolveableURI"  /*, EObjectValidator.getValueLabel(PivotAnnotationsPackage.Literals.IMPORT_URI, importURI, context)*/ },
+					//					new Object[] { importURI },
+					//					context));
+				}
+			}
+		}
+		return allOk;
+	}
+
+	@Override
+	protected boolean validateReferences(EAnnotation eAnnotation, EModelElement eModelElement, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean allOk = true;
 		for (EObject eReference : eAnnotation.getReferences()) {
 			if (!(eReference instanceof EModelElement)) {

@@ -511,7 +511,7 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			new String[] {
 		},
 			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EAnnotation")
+				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
 		});
 	}
 

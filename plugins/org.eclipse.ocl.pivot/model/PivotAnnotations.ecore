@@ -97,6 +97,6 @@
       name="MetaAnnotation_EAnnotation">
     <eAnnotations
         source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation"/>
+        references="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
 </ecore:EPackage>
