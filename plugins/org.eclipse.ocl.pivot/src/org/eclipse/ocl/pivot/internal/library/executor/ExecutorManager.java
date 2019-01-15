@@ -345,7 +345,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 * @since 1.7
 	 */
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return getIdResolver().getStaticTypeOfValue(staticType, value);
 	}
 

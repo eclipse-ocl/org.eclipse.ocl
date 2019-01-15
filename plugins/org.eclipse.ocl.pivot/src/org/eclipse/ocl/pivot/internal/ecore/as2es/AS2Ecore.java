@@ -555,6 +555,7 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void setGenerationInProgress(org.eclipse.ocl.pivot.@NonNull Package asPackage, boolean isGenerating) {
 		String nsUri = asPackage.getURI();
 		if (nsUri != null) {

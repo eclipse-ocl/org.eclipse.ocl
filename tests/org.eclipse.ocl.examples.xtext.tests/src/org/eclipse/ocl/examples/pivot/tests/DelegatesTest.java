@@ -1449,7 +1449,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected org.eclipse.ocl.pivot.Class getType(@NonNull OCL ocl, EObject eObject) {
-		return ocl.getIdResolver().getStaticTypeOf(eObject);
+		return ocl.getIdResolver().getStaticTypeOfValue(null, eObject);
 	}
 
 	public void getWithException(EObject eObject, String featureName, String expectedMessage) {

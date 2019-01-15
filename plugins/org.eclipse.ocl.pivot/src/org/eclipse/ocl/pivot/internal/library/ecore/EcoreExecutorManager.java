@@ -187,7 +187,7 @@ public class EcoreExecutorManager extends ExecutorManager
 		if (idResolver2 == null) {
 			idResolver = idResolver2 = createIdResolver();
 		}
-		return idResolver2.getStaticTypeOf(value);
+		return idResolver2.getStaticTypeOfValue(null, value);
 	}
 
 	@Override
@@ -209,8 +209,11 @@ public class EcoreExecutorManager extends ExecutorManager
 		return idResolver2.getStaticTypeOf(value, values);
 	}
 
+	/**
+	 * @since 1.7
+	 */
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		IdResolver idResolver2 = idResolver;
 		if (idResolver2 == null) {
 			idResolver = idResolver2 = createIdResolver();

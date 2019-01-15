@@ -87,7 +87,7 @@ public class UMLIdResolver extends PivotIdResolver
 			return asStereotype != null ? asStereotype : environmentFactory.getStandardLibrary().getOclInvalidType();
 		}
 		else if (!(value instanceof CollectionValue)) {			// Fast test to bypass redundant derived getStaticTypeOf
-			return super.getStaticTypeOf(value);
+			return super.getStaticTypeOfValue(null, value);
 		}
 		return super.getDynamicTypeOf(value);
 	}
@@ -146,7 +146,7 @@ public class UMLIdResolver extends PivotIdResolver
 	}
 
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof org.eclipse.uml2.uml.Element) {
 			// FIXME Find a more efficient way to ensure Profiles are imported and applied
 			org.eclipse.uml2.uml.Element umlElement = (org.eclipse.uml2.uml.Element)value;

@@ -118,19 +118,15 @@ public abstract class MethodSpec
 			Class<?> cgSuperclass = cgClass.getSuperclass();
 			if (cgSuperclass != null) {
 				String name = cgSuperclass.getName();
-				if (name != null) {
-					specs = ModelSpec.get(name);
-				}
+				specs = ModelSpec.get(name);
 			}
 			if (specs == null) {
 				for (Class<?> cgSuperInterface : cgClass.getInterfaces()) {
 					if (cgSuperInterface != null) {
 						String name = cgSuperInterface.getName();
-						if (name != null) {
-							specs = ModelSpec.get(name);
-							cgSuperclass = cgSuperInterface;
-							break;
-						}
+						specs = ModelSpec.get(name);
+						cgSuperclass = cgSuperInterface;
+						break;
 					}
 				}
 			}

@@ -153,7 +153,6 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
-import org.eclipse.ocl.pivot.internal.ecore.EObjectProperty;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
@@ -1252,6 +1251,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	protected boolean isEcoreProperty(@NonNull LibraryProperty libraryProperty) {
 		return (libraryProperty instanceof ExplicitNavigationProperty)
 				|| (libraryProperty instanceof CompositionProperty)
@@ -1259,7 +1259,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				|| (libraryProperty instanceof StaticProperty)
 				|| (libraryProperty instanceof StereotypeProperty)
 				|| (libraryProperty instanceof ConstrainedProperty)
-				|| (libraryProperty instanceof EObjectProperty);
+				|| (libraryProperty instanceof org.eclipse.ocl.pivot.internal.ecore.EObjectProperty);
 	}
 
 	/**

@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -968,6 +969,19 @@ public class PivotUtil
 	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
 		Type type = PivotUtilInternal.getType(element);
 		return type != null ? getBehavioralType(type) : null;
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull Type type, @NonNull StandardLibrary standardLibrary) {
+		if (type instanceof org.eclipse.ocl.pivot.Class) {
+			return (org.eclipse.ocl.pivot.Class)type;
+		}
+		else if (type instanceof TemplateParameter) {
+			return getLowerBound((TemplateParameter)type, standardLibrary.getOclAnyType());
+		}
+		return standardLibrary.getOclVoidType();			// Never happens
 	}
 
 	/**

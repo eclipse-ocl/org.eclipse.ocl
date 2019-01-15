@@ -86,7 +86,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 * @since 1.7
 	 */
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof ElementExtension) {
 			Stereotype asStereotype = ((ElementExtension)value).getStereotype();
 			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();

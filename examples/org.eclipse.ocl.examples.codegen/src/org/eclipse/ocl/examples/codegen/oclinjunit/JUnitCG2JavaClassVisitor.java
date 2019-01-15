@@ -36,6 +36,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		this.sortedGlobals = sortedGlobals;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NonNull Set<String> getAllImports() {
 		return globalContext.getImports();

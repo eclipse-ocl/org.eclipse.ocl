@@ -199,7 +199,7 @@ public class PivotExecutorManager extends ExecutorManager
 	}
 
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return idResolver.getStaticTypeOfValue(staticType, value);
 	}
 }

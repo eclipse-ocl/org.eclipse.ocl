@@ -69,7 +69,7 @@ public interface Executor extends Evaluator
 	/**
 	 * @since 1.7
 	 */
-	default @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return getStaticTypeOf(value);
 	}
 	void popEvaluationEnvironment();

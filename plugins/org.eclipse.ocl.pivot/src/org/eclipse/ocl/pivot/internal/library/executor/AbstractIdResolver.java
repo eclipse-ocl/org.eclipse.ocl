@@ -1082,7 +1082,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof EObject) {
 			EClass eClass = ((EObject)value).eClass();
 			assert eClass != null;
@@ -1092,7 +1092,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				assert type != null;
 				key2type.put(eClass, type);
 			}
-			return type;
+			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else if (value instanceof Value) {
 			TypeId typeId = ((Value)value).getTypeId();
@@ -1116,7 +1116,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				}
 				key2type.put(typeId, type);
 			}
-			return type;
+			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else if (value == null) {
 			return standardLibrary.getOclVoidType();

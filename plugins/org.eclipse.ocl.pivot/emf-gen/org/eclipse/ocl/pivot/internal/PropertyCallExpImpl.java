@@ -446,7 +446,7 @@ implements PropertyCallExp {
 	 * @generated NOT
 	 */
 	@Override
-	public @NonNull Type getSpecializedReferredPropertyOwningType()
+	public /*@NonNull*/ Type getSpecializedReferredPropertyOwningType()
 	{
 		Property referredProperty = getReferredProperty();
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
@@ -479,7 +479,7 @@ implements PropertyCallExp {
 	 * @generated NOT
 	 */
 	@Override
-	public @NonNull Type getSpecializedReferredPropertyType()
+	public /*@NonNull*/ Type getSpecializedReferredPropertyType()
 	{
 		Property referredProperty = getReferredProperty();
 		Type referencedType = referredProperty.getType();
@@ -567,6 +567,7 @@ implements PropertyCallExp {
 							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
 							safe_type_source = type_0;
 						}
+						@SuppressWarnings("null")
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
 						CAUGHT_conformsTo = conformsTo;
@@ -765,6 +766,7 @@ implements PropertyCallExp {
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				@SuppressWarnings("null")
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();

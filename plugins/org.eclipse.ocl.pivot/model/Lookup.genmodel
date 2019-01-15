@@ -23,8 +23,10 @@
       <genOperations ecoreOperation="Lookup.ecore#//LookupEnvironment/addElement">
         <genParameters ecoreParameter="Lookup.ecore#//LookupEnvironment/addElement/element"/>
       </genOperations>
-      <genOperations ecoreOperation="Lookup.ecore#//LookupEnvironment/hasFinalResult"/>
-      <genOperations ecoreOperation="Lookup.ecore#//LookupEnvironment/getExecutor"/>
+      <genOperations ecoreOperation="Lookup.ecore#//LookupEnvironment/hasFinalResult"
+          body="throw new &lt;%java.lang.UnsupportedOperationException%>(&quot;Enviroment::hasFinalResult() has been created for CG purposes. Don't call this method&quot;);"/>
+      <genOperations ecoreOperation="Lookup.ecore#//LookupEnvironment/getExecutor"
+          body="throw new &lt;%java.lang.UnsupportedOperationException%>(&quot;Enviroment::getEvaluator() has been created for CG purposes. Don't call this method&quot;);"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Lookup.ecore#//Executor"/>
   </genPackages>

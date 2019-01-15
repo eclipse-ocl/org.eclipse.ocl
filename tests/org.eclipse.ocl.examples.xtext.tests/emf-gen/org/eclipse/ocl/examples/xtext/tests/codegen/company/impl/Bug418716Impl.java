@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2018 Willink Transformations and others.
+ * Copyright (c) 2015, 2019 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Bug418716;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
 
@@ -102,6 +103,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithInitital() {
 		return attributeWithInitital;
 	}
@@ -111,6 +113,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithInitital(int newAttributeWithInitital) {
 		int oldAttributeWithInitital = attributeWithInitital;
 		attributeWithInitital = newAttributeWithInitital;
@@ -123,6 +126,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithoutInitital() {
 		return attributeWithoutInitital;
 	}
@@ -132,6 +136,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithoutInitital(int newAttributeWithoutInitital) {
 		int oldAttributeWithoutInitital = attributeWithoutInitital;
 		attributeWithoutInitital = newAttributeWithoutInitital;

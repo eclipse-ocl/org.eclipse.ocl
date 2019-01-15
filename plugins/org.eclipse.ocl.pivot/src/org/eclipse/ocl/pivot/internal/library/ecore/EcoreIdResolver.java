@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * EcoreIdResolver provides a package discovery capability so that package identifiers can be resolved.
@@ -108,7 +109,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
 		if (value instanceof AbstractExecutorType) {	// The direct CGed Executor has no eClass() so use getMetaclass()
 			Type type = key2type.get(value);
 			if (type == null) {
@@ -116,7 +117,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 				assert type != null;
 				key2type.put(value, type);
 			}
-			return type;
+			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else {
 			return super.getStaticTypeOfValue(staticType, value);

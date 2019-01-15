@@ -15,10 +15,8 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment;
@@ -87,8 +85,8 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 		if (isInited) return (LookupPackage)EPackage.Registry.INSTANCE.getEPackage(LookupPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		LookupPackageImpl theLookupPackage = (LookupPackageImpl)(ePackage instanceof LookupPackageImpl ? ePackage : new LookupPackageImpl());
+		Object registeredLookupPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		LookupPackageImpl theLookupPackage = registeredLookupPackage instanceof LookupPackageImpl ? (LookupPackageImpl)registeredLookupPackage : new LookupPackageImpl();
 
 		isInited = true;
 
@@ -104,7 +102,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 		// Mark meta-data to indicate it can't be changed
 		theLookupPackage.freeze();
-
 
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(LookupPackage.eNS_URI, theLookupPackage);
@@ -299,28 +296,17 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/OCL/Import
-		createImportAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
+		createPivotAnnotations();
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Import</b>.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import"; //$NON-NLS-1$
-		addAnnotation
-		  (this,
-		   source,
-		   new String[] {
-			 null, "platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore" //$NON-NLS-1$
-		   });
-	}
+	@Deprecated /* @deprecated not used, no functionality */
+	protected void createImportAnnotations() {}
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
@@ -332,10 +318,33 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	protected void createEcoreAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		  (this,
-		   source,
-		   new String[] {
-		   });
+		(this,
+			source,
+			new String[] {
+		});
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot</b>.
+	 * <!-- begin-user-doc -->
+	 * @since 1.7
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createPivotAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"; //$NON-NLS-1$
+		addAnnotation
+		(getLookupEnvironment__AddElements__Collection(),
+			source,
+			new String[] {
+				"body", "LookupEnvironment{\n\t\t\t\t\t\tnamedElements = namedElements->includingAll(elements) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\t\n\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		});
+		addAnnotation
+		(getLookupEnvironment__AddElement__NamedElement(),
+			source,
+			new String[] {
+				"body", "LookupEnvironment {\n\t\t\t\t\t\tnamedElements = namedElements->including(element) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\n\t\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		});
 	}
 
 } //LookupPackageImpl

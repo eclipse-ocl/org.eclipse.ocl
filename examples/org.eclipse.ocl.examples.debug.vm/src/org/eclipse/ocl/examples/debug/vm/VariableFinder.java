@@ -70,7 +70,7 @@ public class VariableFinder
 	public static @NonNull URI createURI(@NonNull String @NonNull [] varPath) {
 		return createURI(varPath, varPath.length - 1);
 	}
-	
+
 	public static @NonNull URI createURI(@NonNull String @NonNull [] varPath, int endIndex) {
 		String[] segments = new String[endIndex + 1];
 		for (int i = 0; i < segments.length; i++) {
@@ -79,11 +79,11 @@ public class VariableFinder
 		@SuppressWarnings("null") @NonNull URI hierarchicalURI = URI.createHierarchicalURI(segments, null, null);
 		return hierarchicalURI;
 	}
-	
+
 	public static @NonNull List<EStructuralFeature> getAllFeatures(@NonNull EClass eClass) {
 		List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
 		features.addAll(eClass.getEAllStructuralFeatures());
-/* 		if (eClass instanceof Root) {
+		/* 		if (eClass instanceof Root) {
 			for (Iterator<EStructuralFeature> it = features.iterator(); it.hasNext();) {
 				EStructuralFeature feature = it.next();
 				if(feature instanceof ContextualProperty) {
@@ -93,6 +93,7 @@ public class VariableFinder
 		}
 		collectIntermediateProperties(features, eClass); */
 		Collections.sort(features, new Comparator<EStructuralFeature>() {
+			@Override
 			public int compare(EStructuralFeature var1, EStructuralFeature var2) {
 				String n1 = var1.getName();
 				String n2 = var2.getName();
@@ -103,12 +104,12 @@ public class VariableFinder
 		});
 		return features;
 	}
-	
+
 	private static @NonNull String getOCLType(@NonNull ETypedElement feature) {
 		boolean isNullFree = Ecore2AS.isNullFree(feature);
 		return getOCLType(feature.getEType(), feature.isUnique(), feature.isOrdered(), isNullFree, feature.getLowerBound(), feature.getUpperBound());
 	}
-	
+
 	private static @NonNull String getOCLType(@Nullable EClassifier eType, boolean isUnique, boolean isOrdered, boolean isNullFree, int lowerBound, int upperBound) {
 		StringBuilder s = new StringBuilder();
 		if (eType == null) {
@@ -142,7 +143,7 @@ public class VariableFinder
 	public static @NonNull List<VMVariableData> getVariables(@NonNull VMEvaluationEnvironment evalEnv) {
 		return newInstance(evalEnv, false).getVariables();
 	}
-	
+
 	private static boolean isPredefinedVar(String name, @NonNull VMEvaluationEnvironment evalEnv) {
 		if((PivotConstants.SELF_NAME.equals(name) || PivotConstants.RESULT_NAME.equals(name)) && evalEnv.getOperation() != null) {
 			return true;
@@ -165,13 +166,13 @@ public class VariableFinder
 	public static @NonNull URI parseURI(String variableURI) throws IllegalArgumentException {
 		return URI.createURI(variableURI);
 	}
-	
+
 	/** @deprecated use non-static method */
 	@Deprecated
 	public static VMResponse process(@NonNull VMVariableRequest request, @NonNull List<UnitLocation> stack, @NonNull VMEvaluationEnvironment vmEvaluationEnvironment) {
 		return newInstance(vmEvaluationEnvironment, true).process(request, stack);
 	}
-	
+
 	private static EClass selectEClass(EClass eClass, int index) {
 		if(index > 0) {
 			EList<EClass> superClasses = eClass.getEAllSuperTypes();
@@ -179,7 +180,7 @@ public class VariableFinder
 				return superClasses.get(index);
 			}
 		}
-		
+
 		return eClass;
 	}
 
@@ -210,10 +211,10 @@ public class VariableFinder
 			vmType = new VMTypeData(VMTypeData.DATATYPE, "OclInvalid", declaredTypeName); //$NON-NLS-1$
 		} else if (value instanceof Resource) {
 			Resource resource = (Resource) value;
-//			EClass eClass = eObject.eClass();
+			//			EClass eClass = eObject.eClass();
 			@NonNull String strVal = String.valueOf(resource.getURI());
 			vmValue = new VMValueData(VMValueData.RESOURCE, strVal, true);
-			@SuppressWarnings("null")@NonNull String className = resource.getClass().getSimpleName();
+			@NonNull String className = resource.getClass().getSimpleName();
 			vmType = new VMTypeData(VMTypeData.EOBJECT, className, declaredTypeName);
 		} else if (value instanceof EObject) {
 			EObject eObject = (EObject) value;
@@ -239,9 +240,9 @@ public class VariableFinder
 			String string = strVal.toString();
 			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
 			// TODO - use mapping by runtime class to OCL type
-			@SuppressWarnings("null")@NonNull String className = javaType.getSimpleName();
+			@NonNull String className = javaType.getSimpleName();
 			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-			
+
 		} else if (value instanceof CollectionValue) {
 			CollectionValue collection = (CollectionValue) value;
 			Class<?> javaType = value.getClass();
@@ -257,9 +258,9 @@ public class VariableFinder
 			String string = strVal.toString();
 			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
 			// TODO - use mapping by runtime class to OCL type
-			@SuppressWarnings("null")@NonNull String className = javaType.getSimpleName();
+			@NonNull String className = javaType.getSimpleName();
 			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-			
+
 		} else {
 			// everything else we see as a data type
 			@NonNull String valueOf = String.valueOf(value);
@@ -267,7 +268,7 @@ public class VariableFinder
 				valueOf = "'" + valueOf + "'";
 			}
 			vmValue = new VMValueData(VMValueData.PRIMITIVE, valueOf);
-			@SuppressWarnings("null")@NonNull String className = value.getClass().getSimpleName();
+			@NonNull String className = value.getClass().getSimpleName();
 			vmType = new VMTypeData(VMTypeData.DATATYPE, className, declaredTypeName);
 		}
 		variable.type = vmType;
@@ -283,45 +284,45 @@ public class VariableFinder
 		this.fEvalEnv = fEvalEnv;
 		fIsStoreValues = isStoreValues;
 	}
-	
+
 	public void collectChildVars(Object root, @NonNull String @NonNull [] parentPath, @Nullable String containerType, @NonNull List<@NonNull VMVariableData> result) {
 		@NonNull String childPath @NonNull [] = new @NonNull String[parentPath.length + 1];
 		System.arraycopy(parentPath, 0, childPath, 0, parentPath.length);
-		
+
 		if (root instanceof Resource) {
 			Resource model = (Resource) root;
 			root = model.getContents();
 			containerType = "Set(EObject)";
 		}
-		
+
 		if (root instanceof EObject) {
 			EObject eObject = (EObject) root;
 			@SuppressWarnings("null")@NonNull EClass eClass = eObject.eClass();
 
-			StringBuilder uriBuf = new StringBuilder();			
+			StringBuilder uriBuf = new StringBuilder();
 			List<EStructuralFeature> eAllFeatures = getAllFeatures(eClass);
-			
+
 			List<EClass> superClasses = eClass.getEAllSuperTypes();
-			for (EStructuralFeature feature : eAllFeatures) {		
+			for (EStructuralFeature feature : eAllFeatures) {
 				EClass owner;
-				
-//				if(feature.eClass() == ExpressionsPackage.eINSTANCE.getContextualProperty()) {
-//					ContextualProperty ctxProperty = (ContextualProperty) feature;
-//					owner = ctxProperty.getContext();
-					
-//					uriBuf.append('+');//.append(intermPropIndex++);
-//				} else {
-					owner = feature.getEContainingClass();
-//				}
-							
+
+				//				if(feature.eClass() == ExpressionsPackage.eINSTANCE.getContextualProperty()) {
+				//					ContextualProperty ctxProperty = (ContextualProperty) feature;
+				//					owner = ctxProperty.getContext();
+
+				//					uriBuf.append('+');//.append(intermPropIndex++);
+				//				} else {
+				owner = feature.getEContainingClass();
+				//				}
+
 				int index = superClasses.indexOf(owner);
 				uriBuf.append(index < 0 ? 0 : index);
 				uriBuf.append('.').append(feature.getName());
-				
+
 				childPath[childPath.length - 1] = String.valueOf(uriBuf);
 				VMVariableData elementVar = createFeatureVar(feature, getValue(feature, eObject), createURI(childPath).toString());
 				result.add(elementVar);
-				
+
 				uriBuf.setLength(0);
 			}
 			childPath[childPath.length - 1] = CONTAINER_VARIABLE_NAME;
@@ -334,52 +335,52 @@ public class VariableFinder
 		} else if(root instanceof Collection<?>) {
 			Collection<?> elements = (Collection<?>) root;
 			String elementType = "?";//"(containerType instanceof CollectionType) ? ((CollectionType) containerType) .getElementType() : fFeatureAccessor.getStandardLibrary().getOclAny()";
-									
-//			Dictionary<Object, Object> asDictionary = null;
-//			if(root instanceof Dictionary<?, ?>) {
-//				@SuppressWarnings("unchecked")
-//				Dictionary<Object, Object> dict = (Dictionary<Object, Object>) root;
-//				asDictionary = dict;
-//				elements = asDictionary.keys();
-//			}			
-			
+
+			//			Dictionary<Object, Object> asDictionary = null;
+			//			if(root instanceof Dictionary<?, ?>) {
+			//				@SuppressWarnings("unchecked")
+			//				Dictionary<Object, Object> dict = (Dictionary<Object, Object>) root;
+			//				asDictionary = dict;
+			//				elements = asDictionary.keys();
+			//			}
+
 			int i = 0;
 			for (Object element : elements) {
 				childPath[childPath.length - 1] = String.valueOf(i);
 				VMVariableData elementVar;
-//				if(asDictionary == null) {
-					elementVar = createCollectionElementVar(i, element, elementType, createURI(childPath).toString());
-//				} else {
-//					Object key = element;
-//					Object value = asDictionary.get(element);
-//					elementVar = createDictionaryElementVar(key, value, elementType, createURI(childPath).toString());
-//				}
+				//				if(asDictionary == null) {
+				elementVar = createCollectionElementVar(i, element, elementType, createURI(childPath).toString());
+				//				} else {
+				//					Object key = element;
+				//					Object value = asDictionary.get(element);
+				//					elementVar = createDictionaryElementVar(key, value, elementType, createURI(childPath).toString());
+				//				}
 				result.add(elementVar);
 				i++;
 			}
 		} else if(root instanceof CollectionValue) {
 			CollectionValue elements = (CollectionValue) root;
 			String elementType = "(containerType instanceof CollectionType) ? ((CollectionType) containerType) .getElementType() : fFeatureAccessor.getStandardLibrary().getOclAny()";
-									
-//			Dictionary<Object, Object> asDictionary = null;
-//			if(root instanceof Dictionary<?, ?>) {
-//				@SuppressWarnings("unchecked")
-//				Dictionary<Object, Object> dict = (Dictionary<Object, Object>) root;
-//				asDictionary = dict;
-//				elements = asDictionary.keys();
-//			}			
-			
+
+			//			Dictionary<Object, Object> asDictionary = null;
+			//			if(root instanceof Dictionary<?, ?>) {
+			//				@SuppressWarnings("unchecked")
+			//				Dictionary<Object, Object> dict = (Dictionary<Object, Object>) root;
+			//				asDictionary = dict;
+			//				elements = asDictionary.keys();
+			//			}
+
 			int i = 0;
 			for (Object element : elements) {
 				childPath[childPath.length - 1] = String.valueOf(i);
 				VMVariableData elementVar;
-//				if(asDictionary == null) {
-					elementVar = createCollectionElementVar(i, element, elementType, createURI(childPath).toString());
-//				} else {
-//					Object key = element;
-//					Object value = asDictionary.get(element);
-//					elementVar = createDictionaryElementVar(key, value, elementType, createURI(childPath).toString());
-//				}
+				//				if(asDictionary == null) {
+				elementVar = createCollectionElementVar(i, element, elementType, createURI(childPath).toString());
+				//				} else {
+				//					Object key = element;
+				//					Object value = asDictionary.get(element);
+				//					elementVar = createDictionaryElementVar(key, value, elementType, createURI(childPath).toString());
+				//				}
 				result.add(elementVar);
 				i++;
 			}
@@ -396,7 +397,7 @@ public class VariableFinder
 		}
 		return null;
 	}
-	
+
 	private @NonNull VMVariableData createCollectionElementVar(int elementIndex, Object element, @Nullable String elementType, String uri) {
 		String varName = "[" + elementIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 		int kind = VMVariableData.COLLECTION_ELEMENT;
@@ -407,25 +408,25 @@ public class VariableFinder
 		String oclType = getOCLType(ClassUtil.nonNullModel(EcorePackage.Literals.EOBJECT___ECONTAINER));
 		return createVariable(CONTAINER_VARIABLE_NAME, VMVariableData.REFERENCE, oclType, value, uri.toString());
 	}
-	
-/*	private VMVariable createDictionaryElementVar(Object key, Object value, @Nullable String elementType, String uri) {
+
+	/*	private VMVariable createDictionaryElementVar(Object key, Object value, @Nullable String elementType, String uri) {
 		String varName = String.valueOf(key);
 		int kind = VMVariable.COLLECTION_ELEMENT;
 		return createVariable(varName, kind, elementType, value, uri);
 	} */
-	
+
 	private @NonNull VMVariableData createFeatureVar(@NonNull EStructuralFeature feature, Object value, String uri) {
 		String varName = ClassUtil.nonNullModel(feature.getName());
 		String declaredType = getOCLType(feature);
-		
+
 		int kind = VMVariableData.ATTRIBUTE;
 		if (feature instanceof EReference) {
 			kind = VMVariableData.REFERENCE;
 		}
-//		if (feature instanceof ContextualProperty) {
-//			kind = VMVariable.INTERM_PROPERTY;
-//		}
-		
+		//		if (feature instanceof ContextualProperty) {
+		//			kind = VMVariable.INTERM_PROPERTY;
+		//		}
+
 		return createVariable(varName, kind, declaredType, value, uri);
 	}
 
@@ -443,7 +444,7 @@ public class VariableFinder
 		if (result.contains(null)) {
 			throw new IllegalArgumentException("null result variables"); //$NON-NLS-1$
 		}
-		try {	
+		try {
 			Object referencedObj = findStackObject(objectPath);
 			VMVariableData variable = fTargetVar;
 
@@ -462,16 +463,16 @@ public class VariableFinder
 	protected Object findChildObject(Object parentObj, @Nullable String optParentDeclaredType, @NonNull String @NonNull [] varTreePath, int pathIndex) {
 		URI uri = createURI(varTreePath, pathIndex);
 		// FIXME - deduce the type from actual type, ensure null is not propagated
-		
+
 		VMVariableData childVar = null;
 		Object nextObject = null;
 		String nextDeclaredType = null;
-		
+
 		if (parentObj instanceof Resource) {
 			parentObj = ((Resource)parentObj).getContents();
 			nextDeclaredType = "EObject"; //"QvtOperationalStdLibrary.INSTANCE.getElementType()";
 		}
-		
+
 		if (parentObj instanceof EObject) {
 			String indexedPath = varTreePath[pathIndex];
 			if (CONTAINER_VARIABLE_NAME.equals(indexedPath)) {
@@ -499,25 +500,25 @@ public class VariableFinder
 			try {
 				elementIndex = Integer.parseInt(varTreePath[pathIndex]);
 			} catch(NumberFormatException e) {
-				// FIXME 
+				// FIXME
 				throw new IllegalArgumentException();
 			}
-			
+
 			if (elementIndex < 0 || elementIndex >= collection.size()) {
 				// not valid element position in this collection
 				throw new IllegalArgumentException();
 			}
-						
-//			if (optParentDeclaredType instanceof CollectionType) {
-//				CollectionType type = (CollectionType) optParentDeclaredType;
-//				nextDeclaredType = "type.getElementType()";
-//			} else if(nextDeclaredType == null) {
-				// FIXME
-				nextDeclaredType = "OclAny";
-//			}
+
+			//			if (optParentDeclaredType instanceof CollectionType) {
+			//				CollectionType type = (CollectionType) optParentDeclaredType;
+			//				nextDeclaredType = "type.getElementType()";
+			//			} else if(nextDeclaredType == null) {
+			// FIXME
+			nextDeclaredType = "OclAny";
+			//			}
 
 			Object element = getElement(collection, elementIndex);
-			
+
 			childVar = createCollectionElementVar(elementIndex, element, nextDeclaredType, uri.toString());
 			nextObject = element;
 		} else if (parentObj instanceof CollectionValue) {
@@ -526,25 +527,25 @@ public class VariableFinder
 			try {
 				elementIndex = Integer.parseInt(varTreePath[pathIndex]);
 			} catch(NumberFormatException e) {
-				// FIXME 
+				// FIXME
 				throw new IllegalArgumentException();
 			}
-			
+
 			if (elementIndex < 0 || elementIndex >= collection.intSize()) {
 				// not valid element position in this collection
 				throw new IllegalArgumentException();
 			}
-						
-//			if (optParentDeclaredType instanceof CollectionType) {
-//				CollectionType type = (CollectionType) optParentDeclaredType;
-//				nextDeclaredType = "type.getElementType()";
-//			} else if(nextDeclaredType == null) {
-				// FIXME
-				nextDeclaredType = "OclAny";
-//			}
+
+			//			if (optParentDeclaredType instanceof CollectionType) {
+			//				CollectionType type = (CollectionType) optParentDeclaredType;
+			//				nextDeclaredType = "type.getElementType()";
+			//			} else if(nextDeclaredType == null) {
+			// FIXME
+			nextDeclaredType = "OclAny";
+			//			}
 
 			Object element = getElement(collection.getElements(), elementIndex);
-			
+
 			childVar = createCollectionElementVar(elementIndex, element, nextDeclaredType, uri.toString());
 			nextObject = element;
 		}
@@ -560,10 +561,10 @@ public class VariableFinder
 			}
 		}
 
-		this.fTargetVar = childVar;		
+		this.fTargetVar = childVar;
 		return nextObject;
 	}
-	
+
 	private @Nullable Object findStackObject(@NonNull String @NonNull [] varTreePath) {
 		Object rootObj = null;
 		boolean gotIt = false;
@@ -611,14 +612,14 @@ public class VariableFinder
 			fTargetVar = createVariable(envVarName, VMVariableData.LOCAL, fRootDeclaredType, rootObj, createURI(uri).toString());
 			return rootObj;
 		}
-		
+
 		if(rootObj == null) {
 			// can't navigate further via <null> object
 			return null;
 		}
 
 		// navigate from the root object using the remaining variable path
-		return findChildObject(rootObj, fRootDeclaredType, varTreePath, 1); 
+		return findChildObject(rootObj, fRootDeclaredType, varTreePath, 1);
 	}
 
 	protected String getDeclaredType(Object valueObject) {
@@ -652,7 +653,7 @@ public class VariableFinder
 	private @Nullable EStructuralFeature findFeature(@NonNull String featureRef, EClass actualTarget) {
 		String actualRef = featureRef.startsWith("+") ? featureRef.substring(1) : featureRef;
 		boolean isIntermediate = featureRef.length() != actualRef.length();
-		
+
 		int classIndex;
 		String featureName;
 		try {
@@ -660,30 +661,30 @@ public class VariableFinder
 			if(delimiterPos <= 0 || delimiterPos >= actualRef.length() - 1) {
 				throw new IllegalArgumentException("navigation feature: " + actualRef);
 			}
-			
- 			classIndex = Integer.parseInt(actualRef.substring(0, delimiterPos));
- 			featureName = actualRef.substring(delimiterPos + 1);
+
+			classIndex = Integer.parseInt(actualRef.substring(0, delimiterPos));
+			featureName = actualRef.substring(delimiterPos + 1);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Illegal feature reference: " + featureRef);
 		}
-		
+
 		EClass featureOwner = selectEClass(actualTarget, classIndex);
 		if(featureOwner == null) {
 			return null;
 		}
-		
+
 		if(!isIntermediate) {
 			return featureOwner.getEStructuralFeature(featureName);
 		}
-		
-//		EClass contextualPropMetaClass = ExpressionsPackage.eINSTANCE.getContextualProperty();
-		
-//		for (EStructuralFeature feature : actualTarget.getEAllStructuralFeatures()) {					
-//			if(feature.eClass() == contextualPropMetaClass && feature.equals(feature.getName())) {
-//				return feature;
-//			}
-//		}
-		
+
+		//		EClass contextualPropMetaClass = ExpressionsPackage.eINSTANCE.getContextualProperty();
+
+		//		for (EStructuralFeature feature : actualTarget.getEAllStructuralFeatures()) {
+		//			if(feature.eClass() == contextualPropMetaClass && feature.equals(feature.getName())) {
+		//				return feature;
+		//			}
+		//		}
+
 		return null;
 	}
 
@@ -709,7 +710,7 @@ public class VariableFinder
 
 	public Object getValue(EStructuralFeature feature, EObject target) {
 		return /*fEvalEnv*/navigateProperty(feature, null, target);
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 	}
 
 	protected @Nullable VMVariableData getVariable(@NonNull TypedElement variable, @Nullable Object pcObject) {
@@ -769,11 +770,11 @@ public class VariableFinder
 		return result;
 	}
 
-//	@Override
+	//	@Override
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
-/*		if(target instanceof ModuleInstance) {
+		/*		if(target instanceof ModuleInstance) {
 			ModuleInstance moduleTarget = (ModuleInstance) target;
-			EClassifier owningClassifier = QvtOperationalStdLibrary.INSTANCE.getEnvironment().getUMLReflection().getOwningClassifier(property);			
+			EClassifier owningClassifier = QvtOperationalStdLibrary.INSTANCE.getEnvironment().getUMLReflection().getOwningClassifier(property);
 			if (owningClassifier instanceof Module) {
 				target = moduleTarget.getThisInstanceOf((Module) owningClassifier);
 			}
@@ -782,23 +783,23 @@ public class VariableFinder
 			}
 		} */
 
-		EStructuralFeature resolvedProperty = property;		
+		EStructuralFeature resolvedProperty = property;
 
-//		if (property instanceof ContextualProperty) {
-//			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
-//														property.getEContainingClass(), (ContextualProperty)property, target);
-//			target = shadow.getPropertyRuntimeOwner(target, this);
-//			resolvedProperty = shadow.getProperty();
-//		}
-		
-		// FIXME - workaround for a issue of multiple typle type instances, possibly coming from 
+		//		if (property instanceof ContextualProperty) {
+		//			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
+		//														property.getEContainingClass(), (ContextualProperty)property, target);
+		//			target = shadow.getPropertyRuntimeOwner(target, this);
+		//			resolvedProperty = shadow.getProperty();
+		//		}
+
+		// FIXME - workaround for a issue of multiple typle type instances, possibly coming from
 		// imported modules. The super impl. looks for the property by feature instance, do it
 		// by name here to avoid lookup failure, IllegalArgExc...
-/*		if(target instanceof Tuple<?, ?>) {
+		/*		if(target instanceof Tuple<?, ?>) {
 			if (target instanceof EObject) {
 	            EObject etarget = (EObject) target;
 	            resolvedProperty = etarget.eClass().getEStructuralFeature(property.getName());
-	            if(resolvedProperty == null) { 
+	            if(resolvedProperty == null) {
 	            	return null;
 	            }
 			}
@@ -810,31 +811,31 @@ public class VariableFinder
 						break;
 					}
 				}
-	            if(resolvedProperty == null) { 
+	            if(resolvedProperty == null) {
 	            	return null;
 	            }
 			}
 		}
 		else if(property.getEType() instanceof CollectionType<?, ?> && target instanceof EObject) {
-			// module property of direct OCL collection type => override the super impl which coerce the result value 
+			// module property of direct OCL collection type => override the super impl which coerce the result value
 			// and takes only the first element and returns from navigate call
             EObject eTarget = (EObject) target;
             if (eTarget.eClass().getEAllStructuralFeatures().contains(resolvedProperty)) {
                 return eTarget.eGet(resolvedProperty, true);
             }
 		} */
-		
+
 		try {
 			return superNavigateProperty(resolvedProperty, qualifiers, target);
 		}
 		catch (IllegalArgumentException e) {
-            fEvalEnv.throwVMException(new VMRuntimeException("Unknown property '" + property.getName() + "'", e)); //$NON-NLS-1$ //$NON-NLS-2$
+			fEvalEnv.throwVMException(new VMRuntimeException("Unknown property '" + property.getName() + "'", e)); //$NON-NLS-1$ //$NON-NLS-2$
 			return ValueUtil.INVALID_VALUE; //getInvalidResult();
 		}
 	}
-	
+
 	public @Nullable VMResponse process(@NonNull VMVariableRequest request, @NonNull List<UnitLocation> stack) {
-		
+
 		UnitLocation location = VMVirtualMachine.lookupEnvironmentByID(request.frameID, stack);
 		if (location == null) {
 			return VMResponse.createERROR();
@@ -844,7 +845,7 @@ public class VariableFinder
 		URI variableURI = parseURI(variableURIStr);
 
 		@NonNull String @NonNull [] variablePath = getVariablePath(variableURI);
-		
+
 		List<@NonNull VMVariableData> variables = new ArrayList<@NonNull VMVariableData>();
 		find(variablePath, request.includeChildVars, variables);
 
@@ -865,7 +866,7 @@ public class VariableFinder
 		String declaredTypeName = (optDeclaredType != null) ? optDeclaredType.toString() : null;
 		setValueAndType(variable, value, declaredTypeName);
 	}
-	
+
 	public void setValueAndType(@NonNull VMVariableData variable, @Nullable Object value, @Nullable String declaredTypeName) {
 		VMValueData vmValue;
 		VMTypeData vmType;
@@ -877,10 +878,10 @@ public class VariableFinder
 			vmType = new VMTypeData(VMTypeData.DATATYPE, "OclInvalid", declaredTypeName); //$NON-NLS-1$
 		} else if (value instanceof Resource) {
 			Resource resource = (Resource) value;
-//			EClass eClass = eObject.eClass();
+			//			EClass eClass = eObject.eClass();
 			@NonNull String strVal = String.valueOf(resource.getURI());
 			vmValue = new VMValueData(VMValueData.RESOURCE, strVal, true);
-			@SuppressWarnings("null")@NonNull String className = resource.getClass().getSimpleName();
+			@NonNull String className = resource.getClass().getSimpleName();
 			vmType = new VMTypeData(VMTypeData.EOBJECT, className, declaredTypeName);
 		} else if (value instanceof EObject) {
 			EObject eObject = (EObject) value;
@@ -906,9 +907,9 @@ public class VariableFinder
 			String string = strVal.toString();
 			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
 			// TODO - use mapping by runtime class to OCL type
-			@SuppressWarnings("null")@NonNull String className = javaType.getSimpleName();
+			@NonNull String className = javaType.getSimpleName();
 			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-			
+
 		} else if (value instanceof CollectionValue) {
 			CollectionValue collection = (CollectionValue) value;
 			Class<?> javaType = value.getClass();
@@ -924,9 +925,9 @@ public class VariableFinder
 			String string = strVal.toString();
 			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
 			// TODO - use mapping by runtime class to OCL type
-			@SuppressWarnings("null")@NonNull String className = javaType.getSimpleName();
+			@NonNull String className = javaType.getSimpleName();
 			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-			
+
 		} else {
 			// everything else we see as a data type
 			@NonNull String valueOf = String.valueOf(value);
@@ -934,17 +935,17 @@ public class VariableFinder
 				valueOf = "'" + valueOf + "'";
 			}
 			vmValue = new VMValueData(VMValueData.PRIMITIVE, valueOf);
-			@SuppressWarnings("null")@NonNull String className = value.getClass().getSimpleName();
+			@NonNull String className = value.getClass().getSimpleName();
 			vmType = new VMTypeData(VMTypeData.DATATYPE, className, declaredTypeName);
 		}
 		variable.type = vmType;
 		variable.value = vmValue;
 	}
-	
+
 	// implements the inherited specification
 	public Object superNavigateProperty(EStructuralFeature property,
 			List<?> qualifiers, Object target)
-			throws IllegalArgumentException {
+					throws IllegalArgumentException {
 
 		if (target instanceof EObject) {
 			EObject etarget = (EObject) target;
@@ -958,10 +959,10 @@ public class VariableFinder
 				}
 				return /*coerceValue(property,*/ etarget.eGet(property)/*, true)*/;
 			}
-    	} /*else if (target instanceof Tuple<?, ?>) {
+		} /*else if (target instanceof Tuple<?, ?>) {
     		@SuppressWarnings("unchecked")
     		Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) target;
-    		
+
     		if (tuple.getTupleType().oclProperties().contains(property)) {
     			return tuple.getValue(property);
     		}

@@ -146,7 +146,7 @@ public interface IdResolver extends IdVisitor<Element>
 	/**
 	 * @since 1.7
 	 */
-	default @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return getStaticTypeOf(value);
 	}
 

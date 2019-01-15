@@ -351,7 +351,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 * @since 1.7
 	 */
 	@Override
-	public @NonNull Type getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return idResolver.getStaticTypeOfValue(staticType, value);
 	}
 
