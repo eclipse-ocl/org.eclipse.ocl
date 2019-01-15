@@ -40,9 +40,10 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	@Override
 	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
+		js.appendSuppressWarningsNull(true);
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
-		js.appendClassReference(null, ecoreJavaClass);
+		js.appendClassReference(true, ecoreJavaClass);
 		js.append(")");
 		js.appendReferenceTo(localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOf(");

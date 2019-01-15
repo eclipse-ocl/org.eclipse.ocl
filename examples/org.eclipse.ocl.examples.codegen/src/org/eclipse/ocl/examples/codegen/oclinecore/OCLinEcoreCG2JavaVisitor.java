@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
@@ -18,6 +19,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
@@ -25,10 +27,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -36,6 +41,8 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -86,7 +93,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				if ((cgBody != null) && (asOperation instanceof Operation)) {
 					String returnClassName = genModelHelper.getOperationReturnType((Operation)asOperation);
 					localContext = globalContext.getLocalContext(cgOperation);
-					String bodyText = generateBody(cgBody, returnClassName);
+					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asOperation);
 					bodies.put(fragmentURI, bodyText);
 				}
@@ -97,7 +104,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				if ((cgBody != null) && (asProperty instanceof Property)) {
 					String returnClassName = genModelHelper.getPropertyResultType((Property)asProperty);
 					localContext = globalContext.getLocalContext(cgProperty);
-					String bodyText = generateBody(cgBody, returnClassName);
+					String bodyText = generateBody(null, cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asProperty);
 					bodies.put(fragmentURI, bodyText);
 				}
@@ -107,9 +114,20 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return bodies;
 	}
 
-	protected @NonNull String generateBody(@NonNull CGValuedElement cgBody, @NonNull String returnClassName) {
+	protected @NonNull String generateBody(@Nullable List<CGParameter> cgParameters, @NonNull CGValuedElement cgBody, @NonNull String returnClassName) {
 		js.resetStream();
 		js.appendCommentWithOCL(null, cgBody.getAst());
+		if (cgParameters != null) {
+			for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+				VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
+				Type asType = PivotUtil.getType(asParameter);
+				if (asType instanceof CollectionType) {
+					js.append("assert ");
+					js.appendValueName(cgParameter);
+					js.append(" != null;\n");
+				}
+			}
+		}
 		js.appendLocalStatements(cgBody);
 		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
 		if (cgInvalidValue  != null) {

@@ -322,11 +322,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//	Dispatch: Determine static type
 		//
 		js.append("final ");
-		js.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);		// FIXME lookup type
+		js.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		js.append(" " + staticTypeName + " = ");
 		//		js.appendReferenceTo(evaluatorParameter);
 		js.append(JavaConstants.EXECUTOR_NAME);
-		js.append(".getStaticTypeOf(");
+		js.append(".getStaticTypeOfValue(null, ");
 		js.appendValueName(source);
 		js.append(");\n");
 		//
@@ -510,9 +510,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		//	Dispatch: Invoke iteration
 		//
+		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		if (isRequiredNullCast) {
+			js.appendSuppressWarningsNull(true);
+		}
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
 		//		if (isRequiredNullCast) {
 		//			js.appendClassReference(null, ClassUtil.class);
 		//			js.append(".nonNullState(");
