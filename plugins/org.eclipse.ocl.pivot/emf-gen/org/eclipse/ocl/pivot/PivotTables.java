@@ -1911,6 +1911,9 @@ public class PivotTables
 		public static final @NonNull ExecutorOperation _OCLExpression__isNull = new ExecutorOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			1, TemplateParameters.EMPTY_LIST, null);
 
+		public static final @NonNull ExecutorOperation _OperationCallExp__hasOclVoidOverload = new ExecutorOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OperationCallExp,
+			0, TemplateParameters.EMPTY_LIST, null);
+
 		public static final @NonNull ExecutorOperation _Property__isAttribute = new ExecutorOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
 
@@ -7229,7 +7232,9 @@ public class PivotTables
 			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
 		};
 
-		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OperationCallExp = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OperationCallExp = {
+			PivotTables.Operations._OperationCallExp__hasOclVoidOverload /* hasOclVoidOverload() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__CallExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__Element = {
 			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,

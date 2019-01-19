@@ -109,6 +109,13 @@ public interface OperationCallExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean hasOclVoidOverload();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateArgumentTypeIsConformant(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
@@ -118,6 +125,13 @@ public interface OperationCallExp
 	 */
 	@Override
 	boolean validateSafeSourceCanBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateUnsafeSourceCanNotBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

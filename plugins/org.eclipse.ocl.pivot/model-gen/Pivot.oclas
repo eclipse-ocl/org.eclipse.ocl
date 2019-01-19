@@ -677,6 +677,12 @@
       <ownedInvariants xmi:id="v+X3T" isCallable="true" name="SafeSourceCanBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
       </ownedInvariants>
+      <ownedInvariants xmi:id="rPRH2" isCallable="true" name="UnsafeSourceCanNotBeNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
+      </ownedInvariants>
+      <ownedOperations xmi:id="ml59+" name="hasOclVoidOverload" type="#ZuwnB">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="false "/>
+      </ownedOperations>
       <ownedProperties xmi:id="eWL7K" defaultValueString="true" name="isVirtual" type="#ZuwnB"/>
       <ownedProperties xmi:id="O9xIX" isComposite="true" name="ownedArguments" type="#Ftslp"/>
       <ownedProperties xmi:id="ztMvO" isRequired="false" name="referredOperation" type="#Yz,F1"/>

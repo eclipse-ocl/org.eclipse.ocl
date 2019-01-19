@@ -636,6 +636,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-OperationCallExp-isVirtual"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-OperationCallExp-ownedArguments"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-OperationCallExp-referredOperation"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/hasOclVoidOverload"/>
       <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateArgumentCount">
         <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentCount/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentCount/context"/>
@@ -647,6 +648,10 @@
       <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull">
         <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull/context"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-OppositePropertyCallExp">

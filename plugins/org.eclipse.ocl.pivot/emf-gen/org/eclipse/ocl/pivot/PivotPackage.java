@@ -17051,13 +17051,22 @@ extends EPackage
 	int OPERATION_CALL_EXP___GET_REFERRED_ELEMENT = FEATURE_CALL_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Has Ocl Void Overload</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD = FEATURE_CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 1;
+	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
@@ -17066,7 +17075,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 2;
+	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Source Can Be Null</em>' operation.
@@ -17075,7 +17084,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 3;
+	int OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Operation Call Exp</em>' class.
@@ -17084,7 +17102,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP_OPERATION_COUNT = FEATURE_CALL_EXP_OPERATION_COUNT + 4;
+	int OPERATION_CALL_EXP_OPERATION_COUNT = FEATURE_CALL_EXP_OPERATION_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -28299,6 +28317,16 @@ extends EPackage
 	EReference getOperationCallExp_ReferredOperation();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#hasOclVoidOverload() <em>Has Ocl Void Overload</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Ocl Void Overload</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OperationCallExp#hasOclVoidOverload()
+	 * @generated
+	 */
+	EOperation getOperationCallExp__HasOclVoidOverload();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateArgumentTypeIsConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Argument Type Is Conformant</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -28317,6 +28345,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateUnsafeSourceCanNotBeNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unsafe Source Can Not Be Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OperationCallExp#validateUnsafeSourceCanNotBeNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateArgumentCount(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Argument Count</em>}' operation.
@@ -31664,9 +31702,9 @@ extends EPackage
 	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Boolean is used for logical expressions, consisting of the predefined values true and false.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Boolean is used for logical expressions, consisting of the predefined values true and false.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @generated
 	 */
@@ -31676,9 +31714,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Integer is a primitive type representing integer values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Integer is a primitive type representing integer values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31709,9 +31747,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Real is a primitive type representing the mathematical concept of real.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * Real is a primitive type representing the mathematical concept of real.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31722,9 +31760,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -31745,9 +31783,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * UnlimitedNatural is a primitive type representing unlimited natural values.
-     * <!-- end-model-doc -->
+	 * <!-- begin-model-doc -->
+	 * UnlimitedNatural is a primitive type representing unlimited natural values.
+	 * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -33590,6 +33628,14 @@ extends EPackage
 		EReference OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getOperationCallExp_ReferredOperation();
 
 		/**
+		 * The meta object literal for the '<em><b>Has Ocl Void Overload</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD = eINSTANCE.getOperationCallExp__HasOclVoidOverload();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Argument Type Is Conformant</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -33604,6 +33650,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Unsafe Source Can Not Be Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Argument Count</b></em>' operation.
