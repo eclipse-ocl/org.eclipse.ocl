@@ -195,6 +195,9 @@
     </ownedClasses>
     <ownedClasses xmi:id="Om,AG" name="Constraint" superClasses="#0kVqz">
       <ownedComments body="A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements."/>
+      <ownedInvariants xmi:id="pSMdw" isCallable="true" name="BooleanValued">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="KOGGk" isCallable="true" name="UniqueName">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>

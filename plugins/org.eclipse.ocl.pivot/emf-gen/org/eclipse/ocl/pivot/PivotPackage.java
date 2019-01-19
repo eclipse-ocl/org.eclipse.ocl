@@ -7206,13 +7206,22 @@ extends EPackage
 	int CONSTRAINT___GET_VALUE__TYPE_STRING = NAMED_ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
+	 * The operation id for the '<em>Validate Boolean Valued</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Constraint</em>' class.
@@ -7221,7 +7230,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 1;
+	int CONSTRAINT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -31230,6 +31239,16 @@ extends EPackage
 	EReference getConstraint_RedefinedConstraints();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Constraint#validateBooleanValued(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Boolean Valued</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Boolean Valued</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Constraint#validateBooleanValued(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getConstraint__ValidateBooleanValued__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Constraint#validateUniqueName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Name</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -31645,9 +31664,9 @@ extends EPackage
 	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Boolean is used for logical expressions, consisting of the predefined values true and false.
-	 * <!-- end-model-doc -->
+     * <!-- begin-model-doc -->
+     * Boolean is used for logical expressions, consisting of the predefined values true and false.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @generated
 	 */
@@ -31657,9 +31676,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Integer is a primitive type representing integer values.
-	 * <!-- end-model-doc -->
+     * <!-- begin-model-doc -->
+     * Integer is a primitive type representing integer values.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31690,9 +31709,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Real is a primitive type representing the mathematical concept of real.
-	 * <!-- end-model-doc -->
+     * <!-- begin-model-doc -->
+     * Real is a primitive type representing the mathematical concept of real.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -31703,9 +31722,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
-	 * <!-- end-model-doc -->
+     * <!-- begin-model-doc -->
+     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -31726,9 +31745,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * UnlimitedNatural is a primitive type representing unlimited natural values.
-	 * <!-- end-model-doc -->
+     * <!-- begin-model-doc -->
+     * UnlimitedNatural is a primitive type representing unlimited natural values.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -35912,6 +35931,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference CONSTRAINT__REDEFINED_CONSTRAINTS = eINSTANCE.getConstraint_RedefinedConstraints();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Boolean Valued</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP = eINSTANCE.getConstraint__ValidateBooleanValued__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Unique Name</b></em>' operation.

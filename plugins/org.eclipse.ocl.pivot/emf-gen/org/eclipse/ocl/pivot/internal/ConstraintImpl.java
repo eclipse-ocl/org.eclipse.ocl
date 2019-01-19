@@ -423,6 +423,20 @@ implements Constraint {
 	 * @generated
 	 */
 	@Override
+	public boolean validateBooleanValued(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 * inv BooleanValued: true
+		 */
+		return ValueUtil.TRUE_VALUE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean validateUniqueName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
@@ -734,6 +748,8 @@ implements Constraint {
 				return allOwnedElements();
 			case PivotPackage.CONSTRAINT___GET_VALUE__TYPE_STRING:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
+			case PivotPackage.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP:
+				return validateBooleanValued((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP:
 				return validateUniqueName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}

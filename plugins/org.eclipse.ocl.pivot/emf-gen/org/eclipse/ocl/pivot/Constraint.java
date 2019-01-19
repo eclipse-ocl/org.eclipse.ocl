@@ -254,6 +254,13 @@ public interface Constraint
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean validateBooleanValued(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateUniqueName(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // Constraint

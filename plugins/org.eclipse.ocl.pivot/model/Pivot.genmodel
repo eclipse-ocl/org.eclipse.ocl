@@ -226,6 +226,10 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Constraint-owningState"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Constraint-owningTransition"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Constraint-redefinedConstraints"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Constraint/validateBooleanValued">
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateBooleanValued/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateBooleanValued/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//Constraint/validateUniqueName">
         <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateUniqueName/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateUniqueName/context"/>
