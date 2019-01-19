@@ -186,7 +186,7 @@ inv ClosureSourceElementTypeIsBodyElementType: true -- FIXME obsolete
 inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
 	let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in 
 	let iteratorType = ownedIterators->at(1).type in
-	bodyElementType.conformsTo(iteratorType)
+	bodyElementType?.conformsTo(iteratorType)
 
 context IteratorExp
 /** The element type is the same as the source element type. */
@@ -196,7 +196,7 @@ inv ClosureResultElementTypeIsIteratorType:
 	name = 'closure' implies
 		let resultElementType = type.oclAsType(CollectionType).elementType in 
 		let iteratorType = ownedIterators->at(1).type in
-		iteratorType.conformsTo(resultElementType)
+		iteratorType?.conformsTo(resultElementType)
 
 context IteratorExp
 /* The collection type for an OrderedSet or a Sequence type is a Sequence,
@@ -212,7 +212,7 @@ endif
 context IteratorExp
 /** The element type is the flattened type of the body elements. */
 inv CollectElementTypeIsFlattenedBodyType: name = 'collect' implies
-type.oclAsType(CollectionType).elementType = ownedBody.type.flattenedType()
+type.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()
 
 context IteratorExp
 /** The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag. */
@@ -353,20 +353,20 @@ inv ArgumentTypeIsConformant:
 	let selfType : Type = operation?.owningClass in
 	Sequence{1..ownedArguments->size()}->forAll (i | 
 		let argument : OCLExpression = ownedArguments->at(i) in
-		let parameter : Parameter = parameters->at(i) in
+		let parameter : Parameter = parameters?->at(i) in
 		let parameterType : Type = parameter.type in
-		let requiredType : Type = if parameter.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in
-		argument.type.conformsTo(requiredType))
+		let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in
+		argument.type?.conformsTo(requiredType))
 
 /*------------- spelling: arguments */
 context OperationCallExp
 def: hasOclVoidOverload() : Boolean[1] = false -- extended in Java code
 /** There must be exactly as many arguments as the referred operation has parameters. */
-inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters->size()
+inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters?->size()
 /** Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
-inv UnsafeSourceCanNotBeNull: true -- API-stub (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isRequired)
+inv UnsafeSourceCanNotBeNull: self <> null -- API-stub (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())
 
 --inv StaticSourceIsNull: referredOperation.isStatic implies source = null
 
@@ -395,7 +395,7 @@ def: getSpecializedReferredPropertyOwningType() : Class = referredProperty?.owni
 def: getSpecializedReferredPropertyType() : Class = referredProperty?.type.oclAsType(Class) -- extended in Java code
 /** The type of the source conforms to the owning type of the property. */
 inv NonStaticSourceTypeIsConformant: not referredProperty?.isStatic implies 
-	ownedSource?.type.conformsTo(getSpecializedReferredPropertyOwningType())
+	ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())
 /** The type of the call expression is the type of the referred property. */
 inv CompatibleResultType: type = getSpecializedReferredPropertyType()
 /** Safe navigation is not necessary when the source cannot be null. */
@@ -421,7 +421,7 @@ inv ClassHasNoStringValueInitializer: true -- obsolete
 inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else 
 	let partProperties = ownedParts.referredProperty->asSet() in
 	let allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in
-	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in
+	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith('ocl')) in
 	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in
 	let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in
 	let missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in
