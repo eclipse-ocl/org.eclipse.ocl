@@ -352,12 +352,13 @@ inv ArgumentTypeIsConformant:
 
 /*------------- spelling: arguments */
 context OperationCallExp
+def: hasOclVoidOverload() : Boolean[1] = false -- extended in Java code
 /** There must be exactly as many arguments as the referred operation has parameters. */
 inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters->size()
 /** Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
---inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource?.isRequired
+inv UnsafeSourceCanNotBeNull: true -- API-stub (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isRequired)
 
 --inv StaticSourceIsNull: referredOperation.isStatic implies source = null
 
