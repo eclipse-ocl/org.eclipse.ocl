@@ -366,7 +366,7 @@ inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters?-
 /** Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
-inv UnsafeSourceCanNotBeNull: self <> null -- API-stub (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())
+inv UnsafeSourceCanNotBeNull: (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())
 
 --inv StaticSourceIsNull: referredOperation.isStatic implies source = null
 
