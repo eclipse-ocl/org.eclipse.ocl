@@ -144,7 +144,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 			else if (contextDecl instanceof PropertyContextDeclCS) {
 				PropertyContextDeclCS propertyContextDecl = (PropertyContextDeclCS) contextDecl;
 				propertyContextDecls.add(propertyContextDecl);
-				allInvariants.addAll(ClassUtil.nullFree(propertyContextDecl.getOwnedDerivedInvariants()));
+				//	allInvariants.addAll(ClassUtil.nullFree(propertyContextDecl.getOwnedDerivedInvariants()));
 			}
 		}
 		List<@NonNull Operation> contextOperations = new ArrayList<>();
@@ -280,7 +280,11 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 			helper.refreshName(contextProperty, ClassUtil.nonNullModel(modelProperty.getName()));
 			helper.setType(contextProperty, modelProperty.getType(), modelProperty.isIsRequired());
 			List<ExpSpecificationCS> ownedDefaultExpressions = propertyContextDecl.getOwnedDefaultExpressions();
-			ExpSpecificationCS ownedDefaultExpression = ownedDefaultExpressions.size() > 0 ? ownedDefaultExpressions.get(0) : null;
+			int size = ownedDefaultExpressions.size();
+			if (size > 1) {
+				context.addError(propertyContextDecl, "Only one init/derive value allowed");
+			}
+			ExpSpecificationCS ownedDefaultExpression = size > 0 ? ownedDefaultExpressions.get(0) : null;
 			LanguageExpression languageExpression = ownedDefaultExpression != null ? PivotUtil.getPivot(LanguageExpression.class,  ownedDefaultExpression) : null;
 			contextProperty.setOwnedExpression(languageExpression);
 		}

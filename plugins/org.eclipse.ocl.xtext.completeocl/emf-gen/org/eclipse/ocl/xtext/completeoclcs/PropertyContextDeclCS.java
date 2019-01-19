@@ -34,7 +34,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
  * @generated
  */
 public interface PropertyContextDeclCS
-		extends FeatureContextDeclCS {
+extends FeatureContextDeclCS {
 
 	/**
 	 * Returns the value of the '<em><b>Referred Property</b></em>' reference.
@@ -81,6 +81,7 @@ public interface PropertyContextDeclCS
 	 * @model containment="true"
 	 * @generated
 	 */
+	@Deprecated /* @deprecated See Bug 543608; there are no Propoerty invariants */
 	EList<ConstraintCS> getOwnedDerivedInvariants();
 
 } // PropertyContextDeclCS
