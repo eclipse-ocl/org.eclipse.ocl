@@ -184,7 +184,7 @@ context IteratorExp
 inv ClosureSourceElementTypeIsBodyElementType: true -- FIXME obsolete
 /** The result element type is the same as type of the body elements or element. */
 inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
-	let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in 
+	let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in 
 	let iteratorType = ownedIterators->at(1).type in
 	bodyElementType.conformsTo(iteratorType)
 
@@ -278,19 +278,27 @@ inv IteratorTypeIsSourceKeyType: let sourceType = ownedSource?.type in sourceTyp
     let sourceKeyType = sourceType.oclAsType(MapType).keyType in
     self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))
 /** Safe navigation is not necessary when the source collection is null-free. */
-inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv SafeSourceCanBeNull: isSafe implies not
+	let sourceType = ownedSource?.type in
+	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 /** Safe navigation is not necessary when an iterator can be null. */
 inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 /** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
-inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
+	let sourceType = ownedSource?.type in
+	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 
 context IterateExp
 /** Safe navigation is not necessary when the source collection is null-free. */
-inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv SafeSourceCanBeNull: isSafe implies not
+	let sourceType = ownedSource?.type in
+	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 /** Safe navigation is not necessary when an iterator can be null. */
 inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 /** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
-inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
+	let sourceType = ownedSource?.type in
+	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 
 context IteratorVariable
 /** Iterator variable has no initializer.*/
