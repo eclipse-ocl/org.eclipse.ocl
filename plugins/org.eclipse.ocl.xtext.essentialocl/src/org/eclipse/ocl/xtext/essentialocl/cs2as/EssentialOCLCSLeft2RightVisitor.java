@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -1039,10 +1040,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		else if (sourceType instanceof MapType) {
 			mapType = (MapType)sourceType;
-			//	MapType sourceMapType = (MapType)sourceType;
-			//	if (sourceMapType.getKeyType().isIsNullFree()) {
-			//		isSafe = true;
-			//	}
+			if (mapType.isKeysAreNullFree()) {
+				isSafe = true;
+			}
 			rawSourceElementType = mapType.getKeyType();
 		}
 		if (!isCollection && (mapType == null)) {
@@ -1995,9 +1995,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asKey instanceof NullLiteralExp) {
 							keysAreNullFree = false;
 						}
-						//	if (!asKey.isNonNull()) {
-						//		keysAreNullFree = false;
-						//	}
+						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asKey);
+						if (!flowAnalysis.isNonNull(asKey)) {
+							keysAreNullFree = false;
+						}
 						Type asKeyType = asKey.getType();
 						if (asKeyType != null) {
 							if (keyType == null) {
@@ -2015,9 +2016,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asValue instanceof NullLiteralExp) {
 							valuesAreNullFree = false;
 						}
-						//	if (!asValue.isNonNull()) {
-						//		valuesAreNullFree = false;
-						//	}
+						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asValue);
+						if (!flowAnalysis.isNonNull(asValue)) {
+							valuesAreNullFree = false;
+						}
 						Type asValueType = asValue.getType();
 						if (asValueType != null) {
 							if (valueType == null) {
@@ -2040,8 +2042,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				keyType = standardLibrary.getOclVoidType();
 				keysAreNullFree = true;
 			}
+			else if (inferKeyType && (keysAreNullFree == null)) {
+				keysAreNullFree = true;
+			}
 			if (valueType == null) {
 				valueType = standardLibrary.getOclVoidType();
+				valuesAreNullFree = true;
+			}
+			else if (inferValueType && (valuesAreNullFree == null)) {
 				valuesAreNullFree = true;
 			}
 			Type type = metamodelManager.getMapType(mapTypeName, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
