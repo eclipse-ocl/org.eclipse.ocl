@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -34,6 +34,8 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_ImportCS_ImportKeyword_0_0_or_IncludeKeyword_0_1_or_LibraryKeyword_0_2;
 	protected AbstractElementAlias match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q;
 	protected AbstractElementAlias match_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q;
+	protected AbstractElementAlias match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q;
+	protected AbstractElementAlias match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q;
 	protected AbstractElementAlias match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 
 	@Inject
@@ -44,6 +46,8 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 		match_ImportCS_ImportKeyword_0_0_or_IncludeKeyword_0_1_or_LibraryKeyword_0_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getImportCSAccess().getImportKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getImportCSAccess().getIncludeKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getImportCSAccess().getLibraryKeyword_0_2()));
 		match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
 		match_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q = new TokenAlias(false, true, grammarAccess.getOperationContextDeclCSAccess().getUnrestrictedNameParserRuleCall_8_2_1());
+		match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q = new TokenAlias(false, true, grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_0_1());
+		match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q = new TokenAlias(false, true, grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_1_1());
 		match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2()));
 	}
 
@@ -84,6 +88,10 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 				emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q.equals(syntax))
 				emit_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q.equals(syntax))
+				emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q.equals(syntax))
+				emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -156,6 +164,30 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	 *     ownedType=TypeExpCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 */
 	protected void emit_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     UnrestrictedName?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedDefaultExpressions+=SpecificationCS 'derive' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+	 *     ownedType=TypeExpCS 'derive' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+	 */
+	protected void emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     UnrestrictedName?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedDefaultExpressions+=SpecificationCS 'init' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+	 *     ownedType=TypeExpCS 'init' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+	 */
+	protected void emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 

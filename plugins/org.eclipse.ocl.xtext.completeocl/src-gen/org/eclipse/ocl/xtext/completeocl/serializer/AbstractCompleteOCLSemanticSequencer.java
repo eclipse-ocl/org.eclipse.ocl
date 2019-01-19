@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -611,7 +611,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 	 *     PropertyContextDeclCS returns PropertyContextDeclCS
 	 *
 	 * Constraint:
-	 *     (ownedPathName=PathNameCS ownedType=TypeExpCS (ownedDerivedInvariants+=ConstraintCS | ownedDefaultExpressions+=SpecificationCS)*)
+	 *     (ownedPathName=PathNameCS ownedType=TypeExpCS (ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)*)
 	 */
 	protected void sequence_PropertyContextDeclCS(ISerializationContext context, PropertyContextDeclCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -1374,45 +1374,71 @@ rulePropertyContextDeclCS returns [EObject current=null]
     	newLeafNode(otherlv_4, grammarAccess.getPropertyContextDeclCSAccess().getDeriveKeyword_4_0_0());
     }
 (
-(
-		{
-	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsConstraintCSParserRuleCall_4_0_1_0());
-	    }
-		lv_ownedDerivedInvariants_5_0=ruleConstraintCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
-	        }
-       		add(
-       			$current,
-       			"ownedDerivedInvariants",
-        		lv_ownedDerivedInvariants_5_0,
-        		"org.eclipse.ocl.xtext.completeocl.CompleteOCL.ConstraintCS");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-    |(	otherlv_6='init'
+	{
+	  /* */
+	}
     {
-    	newLeafNode(otherlv_6, grammarAccess.getPropertyContextDeclCSAccess().getInitKeyword_4_1_0());
+        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_0_1());
     }
-	otherlv_7=':'
+ruleUnrestrictedName
     {
-    	newLeafNode(otherlv_7, grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_1());
+        afterParserOrEnumRuleCall();
+    }
+)?	otherlv_6=':'
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_0_2());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_2_0());
+	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_0_3_0());
 	    }
-		lv_ownedDefaultExpressions_8_0=ruleSpecificationCS		{
+		lv_ownedDefaultExpressions_7_0=ruleSpecificationCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
 	        }
        		add(
        			$current,
        			"ownedDefaultExpressions",
-        		lv_ownedDefaultExpressions_8_0,
+        		lv_ownedDefaultExpressions_7_0,
+        		"org.eclipse.ocl.xtext.completeocl.CompleteOCL.SpecificationCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |(	otherlv_8='init'
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getPropertyContextDeclCSAccess().getInitKeyword_4_1_0());
+    }
+(
+	{
+	  /* */
+	}
+    {
+        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_1_1());
+    }
+ruleUnrestrictedName
+    {
+        afterParserOrEnumRuleCall();
+    }
+)?	otherlv_10=':'
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_2());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_3_0());
+	    }
+		lv_ownedDefaultExpressions_11_0=ruleSpecificationCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
+	        }
+       		add(
+       			$current,
+       			"ownedDefaultExpressions",
+        		lv_ownedDefaultExpressions_11_0,
         		"org.eclipse.ocl.xtext.completeocl.CompleteOCL.SpecificationCS");
 	        afterParserOrEnumRuleCall();
 	    }

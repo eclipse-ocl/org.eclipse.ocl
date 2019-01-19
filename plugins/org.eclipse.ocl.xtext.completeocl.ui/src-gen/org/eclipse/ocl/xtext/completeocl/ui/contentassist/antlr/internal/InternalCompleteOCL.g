@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -7078,6 +7078,7 @@ rule__PropertyContextDeclCS__Group_4_0__1
     }
 :
 	rule__PropertyContextDeclCS__Group_4_0__1__Impl
+	rule__PropertyContextDeclCS__Group_4_0__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -7089,15 +7090,78 @@ rule__PropertyContextDeclCS__Group_4_0__1__Impl
     }
 :
 (
-{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsAssignment_4_0_1()); }
-(rule__PropertyContextDeclCS__OwnedDerivedInvariantsAssignment_4_0_1)
-{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsAssignment_4_0_1()); }
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_0_1()); }
+(	ruleUnrestrictedName)?
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_0_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__PropertyContextDeclCS__Group_4_0__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__PropertyContextDeclCS__Group_4_0__2__Impl
+	rule__PropertyContextDeclCS__Group_4_0__3
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__PropertyContextDeclCS__Group_4_0__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_0_2()); }
+
+	':'
+
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_0_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__PropertyContextDeclCS__Group_4_0__3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__PropertyContextDeclCS__Group_4_0__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__PropertyContextDeclCS__Group_4_0__3__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_0_3()); }
+(rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_0_3)
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_0_3()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
 
 
 
@@ -7153,11 +7217,9 @@ rule__PropertyContextDeclCS__Group_4_1__1__Impl
     }
 :
 (
-{ before(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_1()); }
-
-	':'
-
-{ after(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_1()); }
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_1_1()); }
+(	ruleUnrestrictedName)?
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getUnrestrictedNameParserRuleCall_4_1_1()); }
 )
 
 ;
@@ -7172,6 +7234,7 @@ rule__PropertyContextDeclCS__Group_4_1__2
     }
 :
 	rule__PropertyContextDeclCS__Group_4_1__2__Impl
+	rule__PropertyContextDeclCS__Group_4_1__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -7183,15 +7246,47 @@ rule__PropertyContextDeclCS__Group_4_1__2__Impl
     }
 :
 (
-{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_2()); }
-(rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_2)
-{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_2()); }
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_2()); }
+
+	':'
+
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getColonKeyword_4_1_2()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__PropertyContextDeclCS__Group_4_1__3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__PropertyContextDeclCS__Group_4_1__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__PropertyContextDeclCS__Group_4_1__3__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_3()); }
+(rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_3)
+{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_3()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -16995,14 +17090,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__PropertyContextDeclCS__OwnedDerivedInvariantsAssignment_4_0_1
+rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_0_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsConstraintCSParserRuleCall_4_0_1_0()); }
-	ruleConstraintCS{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsConstraintCSParserRuleCall_4_0_1_0()); }
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_0_3_0()); }
+	ruleSpecificationCS{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_0_3_0()); }
 )
 
 ;
@@ -17010,14 +17105,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_2
+rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_2_0()); }
-	ruleSpecificationCS{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_2_0()); }
+{ before(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_3_0()); }
+	ruleSpecificationCS{ after(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_3_0()); }
 )
 
 ;

@@ -139,8 +139,8 @@ public class CompleteOCLFormatter extends AbstractEssentialOCLFormatter
 			c.setLinewrap(1).after(a.getOwnedTypeAssignment_3());
 			c.setLinewrap(2).before(a.getDeriveKeyword_4_0_0());
 			c.setLinewrap(2).before(a.getInitKeyword_4_1_0());
-			setNoSpaceLineWrap(c, a.getColonKeyword_4_1_1());
-			c.setLinewrap(2).after(a.getOwnedDefaultExpressionsAssignment_4_1_2());
+			setNoSpaceLineWrap(c, a.getColonKeyword_4_1_2());
+			c.setLinewrap(2).after(a.getOwnedDefaultExpressionsAssignment_4_1_3());
 			//		    c.setLinewrap(2).before(a.getDeriveKeyword_0());
 		}
 		{

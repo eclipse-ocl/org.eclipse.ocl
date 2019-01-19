@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Willink Transformations and others.
+ * Copyright (c) 2015, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.completeocl\src-gen\org\eclipse\ocl\xtext\completeocl\CompleteOCL.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.completeocl\src-gen\org\eclipse\ocl\xtext\completeocl\CompleteOCL.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -19,8 +19,8 @@ package	org.eclipse.ocl.xtext.completeocl;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
 import org.eclipse.xtext.AbstractMetamodelDeclaration;
 import org.eclipse.xtext.AbstractRule;
@@ -139,7 +139,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 			PR_PackageDeclarationCS.setAlternatives(createGroup(createKeyword("package"), createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)), setCardinality("*", createGroup(createKeyword("inv"), createAssignment("ownedInvariants", "+=", createRuleCall(PR_ConstraintCS)))), setCardinality("*", createAssignment("ownedContexts", "+=", createRuleCall(PR_ContextDeclCS))), createKeyword("endpackage")));
 			PR_ParameterCS.setAlternatives(createGroup(setCardinality("?", createGroup(createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)), createKeyword(":"))), createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS))));
 			PR_PrimitiveTypeIdentifier.setAlternatives(createAlternatives(createKeyword("Boolean"), createKeyword("Integer"), createKeyword("Real"), createKeyword("String"), createKeyword("UnlimitedNatural"), createKeyword("OclAny"), createKeyword("OclInvalid"), createKeyword("OclMessage"), createKeyword("OclState"), createKeyword("OclVoid")));
-			PR_PropertyContextDeclCS.setAlternatives(createGroup(createKeyword("context"), createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)), createKeyword(":"), createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS)), setCardinality("*", createAlternatives(createGroup(createKeyword("derive"), createAssignment("ownedDerivedInvariants", "+=", createRuleCall(PR_ConstraintCS))), createGroup(createKeyword("init"), createKeyword(":"), createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_SpecificationCS)))))));
+			PR_PropertyContextDeclCS.setAlternatives(createGroup(createKeyword("context"), createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)), createKeyword(":"), createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS)), setCardinality("*", createAlternatives(createGroup(createKeyword("derive"), setCardinality("?", createRuleCall(PR_UnrestrictedName)), createKeyword(":"), createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_SpecificationCS))), createGroup(createKeyword("init"), setCardinality("?", createRuleCall(PR_UnrestrictedName)), createKeyword(":"), createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_SpecificationCS)))))));
 			PR_SpecificationCS.setAlternatives(createAlternatives(createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)), createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING))));
 			PR_TemplateSignatureCS.setAlternatives(createAlternatives(createGroup(createKeyword("("), createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)), setCardinality("*", createGroup(createKeyword(","), createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)))), createKeyword(")")), createGroup(createKeyword("<"), createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)), setCardinality("*", createGroup(createKeyword(","), createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)))), createKeyword(">"))));
 			PR_TypedRefCS.setAlternatives(createAlternatives(createRuleCall(_EssentialOCL.PR_TypeLiteralCS), createRuleCall(_Base.PR_TypedTypeRefCS)));

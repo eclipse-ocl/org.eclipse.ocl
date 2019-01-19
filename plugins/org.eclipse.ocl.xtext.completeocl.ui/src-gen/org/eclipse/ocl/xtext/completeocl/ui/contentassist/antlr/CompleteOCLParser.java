@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -264,8 +264,8 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterCSAccess().getOwnedTypeAssignment_1(), "rule__ParameterCS__OwnedTypeAssignment_1");
 					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedPathNameAssignment_1(), "rule__PropertyContextDeclCS__OwnedPathNameAssignment_1");
 					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedTypeAssignment_3(), "rule__PropertyContextDeclCS__OwnedTypeAssignment_3");
-					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDerivedInvariantsAssignment_4_0_1(), "rule__PropertyContextDeclCS__OwnedDerivedInvariantsAssignment_4_0_1");
-					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_2(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_2");
+					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_0_3(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_0_3");
+					put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_3(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_3");
 					put(grammarAccess.getSpecificationCSAccess().getOwnedExpressionAssignment_0(), "rule__SpecificationCS__OwnedExpressionAssignment_0");
 					put(grammarAccess.getSpecificationCSAccess().getExprStringAssignment_1(), "rule__SpecificationCS__ExprStringAssignment_1");
 					put(grammarAccess.getTemplateSignatureCSAccess().getOwnedParametersAssignment_0_1(), "rule__TemplateSignatureCS__OwnedParametersAssignment_0_1");
