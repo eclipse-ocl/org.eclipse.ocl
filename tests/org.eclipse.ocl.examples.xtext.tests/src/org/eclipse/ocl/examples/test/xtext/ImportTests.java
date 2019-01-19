@@ -135,7 +135,7 @@ public class ImportTests extends XtextTestCase
 				"import 'Names.oclinecore'\n" +
 						"package EMOF\n" +
 						"context Class\n" +
-						"inv Bogus: isAbstract\n" +
+						"inv Bogus: isAbstract <> null\n" +
 						"endpackage\n";
 		doLoadFromString(ocl, "string.ocl", testFile);
 		ocl.dispose();

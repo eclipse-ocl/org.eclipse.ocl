@@ -9518,21 +9518,21 @@ endif&#xD;
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Behavior-context.1-result-_lowerValue"/>
           </ownedParameter>
         </ownedOperation>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="Behavior-behavioredClassifier" name="behavioredClassifier" class="Behavior" isQuery="true" precondition="Behavior-behavioredClassifier-spec">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="Behavior-behavioredClassifier" name="behavioredClassifier" class="Behavior" isQuery="true" bodyCondition="Behavior-behavioredClassifier-spec">
           <ownedComment xmi:type="uml:Comment" xmi:id="Behavior-behavioredClassifier-_ownedComment.0" annotatedElement="Behavior-behavioredClassifier">
             <body>The first BehavioredClassifier reached by following the chain of owner relationships from the Behavior, if any.</body>
           </ownedComment>
           <ownedRule xmi:type="uml:Constraint" xmi:id="Behavior-behavioredClassifier-spec" name="spec" constrainedElement="Behavior-behavioredClassifier" context="Behavior-behavioredClassifier">
             <specification xmi:type="uml:OpaqueExpression" xmi:id="Behavior-behavioredClassifier-spec-_specification">
               <language>OCL</language>
-              <body>if from.oclIsKindOf(BehavioredClassifier) then&#xD;
+              <body>result = (if from.oclIsKindOf(BehavioredClassifier) then&#xD;
     from.oclAsType(BehavioredClassifier)&#xD;
 else if from.owner = null then&#xD;
     null&#xD;
 else&#xD;
     self.behavioredClassifier(from.owner)&#xD;
 endif&#xD;
-endif&#xD;
+endif)&#xD;
     </body>
             </specification>
           </ownedRule>

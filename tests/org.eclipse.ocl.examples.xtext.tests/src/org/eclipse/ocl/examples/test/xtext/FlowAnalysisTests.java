@@ -184,11 +184,12 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testFlowAnalysis_SimpleIfGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
 		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleIfGuard",
-				"let v : Integer[?] = x in if v <> null then v.toString() else v.toString() endif");
-		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
-		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
-		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asIn);
-		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asIn);
+				"let v : Integer[?] = x in if v <> null then v.toString() else v.toString() endif <> null");
+		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		IfExp asExpression = (IfExp) PivotUtil.getOwnedSource(asIn);
+		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asExpression);
+		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asExpression);
+		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asExpression);
 		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition);
 		VariableExp asThenVariableExp = (VariableExp) PivotUtil.getOwnedSource(asThen);
 		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElse);
@@ -230,12 +231,13 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testFlowAnalysis_DoubleIfGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
 		LetExp asLetExp = (LetExp) ocl.createTestModel("DoubleIfGuard",
-				"let v : Integer[?] = x in if v <> null and x <> null then v.toString() else v.toString() endif");
-		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
-		OperationCallExp asCondition1 = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
+				"let v : Integer[?] = x in if v <> null and x <> null then v.toString() else v.toString() endif <> null");
+		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		IfExp asExpression = (IfExp) PivotUtil.getOwnedSource(asIn);
+		OperationCallExp asCondition1 = (OperationCallExp) PivotUtil.getOwnedCondition(asExpression);
 		OperationCallExp asCondition1left = (OperationCallExp) PivotUtil.getOwnedSource(asCondition1);
-		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asIn);
-		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asIn);
+		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asExpression);
+		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asExpression);
 		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition1left);
 		VariableExp asThenVariableExp = (VariableExp) PivotUtil.getOwnedSource(asThen);
 		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElse);

@@ -1930,6 +1930,8 @@ public class PivotUtil
 	public static void setBody(@NonNull ExpressionInOCL expressionInOCL, @Nullable OCLExpression oclExpression, @Nullable String stringExpression) {
 		expressionInOCL.setBody(stringExpression);
 		expressionInOCL.setOwnedBody(oclExpression);
+		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
+		expressionInOCL.setIsRequired(oclExpression != null&& oclExpression.isIsRequired());;
 	}
 
 	/**
