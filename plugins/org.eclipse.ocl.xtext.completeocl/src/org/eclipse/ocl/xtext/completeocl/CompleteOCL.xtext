@@ -153,12 +153,14 @@ ParameterCS returns base::ParameterCS:
  * when its containing object is first created. 
  * 
  * For a derived property, an init expression defines the evaluation of the property, which
- * may vary from access to access even for read-only properties. 
+ * may vary from access to access even for read-only properties.
+ * 
+ * NB. RoyalAndLoyal gratuitously names its derived values.
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:
 	'context' ownedPathName=PathNameCS ':' ownedType=TypeExpCS
-	(('derive' ownedDerivedInvariants+=ConstraintCS)
-	| ('init' ':' ownedDefaultExpressions+=SpecificationCS)
+	(('derive' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
+	| ('init' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
 	)*;
 
 SpecificationCS returns essentialocl::ExpSpecificationCS:
