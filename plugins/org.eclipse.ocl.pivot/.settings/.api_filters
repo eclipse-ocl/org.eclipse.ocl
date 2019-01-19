@@ -199,33 +199,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PropertyCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.PropertyCallExpImpl">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.PropertyCallExpImpl"/>
-                <message_argument value="getSpecializedReferredPropertyOwningType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.PropertyCallExpImpl"/>
-                <message_argument value="getSpecializedReferredPropertyType()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="StandardLibraryInternal"/>
                 <message_argument value="StandardLibraryImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables">
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.LookupTables"/>
-                <message_argument value="COL_PRIMid_OclAny"/>
             </message_arguments>
         </filter>
     </resource>
@@ -974,14 +952,6 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AbstractExternal2AS"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/AbstractExecutor.java" type="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
-                <message_argument value="CONSTRUCTION_COUNT"/>
             </message_arguments>
         </filter>
     </resource>

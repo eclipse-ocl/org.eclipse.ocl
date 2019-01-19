@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -440,12 +441,13 @@ implements Constraint {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = self <> null
+			 *       let result : Boolean[?] = ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid
 			 *       in
 			 *         'Constraint::BooleanValued'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Constraint_c_c_BooleanValued);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
@@ -453,7 +455,29 @@ implements Constraint {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Constraint_c_c_BooleanValued, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSpecification.getType();
+				final /*@NonInvalid*/ boolean ne = type != null;
+				/*@NonInvalid*/ boolean result;
+				if (ne) {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
+					/*@NonInvalid*/ boolean or;
+					if (eq) {
+						or = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
+						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == TYP_OclVoid.getTypeId()) : false;
+						or = eq_0;
+					}
+					result = or;
+				}
+				else {
+					result = ValueUtil.TRUE_VALUE;
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Constraint_c_c_BooleanValued, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
 			return Boolean.TRUE == symbol_0;
