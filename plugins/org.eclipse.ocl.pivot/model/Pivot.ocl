@@ -6,7 +6,7 @@ package ocl
 
 context Constraint
 -- Constraints should have a Boolean value (except for legacy Eclipse OCL purposes it may be null, for legacy UML 2.5 purposes it may be OclVoid).
-inv BooleanValued: true -- API-stub ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid
+inv BooleanValued: self <> null -- API-stub ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid
 inv UniqueName: true -- _'context'.ownedRule->excluding(self)->forAll(name <> self.name or stereotype <> self.stereotype)
 
 context Element
