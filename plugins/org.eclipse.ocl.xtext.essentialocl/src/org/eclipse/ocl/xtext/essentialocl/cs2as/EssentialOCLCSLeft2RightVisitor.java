@@ -865,15 +865,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					OCLExpression initExpression = context.visitLeft2Right(OCLExpression.class, csInit);
 					acc.setOwnedInit(initExpression);
 					TypedRefCS csAccType = csArgument.getOwnedType();
-					Type initType = initExpression != null ? initExpression.getType() : null;
-					Type accType;
+					Type accType = null;
+					Boolean accIsRequired = null;
 					if (csAccType != null) {
 						accType = PivotUtil.getPivot(Type.class, csAccType);
+						accIsRequired = context.getConverter().isRequired(csAccType);
 					}
-					else {
-						accType = initType;
+					if (initExpression != null) {
+						if (accType == null) {
+							accType = initExpression.getType();
+						}
+						if (accIsRequired == null) {
+							accIsRequired = initExpression.isIsRequired();
+						}
 					}
-					helper.setType(acc, accType, false, null);
+					helper.setType(acc, accType, accIsRequired == Boolean.TRUE, null);
 				}
 				if (pivotAccumulators.size() >= iteration.getOwnedAccumulators().size()) {
 					context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, csNameExp.getOwnedPathName());

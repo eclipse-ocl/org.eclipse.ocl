@@ -7206,13 +7206,22 @@ extends EPackage
 	int CONSTRAINT___GET_VALUE__TYPE_STRING = NAMED_ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
+	 * The operation id for the '<em>Validate Boolean Valued</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Constraint</em>' class.
@@ -7221,7 +7230,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 1;
+	int CONSTRAINT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -17042,13 +17051,22 @@ extends EPackage
 	int OPERATION_CALL_EXP___GET_REFERRED_ELEMENT = FEATURE_CALL_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Has Ocl Void Overload</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD = FEATURE_CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 1;
+	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
@@ -17057,7 +17075,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 2;
+	int OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Source Can Be Null</em>' operation.
@@ -17066,7 +17084,16 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 3;
+	int OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP_OPERATION_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Operation Call Exp</em>' class.
@@ -17075,7 +17102,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_CALL_EXP_OPERATION_COUNT = FEATURE_CALL_EXP_OPERATION_COUNT + 4;
+	int OPERATION_CALL_EXP_OPERATION_COUNT = FEATURE_CALL_EXP_OPERATION_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -28290,6 +28317,16 @@ extends EPackage
 	EReference getOperationCallExp_ReferredOperation();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#hasOclVoidOverload() <em>Has Ocl Void Overload</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Ocl Void Overload</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OperationCallExp#hasOclVoidOverload()
+	 * @generated
+	 */
+	EOperation getOperationCallExp__HasOclVoidOverload();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateArgumentTypeIsConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Argument Type Is Conformant</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -28308,6 +28345,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateUnsafeSourceCanNotBeNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unsafe Source Can Not Be Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OperationCallExp#validateUnsafeSourceCanNotBeNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OperationCallExp#validateArgumentCount(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Argument Count</em>}' operation.
@@ -31230,6 +31277,16 @@ extends EPackage
 	EReference getConstraint_RedefinedConstraints();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Constraint#validateBooleanValued(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Boolean Valued</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Boolean Valued</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Constraint#validateBooleanValued(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getConstraint__ValidateBooleanValued__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Constraint#validateUniqueName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Name</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -33571,6 +33628,14 @@ extends EPackage
 		EReference OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getOperationCallExp_ReferredOperation();
 
 		/**
+		 * The meta object literal for the '<em><b>Has Ocl Void Overload</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD = eINSTANCE.getOperationCallExp__HasOclVoidOverload();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Argument Type Is Conformant</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -33585,6 +33650,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Unsafe Source Can Not Be Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Argument Count</b></em>' operation.
@@ -35912,6 +35985,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference CONSTRAINT__REDEFINED_CONSTRAINTS = eINSTANCE.getConstraint_RedefinedConstraints();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Boolean Valued</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP = eINSTANCE.getConstraint__ValidateBooleanValued__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Unique Name</b></em>' operation.

@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @generated
  */
 public interface OperationCallExp
-		extends FeatureCallExp, ReferringElement {
+extends FeatureCallExp, ReferringElement {
 
 	/**
 	 * Returns the value of the '<em><b>Is Virtual</b></em>' attribute.
@@ -106,6 +106,14 @@ public interface OperationCallExp
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.7
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean hasOclVoidOverload();
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -118,6 +126,14 @@ public interface OperationCallExp
 	 */
 	@Override
 	boolean validateSafeSourceCanBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.7
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateUnsafeSourceCanNotBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

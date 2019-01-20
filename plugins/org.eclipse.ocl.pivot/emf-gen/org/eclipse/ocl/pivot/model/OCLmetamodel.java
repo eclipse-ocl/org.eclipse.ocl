@@ -1888,6 +1888,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Operation op_Element_getValue = createOperation("getValue", _Element, null, null);
 		private final @NonNull Operation op_OCLExpression_isNonNull = createOperation("isNonNull", _Boolean, null, null);
 		private final @NonNull Operation op_OCLExpression_isNull = createOperation("isNull", _Boolean, null, null);
+		private final @NonNull Operation op_OperationCallExp_hasOclVoidOverload = createOperation("hasOclVoidOverload", _Boolean, null, null);
 		private final @NonNull Operation op_Property_isAttribute = createOperation("isAttribute", _Boolean, null, null);
 		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation("getSpecializedReferredPropertyOwningType", _Type, null, null);
 		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation("getSpecializedReferredPropertyType", _Type, null, null);
@@ -1936,6 +1937,10 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedOperations = _OCLExpression.getOwnedOperations();
 			ownedOperations.add(operation = op_OCLExpression_isNonNull);
 			ownedOperations.add(operation = op_OCLExpression_isNull);
+
+			ownedOperations = _OperationCallExp.getOwnedOperations();
+			ownedOperations.add(operation = op_OperationCallExp_hasOclVoidOverload);
+			operation.setBodyExpression(createExpressionInOCL(_Boolean, "false"));
 
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);

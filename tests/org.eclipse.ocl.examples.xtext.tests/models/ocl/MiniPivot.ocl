@@ -1,0 +1,21 @@
+-- This is a very selective section of Pivot.ocl used to debug failures. It should be trivial and pass in real testing.
+import 'platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+
+--include 'platform:/resource/org.eclipse.ocl.pivot/model/Types.ocl'
+
+package ocl
+
+context ShadowExp
+inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else 
+	let partProperties = ownedParts.referredProperty->asSet() in
+	let allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in
+	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith('ocl')) in
+	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in
+	let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in
+	let missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in
+	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status
+	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status
+	else Tuple{status:Boolean[1]=true, message:String[1]=''}.status
+	endif endif endif
+
+endpackage

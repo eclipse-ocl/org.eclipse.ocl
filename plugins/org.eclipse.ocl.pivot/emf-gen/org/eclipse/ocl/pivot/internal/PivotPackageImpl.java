@@ -1218,15 +1218,15 @@ implements PivotPackage  {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(thePivotPackage,
-			 new EValidator.Descriptor()
-			 {
-				 @Override
-				 public EValidator getEValidator()
-				 {
-					 return PivotValidator.INSTANCE;
-				 }
-			 });
+		(thePivotPackage,
+			new EValidator.Descriptor()
+		{
+			@Override
+			public EValidator getEValidator()
+			{
+				return PivotValidator.INSTANCE;
+			}
+		});
 
 		// Mark meta-data to indicate it can't be changed
 		thePivotPackage.freeze();
@@ -3539,9 +3539,9 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map()
+	public EOperation getOperationCallExp__HasOclVoidOverload()
 	{
-		return operationCallExpEClass.getEOperations().get(1);
+		return operationCallExpEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -3550,7 +3550,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
+	public EOperation getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map()
 	{
 		return operationCallExpEClass.getEOperations().get(2);
 	}
@@ -3561,9 +3561,31 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
+	{
+		return operationCallExpEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()
+	{
+		return operationCallExpEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map()
 	{
-		return operationCallExpEClass.getEOperations().get(0);
+		return operationCallExpEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -6533,9 +6555,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getConstraint__ValidateUniqueName__DiagnosticChain_Map()
+	public EOperation getConstraint__ValidateBooleanValued__DiagnosticChain_Map()
 	{
 		return constraintEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getConstraint__ValidateUniqueName__DiagnosticChain_Map()
+	{
+		return constraintEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -7178,6 +7211,7 @@ implements PivotPackage  {
 		createEReference(constraintEClass, CONSTRAINT__OWNING_STATE);
 		createEReference(constraintEClass, CONSTRAINT__OWNING_TRANSITION);
 		createEReference(constraintEClass, CONSTRAINT__REDEFINED_CONSTRAINTS);
+		createEOperation(constraintEClass, CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP);
 		createEOperation(constraintEClass, CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP);
 
 		dataTypeEClass = createEClass(DATA_TYPE);
@@ -7430,9 +7464,11 @@ implements PivotPackage  {
 		createEAttribute(operationCallExpEClass, OPERATION_CALL_EXP__IS_VIRTUAL);
 		createEReference(operationCallExpEClass, OPERATION_CALL_EXP__OWNED_ARGUMENTS);
 		createEReference(operationCallExpEClass, OPERATION_CALL_EXP__REFERRED_OPERATION);
+		createEOperation(operationCallExpEClass, OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD);
 		createEOperation(operationCallExpEClass, OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP);
 		createEOperation(operationCallExpEClass, OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP);
 		createEOperation(operationCallExpEClass, OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
+		createEOperation(operationCallExpEClass, OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
 
 		oppositePropertyCallExpEClass = createEClass(OPPOSITE_PROPERTY_CALL_EXP);
 		createEReference(oppositePropertyCallExpEClass, OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY);
@@ -8127,6 +8163,15 @@ implements PivotPackage  {
 		initEReference(getConstraint_OwningTransition(), this.getTransition(), this.getTransition_OwnedGuard(), "owningTransition", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getConstraint_RedefinedConstraints(), this.getConstraint(), null, "redefinedConstraints", null, 0, -1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
+		op = initEOperation(getConstraint__ValidateBooleanValued__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBooleanValued", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		op = initEOperation(getConstraint__ValidateUniqueName__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateUniqueName", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -8817,6 +8862,8 @@ implements PivotPackage  {
 		initEReference(getOperationCallExp_OwnedArguments(), this.getOCLExpression(), null, "ownedArguments", null, 0, -1, OperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOperationCallExp_ReferredOperation(), this.getOperation(), null, "referredOperation", null, 0, 1, OperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEOperation(getOperationCallExp__HasOclVoidOverload(), this.getBoolean(), "hasOclVoidOverload", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		op = initEOperation(getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateArgumentCount", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -8836,6 +8883,15 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSafeSourceCanBeNull", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateUnsafeSourceCanNotBeNull", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -9560,6 +9616,13 @@ implements PivotPackage  {
 			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getConstraint__ValidateBooleanValued__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "self <> null " //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getConstraint__ValidateUniqueName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
@@ -9655,7 +9718,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateTypeIsResultType__DiagnosticChain_Map(),
@@ -9669,7 +9732,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(),
@@ -9697,7 +9760,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType.conformsTo(iteratorType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyTypeIsConformanttoIteratorType__DiagnosticChain_Map(),
@@ -9725,7 +9788,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tname = \'closure\' implies\n\t\tlet resultElementType = type.oclAsType(CollectionType).elementType in \n\t\tlet iteratorType = ownedIterators->at(1).type in\n\t\titeratorType.conformsTo(resultElementType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tname = \'closure\' implies\n\t\tlet resultElementType = type.oclAsType(CollectionType).elementType in \n\t\tlet iteratorType = ownedIterators->at(1).type in\n\t\titeratorType?.conformsTo(resultElementType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map(),
@@ -9746,7 +9809,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "name = \'collect\' implies\ntype.oclAsType(CollectionType).elementType = ownedBody.type.flattenedType()\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "name = \'collect\' implies\ntype.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateCollectTypeIsUnordered__DiagnosticChain_Map(),
@@ -9781,7 +9844,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateSortedByElementTypeIsSourceElementType__DiagnosticChain_Map(),
@@ -9809,7 +9872,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
@@ -9952,18 +10015,25 @@ implements PivotPackage  {
 			   "body", "ownedPreconditions->isUnique(name)\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOperationCallExp__HasOclVoidOverload(),
+		   source,
+		   new String[]
+		   {
+			   "body", "false " //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedArguments->size() = referredOperation?.ownedParameters->size()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedArguments->size() = referredOperation?.ownedParameters?->size()\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in\n\t\targument.type.conformsTo(requiredType))\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -9971,6 +10041,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "self <> null " //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOppositePropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -10033,7 +10110,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "not referredProperty?.isStatic implies \n\townedSource?.type.conformsTo(getSpecializedReferredPropertyOwningType())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -10110,7 +10187,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
@@ -10319,6 +10396,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getConstraint__ValidateBooleanValued__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BooleanValued" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getConstraint__ValidateUniqueName__DiagnosticChain_Map(),
@@ -10718,6 +10802,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOppositePropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),

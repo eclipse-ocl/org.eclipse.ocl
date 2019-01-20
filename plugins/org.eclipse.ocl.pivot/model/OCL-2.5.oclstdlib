@@ -1254,7 +1254,9 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	operation "<>"(object2 : OclSelf) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
 	operation and(b : Boolean[?]) : Boolean[?] precedence=AND => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation';
 	operation implies(b : Boolean[?]) : Boolean[?] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation';
+	operation not() : Boolean[?] validating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation';
 	operation or(b : Boolean[?]) : Boolean[?] precedence=OR => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation';
+	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation';
 	operation oclAsSet() : Set(OclSelf[0..0|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
 	operation oclIsUndefined() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation';

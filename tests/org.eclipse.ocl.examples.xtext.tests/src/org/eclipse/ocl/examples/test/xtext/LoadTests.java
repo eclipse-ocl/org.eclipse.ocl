@@ -1194,8 +1194,15 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
+		TestOCL ocl = createOCL();
+		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
+		doLoad_OCL(ocl, getTestModelURI("models/ocl/MiniPivot.ocl"));
+		ocl.dispose();
+	}
+
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad(ocl, getTestModelURI("models/ecore/Names.ocl"));
 		ocl.dispose();

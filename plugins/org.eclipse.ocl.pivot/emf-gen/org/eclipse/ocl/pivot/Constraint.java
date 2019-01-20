@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @generated
  */
 public interface Constraint
-		extends NamedElement {
+extends NamedElement {
 
 	/**
 	 * Returns the value of the '<em><b>Constrained Elements</b></em>' reference list.
@@ -248,6 +248,14 @@ public interface Constraint
 	 * @generated
 	 */
 	List<Constraint> getRedefinedConstraints();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.7
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateBooleanValued(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

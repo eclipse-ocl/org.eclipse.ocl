@@ -523,6 +523,21 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements."/>
     </eAnnotations>
+    <eOperations name="validateBooleanValued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self &lt;> null "/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="BooleanValued"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eOperations name="validateUniqueName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="true "/>
@@ -944,7 +959,7 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
+        <details key="body" value="isSafe implies not&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -974,7 +989,7 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;&#xA;"/>
+        <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -1046,7 +1061,7 @@
     </eOperations>
     <eOperations name="validateClosureBodyElementTypeIsIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
+        <details key="body" value="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType?.conformsTo(iteratorType)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyElementTypeIsIteratorType"/>
@@ -1106,7 +1121,7 @@
     </eOperations>
     <eOperations name="validateClosureResultElementTypeIsIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType.conformsTo(resultElementType)&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType?.conformsTo(resultElementType)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureResultElementTypeIsIteratorType"/>
@@ -1151,7 +1166,7 @@
     </eOperations>
     <eOperations name="validateCollectElementTypeIsFlattenedBodyType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'collect' implies&#xA;type.oclAsType(CollectionType).elementType = ownedBody.type.flattenedType()&#xA;&#xA;"/>
+        <details key="body" value="name = 'collect' implies&#xA;type.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CollectElementTypeIsFlattenedBodyType"/>
@@ -1226,7 +1241,7 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
+        <details key="body" value="isSafe implies not&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -1286,7 +1301,7 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;&#xA;"/>
+        <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -1818,9 +1833,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OperationCallExp" name="OperationCallExp"
       eSuperTypes="#T-pivot-FeatureCallExp #T-pivot-ReferringElement">
+    <eOperations name="hasOclVoidOverload" lowerBound="1" eType="#T-pivot-Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="false "/>
+      </eAnnotations>
+    </eOperations>
     <eOperations name="validateArgumentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedArguments->size() = referredOperation?.ownedParameters->size()&#xA;"/>
+        <details key="body" value="ownedArguments->size() = referredOperation?.ownedParameters?->size()&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ArgumentCount"/>
@@ -1835,7 +1855,7 @@
     </eOperations>
     <eOperations name="validateArgumentTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type.conformsTo(requiredType))&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ArgumentTypeIsConformant"/>
@@ -1854,6 +1874,21 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self &lt;> null "/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
       <eParameters name="context">
@@ -2166,7 +2201,7 @@
     </eOperations>
     <eOperations name="validateNonStaticSourceTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="not referredProperty?.isStatic implies &#xA;&#x9;ownedSource?.type.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
+        <details key="body" value="not referredProperty?.isStatic implies &#xA;&#x9;ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NonStaticSourceTypeIsConformant"/>
@@ -2412,7 +2447,7 @@
     </eOperations>
     <eOperations name="validateInitializesAllClassProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else &#xA;&#x9;let partProperties = ownedParts.referredProperty->asSet() in&#xA;&#x9;let allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in&#xA;&#x9;let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in&#xA;&#x9;let requiredClassProperties = classProperties->reject(defaultValueString &lt;> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite&lt;>null) and opposite.isComposite) in&#xA;&#x9;let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in&#xA;&#x9;let missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in&#xA;&#x9;if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else Tuple{status:Boolean[1]=true, message:String[1]=''}.status&#xA;&#x9;endif endif endif&#xA;"/>
+        <details key="body" value="if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else &#xA;&#x9;let partProperties = ownedParts.referredProperty->asSet() in&#xA;&#x9;let allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in&#xA;&#x9;let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith('ocl')) in&#xA;&#x9;let requiredClassProperties = classProperties->reject(defaultValueString &lt;> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite&lt;>null) and opposite.isComposite) in&#xA;&#x9;let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in&#xA;&#x9;let missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in&#xA;&#x9;if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else Tuple{status:Boolean[1]=true, message:String[1]=''}.status&#xA;&#x9;endif endif endif&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="InitializesAllClassProperties"/>

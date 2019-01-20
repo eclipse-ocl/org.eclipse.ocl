@@ -1597,11 +1597,13 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclVoid_allInstances = createOperation("allInstances", _Set_OclSelf, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
+		private final @NonNull Operation op_OclVoid_not = createOperation("not", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanNotOperation", org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_oclIsInvalid = createOperation("oclIsInvalid", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_oclIsUndefined = createOperation("oclIsUndefined", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_or = createOperation("or", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+		private final @NonNull Operation op_OclVoid_xor = createOperation("xor", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanXorOperation", org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_at = createOperation("at", tp_OrderedCollection_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_first = createOperation("first", tp_OrderedCollection_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_indexOf = createOperation("indexOf", _Integer, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
@@ -2240,6 +2242,9 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
+			ownedOperations.add(operation = op_OclVoid_not);
+			operation.setIsRequired(false);
+			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclVoid_oclAsSet);
 			ownedOperations.add(operation = op_OclVoid_oclIsInvalid);
 			operation.setIsValidating(true);
@@ -2250,6 +2255,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_OclVoid_toString);
+			ownedOperations.add(operation = op_OclVoid_xor);
+			operation.setIsRequired(false);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 
 			ownedOperations = _OrderedCollection_OrderedCollection_T.getOwnedOperations();
 			ownedOperations.add(operation = op_OrderedCollection_at);
@@ -3149,7 +3158,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid__eq_.setPrecedence(prec_EQUALITY);
 			op_OclVoid_and.setPrecedence(prec_AND);
 			op_OclVoid_implies.setPrecedence(prec_IMPLIES);
+			op_OclVoid_not.setPrecedence(prec_UNARY);
 			op_OclVoid_or.setPrecedence(prec_OR);
+			op_OclVoid_xor.setPrecedence(prec_XOR);
 			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
 			op_OrderedSet__lt__gt_.setPrecedence(prec_EQUALITY);
 			op_OrderedSet__eq_.setPrecedence(prec_EQUALITY);

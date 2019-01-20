@@ -313,7 +313,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *             in
 			 *               let
 			 *                 classProperties : Set(Property) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
-			 *                 ->reject(name.startsWith('ocl'))
+			 *                 ->reject(name?.startsWith('ocl'))
 			 *               in
 			 *                 let
 			 *                   requiredClassProperties : Set(Property) = classProperties->reject(defaultValueString <> null)
@@ -511,12 +511,23 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							@SuppressWarnings("null")
 							/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Property _1_3 = (org.eclipse.ocl.pivot.@NonNull Property)ITERATOR__1_3.next();
 							/**
-							 * name.startsWith('ocl')
+							 * name?.startsWith('ocl')
 							 */
 							final /*@NonInvalid*/ java.lang.@Nullable String name = _1_3.getName();
-							final /*@Thrown*/ boolean startsWith = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
+							final /*@NonInvalid*/ @NonNull Object startsWith = name == null;
+							/*@Thrown*/ java.lang.@Nullable Boolean safe_startsWith_source;
+							if (startsWith == Boolean.TRUE) {
+								safe_startsWith_source = null;
+							}
+							else {
+								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
+								safe_startsWith_source = startsWith_0;
+							}
+							if (safe_startsWith_source == null) {
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+							}
 							//
-							if (startsWith == ValueUtil.FALSE_VALUE) {
+							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
 								accumulator_2.add(_1_3);
 							}
 						}

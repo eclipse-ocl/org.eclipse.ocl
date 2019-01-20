@@ -213,6 +213,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ @NonNull String STR_CollectionLiteralExp_c_c_SequenceKindIsSequence = "CollectionLiteralExp::SequenceKindIsSequence";
 	public static final /*@NonInvalid*/ @NonNull String STR_CollectionLiteralExp_c_c_SetKindIsSet = "CollectionLiteralExp::SetKindIsSet";
 	public static final /*@NonInvalid*/ @NonNull String STR_CollectionLiteralPart_c_c_TypeIsNotInvalid = "CollectionLiteralPart::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ @NonNull String STR_Constraint_c_c_BooleanValued = "Constraint::BooleanValued";
 	public static final /*@NonInvalid*/ @NonNull String STR_EnumLiteralExp_c_c_TypeIsEnumerationType = "EnumLiteralExp::TypeIsEnumerationType";
 	public static final /*@NonInvalid*/ @NonNull String STR_Feature_c_c_NameIsNotNull = "Feature::NameIsNotNull";
 	public static final /*@NonInvalid*/ @NonNull String STR_Feature_c_c_TypeIsNotInvalid = "Feature::TypeIsNotInvalid";
@@ -254,6 +255,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ @NonNull String STR_OperationCallExp_c_c_ArgumentCount = "OperationCallExp::ArgumentCount";
 	public static final /*@NonInvalid*/ @NonNull String STR_OperationCallExp_c_c_ArgumentTypeIsConformant = "OperationCallExp::ArgumentTypeIsConformant";
 	public static final /*@NonInvalid*/ @NonNull String STR_OperationCallExp_c_c_SafeSourceCanBeNull = "OperationCallExp::SafeSourceCanBeNull";
+	public static final /*@NonInvalid*/ @NonNull String STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull = "OperationCallExp::UnsafeSourceCanNotBeNull";
 	public static final /*@NonInvalid*/ @NonNull String STR_Operation_c_c_CompatibleReturn = "Operation::CompatibleReturn";
 	public static final /*@NonInvalid*/ @NonNull String STR_Operation_c_c_UniquePostconditionName = "Operation::UniquePostconditionName";
 	public static final /*@NonInvalid*/ @NonNull String STR_Operation_c_c_UniquePreconditionName = "Operation::UniquePreconditionName";
@@ -1922,6 +1924,9 @@ public class PivotTables
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _OCLExpression__isNull = new ExecutorOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			1, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull ExecutorOperation _OperationCallExp__hasOclVoidOverload = new ExecutorOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OperationCallExp,
+			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull ExecutorOperation _Property__isAttribute = new ExecutorOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
@@ -7241,7 +7246,9 @@ public class PivotTables
 			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
 		};
 
-		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OperationCallExp = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OperationCallExp = {
+			PivotTables.Operations._OperationCallExp__hasOclVoidOverload /* hasOclVoidOverload() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__CallExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__Element = {
 			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
