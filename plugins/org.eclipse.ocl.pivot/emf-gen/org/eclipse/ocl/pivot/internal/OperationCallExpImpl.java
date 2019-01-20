@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -39,11 +40,13 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -857,7 +860,9 @@ implements OperationCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = self <> null
+			 *       let
+			 *         result : Boolean[?] = not hasOclVoidOverload() implies ownedSource <> null and not isSafe implies
+			 *         ownedSource.isNonNull()
 			 *       in
 			 *         'OperationCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -870,7 +875,47 @@ implements OperationCallExp {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
+				/*@Caught*/ @Nullable Object CAUGHT_result;
+				try {
+					final /*@NonInvalid*/ boolean hasOclVoidOverload = this.hasOclVoidOverload();
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(hasOclVoidOverload);
+					/*@Caught*/ @Nullable Object CAUGHT_implies;
+					try {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						/*@NonInvalid*/ java.lang.@Nullable Boolean and;
+						if (ne) {
+							final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+							final /*@NonInvalid*/ java.lang.@Nullable Boolean not_0 = BooleanNotOperation.INSTANCE.evaluate(isSafe);
+							and = not_0;
+						}
+						else {
+							and = ValueUtil.FALSE_VALUE;
+						}
+						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+						try {
+							if (ownedSource == null) {
+								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+							}
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+							CAUGHT_isNonNull = isNonNull;
+						}
+						catch (Exception e) {
+							CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
+						}
+						final /*@Thrown*/ java.lang.@Nullable Boolean implies = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
+						CAUGHT_implies = implies;
+					}
+					catch (Exception e) {
+						CAUGHT_implies = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_implies);
+					CAUGHT_result = result;
+				}
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
 			return Boolean.TRUE == symbol_0;
@@ -948,9 +993,20 @@ implements OperationCallExp {
 		}
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@Override
-	public boolean hasOclVoidOverload() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasOclVoidOverload()
+	{
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, null);
+		Operation referredOperation = getReferredOperation();
+		OperationId baseOperationId = referredOperation.getOperationId();
+		org.eclipse.ocl.pivot.Class oclVoidType = executor.getStandardLibrary().getOclVoidType();
+		CompleteClass oclVoidCompleteClass = executor.getEnvironmentFactory().getCompleteModel().getCompleteClass(oclVoidType);
+		Operation oclVoidOperation = oclVoidCompleteClass.getOperation(baseOperationId);
+		return oclVoidOperation != null;
 	}
 } //OperationCallExpImpl
