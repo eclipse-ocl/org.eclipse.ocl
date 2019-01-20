@@ -8,6 +8,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/OperationCallExp.java" type="org.eclipse.ocl.pivot.OperationCallExp">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.OperationCallExp"/>
+                <message_argument value="hasOclVoidOverload()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.OperationCallExp"/>
+                <message_argument value="validateUnsafeSourceCanNotBeNull(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="388194388">
             <message_arguments>
@@ -23,10 +37,50 @@
                 <message_argument value="2"/>
             </message_arguments>
         </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
@@ -35,6 +89,18 @@
                 <message_argument value="getConstraint__ValidateBooleanValued__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getOperationCallExp__HasOclVoidOverload()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP"/>
@@ -42,7 +108,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getConstraint__ValidateBooleanValued__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOperationCallExp__HasOclVoidOverload()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -53,9 +139,44 @@
                 <message_argument value="CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_Constraint_c_c_BooleanValued"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_Constraint_c_c_BooleanValued"/>
             </message_arguments>
         </filter>
     </resource>
@@ -120,6 +241,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
                 <message_argument value="CONSTRAINT__VALIDATE_BOOLEAN_VALUED"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -731,7 +858,17 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateConstraint_validateBooleanValued(Constraint, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateOperationCallExp_validateUnsafeSourceCanNotBeNull(OperationCallExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
