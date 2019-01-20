@@ -201,6 +201,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralExp_c_c_SequenceKindIsSequence = "CollectionLiteralExp::SequenceKindIsSequence";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralExp_c_c_SetKindIsSet = "CollectionLiteralExp::SetKindIsSet";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralPart_c_c_TypeIsNotInvalid = "CollectionLiteralPart::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Constraint_c_c_BooleanValued = "Constraint::BooleanValued";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_EnumLiteralExp_c_c_TypeIsEnumerationType = "EnumLiteralExp::TypeIsEnumerationType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_NameIsNotNull = "Feature::NameIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_TypeIsNotInvalid = "Feature::TypeIsNotInvalid";
