@@ -328,6 +328,13 @@ implements OCLExpression {
 	}
 
 	/**
+	 * Return true if the FlowAnalysis proves that this expression is not null-valued.
+	 *
+	 * An UnsupportedOperationException is the usual consequence of a failure to ensure that this expression's eResource()
+	 * has an EnvironmentFactoryAdapter to locate an Executor that can provide an EnvironmentFactory.
+	 *
+	 * Invoking FlowAnalysis.getFlowAnalysis directly with a known EnvironmentFactory may solve the problem.
+	 *
 	 * @since 1.3
 	 * @generated NOT
 	 */
@@ -340,6 +347,13 @@ implements OCLExpression {
 	}
 
 	/**
+	 * Return true if the FlowAnalysis proves that this expression is null-valued.
+	 *
+	 * An UnsupportedOperationException is the usual consequence of a failure to ensure that this expression's eResource()
+	 * has an EnvironmentFactoryAdapter to locate an Executor that can provide an EnvironmentFactory.
+	 *
+	 * Invoking FlowAnalysis.getFlowAnalysis directly with a known EnvironmentFactory may solve the problem.
+	 *
 	 * @since 1.3
 	 * @generated NOT
 	 */

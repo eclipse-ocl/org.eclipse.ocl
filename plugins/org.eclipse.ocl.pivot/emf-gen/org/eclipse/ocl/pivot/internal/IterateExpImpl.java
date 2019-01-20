@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -543,7 +545,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     else
 		 *       let result : Boolean[?] = not isSafe and
 		 *         ownedIterators->exists(isRequired) implies
-		 *         ownedSource?.type.oclAsType(CollectionType).isNullFree
+		 *         let sourceType : Type[?] = ownedSource?.type
+		 *         in
+		 *           if sourceType.oclIsKindOf(MapType)
+		 *           then sourceType.oclAsType(MapType).keysAreNullFree
+		 *           else sourceType.oclAsType(CollectionType).isNullFree
+		 *           endif
 		 *       in
 		 *         'IterateExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
@@ -552,9 +559,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
+		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -603,9 +610,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_and = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
+				/*@Caught*/ @NonNull Object CAUGHT_symbol_0;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
@@ -617,23 +623,35 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
 						safe_type_source = type_0;
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
-					final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-					CAUGHT_isNullFree = isNullFree;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0).booleanValue();
+					/*@Thrown*/ boolean symbol_0;
+					if (oclIsKindOf) {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull MapType oclAsType = ClassUtil.nonNullState((MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0));
+						final /*@Thrown*/ boolean keysAreNullFree = oclAsType.isKeysAreNullFree();
+						symbol_0 = keysAreNullFree;
+					}
+					else {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType_0 = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
+						final /*@Thrown*/ boolean isNullFree = oclAsType_0.isIsNullFree();
+						symbol_0 = isNullFree;
+					}
+					CAUGHT_symbol_0 = symbol_0;
 				}
 				catch (Exception e) {
-					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
+					CAUGHT_symbol_0 = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_isNullFree);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_symbol_0);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			symbol_1 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == symbol_1;
 	}
 
 	/**
@@ -761,7 +779,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     then true
 		 *     else
 		 *       let result : Boolean[?] = isSafe implies
-		 *         not ownedSource?.type.oclAsType(CollectionType).isNullFree
+		 *         not let sourceType : Type[?] = ownedSource?.type
+		 *         in
+		 *           if sourceType.oclIsKindOf(MapType)
+		 *           then sourceType.oclAsType(MapType).keysAreNullFree
+		 *           else sourceType.oclAsType(CollectionType).isNullFree
+		 *           endif
 		 *       in
 		 *         'IterateExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
@@ -770,17 +793,16 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
+		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 			final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 			/*@NonInvalid*/ java.lang.@Nullable Boolean result;
 			if (isSafe) {
-				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
+				/*@Caught*/ @NonNull Object CAUGHT_symbol_0;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
@@ -792,23 +814,35 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
 						safe_type_source = type_0;
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
-					final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-					CAUGHT_isNullFree = isNullFree;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0).booleanValue();
+					/*@Thrown*/ boolean symbol_0;
+					if (oclIsKindOf) {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull MapType oclAsType = ClassUtil.nonNullState((MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0));
+						final /*@Thrown*/ boolean keysAreNullFree = oclAsType.isKeysAreNullFree();
+						symbol_0 = keysAreNullFree;
+					}
+					else {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType_0 = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
+						final /*@Thrown*/ boolean isNullFree = oclAsType_0.isIsNullFree();
+						symbol_0 = isNullFree;
+					}
+					CAUGHT_symbol_0 = symbol_0;
 				}
 				catch (Exception e) {
-					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
+					CAUGHT_symbol_0 = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_symbol_0);
 				result = not;
 			}
 			else {
 				result = ValueUtil.TRUE_VALUE;
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
+			symbol_1 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == symbol_1;
 	}
 
 } //IterateExpImpl

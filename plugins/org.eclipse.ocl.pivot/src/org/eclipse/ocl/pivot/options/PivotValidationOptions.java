@@ -43,6 +43,8 @@ public class PivotValidationOptions
 			new HashMap<String, EnumeratedOption<StatusCodes.Severity>>();
 
 	static {
+		safeValidationName2severityOption.put(PivotTables.STR_CallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
+		// safeValidationName2severityOption.put(PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, PivotValidationOptions.MissingSafeNavigation); -- a real not discretionary bug
 		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeIteratorIsRequired, PivotValidationOptions.RedundantSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
@@ -50,7 +52,7 @@ public class PivotValidationOptions
 		safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
-		//    	safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
+		safeValidationName2severityOption.put(PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull, PivotValidationOptions.MissingSafeNavigation);
 		safeValidationName2severityOption.put(PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, PivotValidationOptions.RedundantSafeNavigation);

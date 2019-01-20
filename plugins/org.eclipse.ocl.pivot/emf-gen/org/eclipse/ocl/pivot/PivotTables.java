@@ -243,6 +243,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_ArgumentCount = "OperationCallExp::ArgumentCount";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_ArgumentTypeIsConformant = "OperationCallExp::ArgumentTypeIsConformant";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_SafeSourceCanBeNull = "OperationCallExp::SafeSourceCanBeNull";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull = "OperationCallExp::UnsafeSourceCanNotBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_CompatibleReturn = "Operation::CompatibleReturn";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePostconditionName = "Operation::UniquePostconditionName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePreconditionName = "Operation::UniquePreconditionName";

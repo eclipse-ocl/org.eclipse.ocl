@@ -515,7 +515,7 @@ implements PropertyCallExp {
 		 *     then true
 		 *     else
 		 *       let result : Boolean[?] = not referredProperty?.isStatic implies
-		 *         ownedSource?.type.conformsTo(
+		 *         ownedSource?.type?.conformsTo(
 		 *           getSpecializedReferredPropertyOwningType())
 		 *       in
 		 *         'PropertyCallExp::NonStaticSourceTypeIsConformant'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -550,7 +550,7 @@ implements PropertyCallExp {
 					CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
-				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+				/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
@@ -563,15 +563,30 @@ implements PropertyCallExp {
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
 						safe_type_source = type_0;
 					}
-					@SuppressWarnings("null")
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
-					CAUGHT_conformsTo = conformsTo;
+					/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
+					try {
+						CAUGHT_safe_type_source = safe_type_source;
+					}
+					catch (Exception e) {
+						CAUGHT_safe_type_source = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_safe_type_source == null;
+					/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+					if (conformsTo == Boolean.TRUE) {
+						safe_conformsTo_source = null;
+					}
+					else {
+						@SuppressWarnings("null")
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
+						final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
+						safe_conformsTo_source = conformsTo_0;
+					}
+					CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 				}
 				catch (Exception e) {
-					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+					CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_conformsTo);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_safe_conformsTo_source);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {

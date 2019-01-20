@@ -174,9 +174,20 @@
                 <message_argument value="STR_Constraint_c_c_BooleanValued"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="STR_Constraint_c_c_BooleanValued"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull"/>
             </message_arguments>
         </filter>
     </resource>

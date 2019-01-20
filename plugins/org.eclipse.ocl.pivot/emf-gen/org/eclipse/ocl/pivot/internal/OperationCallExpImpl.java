@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -601,16 +603,16 @@ implements OperationCallExp {
 		 *               ->forAll(i |
 		 *                 let argument : OCLExpression[1] = ownedArguments->at(i)
 		 *                 in
-		 *                   let parameter : Parameter[1] = parameters->at(i)
+		 *                   let parameter : Parameter[1] = parameters?->at(i)
 		 *                   in
 		 *                     let parameterType : Type[?] = parameter.type
 		 *                     in
 		 *                       let
-		 *                         requiredType : Type[1] = if parameter.isTypeof
+		 *                         requiredType : Type[?] = if parameter.isTypeof
 		 *                         then Class
-		 *                         else parameterType.specializeIn(self, selfType)
+		 *                         else parameterType?.specializeIn(self, selfType)
 		 *                         endif
-		 *                       in argument.type.conformsTo(requiredType))
+		 *                       in argument.type?.conformsTo(requiredType))
 		 *       in
 		 *         'OperationCallExp::ArgumentTypeIsConformant'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
@@ -658,7 +660,10 @@ implements OperationCallExp {
 				/*@Thrown*/ java.lang.@Nullable Boolean forAll;
 				while (true) {
 					if (!ITERATOR_i.hasNext()) {
-						if (accumulator == ValueUtil.TRUE_VALUE) {
+						if (accumulator == null) {
+							forAll = null;
+						}
+						else if (accumulator == ValueUtil.TRUE_VALUE) {
 							forAll = ValueUtil.TRUE_VALUE;
 						}
 						else {
@@ -672,59 +677,93 @@ implements OperationCallExp {
 					 *
 					 * let argument : OCLExpression[1] = ownedArguments->at(i)
 					 * in
-					 *   let parameter : Parameter[1] = parameters->at(i)
+					 *   let parameter : Parameter[1] = parameters?->at(i)
 					 *   in
 					 *     let parameterType : Type[?] = parameter.type
 					 *     in
 					 *       let
-					 *         requiredType : Type[1] = if parameter.isTypeof
+					 *         requiredType : Type[?] = if parameter.isTypeof
 					 *         then Class
-					 *         else parameterType.specializeIn(self, selfType)
+					 *         else parameterType?.specializeIn(self, selfType)
 					 *         endif
-					 *       in argument.type.conformsTo(requiredType)
+					 *       in argument.type?.conformsTo(requiredType)
 					 */
-					/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+					/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 					try {
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression argument = (OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Parameter parameter = (Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_ownedParameters_source, i);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue safe_at_sources = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Parameter parameter = (Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
 						if (parameter == null) {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type parameterType = parameter.getType();
 						final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
-						/*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type requiredType;
+						/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type requiredType;
 						if (isTypeof) {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
 							requiredType = TYP_Class;
 						}
 						else {
-							if (parameterType == null) {
-								throw new InvalidValueException("Null source for \'pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]\'");
+							/*@Caught*/ @Nullable Object CAUGHT_parameterType;
+							try {
+								CAUGHT_parameterType = parameterType;
 							}
-							@SuppressWarnings("null")
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type specializeIn = parameterType.specializeIn(this, safe_owningClass_source);
-							requiredType = specializeIn;
+							catch (Exception e) {
+								CAUGHT_parameterType = ValueUtil.createInvalidValue(e);
+							}
+							final /*@NonInvalid*/ @NonNull Object specializeIn = CAUGHT_parameterType == null;
+							/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_specializeIn_source;
+							if (specializeIn == Boolean.TRUE) {
+								safe_specializeIn_source = null;
+							}
+							else {
+								assert parameterType != null;
+								@SuppressWarnings("null")
+								final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type specializeIn_0 = parameterType.specializeIn(this, safe_owningClass_source);
+								safe_specializeIn_source = specializeIn_0;
+							}
+							requiredType = safe_specializeIn_source;
 						}
 						if (argument == null) {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = argument.getType();
-						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
-						CAUGHT_conformsTo = conformsTo;
+						/*@Caught*/ @Nullable Object CAUGHT_type;
+						try {
+							CAUGHT_type = type;
+						}
+						catch (Exception e) {
+							CAUGHT_type = ValueUtil.createInvalidValue(e);
+						}
+						final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
+						/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+						if (conformsTo == Boolean.TRUE) {
+							safe_conformsTo_source = null;
+						}
+						else {
+							final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
+							safe_conformsTo_source = conformsTo_0;
+						}
+						CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 					}
 					catch (Exception e) {
-						CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+						CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
 					}
 					//
-					if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+					if (CAUGHT_safe_conformsTo_source == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 						forAll = ValueUtil.FALSE_VALUE;
 						break;														// Stop immediately
 					}
-					else if (CAUGHT_conformsTo == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+					else if (CAUGHT_safe_conformsTo_source == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 						;															// Carry on
 					}
-					else if (CAUGHT_conformsTo instanceof InvalidValueException) {		// Abnormal exception evaluation result
-						accumulator = CAUGHT_conformsTo;									// Cache an exception failure
+					else if (CAUGHT_safe_conformsTo_source == null) {								// Abnormal null body evaluation result
+						if (accumulator == ValueUtil.TRUE_VALUE) {
+							accumulator = null;										// Cache a null failure
+						}
+					}
+					else if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {		// Abnormal exception evaluation result
+						accumulator = CAUGHT_safe_conformsTo_source;									// Cache an exception failure
 					}
 					else {															// Impossible badly typed result
 						accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
@@ -816,9 +855,31 @@ implements OperationCallExp {
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * inv UnsafeSourceCanNotBeNull: true
+		 *
+		 * inv UnsafeSourceCanNotBeNull:
+		 *   let
+		 *     severity : Integer[1] = 'OperationCallExp::UnsafeSourceCanNotBeNull'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let result : Boolean[1] = self <> null
+		 *       in
+		 *         'OperationCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+		 *     endif
 		 */
-		return ValueUtil.TRUE_VALUE;
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_0;
+		if (le) {
+			symbol_0 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**
@@ -839,7 +900,7 @@ implements OperationCallExp {
 		 *     else
 		 *       let
 		 *         result : Boolean[1] = ownedArguments->size() =
-		 *         referredOperation?.ownedParameters->size()
+		 *         referredOperation?.ownedParameters?->size()
 		 *       in
 		 *         'OperationCallExp::ArgumentCount'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
@@ -870,7 +931,8 @@ implements OperationCallExp {
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
 					safe_ownedParameters_source = BOXED_ownedParameters_0;
 				}
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(safe_ownedParameters_source);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue safe_size_sources = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(safe_size_sources);
 				final /*@Thrown*/ boolean result = size.equals(size_0);
 				CAUGHT_result = result;
 			}
