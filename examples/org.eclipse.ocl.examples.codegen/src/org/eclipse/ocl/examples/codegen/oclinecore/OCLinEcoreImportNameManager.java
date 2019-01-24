@@ -40,21 +40,35 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 			s.append(className);
 		}
 		else {
+			if (Object.class.getName().equals(className)) {
+				className = "Object";			// Is this still needed ?
+			}
 			Class<? extends Annotation> annotationClass = isRequired ? NonNull.class : Nullable.class;
 			String annotationClassName = annotationClass.getName();
 			assert annotationClassName != null;
-			String annotation = "@" + annotationClass.getName() + " ";
-			if (Object.class.getName().equals(className)) {
-				s.append(annotation + "Object");
+			int index = className.lastIndexOf(".");
+			if (index >= 0) {
+				s.append(className.substring(0, index+1));
+			}
+			if (OCLinEcoreTablesUtils.useNestedImports()) {
+				s.append(ImportUtils.IMPORTS_PREFIX);
+				s.append("@");
+				s.append(ImportUtils.IMPORTS_PREFIX);
+				s.append(annotationClass.getName());
+				s.append(ImportUtils.IMPORTS_SUFFIX);
+				s.append(" ");
+				s.append(ImportUtils.IMPORTS_SUFFIX);
 			}
 			else {
-				int index = className.lastIndexOf(".");
-				if (index < 0) {
-					s.append(annotation + className);
-				}
-				else {
-					s.append(className.substring(0, index+1) + annotation + className.substring(index+1));
-				}
+				s.append("@");
+				s.append(annotationClass.getName());
+				s.append(" ");
+			}
+			if (index < 0) {
+				s.append(className);
+			}
+			else {
+				s.append(className.substring(index+1));
 			}
 		}
 		s.append(ImportUtils.IMPORTS_SUFFIX);

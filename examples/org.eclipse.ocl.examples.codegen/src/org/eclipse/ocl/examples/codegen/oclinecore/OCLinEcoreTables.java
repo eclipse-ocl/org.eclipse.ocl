@@ -70,6 +70,74 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
+	/**
+	 * Proces a nested <%...%> to return its equivalent string and request any necessary imports.
+	 */
+	private class NestedImport
+	{
+		private @NonNull StringBuilder result = new StringBuilder();
+
+		public int process(@NonNull String constants, int startIndex) {
+			int iMax = constants.length();
+			String nestedString = null;
+			int i = startIndex;
+			int iStart = -1;
+			int iEnd = -1;
+			while (i < iMax) {
+				char c = constants.charAt(i++);
+				if ((c == '<') && (i < iMax) && (constants.charAt(i) == '%')) {
+					if (nestedString != null) {
+						result.append(constants.substring(startIndex, iStart));
+						result.append(nestedString);
+						result.append(constants.substring(iEnd, i-1));
+						i -= 2;
+						break;
+					}
+					iStart = i-1;
+					NestedImport nestedImport = new NestedImport();
+					i = iEnd = nestedImport.process(constants, ++i);
+					nestedString = nestedImport.toString();
+				}
+				else if ((c == '%') && (i < iMax) && (constants.charAt(i) == '>')) {
+					String possibleClassName = iStart >= 0 ? constants.substring(startIndex, iStart) + constants.substring(iEnd, i-1) : constants.substring(startIndex, i-1);
+					if (Character.isJavaIdentifierStart(possibleClassName.charAt(0))) {
+						String importName = s.addImport(null, possibleClassName);
+						if (!importName.equals(possibleClassName)) {
+							if (nestedString != null) {
+								result.append(nestedString);
+							}
+							result.append(importName);
+							return ++i;
+						}
+					}
+					result.append(constants.substring(startIndex, iStart));
+					result.append(nestedString);
+					result.append(constants.substring(iEnd, i-1));
+					return ++i;
+				}
+			}
+			while (i < iMax) {
+				char c = constants.charAt(i++);
+				if ((c == '<') && (i < iMax) && (constants.charAt(i) == '%')) {
+					NestedImport nestedImport = new NestedImport();
+					i = nestedImport.process(constants, ++i);
+					result.append(nestedImport.toString());
+				}
+				else if ((c == '%') && (i < iMax) && (constants.charAt(i) == '>')) {
+					return ++i;
+				}
+				else {
+					result.append(c);
+				}
+			}
+			return i;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return result.toString();
+		}
+	}
 	private final @Nullable String tablesPostamble;
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
@@ -87,41 +155,57 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 *	Constants used by auto-generated code.\n");
 		s.append("	 */\n");
 		int i = 0;
-		while (i < constants.length()) {
-			int j = constants.indexOf("<%", i);
-			if (j >= 0) {
-				int k = constants.indexOf("%>", j+2);
-				if (k >= 0) {
-					s.append(constants.substring(i, j));
-					Boolean isRequired = null;
-					String longClassName;
-					int atStart = constants.indexOf("@", j+2);
-					if ((0 <= atStart) && (atStart <= k)) {
-						int atEnd = constants.indexOf(" ", atStart);
-						String longAnnotationName = constants.substring(atStart+1, atEnd);
-						if (NonNull.class.getName().equals(longAnnotationName)) {
-							isRequired = true;
+		int iMax = constants.length();
+		if (useNestedImports()) {
+			while (i < iMax) {
+				char c = constants.charAt(i++);
+				if ((c == '<') && (i < iMax) && (constants.charAt(i) == '%')) {
+					NestedImport nestedImport = new NestedImport();
+					i = nestedImport.process(constants, ++i);
+					s.append(nestedImport.toString());
+				}
+				else {
+					s.append(c);
+				}
+			}
+		}
+		else {
+			while (i < iMax) {
+				int j = constants.indexOf("<%", i);
+				if (j >= 0) {
+					int k = constants.indexOf("%>", j+2);
+					if (k >= 0) {
+						s.append(constants.substring(i, j));
+						Boolean isRequired = null;
+						String longClassName;
+						int atStart = constants.indexOf("@", j+2);
+						if ((0 <= atStart) && (atStart <= k)) {
+							int atEnd = constants.indexOf(" ", atStart);
+							String longAnnotationName = constants.substring(atStart+1, atEnd);
+							if (NonNull.class.getName().equals(longAnnotationName)) {
+								isRequired = true;
+							}
+							else if (Nullable.class.getName().equals(longAnnotationName)) {
+								isRequired = false;
+							}
+							longClassName = constants.substring(j+2, atStart) + constants.substring(atEnd+1, k);
 						}
-						else if (Nullable.class.getName().equals(longAnnotationName)) {
-							isRequired = false;
+						else {
+							longClassName = constants.substring(j+2,  k);
 						}
-						longClassName = constants.substring(j+2, atStart) + constants.substring(atEnd+1, k);
+						s.appendClassReference(isRequired, longClassName);
+						i = k+2;
 					}
 					else {
-						longClassName = constants.substring(j+2,  k);
+						break;
 					}
-					s.appendClassReference(isRequired, longClassName);
-					i = k+2;
 				}
 				else {
 					break;
 				}
 			}
-			else {
-				break;
-			}
+			s.append(constants.substring(i));
 		}
-		s.append(constants.substring(i));
 	}
 
 	protected void appendInitializationStart(@NonNull String name) {
@@ -972,7 +1056,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected String deresolveFileName(@Nullable String uri) {
-		if ((uri != null) && (genPackage != null)) {
+		if (uri != null) {
 			String modelProjectDirectory = genPackage.getGenModel().getModelProjectDirectory();
 			int index = uri.indexOf(modelProjectDirectory);
 			if (index >= 0) {
@@ -1085,15 +1169,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected String getGenPackagePrefix() {
-		return genPackage != null ? genPackage.getPrefix() : "/*getGenPackagePrefix*/";
+		return genPackage.getPrefix();
 	}
 
 	public @NonNull String getTablesClassName() {
-		return genPackage != null ? getTablesClassName(genPackage) : "/*getTablesClassName*/";
+		return getTablesClassName(genPackage);
 	}
 
 	protected String getTablesPackageName() {
-		return genPackage != null ? genPackage.getReflectionPackageName() : "/*getTablesPackageName*/";
+		return genPackage.getReflectionPackageName();
 	}
 
 	protected @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginateFragmentOperations(@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations) {
@@ -1139,7 +1223,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	@Override
 	public @NonNull String toString() {
-		String copyright = genPackage != null ? genPackage.getCopyright(" * ") : "";
+		String copyright = genPackage.getCopyright(" * ");
 		StringBuilder s1 = new StringBuilder();
 		s1.append("/*******************************************************************************\n");
 		if (copyright != null) {
@@ -1156,9 +1240,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 		}
 		s1.append(" * using:\n");
-		if (genPackage != null) {
-			s1.append(" *   " + deresolveFileName(genPackage.eResource().getURI().toString()) + "\n");
-		}
+		s1.append(" *   " + deresolveFileName(genPackage.eResource().getURI().toString()) + "\n");
 		s1.append(" *   " + getClass().getName() + "\n");
 		s1.append(" *\n");
 		s1.append(" * Do not edit it.\n");

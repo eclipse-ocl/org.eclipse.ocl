@@ -27,6 +27,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenEnum;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -85,6 +86,8 @@ import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
 {
+	private static final boolean USE_NESTED_IMPORTS = GenRuntimeVersion.get("2.17") != null;	// nested <%...%> JET support added by EMF 2.17.
+
 	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
 		@Override
@@ -219,6 +222,10 @@ public class OCLinEcoreTablesUtils
 		return genPackage;
 	}
 
+	public static boolean useNestedImports() {
+		return USE_NESTED_IMPORTS;
+	}
+
 	public static class CodeGenString
 	{
 		protected final boolean useNullAnnotations;
@@ -231,6 +238,10 @@ public class OCLinEcoreTablesUtils
 
 		public CodeGenString(boolean useNullAnnotations) {
 			this.useNullAnnotations = useNullAnnotations;
+		}
+
+		public void append(char c) {
+			s.append(c);
 		}
 
 		public void append(@Nullable String string) {
@@ -253,6 +264,10 @@ public class OCLinEcoreTablesUtils
 		//	protected String addClassReference(@NonNull String simpleName, @NonNull String fullName) {
 		//		return classReferences.put(simpleName, fullName);
 		//	}
+
+		public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String referencedClass) {
+			return importNameManager.addImport(isRequired, referencedClass);
+		}
 
 		@Deprecated /* @deprecated use isRequired argument */
 		public void appendClassReference(@NonNull Class<?> referencedClass) {
@@ -281,7 +296,7 @@ public class OCLinEcoreTablesUtils
 				//				s.append("%>");
 			}
 			//	addClassReference(key, referencedClass); */
-			s.append(importNameManager.addImport(isRequired, referencedClass));
+			s.append(addImport(isRequired, referencedClass));
 		}
 
 		public void appendName(@NonNull NamedElement namedElement) {
@@ -743,7 +758,7 @@ public class OCLinEcoreTablesUtils
 	protected final boolean useNullAnnotations;
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @Nullable GenPackage genPackage;
+	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
@@ -921,27 +936,21 @@ public class OCLinEcoreTablesUtils
 		List<@NonNull GenPackage> usedGenPackages;
 		ResourceSet genModelResourceSet;
 		GenPackage genPackage2 = genPackage;
-		if (genPackage2 != null) {
-			EPackage firstEPackage = genPackage2.getEcorePackage();
-			if (firstEPackage.getName().equals(asPackage.getName())) {
-				return genPackage2;
-			}
-			usedGenPackages = ClassUtil.nullFree(genPackage2.getGenModel().getUsedGenPackages());
-			assert usedGenPackages != null;
-			//		String nsURI = asPackage.getNsURI();
-			//		String name = asType.getName();
-			//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
-			//		if (usedGenPackage != null) {
-			//			return usedGenPackage;
-			//		}
-			Resource genModelResource = genPackage2.eResource();
-			genModelResourceSet = genModelResource.getResourceSet();
-			assert genModelResourceSet != null;
+		EPackage firstEPackage = genPackage2.getEcorePackage();
+		if (firstEPackage.getName().equals(asPackage.getName())) {
+			return genPackage2;
 		}
-		else {
-			usedGenPackages = Collections.emptyList();
-			genModelResourceSet = environmentFactory.getResourceSet();
-		}
+		usedGenPackages = ClassUtil.nullFree(genPackage2.getGenModel().getUsedGenPackages());
+		assert usedGenPackages != null;
+		//		String nsURI = asPackage.getNsURI();
+		//		String name = asType.getName();
+		//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
+		//		if (usedGenPackage != null) {
+		//			return usedGenPackage;
+		//		}
+		Resource genModelResource = genPackage2.eResource();
+		genModelResourceSet = genModelResource.getResourceSet();
+		assert genModelResourceSet != null;
 		org.eclipse.ocl.pivot.Package metamodelPackage = metamodelManager.getASmetamodel();
 		org.eclipse.ocl.pivot.Package libraryPackage = metamodelManager.getLibraries().get(0);
 		if (asPackage == libraryPackage) {
@@ -1093,19 +1102,18 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @NonNull String getSharedLibrary() {
-		if (genPackage != null) {
-			org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
-			if (thisPackage != null) {
-				PrimitiveType booleanType = standardLibrary.getBooleanType();
-				org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
-				if (libraryPackage != null) {
-					GenPackage gPackage = getGenPackage(libraryPackage);
-					if (gPackage != null) {
-						return gPackage.getReflectionPackageName() + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
-					}
+		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
+		if (thisPackage != null) {
+			PrimitiveType booleanType = standardLibrary.getBooleanType();
+			org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
+			if (libraryPackage != null) {
+				GenPackage gPackage = getGenPackage(libraryPackage);
+				if (gPackage != null) {
+					return gPackage.getReflectionPackageName() + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
 				}
 			}
-			/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
+		}
+		/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
 			for (DomainType type : typeServer.getPartialTypes()) {
 				org.eclipse.ocl.pivot.Package asPackage = type.getPackage();
 				if ((asPackage != null) && (asPackage != thisPackage)) {
@@ -1115,7 +1123,6 @@ public class OCLinEcoreTablesUtils
 					}
 				}
 			} */
-		}
 		return "";
 	}
 
@@ -1203,10 +1210,6 @@ public class OCLinEcoreTablesUtils
 	 * but no Ecore EReference.
 	 */
 	protected @NonNull Boolean hasEcore(@NonNull Property property) {
-		GenPackage genPackage2 = genPackage;
-		if (genPackage2 == null) {
-			return false;
-		}
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType == null) {
 			return false;
@@ -1215,7 +1218,7 @@ public class OCLinEcoreTablesUtils
 		if (typeName == null) {
 			return false;
 		}
-		List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage2.getGenClasses());
+		List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
 		GenClass genClass = getNamedElement1(genClasses, typeName);
 		if (genClass == null) {
 			return false;
@@ -1233,11 +1236,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected boolean hasSharedLibrary() {
-		GenPackage genPackage2 = genPackage;
-		if (genPackage2 == null) {
-			return false;
-		}
-		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage2);
+		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
 		PrimitiveType booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
 		return thisPackage != libraryPackage;
@@ -1272,20 +1271,17 @@ public class OCLinEcoreTablesUtils
 	 * no Ecore types, unless the Pivot model is also in use.
 	 */
 	protected @NonNull Boolean hasEcore(@NonNull Type type) {
-		GenPackage genPackage2 = genPackage;
-		if (genPackage2 != null) {
-			String typeName = type.getName();
-			if (typeName != null) {
-				List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage2.getGenClasses());
-				GenClass genClass = getNamedElement1(genClasses, typeName);
-				if (genClass != null) {
-					return true;
-				}
-				List<@NonNull GenEnum> genEnums = ClassUtil.nullFree(genPackage2.getGenEnums());
-				GenEnum genEnum = getNamedElement1(genEnums, typeName);
-				if (genEnum != null) {
-					return true;
-				}
+		String typeName = type.getName();
+		if (typeName != null) {
+			List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
+			GenClass genClass = getNamedElement1(genClasses, typeName);
+			if (genClass != null) {
+				return true;
+			}
+			List<@NonNull GenEnum> genEnums = ClassUtil.nullFree(genPackage.getGenEnums());
+			GenEnum genEnum = getNamedElement1(genEnums, typeName);
+			if (genEnum != null) {
+				return true;
 			}
 		}
 		return false;
