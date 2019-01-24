@@ -161,7 +161,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		org.eclipse.ocl.pivot.Class pkg1Type = environmentFactory.getASClass("Package");
 		// complete form
-		/*		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package | p?.name = 'bob')");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package | p?.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
 		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
@@ -198,7 +198,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(true)");
 		ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(false)");			// OMG Issue 18504
 		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op?->any(true)");
-		 */
+
 		ocl.assertQueryEquals(null, 2, "Map{2 <- 1, 1 <- 2}->any(key <- value | key > value)");
 		ocl.assertQueryInvalid(null, "Map{2 <- 1, 1 <- 2}->any(key <- value | key = value)");
 		ocl.dispose();
