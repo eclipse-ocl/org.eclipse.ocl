@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
+import java.util.Collection;
+
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -39,7 +43,7 @@ public class EcoreGenModelSetup
 		}
 		return resourceSet;
 	}
-	
+
 	/**
 	 * Define the ResourceSet and consequently ensure that it is initialized with GenModel declarations.
 	 */
@@ -47,10 +51,17 @@ public class EcoreGenModelSetup
 		this.resourceSet = resourceSet;
 		resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new EcoreResourceFactoryImpl());
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor
-	     (GenModelPackage.eNS_URI, OCLBuildGenModelGeneratorAdapterFactory.DESCRIPTOR);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor
-		 (GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
+		Registry generatorAdapterFactoryInstance = GeneratorAdapterFactory.Descriptor.Registry.INSTANCE;
+		Collection<Descriptor> descriptors = generatorAdapterFactoryInstance.getDescriptors(GenModelPackage.eNS_URI);
+	//	if (!descriptors.contains(GenModelGeneratorAdapterFactory.DESCRIPTOR)) {
+	//		generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, GenModelGeneratorAdapterFactory.DESCRIPTOR);
+	//	}
+		if (!descriptors.contains(OCLBuildGenModelGeneratorAdapterFactory.DESCRIPTOR)) {
+			generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, OCLBuildGenModelGeneratorAdapterFactory.DESCRIPTOR);
+		}
+		if (!descriptors.contains(OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR)) {
+			generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
+		}
 		org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup.doSetup();
 	}
 }
