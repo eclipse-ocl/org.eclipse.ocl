@@ -181,109 +181,109 @@ implements PivotFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case PivotPackage.ANNOTATION: return createAnnotation();
-			case PivotPackage.ANY_TYPE: return createAnyType();
-			case PivotPackage.ASSOCIATION_CLASS: return createAssociationClass();
-			case PivotPackage.ASSOCIATION_CLASS_CALL_EXP: return createAssociationClassCallExp();
-			case PivotPackage.BAG_TYPE: return createBagType();
-			case PivotPackage.BOOLEAN_LITERAL_EXP: return createBooleanLiteralExp();
-			case PivotPackage.CALL_OPERATION_ACTION: return createCallOperationAction();
-			case PivotPackage.CLASS: return createClass();
-			case PivotPackage.COLLECTION_ITEM: return createCollectionItem();
-			case PivotPackage.COLLECTION_LITERAL_EXP: return createCollectionLiteralExp();
-			case PivotPackage.COLLECTION_RANGE: return createCollectionRange();
-			case PivotPackage.COLLECTION_TYPE: return createCollectionType();
-			case PivotPackage.COMMENT: return createComment();
-			case PivotPackage.COMPLETE_CLASS: return createCompleteClass();
-			case PivotPackage.COMPLETE_ENVIRONMENT: return createCompleteEnvironment();
-			case PivotPackage.COMPLETE_MODEL: return createCompleteModel();
-			case PivotPackage.COMPLETE_PACKAGE: return createCompletePackage();
-			case PivotPackage.CONNECTION_POINT_REFERENCE: return createConnectionPointReference();
-			case PivotPackage.CONSTRAINT: return createConstraint();
-			case PivotPackage.DATA_TYPE: return createDataType();
-			case PivotPackage.DETAIL: return createDetail();
-			case PivotPackage.DYNAMIC_BEHAVIOR: return createDynamicBehavior();
-			case PivotPackage.DYNAMIC_ELEMENT: return createDynamicElement();
-			case PivotPackage.DYNAMIC_PROPERTY: return createDynamicProperty();
-			case PivotPackage.DYNAMIC_TYPE: return createDynamicType();
-			case PivotPackage.DYNAMIC_VALUE_SPECIFICATION: return createDynamicValueSpecification();
-			case PivotPackage.ELEMENT_EXTENSION: return createElementExtension();
-			case PivotPackage.ENUM_LITERAL_EXP: return createEnumLiteralExp();
-			case PivotPackage.ENUMERATION: return createEnumeration();
-			case PivotPackage.ENUMERATION_LITERAL: return createEnumerationLiteral();
-			case PivotPackage.EXPRESSION_IN_OCL: return createExpressionInOCL();
-			case PivotPackage.FINAL_STATE: return createFinalState();
-			case PivotPackage.IF_EXP: return createIfExp();
-			case PivotPackage.IMPORT: return createImport();
-			case PivotPackage.INSTANCE_SPECIFICATION: return createInstanceSpecification();
-			case PivotPackage.INTEGER_LITERAL_EXP: return createIntegerLiteralExp();
-			case PivotPackage.INVALID_LITERAL_EXP: return createInvalidLiteralExp();
-			case PivotPackage.INVALID_TYPE: return createInvalidType();
-			case PivotPackage.ITERATE_EXP: return createIterateExp();
-			case PivotPackage.ITERATION: return createIteration();
-			case PivotPackage.ITERATOR_EXP: return createIteratorExp();
-			case PivotPackage.ITERATOR_VARIABLE: return createIteratorVariable();
-			case PivotPackage.LAMBDA_TYPE: return createLambdaType();
-			case PivotPackage.LET_EXP: return createLetExp();
-			case PivotPackage.LET_VARIABLE: return createLetVariable();
-			case PivotPackage.LIBRARY: return createLibrary();
-			case PivotPackage.MAP_LITERAL_EXP: return createMapLiteralExp();
-			case PivotPackage.MAP_LITERAL_PART: return createMapLiteralPart();
-			case PivotPackage.MAP_TYPE: return createMapType();
-			case PivotPackage.MESSAGE_EXP: return createMessageExp();
-			case PivotPackage.MESSAGE_TYPE: return createMessageType();
-			case PivotPackage.MODEL: return createModel();
-			case PivotPackage.NULL_LITERAL_EXP: return createNullLiteralExp();
-			case PivotPackage.OPERATION: return createOperation();
-			case PivotPackage.OPERATION_CALL_EXP: return createOperationCallExp();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP: return createOppositePropertyCallExp();
-			case PivotPackage.ORDERED_SET_TYPE: return createOrderedSetType();
-			case PivotPackage.ORPHAN_COMPLETE_PACKAGE: return createOrphanCompletePackage();
-			case PivotPackage.PACKAGE: return createPackage();
-			case PivotPackage.PARAMETER: return createParameter();
-			case PivotPackage.PARAMETER_VARIABLE: return createParameterVariable();
-			case PivotPackage.PRECEDENCE: return createPrecedence();
-			case PivotPackage.PRIMITIVE_COMPLETE_PACKAGE: return createPrimitiveCompletePackage();
-			case PivotPackage.PRIMITIVE_TYPE: return createPrimitiveType();
-			case PivotPackage.PROFILE: return createProfile();
-			case PivotPackage.PROFILE_APPLICATION: return createProfileApplication();
-			case PivotPackage.PROPERTY: return createProperty();
-			case PivotPackage.PROPERTY_CALL_EXP: return createPropertyCallExp();
-			case PivotPackage.PSEUDOSTATE: return createPseudostate();
-			case PivotPackage.REAL_LITERAL_EXP: return createRealLiteralExp();
-			case PivotPackage.REGION: return createRegion();
-			case PivotPackage.RESULT_VARIABLE: return createResultVariable();
-			case PivotPackage.SELF_TYPE: return createSelfType();
-			case PivotPackage.SEND_SIGNAL_ACTION: return createSendSignalAction();
-			case PivotPackage.SEQUENCE_TYPE: return createSequenceType();
-			case PivotPackage.SET_TYPE: return createSetType();
-			case PivotPackage.SHADOW_EXP: return createShadowExp();
-			case PivotPackage.SHADOW_PART: return createShadowPart();
-			case PivotPackage.SIGNAL: return createSignal();
-			case PivotPackage.SLOT: return createSlot();
-			case PivotPackage.STANDARD_LIBRARY: return createStandardLibrary();
-			case PivotPackage.STATE: return createState();
-			case PivotPackage.STATE_EXP: return createStateExp();
-			case PivotPackage.STATE_MACHINE: return createStateMachine();
-			case PivotPackage.STEREOTYPE: return createStereotype();
-			case PivotPackage.STEREOTYPE_EXTENDER: return createStereotypeExtender();
-			case PivotPackage.STRING_LITERAL_EXP: return createStringLiteralExp();
-			case PivotPackage.TEMPLATE_BINDING: return createTemplateBinding();
-			case PivotPackage.TEMPLATE_PARAMETER: return createTemplateParameter();
-			case PivotPackage.TEMPLATE_PARAMETER_SUBSTITUTION: return createTemplateParameterSubstitution();
-			case PivotPackage.TEMPLATE_SIGNATURE: return createTemplateSignature();
-			case PivotPackage.TRANSITION: return createTransition();
-			case PivotPackage.TRIGGER: return createTrigger();
-			case PivotPackage.TUPLE_LITERAL_EXP: return createTupleLiteralExp();
-			case PivotPackage.TUPLE_LITERAL_PART: return createTupleLiteralPart();
-			case PivotPackage.TUPLE_TYPE: return createTupleType();
-			case PivotPackage.TYPE_EXP: return createTypeExp();
-			case PivotPackage.UNLIMITED_NATURAL_LITERAL_EXP: return createUnlimitedNaturalLiteralExp();
-			case PivotPackage.UNSPECIFIED_VALUE_EXP: return createUnspecifiedValueExp();
-			case PivotPackage.VARIABLE: return createVariable();
-			case PivotPackage.VARIABLE_EXP: return createVariableExp();
-			case PivotPackage.VOID_TYPE: return createVoidType();
-			case PivotPackage.WILDCARD_TYPE: return createWildcardType();
+			case 0: return createAnnotation();
+			case 1: return createAnyType();
+			case 2: return createAssociationClass();
+			case 3: return createAssociationClassCallExp();
+			case 4: return createBagType();
+			case 6: return createBooleanLiteralExp();
+			case 8: return createCallOperationAction();
+			case 9: return createClass();
+			case 10: return createCollectionItem();
+			case 11: return createCollectionLiteralExp();
+			case 13: return createCollectionRange();
+			case 14: return createCollectionType();
+			case 15: return createComment();
+			case 16: return createCompleteClass();
+			case 17: return createCompleteEnvironment();
+			case 18: return createCompleteModel();
+			case 19: return createCompletePackage();
+			case 20: return createConnectionPointReference();
+			case 21: return createConstraint();
+			case 22: return createDataType();
+			case 23: return createDetail();
+			case 24: return createDynamicBehavior();
+			case 25: return createDynamicElement();
+			case 26: return createDynamicProperty();
+			case 27: return createDynamicType();
+			case 28: return createDynamicValueSpecification();
+			case 30: return createElementExtension();
+			case 31: return createEnumLiteralExp();
+			case 32: return createEnumeration();
+			case 33: return createEnumerationLiteral();
+			case 34: return createExpressionInOCL();
+			case 37: return createFinalState();
+			case 38: return createIfExp();
+			case 39: return createImport();
+			case 40: return createInstanceSpecification();
+			case 41: return createIntegerLiteralExp();
+			case 42: return createInvalidLiteralExp();
+			case 43: return createInvalidType();
+			case 45: return createIterateExp();
+			case 46: return createIteration();
+			case 47: return createIteratorExp();
+			case 48: return createIteratorVariable();
+			case 49: return createLambdaType();
+			case 51: return createLetExp();
+			case 52: return createLetVariable();
+			case 53: return createLibrary();
+			case 56: return createMapLiteralExp();
+			case 57: return createMapLiteralPart();
+			case 58: return createMapType();
+			case 59: return createMessageExp();
+			case 60: return createMessageType();
+			case 61: return createModel();
+			case 67: return createNullLiteralExp();
+			case 70: return createOperation();
+			case 71: return createOperationCallExp();
+			case 72: return createOppositePropertyCallExp();
+			case 73: return createOrderedSetType();
+			case 74: return createOrphanCompletePackage();
+			case 75: return createPackage();
+			case 76: return createParameter();
+			case 77: return createParameterVariable();
+			case 79: return createPrecedence();
+			case 80: return createPrimitiveCompletePackage();
+			case 82: return createPrimitiveType();
+			case 83: return createProfile();
+			case 84: return createProfileApplication();
+			case 85: return createProperty();
+			case 86: return createPropertyCallExp();
+			case 87: return createPseudostate();
+			case 88: return createRealLiteralExp();
+			case 90: return createRegion();
+			case 91: return createResultVariable();
+			case 92: return createSelfType();
+			case 93: return createSendSignalAction();
+			case 94: return createSequenceType();
+			case 95: return createSetType();
+			case 96: return createShadowExp();
+			case 97: return createShadowPart();
+			case 98: return createSignal();
+			case 99: return createSlot();
+			case 100: return createStandardLibrary();
+			case 101: return createState();
+			case 102: return createStateExp();
+			case 103: return createStateMachine();
+			case 104: return createStereotype();
+			case 105: return createStereotypeExtender();
+			case 106: return createStringLiteralExp();
+			case 107: return createTemplateBinding();
+			case 108: return createTemplateParameter();
+			case 109: return createTemplateParameterSubstitution();
+			case 110: return createTemplateSignature();
+			case 112: return createTransition();
+			case 113: return createTrigger();
+			case 114: return createTupleLiteralExp();
+			case 115: return createTupleLiteralPart();
+			case 116: return createTupleType();
+			case 118: return createTypeExp();
+			case 120: return createUnlimitedNaturalLiteralExp();
+			case 121: return createUnspecifiedValueExp();
+			case 123: return createVariable();
+			case 125: return createVariableExp();
+			case 128: return createVoidType();
+			case 129: return createWildcardType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -298,29 +298,29 @@ implements PivotFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case PivotPackage.ASSOCIATIVITY_KIND:
+			case 130:
 				return createAssociativityKindFromString(eDataType, initialValue);
-			case PivotPackage.COLLECTION_KIND:
+			case 131:
 				return createCollectionKindFromString(eDataType, initialValue);
-			case PivotPackage.PSEUDOSTATE_KIND:
+			case 132:
 				return createPseudostateKindFromString(eDataType, initialValue);
-			case PivotPackage.TRANSITION_KIND:
+			case 133:
 				return createTransitionKindFromString(eDataType, initialValue);
-			case PivotPackage.BOOLEAN:
+			case 134:
 				return createBooleanFromString(eDataType, initialValue);
-			case PivotPackage.INTEGER:
+			case 135:
 				return createIntegerFromString(eDataType, initialValue);
-			case PivotPackage.LIBRARY_FEATURE:
+			case 136:
 				return createLibraryFeatureFromString(eDataType, initialValue);
-			case PivotPackage.OBJECT:
+			case 137:
 				return createObjectFromString(eDataType, initialValue);
-			case PivotPackage.REAL:
+			case 138:
 				return createRealFromString(eDataType, initialValue);
-			case PivotPackage.STRING:
+			case 139:
 				return createStringFromString(eDataType, initialValue);
-			case PivotPackage.THROWABLE:
+			case 140:
 				return createThrowableFromString(eDataType, initialValue);
-			case PivotPackage.UNLIMITED_NATURAL:
+			case 141:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -336,29 +336,29 @@ implements PivotFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case PivotPackage.ASSOCIATIVITY_KIND:
+			case 130:
 				return convertAssociativityKindToString(eDataType, instanceValue);
-			case PivotPackage.COLLECTION_KIND:
+			case 131:
 				return convertCollectionKindToString(eDataType, instanceValue);
-			case PivotPackage.PSEUDOSTATE_KIND:
+			case 132:
 				return convertPseudostateKindToString(eDataType, instanceValue);
-			case PivotPackage.TRANSITION_KIND:
+			case 133:
 				return convertTransitionKindToString(eDataType, instanceValue);
-			case PivotPackage.BOOLEAN:
+			case 134:
 				return convertBooleanToString(eDataType, instanceValue);
-			case PivotPackage.INTEGER:
+			case 135:
 				return convertIntegerToString(eDataType, instanceValue);
-			case PivotPackage.LIBRARY_FEATURE:
+			case 136:
 				return convertLibraryFeatureToString(eDataType, instanceValue);
-			case PivotPackage.OBJECT:
+			case 137:
 				return convertObjectToString(eDataType, instanceValue);
-			case PivotPackage.REAL:
+			case 138:
 				return convertRealToString(eDataType, instanceValue);
-			case PivotPackage.STRING:
+			case 139:
 				return convertStringToString(eDataType, instanceValue);
-			case PivotPackage.THROWABLE:
+			case 140:
 				return convertThrowableToString(eDataType, instanceValue);
-			case PivotPackage.UNLIMITED_NATURAL:
+			case 141:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

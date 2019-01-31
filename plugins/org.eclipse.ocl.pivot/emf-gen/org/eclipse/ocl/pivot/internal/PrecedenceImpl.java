@@ -44,6 +44,24 @@ public class PrecedenceImpl
 		implements Precedence {
 
 	/**
+	 * The number of structural features of the '<em>Precedence</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRECEDENCE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Precedence</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRECEDENCE_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #getAssociativity() <em>Associativity</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -140,7 +158,7 @@ public class PrecedenceImpl
 		if (newAssociativity == null) newAssociativity = ASSOCIATIVITY_EDEFAULT;
 		eFlags = eFlags & ~ASSOCIATIVITY_EFLAG | newAssociativity.ordinal() << ASSOCIATIVITY_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PRECEDENCE__ASSOCIATIVITY, oldAssociativity, newAssociativity));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldAssociativity, newAssociativity));
 	}
 
 	/**
@@ -174,7 +192,7 @@ public class PrecedenceImpl
 		Number oldOrder = order;
 		order = newOrder;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PRECEDENCE__ORDER, oldOrder, order));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldOrder, order));
 	}
 
 	/**
@@ -186,19 +204,19 @@ public class PrecedenceImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.PRECEDENCE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PRECEDENCE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PRECEDENCE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PRECEDENCE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PRECEDENCE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PRECEDENCE__ASSOCIATIVITY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getAssociativity();
-			case PivotPackage.PRECEDENCE__ORDER:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getOrder();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -214,29 +232,29 @@ public class PrecedenceImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.PRECEDENCE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__ASSOCIATIVITY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setAssociativity((AssociativityKind)newValue);
 				return;
-			case PivotPackage.PRECEDENCE__ORDER:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setOrder((Number)newValue);
 				return;
 		}
@@ -252,25 +270,25 @@ public class PrecedenceImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PRECEDENCE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PRECEDENCE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PRECEDENCE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PRECEDENCE__ASSOCIATIVITY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setAssociativity(ASSOCIATIVITY_EDEFAULT);
 				return;
-			case PivotPackage.PRECEDENCE__ORDER:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setOrder(ORDER_EDEFAULT);
 				return;
 		}
@@ -286,19 +304,19 @@ public class PrecedenceImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PRECEDENCE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PRECEDENCE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PRECEDENCE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PRECEDENCE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PRECEDENCE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PRECEDENCE__ASSOCIATIVITY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return (eFlags & ASSOCIATIVITY_EFLAG) != ASSOCIATIVITY_EFLAG_DEFAULT;
-			case PivotPackage.PRECEDENCE__ORDER:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ORDER_EDEFAULT == null ? order != null : !ORDER_EDEFAULT.equals(order);
 		}
 		return eDynamicIsSet(featureID);

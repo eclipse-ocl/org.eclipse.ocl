@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,6 +62,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class LetExpImpl
 extends OCLExpressionImpl
 implements LetExp {
+
+	/**
+	 * The number of structural features of the '<em>Let Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LET_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Let Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LET_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 3;
 
 	/**
 	 * The cached value of the '{@link #getOwnedIn() <em>Owned In</em>}' containment reference.
@@ -120,7 +141,7 @@ implements LetExp {
 		ownedIn = newOwnedIn;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.LET_EXP__OWNED_IN, oldOwnedIn, newOwnedIn);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldOwnedIn, newOwnedIn);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -137,14 +158,14 @@ implements LetExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedIn != null)
-				msgs = ((InternalEObject)ownedIn).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.LET_EXP__OWNED_IN, null, msgs);
+				msgs = ((InternalEObject)ownedIn).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedIn != null)
-				msgs = ((InternalEObject)newOwnedIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.LET_EXP__OWNED_IN, null, msgs);
+				msgs = ((InternalEObject)newOwnedIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedIn(newOwnedIn, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.LET_EXP__OWNED_IN, newOwnedIn, newOwnedIn));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, newOwnedIn, newOwnedIn));
 	}
 
 	/**
@@ -168,7 +189,7 @@ implements LetExp {
 		ownedVariable = newOwnedVariable;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.LET_EXP__OWNED_VARIABLE, oldOwnedVariable, newOwnedVariable);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldOwnedVariable, newOwnedVariable);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -185,14 +206,14 @@ implements LetExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedVariable != null)
-				msgs = ((InternalEObject)ownedVariable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.LET_EXP__OWNED_VARIABLE, null, msgs);
+				msgs = ((InternalEObject)ownedVariable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedVariable != null)
-				msgs = ((InternalEObject)newOwnedVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.LET_EXP__OWNED_VARIABLE, null, msgs);
+				msgs = ((InternalEObject)newOwnedVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedVariable(newOwnedVariable, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.LET_EXP__OWNED_VARIABLE, newOwnedVariable, newOwnedVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, newOwnedVariable, newOwnedVariable));
 	}
 
 	/**
@@ -218,8 +239,8 @@ implements LetExp {
 			 *         'LetExp::CompatibleNullityForIn'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_CompatibleNullityForIn);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_CompatibleNullityForIn);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -228,7 +249,7 @@ implements LetExp {
 			else {
 				final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedIn = this.getOwnedIn();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedIn = this.getOwnedIn();
 				final /*@NonInvalid*/ boolean isRequired_0 = ownedIn.isIsRequired();
 				final /*@NonInvalid*/ boolean result = isRequired == isRequired_0;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_CompatibleNullityForIn, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
@@ -263,18 +284,18 @@ implements LetExp {
 			 *         'LetExp::TypeIsInType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_TypeIsInType);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_TypeIsInType);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedIn = this.getOwnedIn();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedIn.getType();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedIn = this.getOwnedIn();
+				final /*@NonInvalid*/ @Nullable Type type_0 = ownedIn.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsInType, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -308,9 +329,9 @@ implements LetExp {
 			 *         'LetExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_TypeIsNotInvalid);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetExp_c_c_TypeIsNotInvalid);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -318,7 +339,7 @@ implements LetExp {
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -340,17 +361,17 @@ implements LetExp {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.LET_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LET_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LET_EXP__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LET_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LET_EXP__OWNED_IN:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return basicSetOwnedIn(null, msgs);
-			case PivotPackage.LET_EXP__OWNED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return basicSetOwnedVariable(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -365,28 +386,28 @@ implements LetExp {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.LET_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.LET_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.LET_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.LET_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.LET_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.LET_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.LET_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.LET_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.LET_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.LET_EXP__OWNED_IN:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return getOwnedIn();
-			case PivotPackage.LET_EXP__OWNED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return getOwnedVariable();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -402,38 +423,38 @@ implements LetExp {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.LET_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LET_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.LET_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LET_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.LET_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.LET_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.LET_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.LET_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.LET_EXP__OWNED_IN:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setOwnedIn((OCLExpression)newValue);
 				return;
-			case PivotPackage.LET_EXP__OWNED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedVariable((Variable)newValue);
 				return;
 		}
@@ -449,34 +470,34 @@ implements LetExp {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.LET_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.LET_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.LET_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.LET_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.LET_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.LET_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.LET_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.LET_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.LET_EXP__OWNED_IN:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setOwnedIn((OCLExpression)null);
 				return;
-			case PivotPackage.LET_EXP__OWNED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedVariable((Variable)null);
 				return;
 		}
@@ -492,27 +513,27 @@ implements LetExp {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.LET_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.LET_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.LET_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.LET_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.LET_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.LET_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.LET_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.LET_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.LET_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.LET_EXP__OWNED_IN:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return ownedIn != null;
-			case PivotPackage.LET_EXP__OWNED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return ownedVariable != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -529,23 +550,23 @@ implements LetExp {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.LET_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.LET_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.LET_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.LET_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.LET_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.LET_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
 				return validateCompatibleNullityForIn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
 				return validateTypeIsInType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

@@ -26,6 +26,23 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class FinalStateImpl extends StateImpl implements FinalState
 {
 	/**
+	 * The number of structural features of the '<em>Final State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FINAL_STATE_FEATURE_COUNT = StateImpl.STATE_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Final State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FINAL_STATE_OPERATION_COUNT = StateImpl.STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

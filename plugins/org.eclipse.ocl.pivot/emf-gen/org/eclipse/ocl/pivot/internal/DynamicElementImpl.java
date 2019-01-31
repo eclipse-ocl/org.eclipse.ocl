@@ -41,6 +41,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class DynamicElementImpl extends ElementImpl implements DynamicElement
 {
 	/**
+	 * The number of structural features of the '<em>Dynamic Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_ELEMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Dynamic Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_ELEMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getMetaType() <em>Meta Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -86,7 +102,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 			if (metaType != oldMetaType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.DYNAMIC_ELEMENT__META_TYPE, oldMetaType, metaType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldMetaType, metaType));
 			}
 		}
 		return metaType;
@@ -113,7 +129,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 		Type oldMetaType = metaType;
 		metaType = newMetaType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.DYNAMIC_ELEMENT__META_TYPE, oldMetaType, metaType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldMetaType, metaType));
 	}
 
 	/**
@@ -126,15 +142,15 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.DYNAMIC_ELEMENT__META_TYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getMetaType();
 				return basicGetMetaType();
 		}
@@ -152,23 +168,23 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__META_TYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setMetaType((Type)newValue);
 				return;
 		}
@@ -185,19 +201,19 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.DYNAMIC_ELEMENT__META_TYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setMetaType((Type)null);
 				return;
 		}
@@ -214,15 +230,15 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.DYNAMIC_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.DYNAMIC_ELEMENT__META_TYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return metaType != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -43,6 +43,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class ImportImpl extends NamedElementImpl implements Import
 {
 	/**
+	 * The number of structural features of the '<em>Import</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IMPORT_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Import</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IMPORT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getImportedNamespace() <em>Imported Namespace</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +123,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 			if (importedNamespace != oldImportedNamespace)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.IMPORT__IMPORTED_NAMESPACE, oldImportedNamespace, importedNamespace));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldImportedNamespace, importedNamespace));
 			}
 		}
 		return importedNamespace;
@@ -134,7 +150,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.IMPORT__IMPORTED_NAMESPACE, oldImportedNamespace, importedNamespace));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldImportedNamespace, importedNamespace));
 	}
 
 	/**
@@ -161,7 +177,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 		Number oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.IMPORT__XMIID_VERSION, oldXmiidVersion, xmiidVersion));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldXmiidVersion, xmiidVersion));
 	}
 
 	/**
@@ -174,20 +190,20 @@ public class ImportImpl extends NamedElementImpl implements Import
 	{
 		switch (featureID)
 		{
-			case PivotPackage.IMPORT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.IMPORT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.IMPORT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.IMPORT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.IMPORT__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getImportedNamespace();
 				return basicGetImportedNamespace();
-			case PivotPackage.IMPORT__XMIID_VERSION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -204,29 +220,29 @@ public class ImportImpl extends NamedElementImpl implements Import
 	{
 		switch (featureID)
 		{
-			case PivotPackage.IMPORT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.IMPORT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.IMPORT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.IMPORT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.IMPORT__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setImportedNamespace((Namespace)newValue);
 				return;
-			case PivotPackage.IMPORT__XMIID_VERSION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setXmiidVersion((Number)newValue);
 				return;
 		}
@@ -243,25 +259,25 @@ public class ImportImpl extends NamedElementImpl implements Import
 	{
 		switch (featureID)
 		{
-			case PivotPackage.IMPORT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.IMPORT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.IMPORT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.IMPORT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.IMPORT__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setImportedNamespace((Namespace)null);
 				return;
-			case PivotPackage.IMPORT__XMIID_VERSION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setXmiidVersion(XMIID_VERSION_EDEFAULT);
 				return;
 		}
@@ -278,19 +294,19 @@ public class ImportImpl extends NamedElementImpl implements Import
 	{
 		switch (featureID)
 		{
-			case PivotPackage.IMPORT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.IMPORT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.IMPORT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.IMPORT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.IMPORT__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return importedNamespace != null;
-			case PivotPackage.IMPORT__XMIID_VERSION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);

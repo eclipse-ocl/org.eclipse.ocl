@@ -55,6 +55,24 @@ extends VariableDeclarationImpl
 implements Variable {
 
 	/**
+	 * The number of structural features of the '<em>Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_FEATURE_COUNT = VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_OPERATION_COUNT = VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -145,7 +163,7 @@ implements Variable {
 		ownedInit = newOwnedInit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE__OWNED_INIT, oldOwnedInit, newOwnedInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, oldOwnedInit, newOwnedInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -162,14 +180,14 @@ implements Variable {
 		{
 			NotificationChain msgs = null;
 			if (ownedInit != null)
-				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.VARIABLE__OWNED_INIT, null, msgs);
+				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedInit != null)
-				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.VARIABLE__OWNED_INIT, null, msgs);
+				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedInit(newOwnedInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE__OWNED_INIT, newOwnedInit, newOwnedInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, newOwnedInit, newOwnedInit));
 	}
 
 	/**
@@ -186,7 +204,7 @@ implements Variable {
 			if (representedParameter != oldRepresentedParameter)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.VARIABLE__REPRESENTED_PARAMETER, oldRepresentedParameter, representedParameter));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2, oldRepresentedParameter, representedParameter));
 			}
 		}
 		return representedParameter;
@@ -211,7 +229,7 @@ implements Variable {
 		Parameter oldRepresentedParameter = representedParameter;
 		representedParameter = newRepresentedParameter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE__REPRESENTED_PARAMETER, oldRepresentedParameter, representedParameter));
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2, oldRepresentedParameter, representedParameter));
 	}
 
 	/**
@@ -239,7 +257,7 @@ implements Variable {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -252,15 +270,15 @@ implements Variable {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.VARIABLE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.VARIABLE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.VARIABLE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.VARIABLE__OWNED_INIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return basicSetOwnedInit(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -275,30 +293,30 @@ implements Variable {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.VARIABLE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.VARIABLE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.VARIABLE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.VARIABLE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.VARIABLE__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.VARIABLE__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.VARIABLE__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.VARIABLE__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.VARIABLE__IS_IMPLICIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				return isIsImplicit();
-			case PivotPackage.VARIABLE__OWNED_INIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return getOwnedInit();
-			case PivotPackage.VARIABLE__REPRESENTED_PARAMETER:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
 				if (resolve) return getRepresentedParameter();
 				return basicGetRepresentedParameter();
 		}
@@ -315,41 +333,41 @@ implements Variable {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.VARIABLE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.VARIABLE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.VARIABLE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.VARIABLE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.VARIABLE__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.VARIABLE__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.VARIABLE__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.VARIABLE__IS_IMPLICIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.VARIABLE__OWNED_INIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				setOwnedInit((OCLExpression)newValue);
 				return;
-			case PivotPackage.VARIABLE__REPRESENTED_PARAMETER:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
 				setRepresentedParameter((Parameter)newValue);
 				return;
 		}
@@ -365,37 +383,37 @@ implements Variable {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.VARIABLE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.VARIABLE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.VARIABLE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.VARIABLE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.VARIABLE__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.VARIABLE__IS_IMPLICIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE__OWNED_INIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				setOwnedInit((OCLExpression)null);
 				return;
-			case PivotPackage.VARIABLE__REPRESENTED_PARAMETER:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
 				setRepresentedParameter((Parameter)null);
 				return;
 		}
@@ -411,29 +429,29 @@ implements Variable {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.VARIABLE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.VARIABLE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.VARIABLE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.VARIABLE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.VARIABLE__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.VARIABLE__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.VARIABLE__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.VARIABLE__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.VARIABLE__IS_IMPLICIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.VARIABLE__OWNED_INIT:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return ownedInit != null;
-			case PivotPackage.VARIABLE__REPRESENTED_PARAMETER:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
 				return representedParameter != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -450,19 +468,19 @@ implements Variable {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.VARIABLE___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.VARIABLE___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 0:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

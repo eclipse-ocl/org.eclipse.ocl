@@ -40,6 +40,8 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -47,6 +49,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,6 +75,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class ConstraintImpl
 extends NamedElementImpl
 implements Constraint {
+
+	/**
+	 * The number of structural features of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONSTRAINT_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
+	 * The number of operations of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONSTRAINT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getConstrainedElements() <em>Constrained Elements</em>}' reference list.
@@ -153,7 +174,7 @@ implements Constraint {
 	{
 		if (constrainedElements == null)
 		{
-			constrainedElements = new EObjectResolvingEList<Element>(Element.class, this, PivotPackage.CONSTRAINT__CONSTRAINED_ELEMENTS);
+			constrainedElements = new EObjectResolvingEList<Element>(Element.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return constrainedElements;
 	}
@@ -179,7 +200,7 @@ implements Constraint {
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNED_SPECIFICATION, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -197,14 +218,14 @@ implements Constraint {
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, LanguageExpression.class, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, LanguageExpression.class, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, LanguageExpression.class, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, LanguageExpression.class, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNED_SPECIFICATION, newOwnedSpecification, newOwnedSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -215,7 +236,7 @@ implements Constraint {
 	@Override
 	public Operation getOwningPostContext()
 	{
-		if (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -226,7 +247,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningPostContext(Operation newOwningPostContext, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPostContext, PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPostContext, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4, msgs);
 		return msgs;
 	}
 
@@ -238,7 +259,7 @@ implements Constraint {
 	@Override
 	public void setOwningPostContext(Operation newOwningPostContext)
 	{
-		if (newOwningPostContext != eInternalContainer() || (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT && newOwningPostContext != null))
+		if (newOwningPostContext != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4) && newOwningPostContext != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPostContext))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -246,12 +267,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPostContext != null)
-				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, PivotPackage.OPERATION__OWNED_POSTCONDITIONS, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, Operation.class, msgs);
 			msgs = basicSetOwningPostContext(newOwningPostContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT, newOwningPostContext, newOwningPostContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4, newOwningPostContext, newOwningPostContext));
 	}
 
 	/**
@@ -262,7 +283,7 @@ implements Constraint {
 	@Override
 	public Operation getOwningPreContext()
 	{
-		if (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -273,7 +294,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningPreContext(Operation newOwningPreContext, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPreContext, PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPreContext, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5, msgs);
 		return msgs;
 	}
 
@@ -285,7 +306,7 @@ implements Constraint {
 	@Override
 	public void setOwningPreContext(Operation newOwningPreContext)
 	{
-		if (newOwningPreContext != eInternalContainer() || (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT && newOwningPreContext != null))
+		if (newOwningPreContext != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5) && newOwningPreContext != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPreContext))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -293,12 +314,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPreContext != null)
-				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, PivotPackage.OPERATION__OWNED_PRECONDITIONS, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, Operation.class, msgs);
 			msgs = basicSetOwningPreContext(newOwningPreContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT, newOwningPreContext, newOwningPreContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5, newOwningPreContext, newOwningPreContext));
 	}
 
 	/**
@@ -312,7 +333,7 @@ implements Constraint {
 		boolean oldIsCallable = (eFlags & IS_CALLABLE_EFLAG) != 0;
 		if (newIsCallable) eFlags |= IS_CALLABLE_EFLAG; else eFlags &= ~IS_CALLABLE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__IS_CALLABLE, oldIsCallable, newIsCallable));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldIsCallable, newIsCallable));
 	}
 
 	/**
@@ -323,7 +344,7 @@ implements Constraint {
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_STATE) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -334,7 +355,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, PivotPackage.CONSTRAINT__OWNING_STATE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, msgs);
 		return msgs;
 	}
 
@@ -346,7 +367,7 @@ implements Constraint {
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_STATE && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -354,12 +375,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, PivotPackage.STATE__OWNED_STATE_INVARIANT, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNING_STATE, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, newOwningState, newOwningState));
 	}
 
 	/**
@@ -370,7 +391,7 @@ implements Constraint {
 	@Override
 	public Transition getOwningTransition()
 	{
-		if (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_TRANSITION) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7)) return null;
 		return (Transition)eInternalContainer();
 	}
 
@@ -381,7 +402,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningTransition(Transition newOwningTransition, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, PivotPackage.CONSTRAINT__OWNING_TRANSITION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, msgs);
 		return msgs;
 	}
 
@@ -393,7 +414,7 @@ implements Constraint {
 	@Override
 	public void setOwningTransition(Transition newOwningTransition)
 	{
-		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != PivotPackage.CONSTRAINT__OWNING_TRANSITION && newOwningTransition != null))
+		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7) && newOwningTransition != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningTransition))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -401,12 +422,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningTransition != null)
-				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, PivotPackage.TRANSITION__OWNED_GUARD, Transition.class, msgs);
+				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Transition.class, msgs);
 			msgs = basicSetOwningTransition(newOwningTransition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CONSTRAINT__OWNING_TRANSITION, newOwningTransition, newOwningTransition));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, newOwningTransition, newOwningTransition));
 	}
 
 	/**
@@ -419,7 +440,7 @@ implements Constraint {
 	{
 		if (redefinedConstraints == null)
 		{
-			redefinedConstraints = new EObjectResolvingEList<Constraint>(Constraint.class, this, PivotPackage.CONSTRAINT__REDEFINED_CONSTRAINTS);
+			redefinedConstraints = new EObjectResolvingEList<Constraint>(Constraint.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8);
 		}
 		return redefinedConstraints;
 	}
@@ -446,9 +467,9 @@ implements Constraint {
 			 *         'Constraint::BooleanValued'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Constraint_c_c_BooleanValued);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Constraint_c_c_BooleanValued);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -456,8 +477,8 @@ implements Constraint {
 			}
 			else {
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSpecification.getType();
+				final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
+				final /*@NonInvalid*/ @Nullable Type type = ownedSpecification.getType();
 				final /*@NonInvalid*/ boolean ne = type != null;
 				/*@NonInvalid*/ boolean result;
 				if (ne) {
@@ -512,29 +533,29 @@ implements Constraint {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				if (ownedSpecification != null)
-					msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.CONSTRAINT__OWNED_SPECIFICATION, null, msgs);
+					msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3), null, msgs);
 				return basicSetOwnedSpecification((LanguageExpression)otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPostContext((Operation)otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPreContext((Operation)otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningTransition((Transition)otherEnd, msgs);
@@ -552,23 +573,23 @@ implements Constraint {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return basicSetOwnedSpecification(null, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				return basicSetOwningPostContext(null, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				return basicSetOwningPreContext(null, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				return basicSetOwningState(null, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				return basicSetOwningTransition(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -584,14 +605,14 @@ implements Constraint {
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.OPERATION__OWNED_POSTCONDITIONS, Operation.class, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.OPERATION__OWNED_PRECONDITIONS, Operation.class, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.STATE__OWNED_STATE_INVARIANT, State.class, msgs);
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.TRANSITION__OWNED_GUARD, Transition.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, Operation.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, Operation.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, State.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Transition.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -605,33 +626,33 @@ implements Constraint {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.CONSTRAINT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.CONSTRAINT__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.CONSTRAINT__CONSTRAINED_ELEMENTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getConstrainedElements();
-			case PivotPackage.CONSTRAINT__CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getContext();
-			case PivotPackage.CONSTRAINT__IS_CALLABLE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return isIsCallable();
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return getOwnedSpecification();
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				return getOwningPostContext();
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				return getOwningPreContext();
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				return getOwningState();
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				return getOwningTransition();
-			case PivotPackage.CONSTRAINT__REDEFINED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
 				return getRedefinedConstraints();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -647,48 +668,48 @@ implements Constraint {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__CONSTRAINED_ELEMENTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getConstrainedElements().clear();
 				getConstrainedElements().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__IS_CALLABLE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setIsCallable((Boolean)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwnedSpecification((LanguageExpression)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				setOwningPostContext((Operation)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				setOwningPreContext((Operation)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				setOwningState((State)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				setOwningTransition((Transition)newValue);
 				return;
-			case PivotPackage.CONSTRAINT__REDEFINED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
 				getRedefinedConstraints().clear();
 				getRedefinedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
@@ -705,43 +726,43 @@ implements Constraint {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.CONSTRAINT__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.CONSTRAINT__CONSTRAINED_ELEMENTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getConstrainedElements().clear();
 				return;
-			case PivotPackage.CONSTRAINT__IS_CALLABLE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setIsCallable(IS_CALLABLE_EDEFAULT);
 				return;
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwnedSpecification((LanguageExpression)null);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				setOwningPostContext((Operation)null);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				setOwningPreContext((Operation)null);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				setOwningState((State)null);
 				return;
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				setOwningTransition((Transition)null);
 				return;
-			case PivotPackage.CONSTRAINT__REDEFINED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
 				getRedefinedConstraints().clear();
 				return;
 		}
@@ -757,33 +778,33 @@ implements Constraint {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CONSTRAINT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.CONSTRAINT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.CONSTRAINT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.CONSTRAINT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.CONSTRAINT__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.CONSTRAINT__CONSTRAINED_ELEMENTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return constrainedElements != null && !constrainedElements.isEmpty();
-			case PivotPackage.CONSTRAINT__CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getContext() != null;
-			case PivotPackage.CONSTRAINT__IS_CALLABLE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return ((eFlags & IS_CALLABLE_EFLAG) != 0) != IS_CALLABLE_EDEFAULT;
-			case PivotPackage.CONSTRAINT__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return ownedSpecification != null;
-			case PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				return getOwningPostContext() != null;
-			case PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
 				return getOwningPreContext() != null;
-			case PivotPackage.CONSTRAINT__OWNING_STATE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
 				return getOwningState() != null;
-			case PivotPackage.CONSTRAINT__OWNING_TRANSITION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
 				return getOwningTransition() != null;
-			case PivotPackage.CONSTRAINT__REDEFINED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
 				return redefinedConstraints != null && !redefinedConstraints.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -800,13 +821,13 @@ implements Constraint {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.CONSTRAINT___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.CONSTRAINT___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
 				return validateBooleanValued((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1:
 				return validateUniqueName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

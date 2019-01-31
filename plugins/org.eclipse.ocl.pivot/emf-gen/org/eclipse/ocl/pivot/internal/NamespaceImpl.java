@@ -46,6 +46,22 @@ public abstract class NamespaceImpl
 		implements Namespace {
 
 	/**
+	 * The number of structural features of the '<em>Namespace</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAMESPACE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Namespace</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAMESPACE_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +100,7 @@ public abstract class NamespaceImpl
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, PivotPackage.NAMESPACE__OWNED_CONSTRAINTS);
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return ownedConstraints;
 	}
@@ -99,15 +115,15 @@ public abstract class NamespaceImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.NAMESPACE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.NAMESPACE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.NAMESPACE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.NAMESPACE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -123,17 +139,17 @@ public abstract class NamespaceImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.NAMESPACE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.NAMESPACE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.NAMESPACE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.NAMESPACE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.NAMESPACE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedConstraints();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -150,26 +166,26 @@ public abstract class NamespaceImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.NAMESPACE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.NAMESPACE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.NAMESPACE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.NAMESPACE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.NAMESPACE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
@@ -187,22 +203,22 @@ public abstract class NamespaceImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.NAMESPACE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.NAMESPACE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.NAMESPACE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.NAMESPACE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.NAMESPACE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				return;
 		}
@@ -219,17 +235,17 @@ public abstract class NamespaceImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.NAMESPACE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.NAMESPACE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.NAMESPACE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.NAMESPACE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.NAMESPACE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

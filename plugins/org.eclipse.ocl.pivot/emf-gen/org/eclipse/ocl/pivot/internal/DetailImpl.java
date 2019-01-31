@@ -42,6 +42,22 @@ public class DetailImpl
 		implements Detail {
 
 	/**
+	 * The number of structural features of the '<em>Detail</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DETAIL_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Detail</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DETAIL_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getValues() <em>Values</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,7 +96,7 @@ public class DetailImpl
 	{
 		if (values == null)
 		{
-			values = new EDataTypeUniqueEList<String>(String.class, this, PivotPackage.DETAIL__VALUES);
+			values = new EDataTypeUniqueEList<String>(String.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return values;
 	}
@@ -94,17 +110,17 @@ public class DetailImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.DETAIL__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.DETAIL__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.DETAIL__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.DETAIL__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.DETAIL__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.DETAIL__VALUES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getValues();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -120,26 +136,26 @@ public class DetailImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.DETAIL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DETAIL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.DETAIL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DETAIL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.DETAIL__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.DETAIL__VALUES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getValues().clear();
 				getValues().addAll((Collection<? extends String>)newValue);
 				return;
@@ -156,22 +172,22 @@ public class DetailImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.DETAIL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.DETAIL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.DETAIL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.DETAIL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.DETAIL__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.DETAIL__VALUES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getValues().clear();
 				return;
 		}
@@ -187,17 +203,17 @@ public class DetailImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.DETAIL__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.DETAIL__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.DETAIL__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.DETAIL__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.DETAIL__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.DETAIL__VALUES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return values != null && !values.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

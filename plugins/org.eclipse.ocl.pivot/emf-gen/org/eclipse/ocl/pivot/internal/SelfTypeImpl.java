@@ -40,6 +40,23 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class SelfTypeImpl extends ClassImpl implements SelfType
 {
 	/**
+	 * The number of structural features of the '<em>Self Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SELF_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Self Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SELF_TYPE_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -71,21 +88,21 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 	{
 		switch (operationID)
 		{
-			case PivotPackage.SELF_TYPE___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.SELF_TYPE___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.SELF_TYPE___FLATTENED_TYPE:
+			case 2:
 				return flattenedType();
-			case PivotPackage.SELF_TYPE___IS_CLASS:
+			case 3:
 				return isClass();
-			case PivotPackage.SELF_TYPE___IS_TEMPLATE_PARAMETER:
+			case 4:
 				return isTemplateParameter();
-			case PivotPackage.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE:
+			case ClassImpl.CLASS_OPERATION_COUNT + 0:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
-			case PivotPackage.SELF_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 6:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.SELF_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP:
+			case 7:
 				return validateUniqueInvariantName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -139,7 +156,7 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.TYPE___SPECIALIZE_IN__CALLEXP_TYPE: return PivotPackage.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+				case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 3: return ClassImpl.CLASS_OPERATION_COUNT + 0;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}

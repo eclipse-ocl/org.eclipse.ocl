@@ -46,6 +46,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class ProfileImpl extends PackageImpl implements Profile
 {
 	/**
+	 * The number of structural features of the '<em>Profile</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROFILE_FEATURE_COUNT = PackageImpl.PACKAGE_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Profile</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROFILE_OPERATION_COUNT = PackageImpl.PACKAGE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getProfileApplications() <em>Profile Applications</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +101,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		if (profileApplications == null)
 		{
-			profileApplications = new EObjectWithInverseResolvingEList<ProfileApplication>(ProfileApplication.class, this, PivotPackage.PROFILE__PROFILE_APPLICATIONS, PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE);
+			profileApplications = new EObjectWithInverseResolvingEList<ProfileApplication>(ProfileApplication.class, this, PackageImpl.PACKAGE_FEATURE_COUNT + 0, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
 		}
 		return profileApplications;
 	}
@@ -101,25 +117,25 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedClasses()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedInstances()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPackages()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProfileApplications()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getProfileApplications()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -135,27 +151,27 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				return ((InternalEList<?>)getOwnedClasses()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				return ((InternalEList<?>)getOwnedInstances()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return ((InternalEList<?>)getOwnedProfileApplications()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				return basicSetOwningPackage(null, msgs);
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getProfileApplications()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -171,35 +187,35 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PROFILE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PROFILE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PROFILE__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.PROFILE__URI:
+			case 6:
 				return getURI();
-			case PivotPackage.PROFILE__IMPORTED_PACKAGES:
+			case 7:
 				return getImportedPackages();
-			case PivotPackage.PROFILE__NS_PREFIX:
+			case 8:
 				return getNsPrefix();
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				return getOwnedClasses();
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				return getOwnedInstances();
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				return getOwnedPackages();
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return getOwnedProfileApplications();
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				return getOwningPackage();
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return getProfileApplications();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -216,59 +232,59 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PROFILE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.PROFILE__URI:
+			case 6:
 				setURI((String)newValue);
 				return;
-			case PivotPackage.PROFILE__IMPORTED_PACKAGES:
+			case 7:
 				getImportedPackages().clear();
 				getImportedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case PivotPackage.PROFILE__NS_PREFIX:
+			case 8:
 				setNsPrefix((String)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				getOwnedClasses().clear();
 				getOwnedClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				getOwnedInstances().clear();
 				getOwnedInstances().addAll((Collection<? extends InstanceSpecification>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				getOwnedProfileApplications().clear();
 				getOwnedProfileApplications().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				getProfileApplications().clear();
 				getProfileApplications().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
@@ -286,49 +302,49 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PROFILE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PROFILE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.PROFILE__URI:
+			case 6:
 				setURI(URI_EDEFAULT);
 				return;
-			case PivotPackage.PROFILE__IMPORTED_PACKAGES:
+			case 7:
 				getImportedPackages().clear();
 				return;
-			case PivotPackage.PROFILE__NS_PREFIX:
+			case 8:
 				setNsPrefix(NS_PREFIX_EDEFAULT);
 				return;
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				getOwnedClasses().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				getOwnedInstances().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				getOwnedPackages().clear();
 				return;
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				getOwnedProfileApplications().clear();
 				return;
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				getProfileApplications().clear();
 				return;
 		}
@@ -345,35 +361,35 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PROFILE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PROFILE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PROFILE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PROFILE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PROFILE__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.PROFILE__URI:
+			case 6:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
-			case PivotPackage.PROFILE__IMPORTED_PACKAGES:
+			case 7:
 				return importedPackages != null && !importedPackages.isEmpty();
-			case PivotPackage.PROFILE__NS_PREFIX:
+			case 8:
 				return NS_PREFIX_EDEFAULT == null ? nsPrefix != null : !NS_PREFIX_EDEFAULT.equals(nsPrefix);
-			case PivotPackage.PROFILE__OWNED_CLASSES:
+			case 9:
 				return ownedClasses != null && !ownedClasses.isEmpty();
-			case PivotPackage.PROFILE__OWNED_INSTANCES:
+			case 10:
 				return ownedInstances != null && !ownedInstances.isEmpty();
-			case PivotPackage.PROFILE__OWNED_PACKAGES:
+			case 11:
 				return ownedPackages != null && !ownedPackages.isEmpty();
-			case PivotPackage.PROFILE__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return ownedProfileApplications != null && !ownedProfileApplications.isEmpty();
-			case PivotPackage.PROFILE__OWNING_PACKAGE:
+			case 13:
 				return getOwningPackage() != null;
-			case PivotPackage.PROFILE__PROFILE_APPLICATIONS:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return profileApplications != null && !profileApplications.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

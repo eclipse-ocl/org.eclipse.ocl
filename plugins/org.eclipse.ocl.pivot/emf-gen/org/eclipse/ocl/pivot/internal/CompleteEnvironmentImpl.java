@@ -85,6 +85,23 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvironment, org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal
 {
 	/**
+	 * The number of structural features of the '<em>Complete Environment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPLETE_ENVIRONMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Complete Environment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPLETE_ENVIRONMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -134,14 +151,14 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		{
 			NotificationChain msgs = null;
 			if (ownedCompleteModel != null)
-				msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, PivotPackage.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, CompleteModel.class, msgs);
 			if (newOwnedCompleteModel != null)
-				msgs = ((InternalEObject)newOwnedCompleteModel).eInverseAdd(this, PivotPackage.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)newOwnedCompleteModel).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, CompleteModel.class, msgs);
 			msgs = basicSetOwnedCompleteModel(newOwnedCompleteModel, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, newOwnedCompleteModel, newOwnedCompleteModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwnedCompleteModel, newOwnedCompleteModel));
 	}
 
 	/**
@@ -173,14 +190,14 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		{
 			NotificationChain msgs = null;
 			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, StandardLibrary.class, msgs);
 			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, StandardLibrary.class, msgs);
 			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, newOwnedStandardLibrary, newOwnedStandardLibrary));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedStandardLibrary, newOwnedStandardLibrary));
 	}
 
 	/**
@@ -194,19 +211,19 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (ownedCompleteModel != null)
-					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, null, msgs);
+					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
 				return basicSetOwnedCompleteModel((CompleteModel)otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				if (ownedStandardLibrary != null)
-					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, null, msgs);
+					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
 				return basicSetOwnedStandardLibrary((StandardLibrary)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -222,17 +239,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return basicSetOwnedCompleteModel(null, msgs);
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return basicSetOwnedStandardLibrary(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -248,17 +265,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedCompleteModel();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getOwnedStandardLibrary();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -275,26 +292,26 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedStandardLibrary((StandardLibrary)newValue);
 				return;
 		}
@@ -311,22 +328,22 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedStandardLibrary((StandardLibrary)null);
 				return;
 		}
@@ -343,17 +360,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_ENVIRONMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ownedCompleteModel != null;
-			case PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return ownedStandardLibrary != null;
 		}
 		return eDynamicIsSet(featureID);

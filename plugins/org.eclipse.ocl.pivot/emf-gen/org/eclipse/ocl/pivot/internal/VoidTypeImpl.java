@@ -32,6 +32,23 @@ public class VoidTypeImpl
 		implements VoidType {
 
 	/**
+	 * The number of structural features of the '<em>Void Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VOID_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Void Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VOID_TYPE_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

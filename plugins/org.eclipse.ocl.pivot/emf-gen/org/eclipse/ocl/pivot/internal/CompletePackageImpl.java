@@ -75,6 +75,23 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 {
 
 	/**
+	 * The number of structural features of the '<em>Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPLETE_PACKAGE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5;
+	/**
+	 * The number of operations of the '<em>Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPLETE_PACKAGE_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -96,21 +113,21 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompleteClasses()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompletePackages()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompleteModel((CompleteModel)otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompletePackage((CompletePackage)otherEnd, msgs);
@@ -128,21 +145,21 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedCompleteClasses()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedCompletePackages()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return basicSetOwningCompleteModel(null, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return basicSetOwningCompletePackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -158,10 +175,10 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, CompleteModel.class, msgs);
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, CompletePackage.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompleteModel.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompletePackage.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -176,25 +193,25 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.COMPLETE_PACKAGE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedCompleteClasses();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getOwnedCompletePackages();
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return getOwningCompleteModel();
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return getOwningCompletePackage();
-			case PivotPackage.COMPLETE_PACKAGE__PARTIAL_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				return getPartialPackages();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -211,40 +228,40 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getOwnedCompleteClasses().clear();
 				getOwnedCompleteClasses().addAll((Collection<? extends CompleteClass>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getOwnedCompletePackages().clear();
 				getOwnedCompletePackages().addAll((Collection<? extends CompletePackage>)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setOwningCompleteModel((CompleteModel)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwningCompletePackage((CompletePackage)newValue);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__PARTIAL_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				getPartialPackages().clear();
 				getPartialPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
@@ -262,34 +279,34 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getOwnedCompleteClasses().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getOwnedCompletePackages().clear();
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setOwningCompleteModel((CompleteModel)null);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwningCompletePackage((CompletePackage)null);
 				return;
-			case PivotPackage.COMPLETE_PACKAGE__PARTIAL_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				getPartialPackages().clear();
 				return;
 		}
@@ -307,25 +324,25 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ownedCompleteClasses != null && !ownedCompleteClasses.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ownedCompletePackages != null && !ownedCompletePackages.isEmpty();
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return getOwningCompleteModel() != null;
-			case PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return getOwningCompletePackage() != null;
-			case PivotPackage.COMPLETE_PACKAGE__PARTIAL_PACKAGES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
 				return partialPackages != null && !partialPackages.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -341,11 +358,11 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (operationID)
 		{
-			case PivotPackage.COMPLETE_PACKAGE___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.COMPLETE_PACKAGE___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
 				return getOwnedCompleteClass((String)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -600,7 +617,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public CompleteModel getOwningCompleteModel()
 	{
-		if (eContainerFeatureID() != PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (CompleteModel)eInternalContainer();
 	}
 
@@ -611,7 +628,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	public NotificationChain basicSetOwningCompleteModel(CompleteModel newOwningCompleteModel, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteModel, PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteModel, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -623,7 +640,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void setOwningCompleteModel(CompleteModel newOwningCompleteModel)
 	{
-		if (newOwningCompleteModel != eInternalContainer() || (eContainerFeatureID() != PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL && newOwningCompleteModel != null))
+		if (newOwningCompleteModel != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2) && newOwningCompleteModel != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompleteModel))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -631,12 +648,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompleteModel != null)
-				msgs = ((InternalEObject)newOwningCompleteModel).eInverseAdd(this, PivotPackage.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)newOwningCompleteModel).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompleteModel.class, msgs);
 			msgs = basicSetOwningCompleteModel(newOwningCompleteModel, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, newOwningCompleteModel, newOwningCompleteModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, newOwningCompleteModel, newOwningCompleteModel));
 	}
 
 	/**
@@ -646,7 +663,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	@Override
 	public @Nullable CompletePackage getOwningCompletePackage() {
-		if (eContainerFeatureID() != PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3)) return null;
 		return (CompletePackage)eInternalContainer();
 	}
 
@@ -657,7 +674,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	public NotificationChain basicSetOwningCompletePackage(CompletePackage newOwningCompletePackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompletePackage, PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompletePackage, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, msgs);
 		return msgs;
 	}
 
@@ -669,7 +686,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void setOwningCompletePackage(CompletePackage newOwningCompletePackage)
 	{
-		if (newOwningCompletePackage != eInternalContainer() || (eContainerFeatureID() != PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE && newOwningCompletePackage != null))
+		if (newOwningCompletePackage != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3) && newOwningCompletePackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompletePackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -677,12 +694,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompletePackage != null)
-				msgs = ((InternalEObject)newOwningCompletePackage).eInverseAdd(this, PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, CompletePackage.class, msgs);
+				msgs = ((InternalEObject)newOwningCompletePackage).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompletePackage.class, msgs);
 			msgs = basicSetOwningCompletePackage(newOwningCompletePackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, newOwningCompletePackage, newOwningCompletePackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, newOwningCompletePackage, newOwningCompletePackage));
 	}
 
 	@Override

@@ -29,6 +29,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -36,6 +38,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -53,6 +56,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class BooleanLiteralExpImpl
 		extends PrimitiveLiteralExpImpl
 		implements BooleanLiteralExp {
+
+	/**
+	 * The number of structural features of the '<em>Boolean Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BOOLEAN_LITERAL_EXP_FEATURE_COUNT = PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Boolean Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BOOLEAN_LITERAL_EXP_OPERATION_COUNT = PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The default value of the '{@link #isBooleanSymbol() <em>Boolean Symbol</em>}' attribute.
@@ -124,7 +145,7 @@ public class BooleanLiteralExpImpl
 		boolean oldBooleanSymbolESet = (eFlags & BOOLEAN_SYMBOL_ESETFLAG) != 0;
 		eFlags |= BOOLEAN_SYMBOL_ESETFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, oldBooleanSymbol, newBooleanSymbol, !oldBooleanSymbolESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0, oldBooleanSymbol, newBooleanSymbol, !oldBooleanSymbolESet));
 	}
 
 	/**
@@ -139,7 +160,7 @@ public class BooleanLiteralExpImpl
 		if (BOOLEAN_SYMBOL_EDEFAULT) eFlags |= BOOLEAN_SYMBOL_EFLAG; else eFlags &= ~BOOLEAN_SYMBOL_EFLAG;
 		eFlags &= ~BOOLEAN_SYMBOL_ESETFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, oldBooleanSymbol, BOOLEAN_SYMBOL_EDEFAULT, oldBooleanSymbolESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0, oldBooleanSymbol, BOOLEAN_SYMBOL_EDEFAULT, oldBooleanSymbolESet));
 	}
 
 	/**
@@ -174,9 +195,9 @@ public class BooleanLiteralExpImpl
 			 *         'BooleanLiteralExp::TypeIsBoolean'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_BooleanLiteralExp_c_c_TypeIsBoolean);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_BooleanLiteralExp_c_c_TypeIsBoolean);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -184,7 +205,7 @@ public class BooleanLiteralExpImpl
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean = idResolver.getClass(TypeId.BOOLEAN, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Boolean.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_BooleanLiteralExp_c_c_TypeIsBoolean, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -205,26 +226,26 @@ public class BooleanLiteralExpImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.BOOLEAN_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL:
+			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
 				return isBooleanSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -240,35 +261,35 @@ public class BooleanLiteralExpImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.BOOLEAN_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL:
+			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
 				setBooleanSymbol((Boolean)newValue);
 				return;
 		}
@@ -284,31 +305,31 @@ public class BooleanLiteralExpImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.BOOLEAN_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL:
+			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
 				unsetBooleanSymbol();
 				return;
 		}
@@ -324,25 +345,25 @@ public class BooleanLiteralExpImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.BOOLEAN_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.BOOLEAN_LITERAL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL:
+			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
 				return isSetBooleanSymbol();
 		}
 		return eDynamicIsSet(featureID);
@@ -359,19 +380,19 @@ public class BooleanLiteralExpImpl
 	{
 		switch (operationID)
 		{
-			case PivotPackage.BOOLEAN_LITERAL_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.BOOLEAN_LITERAL_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.BOOLEAN_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.BOOLEAN_LITERAL_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.BOOLEAN_LITERAL_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP:
+			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_OPERATION_COUNT + 0:
 				return validateTypeIsBoolean((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

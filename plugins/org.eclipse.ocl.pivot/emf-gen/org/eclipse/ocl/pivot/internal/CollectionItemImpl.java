@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,6 +60,22 @@ public class CollectionItemImpl
 		extends CollectionLiteralPartImpl
 		implements CollectionItem {
 
+	/**
+	 * The number of structural features of the '<em>Collection Item</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_ITEM_FEATURE_COUNT = CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Collection Item</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_ITEM_OPERATION_COUNT = CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_OPERATION_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getOwnedItem() <em>Owned Item</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -107,7 +125,7 @@ public class CollectionItemImpl
 		ownedItem = newOwnedItem;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_ITEM__OWNED_ITEM, oldOwnedItem, newOwnedItem);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, oldOwnedItem, newOwnedItem);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +142,14 @@ public class CollectionItemImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedItem != null)
-				msgs = ((InternalEObject)ownedItem).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_ITEM__OWNED_ITEM, null, msgs);
+				msgs = ((InternalEObject)ownedItem).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedItem != null)
-				msgs = ((InternalEObject)newOwnedItem).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_ITEM__OWNED_ITEM, null, msgs);
+				msgs = ((InternalEObject)newOwnedItem).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedItem(newOwnedItem, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_ITEM__OWNED_ITEM, newOwnedItem, newOwnedItem));
+			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, newOwnedItem, newOwnedItem));
 	}
 
 	/**
@@ -156,18 +174,18 @@ public class CollectionItemImpl
 			 *         'CollectionItem::TypeIsItemType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_CollectionItem_c_c_TypeIsItemType);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_CollectionItem_c_c_TypeIsItemType);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedItem = this.getOwnedItem();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedItem.getType();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedItem = this.getOwnedItem();
+				final /*@NonInvalid*/ @Nullable Type type_0 = ownedItem.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionItem_c_c_TypeIsItemType, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -189,15 +207,15 @@ public class CollectionItemImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_ITEM__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_ITEM__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_ITEM__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_ITEM__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return basicSetOwnedItem(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -212,24 +230,24 @@ public class CollectionItemImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_ITEM__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.COLLECTION_ITEM__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.COLLECTION_ITEM__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.COLLECTION_ITEM__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.COLLECTION_ITEM__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.COLLECTION_ITEM__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.COLLECTION_ITEM__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.COLLECTION_ITEM__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return getOwnedItem();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -245,32 +263,32 @@ public class CollectionItemImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_ITEM__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				setOwnedItem((OCLExpression)newValue);
 				return;
 		}
@@ -286,28 +304,28 @@ public class CollectionItemImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_ITEM__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.COLLECTION_ITEM__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.COLLECTION_ITEM__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.COLLECTION_ITEM__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				setOwnedItem((OCLExpression)null);
 				return;
 		}
@@ -323,23 +341,23 @@ public class CollectionItemImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_ITEM__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.COLLECTION_ITEM__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.COLLECTION_ITEM__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.COLLECTION_ITEM__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.COLLECTION_ITEM__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.COLLECTION_ITEM__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.COLLECTION_ITEM__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.COLLECTION_ITEM__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return ownedItem != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -356,15 +374,15 @@ public class CollectionItemImpl
 	{
 		switch (operationID)
 		{
-			case PivotPackage.COLLECTION_ITEM___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.COLLECTION_ITEM___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.COLLECTION_ITEM___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.COLLECTION_ITEM___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 3:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.COLLECTION_ITEM___VALIDATE_TYPE_IS_ITEM_TYPE__DIAGNOSTICCHAIN_MAP:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_OPERATION_COUNT + 0:
 				return validateTypeIsItemType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

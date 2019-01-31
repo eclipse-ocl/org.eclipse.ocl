@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -42,6 +44,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,6 +62,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 {
+	/**
+	 * The number of structural features of the '<em>Shadow Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SHADOW_PART_FEATURE_COUNT = TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Shadow Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SHADOW_PART_OPERATION_COUNT = TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 3;
+
 	/**
 	 * The cached value of the '{@link #getOwnedInit() <em>Owned Init</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -115,7 +136,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.SHADOW_PART__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -142,7 +163,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.SHADOW_PART__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -168,8 +189,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			 *         'ShadowPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -179,15 +200,15 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit = this.getOwnedInit();
+					final /*@NonInvalid*/ @Nullable Type type = ownedInit.getType();
 					final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
-					/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+					/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
 					if (conformsTo == Boolean.TRUE) {
 						safe_conformsTo_source = null;
 					}
 					else {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 						final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 						safe_conformsTo_source = conformsTo_0;
 					}
@@ -228,9 +249,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			 *         'ShadowPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_TypeIsNotInvalid);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_TypeIsNotInvalid);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -238,7 +259,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -273,15 +294,15 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			 *         'ShadowPart::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_TypeIsNotNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_TypeIsNotNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = type != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_TypeIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -315,7 +336,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		ownedInit = newOwnedInit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.SHADOW_PART__OWNED_INIT, oldOwnedInit, newOwnedInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, oldOwnedInit, newOwnedInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -333,14 +354,14 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		{
 			NotificationChain msgs = null;
 			if (ownedInit != null)
-				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.SHADOW_PART__OWNED_INIT, null, msgs);
+				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedInit != null)
-				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.SHADOW_PART__OWNED_INIT, null, msgs);
+				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedInit(newOwnedInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.SHADOW_PART__OWNED_INIT, newOwnedInit, newOwnedInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, newOwnedInit, newOwnedInit));
 	}
 
 	/**
@@ -353,15 +374,15 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.SHADOW_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.SHADOW_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.SHADOW_PART__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.SHADOW_PART__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.SHADOW_PART__OWNED_INIT:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetOwnedInit(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -377,26 +398,26 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.SHADOW_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.SHADOW_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.SHADOW_PART__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.SHADOW_PART__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.SHADOW_PART__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.SHADOW_PART__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.SHADOW_PART__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.SHADOW_PART__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.SHADOW_PART__OWNED_INIT:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedInit();
-			case PivotPackage.SHADOW_PART__REFERRED_PROPERTY:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -414,35 +435,35 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.SHADOW_PART__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_INIT:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				setOwnedInit((OCLExpression)newValue);
 				return;
-			case PivotPackage.SHADOW_PART__REFERRED_PROPERTY:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -459,31 +480,31 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.SHADOW_PART__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.SHADOW_PART__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.SHADOW_PART__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.SHADOW_PART__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.SHADOW_PART__OWNED_INIT:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				setOwnedInit((OCLExpression)null);
 				return;
-			case PivotPackage.SHADOW_PART__REFERRED_PROPERTY:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -500,25 +521,25 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.SHADOW_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.SHADOW_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.SHADOW_PART__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.SHADOW_PART__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.SHADOW_PART__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.SHADOW_PART__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.SHADOW_PART__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.SHADOW_PART__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.SHADOW_PART__OWNED_INIT:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return ownedInit != null;
-			case PivotPackage.SHADOW_PART__REFERRED_PROPERTY:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -535,17 +556,17 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		switch (operationID)
 		{
-			case PivotPackage.SHADOW_PART___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.SHADOW_PART___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.SHADOW_PART___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

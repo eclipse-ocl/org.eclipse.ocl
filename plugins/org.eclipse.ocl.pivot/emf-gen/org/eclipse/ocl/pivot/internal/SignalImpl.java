@@ -28,6 +28,23 @@ public class SignalImpl
 		implements Signal {
 
 	/**
+	 * The number of structural features of the '<em>Signal</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SIGNAL_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Signal</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SIGNAL_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

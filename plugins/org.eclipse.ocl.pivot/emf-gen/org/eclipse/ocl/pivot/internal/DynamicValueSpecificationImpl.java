@@ -26,6 +26,23 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class DynamicValueSpecificationImpl extends ValueSpecificationImpl implements DynamicValueSpecification
 {
 	/**
+	 * The number of structural features of the '<em>Dynamic Value Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_VALUE_SPECIFICATION_FEATURE_COUNT = ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Dynamic Value Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_VALUE_SPECIFICATION_OPERATION_COUNT = ValueSpecificationImpl.VALUE_SPECIFICATION_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -45,6 +45,24 @@ import org.eclipse.ocl.pivot.Type;
 public abstract class LanguageExpressionImpl extends ValueSpecificationImpl implements LanguageExpression
 {
 	/**
+	 * The number of structural features of the '<em>Language Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LANGUAGE_EXPRESSION_FEATURE_COUNT = ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Language Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LANGUAGE_EXPRESSION_OPERATION_COUNT = ValueSpecificationImpl.VALUE_SPECIFICATION_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #getBody() <em>Body</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -117,7 +135,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.LANGUAGE_EXPRESSION__BODY, oldBody, body));
+			eNotify(new ENotificationImpl(this, Notification.SET, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0, oldBody, body));
 	}
 
 	/**
@@ -139,7 +157,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public Constraint getOwningConstraint()
 	{
-		if (eContainerFeatureID() != PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT) return null;
+		if (eContainerFeatureID() != (ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2)) return null;
 		return (Constraint)eInternalContainer();
 	}
 
@@ -150,7 +168,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	 */
 	public NotificationChain basicSetOwningConstraint(Constraint newOwningConstraint, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningConstraint, PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningConstraint, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -162,7 +180,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public void setOwningConstraint(Constraint newOwningConstraint)
 	{
-		if (newOwningConstraint != eInternalContainer() || (eContainerFeatureID() != PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT && newOwningConstraint != null))
+		if (newOwningConstraint != eInternalContainer() || (eContainerFeatureID() != (ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2) && newOwningConstraint != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningConstraint))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -170,12 +188,12 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningConstraint != null)
-				msgs = ((InternalEObject)newOwningConstraint).eInverseAdd(this, PivotPackage.CONSTRAINT__OWNED_SPECIFICATION, Constraint.class, msgs);
+				msgs = ((InternalEObject)newOwningConstraint).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, Constraint.class, msgs);
 			msgs = basicSetOwningConstraint(newOwningConstraint, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, newOwningConstraint, newOwningConstraint));
+			eNotify(new ENotificationImpl(this, Notification.SET, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, newOwningConstraint, newOwningConstraint));
 	}
 
 	/**
@@ -189,13 +207,13 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningConstraint((Constraint)otherEnd, msgs);
@@ -213,15 +231,15 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				return basicSetOwningConstraint(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -237,8 +255,8 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.CONSTRAINT__OWNED_SPECIFICATION, Constraint.class, msgs);
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, Constraint.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -253,28 +271,28 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.LANGUAGE_EXPRESSION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.LANGUAGE_EXPRESSION__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.LANGUAGE_EXPRESSION__BODY:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
 				return getBody();
-			case PivotPackage.LANGUAGE_EXPRESSION__LANGUAGE:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 1:
 				return getLanguage();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				return getOwningConstraint();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -291,35 +309,35 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__BODY:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
 				setBody((String)newValue);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				setOwningConstraint((Constraint)newValue);
 				return;
 		}
@@ -336,31 +354,31 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__BODY:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
 				setBody(BODY_EDEFAULT);
 				return;
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				setOwningConstraint((Constraint)null);
 				return;
 		}
@@ -377,27 +395,27 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LANGUAGE_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.LANGUAGE_EXPRESSION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.LANGUAGE_EXPRESSION__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.LANGUAGE_EXPRESSION__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.LANGUAGE_EXPRESSION__BODY:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
-			case PivotPackage.LANGUAGE_EXPRESSION__LANGUAGE:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 1:
 				return LANGUAGE_EDEFAULT == null ? getLanguage() != null : !LANGUAGE_EDEFAULT.equals(getLanguage());
-			case PivotPackage.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT:
+			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
 				return getOwningConstraint() != null;
 		}
 		return eDynamicIsSet(featureID);

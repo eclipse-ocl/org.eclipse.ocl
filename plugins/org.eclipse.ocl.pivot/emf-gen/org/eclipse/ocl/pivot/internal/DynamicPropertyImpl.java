@@ -42,6 +42,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 {
 	/**
+	 * The number of structural features of the '<em>Dynamic Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_PROPERTY_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Dynamic Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_PROPERTY_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #getDefault() <em>Default</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +125,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -134,7 +152,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -159,7 +177,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 		String oldDefault = default_;
 		default_ = newDefault;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.DYNAMIC_PROPERTY__DEFAULT, oldDefault, default_));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldDefault, default_));
 	}
 
 	/**
@@ -172,17 +190,17 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.DYNAMIC_PROPERTY__DEFAULT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getDefault();
-			case PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -200,26 +218,26 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__DEFAULT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setDefault((String)newValue);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -236,22 +254,22 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__DEFAULT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setDefault(DEFAULT_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -268,17 +286,17 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.DYNAMIC_PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.DYNAMIC_PROPERTY__DEFAULT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return DEFAULT_EDEFAULT == null ? default_ != null : !DEFAULT_EDEFAULT.equals(default_);
-			case PivotPackage.DYNAMIC_PROPERTY__REFERRED_PROPERTY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);

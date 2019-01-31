@@ -32,6 +32,23 @@ public abstract class ValueSpecificationImpl
 		implements ValueSpecification {
 
 	/**
+	 * The number of structural features of the '<em>Value Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VALUE_SPECIFICATION_FEATURE_COUNT = TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Value Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VALUE_SPECIFICATION_OPERATION_COUNT = TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -120,23 +137,23 @@ public abstract class ValueSpecificationImpl
 			throws InvocationTargetException {
 		switch (operationID)
 		{
-			case PivotPackage.VALUE_SPECIFICATION___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.VALUE_SPECIFICATION___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.VALUE_SPECIFICATION___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.VALUE_SPECIFICATION___BOOLEAN_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
 				return booleanValue();
-			case PivotPackage.VALUE_SPECIFICATION___INTEGER_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
 				return integerValue();
-			case PivotPackage.VALUE_SPECIFICATION___IS_COMPUTABLE:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
 				return isComputable();
-			case PivotPackage.VALUE_SPECIFICATION___IS_NULL:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 3:
 				return isNull();
-			case PivotPackage.VALUE_SPECIFICATION___STRING_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 4:
 				return stringValue();
-			case PivotPackage.VALUE_SPECIFICATION___UNLIMITED_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 5:
 				return unlimitedValue();
 		}
 		return eDynamicInvoke(operationID, arguments);

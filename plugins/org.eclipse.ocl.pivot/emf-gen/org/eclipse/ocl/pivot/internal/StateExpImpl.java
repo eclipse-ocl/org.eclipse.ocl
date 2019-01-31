@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -38,6 +40,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,6 +59,22 @@ public class StateExpImpl
 		extends OCLExpressionImpl
 		implements StateExp {
 
+	/**
+	 * The number of structural features of the '<em>State Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STATE_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>State Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STATE_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getReferredState() <em>Referred State</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -99,7 +118,7 @@ public class StateExpImpl
 			if (referredState != oldReferredState)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.STATE_EXP__REFERRED_STATE, oldReferredState, referredState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredState, referredState));
 			}
 		}
 		return referredState;
@@ -124,7 +143,7 @@ public class StateExpImpl
 		State oldReferredState = referredState;
 		referredState = newReferredState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE_EXP__REFERRED_STATE, oldReferredState, referredState));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredState, referredState));
 	}
 
 	/**
@@ -149,9 +168,9 @@ public class StateExpImpl
 			 *         'StateExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_StateExp_c_c_TypeIsNotInvalid);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_StateExp_c_c_TypeIsNotInvalid);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -159,7 +178,7 @@ public class StateExpImpl
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_StateExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -180,26 +199,26 @@ public class StateExpImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.STATE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.STATE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.STATE_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.STATE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.STATE_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.STATE_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.STATE_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.STATE_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.STATE_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.STATE_EXP__REFERRED_STATE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				if (resolve) return getReferredState();
 				return basicGetReferredState();
 		}
@@ -216,35 +235,35 @@ public class StateExpImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.STATE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STATE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.STATE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STATE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.STATE_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.STATE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.STATE_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.STATE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.STATE_EXP__REFERRED_STATE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setReferredState((State)newValue);
 				return;
 		}
@@ -260,31 +279,31 @@ public class StateExpImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.STATE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.STATE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.STATE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.STATE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.STATE_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.STATE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.STATE_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.STATE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.STATE_EXP__REFERRED_STATE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setReferredState((State)null);
 				return;
 		}
@@ -300,25 +319,25 @@ public class StateExpImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.STATE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.STATE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.STATE_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.STATE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.STATE_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.STATE_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.STATE_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.STATE_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.STATE_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.STATE_EXP__REFERRED_STATE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return referredState != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -335,19 +354,19 @@ public class StateExpImpl
 	{
 		switch (operationID)
 		{
-			case PivotPackage.STATE_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.STATE_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.STATE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.STATE_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.STATE_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.STATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.STATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

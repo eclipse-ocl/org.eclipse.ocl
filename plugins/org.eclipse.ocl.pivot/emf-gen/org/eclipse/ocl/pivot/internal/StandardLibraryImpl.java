@@ -90,6 +90,24 @@ import org.eclipse.osgi.util.NLS;
 public class StandardLibraryImpl extends ElementImpl implements StandardLibrary, org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal
 {
 	/**
+	 * The number of structural features of the '<em>Standard Library</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STANDARD_LIBRARY_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Standard Library</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STANDARD_LIBRARY_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -117,7 +135,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public CompleteEnvironment getOwningCompleteEnvironment()
 	{
-		if (eContainerFeatureID() != PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT) return null;
+		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 0)) return null;
 		return (CompleteEnvironment)eInternalContainer();
 	}
 
@@ -128,7 +146,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	 */
 	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, ElementImpl.ELEMENT_FEATURE_COUNT + 0, msgs);
 		return msgs;
 	}
 
@@ -140,7 +158,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
 	{
-		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT && newOwningCompleteEnvironment != null))
+		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 0) && newOwningCompleteEnvironment != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -148,12 +166,12 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompleteEnvironment != null)
-				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, CompleteEnvironment.class, msgs);
+				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, CompleteEnvironment.class, msgs);
 			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
 	}
 
 	/**
@@ -167,13 +185,13 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompleteEnvironment((CompleteEnvironment)otherEnd, msgs);
@@ -191,15 +209,15 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return basicSetOwningCompleteEnvironment(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -215,8 +233,8 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, CompleteEnvironment.class, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+				return eInternalContainer().eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, CompleteEnvironment.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -231,15 +249,15 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwningCompleteEnvironment();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -256,23 +274,23 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwningCompleteEnvironment((CompleteEnvironment)newValue);
 				return;
 		}
@@ -289,19 +307,19 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwningCompleteEnvironment((CompleteEnvironment)null);
 				return;
 		}
@@ -318,15 +336,15 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STANDARD_LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.STANDARD_LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwningCompleteEnvironment() != null;
 		}
 		return eDynamicIsSet(featureID);

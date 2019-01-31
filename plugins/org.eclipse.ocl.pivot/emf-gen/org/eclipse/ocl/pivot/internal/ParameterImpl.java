@@ -48,6 +48,22 @@ public class ParameterImpl
 		implements Parameter {
 
 	/**
+	 * The number of structural features of the '<em>Parameter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PARAMETER_FEATURE_COUNT = VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Parameter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PARAMETER_OPERATION_COUNT = VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 0;
+	/**
 	 * The default value of the '{@link #isIsTypeof() <em>Is Typeof</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +123,7 @@ public class ParameterImpl
 		boolean oldIsTypeof = (eFlags & IS_TYPEOF_EFLAG) != 0;
 		if (newIsTypeof) eFlags |= IS_TYPEOF_EFLAG; else eFlags &= ~IS_TYPEOF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PARAMETER__IS_TYPEOF, oldIsTypeof, newIsTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0, oldIsTypeof, newIsTypeof));
 	}
 
 	/**
@@ -118,7 +134,7 @@ public class ParameterImpl
 	@Override
 	public Operation getOwningOperation()
 	{
-		if (eContainerFeatureID() != PivotPackage.PARAMETER__OWNING_OPERATION) return null;
+		if (eContainerFeatureID() != (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -129,7 +145,7 @@ public class ParameterImpl
 	 */
 	public NotificationChain basicSetOwningOperation(Operation newOwningOperation, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, PivotPackage.PARAMETER__OWNING_OPERATION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -141,7 +157,7 @@ public class ParameterImpl
 	@Override
 	public void setOwningOperation(Operation newOwningOperation)
 	{
-		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != PivotPackage.PARAMETER__OWNING_OPERATION && newOwningOperation != null))
+		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1) && newOwningOperation != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -149,12 +165,12 @@ public class ParameterImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningOperation != null)
-				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, PivotPackage.OPERATION__OWNED_PARAMETERS, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, Operation.class, msgs);
 			msgs = basicSetOwningOperation(newOwningOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PARAMETER__OWNING_OPERATION, newOwningOperation, newOwningOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, newOwningOperation, newOwningOperation));
 	}
 
 	/**
@@ -168,13 +184,13 @@ public class ParameterImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningOperation((Operation)otherEnd, msgs);
@@ -192,15 +208,15 @@ public class ParameterImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return basicSetOwningOperation(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -216,8 +232,8 @@ public class ParameterImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.OPERATION__OWNED_PARAMETERS, Operation.class, msgs);
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, Operation.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -231,28 +247,28 @@ public class ParameterImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PARAMETER__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PARAMETER__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PARAMETER__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.PARAMETER__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.PARAMETER__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.PARAMETER__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.PARAMETER__IS_TYPEOF:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				return isIsTypeof();
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return getOwningOperation();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -268,38 +284,38 @@ public class ParameterImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PARAMETER__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PARAMETER__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PARAMETER__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.PARAMETER__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.PARAMETER__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.PARAMETER__IS_TYPEOF:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				setIsTypeof((Boolean)newValue);
 				return;
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				setOwningOperation((Operation)newValue);
 				return;
 		}
@@ -315,34 +331,34 @@ public class ParameterImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PARAMETER__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PARAMETER__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PARAMETER__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.PARAMETER__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.PARAMETER__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.PARAMETER__IS_TYPEOF:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				setOwningOperation((Operation)null);
 				return;
 		}
@@ -358,27 +374,27 @@ public class ParameterImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PARAMETER__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PARAMETER__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PARAMETER__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PARAMETER__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PARAMETER__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PARAMETER__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.PARAMETER__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.PARAMETER__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.PARAMETER__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.PARAMETER__IS_TYPEOF:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
-			case PivotPackage.PARAMETER__OWNING_OPERATION:
+			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
 				return getOwningOperation() != null;
 		}
 		return eDynamicIsSet(featureID);

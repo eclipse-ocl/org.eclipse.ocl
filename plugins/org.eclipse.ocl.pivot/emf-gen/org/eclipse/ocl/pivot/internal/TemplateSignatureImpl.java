@@ -55,6 +55,22 @@ public class TemplateSignatureImpl
 		implements TemplateSignature {
 
 	/**
+	 * The number of structural features of the '<em>Template Signature</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATE_SIGNATURE_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Template Signature</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATE_SIGNATURE_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getOwnedParameters() <em>Owned Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,7 +109,7 @@ public class TemplateSignatureImpl
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS, PivotPackage.TEMPLATE_PARAMETER__OWNING_SIGNATURE);
+			ownedParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, TypeImpl.TYPE_FEATURE_COUNT + 1);
 		}
 		return ownedParameters;
 	}
@@ -105,7 +121,7 @@ public class TemplateSignatureImpl
 	 */
 	@Override
 	public TemplateableElement getOwningElement() {
-		if (eContainerFeatureID() != PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT) return null;
+		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 1)) return null;
 		return (TemplateableElement)eInternalContainer();
 	}
 
@@ -116,7 +132,7 @@ public class TemplateSignatureImpl
 	 */
 	public NotificationChain basicSetOwningElement(TemplateableElement newOwningElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningElement, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningElement, ElementImpl.ELEMENT_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -128,7 +144,7 @@ public class TemplateSignatureImpl
 	@Override
 	public void setOwningElement(TemplateableElement newOwningElement)
 	{
-		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT && newOwningElement != null))
+		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 1) && newOwningElement != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -136,12 +152,12 @@ public class TemplateSignatureImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, TemplateableElement.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateableElement.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, newOwningElement, newOwningElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwningElement, newOwningElement));
 	}
 
 	/**
@@ -155,15 +171,15 @@ public class TemplateSignatureImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningElement((TemplateableElement)otherEnd, msgs);
@@ -181,17 +197,17 @@ public class TemplateSignatureImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return basicSetOwningElement(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -207,8 +223,8 @@ public class TemplateSignatureImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, TemplateableElement.class, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateableElement.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -222,17 +238,17 @@ public class TemplateSignatureImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedParameters();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getOwningElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -248,27 +264,27 @@ public class TemplateSignatureImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwningElement((TemplateableElement)newValue);
 				return;
 		}
@@ -284,22 +300,22 @@ public class TemplateSignatureImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getOwnedParameters().clear();
 				return;
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwningElement((TemplateableElement)null);
 				return;
 		}
@@ -315,17 +331,17 @@ public class TemplateSignatureImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATE_SIGNATURE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNED_PARAMETERS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getOwningElement() != null;
 		}
 		return eDynamicIsSet(featureID);

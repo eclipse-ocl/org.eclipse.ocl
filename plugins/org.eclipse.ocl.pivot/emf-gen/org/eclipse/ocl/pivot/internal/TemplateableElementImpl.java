@@ -49,6 +49,24 @@ public abstract class TemplateableElementImpl
 		implements TemplateableElement {
 
 	/**
+	 * The number of structural features of the '<em>Templateable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATEABLE_ELEMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Templateable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATEABLE_ELEMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +125,7 @@ public abstract class TemplateableElementImpl
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, PivotPackage.TEMPLATE_BINDING__OWNING_ELEMENT);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
 		}
 		return ownedBindings;
 	}
@@ -133,7 +151,7 @@ public abstract class TemplateableElementImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -151,14 +169,14 @@ public abstract class TemplateableElementImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -183,7 +201,7 @@ public abstract class TemplateableElementImpl
 		TemplateableElement oldUnspecializedElement = unspecializedElement;
 		unspecializedElement = newUnspecializedElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -197,17 +215,17 @@ public abstract class TemplateableElementImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -223,17 +241,17 @@ public abstract class TemplateableElementImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return basicSetOwnedSignature(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -248,19 +266,19 @@ public abstract class TemplateableElementImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedBindings();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getOwnedSignature();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getUnspecializedElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -276,30 +294,30 @@ public abstract class TemplateableElementImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
 		}
@@ -315,25 +333,25 @@ public abstract class TemplateableElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
 		}
@@ -349,19 +367,19 @@ public abstract class TemplateableElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TEMPLATEABLE_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return ownedSignature != null;
-			case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return unspecializedElement != null;
 		}
 		return eDynamicIsSet(featureID);

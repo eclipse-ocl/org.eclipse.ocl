@@ -59,6 +59,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 {
 	/**
+	 * The number of structural features of the '<em>Dynamic Behavior</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_BEHAVIOR_FEATURE_COUNT = BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Dynamic Behavior</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DYNAMIC_BEHAVIOR_OPERATION_COUNT = BehaviorImpl.BEHAVIOR_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getMetaType() <em>Meta Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,7 +129,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 			if (metaType != oldMetaType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE, oldMetaType, metaType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0, oldMetaType, metaType));
 			}
 		}
 		return metaType;
@@ -140,7 +156,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		Type oldMetaType = metaType;
 		metaType = newMetaType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE, oldMetaType, metaType));
+			eNotify(new ENotificationImpl(this, Notification.SET, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0, oldMetaType, metaType));
 	}
 
 	/**
@@ -154,7 +170,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		if (ownedDynamicProperties == null)
 		{
-			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES);
+			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1);
 		}
 		return ownedDynamicProperties;
 	}
@@ -169,35 +185,35 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_BEHAVIOR__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BINDINGS:
+			case 6:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_SIGNATURE:
+			case 7:
 				return basicSetOwnedSignature(null, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__EXTENDERS:
+			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BEHAVIORS:
+			case 14:
 				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_INVARIANTS:
+			case 15:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_OPERATIONS:
+			case 16:
 				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_PROPERTIES:
+			case 17:
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_PACKAGE:
+			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_TRANSITION:
+			case 20:
 				return basicSetOwningTransition(null, msgs);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedDynamicProperties()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -213,52 +229,52 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_BEHAVIOR__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.DYNAMIC_BEHAVIOR__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BINDINGS:
+			case 6:
 				return getOwnedBindings();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_SIGNATURE:
+			case 7:
 				return getOwnedSignature();
-			case PivotPackage.DYNAMIC_BEHAVIOR__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return getUnspecializedElement();
-			case PivotPackage.DYNAMIC_BEHAVIOR__EXTENDERS:
+			case 9:
 				return getExtenders();
-			case PivotPackage.DYNAMIC_BEHAVIOR__INSTANCE_CLASS_NAME:
+			case 10:
 				return getInstanceClassName();
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ABSTRACT:
+			case 11:
 				return isIsAbstract();
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ACTIVE:
+			case 12:
 				return isIsActive();
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_INTERFACE:
+			case 13:
 				return isIsInterface();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BEHAVIORS:
+			case 14:
 				return getOwnedBehaviors();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_INVARIANTS:
+			case 15:
 				return getOwnedInvariants();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_OPERATIONS:
+			case 16:
 				return getOwnedOperations();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_PROPERTIES:
+			case 17:
 				return getOwnedProperties();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage();
-			case PivotPackage.DYNAMIC_BEHAVIOR__SUPER_CLASSES:
+			case 19:
 				return getSuperClasses();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_TRANSITION:
+			case 20:
 				return getOwningTransition();
-			case PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
 				if (resolve) return getMetaType();
 				return basicGetMetaType();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
 				return getOwnedDynamicProperties();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -275,85 +291,85 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_BEHAVIOR__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName((String)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ABSTRACT:
+			case 11:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ACTIVE:
+			case 12:
 				setIsActive((Boolean)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_INTERFACE:
+			case 13:
 				setIsInterface((Boolean)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_TRANSITION:
+			case 20:
 				setOwningTransition((Transition)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
 				setMetaType((Type)newValue);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
 				getOwnedDynamicProperties().clear();
 				getOwnedDynamicProperties().addAll((Collection<? extends DynamicProperty>)newValue);
 				return;
@@ -371,73 +387,73 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_BEHAVIOR__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ABSTRACT:
+			case 11:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ACTIVE:
+			case 12:
 				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_INTERFACE:
+			case 13:
 				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_TRANSITION:
+			case 20:
 				setOwningTransition((Transition)null);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
 				setMetaType((Type)null);
 				return;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
 				getOwnedDynamicProperties().clear();
 				return;
 		}
@@ -454,51 +470,51 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		switch (featureID)
 		{
-			case PivotPackage.DYNAMIC_BEHAVIOR__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BINDINGS:
+			case 6:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_SIGNATURE:
+			case 7:
 				return ownedSignature != null;
-			case PivotPackage.DYNAMIC_BEHAVIOR__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return unspecializedElement != null;
-			case PivotPackage.DYNAMIC_BEHAVIOR__EXTENDERS:
+			case 9:
 				return extenders != null && !extenders.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__INSTANCE_CLASS_NAME:
+			case 10:
 				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ABSTRACT:
+			case 11:
 				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_ACTIVE:
+			case 12:
 				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
-			case PivotPackage.DYNAMIC_BEHAVIOR__IS_INTERFACE:
+			case 13:
 				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_BEHAVIORS:
+			case 14:
 				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_INVARIANTS:
+			case 15:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_OPERATIONS:
+			case 16:
 				return ownedOperations != null && !ownedOperations.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_PROPERTIES:
+			case 17:
 				return ownedProperties != null && !ownedProperties.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage() != null;
-			case PivotPackage.DYNAMIC_BEHAVIOR__SUPER_CLASSES:
+			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNING_TRANSITION:
+			case 20:
 				return getOwningTransition() != null;
-			case PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
 				return metaType != null;
-			case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES:
+			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
 				return ownedDynamicProperties != null && !ownedDynamicProperties.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -516,7 +532,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE: return PivotPackage.DYNAMIC_ELEMENT__META_TYPE;
+				case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -524,7 +540,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES: return PivotPackage.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES;
+				case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1: return ClassImpl.CLASS_FEATURE_COUNT + 1;
 				default: return -1;
 			}
 		}
@@ -543,7 +559,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.DYNAMIC_ELEMENT__META_TYPE: return PivotPackage.DYNAMIC_BEHAVIOR__META_TYPE;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -551,7 +567,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES: return PivotPackage.DYNAMIC_BEHAVIOR__OWNED_DYNAMIC_PROPERTIES;
+				case ClassImpl.CLASS_FEATURE_COUNT + 1: return BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1;
 				default: return -1;
 			}
 		}

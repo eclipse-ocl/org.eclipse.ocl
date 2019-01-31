@@ -49,6 +49,22 @@ extends OCLExpressionImpl
 implements TypeExp {
 
 	/**
+	 * The number of structural features of the '<em>Type Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Type Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredType() <em>Referred Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,7 +107,7 @@ implements TypeExp {
 			if (referredType != oldReferredType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.TYPE_EXP__REFERRED_TYPE, oldReferredType, referredType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredType, referredType));
 			}
 		}
 		return referredType;
@@ -116,7 +132,7 @@ implements TypeExp {
 		Type oldReferredType = referredType;
 		referredType = newReferredType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TYPE_EXP__REFERRED_TYPE, oldReferredType, referredType));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredType, referredType));
 	}
 
 	/**
@@ -128,26 +144,26 @@ implements TypeExp {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.TYPE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.TYPE_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.TYPE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.TYPE_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.TYPE_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.TYPE_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.TYPE_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.TYPE_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.TYPE_EXP__REFERRED_TYPE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				if (resolve) return getReferredType();
 				return basicGetReferredType();
 		}
@@ -164,35 +180,35 @@ implements TypeExp {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.TYPE_EXP__REFERRED_TYPE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setReferredType((Type)newValue);
 				return;
 		}
@@ -208,31 +224,31 @@ implements TypeExp {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.TYPE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.TYPE_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.TYPE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.TYPE_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.TYPE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.TYPE_EXP__REFERRED_TYPE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setReferredType((Type)null);
 				return;
 		}
@@ -248,25 +264,25 @@ implements TypeExp {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.TYPE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.TYPE_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.TYPE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.TYPE_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.TYPE_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.TYPE_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.TYPE_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.TYPE_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.TYPE_EXP__REFERRED_TYPE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return referredType != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -284,7 +300,7 @@ implements TypeExp {
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.REFERRING_ELEMENT___GET_REFERRED_ELEMENT: return PivotPackage.TYPE_EXP___GET_REFERRED_ELEMENT;
+				case 0: return OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -302,19 +318,19 @@ implements TypeExp {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.TYPE_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.TYPE_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.TYPE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.TYPE_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.TYPE_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.TYPE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.TYPE_EXP___GET_REFERRED_ELEMENT:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
 				return getReferredElement();
 		}
 		return eDynamicInvoke(operationID, arguments);

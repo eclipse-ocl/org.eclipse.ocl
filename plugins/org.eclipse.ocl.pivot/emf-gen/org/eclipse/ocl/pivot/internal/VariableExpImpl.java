@@ -32,6 +32,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -39,6 +41,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,6 +61,22 @@ public class VariableExpImpl
 extends OCLExpressionImpl
 implements VariableExp {
 
+	/**
+	 * The number of structural features of the '<em>Variable Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2;
+	/**
+	 * The number of operations of the '<em>Variable Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2;
 	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -130,7 +149,7 @@ implements VariableExp {
 			if (referredVariable != oldReferredVariable)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE, oldReferredVariable, referredVariable));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldReferredVariable, referredVariable));
 			}
 		}
 		return referredVariable;
@@ -155,7 +174,7 @@ implements VariableExp {
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -180,9 +199,9 @@ implements VariableExp {
 			 *         'VariableExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_VariableExp_c_c_TypeIsNotInvalid);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_VariableExp_c_c_TypeIsNotInvalid);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -190,7 +209,7 @@ implements VariableExp {
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_VariableExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -213,7 +232,7 @@ implements VariableExp {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE_EXP__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -225,28 +244,28 @@ implements VariableExp {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.VARIABLE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.VARIABLE_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.VARIABLE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.VARIABLE_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.VARIABLE_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.VARIABLE_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.VARIABLE_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.VARIABLE_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.VARIABLE_EXP__IS_IMPLICIT:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return isIsImplicit();
-			case PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				if (resolve) return getReferredVariable();
 				return basicGetReferredVariable();
 		}
@@ -263,38 +282,38 @@ implements VariableExp {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__IS_IMPLICIT:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setReferredVariable((VariableDeclaration)newValue);
 				return;
 		}
@@ -310,34 +329,34 @@ implements VariableExp {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.VARIABLE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.VARIABLE_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.VARIABLE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.VARIABLE_EXP__IS_IMPLICIT:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setReferredVariable((VariableDeclaration)null);
 				return;
 		}
@@ -353,27 +372,27 @@ implements VariableExp {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.VARIABLE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.VARIABLE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.VARIABLE_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.VARIABLE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.VARIABLE_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.VARIABLE_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.VARIABLE_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.VARIABLE_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.VARIABLE_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.VARIABLE_EXP__IS_IMPLICIT:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.VARIABLE_EXP__REFERRED_VARIABLE:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return referredVariable != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -391,7 +410,7 @@ implements VariableExp {
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.REFERRING_ELEMENT___GET_REFERRED_ELEMENT: return PivotPackage.VARIABLE_EXP___GET_REFERRED_ELEMENT;
+				case 0: return OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -409,21 +428,21 @@ implements VariableExp {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.VARIABLE_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.VARIABLE_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.VARIABLE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.VARIABLE_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.VARIABLE_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.VARIABLE_EXP___GET_REFERRED_ELEMENT:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
 				return getReferredElement();
-			case PivotPackage.VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

@@ -49,6 +49,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class PseudostateImpl extends VertexImpl implements Pseudostate
 {
 	/**
+	 * The number of structural features of the '<em>Pseudostate</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PSEUDOSTATE_FEATURE_COUNT = VertexImpl.VERTEX_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Pseudostate</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PSEUDOSTATE_OPERATION_COUNT = VertexImpl.VERTEX_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -139,7 +157,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 		if (newKind == null) newKind = KIND_EDEFAULT;
 		eFlags = eFlags & ~KIND_EFLAG | newKind.ordinal() << KIND_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PSEUDOSTATE__KIND, oldKind, newKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 0, oldKind, newKind));
 	}
 
 	/**
@@ -150,7 +168,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != PivotPackage.PSEUDOSTATE__OWNING_STATE) return null;
+		if (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 1)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -161,7 +179,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, PivotPackage.PSEUDOSTATE__OWNING_STATE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, VertexImpl.VERTEX_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -173,7 +191,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != PivotPackage.PSEUDOSTATE__OWNING_STATE && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 1) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -181,12 +199,12 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, PivotPackage.STATE__OWNED_CONNECTION_POINTS, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PSEUDOSTATE__OWNING_STATE, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 1, newOwningState, newOwningState));
 	}
 
 	/**
@@ -197,7 +215,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public StateMachine getOwningStateMachine()
 	{
-		if (eContainerFeatureID() != PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE) return null;
+		if (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2)) return null;
 		return (StateMachine)eInternalContainer();
 	}
 
@@ -208,7 +226,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	 */
 	public NotificationChain basicSetOwningStateMachine(StateMachine newOwningStateMachine, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, VertexImpl.VERTEX_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -220,7 +238,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public void setOwningStateMachine(StateMachine newOwningStateMachine)
 	{
-		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE && newOwningStateMachine != null))
+		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2) && newOwningStateMachine != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningStateMachine))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -228,12 +246,12 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStateMachine != null)
-				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, PivotPackage.STATE_MACHINE__OWNED_CONNECTION_POINTS, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1, StateMachine.class, msgs);
 			msgs = basicSetOwningStateMachine(newOwningStateMachine, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE, newOwningStateMachine, newOwningStateMachine));
+			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 2, newOwningStateMachine, newOwningStateMachine));
 	}
 
 	/**
@@ -247,25 +265,25 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__INCOMING_TRANSITIONS:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OUTGOING_TRANSITIONS:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningStateMachine((StateMachine)otherEnd, msgs);
@@ -283,23 +301,23 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__INCOMING_TRANSITIONS:
+			case 5:
 				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OUTGOING_TRANSITIONS:
+			case 6:
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				return basicSetOwningRegion(null, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				return basicSetOwningState(null, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				return basicSetOwningStateMachine(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -315,12 +333,12 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.REGION__OWNED_SUBVERTEXES, Region.class, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.STATE__OWNED_CONNECTION_POINTS, State.class, msgs);
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.STATE_MACHINE__OWNED_CONNECTION_POINTS, StateMachine.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, State.class, msgs);
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1, StateMachine.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -335,27 +353,27 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PSEUDOSTATE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PSEUDOSTATE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PSEUDOSTATE__INCOMING_TRANSITIONS:
+			case 5:
 				return getIncomingTransitions();
-			case PivotPackage.PSEUDOSTATE__OUTGOING_TRANSITIONS:
+			case 6:
 				return getOutgoingTransitions();
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				return getOwningRegion();
-			case PivotPackage.PSEUDOSTATE__KIND:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
 				return getKind();
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				return getOwningState();
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				return getOwningStateMachine();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -372,35 +390,35 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				setOwningRegion((Region)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__KIND:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
 				setKind((PseudostateKind)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				setOwningState((State)newValue);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				setOwningStateMachine((StateMachine)newValue);
 				return;
 		}
@@ -417,31 +435,31 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PSEUDOSTATE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				setOwningRegion((Region)null);
 				return;
-			case PivotPackage.PSEUDOSTATE__KIND:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
 				setKind(KIND_EDEFAULT);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				setOwningState((State)null);
 				return;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				setOwningStateMachine((StateMachine)null);
 				return;
 		}
@@ -458,27 +476,27 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PSEUDOSTATE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PSEUDOSTATE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PSEUDOSTATE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PSEUDOSTATE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PSEUDOSTATE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PSEUDOSTATE__INCOMING_TRANSITIONS:
+			case 5:
 				return incomingTransitions != null && !incomingTransitions.isEmpty();
-			case PivotPackage.PSEUDOSTATE__OUTGOING_TRANSITIONS:
+			case 6:
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-			case PivotPackage.PSEUDOSTATE__OWNING_REGION:
+			case 7:
 				return getOwningRegion() != null;
-			case PivotPackage.PSEUDOSTATE__KIND:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
 				return (eFlags & KIND_EFLAG) != KIND_EFLAG_DEFAULT;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
 				return getOwningState() != null;
-			case PivotPackage.PSEUDOSTATE__OWNING_STATE_MACHINE:
+			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
 				return getOwningStateMachine() != null;
 		}
 		return eDynamicIsSet(featureID);

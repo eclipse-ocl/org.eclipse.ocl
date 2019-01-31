@@ -29,6 +29,23 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class PrimitiveCompletePackageImpl extends CompletePackageImpl implements PrimitiveCompletePackage
 {
 	/**
+	 * The number of structural features of the '<em>Primitive Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRIMITIVE_COMPLETE_PACKAGE_FEATURE_COUNT = CompletePackageImpl.COMPLETE_PACKAGE_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Primitive Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRIMITIVE_COMPLETE_PACKAGE_OPERATION_COUNT = CompletePackageImpl.COMPLETE_PACKAGE_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

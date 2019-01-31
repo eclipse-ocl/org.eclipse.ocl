@@ -47,6 +47,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class LibraryImpl extends PackageImpl implements Library
 {
 	/**
+	 * The number of structural features of the '<em>Library</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIBRARY_FEATURE_COUNT = PackageImpl.PACKAGE_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Library</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIBRARY_OPERATION_COUNT = PackageImpl.PACKAGE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getOwnedPrecedences() <em>Owned Precedences</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -86,7 +102,7 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		if (ownedPrecedences == null)
 		{
-			ownedPrecedences = new EObjectContainmentEList<Precedence>(Precedence.class, this, PivotPackage.LIBRARY__OWNED_PRECEDENCES);
+			ownedPrecedences = new EObjectContainmentEList<Precedence>(Precedence.class, this, PackageImpl.PACKAGE_FEATURE_COUNT + 0);
 		}
 		return ownedPrecedences;
 	}
@@ -101,27 +117,27 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_CLASSES:
+			case 9:
 				return ((InternalEList<?>)getOwnedClasses()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_INSTANCES:
+			case 10:
 				return ((InternalEList<?>)getOwnedInstances()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_PACKAGES:
+			case 11:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return ((InternalEList<?>)getOwnedProfileApplications()).basicRemove(otherEnd, msgs);
-			case PivotPackage.LIBRARY__OWNING_PACKAGE:
+			case 13:
 				return basicSetOwningPackage(null, msgs);
-			case PivotPackage.LIBRARY__OWNED_PRECEDENCES:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedPrecedences()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -137,35 +153,35 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.LIBRARY__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.LIBRARY__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.LIBRARY__URI:
+			case 6:
 				return getURI();
-			case PivotPackage.LIBRARY__IMPORTED_PACKAGES:
+			case 7:
 				return getImportedPackages();
-			case PivotPackage.LIBRARY__NS_PREFIX:
+			case 8:
 				return getNsPrefix();
-			case PivotPackage.LIBRARY__OWNED_CLASSES:
+			case 9:
 				return getOwnedClasses();
-			case PivotPackage.LIBRARY__OWNED_INSTANCES:
+			case 10:
 				return getOwnedInstances();
-			case PivotPackage.LIBRARY__OWNED_PACKAGES:
+			case 11:
 				return getOwnedPackages();
-			case PivotPackage.LIBRARY__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return getOwnedProfileApplications();
-			case PivotPackage.LIBRARY__OWNING_PACKAGE:
+			case 13:
 				return getOwningPackage();
-			case PivotPackage.LIBRARY__OWNED_PRECEDENCES:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return getOwnedPrecedences();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -182,59 +198,59 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.LIBRARY__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.LIBRARY__URI:
+			case 6:
 				setURI((String)newValue);
 				return;
-			case PivotPackage.LIBRARY__IMPORTED_PACKAGES:
+			case 7:
 				getImportedPackages().clear();
 				getImportedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case PivotPackage.LIBRARY__NS_PREFIX:
+			case 8:
 				setNsPrefix((String)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_CLASSES:
+			case 9:
 				getOwnedClasses().clear();
 				getOwnedClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_INSTANCES:
+			case 10:
 				getOwnedInstances().clear();
 				getOwnedInstances().addAll((Collection<? extends InstanceSpecification>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_PACKAGES:
+			case 11:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				getOwnedProfileApplications().clear();
 				getOwnedProfileApplications().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNING_PACKAGE:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.LIBRARY__OWNED_PRECEDENCES:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				getOwnedPrecedences().clear();
 				getOwnedPrecedences().addAll((Collection<? extends Precedence>)newValue);
 				return;
@@ -252,49 +268,49 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.LIBRARY__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.LIBRARY__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.LIBRARY__URI:
+			case 6:
 				setURI(URI_EDEFAULT);
 				return;
-			case PivotPackage.LIBRARY__IMPORTED_PACKAGES:
+			case 7:
 				getImportedPackages().clear();
 				return;
-			case PivotPackage.LIBRARY__NS_PREFIX:
+			case 8:
 				setNsPrefix(NS_PREFIX_EDEFAULT);
 				return;
-			case PivotPackage.LIBRARY__OWNED_CLASSES:
+			case 9:
 				getOwnedClasses().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_INSTANCES:
+			case 10:
 				getOwnedInstances().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_PACKAGES:
+			case 11:
 				getOwnedPackages().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				getOwnedProfileApplications().clear();
 				return;
-			case PivotPackage.LIBRARY__OWNING_PACKAGE:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.LIBRARY__OWNED_PRECEDENCES:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				getOwnedPrecedences().clear();
 				return;
 		}
@@ -311,35 +327,35 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		switch (featureID)
 		{
-			case PivotPackage.LIBRARY__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.LIBRARY__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.LIBRARY__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.LIBRARY__URI:
+			case 6:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
-			case PivotPackage.LIBRARY__IMPORTED_PACKAGES:
+			case 7:
 				return importedPackages != null && !importedPackages.isEmpty();
-			case PivotPackage.LIBRARY__NS_PREFIX:
+			case 8:
 				return NS_PREFIX_EDEFAULT == null ? nsPrefix != null : !NS_PREFIX_EDEFAULT.equals(nsPrefix);
-			case PivotPackage.LIBRARY__OWNED_CLASSES:
+			case 9:
 				return ownedClasses != null && !ownedClasses.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_INSTANCES:
+			case 10:
 				return ownedInstances != null && !ownedInstances.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_PACKAGES:
+			case 11:
 				return ownedPackages != null && !ownedPackages.isEmpty();
-			case PivotPackage.LIBRARY__OWNED_PROFILE_APPLICATIONS:
+			case 12:
 				return ownedProfileApplications != null && !ownedProfileApplications.isEmpty();
-			case PivotPackage.LIBRARY__OWNING_PACKAGE:
+			case 13:
 				return getOwningPackage() != null;
-			case PivotPackage.LIBRARY__OWNED_PRECEDENCES:
+			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
 				return ownedPrecedences != null && !ownedPrecedences.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

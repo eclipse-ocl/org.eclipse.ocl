@@ -28,6 +28,23 @@ public class UnspecifiedValueExpImpl
 		implements UnspecifiedValueExp {
 
 	/**
+	 * The number of structural features of the '<em>Unspecified Value Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int UNSPECIFIED_VALUE_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Unspecified Value Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int UNSPECIFIED_VALUE_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

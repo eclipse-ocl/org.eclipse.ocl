@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -59,6 +61,22 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implements OppositePropertyCallExp
 {
+	/**
+	 * The number of structural features of the '<em>Opposite Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT = NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Opposite Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPPOSITE_PROPERTY_CALL_EXP_OPERATION_COUNT = NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 2;
 	/**
 	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -105,7 +123,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -132,7 +150,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -159,15 +177,15 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *         'OppositePropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_SafeSourceCanBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+				final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 				final /*@NonInvalid*/ boolean ne = ownedSource != null;
 				/*@NonInvalid*/ boolean and;
 				if (ne) {
@@ -177,7 +195,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				else {
 					and = ValueUtil.FALSE_VALUE;
 				}
-				/*@NonInvalid*/ java.lang.@Nullable Boolean result;
+				/*@NonInvalid*/ @Nullable Boolean result;
 				if (and) {
 					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 					try {
@@ -190,7 +208,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					catch (Exception e) {
 						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 					}
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
+					final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
 					result = not;
 				}
 				else {
@@ -230,8 +248,8 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *         'OppositePropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OppositePropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -240,12 +258,12 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ boolean ne = ownedSource != null;
-					/*@NonInvalid*/ java.lang.@Nullable Boolean and;
+					/*@NonInvalid*/ @Nullable Boolean and;
 					if (ne) {
 						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-						final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
+						final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
 						and = not;
 					}
 					else {
@@ -262,7 +280,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					catch (Exception e) {
 						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
+					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -288,39 +306,39 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return isIsImplicit();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				return isIsSafe();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return getOwnedSource();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				return isIsPre();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				if (resolve) return getNavigationSource();
 				return basicGetNavigationSource();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				return getQualifiers();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -338,54 +356,54 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe((Boolean)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				setIsPre((Boolean)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				setNavigationSource((Property)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -402,49 +420,49 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				setNavigationSource((Property)null);
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				getQualifiers().clear();
 				return;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -461,37 +479,37 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return ownedSource != null;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				return navigationSource != null;
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				return qualifiers != null && !qualifiers.isEmpty();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -509,7 +527,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP: return PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP;
+				case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0: return NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -527,25 +545,25 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 	{
 		switch (operationID)
 		{
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP:
+			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 1:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

@@ -37,6 +37,8 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.SendSignalAction;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
@@ -49,6 +51,8 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -69,6 +73,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class MessageExpImpl
 		extends OCLExpressionImpl
 		implements MessageExp {
+
+	/**
+	 * The number of structural features of the '<em>Message Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MESSAGE_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Message Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MESSAGE_EXP_OPERATION_COUNT = OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getOwnedArguments() <em>Owned Arguments</em>}' containment reference list.
@@ -150,7 +172,7 @@ public class MessageExpImpl
 		ownedTarget = newOwnedTarget;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_TARGET, oldOwnedTarget, newOwnedTarget);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, oldOwnedTarget, newOwnedTarget);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -167,14 +189,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedTarget != null)
-				msgs = ((InternalEObject)ownedTarget).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_TARGET, null, msgs);
+				msgs = ((InternalEObject)ownedTarget).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
 			if (newOwnedTarget != null)
-				msgs = ((InternalEObject)newOwnedTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_TARGET, null, msgs);
+				msgs = ((InternalEObject)newOwnedTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
 			msgs = basicSetOwnedTarget(newOwnedTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_TARGET, newOwnedTarget, newOwnedTarget));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, newOwnedTarget, newOwnedTarget));
 	}
 
 	/**
@@ -188,7 +210,7 @@ public class MessageExpImpl
 	{
 		if (ownedArguments == null)
 		{
-			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS);
+			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
 		}
 		return ownedArguments;
 	}
@@ -214,7 +236,7 @@ public class MessageExpImpl
 		ownedCalledOperation = newOwnedCalledOperation;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION, oldOwnedCalledOperation, newOwnedCalledOperation);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldOwnedCalledOperation, newOwnedCalledOperation);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -232,14 +254,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedCalledOperation != null)
-				msgs = ((InternalEObject)ownedCalledOperation).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION, null, msgs);
+				msgs = ((InternalEObject)ownedCalledOperation).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedCalledOperation != null)
-				msgs = ((InternalEObject)newOwnedCalledOperation).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION, null, msgs);
+				msgs = ((InternalEObject)newOwnedCalledOperation).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedCalledOperation(newOwnedCalledOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION, newOwnedCalledOperation, newOwnedCalledOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, newOwnedCalledOperation, newOwnedCalledOperation));
 	}
 
 	/**
@@ -263,7 +285,7 @@ public class MessageExpImpl
 		ownedSentSignal = newOwnedSentSignal;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL, oldOwnedSentSignal, newOwnedSentSignal);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, oldOwnedSentSignal, newOwnedSentSignal);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -281,14 +303,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSentSignal != null)
-				msgs = ((InternalEObject)ownedSentSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL, null, msgs);
+				msgs = ((InternalEObject)ownedSentSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedSentSignal != null)
-				msgs = ((InternalEObject)newOwnedSentSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL, null, msgs);
+				msgs = ((InternalEObject)newOwnedSentSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedSentSignal(newOwnedSentSignal, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL, newOwnedSentSignal, newOwnedSentSignal));
+			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, newOwnedSentSignal, newOwnedSentSignal));
 	}
 
 	/**
@@ -315,8 +337,8 @@ public class MessageExpImpl
 			 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -325,13 +347,13 @@ public class MessageExpImpl
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue sum = (org.eclipse.ocl.pivot.values.@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
+					final /*@NonInvalid*/ @Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
+					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
+					final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
+					final /*@NonInvalid*/ @Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
+					final /*@Thrown*/ @NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
+					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
+					final /*@Thrown*/ @NonNull IntegerValue sum = (@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
 					final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
 					CAUGHT_result = result;
 				}
@@ -372,9 +394,9 @@ public class MessageExpImpl
 			 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -385,15 +407,15 @@ public class MessageExpImpl
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedTarget = this.getOwnedTarget();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedTarget.getType();
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
+					final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
 					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
 					CAUGHT_oclIsKindOf = oclIsKindOf;
 				}
 				catch (Exception e) {
 					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean result = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
+				final /*@NonInvalid*/ @Nullable Boolean result = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
@@ -414,21 +436,21 @@ public class MessageExpImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.MESSAGE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedArguments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return basicSetOwnedCalledOperation(null, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
 				return basicSetOwnedSentSignal(null, msgs);
-			case PivotPackage.MESSAGE_EXP__OWNED_TARGET:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
 				return basicSetOwnedTarget(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -443,32 +465,32 @@ public class MessageExpImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.MESSAGE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.MESSAGE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.MESSAGE_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.MESSAGE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.MESSAGE_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.MESSAGE_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.MESSAGE_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.MESSAGE_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.MESSAGE_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return getOwnedArguments();
-			case PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return getOwnedCalledOperation();
-			case PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
 				return getOwnedSentSignal();
-			case PivotPackage.MESSAGE_EXP__OWNED_TARGET:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
 				return getOwnedTarget();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -484,45 +506,45 @@ public class MessageExpImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.MESSAGE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				getOwnedArguments().clear();
 				getOwnedArguments().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedCalledOperation((CallOperationAction)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
 				setOwnedSentSignal((SendSignalAction)newValue);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_TARGET:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
 				setOwnedTarget((OCLExpression)newValue);
 				return;
 		}
@@ -538,40 +560,40 @@ public class MessageExpImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.MESSAGE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.MESSAGE_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.MESSAGE_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.MESSAGE_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.MESSAGE_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				getOwnedArguments().clear();
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedCalledOperation((CallOperationAction)null);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
 				setOwnedSentSignal((SendSignalAction)null);
 				return;
-			case PivotPackage.MESSAGE_EXP__OWNED_TARGET:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
 				setOwnedTarget((OCLExpression)null);
 				return;
 		}
@@ -587,31 +609,31 @@ public class MessageExpImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.MESSAGE_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.MESSAGE_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.MESSAGE_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.MESSAGE_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.MESSAGE_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.MESSAGE_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.MESSAGE_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.MESSAGE_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.MESSAGE_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.MESSAGE_EXP__OWNED_ARGUMENTS:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
 				return ownedArguments != null && !ownedArguments.isEmpty();
-			case PivotPackage.MESSAGE_EXP__OWNED_CALLED_OPERATION:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
 				return ownedCalledOperation != null;
-			case PivotPackage.MESSAGE_EXP__OWNED_SENT_SIGNAL:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
 				return ownedSentSignal != null;
-			case PivotPackage.MESSAGE_EXP__OWNED_TARGET:
+			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
 				return ownedTarget != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -628,21 +650,21 @@ public class MessageExpImpl
 	{
 		switch (operationID)
 		{
-			case PivotPackage.MESSAGE_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.MESSAGE_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.MESSAGE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.MESSAGE_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.MESSAGE_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.MESSAGE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.MESSAGE_EXP___VALIDATE_ONE_CALL_OR_ONE_SEND__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
 				return validateOneCallOrOneSend((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.MESSAGE_EXP___VALIDATE_TARGET_IS_NOT_ACOLLECTION__DIAGNOSTICCHAIN_MAP:
+			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
 				return validateTargetIsNotACollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

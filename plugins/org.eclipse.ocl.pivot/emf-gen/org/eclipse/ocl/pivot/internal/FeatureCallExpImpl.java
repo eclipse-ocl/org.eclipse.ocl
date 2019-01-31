@@ -43,6 +43,24 @@ public abstract class FeatureCallExpImpl
 		implements FeatureCallExp {
 
 	/**
+	 * The number of structural features of the '<em>Feature Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FEATURE_CALL_EXP_FEATURE_COUNT = CallExpImpl.CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Feature Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FEATURE_CALL_EXP_OPERATION_COUNT = CallExpImpl.CALL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #isIsPre() <em>Is Pre</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,7 +120,7 @@ public abstract class FeatureCallExpImpl
 		boolean oldIsPre = (eFlags & IS_PRE_EFLAG) != 0;
 		if (newIsPre) eFlags |= IS_PRE_EFLAG; else eFlags &= ~IS_PRE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.FEATURE_CALL_EXP__IS_PRE, oldIsPre, newIsPre));
+			eNotify(new ENotificationImpl(this, Notification.SET, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0, oldIsPre, newIsPre));
 	}
 
 	/**
@@ -114,32 +132,32 @@ public abstract class FeatureCallExpImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.FEATURE_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.FEATURE_CALL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.FEATURE_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.FEATURE_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.FEATURE_CALL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.FEATURE_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.FEATURE_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return isIsImplicit();
-			case PivotPackage.FEATURE_CALL_EXP__IS_SAFE:
+			case 10:
 				return isIsSafe();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return getOwnedSource();
-			case PivotPackage.FEATURE_CALL_EXP__IS_PRE:
+			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
 				return isIsPre();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -155,44 +173,44 @@ public abstract class FeatureCallExpImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.FEATURE_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe((Boolean)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_PRE:
+			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
 				setIsPre((Boolean)newValue);
 				return;
 		}
@@ -208,40 +226,40 @@ public abstract class FeatureCallExpImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.FEATURE_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
-			case PivotPackage.FEATURE_CALL_EXP__IS_PRE:
+			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
 		}
@@ -257,31 +275,31 @@ public abstract class FeatureCallExpImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.FEATURE_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.FEATURE_CALL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.FEATURE_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.FEATURE_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.FEATURE_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.FEATURE_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.FEATURE_CALL_EXP__IS_SAFE:
+			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
-			case PivotPackage.FEATURE_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return ownedSource != null;
-			case PivotPackage.FEATURE_CALL_EXP__IS_PRE:
+			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);

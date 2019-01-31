@@ -57,6 +57,22 @@ extends InstanceSpecificationImpl
 implements EnumerationLiteral {
 
 	/**
+	 * The number of structural features of the '<em>Enumeration Literal</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ENUMERATION_LITERAL_FEATURE_COUNT = InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 3;
+	/**
+	 * The number of operations of the '<em>Enumeration Literal</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ENUMERATION_LITERAL_OPERATION_COUNT = InstanceSpecificationImpl.INSTANCE_SPECIFICATION_OPERATION_COUNT + 0;
+	/**
 	 * The default value of the '{@link #getLiteral() <em>Literal</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * @since 1.4
@@ -136,7 +152,7 @@ implements EnumerationLiteral {
 		String oldLiteral = literal;
 		literal = newLiteral;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ENUMERATION_LITERAL__LITERAL, oldLiteral, literal));
+			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0, oldLiteral, literal));
 	}
 
 	/**
@@ -147,7 +163,7 @@ implements EnumerationLiteral {
 	@Override
 	public Enumeration getOwningEnumeration()
 	{
-		if (eContainerFeatureID() != PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION) return null;
+		if (eContainerFeatureID() != (InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1)) return null;
 		return (Enumeration)eInternalContainer();
 	}
 
@@ -158,7 +174,7 @@ implements EnumerationLiteral {
 	 */
 	public NotificationChain basicSetOwningEnumeration(Enumeration newOwningEnumeration, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningEnumeration, PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningEnumeration, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -170,7 +186,7 @@ implements EnumerationLiteral {
 	@Override
 	public void setOwningEnumeration(Enumeration newOwningEnumeration)
 	{
-		if (newOwningEnumeration != eInternalContainer() || (eContainerFeatureID() != PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION && newOwningEnumeration != null))
+		if (newOwningEnumeration != eInternalContainer() || (eContainerFeatureID() != (InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1) && newOwningEnumeration != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningEnumeration))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -178,12 +194,12 @@ implements EnumerationLiteral {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningEnumeration != null)
-				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, PivotPackage.ENUMERATION__OWNED_LITERALS, Enumeration.class, msgs);
+				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, Enumeration.class, msgs);
 			msgs = basicSetOwningEnumeration(newOwningEnumeration, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION, newOwningEnumeration, newOwningEnumeration));
+			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1, newOwningEnumeration, newOwningEnumeration));
 	}
 
 	/**
@@ -208,7 +224,7 @@ implements EnumerationLiteral {
 		Number oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ENUMERATION_LITERAL__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2, oldValue, value));
 	}
 
 	/**
@@ -222,19 +238,19 @@ implements EnumerationLiteral {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSlots()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningEnumeration((Enumeration)otherEnd, msgs);
@@ -252,21 +268,21 @@ implements EnumerationLiteral {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				return ((InternalEList<?>)getOwnedSlots()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SPECIFICATION:
+			case 7:
 				return basicSetOwnedSpecification(null, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				return basicSetOwningPackage(null, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				return basicSetOwningEnumeration(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -282,10 +298,10 @@ implements EnumerationLiteral {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.PACKAGE__OWNED_INSTANCES, org.eclipse.ocl.pivot.Package.class, msgs);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.ENUMERATION__OWNED_LITERALS, Enumeration.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Package.class, msgs);
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, Enumeration.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -299,29 +315,29 @@ implements EnumerationLiteral {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.ENUMERATION_LITERAL__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.ENUMERATION_LITERAL__CLASSES:
+			case 5:
 				return getClasses();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				return getOwnedSlots();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SPECIFICATION:
+			case 7:
 				return getOwnedSpecification();
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				return getOwningPackage();
-			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
 				return getLiteral();
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				return getOwningEnumeration();
-			case PivotPackage.ENUMERATION_LITERAL__VALUE:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
 				return getValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -337,46 +353,46 @@ implements EnumerationLiteral {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__CLASSES:
+			case 5:
 				getClasses().clear();
 				getClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				getOwnedSlots().clear();
 				getOwnedSlots().addAll((Collection<? extends Slot>)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SPECIFICATION:
+			case 7:
 				setOwnedSpecification((LanguageExpression)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
 				setLiteral((String)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				setOwningEnumeration((Enumeration)newValue);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__VALUE:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
 				setValue((Number)newValue);
 				return;
 		}
@@ -392,40 +408,40 @@ implements EnumerationLiteral {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__CLASSES:
+			case 5:
 				getClasses().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				getOwnedSlots().clear();
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SPECIFICATION:
+			case 7:
 				setOwnedSpecification((LanguageExpression)null);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
 				setLiteral(LITERAL_EDEFAULT);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				setOwningEnumeration((Enumeration)null);
 				return;
-			case PivotPackage.ENUMERATION_LITERAL__VALUE:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -441,29 +457,29 @@ implements EnumerationLiteral {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.ENUMERATION_LITERAL__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.ENUMERATION_LITERAL__CLASSES:
+			case 5:
 				return classes != null && !classes.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SLOTS:
+			case 6:
 				return ownedSlots != null && !ownedSlots.isEmpty();
-			case PivotPackage.ENUMERATION_LITERAL__OWNED_SPECIFICATION:
+			case 7:
 				return ownedSpecification != null;
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_PACKAGE:
+			case 8:
 				return getOwningPackage() != null;
-			case PivotPackage.ENUMERATION_LITERAL__LITERAL:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
 				return LITERAL_EDEFAULT == null ? literal != null : !LITERAL_EDEFAULT.equals(literal);
-			case PivotPackage.ENUMERATION_LITERAL__OWNING_ENUMERATION:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
 				return getOwningEnumeration() != null;
-			case PivotPackage.ENUMERATION_LITERAL__VALUE:
+			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return eDynamicIsSet(featureID);

@@ -43,6 +43,22 @@ public class CallOperationActionImpl
 		implements CallOperationAction {
 
 	/**
+	 * The number of structural features of the '<em>Call Operation Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CALL_OPERATION_ACTION_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Call Operation Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CALL_OPERATION_ACTION_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getOperation() <em>Operation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +101,7 @@ public class CallOperationActionImpl
 			if (operation != oldOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.CALL_OPERATION_ACTION__OPERATION, oldOperation, operation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldOperation, operation));
 			}
 		}
 		return operation;
@@ -110,7 +126,7 @@ public class CallOperationActionImpl
 		Operation oldOperation = operation;
 		operation = newOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CALL_OPERATION_ACTION__OPERATION, oldOperation, operation));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldOperation, operation));
 	}
 
 	/**
@@ -122,17 +138,17 @@ public class CallOperationActionImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.CALL_OPERATION_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.CALL_OPERATION_ACTION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.CALL_OPERATION_ACTION__OPERATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getOperation();
 				return basicGetOperation();
 		}
@@ -149,26 +165,26 @@ public class CallOperationActionImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.CALL_OPERATION_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OPERATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setOperation((Operation)newValue);
 				return;
 		}
@@ -184,22 +200,22 @@ public class CallOperationActionImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CALL_OPERATION_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.CALL_OPERATION_ACTION__OPERATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setOperation((Operation)null);
 				return;
 		}
@@ -215,17 +231,17 @@ public class CallOperationActionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CALL_OPERATION_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.CALL_OPERATION_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.CALL_OPERATION_ACTION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.CALL_OPERATION_ACTION__OPERATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return operation != null;
 		}
 		return eDynamicIsSet(featureID);

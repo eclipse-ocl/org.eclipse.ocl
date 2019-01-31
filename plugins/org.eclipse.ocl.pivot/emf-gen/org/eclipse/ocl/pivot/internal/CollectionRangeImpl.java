@@ -48,6 +48,24 @@ public class CollectionRangeImpl
 		implements CollectionRange {
 
 	/**
+	 * The number of structural features of the '<em>Collection Range</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_RANGE_FEATURE_COUNT = CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Collection Range</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_RANGE_OPERATION_COUNT = CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getOwnedFirst() <em>Owned First</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +125,7 @@ public class CollectionRangeImpl
 		ownedFirst = newOwnedFirst;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_RANGE__OWNED_FIRST, oldOwnedFirst, newOwnedFirst);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, oldOwnedFirst, newOwnedFirst);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +142,14 @@ public class CollectionRangeImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedFirst != null)
-				msgs = ((InternalEObject)ownedFirst).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_RANGE__OWNED_FIRST, null, msgs);
+				msgs = ((InternalEObject)ownedFirst).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedFirst != null)
-				msgs = ((InternalEObject)newOwnedFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_RANGE__OWNED_FIRST, null, msgs);
+				msgs = ((InternalEObject)newOwnedFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedFirst(newOwnedFirst, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_RANGE__OWNED_FIRST, newOwnedFirst, newOwnedFirst));
+			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, newOwnedFirst, newOwnedFirst));
 	}
 
 	/**
@@ -155,7 +173,7 @@ public class CollectionRangeImpl
 		ownedLast = newOwnedLast;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_RANGE__OWNED_LAST, oldOwnedLast, newOwnedLast);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1, oldOwnedLast, newOwnedLast);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -172,14 +190,14 @@ public class CollectionRangeImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedLast != null)
-				msgs = ((InternalEObject)ownedLast).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_RANGE__OWNED_LAST, null, msgs);
+				msgs = ((InternalEObject)ownedLast).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedLast != null)
-				msgs = ((InternalEObject)newOwnedLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.COLLECTION_RANGE__OWNED_LAST, null, msgs);
+				msgs = ((InternalEObject)newOwnedLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedLast(newOwnedLast, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_RANGE__OWNED_LAST, newOwnedLast, newOwnedLast));
+			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1, newOwnedLast, newOwnedLast));
 	}
 
 	/**
@@ -192,17 +210,17 @@ public class CollectionRangeImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_RANGE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_RANGE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_RANGE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_RANGE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return basicSetOwnedFirst(null, msgs);
-			case PivotPackage.COLLECTION_RANGE__OWNED_LAST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
 				return basicSetOwnedLast(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -217,26 +235,26 @@ public class CollectionRangeImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_RANGE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.COLLECTION_RANGE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.COLLECTION_RANGE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.COLLECTION_RANGE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.COLLECTION_RANGE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.COLLECTION_RANGE__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.COLLECTION_RANGE__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.COLLECTION_RANGE__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return getOwnedFirst();
-			case PivotPackage.COLLECTION_RANGE__OWNED_LAST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
 				return getOwnedLast();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -252,35 +270,35 @@ public class CollectionRangeImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_RANGE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				setOwnedFirst((OCLExpression)newValue);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_LAST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
 				setOwnedLast((OCLExpression)newValue);
 				return;
 		}
@@ -296,31 +314,31 @@ public class CollectionRangeImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_RANGE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.COLLECTION_RANGE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.COLLECTION_RANGE__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.COLLECTION_RANGE__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				setOwnedFirst((OCLExpression)null);
 				return;
-			case PivotPackage.COLLECTION_RANGE__OWNED_LAST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
 				setOwnedLast((OCLExpression)null);
 				return;
 		}
@@ -336,25 +354,25 @@ public class CollectionRangeImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COLLECTION_RANGE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.COLLECTION_RANGE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.COLLECTION_RANGE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.COLLECTION_RANGE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.COLLECTION_RANGE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.COLLECTION_RANGE__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.COLLECTION_RANGE__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.COLLECTION_RANGE__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
 				return ownedFirst != null;
-			case PivotPackage.COLLECTION_RANGE__OWNED_LAST:
+			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
 				return ownedLast != null;
 		}
 		return eDynamicIsSet(featureID);

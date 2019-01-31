@@ -52,6 +52,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class InstanceSpecificationImpl extends NamedElementImpl implements InstanceSpecification
 {
 	/**
+	 * The number of structural features of the '<em>Instance Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INSTANCE_SPECIFICATION_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Instance Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INSTANCE_SPECIFICATION_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getClasses() <em>Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -112,7 +130,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		if (classes == null)
 		{
-			classes = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.INSTANCE_SPECIFICATION__CLASSES);
+			classes = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return classes;
 	}
@@ -127,7 +145,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		if (ownedSlots == null)
 		{
-			ownedSlots = new EObjectContainmentWithInverseEList<Slot>(Slot.class, this, PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS, PivotPackage.SLOT__OWNING_INSTANCE);
+			ownedSlots = new EObjectContainmentWithInverseEList<Slot>(Slot.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
 		}
 		return ownedSlots;
 	}
@@ -154,7 +172,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -172,14 +190,14 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, null, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, null, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, newOwnedSpecification, newOwnedSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -190,7 +208,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage()
 	{
-		if (eContainerFeatureID() != PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE) return null;
+		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3)) return null;
 		return (org.eclipse.ocl.pivot.Package)eInternalContainer();
 	}
 
@@ -201,7 +219,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	 */
 	public NotificationChain basicSetOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, msgs);
 		return msgs;
 	}
 
@@ -213,7 +231,7 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	@Override
 	public void setOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage)
 	{
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -221,12 +239,12 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPackage != null)
-				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, PivotPackage.PACKAGE__OWNED_INSTANCES, org.eclipse.ocl.pivot.Package.class, msgs);
+				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Package.class, msgs);
 			msgs = basicSetOwningPackage(newOwningPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -240,15 +258,15 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSlots()).basicAdd(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
@@ -266,19 +284,19 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedSlots()).basicRemove(otherEnd, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return basicSetOwnedSpecification(null, msgs);
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -294,8 +312,8 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.PACKAGE__OWNED_INSTANCES, org.eclipse.ocl.pivot.Package.class, msgs);
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Package.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -310,23 +328,23 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.INSTANCE_SPECIFICATION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.INSTANCE_SPECIFICATION__CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getClasses();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getOwnedSlots();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return getOwnedSpecification();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return getOwningPackage();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -343,37 +361,37 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getClasses().clear();
 				getClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getOwnedSlots().clear();
 				getOwnedSlots().addAll((Collection<? extends Slot>)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setOwnedSpecification((LanguageExpression)newValue);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
 		}
@@ -390,31 +408,31 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getClasses().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getOwnedSlots().clear();
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setOwnedSpecification((LanguageExpression)null);
 				return;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 		}
@@ -431,23 +449,23 @@ public class InstanceSpecificationImpl extends NamedElementImpl implements Insta
 	{
 		switch (featureID)
 		{
-			case PivotPackage.INSTANCE_SPECIFICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.INSTANCE_SPECIFICATION__CLASSES:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return classes != null && !classes.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SLOTS:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ownedSlots != null && !ownedSlots.isEmpty();
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return ownedSpecification != null;
-			case PivotPackage.INSTANCE_SPECIFICATION__OWNING_PACKAGE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
 				return getOwningPackage() != null;
 		}
 		return eDynamicIsSet(featureID);

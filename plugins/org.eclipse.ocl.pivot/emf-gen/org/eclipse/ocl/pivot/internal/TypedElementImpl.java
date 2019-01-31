@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -55,6 +56,22 @@ public abstract class TypedElementImpl
 extends NamedElementImpl
 implements TypedElement {
 
+	/**
+	 * The number of structural features of the '<em>Typed Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPED_ELEMENT_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3;
+	/**
+	 * The number of operations of the '<em>Typed Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPED_ELEMENT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1;
 	/**
 	 * The default value of the '{@link #isIsMany() <em>Is Many</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -139,7 +156,7 @@ implements TypedElement {
 			if (type != oldType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.TYPED_ELEMENT__TYPE, oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldType, type));
 			}
 		}
 		return type;
@@ -164,7 +181,7 @@ implements TypedElement {
 		Type oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TYPED_ELEMENT__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldType, type));
 	}
 
 	/**
@@ -178,15 +195,15 @@ implements TypedElement {
 		/**
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
+		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
 		final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
-		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+		/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
 		if (conformsTo == Boolean.TRUE) {
 			safe_conformsTo_source = null;
 		}
 		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 			safe_conformsTo_source = conformsTo_0;
 		}
@@ -207,7 +224,7 @@ implements TypedElement {
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TYPED_ELEMENT__IS_REQUIRED, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -219,21 +236,21 @@ implements TypedElement {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPED_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.TYPED_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.TYPED_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.TYPED_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.TYPED_ELEMENT__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.TYPED_ELEMENT__IS_MANY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return isIsMany();
-			case PivotPackage.TYPED_ELEMENT__IS_REQUIRED:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return isIsRequired();
-			case PivotPackage.TYPED_ELEMENT__TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				if (resolve) return getType();
 				return basicGetType();
 		}
@@ -250,29 +267,29 @@ implements TypedElement {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPED_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__IS_REQUIRED:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.TYPED_ELEMENT__TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setType((Type)newValue);
 				return;
 		}
@@ -288,25 +305,25 @@ implements TypedElement {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPED_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.TYPED_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.TYPED_ELEMENT__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.TYPED_ELEMENT__IS_REQUIRED:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.TYPED_ELEMENT__TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				setType((Type)null);
 				return;
 		}
@@ -322,21 +339,21 @@ implements TypedElement {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.TYPED_ELEMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.TYPED_ELEMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.TYPED_ELEMENT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.TYPED_ELEMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.TYPED_ELEMENT__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.TYPED_ELEMENT__IS_MANY:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.TYPED_ELEMENT__IS_REQUIRED:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.TYPED_ELEMENT__TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
 				return type != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -352,11 +369,11 @@ implements TypedElement {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.TYPED_ELEMENT___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.TYPED_ELEMENT___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);

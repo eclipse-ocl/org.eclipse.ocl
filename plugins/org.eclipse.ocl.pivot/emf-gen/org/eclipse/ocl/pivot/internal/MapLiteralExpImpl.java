@@ -45,6 +45,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 {
 	/**
+	 * The number of structural features of the '<em>Map Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_LITERAL_EXP_FEATURE_COUNT = LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Map Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_LITERAL_EXP_OPERATION_COUNT = LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +101,7 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<MapLiteralPart>(MapLiteralPart.class, this, PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<MapLiteralPart>(MapLiteralPart.class, this, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
 		}
 		return ownedParts;
 	}
@@ -100,15 +116,15 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS:
+			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -124,26 +140,26 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.MAP_LITERAL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.MAP_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.MAP_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.MAP_LITERAL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.MAP_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS:
+			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
 				return getOwnedParts();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -160,35 +176,35 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS:
+			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends MapLiteralPart>)newValue);
 				return;
@@ -206,31 +222,31 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS:
+			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				return;
 		}
@@ -247,25 +263,25 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.MAP_LITERAL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.MAP_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.MAP_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.MAP_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.MAP_LITERAL_EXP__OWNED_PARTS:
+			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

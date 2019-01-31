@@ -46,6 +46,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class ProfileApplicationImpl extends ElementImpl implements ProfileApplication
 {
 	/**
+	 * The number of structural features of the '<em>Profile Application</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROFILE_APPLICATION_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Profile Application</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROFILE_APPLICATION_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getAppliedProfile() <em>Applied Profile</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,7 +129,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 			if (appliedProfile != oldAppliedProfile)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE, oldAppliedProfile, appliedProfile));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldAppliedProfile, appliedProfile));
 			}
 		}
 		return appliedProfile;
@@ -138,7 +156,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 		appliedProfile = newAppliedProfile;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE, oldAppliedProfile, newAppliedProfile);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldAppliedProfile, newAppliedProfile);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -156,14 +174,14 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 		{
 			NotificationChain msgs = null;
 			if (appliedProfile != null)
-				msgs = ((InternalEObject)appliedProfile).eInverseRemove(this, PivotPackage.PROFILE__PROFILE_APPLICATIONS, Profile.class, msgs);
+				msgs = ((InternalEObject)appliedProfile).eInverseRemove(this, PackageImpl.PACKAGE_FEATURE_COUNT + 0, Profile.class, msgs);
 			if (newAppliedProfile != null)
-				msgs = ((InternalEObject)newAppliedProfile).eInverseAdd(this, PivotPackage.PROFILE__PROFILE_APPLICATIONS, Profile.class, msgs);
+				msgs = ((InternalEObject)newAppliedProfile).eInverseAdd(this, PackageImpl.PACKAGE_FEATURE_COUNT + 0, Profile.class, msgs);
 			msgs = basicSetAppliedProfile(newAppliedProfile, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE, newAppliedProfile, newAppliedProfile));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newAppliedProfile, newAppliedProfile));
 	}
 
 	/**
@@ -188,7 +206,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 		boolean oldIsStrict = (eFlags & IS_STRICT_EFLAG) != 0;
 		if (newIsStrict) eFlags |= IS_STRICT_EFLAG; else eFlags &= ~IS_STRICT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROFILE_APPLICATION__IS_STRICT, oldIsStrict, newIsStrict));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldIsStrict, newIsStrict));
 	}
 
 	/**
@@ -199,7 +217,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage()
 	{
-		if (eContainerFeatureID() != PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE) return null;
+		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (org.eclipse.ocl.pivot.Package)eInternalContainer();
 	}
 
@@ -210,7 +228,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	 */
 	public NotificationChain basicSetOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, ElementImpl.ELEMENT_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -222,7 +240,7 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	@Override
 	public void setOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage)
 	{
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -230,12 +248,12 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPackage != null)
-				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, PivotPackage.PACKAGE__OWNED_PROFILE_APPLICATIONS, org.eclipse.ocl.pivot.Package.class, msgs);
+				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, org.eclipse.ocl.pivot.Package.class, msgs);
 			msgs = basicSetOwningPackage(newOwningPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -249,17 +267,17 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (appliedProfile != null)
-					msgs = ((InternalEObject)appliedProfile).eInverseRemove(this, PivotPackage.PROFILE__PROFILE_APPLICATIONS, Profile.class, msgs);
+					msgs = ((InternalEObject)appliedProfile).eInverseRemove(this, PackageImpl.PACKAGE_FEATURE_COUNT + 0, Profile.class, msgs);
 				return basicSetAppliedProfile((Profile)otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
@@ -277,17 +295,17 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return basicSetAppliedProfile(null, msgs);
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -303,8 +321,8 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.PACKAGE__OWNED_PROFILE_APPLICATIONS, org.eclipse.ocl.pivot.Package.class, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, org.eclipse.ocl.pivot.Package.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -319,20 +337,20 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getAppliedProfile();
 				return basicGetAppliedProfile();
-			case PivotPackage.PROFILE_APPLICATION__IS_STRICT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return isIsStrict();
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningPackage();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -349,29 +367,29 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setAppliedProfile((Profile)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__IS_STRICT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setIsStrict((Boolean)newValue);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
 		}
@@ -388,25 +406,25 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setAppliedProfile((Profile)null);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__IS_STRICT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setIsStrict(IS_STRICT_EDEFAULT);
 				return;
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 		}
@@ -423,19 +441,19 @@ public class ProfileApplicationImpl extends ElementImpl implements ProfileApplic
 	{
 		switch (featureID)
 		{
-			case PivotPackage.PROFILE_APPLICATION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PROFILE_APPLICATION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PROFILE_APPLICATION__APPLIED_PROFILE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return appliedProfile != null;
-			case PivotPackage.PROFILE_APPLICATION__IS_STRICT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return ((eFlags & IS_STRICT_EFLAG) != 0) != IS_STRICT_EDEFAULT;
-			case PivotPackage.PROFILE_APPLICATION__OWNING_PACKAGE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningPackage() != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -57,6 +57,22 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 {
 	/**
+	 * The number of structural features of the '<em>Element Extension</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ELEMENT_EXTENSION_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 4;
+	/**
+	 * The number of operations of the '<em>Element Extension</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ELEMENT_EXTENSION_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
+	/**
 	 * The default value of the '{@link #isIsApplied() <em>Is Applied</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -137,7 +153,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			if (stereotype != oldStereotype)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.ELEMENT_EXTENSION__STEREOTYPE, oldStereotype, stereotype));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 3, oldStereotype, stereotype));
 			}
 		}
 		return stereotype;
@@ -164,7 +180,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		Stereotype oldStereotype = stereotype;
 		stereotype = newStereotype;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ELEMENT_EXTENSION__STEREOTYPE, oldStereotype, stereotype));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 3, oldStereotype, stereotype));
 	}
 
 	/**
@@ -175,7 +191,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public Element getBase()
 	{
-		if (eContainerFeatureID() != PivotPackage.ELEMENT_EXTENSION__BASE) return null;
+		if (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0)) return null;
 		return (Element)eInternalContainer();
 	}
 
@@ -186,7 +202,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	 */
 	public NotificationChain basicSetBase(Element newBase, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newBase, PivotPackage.ELEMENT_EXTENSION__BASE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newBase, ClassImpl.CLASS_FEATURE_COUNT + 0, msgs);
 		return msgs;
 	}
 
@@ -198,7 +214,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public void setBase(Element newBase)
 	{
-		if (newBase != eInternalContainer() || (eContainerFeatureID() != PivotPackage.ELEMENT_EXTENSION__BASE && newBase != null))
+		if (newBase != eInternalContainer() || (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0) && newBase != null))
 		{
 			if (EcoreUtil.isAncestor(this, newBase))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -206,12 +222,12 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newBase != null)
-				msgs = ((InternalEObject)newBase).eInverseAdd(this, PivotPackage.ELEMENT__OWNED_EXTENSIONS, Element.class, msgs);
+				msgs = ((InternalEObject)newBase).eInverseAdd(this, 3, Element.class, msgs);
 			msgs = basicSetBase(newBase, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ELEMENT_EXTENSION__BASE, newBase, newBase));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, newBase, newBase));
 	}
 
 	/**
@@ -236,7 +252,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		boolean oldIsApplied = (eFlags & IS_APPLIED_EFLAG) != 0;
 		if (newIsApplied) eFlags |= IS_APPLIED_EFLAG; else eFlags &= ~IS_APPLIED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ELEMENT_EXTENSION__IS_APPLIED, oldIsApplied, newIsApplied));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 1, oldIsApplied, newIsApplied));
 	}
 
 	/**
@@ -261,7 +277,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.ELEMENT_EXTENSION__IS_REQUIRED, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 2, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -275,29 +291,29 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetBase((Element)otherEnd, msgs);
@@ -315,33 +331,33 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				return basicSetOwnedSignature(null, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BEHAVIORS:
+			case 14:
 				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_INVARIANTS:
+			case 15:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				return basicSetBase(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -357,10 +373,10 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.PACKAGE__OWNED_CLASSES, org.eclipse.ocl.pivot.Package.class, msgs);
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.ELEMENT__OWNED_EXTENSIONS, Element.class, msgs);
+			case 18:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, org.eclipse.ocl.pivot.Package.class, msgs);
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+				return eInternalContainer().eInverseRemove(this, 3, Element.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -375,53 +391,53 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.ELEMENT_EXTENSION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				return getOwnedBindings();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				return getOwnedSignature();
-			case PivotPackage.ELEMENT_EXTENSION__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return getUnspecializedElement();
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				return getExtenders();
-			case PivotPackage.ELEMENT_EXTENSION__INSTANCE_CLASS_NAME:
+			case 10:
 				return getInstanceClassName();
-			case PivotPackage.ELEMENT_EXTENSION__IS_ABSTRACT:
+			case 11:
 				return isIsAbstract();
-			case PivotPackage.ELEMENT_EXTENSION__IS_ACTIVE:
+			case 12:
 				return isIsActive();
-			case PivotPackage.ELEMENT_EXTENSION__IS_INTERFACE:
+			case 13:
 				return isIsInterface();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BEHAVIORS:
+			case 14:
 				return getOwnedBehaviors();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_INVARIANTS:
+			case 15:
 				return getOwnedInvariants();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				return getOwnedOperations();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				return getOwnedProperties();
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage();
-			case PivotPackage.ELEMENT_EXTENSION__SUPER_CLASSES:
+			case 19:
 				return getSuperClasses();
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				return getBase();
-			case PivotPackage.ELEMENT_EXTENSION__IS_APPLIED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 1:
 				return isIsApplied();
-			case PivotPackage.ELEMENT_EXTENSION__IS_REQUIRED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 2:
 				return isIsRequired();
-			case PivotPackage.ELEMENT_EXTENSION__STEREOTYPE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 3:
 				if (resolve) return getStereotype();
 				return basicGetStereotype();
 		}
@@ -439,88 +455,88 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName((String)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_ABSTRACT:
+			case 11:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_ACTIVE:
+			case 12:
 				setIsActive((Boolean)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_INTERFACE:
+			case 13:
 				setIsInterface((Boolean)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				setBase((Element)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_APPLIED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 1:
 				setIsApplied((Boolean)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_REQUIRED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 2:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__STEREOTYPE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 3:
 				setStereotype((Stereotype)newValue);
 				return;
 		}
@@ -537,76 +553,76 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_ABSTRACT:
+			case 11:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_ACTIVE:
+			case 12:
 				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_INTERFACE:
+			case 13:
 				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				setBase((Element)null);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_APPLIED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 1:
 				setIsApplied(IS_APPLIED_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__IS_REQUIRED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 2:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.ELEMENT_EXTENSION__STEREOTYPE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 3:
 				setStereotype((Stereotype)null);
 				return;
 		}
@@ -623,53 +639,53 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	{
 		switch (featureID)
 		{
-			case PivotPackage.ELEMENT_EXTENSION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BINDINGS:
+			case 6:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_SIGNATURE:
+			case 7:
 				return ownedSignature != null;
-			case PivotPackage.ELEMENT_EXTENSION__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return unspecializedElement != null;
-			case PivotPackage.ELEMENT_EXTENSION__EXTENDERS:
+			case 9:
 				return extenders != null && !extenders.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__INSTANCE_CLASS_NAME:
+			case 10:
 				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
-			case PivotPackage.ELEMENT_EXTENSION__IS_ABSTRACT:
+			case 11:
 				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
-			case PivotPackage.ELEMENT_EXTENSION__IS_ACTIVE:
+			case 12:
 				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
-			case PivotPackage.ELEMENT_EXTENSION__IS_INTERFACE:
+			case 13:
 				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_BEHAVIORS:
+			case 14:
 				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_INVARIANTS:
+			case 15:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_OPERATIONS:
+			case 16:
 				return ownedOperations != null && !ownedOperations.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNED_PROPERTIES:
+			case 17:
 				return ownedProperties != null && !ownedProperties.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage() != null;
-			case PivotPackage.ELEMENT_EXTENSION__SUPER_CLASSES:
+			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case PivotPackage.ELEMENT_EXTENSION__BASE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 0:
 				return getBase() != null;
-			case PivotPackage.ELEMENT_EXTENSION__IS_APPLIED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 1:
 				return ((eFlags & IS_APPLIED_EFLAG) != 0) != IS_APPLIED_EDEFAULT;
-			case PivotPackage.ELEMENT_EXTENSION__IS_REQUIRED:
+			case ClassImpl.CLASS_FEATURE_COUNT + 2:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.ELEMENT_EXTENSION__STEREOTYPE:
+			case ClassImpl.CLASS_FEATURE_COUNT + 3:
 				return stereotype != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -43,6 +43,22 @@ public class SendSignalActionImpl
 		implements SendSignalAction {
 
 	/**
+	 * The number of structural features of the '<em>Send Signal Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SEND_SIGNAL_ACTION_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Send Signal Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SEND_SIGNAL_ACTION_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +101,7 @@ public class SendSignalActionImpl
 			if (signal != oldSignal)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.SEND_SIGNAL_ACTION__SIGNAL, oldSignal, signal));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldSignal, signal));
 			}
 		}
 		return signal;
@@ -110,7 +126,7 @@ public class SendSignalActionImpl
 		Signal oldSignal = signal;
 		signal = newSignal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.SEND_SIGNAL_ACTION__SIGNAL, oldSignal, signal));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldSignal, signal));
 	}
 
 	/**
@@ -122,17 +138,17 @@ public class SendSignalActionImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.SEND_SIGNAL_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.SEND_SIGNAL_ACTION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.SEND_SIGNAL_ACTION__SIGNAL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getSignal();
 				return basicGetSignal();
 		}
@@ -149,26 +165,26 @@ public class SendSignalActionImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.SEND_SIGNAL_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__SIGNAL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setSignal((Signal)newValue);
 				return;
 		}
@@ -184,22 +200,22 @@ public class SendSignalActionImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.SEND_SIGNAL_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.SEND_SIGNAL_ACTION__SIGNAL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setSignal((Signal)null);
 				return;
 		}
@@ -215,17 +231,17 @@ public class SendSignalActionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.SEND_SIGNAL_ACTION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.SEND_SIGNAL_ACTION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.SEND_SIGNAL_ACTION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.SEND_SIGNAL_ACTION__SIGNAL:
+			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return signal != null;
 		}
 		return eDynamicIsSet(featureID);

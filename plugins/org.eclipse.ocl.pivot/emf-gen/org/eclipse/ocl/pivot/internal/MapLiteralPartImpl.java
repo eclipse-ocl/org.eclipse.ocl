@@ -44,6 +44,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 {
 	/**
+	 * The number of structural features of the '<em>Map Literal Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_LITERAL_PART_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Map Literal Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_LITERAL_PART_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getOwnedKey() <em>Owned Key</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -106,7 +124,7 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		ownedKey = newOwnedKey;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_LITERAL_PART__OWNED_KEY, oldOwnedKey, newOwnedKey);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldOwnedKey, newOwnedKey);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +142,14 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		{
 			NotificationChain msgs = null;
 			if (ownedKey != null)
-				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MAP_LITERAL_PART__OWNED_KEY, null, msgs);
+				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedKey != null)
-				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MAP_LITERAL_PART__OWNED_KEY, null, msgs);
+				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedKey(newOwnedKey, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_LITERAL_PART__OWNED_KEY, newOwnedKey, newOwnedKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwnedKey, newOwnedKey));
 	}
 
 	/**
@@ -156,7 +174,7 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		ownedValue = newOwnedValue;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_LITERAL_PART__OWNED_VALUE, oldOwnedValue, newOwnedValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldOwnedValue, newOwnedValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -174,14 +192,14 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		{
 			NotificationChain msgs = null;
 			if (ownedValue != null)
-				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MAP_LITERAL_PART__OWNED_VALUE, null, msgs);
+				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedValue != null)
-				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.MAP_LITERAL_PART__OWNED_VALUE, null, msgs);
+				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedValue(newOwnedValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_LITERAL_PART__OWNED_VALUE, newOwnedValue, newOwnedValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedValue, newOwnedValue));
 	}
 
 	/**
@@ -194,17 +212,17 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_PART__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_PART__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MAP_LITERAL_PART__OWNED_KEY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return basicSetOwnedKey(null, msgs);
-			case PivotPackage.MAP_LITERAL_PART__OWNED_VALUE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return basicSetOwnedValue(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -220,17 +238,17 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_KEY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getOwnedKey();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_VALUE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getOwnedValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -247,26 +265,26 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_PART__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_KEY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwnedKey((OCLExpression)newValue);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_VALUE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedValue((OCLExpression)newValue);
 				return;
 		}
@@ -283,22 +301,22 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_PART__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_KEY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setOwnedKey((OCLExpression)null);
 				return;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_VALUE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setOwnedValue((OCLExpression)null);
 				return;
 		}
@@ -315,17 +333,17 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_LITERAL_PART__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.MAP_LITERAL_PART__OWNED_KEY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ownedKey != null;
-			case PivotPackage.MAP_LITERAL_PART__OWNED_VALUE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return ownedValue != null;
 		}
 		return eDynamicIsSet(featureID);

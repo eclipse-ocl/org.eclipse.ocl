@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -66,6 +68,9 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 
 /**
  * <!-- begin-user-doc -->
@@ -97,6 +102,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class ClassImpl
 extends TypeImpl
 implements org.eclipse.ocl.pivot.Class {
+
+	/**
+	 * The number of structural features of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CLASS_FEATURE_COUNT = TypeImpl.TYPE_FEATURE_COUNT + 15;
+
+	/**
+	 * The number of operations of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CLASS_OPERATION_COUNT = TypeImpl.TYPE_OPERATION_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
@@ -308,7 +331,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, PivotPackage.CLASS__OWNED_CONSTRAINTS);
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, TypeImpl.TYPE_FEATURE_COUNT + 0);
 		}
 		return ownedConstraints;
 	}
@@ -335,7 +358,7 @@ implements org.eclipse.ocl.pivot.Class {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 2, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -353,14 +376,14 @@ implements org.eclipse.ocl.pivot.Class {
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 2, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -373,7 +396,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, PivotPackage.CLASS__OWNED_BINDINGS, PivotPackage.TEMPLATE_BINDING__OWNING_ELEMENT);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, TypeImpl.TYPE_FEATURE_COUNT + 1, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
 		}
 		return ownedBindings;
 	}
@@ -389,7 +412,7 @@ implements org.eclipse.ocl.pivot.Class {
 		TemplateableElement oldUnspecializedElement = unspecializedElement;
 		unspecializedElement = newUnspecializedElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__UNSPECIALIZED_ELEMENT, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 3, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -403,7 +426,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (extenders == null)
 		{
-			extenders = new EObjectWithInverseResolvingEList<StereotypeExtender>(StereotypeExtender.class, this, PivotPackage.CLASS__EXTENDERS, PivotPackage.STEREOTYPE_EXTENDER__CLASS);
+			extenders = new EObjectWithInverseResolvingEList<StereotypeExtender>(StereotypeExtender.class, this, TypeImpl.TYPE_FEATURE_COUNT + 4, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
 		}
 		return extenders;
 	}
@@ -430,7 +453,7 @@ implements org.eclipse.ocl.pivot.Class {
 		String oldInstanceClassName = instanceClassName;
 		instanceClassName = newInstanceClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__INSTANCE_CLASS_NAME, oldInstanceClassName, instanceClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 5, oldInstanceClassName, instanceClassName));
 	}
 
 	/**
@@ -454,7 +477,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsAbstract = (eFlags & IS_ABSTRACT_EFLAG) != 0;
 		if (newIsAbstract) eFlags |= IS_ABSTRACT_EFLAG; else eFlags &= ~IS_ABSTRACT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__IS_ABSTRACT, oldIsAbstract, newIsAbstract));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 6, oldIsAbstract, newIsAbstract));
 	}
 
 	/**
@@ -479,7 +502,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsActive = (eFlags & IS_ACTIVE_EFLAG) != 0;
 		if (newIsActive) eFlags |= IS_ACTIVE_EFLAG; else eFlags &= ~IS_ACTIVE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__IS_ACTIVE, oldIsActive, newIsActive));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 7, oldIsActive, newIsActive));
 	}
 
 	/**
@@ -504,7 +527,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<Constraint>(Constraint.class, this, PivotPackage.CLASS__OWNED_INVARIANTS);
+			ownedInvariants = new EObjectContainmentEList<Constraint>(Constraint.class, this, TypeImpl.TYPE_FEATURE_COUNT + 10);
 		}
 		return ownedInvariants;
 	}
@@ -517,7 +540,7 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage()
 	{
-		if (eContainerFeatureID() != PivotPackage.CLASS__OWNING_PACKAGE) return null;
+		if (eContainerFeatureID() != (TypeImpl.TYPE_FEATURE_COUNT + 13)) return null;
 		return (org.eclipse.ocl.pivot.Package)eInternalContainer();
 	}
 
@@ -528,7 +551,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	public NotificationChain basicSetOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, PivotPackage.CLASS__OWNING_PACKAGE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, TypeImpl.TYPE_FEATURE_COUNT + 13, msgs);
 		return msgs;
 	}
 
@@ -540,7 +563,7 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public void setOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage)
 	{
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != PivotPackage.CLASS__OWNING_PACKAGE && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (TypeImpl.TYPE_FEATURE_COUNT + 13) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -548,12 +571,12 @@ implements org.eclipse.ocl.pivot.Class {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPackage != null)
-				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, PivotPackage.PACKAGE__OWNED_CLASSES, org.eclipse.ocl.pivot.Package.class, msgs);
+				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, org.eclipse.ocl.pivot.Package.class, msgs);
 			msgs = basicSetOwningPackage(newOwningPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__OWNING_PACKAGE, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 13, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -567,25 +590,25 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.CLASS__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypeImpl.TYPE_FEATURE_COUNT + 2), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
@@ -603,31 +626,31 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_CONSTRAINTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				return basicSetOwnedSignature(null, msgs);
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_BEHAVIORS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 9:
 				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_INVARIANTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 10:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -643,8 +666,8 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.CLASS__OWNING_PACKAGE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.PACKAGE__OWNED_CLASSES, org.eclipse.ocl.pivot.Package.class, msgs);
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, org.eclipse.ocl.pivot.Package.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -671,9 +694,9 @@ implements org.eclipse.ocl.pivot.Class {
 			 *         'Class::UniqueInvariantName'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Class_c_c_UniqueInvariantName);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Class_c_c_UniqueInvariantName);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -682,10 +705,10 @@ implements org.eclipse.ocl.pivot.Class {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					java.util.@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedInvariants.iterator();
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
+					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedInvariants.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -693,11 +716,11 @@ implements org.eclipse.ocl.pivot.Class {
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Constraint _1 = (org.eclipse.ocl.pivot.@NonNull Constraint)ITERATOR__1.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
 						/**
 						 * name
 						 */
-						final /*@NonInvalid*/ java.lang.@Nullable String name = _1.getName();
+						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.FALSE_VALUE;			// Abort after second find
@@ -733,7 +756,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsInterface = (eFlags & IS_INTERFACE_EFLAG) != 0;
 		if (newIsInterface) eFlags |= IS_INTERFACE_EFLAG; else eFlags &= ~IS_INTERFACE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.CLASS__IS_INTERFACE, oldIsInterface, newIsInterface));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 8, oldIsInterface, newIsInterface));
 	}
 
 	/**
@@ -747,7 +770,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedBehaviors == null)
 		{
-			ownedBehaviors = new EObjectContainmentEList<Behavior>(Behavior.class, this, PivotPackage.CLASS__OWNED_BEHAVIORS);
+			ownedBehaviors = new EObjectContainmentEList<Behavior>(Behavior.class, this, TypeImpl.TYPE_FEATURE_COUNT + 9);
 		}
 		return ownedBehaviors;
 	}
@@ -761,45 +784,45 @@ implements org.eclipse.ocl.pivot.Class {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.CLASS__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.CLASS__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.CLASS__OWNED_CONSTRAINTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 0:
 				return getOwnedConstraints();
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				return getOwnedBindings();
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				return getOwnedSignature();
-			case PivotPackage.CLASS__UNSPECIALIZED_ELEMENT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 3:
 				return getUnspecializedElement();
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				return getExtenders();
-			case PivotPackage.CLASS__INSTANCE_CLASS_NAME:
+			case TypeImpl.TYPE_FEATURE_COUNT + 5:
 				return getInstanceClassName();
-			case PivotPackage.CLASS__IS_ABSTRACT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 6:
 				return isIsAbstract();
-			case PivotPackage.CLASS__IS_ACTIVE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 7:
 				return isIsActive();
-			case PivotPackage.CLASS__IS_INTERFACE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 8:
 				return isIsInterface();
-			case PivotPackage.CLASS__OWNED_BEHAVIORS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 9:
 				return getOwnedBehaviors();
-			case PivotPackage.CLASS__OWNED_INVARIANTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 10:
 				return getOwnedInvariants();
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				return getOwnedOperations();
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				return getOwnedProperties();
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				return getOwningPackage();
-			case PivotPackage.CLASS__SUPER_CLASSES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 14:
 				return getSuperClasses();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -815,75 +838,75 @@ implements org.eclipse.ocl.pivot.Class {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.CLASS__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_CONSTRAINTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.CLASS__UNSPECIALIZED_ELEMENT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 3:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case PivotPackage.CLASS__INSTANCE_CLASS_NAME:
+			case TypeImpl.TYPE_FEATURE_COUNT + 5:
 				setInstanceClassName((String)newValue);
 				return;
-			case PivotPackage.CLASS__IS_ABSTRACT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 6:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case PivotPackage.CLASS__IS_ACTIVE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 7:
 				setIsActive((Boolean)newValue);
 				return;
-			case PivotPackage.CLASS__IS_INTERFACE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 8:
 				setIsInterface((Boolean)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_BEHAVIORS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 9:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_INVARIANTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 10:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.CLASS__SUPER_CLASSES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 14:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
@@ -900,64 +923,64 @@ implements org.eclipse.ocl.pivot.Class {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.CLASS__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.CLASS__OWNED_CONSTRAINTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.CLASS__UNSPECIALIZED_ELEMENT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 3:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				getExtenders().clear();
 				return;
-			case PivotPackage.CLASS__INSTANCE_CLASS_NAME:
+			case TypeImpl.TYPE_FEATURE_COUNT + 5:
 				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
-			case PivotPackage.CLASS__IS_ABSTRACT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 6:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case PivotPackage.CLASS__IS_ACTIVE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 7:
 				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
-			case PivotPackage.CLASS__IS_INTERFACE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 8:
 				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
-			case PivotPackage.CLASS__OWNED_BEHAVIORS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 9:
 				getOwnedBehaviors().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_INVARIANTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 10:
 				getOwnedInvariants().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				getOwnedOperations().clear();
 				return;
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				getOwnedProperties().clear();
 				return;
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.CLASS__SUPER_CLASSES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 14:
 				getSuperClasses().clear();
 				return;
 		}
@@ -973,45 +996,45 @@ implements org.eclipse.ocl.pivot.Class {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.CLASS__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.CLASS__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.CLASS__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.CLASS__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.CLASS__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.CLASS__OWNED_CONSTRAINTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 0:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.CLASS__OWNED_BINDINGS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 1:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.CLASS__OWNED_SIGNATURE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 2:
 				return ownedSignature != null;
-			case PivotPackage.CLASS__UNSPECIALIZED_ELEMENT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 3:
 				return unspecializedElement != null;
-			case PivotPackage.CLASS__EXTENDERS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 4:
 				return extenders != null && !extenders.isEmpty();
-			case PivotPackage.CLASS__INSTANCE_CLASS_NAME:
+			case TypeImpl.TYPE_FEATURE_COUNT + 5:
 				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
-			case PivotPackage.CLASS__IS_ABSTRACT:
+			case TypeImpl.TYPE_FEATURE_COUNT + 6:
 				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
-			case PivotPackage.CLASS__IS_ACTIVE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 7:
 				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
-			case PivotPackage.CLASS__IS_INTERFACE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 8:
 				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
-			case PivotPackage.CLASS__OWNED_BEHAVIORS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 9:
 				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
-			case PivotPackage.CLASS__OWNED_INVARIANTS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 10:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case PivotPackage.CLASS__OWNED_OPERATIONS:
+			case TypeImpl.TYPE_FEATURE_COUNT + 11:
 				return ownedOperations != null && !ownedOperations.isEmpty();
-			case PivotPackage.CLASS__OWNED_PROPERTIES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 12:
 				return ownedProperties != null && !ownedProperties.isEmpty();
-			case PivotPackage.CLASS__OWNING_PACKAGE:
+			case TypeImpl.TYPE_FEATURE_COUNT + 13:
 				return getOwningPackage() != null;
-			case PivotPackage.CLASS__SUPER_CLASSES:
+			case TypeImpl.TYPE_FEATURE_COUNT + 14:
 				return superClasses != null && !superClasses.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1029,7 +1052,7 @@ implements org.eclipse.ocl.pivot.Class {
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.CLASS__OWNED_CONSTRAINTS: return PivotPackage.NAMESPACE__OWNED_CONSTRAINTS;
+				case TypeImpl.TYPE_FEATURE_COUNT + 0: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -1037,9 +1060,9 @@ implements org.eclipse.ocl.pivot.Class {
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.CLASS__OWNED_BINDINGS: return PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS;
-				case PivotPackage.CLASS__OWNED_SIGNATURE: return PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE;
-				case PivotPackage.CLASS__UNSPECIALIZED_ELEMENT: return PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT;
+				case TypeImpl.TYPE_FEATURE_COUNT + 1: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
+				case TypeImpl.TYPE_FEATURE_COUNT + 2: return ElementImpl.ELEMENT_FEATURE_COUNT + 1;
+				case TypeImpl.TYPE_FEATURE_COUNT + 3: return ElementImpl.ELEMENT_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -1058,7 +1081,7 @@ implements org.eclipse.ocl.pivot.Class {
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS: return PivotPackage.CLASS__OWNED_CONSTRAINTS;
+				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0: return TypeImpl.TYPE_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -1066,9 +1089,9 @@ implements org.eclipse.ocl.pivot.Class {
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS: return PivotPackage.CLASS__OWNED_BINDINGS;
-				case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE: return PivotPackage.CLASS__OWNED_SIGNATURE;
-				case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT: return PivotPackage.CLASS__UNSPECIALIZED_ELEMENT;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return TypeImpl.TYPE_FEATURE_COUNT + 1;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 1: return TypeImpl.TYPE_FEATURE_COUNT + 2;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 2: return TypeImpl.TYPE_FEATURE_COUNT + 3;
 				default: return -1;
 			}
 		}
@@ -1086,21 +1109,21 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.CLASS___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.CLASS___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.CLASS___FLATTENED_TYPE:
+			case 2:
 				return flattenedType();
-			case PivotPackage.CLASS___IS_CLASS:
+			case 3:
 				return isClass();
-			case PivotPackage.CLASS___IS_TEMPLATE_PARAMETER:
+			case 4:
 				return isTemplateParameter();
-			case PivotPackage.CLASS___SPECIALIZE_IN__CALLEXP_TYPE:
+			case 5:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
-			case PivotPackage.CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case TypeImpl.TYPE_OPERATION_COUNT + 0:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP:
+			case TypeImpl.TYPE_OPERATION_COUNT + 1:
 				return validateUniqueInvariantName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -1274,15 +1297,15 @@ implements org.eclipse.ocl.pivot.Class {
 			 *         'Class::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Class_c_c_NameIsNotNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Class_c_c_NameIsNotNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ java.lang.@Nullable String name = this.getName();
+				final /*@NonInvalid*/ @Nullable String name = this.getName();
 				final /*@NonInvalid*/ boolean result = name != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Class_c_c_NameIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;

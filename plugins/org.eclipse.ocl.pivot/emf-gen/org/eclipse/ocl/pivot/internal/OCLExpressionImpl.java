@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -57,6 +58,22 @@ public abstract class OCLExpressionImpl
 extends TypedElementImpl
 implements OCLExpression {
 
+	/**
+	 * The number of structural features of the '<em>OCL Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OCL_EXPRESSION_FEATURE_COUNT = TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>OCL Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OCL_EXPRESSION_OPERATION_COUNT = TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 3;
 	/**
 	 * The cached value of the '{@link #getTypeValue() <em>Type Value</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -108,7 +125,7 @@ implements OCLExpression {
 		Type oldTypeValue = typeValue;
 		typeValue = newTypeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OCL_EXPRESSION__TYPE_VALUE, oldTypeValue, typeValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, oldTypeValue, typeValue));
 	}
 
 	/**
@@ -134,15 +151,15 @@ implements OCLExpression {
 			 *         'OCLExpression::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = type != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
@@ -164,24 +181,24 @@ implements OCLExpression {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OCL_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.OCL_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.OCL_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.OCL_EXPRESSION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.OCL_EXPRESSION__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.OCL_EXPRESSION__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.OCL_EXPRESSION__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.OCL_EXPRESSION__TYPE_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return getTypeValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -198,32 +215,32 @@ implements OCLExpression {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OCL_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.OCL_EXPRESSION__TYPE_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				setTypeValue((Type)newValue);
 				return;
 		}
@@ -240,28 +257,28 @@ implements OCLExpression {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OCL_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.OCL_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.OCL_EXPRESSION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.OCL_EXPRESSION__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.OCL_EXPRESSION__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.OCL_EXPRESSION__TYPE_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				setTypeValue((Type)null);
 				return;
 		}
@@ -278,23 +295,23 @@ implements OCLExpression {
 	{
 		switch (featureID)
 		{
-			case PivotPackage.OCL_EXPRESSION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.OCL_EXPRESSION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.OCL_EXPRESSION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.OCL_EXPRESSION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.OCL_EXPRESSION__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.OCL_EXPRESSION__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.OCL_EXPRESSION__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.OCL_EXPRESSION__TYPE_VALUE:
+			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return typeValue != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -311,17 +328,17 @@ implements OCLExpression {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.OCL_EXPRESSION___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.OCL_EXPRESSION___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.OCL_EXPRESSION___IS_NON_NULL:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
 				return isNonNull();
-			case PivotPackage.OCL_EXPRESSION___IS_NULL:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
 				return isNull();
-			case PivotPackage.OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

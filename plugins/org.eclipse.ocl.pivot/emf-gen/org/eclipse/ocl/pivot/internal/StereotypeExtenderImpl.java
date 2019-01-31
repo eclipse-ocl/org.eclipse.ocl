@@ -47,6 +47,24 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExtender
 {
 	/**
+	 * The number of structural features of the '<em>Stereotype Extender</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STEREOTYPE_EXTENDER_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Stereotype Extender</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STEREOTYPE_EXTENDER_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getClass_() <em>Class</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -108,7 +126,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STEREOTYPE_EXTENDER__IS_REQUIRED, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -119,7 +137,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	@Override
 	public Stereotype getOwningStereotype()
 	{
-		if (eContainerFeatureID() != PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE) return null;
+		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (Stereotype)eInternalContainer();
 	}
 
@@ -130,7 +148,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	 */
 	public NotificationChain basicSetOwningStereotype(Stereotype newOwningStereotype, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningStereotype, PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningStereotype, ElementImpl.ELEMENT_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -142,7 +160,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	@Override
 	public void setOwningStereotype(Stereotype newOwningStereotype)
 	{
-		if (newOwningStereotype != eInternalContainer() || (eContainerFeatureID() != PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE && newOwningStereotype != null))
+		if (newOwningStereotype != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2) && newOwningStereotype != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningStereotype))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -150,12 +168,12 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStereotype != null)
-				msgs = ((InternalEObject)newOwningStereotype).eInverseAdd(this, PivotPackage.STEREOTYPE__OWNED_EXTENDERS, Stereotype.class, msgs);
+				msgs = ((InternalEObject)newOwningStereotype).eInverseAdd(this, ClassImpl.CLASS_FEATURE_COUNT + 0, Stereotype.class, msgs);
 			msgs = basicSetOwningStereotype(newOwningStereotype, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE, newOwningStereotype, newOwningStereotype));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newOwningStereotype, newOwningStereotype));
 	}
 
 	/**
@@ -173,7 +191,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 			if (class_ != oldClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.STEREOTYPE_EXTENDER__CLASS, oldClass, class_));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldClass, class_));
 			}
 		}
 		return class_;
@@ -200,7 +218,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		class_ = newClass;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STEREOTYPE_EXTENDER__CLASS, oldClass, newClass);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldClass, newClass);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -218,14 +236,14 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		{
 			NotificationChain msgs = null;
 			if (class_ != null)
-				msgs = ((InternalEObject)class_).eInverseRemove(this, PivotPackage.CLASS__EXTENDERS, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)class_).eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Class.class, msgs);
 			if (newClass != null)
-				msgs = ((InternalEObject)newClass).eInverseAdd(this, PivotPackage.CLASS__EXTENDERS, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newClass).eInverseAdd(this, TypeImpl.TYPE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetClass(newClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STEREOTYPE_EXTENDER__CLASS, newClass, newClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newClass, newClass));
 	}
 
 	/**
@@ -250,17 +268,17 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (class_ != null)
-					msgs = ((InternalEObject)class_).eInverseRemove(this, PivotPackage.CLASS__EXTENDERS, org.eclipse.ocl.pivot.Class.class, msgs);
+					msgs = ((InternalEObject)class_).eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Class.class, msgs);
 				return basicSetClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningStereotype((Stereotype)otherEnd, msgs);
@@ -278,17 +296,17 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return basicSetClass(null, msgs);
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return basicSetOwningStereotype(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -304,8 +322,8 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.STEREOTYPE__OWNED_EXTENDERS, Stereotype.class, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, Stereotype.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -320,20 +338,20 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getClass_();
 				return basicGetClass();
-			case PivotPackage.STEREOTYPE_EXTENDER__IS_REQUIRED:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return isIsRequired();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningStereotype();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -350,29 +368,29 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__IS_REQUIRED:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningStereotype((Stereotype)newValue);
 				return;
 		}
@@ -389,25 +407,25 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				setClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__IS_REQUIRED:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningStereotype((Stereotype)null);
 				return;
 		}
@@ -424,19 +442,19 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STEREOTYPE_EXTENDER__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.STEREOTYPE_EXTENDER__CLASS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return class_ != null;
-			case PivotPackage.STEREOTYPE_EXTENDER__IS_REQUIRED:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningStereotype() != null;
 		}
 		return eDynamicIsSet(featureID);

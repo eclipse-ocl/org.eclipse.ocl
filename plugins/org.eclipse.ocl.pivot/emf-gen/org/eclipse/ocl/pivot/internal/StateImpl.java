@@ -74,6 +74,22 @@ public class StateImpl
 		implements State {
 
 	/**
+	 * The number of structural features of the '<em>State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STATE_FEATURE_COUNT = NamespaceImpl.NAMESPACE_FEATURE_COUNT + 17;
+	/**
+	 * The number of operations of the '<em>State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STATE_OPERATION_COUNT = NamespaceImpl.NAMESPACE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -246,7 +262,7 @@ public class StateImpl
 	{
 		if (incomingTransitions == null)
 		{
-			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, PivotPackage.STATE__INCOMING_TRANSITIONS, PivotPackage.TRANSITION__TARGET);
+			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
 		}
 		return incomingTransitions;
 	}
@@ -261,7 +277,7 @@ public class StateImpl
 	{
 		if (outgoingTransitions == null)
 		{
-			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, PivotPackage.STATE__OUTGOING_TRANSITIONS, PivotPackage.TRANSITION__SOURCE);
+			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
 		}
 		return outgoingTransitions;
 	}
@@ -274,7 +290,7 @@ public class StateImpl
 	@Override
 	public Region getOwningRegion()
 	{
-		if (eContainerFeatureID() != PivotPackage.STATE__OWNING_REGION) return null;
+		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2)) return null;
 		return (Region)eInternalContainer();
 	}
 
@@ -285,7 +301,7 @@ public class StateImpl
 	 */
 	public NotificationChain basicSetOwningRegion(Region newOwningRegion, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, PivotPackage.STATE__OWNING_REGION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -297,7 +313,7 @@ public class StateImpl
 	@Override
 	public void setOwningRegion(Region newOwningRegion)
 	{
-		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != PivotPackage.STATE__OWNING_REGION && newOwningRegion != null))
+		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2) && newOwningRegion != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningRegion))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -305,12 +321,12 @@ public class StateImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningRegion != null)
-				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, PivotPackage.REGION__OWNED_SUBVERTEXES, Region.class, msgs);
+				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
 			msgs = basicSetOwningRegion(newOwningRegion, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNING_REGION, newOwningRegion, newOwningRegion));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, newOwningRegion, newOwningRegion));
 	}
 
 	/**
@@ -367,7 +383,7 @@ public class StateImpl
 	{
 		if (ownedConnectionPoints == null)
 		{
-			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, PivotPackage.STATE__OWNED_CONNECTION_POINTS, PivotPackage.PSEUDOSTATE__OWNING_STATE);
+			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, VertexImpl.VERTEX_FEATURE_COUNT + 1);
 		}
 		return ownedConnectionPoints;
 	}
@@ -382,7 +398,7 @@ public class StateImpl
 	{
 		if (ownedConnections == null)
 		{
-			ownedConnections = new EObjectContainmentWithInverseEList<ConnectionPointReference>(ConnectionPointReference.class, this, PivotPackage.STATE__OWNED_CONNECTIONS, PivotPackage.CONNECTION_POINT_REFERENCE__OWNING_STATE);
+			ownedConnections = new EObjectContainmentWithInverseEList<ConnectionPointReference>(ConnectionPointReference.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8, VertexImpl.VERTEX_FEATURE_COUNT + 2);
 		}
 		return ownedConnections;
 	}
@@ -397,7 +413,7 @@ public class StateImpl
 	{
 		if (ownedDeferrableTriggers == null)
 		{
-			ownedDeferrableTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS, PivotPackage.TRIGGER__OWNING_STATE);
+			ownedDeferrableTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return ownedDeferrableTriggers;
 	}
@@ -424,7 +440,7 @@ public class StateImpl
 		ownedDoActivity = newOwnedDoActivity;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_DO_ACTIVITY, oldOwnedDoActivity, newOwnedDoActivity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10, oldOwnedDoActivity, newOwnedDoActivity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -442,14 +458,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedDoActivity != null)
-				msgs = ((InternalEObject)ownedDoActivity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_DO_ACTIVITY, null, msgs);
+				msgs = ((InternalEObject)ownedDoActivity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10), null, msgs);
 			if (newOwnedDoActivity != null)
-				msgs = ((InternalEObject)newOwnedDoActivity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_DO_ACTIVITY, null, msgs);
+				msgs = ((InternalEObject)newOwnedDoActivity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10), null, msgs);
 			msgs = basicSetOwnedDoActivity(newOwnedDoActivity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_DO_ACTIVITY, newOwnedDoActivity, newOwnedDoActivity));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10, newOwnedDoActivity, newOwnedDoActivity));
 	}
 
 	/**
@@ -474,7 +490,7 @@ public class StateImpl
 		ownedEntry = newOwnedEntry;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_ENTRY, oldOwnedEntry, newOwnedEntry);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11, oldOwnedEntry, newOwnedEntry);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -492,14 +508,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedEntry != null)
-				msgs = ((InternalEObject)ownedEntry).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_ENTRY, null, msgs);
+				msgs = ((InternalEObject)ownedEntry).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11), null, msgs);
 			if (newOwnedEntry != null)
-				msgs = ((InternalEObject)newOwnedEntry).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_ENTRY, null, msgs);
+				msgs = ((InternalEObject)newOwnedEntry).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11), null, msgs);
 			msgs = basicSetOwnedEntry(newOwnedEntry, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_ENTRY, newOwnedEntry, newOwnedEntry));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11, newOwnedEntry, newOwnedEntry));
 	}
 
 	/**
@@ -524,7 +540,7 @@ public class StateImpl
 		ownedExit = newOwnedExit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_EXIT, oldOwnedExit, newOwnedExit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12, oldOwnedExit, newOwnedExit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -542,14 +558,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedExit != null)
-				msgs = ((InternalEObject)ownedExit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_EXIT, null, msgs);
+				msgs = ((InternalEObject)ownedExit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12), null, msgs);
 			if (newOwnedExit != null)
-				msgs = ((InternalEObject)newOwnedExit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_EXIT, null, msgs);
+				msgs = ((InternalEObject)newOwnedExit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12), null, msgs);
 			msgs = basicSetOwnedExit(newOwnedExit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_EXIT, newOwnedExit, newOwnedExit));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12, newOwnedExit, newOwnedExit));
 	}
 
 	/**
@@ -562,7 +578,7 @@ public class StateImpl
 	{
 		if (ownedRegions == null)
 		{
-			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, PivotPackage.STATE__OWNED_REGIONS, PivotPackage.REGION__OWNING_STATE);
+			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
 		}
 		return ownedRegions;
 	}
@@ -589,7 +605,7 @@ public class StateImpl
 		ownedStateInvariant = newOwnedStateInvariant;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_STATE_INVARIANT, oldOwnedStateInvariant, newOwnedStateInvariant);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, oldOwnedStateInvariant, newOwnedStateInvariant);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -607,14 +623,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedStateInvariant != null)
-				msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, PivotPackage.CONSTRAINT__OWNING_STATE, Constraint.class, msgs);
+				msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, Constraint.class, msgs);
 			if (newOwnedStateInvariant != null)
-				msgs = ((InternalEObject)newOwnedStateInvariant).eInverseAdd(this, PivotPackage.CONSTRAINT__OWNING_STATE, Constraint.class, msgs);
+				msgs = ((InternalEObject)newOwnedStateInvariant).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, Constraint.class, msgs);
 			msgs = basicSetOwnedStateInvariant(newOwnedStateInvariant, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__OWNED_STATE_INVARIANT, newOwnedStateInvariant, newOwnedStateInvariant));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, newOwnedStateInvariant, newOwnedStateInvariant));
 	}
 
 	/**
@@ -632,7 +648,7 @@ public class StateImpl
 			if (redefinedState != oldRedefinedState)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.STATE__REDEFINED_STATE, oldRedefinedState, redefinedState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15, oldRedefinedState, redefinedState));
 			}
 		}
 		return redefinedState;
@@ -659,7 +675,7 @@ public class StateImpl
 		State oldRedefinedState = redefinedState;
 		redefinedState = newRedefinedState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__REDEFINED_STATE, oldRedefinedState, redefinedState));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15, oldRedefinedState, redefinedState));
 	}
 
 	/**
@@ -677,7 +693,7 @@ public class StateImpl
 			if (submachines != oldSubmachines)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.STATE__SUBMACHINES, oldSubmachines, submachines));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, oldSubmachines, submachines));
 			}
 		}
 		return submachines;
@@ -704,7 +720,7 @@ public class StateImpl
 		submachines = newSubmachines;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__SUBMACHINES, oldSubmachines, newSubmachines);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, oldSubmachines, newSubmachines);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -722,14 +738,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (submachines != null)
-				msgs = ((InternalEObject)submachines).eInverseRemove(this, PivotPackage.STATE_MACHINE__SUBMACHINE_STATES, StateMachine.class, msgs);
+				msgs = ((InternalEObject)submachines).eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
 			if (newSubmachines != null)
-				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, PivotPackage.STATE_MACHINE__SUBMACHINE_STATES, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
 			msgs = basicSetSubmachines(newSubmachines, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.STATE__SUBMACHINES, newSubmachines, newSubmachines));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, newSubmachines, newSubmachines));
 	}
 
 	/**
@@ -743,35 +759,35 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__INCOMING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OUTGOING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedConnectionPoints()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedConnections()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedDeferrableTriggers()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedRegions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				if (ownedStateInvariant != null)
-					msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.STATE__OWNED_STATE_INVARIANT, null, msgs);
+					msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14), null, msgs);
 				return basicSetOwnedStateInvariant((Constraint)otherEnd, msgs);
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				if (submachines != null)
-					msgs = ((InternalEObject)submachines).eInverseRemove(this, PivotPackage.STATE_MACHINE__SUBMACHINE_STATES, StateMachine.class, msgs);
+					msgs = ((InternalEObject)submachines).eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
 				return basicSetSubmachines((StateMachine)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -787,39 +803,39 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__INCOMING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OUTGOING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return basicSetOwningRegion(null, msgs);
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				return ((InternalEList<?>)getOwnedConnectionPoints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				return ((InternalEList<?>)getOwnedConnections()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				return ((InternalEList<?>)getOwnedDeferrableTriggers()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_DO_ACTIVITY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
 				return basicSetOwnedDoActivity(null, msgs);
-			case PivotPackage.STATE__OWNED_ENTRY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
 				return basicSetOwnedEntry(null, msgs);
-			case PivotPackage.STATE__OWNED_EXIT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
 				return basicSetOwnedExit(null, msgs);
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				return ((InternalEList<?>)getOwnedRegions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				return basicSetOwnedStateInvariant(null, msgs);
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				return basicSetSubmachines(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -835,8 +851,8 @@ public class StateImpl
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.STATE__OWNING_REGION:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.REGION__OWNED_SUBVERTEXES, Region.class, msgs);
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -851,52 +867,52 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.STATE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.STATE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.STATE__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.STATE__INCOMING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return getIncomingTransitions();
-			case PivotPackage.STATE__OUTGOING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return getOutgoingTransitions();
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return getOwningRegion();
-			case PivotPackage.STATE__IS_COMPOSITE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				return isIsComposite();
-			case PivotPackage.STATE__IS_ORTHOGONAL:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
 				return isIsOrthogonal();
-			case PivotPackage.STATE__IS_SIMPLE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
 				return isIsSimple();
-			case PivotPackage.STATE__IS_SUBMACHINE_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
 				return isIsSubmachineState();
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				return getOwnedConnectionPoints();
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				return getOwnedConnections();
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				return getOwnedDeferrableTriggers();
-			case PivotPackage.STATE__OWNED_DO_ACTIVITY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
 				return getOwnedDoActivity();
-			case PivotPackage.STATE__OWNED_ENTRY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
 				return getOwnedEntry();
-			case PivotPackage.STATE__OWNED_EXIT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
 				return getOwnedExit();
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				return getOwnedRegions();
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				return getOwnedStateInvariant();
-			case PivotPackage.STATE__REDEFINED_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
 				if (resolve) return getRedefinedState();
 				return basicGetRedefinedState();
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				if (resolve) return getSubmachines();
 				return basicGetSubmachines();
 		}
@@ -914,64 +930,64 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.STATE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				setOwningRegion((Region)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				getOwnedConnectionPoints().clear();
 				getOwnedConnectionPoints().addAll((Collection<? extends Pseudostate>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				getOwnedConnections().clear();
 				getOwnedConnections().addAll((Collection<? extends ConnectionPointReference>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				getOwnedDeferrableTriggers().clear();
 				getOwnedDeferrableTriggers().addAll((Collection<? extends Trigger>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_DO_ACTIVITY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
 				setOwnedDoActivity((Behavior)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_ENTRY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
 				setOwnedEntry((Behavior)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_EXIT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
 				setOwnedExit((Behavior)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				getOwnedRegions().clear();
 				getOwnedRegions().addAll((Collection<? extends Region>)newValue);
 				return;
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				setOwnedStateInvariant((Constraint)newValue);
 				return;
-			case PivotPackage.STATE__REDEFINED_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
 				setRedefinedState((State)newValue);
 				return;
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				setSubmachines((StateMachine)newValue);
 				return;
 		}
@@ -988,55 +1004,55 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.STATE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.STATE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.STATE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				setOwningRegion((Region)null);
 				return;
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				getOwnedConnectionPoints().clear();
 				return;
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				getOwnedConnections().clear();
 				return;
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				getOwnedDeferrableTriggers().clear();
 				return;
-			case PivotPackage.STATE__OWNED_DO_ACTIVITY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
 				setOwnedDoActivity((Behavior)null);
 				return;
-			case PivotPackage.STATE__OWNED_ENTRY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
 				setOwnedEntry((Behavior)null);
 				return;
-			case PivotPackage.STATE__OWNED_EXIT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
 				setOwnedExit((Behavior)null);
 				return;
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				getOwnedRegions().clear();
 				return;
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				setOwnedStateInvariant((Constraint)null);
 				return;
-			case PivotPackage.STATE__REDEFINED_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
 				setRedefinedState((State)null);
 				return;
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				setSubmachines((StateMachine)null);
 				return;
 		}
@@ -1053,51 +1069,51 @@ public class StateImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.STATE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.STATE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.STATE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.STATE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.STATE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.STATE__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.STATE__INCOMING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return incomingTransitions != null && !incomingTransitions.isEmpty();
-			case PivotPackage.STATE__OUTGOING_TRANSITIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-			case PivotPackage.STATE__OWNING_REGION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return getOwningRegion() != null;
-			case PivotPackage.STATE__IS_COMPOSITE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				return isIsComposite() != IS_COMPOSITE_EDEFAULT;
-			case PivotPackage.STATE__IS_ORTHOGONAL:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
 				return isIsOrthogonal() != IS_ORTHOGONAL_EDEFAULT;
-			case PivotPackage.STATE__IS_SIMPLE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
 				return isIsSimple() != IS_SIMPLE_EDEFAULT;
-			case PivotPackage.STATE__IS_SUBMACHINE_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
 				return isIsSubmachineState() != IS_SUBMACHINE_STATE_EDEFAULT;
-			case PivotPackage.STATE__OWNED_CONNECTION_POINTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
 				return ownedConnectionPoints != null && !ownedConnectionPoints.isEmpty();
-			case PivotPackage.STATE__OWNED_CONNECTIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
 				return ownedConnections != null && !ownedConnections.isEmpty();
-			case PivotPackage.STATE__OWNED_DEFERRABLE_TRIGGERS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
 				return ownedDeferrableTriggers != null && !ownedDeferrableTriggers.isEmpty();
-			case PivotPackage.STATE__OWNED_DO_ACTIVITY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
 				return ownedDoActivity != null;
-			case PivotPackage.STATE__OWNED_ENTRY:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
 				return ownedEntry != null;
-			case PivotPackage.STATE__OWNED_EXIT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
 				return ownedExit != null;
-			case PivotPackage.STATE__OWNED_REGIONS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
 				return ownedRegions != null && !ownedRegions.isEmpty();
-			case PivotPackage.STATE__OWNED_STATE_INVARIANT:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
 				return ownedStateInvariant != null;
-			case PivotPackage.STATE__REDEFINED_STATE:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
 				return redefinedState != null;
-			case PivotPackage.STATE__SUBMACHINES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
 				return submachines != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -1115,9 +1131,9 @@ public class StateImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.STATE__INCOMING_TRANSITIONS: return PivotPackage.VERTEX__INCOMING_TRANSITIONS;
-				case PivotPackage.STATE__OUTGOING_TRANSITIONS: return PivotPackage.VERTEX__OUTGOING_TRANSITIONS;
-				case PivotPackage.STATE__OWNING_REGION: return PivotPackage.VERTEX__OWNING_REGION;
+				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
+				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
+				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -1136,9 +1152,9 @@ public class StateImpl
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.VERTEX__INCOMING_TRANSITIONS: return PivotPackage.STATE__INCOMING_TRANSITIONS;
-				case PivotPackage.VERTEX__OUTGOING_TRANSITIONS: return PivotPackage.STATE__OUTGOING_TRANSITIONS;
-				case PivotPackage.VERTEX__OWNING_REGION: return PivotPackage.STATE__OWNING_REGION;
+				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0;
+				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1;
+				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}

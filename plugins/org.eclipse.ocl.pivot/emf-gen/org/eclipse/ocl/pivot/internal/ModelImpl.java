@@ -54,6 +54,22 @@ public class ModelImpl extends NamespaceImpl implements Model
 {
 
 	/**
+	 * The number of structural features of the '<em>Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MODEL_FEATURE_COUNT = NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4;
+	/**
+	 * The number of operations of the '<em>Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MODEL_OPERATION_COUNT = NamespaceImpl.NAMESPACE_OPERATION_COUNT + 0;
+	/**
 	 * The default value of the '{@link #getExternalURI() <em>External URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,7 +197,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		Number oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MODEL__XMIID_VERSION, oldXmiidVersion, xmiidVersion));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, oldXmiidVersion, xmiidVersion));
 	}
 
 	/**
@@ -205,7 +221,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		String oldExternalURI = externalURI;
 		externalURI = newExternalURI;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MODEL__EXTERNAL_URI, oldExternalURI, externalURI));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldExternalURI, externalURI));
 	}
 
 	/**
@@ -218,19 +234,19 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MODEL__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_CONSTRAINTS:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_IMPORTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
-			case PivotPackage.MODEL__OWNED_PACKAGES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -246,25 +262,25 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MODEL__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.MODEL__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.MODEL__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.MODEL__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.MODEL__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.MODEL__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.MODEL__EXTERNAL_URI:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return getExternalURI();
-			case PivotPackage.MODEL__OWNED_IMPORTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return getOwnedImports();
-			case PivotPackage.MODEL__OWNED_PACKAGES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return getOwnedPackages();
-			case PivotPackage.MODEL__XMIID_VERSION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -281,41 +297,41 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MODEL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.MODEL__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.MODEL__EXTERNAL_URI:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				setExternalURI((String)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_IMPORTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends Import>)newValue);
 				return;
-			case PivotPackage.MODEL__OWNED_PACKAGES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case PivotPackage.MODEL__XMIID_VERSION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				setXmiidVersion((Number)newValue);
 				return;
 		}
@@ -332,34 +348,34 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MODEL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.MODEL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.MODEL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.MODEL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.MODEL__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.MODEL__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.MODEL__EXTERNAL_URI:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				setExternalURI(EXTERNAL_URI_EDEFAULT);
 				return;
-			case PivotPackage.MODEL__OWNED_IMPORTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				getOwnedImports().clear();
 				return;
-			case PivotPackage.MODEL__OWNED_PACKAGES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				getOwnedPackages().clear();
 				return;
-			case PivotPackage.MODEL__XMIID_VERSION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				setXmiidVersion(XMIID_VERSION_EDEFAULT);
 				return;
 		}
@@ -376,25 +392,25 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MODEL__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.MODEL__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.MODEL__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.MODEL__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.MODEL__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.MODEL__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.MODEL__EXTERNAL_URI:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
 				return EXTERNAL_URI_EDEFAULT == null ? externalURI != null : !EXTERNAL_URI_EDEFAULT.equals(externalURI);
-			case PivotPackage.MODEL__OWNED_IMPORTS:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
 				return ownedImports != null && !ownedImports.isEmpty();
-			case PivotPackage.MODEL__OWNED_PACKAGES:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
 				return ownedPackages != null && !ownedPackages.isEmpty();
-			case PivotPackage.MODEL__XMIID_VERSION:
+			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
 				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);
@@ -465,7 +481,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, PivotPackage.MODEL__OWNED_IMPORTS);
+			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
 		}
 		return ownedImports;
 	}

@@ -47,6 +47,23 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class OrphanCompletePackageImpl extends CompletePackageImpl implements OrphanCompletePackage
 {
 	/**
+	 * The number of structural features of the '<em>Orphan Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ORPHAN_COMPLETE_PACKAGE_FEATURE_COUNT = CompletePackageImpl.COMPLETE_PACKAGE_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Orphan Complete Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ORPHAN_COMPLETE_PACKAGE_OPERATION_COUNT = CompletePackageImpl.COMPLETE_PACKAGE_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -66,6 +67,22 @@ public class PropertyCallExpImpl
 extends NavigationCallExpImpl
 implements PropertyCallExp {
 
+	/**
+	 * The number of structural features of the '<em>Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_CALL_EXP_FEATURE_COUNT = NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
+	 * The number of operations of the '<em>Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_CALL_EXP_OPERATION_COUNT = NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 7;
 	/**
 	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -109,7 +126,7 @@ implements PropertyCallExp {
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -134,7 +151,7 @@ implements PropertyCallExp {
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -146,39 +163,39 @@ implements PropertyCallExp {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PROPERTY_CALL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PROPERTY_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return isIsImplicit();
-			case PivotPackage.PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				return isIsSafe();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return getOwnedSource();
-			case PivotPackage.PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				return isIsPre();
-			case PivotPackage.PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				if (resolve) return getNavigationSource();
 				return basicGetNavigationSource();
-			case PivotPackage.PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				return getQualifiers();
-			case PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -195,54 +212,54 @@ implements PropertyCallExp {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				setIsPre((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				setNavigationSource((Property)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -258,49 +275,49 @@ implements PropertyCallExp {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				setNavigationSource((Property)null);
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				getQualifiers().clear();
 				return;
-			case PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -316,37 +333,37 @@ implements PropertyCallExp {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY_CALL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PROPERTY_CALL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PROPERTY_CALL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.PROPERTY_CALL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_IMPLICIT:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_SAFE:
+			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
-			case PivotPackage.PROPERTY_CALL_EXP__OWNED_SOURCE:
+			case 11:
 				return ownedSource != null;
-			case PivotPackage.PROPERTY_CALL_EXP__IS_PRE:
+			case 12:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
-			case PivotPackage.PROPERTY_CALL_EXP__NAVIGATION_SOURCE:
+			case 13:
 				return navigationSource != null;
-			case PivotPackage.PROPERTY_CALL_EXP__QUALIFIERS:
+			case 14:
 				return qualifiers != null && !qualifiers.isEmpty();
-			case PivotPackage.PROPERTY_CALL_EXP__REFERRED_PROPERTY:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -364,7 +381,7 @@ implements PropertyCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP: return PivotPackage.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP;
+				case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0: return NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 5;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -372,7 +389,7 @@ implements PropertyCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case PivotPackage.REFERRING_ELEMENT___GET_REFERRED_ELEMENT: return PivotPackage.PROPERTY_CALL_EXP___GET_REFERRED_ELEMENT;
+				case 0: return NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -390,35 +407,35 @@ implements PropertyCallExp {
 	{
 		switch (operationID)
 		{
-			case PivotPackage.PROPERTY_CALL_EXP___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.PROPERTY_CALL_EXP___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.PROPERTY_CALL_EXP___IS_NON_NULL:
+			case 3:
 				return isNonNull();
-			case PivotPackage.PROPERTY_CALL_EXP___IS_NULL:
+			case 4:
 				return isNull();
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 5:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP:
+			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___GET_REFERRED_ELEMENT:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0:
 				return getReferredElement();
-			case PivotPackage.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 1:
 				return getSpecializedReferredPropertyOwningType();
-			case PivotPackage.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_TYPE:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 2:
 				return getSpecializedReferredPropertyType();
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_COMPATIBLE_RESULT_TYPE__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 3:
 				return validateCompatibleResultType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 4:
 				return validateNonStaticSourceTypeIsConformant((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP:
+			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 6:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -525,8 +542,8 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::NonStaticSourceTypeIsConformant'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -537,9 +554,9 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
+						final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
 						final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
-						/*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
+						/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
 						if (isStatic == Boolean.TRUE) {
 							safe_isStatic_source = null;
 						}
@@ -553,18 +570,18 @@ implements PropertyCallExp {
 					catch (Exception e) {
 						CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
 					}
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
+					final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
 					/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 						final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
-						/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+						/*@Thrown*/ @Nullable Type safe_type_source;
 						if (type == Boolean.TRUE) {
 							safe_type_source = null;
 						}
 						else {
 							assert ownedSource != null;
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedSource.getType();
+							final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 							safe_type_source = type_0;
 						}
 						/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
@@ -575,13 +592,13 @@ implements PropertyCallExp {
 							CAUGHT_safe_type_source = ValueUtil.createInvalidValue(e);
 						}
 						final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_safe_type_source == null;
-						/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+						/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
 						if (conformsTo == Boolean.TRUE) {
 							safe_conformsTo_source = null;
 						}
 						else {
 							@SuppressWarnings("null")
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
+							final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
 							final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
 							safe_conformsTo_source = conformsTo_0;
 						}
@@ -590,7 +607,7 @@ implements PropertyCallExp {
 					catch (Exception e) {
 						CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_safe_conformsTo_source);
+					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_safe_conformsTo_source);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -630,15 +647,15 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+				final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 				final /*@NonInvalid*/ boolean ne = ownedSource != null;
 				/*@NonInvalid*/ boolean and;
 				if (ne) {
@@ -648,7 +665,7 @@ implements PropertyCallExp {
 				else {
 					and = ValueUtil.FALSE_VALUE;
 				}
-				/*@NonInvalid*/ java.lang.@Nullable Boolean result;
+				/*@NonInvalid*/ @Nullable Boolean result;
 				if (and) {
 					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 					try {
@@ -661,7 +678,7 @@ implements PropertyCallExp {
 					catch (Exception e) {
 						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 					}
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
+					final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
 					result = not;
 				}
 				else {
@@ -701,8 +718,8 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -711,12 +728,12 @@ implements PropertyCallExp {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ boolean ne = ownedSource != null;
-					/*@NonInvalid*/ java.lang.@Nullable Boolean and;
+					/*@NonInvalid*/ @Nullable Boolean and;
 					if (ne) {
 						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-						final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
+						final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
 						and = not;
 					}
 					else {
@@ -733,7 +750,7 @@ implements PropertyCallExp {
 					catch (Exception e) {
 						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
+					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, CAUGHT_isNonNull);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -772,17 +789,17 @@ implements PropertyCallExp {
 			 *         'PropertyCallExp::CompatibleResultType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
+				final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;

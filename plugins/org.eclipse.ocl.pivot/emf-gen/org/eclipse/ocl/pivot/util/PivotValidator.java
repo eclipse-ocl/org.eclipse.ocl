@@ -1013,7 +1013,7 @@ extends EObjectValidator {
 	 */
 	@Override
 	protected EPackage getEPackage() {
-		return PivotPackage.eINSTANCE;
+	  return PivotPackage.eINSTANCE;
 	}
 
 	/**
@@ -1027,289 +1027,289 @@ extends EObjectValidator {
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID)
 		{
-			case PivotPackage.ANNOTATION:
+			case 0:
 				return validateAnnotation((Annotation)value, diagnostics, context);
-			case PivotPackage.ANY_TYPE:
+			case 1:
 				return validateAnyType((AnyType)value, diagnostics, context);
-			case PivotPackage.ASSOCIATION_CLASS:
+			case 2:
 				return validateAssociationClass((AssociationClass)value, diagnostics, context);
-			case PivotPackage.ASSOCIATION_CLASS_CALL_EXP:
+			case 3:
 				return validateAssociationClassCallExp((AssociationClassCallExp)value, diagnostics, context);
-			case PivotPackage.BAG_TYPE:
+			case 4:
 				return validateBagType((BagType)value, diagnostics, context);
-			case PivotPackage.BEHAVIOR:
+			case 5:
 				return validateBehavior((Behavior)value, diagnostics, context);
-			case PivotPackage.BOOLEAN_LITERAL_EXP:
+			case 6:
 				return validateBooleanLiteralExp((BooleanLiteralExp)value, diagnostics, context);
-			case PivotPackage.CALL_EXP:
+			case 7:
 				return validateCallExp((CallExp)value, diagnostics, context);
-			case PivotPackage.CALL_OPERATION_ACTION:
+			case 8:
 				return validateCallOperationAction((CallOperationAction)value, diagnostics, context);
-			case PivotPackage.CLASS:
+			case 9:
 				return validateClass((org.eclipse.ocl.pivot.Class)value, diagnostics, context);
-			case PivotPackage.COLLECTION_ITEM:
+			case 10:
 				return validateCollectionItem((CollectionItem)value, diagnostics, context);
-			case PivotPackage.COLLECTION_LITERAL_EXP:
+			case 11:
 				return validateCollectionLiteralExp((CollectionLiteralExp)value, diagnostics, context);
-			case PivotPackage.COLLECTION_LITERAL_PART:
+			case 12:
 				return validateCollectionLiteralPart((CollectionLiteralPart)value, diagnostics, context);
-			case PivotPackage.COLLECTION_RANGE:
+			case 13:
 				return validateCollectionRange((CollectionRange)value, diagnostics, context);
-			case PivotPackage.COLLECTION_TYPE:
+			case 14:
 				return validateCollectionType((CollectionType)value, diagnostics, context);
-			case PivotPackage.COMMENT:
+			case 15:
 				return validateComment((Comment)value, diagnostics, context);
-			case PivotPackage.COMPLETE_CLASS:
+			case 16:
 				return validateCompleteClass((CompleteClass)value, diagnostics, context);
-			case PivotPackage.COMPLETE_ENVIRONMENT:
+			case 17:
 				return validateCompleteEnvironment((CompleteEnvironment)value, diagnostics, context);
-			case PivotPackage.COMPLETE_MODEL:
+			case 18:
 				return validateCompleteModel((CompleteModel)value, diagnostics, context);
-			case PivotPackage.COMPLETE_PACKAGE:
+			case 19:
 				return validateCompletePackage((CompletePackage)value, diagnostics, context);
-			case PivotPackage.CONNECTION_POINT_REFERENCE:
+			case 20:
 				return validateConnectionPointReference((ConnectionPointReference)value, diagnostics, context);
-			case PivotPackage.CONSTRAINT:
+			case 21:
 				return validateConstraint((Constraint)value, diagnostics, context);
-			case PivotPackage.DATA_TYPE:
+			case 22:
 				return validateDataType((DataType)value, diagnostics, context);
-			case PivotPackage.DETAIL:
+			case 23:
 				return validateDetail((Detail)value, diagnostics, context);
-			case PivotPackage.DYNAMIC_BEHAVIOR:
+			case 24:
 				return validateDynamicBehavior((DynamicBehavior)value, diagnostics, context);
-			case PivotPackage.DYNAMIC_ELEMENT:
+			case 25:
 				return validateDynamicElement((DynamicElement)value, diagnostics, context);
-			case PivotPackage.DYNAMIC_PROPERTY:
+			case 26:
 				return validateDynamicProperty((DynamicProperty)value, diagnostics, context);
-			case PivotPackage.DYNAMIC_TYPE:
+			case 27:
 				return validateDynamicType((DynamicType)value, diagnostics, context);
-			case PivotPackage.DYNAMIC_VALUE_SPECIFICATION:
+			case 28:
 				return validateDynamicValueSpecification((DynamicValueSpecification)value, diagnostics, context);
-			case PivotPackage.ELEMENT:
+			case 29:
 				return validateElement((Element)value, diagnostics, context);
-			case PivotPackage.ELEMENT_EXTENSION:
+			case 30:
 				return validateElementExtension((ElementExtension)value, diagnostics, context);
-			case PivotPackage.ENUM_LITERAL_EXP:
+			case 31:
 				return validateEnumLiteralExp((EnumLiteralExp)value, diagnostics, context);
-			case PivotPackage.ENUMERATION:
+			case 32:
 				return validateEnumeration((Enumeration)value, diagnostics, context);
-			case PivotPackage.ENUMERATION_LITERAL:
+			case 33:
 				return validateEnumerationLiteral((EnumerationLiteral)value, diagnostics, context);
-			case PivotPackage.EXPRESSION_IN_OCL:
+			case 34:
 				return validateExpressionInOCL((ExpressionInOCL)value, diagnostics, context);
-			case PivotPackage.FEATURE:
+			case 35:
 				return validateFeature((Feature)value, diagnostics, context);
-			case PivotPackage.FEATURE_CALL_EXP:
+			case 36:
 				return validateFeatureCallExp((FeatureCallExp)value, diagnostics, context);
-			case PivotPackage.FINAL_STATE:
+			case 37:
 				return validateFinalState((FinalState)value, diagnostics, context);
-			case PivotPackage.IF_EXP:
+			case 38:
 				return validateIfExp((IfExp)value, diagnostics, context);
-			case PivotPackage.IMPORT:
+			case 39:
 				return validateImport((Import)value, diagnostics, context);
-			case PivotPackage.INSTANCE_SPECIFICATION:
+			case 40:
 				return validateInstanceSpecification((InstanceSpecification)value, diagnostics, context);
-			case PivotPackage.INTEGER_LITERAL_EXP:
+			case 41:
 				return validateIntegerLiteralExp((IntegerLiteralExp)value, diagnostics, context);
-			case PivotPackage.INVALID_LITERAL_EXP:
+			case 42:
 				return validateInvalidLiteralExp((InvalidLiteralExp)value, diagnostics, context);
-			case PivotPackage.INVALID_TYPE:
+			case 43:
 				return validateInvalidType((InvalidType)value, diagnostics, context);
-			case PivotPackage.ITERABLE_TYPE:
+			case 44:
 				return validateIterableType((IterableType)value, diagnostics, context);
-			case PivotPackage.ITERATE_EXP:
+			case 45:
 				return validateIterateExp((IterateExp)value, diagnostics, context);
-			case PivotPackage.ITERATION:
+			case 46:
 				return validateIteration((Iteration)value, diagnostics, context);
-			case PivotPackage.ITERATOR_EXP:
+			case 47:
 				return validateIteratorExp((IteratorExp)value, diagnostics, context);
-			case PivotPackage.ITERATOR_VARIABLE:
+			case 48:
 				return validateIteratorVariable((IteratorVariable)value, diagnostics, context);
-			case PivotPackage.LAMBDA_TYPE:
+			case 49:
 				return validateLambdaType((LambdaType)value, diagnostics, context);
-			case PivotPackage.LANGUAGE_EXPRESSION:
+			case 50:
 				return validateLanguageExpression((LanguageExpression)value, diagnostics, context);
-			case PivotPackage.LET_EXP:
+			case 51:
 				return validateLetExp((LetExp)value, diagnostics, context);
-			case PivotPackage.LET_VARIABLE:
+			case 52:
 				return validateLetVariable((LetVariable)value, diagnostics, context);
-			case PivotPackage.LIBRARY:
+			case 53:
 				return validateLibrary((Library)value, diagnostics, context);
-			case PivotPackage.LITERAL_EXP:
+			case 54:
 				return validateLiteralExp((LiteralExp)value, diagnostics, context);
-			case PivotPackage.LOOP_EXP:
+			case 55:
 				return validateLoopExp((LoopExp)value, diagnostics, context);
-			case PivotPackage.MAP_LITERAL_EXP:
+			case 56:
 				return validateMapLiteralExp((MapLiteralExp)value, diagnostics, context);
-			case PivotPackage.MAP_LITERAL_PART:
+			case 57:
 				return validateMapLiteralPart((MapLiteralPart)value, diagnostics, context);
-			case PivotPackage.MAP_TYPE:
+			case 58:
 				return validateMapType((MapType)value, diagnostics, context);
-			case PivotPackage.MESSAGE_EXP:
+			case 59:
 				return validateMessageExp((MessageExp)value, diagnostics, context);
-			case PivotPackage.MESSAGE_TYPE:
+			case 60:
 				return validateMessageType((MessageType)value, diagnostics, context);
-			case PivotPackage.MODEL:
+			case 61:
 				return validateModel((Model)value, diagnostics, context);
-			case PivotPackage.MORE_PIVOTABLE:
+			case 62:
 				return validateMorePivotable((MorePivotable)value, diagnostics, context);
-			case PivotPackage.NAMEABLE:
+			case 63:
 				return validateNameable((Nameable)value, diagnostics, context);
-			case PivotPackage.NAMED_ELEMENT:
+			case 64:
 				return validateNamedElement((NamedElement)value, diagnostics, context);
-			case PivotPackage.NAMESPACE:
+			case 65:
 				return validateNamespace((Namespace)value, diagnostics, context);
-			case PivotPackage.NAVIGATION_CALL_EXP:
+			case 66:
 				return validateNavigationCallExp((NavigationCallExp)value, diagnostics, context);
-			case PivotPackage.NULL_LITERAL_EXP:
+			case 67:
 				return validateNullLiteralExp((NullLiteralExp)value, diagnostics, context);
-			case PivotPackage.NUMERIC_LITERAL_EXP:
+			case 68:
 				return validateNumericLiteralExp((NumericLiteralExp)value, diagnostics, context);
-			case PivotPackage.OCL_EXPRESSION:
+			case 69:
 				return validateOCLExpression((OCLExpression)value, diagnostics, context);
-			case PivotPackage.OPERATION:
+			case 70:
 				return validateOperation((Operation)value, diagnostics, context);
-			case PivotPackage.OPERATION_CALL_EXP:
+			case 71:
 				return validateOperationCallExp((OperationCallExp)value, diagnostics, context);
-			case PivotPackage.OPPOSITE_PROPERTY_CALL_EXP:
+			case 72:
 				return validateOppositePropertyCallExp((OppositePropertyCallExp)value, diagnostics, context);
-			case PivotPackage.ORDERED_SET_TYPE:
+			case 73:
 				return validateOrderedSetType((OrderedSetType)value, diagnostics, context);
-			case PivotPackage.ORPHAN_COMPLETE_PACKAGE:
+			case 74:
 				return validateOrphanCompletePackage((OrphanCompletePackage)value, diagnostics, context);
-			case PivotPackage.PACKAGE:
+			case 75:
 				return validatePackage((org.eclipse.ocl.pivot.Package)value, diagnostics, context);
-			case PivotPackage.PARAMETER:
+			case 76:
 				return validateParameter((Parameter)value, diagnostics, context);
-			case PivotPackage.PARAMETER_VARIABLE:
+			case 77:
 				return validateParameterVariable((ParameterVariable)value, diagnostics, context);
-			case PivotPackage.PIVOTABLE:
+			case 78:
 				return validatePivotable((Pivotable)value, diagnostics, context);
-			case PivotPackage.PRECEDENCE:
+			case 79:
 				return validatePrecedence((Precedence)value, diagnostics, context);
-			case PivotPackage.PRIMITIVE_COMPLETE_PACKAGE:
+			case 80:
 				return validatePrimitiveCompletePackage((PrimitiveCompletePackage)value, diagnostics, context);
-			case PivotPackage.PRIMITIVE_LITERAL_EXP:
+			case 81:
 				return validatePrimitiveLiteralExp((PrimitiveLiteralExp)value, diagnostics, context);
-			case PivotPackage.PRIMITIVE_TYPE:
+			case 82:
 				return validatePrimitiveType((PrimitiveType)value, diagnostics, context);
-			case PivotPackage.PROFILE:
+			case 83:
 				return validateProfile((Profile)value, diagnostics, context);
-			case PivotPackage.PROFILE_APPLICATION:
+			case 84:
 				return validateProfileApplication((ProfileApplication)value, diagnostics, context);
-			case PivotPackage.PROPERTY:
+			case 85:
 				return validateProperty((Property)value, diagnostics, context);
-			case PivotPackage.PROPERTY_CALL_EXP:
+			case 86:
 				return validatePropertyCallExp((PropertyCallExp)value, diagnostics, context);
-			case PivotPackage.PSEUDOSTATE:
+			case 87:
 				return validatePseudostate((Pseudostate)value, diagnostics, context);
-			case PivotPackage.REAL_LITERAL_EXP:
+			case 88:
 				return validateRealLiteralExp((RealLiteralExp)value, diagnostics, context);
-			case PivotPackage.REFERRING_ELEMENT:
+			case 89:
 				return validateReferringElement((ReferringElement)value, diagnostics, context);
-			case PivotPackage.REGION:
+			case 90:
 				return validateRegion((Region)value, diagnostics, context);
-			case PivotPackage.RESULT_VARIABLE:
+			case 91:
 				return validateResultVariable((ResultVariable)value, diagnostics, context);
-			case PivotPackage.SELF_TYPE:
+			case 92:
 				return validateSelfType((SelfType)value, diagnostics, context);
-			case PivotPackage.SEND_SIGNAL_ACTION:
+			case 93:
 				return validateSendSignalAction((SendSignalAction)value, diagnostics, context);
-			case PivotPackage.SEQUENCE_TYPE:
+			case 94:
 				return validateSequenceType((SequenceType)value, diagnostics, context);
-			case PivotPackage.SET_TYPE:
+			case 95:
 				return validateSetType((SetType)value, diagnostics, context);
-			case PivotPackage.SHADOW_EXP:
+			case 96:
 				return validateShadowExp((ShadowExp)value, diagnostics, context);
-			case PivotPackage.SHADOW_PART:
+			case 97:
 				return validateShadowPart((ShadowPart)value, diagnostics, context);
-			case PivotPackage.SIGNAL:
+			case 98:
 				return validateSignal((Signal)value, diagnostics, context);
-			case PivotPackage.SLOT:
+			case 99:
 				return validateSlot((Slot)value, diagnostics, context);
-			case PivotPackage.STANDARD_LIBRARY:
+			case 100:
 				return validateStandardLibrary((StandardLibrary)value, diagnostics, context);
-			case PivotPackage.STATE:
+			case 101:
 				return validateState((State)value, diagnostics, context);
-			case PivotPackage.STATE_EXP:
+			case 102:
 				return validateStateExp((StateExp)value, diagnostics, context);
-			case PivotPackage.STATE_MACHINE:
+			case 103:
 				return validateStateMachine((StateMachine)value, diagnostics, context);
-			case PivotPackage.STEREOTYPE:
+			case 104:
 				return validateStereotype((Stereotype)value, diagnostics, context);
-			case PivotPackage.STEREOTYPE_EXTENDER:
+			case 105:
 				return validateStereotypeExtender((StereotypeExtender)value, diagnostics, context);
-			case PivotPackage.STRING_LITERAL_EXP:
+			case 106:
 				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
-			case PivotPackage.TEMPLATE_BINDING:
+			case 107:
 				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
-			case PivotPackage.TEMPLATE_PARAMETER:
+			case 108:
 				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
-			case PivotPackage.TEMPLATE_PARAMETER_SUBSTITUTION:
+			case 109:
 				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
-			case PivotPackage.TEMPLATE_SIGNATURE:
+			case 110:
 				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
-			case PivotPackage.TEMPLATEABLE_ELEMENT:
+			case 111:
 				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
-			case PivotPackage.TRANSITION:
+			case 112:
 				return validateTransition((Transition)value, diagnostics, context);
-			case PivotPackage.TRIGGER:
+			case 113:
 				return validateTrigger((Trigger)value, diagnostics, context);
-			case PivotPackage.TUPLE_LITERAL_EXP:
+			case 114:
 				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
-			case PivotPackage.TUPLE_LITERAL_PART:
+			case 115:
 				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
-			case PivotPackage.TUPLE_TYPE:
+			case 116:
 				return validateTupleType((TupleType)value, diagnostics, context);
-			case PivotPackage.TYPE:
+			case 117:
 				return validateType((Type)value, diagnostics, context);
-			case PivotPackage.TYPE_EXP:
+			case 118:
 				return validateTypeExp((TypeExp)value, diagnostics, context);
-			case PivotPackage.TYPED_ELEMENT:
+			case 119:
 				return validateTypedElement((TypedElement)value, diagnostics, context);
-			case PivotPackage.UNLIMITED_NATURAL_LITERAL_EXP:
+			case 120:
 				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
-			case PivotPackage.UNSPECIFIED_VALUE_EXP:
+			case 121:
 				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
-			case PivotPackage.VALUE_SPECIFICATION:
+			case 122:
 				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
-			case PivotPackage.VARIABLE:
+			case 123:
 				return validateVariable((Variable)value, diagnostics, context);
-			case PivotPackage.VARIABLE_DECLARATION:
+			case 124:
 				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
-			case PivotPackage.VARIABLE_EXP:
+			case 125:
 				return validateVariableExp((VariableExp)value, diagnostics, context);
-			case PivotPackage.VERTEX:
+			case 126:
 				return validateVertex((Vertex)value, diagnostics, context);
-			case PivotPackage.VISITABLE:
+			case 127:
 				return validateVisitable((Visitable)value, diagnostics, context);
-			case PivotPackage.VOID_TYPE:
+			case 128:
 				return validateVoidType((VoidType)value, diagnostics, context);
-			case PivotPackage.WILDCARD_TYPE:
+			case 129:
 				return validateWildcardType((WildcardType)value, diagnostics, context);
-			case PivotPackage.ASSOCIATIVITY_KIND:
+			case 130:
 				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
-			case PivotPackage.COLLECTION_KIND:
+			case 131:
 				return validateCollectionKind((CollectionKind)value, diagnostics, context);
-			case PivotPackage.PSEUDOSTATE_KIND:
+			case 132:
 				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
-			case PivotPackage.TRANSITION_KIND:
+			case 133:
 				return validateTransitionKind((TransitionKind)value, diagnostics, context);
-			case PivotPackage.BOOLEAN:
+			case 134:
 				return validateBoolean((Boolean)value, diagnostics, context);
-			case PivotPackage.INTEGER:
+			case 135:
 				return validateInteger((Number)value, diagnostics, context);
-			case PivotPackage.LIBRARY_FEATURE:
+			case 136:
 				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
-			case PivotPackage.OBJECT:
+			case 137:
 				return validateObject(value, diagnostics, context);
-			case PivotPackage.REAL:
+			case 138:
 				return validateReal((Number)value, diagnostics, context);
-			case PivotPackage.STRING:
+			case 139:
 				return validateString((String)value, diagnostics, context);
-			case PivotPackage.THROWABLE:
+			case 140:
 				return validateThrowable((Throwable)value, diagnostics, context);
-			case PivotPackage.UNLIMITED_NATURAL:
+			case 141:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;

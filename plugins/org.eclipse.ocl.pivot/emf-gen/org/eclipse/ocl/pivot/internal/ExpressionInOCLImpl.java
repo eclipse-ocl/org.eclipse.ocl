@@ -55,6 +55,24 @@ public class ExpressionInOCLImpl
 		implements ExpressionInOCL {
 
 	/**
+	 * The number of structural features of the '<em>Expression In OCL</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EXPRESSION_IN_OCL_FEATURE_COUNT = LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Expression In OCL</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EXPRESSION_IN_OCL_OPERATION_COUNT = LanguageExpressionImpl.LANGUAGE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getOwnedBody() <em>Owned Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -134,7 +152,7 @@ public class ExpressionInOCLImpl
 		ownedBody = newOwnedBody;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY, oldOwnedBody, newOwnedBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0, oldOwnedBody, newOwnedBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -151,14 +169,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedBody != null)
-				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY, null, msgs);
+				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedBody != null)
-				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY, null, msgs);
+				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedBody(newOwnedBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY, newOwnedBody, newOwnedBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0, newOwnedBody, newOwnedBody));
 	}
 
 	/**
@@ -182,7 +200,7 @@ public class ExpressionInOCLImpl
 		ownedContext = newOwnedContext;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT, oldOwnedContext, newOwnedContext);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1, oldOwnedContext, newOwnedContext);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -199,14 +217,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedContext != null)
-				msgs = ((InternalEObject)ownedContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT, null, msgs);
+				msgs = ((InternalEObject)ownedContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedContext != null)
-				msgs = ((InternalEObject)newOwnedContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT, null, msgs);
+				msgs = ((InternalEObject)newOwnedContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedContext(newOwnedContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT, newOwnedContext, newOwnedContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1, newOwnedContext, newOwnedContext));
 	}
 
 	/**
@@ -230,7 +248,7 @@ public class ExpressionInOCLImpl
 		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT, oldOwnedResult, newOwnedResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3, oldOwnedResult, newOwnedResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -247,14 +265,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedResult != null)
-				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT, null, msgs);
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
 			if (newOwnedResult != null)
-				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT, null, msgs);
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
 			msgs = basicSetOwnedResult(newOwnedResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT, newOwnedResult, newOwnedResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3, newOwnedResult, newOwnedResult));
 	}
 
 	/**
@@ -268,7 +286,7 @@ public class ExpressionInOCLImpl
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentEList<Variable>(Variable.class, this, PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS);
+			ownedParameters = new EObjectContainmentEList<Variable>(Variable.class, this, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2);
 		}
 		return ownedParameters;
 	}
@@ -283,23 +301,23 @@ public class ExpressionInOCLImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.EXPRESSION_IN_OCL__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNING_CONSTRAINT:
+			case 10:
 				return basicSetOwningConstraint(null, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
 				return basicSetOwnedBody(null, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
 				return basicSetOwnedContext(null, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
 				return basicSetOwnedResult(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -314,36 +332,36 @@ public class ExpressionInOCLImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.EXPRESSION_IN_OCL__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.EXPRESSION_IN_OCL__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.EXPRESSION_IN_OCL__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.EXPRESSION_IN_OCL__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.EXPRESSION_IN_OCL__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.EXPRESSION_IN_OCL__BODY:
+			case 8:
 				return getBody();
-			case PivotPackage.EXPRESSION_IN_OCL__LANGUAGE:
+			case 9:
 				return getLanguage();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNING_CONSTRAINT:
+			case 10:
 				return getOwningConstraint();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
 				return getOwnedBody();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
 				return getOwnedContext();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
 				return getOwnedParameters();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
 				return getOwnedResult();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -359,48 +377,48 @@ public class ExpressionInOCLImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.EXPRESSION_IN_OCL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__BODY:
+			case 8:
 				setBody((String)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNING_CONSTRAINT:
+			case 10:
 				setOwningConstraint((Constraint)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
 				setOwnedBody((OCLExpression)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedContext((Variable)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Variable>)newValue);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
 				setOwnedResult((Variable)newValue);
 				return;
 		}
@@ -416,43 +434,43 @@ public class ExpressionInOCLImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.EXPRESSION_IN_OCL__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__BODY:
+			case 8:
 				setBody(BODY_EDEFAULT);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNING_CONSTRAINT:
+			case 10:
 				setOwningConstraint((Constraint)null);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
 				setOwnedBody((OCLExpression)null);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
 				setOwnedContext((Variable)null);
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
 				getOwnedParameters().clear();
 				return;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
 				setOwnedResult((Variable)null);
 				return;
 		}
@@ -468,35 +486,35 @@ public class ExpressionInOCLImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.EXPRESSION_IN_OCL__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.EXPRESSION_IN_OCL__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.EXPRESSION_IN_OCL__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.EXPRESSION_IN_OCL__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.EXPRESSION_IN_OCL__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.EXPRESSION_IN_OCL__BODY:
+			case 8:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
-			case PivotPackage.EXPRESSION_IN_OCL__LANGUAGE:
+			case 9:
 				return LANGUAGE_EDEFAULT == null ? getLanguage() != null : !LANGUAGE_EDEFAULT.equals(getLanguage());
-			case PivotPackage.EXPRESSION_IN_OCL__OWNING_CONSTRAINT:
+			case 10:
 				return getOwningConstraint() != null;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_BODY:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
 				return ownedBody != null;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_CONTEXT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
 				return ownedContext != null;
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_PARAMETERS:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case PivotPackage.EXPRESSION_IN_OCL__OWNED_RESULT:
+			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
 				return ownedResult != null;
 		}
 		return eDynamicIsSet(featureID);

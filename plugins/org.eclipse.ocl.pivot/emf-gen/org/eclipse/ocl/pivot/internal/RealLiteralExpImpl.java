@@ -42,6 +42,24 @@ public class RealLiteralExpImpl
 		implements RealLiteralExp {
 
 	/**
+	 * The number of structural features of the '<em>Real Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REAL_LITERAL_EXP_FEATURE_COUNT = NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Real Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REAL_LITERAL_EXP_OPERATION_COUNT = NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The default value of the '{@link #getRealSymbol() <em>Real Symbol</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +119,7 @@ public class RealLiteralExpImpl
 		Number oldRealSymbol = realSymbol;
 		realSymbol = newRealSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.REAL_LITERAL_EXP__REAL_SYMBOL, oldRealSymbol, realSymbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0, oldRealSymbol, realSymbol));
 	}
 
 	/**
@@ -113,26 +131,26 @@ public class RealLiteralExpImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.REAL_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.REAL_LITERAL_EXP__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.REAL_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.REAL_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.REAL_LITERAL_EXP__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.REAL_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return getTypeValue();
-			case PivotPackage.REAL_LITERAL_EXP__REAL_SYMBOL:
+			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
 				return getRealSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -148,35 +166,35 @@ public class RealLiteralExpImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.REAL_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__REAL_SYMBOL:
+			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
 				setRealSymbol((Number)newValue);
 				return;
 		}
@@ -192,31 +210,31 @@ public class RealLiteralExpImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.REAL_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PivotPackage.REAL_LITERAL_EXP__REAL_SYMBOL:
+			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
 				setRealSymbol(REAL_SYMBOL_EDEFAULT);
 				return;
 		}
@@ -232,25 +250,25 @@ public class RealLiteralExpImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.REAL_LITERAL_EXP__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.REAL_LITERAL_EXP__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.REAL_LITERAL_EXP__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.REAL_LITERAL_EXP__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.REAL_LITERAL_EXP__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.REAL_LITERAL_EXP__TYPE_VALUE:
+			case 8:
 				return typeValue != null;
-			case PivotPackage.REAL_LITERAL_EXP__REAL_SYMBOL:
+			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
 				return REAL_SYMBOL_EDEFAULT == null ? realSymbol != null : !REAL_SYMBOL_EDEFAULT.equals(realSymbol);
 		}
 		return eDynamicIsSet(featureID);

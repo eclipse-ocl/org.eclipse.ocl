@@ -57,6 +57,22 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class MapTypeImpl extends IterableTypeImpl implements MapType
 {
 	/**
+	 * The number of structural features of the '<em>Map Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_TYPE_FEATURE_COUNT = IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 5;
+	/**
+	 * The number of operations of the '<em>Map Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_TYPE_OPERATION_COUNT = IterableTypeImpl.ITERABLE_TYPE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getEntryClass() <em>Entry Class</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * @since 1.7
@@ -145,7 +161,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			if (entryClass != oldEntryClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.MAP_TYPE__ENTRY_CLASS, oldEntryClass, entryClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0, oldEntryClass, entryClass));
 			}
 		}
 		return entryClass;
@@ -173,7 +189,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		org.eclipse.ocl.pivot.Class oldEntryClass = entryClass;
 		entryClass = newEntryClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__ENTRY_CLASS, oldEntryClass, entryClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0, oldEntryClass, entryClass));
 	}
 
 	/**
@@ -186,63 +202,63 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_TYPE__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.MAP_TYPE__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.MAP_TYPE__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.MAP_TYPE__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.MAP_TYPE__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.MAP_TYPE__OWNED_CONSTRAINTS:
+			case 5:
 				return getOwnedConstraints();
-			case PivotPackage.MAP_TYPE__OWNED_BINDINGS:
+			case 6:
 				return getOwnedBindings();
-			case PivotPackage.MAP_TYPE__OWNED_SIGNATURE:
+			case 7:
 				return getOwnedSignature();
-			case PivotPackage.MAP_TYPE__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return getUnspecializedElement();
-			case PivotPackage.MAP_TYPE__EXTENDERS:
+			case 9:
 				return getExtenders();
-			case PivotPackage.MAP_TYPE__INSTANCE_CLASS_NAME:
+			case 10:
 				return getInstanceClassName();
-			case PivotPackage.MAP_TYPE__IS_ABSTRACT:
+			case 11:
 				return isIsAbstract();
-			case PivotPackage.MAP_TYPE__IS_ACTIVE:
+			case 12:
 				return isIsActive();
-			case PivotPackage.MAP_TYPE__IS_INTERFACE:
+			case 13:
 				return isIsInterface();
-			case PivotPackage.MAP_TYPE__OWNED_BEHAVIORS:
+			case 14:
 				return getOwnedBehaviors();
-			case PivotPackage.MAP_TYPE__OWNED_INVARIANTS:
+			case 15:
 				return getOwnedInvariants();
-			case PivotPackage.MAP_TYPE__OWNED_OPERATIONS:
+			case 16:
 				return getOwnedOperations();
-			case PivotPackage.MAP_TYPE__OWNED_PROPERTIES:
+			case 17:
 				return getOwnedProperties();
-			case PivotPackage.MAP_TYPE__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage();
-			case PivotPackage.MAP_TYPE__SUPER_CLASSES:
+			case 19:
 				return getSuperClasses();
-			case PivotPackage.MAP_TYPE__BEHAVIORAL_CLASS:
+			case 20:
 				if (resolve) return getBehavioralClass();
 				return basicGetBehavioralClass();
-			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
+			case 21:
 				return isIsSerializable();
-			case PivotPackage.MAP_TYPE__VALUE:
+			case 22:
 				return getValue();
-			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
 				if (resolve) return getEntryClass();
 				return basicGetEntryClass();
-			case PivotPackage.MAP_TYPE__KEY_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
 				return getKeyType();
-			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
 				return isKeysAreNullFree();
-			case PivotPackage.MAP_TYPE__VALUE_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
 				return getValueType();
-			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
 				return isValuesAreNullFree();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -259,97 +275,97 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_TYPE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName((String)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__IS_ABSTRACT:
+			case 11:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__IS_ACTIVE:
+			case 12:
 				setIsActive((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__IS_INTERFACE:
+			case 13:
 				setIsInterface((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__BEHAVIORAL_CLASS:
+			case 20:
 				setBehavioralClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
+			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
 				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__KEY_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
 				setKeyType((Type)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
 				setKeysAreNullFree((Boolean)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__VALUE_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
 				setValueType((Type)newValue);
 				return;
-			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
 				setValuesAreNullFree((Boolean)newValue);
 				return;
 		}
@@ -366,85 +382,85 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_TYPE__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.MAP_TYPE__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_CONSTRAINTS:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_BINDINGS:
+			case 6:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_SIGNATURE:
+			case 7:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.MAP_TYPE__UNSPECIALIZED_ELEMENT:
+			case 8:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case PivotPackage.MAP_TYPE__EXTENDERS:
+			case 9:
 				getExtenders().clear();
 				return;
-			case PivotPackage.MAP_TYPE__INSTANCE_CLASS_NAME:
+			case 10:
 				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__IS_ABSTRACT:
+			case 11:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__IS_ACTIVE:
+			case 12:
 				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__IS_INTERFACE:
+			case 13:
 				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_BEHAVIORS:
+			case 14:
 				getOwnedBehaviors().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_INVARIANTS:
+			case 15:
 				getOwnedInvariants().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_OPERATIONS:
+			case 16:
 				getOwnedOperations().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNED_PROPERTIES:
+			case 17:
 				getOwnedProperties().clear();
 				return;
-			case PivotPackage.MAP_TYPE__OWNING_PACKAGE:
+			case 18:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PivotPackage.MAP_TYPE__SUPER_CLASSES:
+			case 19:
 				getSuperClasses().clear();
 				return;
-			case PivotPackage.MAP_TYPE__BEHAVIORAL_CLASS:
+			case 20:
 				setBehavioralClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
+			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
 				setEntryClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case PivotPackage.MAP_TYPE__KEY_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
 				setKeyType((Type)null);
 				return;
-			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
 				setKeysAreNullFree(KEYS_ARE_NULL_FREE_EDEFAULT);
 				return;
-			case PivotPackage.MAP_TYPE__VALUE_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
 				setValueType((Type)null);
 				return;
-			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
 				setValuesAreNullFree(VALUES_ARE_NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -461,61 +477,61 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	{
 		switch (featureID)
 		{
-			case PivotPackage.MAP_TYPE__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.MAP_TYPE__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.MAP_TYPE__OWNED_CONSTRAINTS:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_BINDINGS:
+			case 6:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_SIGNATURE:
+			case 7:
 				return ownedSignature != null;
-			case PivotPackage.MAP_TYPE__UNSPECIALIZED_ELEMENT:
+			case 8:
 				return unspecializedElement != null;
-			case PivotPackage.MAP_TYPE__EXTENDERS:
+			case 9:
 				return extenders != null && !extenders.isEmpty();
-			case PivotPackage.MAP_TYPE__INSTANCE_CLASS_NAME:
+			case 10:
 				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
-			case PivotPackage.MAP_TYPE__IS_ABSTRACT:
+			case 11:
 				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
-			case PivotPackage.MAP_TYPE__IS_ACTIVE:
+			case 12:
 				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
-			case PivotPackage.MAP_TYPE__IS_INTERFACE:
+			case 13:
 				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
-			case PivotPackage.MAP_TYPE__OWNED_BEHAVIORS:
+			case 14:
 				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_INVARIANTS:
+			case 15:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_OPERATIONS:
+			case 16:
 				return ownedOperations != null && !ownedOperations.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNED_PROPERTIES:
+			case 17:
 				return ownedProperties != null && !ownedProperties.isEmpty();
-			case PivotPackage.MAP_TYPE__OWNING_PACKAGE:
+			case 18:
 				return getOwningPackage() != null;
-			case PivotPackage.MAP_TYPE__SUPER_CLASSES:
+			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case PivotPackage.MAP_TYPE__BEHAVIORAL_CLASS:
+			case 20:
 				return behavioralClass != null;
-			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
+			case 21:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
-			case PivotPackage.MAP_TYPE__VALUE:
+			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case PivotPackage.MAP_TYPE__ENTRY_CLASS:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
 				return entryClass != null;
-			case PivotPackage.MAP_TYPE__KEY_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
 				return getKeyType() != null;
-			case PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
 				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
-			case PivotPackage.MAP_TYPE__VALUE_TYPE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
 				return getValueType() != null;
-			case PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE:
+			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
 				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
@@ -620,7 +636,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
 		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__KEYS_ARE_NULL_FREE, oldKeysAreNullFree, newKeysAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2, oldKeysAreNullFree, newKeysAreNullFree));
 	}
 
 	@Override
@@ -650,6 +666,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
 		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__VALUES_ARE_NULL_FREE, oldValuesAreNullFree, newValuesAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4, oldValuesAreNullFree, newValuesAreNullFree));
 	}
 } //MapTypeImpl

@@ -49,6 +49,24 @@ public class CommentImpl
 		implements Comment {
 
 	/**
+	 * The number of structural features of the '<em>Comment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Comment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getAnnotatedElements() <em>Annotated Elements</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +125,7 @@ public class CommentImpl
 	{
 		if (annotatedElements == null)
 		{
-			annotatedElements = new EObjectWithInverseResolvingEList.ManyInverse<Element>(Element.class, this, PivotPackage.COMMENT__ANNOTATED_ELEMENTS, PivotPackage.ELEMENT__ANNOTATING_COMMENTS);
+			annotatedElements = new EObjectWithInverseResolvingEList.ManyInverse<Element>(Element.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, 0);
 		}
 		return annotatedElements;
 	}
@@ -132,7 +150,7 @@ public class CommentImpl
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMMENT__BODY, oldBody, body));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldBody, body));
 	}
 
 	/**
@@ -143,7 +161,7 @@ public class CommentImpl
 	@Override
 	public Element getOwningElement()
 	{
-		if (eContainerFeatureID() != PivotPackage.COMMENT__OWNING_ELEMENT) return null;
+		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (Element)eInternalContainer();
 	}
 
@@ -154,7 +172,7 @@ public class CommentImpl
 	 */
 	public NotificationChain basicSetOwningElement(Element newOwningElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningElement, PivotPackage.COMMENT__OWNING_ELEMENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningElement, ElementImpl.ELEMENT_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -166,7 +184,7 @@ public class CommentImpl
 	@Override
 	public void setOwningElement(Element newOwningElement)
 	{
-		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != PivotPackage.COMMENT__OWNING_ELEMENT && newOwningElement != null))
+		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2) && newOwningElement != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -174,12 +192,12 @@ public class CommentImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, PivotPackage.ELEMENT__OWNED_COMMENTS, Element.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 2, Element.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COMMENT__OWNING_ELEMENT, newOwningElement, newOwningElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newOwningElement, newOwningElement));
 	}
 
 	/**
@@ -193,15 +211,15 @@ public class CommentImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatedElements()).basicAdd(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningElement((Element)otherEnd, msgs);
@@ -219,17 +237,17 @@ public class CommentImpl
 	{
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getAnnotatedElements()).basicRemove(otherEnd, msgs);
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return basicSetOwningElement(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -245,8 +263,8 @@ public class CommentImpl
 	{
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.ELEMENT__OWNED_COMMENTS, Element.class, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, 2, Element.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -260,19 +278,19 @@ public class CommentImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.COMMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return getAnnotatedElements();
-			case PivotPackage.COMMENT__BODY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return getBody();
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -288,30 +306,30 @@ public class CommentImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getAnnotatedElements().clear();
 				getAnnotatedElements().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.COMMENT__BODY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setBody((String)newValue);
 				return;
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningElement((Element)newValue);
 				return;
 		}
@@ -327,25 +345,25 @@ public class CommentImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.COMMENT__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				getAnnotatedElements().clear();
 				return;
-			case PivotPackage.COMMENT__BODY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				setBody(BODY_EDEFAULT);
 				return;
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				setOwningElement((Element)null);
 				return;
 		}
@@ -361,19 +379,19 @@ public class CommentImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.COMMENT__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.COMMENT__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.COMMENT__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.COMMENT__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.COMMENT__ANNOTATED_ELEMENTS:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
 				return annotatedElements != null && !annotatedElements.isEmpty();
-			case PivotPackage.COMMENT__BODY:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
-			case PivotPackage.COMMENT__OWNING_ELEMENT:
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
 				return getOwningElement() != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +35,10 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -49,7 +52,9 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -63,6 +68,9 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 
 /**
  * <!-- begin-user-doc -->
@@ -95,6 +103,24 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class OperationImpl
 extends FeatureImpl
 implements Operation {
+
+	/**
+	 * The number of structural features of the '<em>Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPERATION_FEATURE_COUNT = FeatureImpl.FEATURE_FEATURE_COUNT + 16;
+
+	/**
+	 * The number of operations of the '<em>Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPERATION_OPERATION_COUNT = FeatureImpl.FEATURE_OPERATION_COUNT + 4;
 
 	/**
 	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
@@ -318,7 +344,7 @@ implements Operation {
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, PivotPackage.OPERATION__OWNED_CONSTRAINTS);
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 0);
 		}
 		return ownedConstraints;
 	}
@@ -333,7 +359,7 @@ implements Operation {
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, PivotPackage.OPERATION__OWNED_BINDINGS, PivotPackage.TEMPLATE_BINDING__OWNING_ELEMENT);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 1, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
 		}
 		return ownedBindings;
 	}
@@ -349,7 +375,7 @@ implements Operation {
 	{
 		if (raisedExceptions == null)
 		{
-			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, PivotPackage.OPERATION__RAISED_EXCEPTIONS);
+			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 14);
 		}
 		return raisedExceptions;
 	}
@@ -365,7 +391,7 @@ implements Operation {
 	{
 		if (redefinedOperations == null)
 		{
-			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, PivotPackage.OPERATION__REDEFINED_OPERATIONS);
+			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 15);
 		}
 		return redefinedOperations;
 	}
@@ -381,7 +407,7 @@ implements Operation {
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, PivotPackage.OPERATION__OWNED_PARAMETERS, PivotPackage.PARAMETER__OWNING_OPERATION);
+			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1);
 		}
 		return ownedParameters;
 	}
@@ -397,7 +423,7 @@ implements Operation {
 	{
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, PivotPackage.OPERATION__OWNED_POSTCONDITIONS, PivotPackage.CONSTRAINT__OWNING_POST_CONTEXT);
+			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4);
 		}
 		return ownedPostconditions;
 	}
@@ -413,7 +439,7 @@ implements Operation {
 	{
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, PivotPackage.OPERATION__OWNED_PRECONDITIONS, PivotPackage.CONSTRAINT__OWNING_PRE_CONTEXT);
+			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5);
 		}
 		return ownedPreconditions;
 	}
@@ -439,7 +465,7 @@ implements Operation {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -457,14 +483,14 @@ implements Operation {
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, PivotPackage.TEMPLATE_SIGNATURE__OWNING_ELEMENT, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -504,7 +530,7 @@ implements Operation {
 			if (precedence != oldPrecedence)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.OPERATION__PRECEDENCE, oldPrecedence, precedence));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldPrecedence, precedence));
 			}
 		}
 		return precedence;
@@ -529,7 +555,7 @@ implements Operation {
 		Precedence oldPrecedence = precedence;
 		precedence = newPrecedence;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__PRECEDENCE, oldPrecedence, precedence));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldPrecedence, precedence));
 	}
 
 	/**
@@ -554,7 +580,7 @@ implements Operation {
 		bodyExpression = newBodyExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__BODY_EXPRESSION, oldBodyExpression, newBodyExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, oldBodyExpression, newBodyExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -572,14 +598,14 @@ implements Operation {
 		{
 			NotificationChain msgs = null;
 			if (bodyExpression != null)
-				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.OPERATION__BODY_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 4), null, msgs);
 			if (newBodyExpression != null)
-				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.OPERATION__BODY_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 4), null, msgs);
 			msgs = basicSetBodyExpression(newBodyExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__BODY_EXPRESSION, newBodyExpression, newBodyExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, newBodyExpression, newBodyExpression));
 	}
 
 	/**
@@ -604,7 +630,7 @@ implements Operation {
 		boolean oldIsInvalidating = (eFlags & IS_INVALIDATING_EFLAG) != 0;
 		if (newIsInvalidating) eFlags |= IS_INVALIDATING_EFLAG; else eFlags &= ~IS_INVALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_INVALIDATING, oldIsInvalidating, newIsInvalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 5, oldIsInvalidating, newIsInvalidating));
 	}
 
 	/**
@@ -631,7 +657,7 @@ implements Operation {
 		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
 		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_TRANSIENT, oldIsTransient, newIsTransient));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 6, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -656,7 +682,7 @@ implements Operation {
 		boolean oldIsTypeof = (eFlags & IS_TYPEOF_EFLAG) != 0;
 		if (newIsTypeof) eFlags |= IS_TYPEOF_EFLAG; else eFlags &= ~IS_TYPEOF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_TYPEOF, oldIsTypeof, newIsTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 7, oldIsTypeof, newIsTypeof));
 	}
 
 	/**
@@ -681,7 +707,7 @@ implements Operation {
 		boolean oldIsValidating = (eFlags & IS_VALIDATING_EFLAG) != 0;
 		if (newIsValidating) eFlags |= IS_VALIDATING_EFLAG; else eFlags &= ~IS_VALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_VALIDATING, oldIsValidating, newIsValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 8, oldIsValidating, newIsValidating));
 	}
 
 	/**
@@ -691,7 +717,7 @@ implements Operation {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Class getOwningClass() {
-		if (eContainerFeatureID() != PivotPackage.OPERATION__OWNING_CLASS) return null;
+		if (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 12)) return null;
 		return (org.eclipse.ocl.pivot.Class)eInternalContainer();
 	}
 
@@ -702,7 +728,7 @@ implements Operation {
 	 */
 	public NotificationChain basicSetOwningClass(org.eclipse.ocl.pivot.Class newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, PivotPackage.OPERATION__OWNING_CLASS, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureImpl.FEATURE_FEATURE_COUNT + 12, msgs);
 		return msgs;
 	}
 
@@ -714,7 +740,7 @@ implements Operation {
 	@Override
 	public void setOwningClass(org.eclipse.ocl.pivot.Class newOwningClass)
 	{
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != PivotPackage.OPERATION__OWNING_CLASS && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 12) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -722,12 +748,12 @@ implements Operation {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, PivotPackage.CLASS__OWNED_OPERATIONS, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, TypeImpl.TYPE_FEATURE_COUNT + 11, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__OWNING_CLASS, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 12, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -754,9 +780,9 @@ implements Operation {
 			 *         'Operation::CompatibleReturn'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_CompatibleReturn);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_CompatibleReturn);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -767,14 +793,14 @@ implements Operation {
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression = this.getBodyExpression();
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
 						final /*@NonInvalid*/ boolean ne = bodyExpression != null;
 						/*@Thrown*/ boolean and;
 						if (ne) {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 							@SuppressWarnings("null")
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = (org.eclipse.ocl.pivot.@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL);
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
+							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL);
+							final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 							final /*@Thrown*/ boolean ne_0 = ownedBody != null;
 							and = ne_0;
 						}
@@ -788,14 +814,14 @@ implements Operation {
 					}
 					/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
 						final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 						CAUGHT_CompatibleBody = CompatibleBody;
 					}
 					catch (Exception e) {
 						CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
+					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -848,9 +874,9 @@ implements Operation {
 			 *         'Operation::UniquePreconditionName'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_UniquePreconditionName);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_UniquePreconditionName);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -859,10 +885,10 @@ implements Operation {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					java.util.@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -870,11 +896,11 @@ implements Operation {
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Constraint _1 = (org.eclipse.ocl.pivot.@NonNull Constraint)ITERATOR__1.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
 						/**
 						 * name
 						 */
-						final /*@NonInvalid*/ java.lang.@Nullable String name = _1.getName();
+						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.FALSE_VALUE;			// Abort after second find
@@ -922,9 +948,9 @@ implements Operation {
 			 *         'Operation::UniquePostconditionName'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_UniquePostconditionName);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_UniquePostconditionName);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -933,10 +959,10 @@ implements Operation {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					java.util.@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -944,11 +970,11 @@ implements Operation {
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Constraint _1 = (org.eclipse.ocl.pivot.@NonNull Constraint)ITERATOR__1.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
 						/**
 						 * name
 						 */
-						final /*@NonInvalid*/ java.lang.@Nullable String name = _1.getName();
+						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.FALSE_VALUE;			// Abort after second find
@@ -984,25 +1010,25 @@ implements Operation {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.OPERATION__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 2), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPostconditions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPreconditions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
@@ -1020,29 +1046,29 @@ implements Operation {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_CONSTRAINTS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				return basicSetOwnedSignature(null, msgs);
-			case PivotPackage.OPERATION__BODY_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				return basicSetBodyExpression(null, msgs);
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				return basicSetOwningClass(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1058,8 +1084,8 @@ implements Operation {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.OPERATION__OWNING_CLASS:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.CLASS__OWNED_OPERATIONS, org.eclipse.ocl.pivot.Class.class, msgs);
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+				return eInternalContainer().eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 11, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1073,61 +1099,61 @@ implements Operation {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.OPERATION__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.OPERATION__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.OPERATION__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.OPERATION__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.OPERATION__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.OPERATION__IMPLEMENTATION:
+			case 8:
 				return getImplementation();
-			case PivotPackage.OPERATION__IMPLEMENTATION_CLASS:
+			case 9:
 				return getImplementationClass();
-			case PivotPackage.OPERATION__IS_STATIC:
+			case 10:
 				return isIsStatic();
-			case PivotPackage.OPERATION__OWNED_CONSTRAINTS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				return getOwnedConstraints();
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return getOwnedBindings();
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				return getOwnedSignature();
-			case PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				return getUnspecializedElement();
-			case PivotPackage.OPERATION__BODY_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				return getBodyExpression();
-			case PivotPackage.OPERATION__IS_INVALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				return isIsInvalidating();
-			case PivotPackage.OPERATION__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				return isIsTransient();
-			case PivotPackage.OPERATION__IS_TYPEOF:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				return isIsTypeof();
-			case PivotPackage.OPERATION__IS_VALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				return isIsValidating();
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return getOwnedParameters();
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return getOwnedPostconditions();
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return getOwnedPreconditions();
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				return getOwningClass();
-			case PivotPackage.OPERATION__PRECEDENCE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
-			case PivotPackage.OPERATION__RAISED_EXCEPTIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				return getRaisedExceptions();
-			case PivotPackage.OPERATION__REDEFINED_OPERATIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				return getRedefinedOperations();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -1143,92 +1169,92 @@ implements Operation {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.OPERATION__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.OPERATION__IMPLEMENTATION:
+			case 8:
 				setImplementation((LibraryFeature)newValue);
 				return;
-			case PivotPackage.OPERATION__IMPLEMENTATION_CLASS:
+			case 9:
 				setImplementationClass((String)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_STATIC:
+			case 10:
 				setIsStatic((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_CONSTRAINTS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case PivotPackage.OPERATION__BODY_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				setBodyExpression((LanguageExpression)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_INVALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				setIsInvalidating((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				setIsTransient((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_TYPEOF:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				setIsTypeof((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__IS_VALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				setIsValidating((Boolean)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case PivotPackage.OPERATION__PRECEDENCE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				setPrecedence((Precedence)newValue);
 				return;
-			case PivotPackage.OPERATION__RAISED_EXCEPTIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				getRaisedExceptions().clear();
 				getRaisedExceptions().addAll((Collection<? extends Type>)newValue);
 				return;
-			case PivotPackage.OPERATION__REDEFINED_OPERATIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				getRedefinedOperations().clear();
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
@@ -1245,82 +1271,82 @@ implements Operation {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.OPERATION__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.OPERATION__IMPLEMENTATION:
+			case 8:
 				setImplementation(IMPLEMENTATION_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IMPLEMENTATION_CLASS:
+			case 9:
 				setImplementationClass(IMPLEMENTATION_CLASS_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IS_STATIC:
+			case 10:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__OWNED_CONSTRAINTS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				getOwnedConstraints().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				getOwnedBindings().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case PivotPackage.OPERATION__BODY_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				setBodyExpression((LanguageExpression)null);
 				return;
-			case PivotPackage.OPERATION__IS_INVALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IS_TYPEOF:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__IS_VALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				getOwnedParameters().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				getOwnedPostconditions().clear();
 				return;
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				getOwnedPreconditions().clear();
 				return;
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case PivotPackage.OPERATION__PRECEDENCE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				setPrecedence((Precedence)null);
 				return;
-			case PivotPackage.OPERATION__RAISED_EXCEPTIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				getRaisedExceptions().clear();
 				return;
-			case PivotPackage.OPERATION__REDEFINED_OPERATIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				getRedefinedOperations().clear();
 				return;
 		}
@@ -1336,59 +1362,59 @@ implements Operation {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.OPERATION__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.OPERATION__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.OPERATION__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.OPERATION__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.OPERATION__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.OPERATION__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.OPERATION__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.OPERATION__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.OPERATION__IMPLEMENTATION:
+			case 8:
 				return IMPLEMENTATION_EDEFAULT == null ? implementation != null : !IMPLEMENTATION_EDEFAULT.equals(implementation);
-			case PivotPackage.OPERATION__IMPLEMENTATION_CLASS:
+			case 9:
 				return IMPLEMENTATION_CLASS_EDEFAULT == null ? implementationClass != null : !IMPLEMENTATION_CLASS_EDEFAULT.equals(implementationClass);
-			case PivotPackage.OPERATION__IS_STATIC:
+			case 10:
 				return ((eFlags & IS_STATIC_EFLAG) != 0) != IS_STATIC_EDEFAULT;
-			case PivotPackage.OPERATION__OWNED_CONSTRAINTS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case PivotPackage.OPERATION__OWNED_BINDINGS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case PivotPackage.OPERATION__OWNED_SIGNATURE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				return ownedSignature != null;
-			case PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				return unspecializedElement != null;
-			case PivotPackage.OPERATION__BODY_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				return bodyExpression != null;
-			case PivotPackage.OPERATION__IS_INVALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
-			case PivotPackage.OPERATION__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
-			case PivotPackage.OPERATION__IS_TYPEOF:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
-			case PivotPackage.OPERATION__IS_VALIDATING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
-			case PivotPackage.OPERATION__OWNED_PARAMETERS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case PivotPackage.OPERATION__OWNED_POSTCONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
-			case PivotPackage.OPERATION__OWNED_PRECONDITIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
-			case PivotPackage.OPERATION__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				return getOwningClass() != null;
-			case PivotPackage.OPERATION__PRECEDENCE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				return precedence != null;
-			case PivotPackage.OPERATION__RAISED_EXCEPTIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				return raisedExceptions != null && !raisedExceptions.isEmpty();
-			case PivotPackage.OPERATION__REDEFINED_OPERATIONS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				return redefinedOperations != null && !redefinedOperations.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1405,7 +1431,7 @@ implements Operation {
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.OPERATION__OWNED_CONSTRAINTS: return PivotPackage.NAMESPACE__OWNED_CONSTRAINTS;
+				case FeatureImpl.FEATURE_FEATURE_COUNT + 0: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -1413,9 +1439,9 @@ implements Operation {
 		{
 			switch (derivedFeatureID)
 			{
-				case PivotPackage.OPERATION__OWNED_BINDINGS: return PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS;
-				case PivotPackage.OPERATION__OWNED_SIGNATURE: return PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE;
-				case PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT: return PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT;
+				case FeatureImpl.FEATURE_FEATURE_COUNT + 1: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
+				case FeatureImpl.FEATURE_FEATURE_COUNT + 2: return ElementImpl.ELEMENT_FEATURE_COUNT + 1;
+				case FeatureImpl.FEATURE_FEATURE_COUNT + 3: return ElementImpl.ELEMENT_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -1433,7 +1459,7 @@ implements Operation {
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.NAMESPACE__OWNED_CONSTRAINTS: return PivotPackage.OPERATION__OWNED_CONSTRAINTS;
+				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0: return FeatureImpl.FEATURE_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -1441,9 +1467,9 @@ implements Operation {
 		{
 			switch (baseFeatureID)
 			{
-				case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS: return PivotPackage.OPERATION__OWNED_BINDINGS;
-				case PivotPackage.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE: return PivotPackage.OPERATION__OWNED_SIGNATURE;
-				case PivotPackage.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT: return PivotPackage.OPERATION__UNSPECIALIZED_ELEMENT;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return FeatureImpl.FEATURE_FEATURE_COUNT + 1;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 1: return FeatureImpl.FEATURE_FEATURE_COUNT + 2;
+				case ElementImpl.ELEMENT_FEATURE_COUNT + 2: return FeatureImpl.FEATURE_FEATURE_COUNT + 3;
 				default: return -1;
 			}
 		}
@@ -1461,25 +1487,25 @@ implements Operation {
 			throws InvocationTargetException {
 		switch (operationID)
 		{
-			case PivotPackage.OPERATION___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.OPERATION___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.OPERATION___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.OPERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_COMPATIBLE_RETURN__DIAGNOSTICCHAIN_MAP:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 0:
 				return validateCompatibleReturn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 1:
 				return validateLoadableImplementation((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 2:
 				return validateUniquePostconditionName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 3:
 				return validateUniquePreconditionName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

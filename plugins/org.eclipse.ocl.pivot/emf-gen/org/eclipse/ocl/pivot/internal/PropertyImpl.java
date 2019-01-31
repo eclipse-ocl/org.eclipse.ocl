@@ -38,14 +38,18 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -64,7 +68,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -101,6 +107,24 @@ import org.eclipse.ocl.pivot.values.Value;
 public class PropertyImpl
 extends FeatureImpl
 implements Property {
+
+	/**
+	 * The number of structural features of the '<em>Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_FEATURE_COUNT = FeatureImpl.FEATURE_FEATURE_COUNT + 19;
+
+	/**
+	 * The number of operations of the '<em>Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_OPERATION_COUNT = FeatureImpl.FEATURE_OPERATION_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getAssociationClass() <em>Association Class</em>}' reference.
@@ -427,7 +451,7 @@ implements Property {
 			if (associationClass != oldAssociationClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.PROPERTY__ASSOCIATION_CLASS, oldAssociationClass, associationClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 0, oldAssociationClass, associationClass));
 			}
 		}
 		return associationClass;
@@ -454,7 +478,7 @@ implements Property {
 		associationClass = newAssociationClass;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__ASSOCIATION_CLASS, oldAssociationClass, newAssociationClass);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 0, oldAssociationClass, newAssociationClass);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -472,14 +496,14 @@ implements Property {
 		{
 			NotificationChain msgs = null;
 			if (associationClass != null)
-				msgs = ((InternalEObject)associationClass).eInverseRemove(this, PivotPackage.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)associationClass).eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
 			if (newAssociationClass != null)
-				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, PivotPackage.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
 			msgs = basicSetAssociationClass(newAssociationClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__ASSOCIATION_CLASS, newAssociationClass, newAssociationClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 0, newAssociationClass, newAssociationClass));
 	}
 
 	/**
@@ -492,7 +516,7 @@ implements Property {
 		boolean oldIsReadOnly = (eFlags & IS_READ_ONLY_EFLAG) != 0;
 		if (newIsReadOnly) eFlags |= IS_READ_ONLY_EFLAG; else eFlags &= ~IS_READ_ONLY_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_READ_ONLY, oldIsReadOnly, newIsReadOnly));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 7, oldIsReadOnly, newIsReadOnly));
 	}
 
 	/**
@@ -516,7 +540,7 @@ implements Property {
 		boolean oldIsComposite = (eFlags & IS_COMPOSITE_EFLAG) != 0;
 		if (newIsComposite) eFlags |= IS_COMPOSITE_EFLAG; else eFlags &= ~IS_COMPOSITE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_COMPOSITE, oldIsComposite, newIsComposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 3, oldIsComposite, newIsComposite));
 	}
 
 	/**
@@ -540,7 +564,7 @@ implements Property {
 		boolean oldIsDerived = (eFlags & IS_DERIVED_EFLAG) != 0;
 		if (newIsDerived) eFlags |= IS_DERIVED_EFLAG; else eFlags &= ~IS_DERIVED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_DERIVED, oldIsDerived, newIsDerived));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, oldIsDerived, newIsDerived));
 	}
 
 	/**
@@ -568,7 +592,7 @@ implements Property {
 			if (opposite != oldOpposite)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.PROPERTY__OPPOSITE, oldOpposite, opposite));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldOpposite, opposite));
 			}
 		}
 		return opposite;
@@ -593,7 +617,7 @@ implements Property {
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__OPPOSITE, oldOpposite, opposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldOpposite, opposite));
 	}
 
 	/**
@@ -618,7 +642,7 @@ implements Property {
 		ownedExpression = newOwnedExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__OWNED_EXPRESSION, oldOwnedExpression, newOwnedExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 14, oldOwnedExpression, newOwnedExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -636,14 +660,14 @@ implements Property {
 		{
 			NotificationChain msgs = null;
 			if (ownedExpression != null)
-				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PivotPackage.PROPERTY__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 14), null, msgs);
 			if (newOwnedExpression != null)
-				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PivotPackage.PROPERTY__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 14), null, msgs);
 			msgs = basicSetOwnedExpression(newOwnedExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__OWNED_EXPRESSION, newOwnedExpression, newOwnedExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 14, newOwnedExpression, newOwnedExpression));
 	}
 
 	/**
@@ -657,7 +681,7 @@ implements Property {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_IMPLICIT, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 6, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -766,7 +790,7 @@ implements Property {
 		String oldDefaultValueString = defaultValueString;
 		defaultValueString = newDefaultValueString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__DEFAULT_VALUE_STRING, oldDefaultValueString, defaultValueString));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, oldDefaultValueString, defaultValueString));
 	}
 	@Override
 	public void setDefaultValueString(String newDefaultValueString)
@@ -800,7 +824,7 @@ implements Property {
 		boolean oldIsID = (eFlags & IS_ID_EFLAG) != 0;
 		if (newIsID) eFlags |= IS_ID_EFLAG; else eFlags &= ~IS_ID_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_ID, oldIsID, newIsID));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 5, oldIsID, newIsID));
 	}
 
 	/**
@@ -825,7 +849,7 @@ implements Property {
 	{
 		if (keys == null)
 		{
-			keys = new EObjectResolvingEList<Property>(Property.class, this, PivotPackage.PROPERTY__KEYS);
+			keys = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 12);
 		}
 		return keys;
 	}
@@ -841,7 +865,7 @@ implements Property {
 		boolean oldIsResolveProxies = (eFlags & IS_RESOLVE_PROXIES_EFLAG) != 0;
 		if (newIsResolveProxies) eFlags |= IS_RESOLVE_PROXIES_EFLAG; else eFlags &= ~IS_RESOLVE_PROXIES_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_RESOLVE_PROXIES, oldIsResolveProxies, newIsResolveProxies));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 8, oldIsResolveProxies, newIsResolveProxies));
 	}
 
 	/**
@@ -866,7 +890,7 @@ implements Property {
 		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
 		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_TRANSIENT, oldIsTransient, newIsTransient));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 9, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -891,7 +915,7 @@ implements Property {
 		boolean oldIsUnsettable = (eFlags & IS_UNSETTABLE_EFLAG) != 0;
 		if (newIsUnsettable) eFlags |= IS_UNSETTABLE_EFLAG; else eFlags &= ~IS_UNSETTABLE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_UNSETTABLE, oldIsUnsettable, newIsUnsettable));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 10, oldIsUnsettable, newIsUnsettable));
 	}
 
 	/**
@@ -916,7 +940,7 @@ implements Property {
 		boolean oldIsVolatile = (eFlags & IS_VOLATILE_EFLAG) != 0;
 		if (newIsVolatile) eFlags |= IS_VOLATILE_EFLAG; else eFlags &= ~IS_VOLATILE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__IS_VOLATILE, oldIsVolatile, newIsVolatile));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 11, oldIsVolatile, newIsVolatile));
 	}
 
 	/**
@@ -929,7 +953,7 @@ implements Property {
 	{
 		if (subsettedProperty == null)
 		{
-			subsettedProperty = new EObjectResolvingEList<Property>(Property.class, this, PivotPackage.PROPERTY__SUBSETTED_PROPERTY);
+			subsettedProperty = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 18);
 		}
 		return subsettedProperty;
 	}
@@ -949,7 +973,7 @@ implements Property {
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.PROPERTY__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 17, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -976,7 +1000,7 @@ implements Property {
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 17, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -995,8 +1019,8 @@ implements Property {
 		 *   container.oclAsType(Class)
 		 *   .ownedProperties->includes(self)
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
+		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
@@ -1012,15 +1036,15 @@ implements Property {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
 			@SuppressWarnings("null")
 			final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1);
-			final /*@Thrown*/ java.util.@NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
-			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
+			final /*@Thrown*/ @NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
+			final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
 			final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
 			CAUGHT_includes = includes;
 		}
 		catch (Exception e) {
 			CAUGHT_includes = ValueUtil.createInvalidValue(e);
 		}
-		final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf, CAUGHT_includes);
+		final /*@Thrown*/ @Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf, CAUGHT_includes);
 		if (and == null) {
 			throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : Boolean[1]\'");
 		}
@@ -1052,9 +1076,9 @@ implements Property {
 			 *         'Property::CompatibleDefaultExpression'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, context);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Property_c_c_CompatibleDefaultExpression);
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Property_c_c_CompatibleDefaultExpression);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
@@ -1065,14 +1089,14 @@ implements Property {
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
 						final /*@NonInvalid*/ boolean ne = ownedExpression != null;
 						/*@Thrown*/ boolean and;
 						if (ne) {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 							@SuppressWarnings("null")
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = (org.eclipse.ocl.pivot.@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
+							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
+							final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 							final /*@Thrown*/ boolean ne_0 = ownedBody != null;
 							and = ne_0;
 						}
@@ -1086,14 +1110,14 @@ implements Property {
 					}
 					/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
+						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
 						final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
 						CAUGHT_CompatibleBody = CompatibleBody;
 					}
 					catch (Exception e) {
 						CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
+					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -1120,17 +1144,17 @@ implements Property {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				if (associationClass != null)
-					msgs = ((InternalEObject)associationClass).eInverseRemove(this, PivotPackage.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, AssociationClass.class, msgs);
+					msgs = ((InternalEObject)associationClass).eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
 				return basicSetAssociationClass((AssociationClass)otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
@@ -1148,19 +1172,19 @@ implements Property {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				return basicSetAssociationClass(null, msgs);
-			case PivotPackage.PROPERTY__OWNED_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				return basicSetOwnedExpression(null, msgs);
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				return basicSetOwningClass(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1176,8 +1200,8 @@ implements Property {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case PivotPackage.PROPERTY__OWNING_CLASS:
-				return eInternalContainer().eInverseRemove(this, PivotPackage.CLASS__OWNED_PROPERTIES, org.eclipse.ocl.pivot.Class.class, msgs);
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+				return eInternalContainer().eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 12, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1191,69 +1215,69 @@ implements Property {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return getAnnotatingComments();
-			case PivotPackage.PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				return getOwnedAnnotations();
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return getOwnedComments();
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return getOwnedExtensions();
-			case PivotPackage.PROPERTY__NAME:
+			case 4:
 				return getName();
-			case PivotPackage.PROPERTY__IS_MANY:
+			case 5:
 				return isIsMany();
-			case PivotPackage.PROPERTY__IS_REQUIRED:
+			case 6:
 				return isIsRequired();
-			case PivotPackage.PROPERTY__TYPE:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case PivotPackage.PROPERTY__IMPLEMENTATION:
+			case 8:
 				return getImplementation();
-			case PivotPackage.PROPERTY__IMPLEMENTATION_CLASS:
+			case 9:
 				return getImplementationClass();
-			case PivotPackage.PROPERTY__IS_STATIC:
+			case 10:
 				return isIsStatic();
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				if (resolve) return getAssociationClass();
 				return basicGetAssociationClass();
-			case PivotPackage.PROPERTY__DEFAULT_VALUE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return getDefaultValue();
-			case PivotPackage.PROPERTY__DEFAULT_VALUE_STRING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				return getDefaultValueString();
-			case PivotPackage.PROPERTY__IS_COMPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				return isIsComposite();
-			case PivotPackage.PROPERTY__IS_DERIVED:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				return isIsDerived();
-			case PivotPackage.PROPERTY__IS_ID:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				return isIsID();
-			case PivotPackage.PROPERTY__IS_IMPLICIT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				return isIsImplicit();
-			case PivotPackage.PROPERTY__IS_READ_ONLY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				return isIsReadOnly();
-			case PivotPackage.PROPERTY__IS_RESOLVE_PROXIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				return isIsResolveProxies();
-			case PivotPackage.PROPERTY__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return isIsTransient();
-			case PivotPackage.PROPERTY__IS_UNSETTABLE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return isIsUnsettable();
-			case PivotPackage.PROPERTY__IS_VOLATILE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return isIsVolatile();
-			case PivotPackage.PROPERTY__KEYS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				return getKeys();
-			case PivotPackage.PROPERTY__OPPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				if (resolve) return getOpposite();
 				return basicGetOpposite();
-			case PivotPackage.PROPERTY__OWNED_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				return getOwnedExpression();
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				return getOwningClass();
-			case PivotPackage.PROPERTY__REDEFINED_PROPERTIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
 				return getRedefinedProperties();
-			case PivotPackage.PROPERTY__REFERRED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
-			case PivotPackage.PROPERTY__SUBSETTED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
 				return getSubsettedProperty();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -1269,97 +1293,97 @@ implements Property {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
 				return;
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
 				return;
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case PivotPackage.PROPERTY__NAME:
+			case 4:
 				setName((String)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_REQUIRED:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__TYPE:
+			case 7:
 				setType((Type)newValue);
 				return;
-			case PivotPackage.PROPERTY__IMPLEMENTATION:
+			case 8:
 				setImplementation((LibraryFeature)newValue);
 				return;
-			case PivotPackage.PROPERTY__IMPLEMENTATION_CLASS:
+			case 9:
 				setImplementationClass((String)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_STATIC:
+			case 10:
 				setIsStatic((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				setAssociationClass((AssociationClass)newValue);
 				return;
-			case PivotPackage.PROPERTY__DEFAULT_VALUE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				setDefaultValue(newValue);
 				return;
-			case PivotPackage.PROPERTY__DEFAULT_VALUE_STRING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				setDefaultValueString((String)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_COMPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				setIsComposite((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_DERIVED:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				setIsDerived((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_ID:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				setIsID((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_IMPLICIT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_READ_ONLY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				setIsReadOnly((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_RESOLVE_PROXIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				setIsResolveProxies((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				setIsTransient((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_UNSETTABLE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				setIsUnsettable((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__IS_VOLATILE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				setIsVolatile((Boolean)newValue);
 				return;
-			case PivotPackage.PROPERTY__KEYS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				getKeys().clear();
 				getKeys().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.PROPERTY__OPPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				setOpposite((Property)newValue);
 				return;
-			case PivotPackage.PROPERTY__OWNED_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				setOwnedExpression((LanguageExpression)newValue);
 				return;
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case PivotPackage.PROPERTY__REDEFINED_PROPERTIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
 				getRedefinedProperties().clear();
 				getRedefinedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case PivotPackage.PROPERTY__REFERRED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
 				setReferredProperty((Property)newValue);
 				return;
-			case PivotPackage.PROPERTY__SUBSETTED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
 				getSubsettedProperty().clear();
 				getSubsettedProperty().addAll((Collection<? extends Property>)newValue);
 				return;
@@ -1376,91 +1400,91 @@ implements Property {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				getAnnotatingComments().clear();
 				return;
-			case PivotPackage.PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				getOwnedAnnotations().clear();
 				return;
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				getOwnedComments().clear();
 				return;
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case PivotPackage.PROPERTY__NAME:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_REQUIRED:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__TYPE:
+			case 7:
 				setType((Type)null);
 				return;
-			case PivotPackage.PROPERTY__IMPLEMENTATION:
+			case 8:
 				setImplementation(IMPLEMENTATION_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IMPLEMENTATION_CLASS:
+			case 9:
 				setImplementationClass(IMPLEMENTATION_CLASS_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_STATIC:
+			case 10:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				setAssociationClass((AssociationClass)null);
 				return;
-			case PivotPackage.PROPERTY__DEFAULT_VALUE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__DEFAULT_VALUE_STRING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				setDefaultValueString(DEFAULT_VALUE_STRING_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_COMPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				setIsComposite(IS_COMPOSITE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_DERIVED:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				setIsDerived(IS_DERIVED_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_ID:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				setIsID(IS_ID_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_IMPLICIT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_READ_ONLY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				setIsReadOnly(IS_READ_ONLY_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_RESOLVE_PROXIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				setIsResolveProxies(IS_RESOLVE_PROXIES_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_UNSETTABLE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				setIsUnsettable(IS_UNSETTABLE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__IS_VOLATILE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				setIsVolatile(IS_VOLATILE_EDEFAULT);
 				return;
-			case PivotPackage.PROPERTY__KEYS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				getKeys().clear();
 				return;
-			case PivotPackage.PROPERTY__OPPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				setOpposite((Property)null);
 				return;
-			case PivotPackage.PROPERTY__OWNED_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				setOwnedExpression((LanguageExpression)null);
 				return;
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case PivotPackage.PROPERTY__REDEFINED_PROPERTIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
 				getRedefinedProperties().clear();
 				return;
-			case PivotPackage.PROPERTY__REFERRED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
 				setReferredProperty((Property)null);
 				return;
-			case PivotPackage.PROPERTY__SUBSETTED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
 				getSubsettedProperty().clear();
 				return;
 		}
@@ -1476,65 +1500,65 @@ implements Property {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotPackage.PROPERTY__ANNOTATING_COMMENTS:
+			case 0:
 				return annotatingComments != null && !annotatingComments.isEmpty();
-			case PivotPackage.PROPERTY__OWNED_ANNOTATIONS:
+			case 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case PivotPackage.PROPERTY__OWNED_COMMENTS:
+			case 2:
 				return ownedComments != null && !ownedComments.isEmpty();
-			case PivotPackage.PROPERTY__OWNED_EXTENSIONS:
+			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case PivotPackage.PROPERTY__NAME:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PivotPackage.PROPERTY__IS_MANY:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_REQUIRED:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case PivotPackage.PROPERTY__TYPE:
+			case 7:
 				return type != null;
-			case PivotPackage.PROPERTY__IMPLEMENTATION:
+			case 8:
 				return IMPLEMENTATION_EDEFAULT == null ? implementation != null : !IMPLEMENTATION_EDEFAULT.equals(implementation);
-			case PivotPackage.PROPERTY__IMPLEMENTATION_CLASS:
+			case 9:
 				return IMPLEMENTATION_CLASS_EDEFAULT == null ? implementationClass != null : !IMPLEMENTATION_CLASS_EDEFAULT.equals(implementationClass);
-			case PivotPackage.PROPERTY__IS_STATIC:
+			case 10:
 				return ((eFlags & IS_STATIC_EFLAG) != 0) != IS_STATIC_EDEFAULT;
-			case PivotPackage.PROPERTY__ASSOCIATION_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
 				return associationClass != null;
-			case PivotPackage.PROPERTY__DEFAULT_VALUE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
 				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
-			case PivotPackage.PROPERTY__DEFAULT_VALUE_STRING:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
 				return DEFAULT_VALUE_STRING_EDEFAULT == null ? defaultValueString != null : !DEFAULT_VALUE_STRING_EDEFAULT.equals(defaultValueString);
-			case PivotPackage.PROPERTY__IS_COMPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
 				return ((eFlags & IS_COMPOSITE_EFLAG) != 0) != IS_COMPOSITE_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_DERIVED:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
 				return ((eFlags & IS_DERIVED_EFLAG) != 0) != IS_DERIVED_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_ID:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
 				return ((eFlags & IS_ID_EFLAG) != 0) != IS_ID_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_IMPLICIT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_READ_ONLY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
 				return ((eFlags & IS_READ_ONLY_EFLAG) != 0) != IS_READ_ONLY_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_RESOLVE_PROXIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
 				return ((eFlags & IS_RESOLVE_PROXIES_EFLAG) != 0) != IS_RESOLVE_PROXIES_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_TRANSIENT:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
 				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_UNSETTABLE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
 				return ((eFlags & IS_UNSETTABLE_EFLAG) != 0) != IS_UNSETTABLE_EDEFAULT;
-			case PivotPackage.PROPERTY__IS_VOLATILE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
 				return ((eFlags & IS_VOLATILE_EFLAG) != 0) != IS_VOLATILE_EDEFAULT;
-			case PivotPackage.PROPERTY__KEYS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
 				return keys != null && !keys.isEmpty();
-			case PivotPackage.PROPERTY__OPPOSITE:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
 				return opposite != null;
-			case PivotPackage.PROPERTY__OWNED_EXPRESSION:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
 				return ownedExpression != null;
-			case PivotPackage.PROPERTY__OWNING_CLASS:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
 				return getOwningClass() != null;
-			case PivotPackage.PROPERTY__REDEFINED_PROPERTIES:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
 				return redefinedProperties != null && !redefinedProperties.isEmpty();
-			case PivotPackage.PROPERTY__REFERRED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
 				return referredProperty != null;
-			case PivotPackage.PROPERTY__SUBSETTED_PROPERTY:
+			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
 				return subsettedProperty != null && !subsettedProperty.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1551,21 +1575,21 @@ implements Property {
 			throws InvocationTargetException {
 		switch (operationID)
 		{
-			case PivotPackage.PROPERTY___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.PROPERTY___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.PROPERTY___COMPATIBLE_BODY__VALUESPECIFICATION:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case PivotPackage.PROPERTY___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PivotPackage.PROPERTY___IS_ATTRIBUTE__PROPERTY:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 0:
 				return isAttribute((Property)arguments.get(0));
-			case PivotPackage.PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP:
+			case FeatureImpl.FEATURE_OPERATION_COUNT + 1:
 				return validateCompatibleDefaultExpression((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -1593,7 +1617,7 @@ implements Property {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Class getOwningClass() {
-		if (eContainerFeatureID() != PivotPackage.PROPERTY__OWNING_CLASS) return null;
+		if (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 15)) return null;
 		return (org.eclipse.ocl.pivot.Class)eInternalContainer();
 	}
 
@@ -1604,7 +1628,7 @@ implements Property {
 	 */
 	public NotificationChain basicSetOwningClass(org.eclipse.ocl.pivot.Class newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, PivotPackage.PROPERTY__OWNING_CLASS, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureImpl.FEATURE_FEATURE_COUNT + 15, msgs);
 		return msgs;
 	}
 
@@ -1616,7 +1640,7 @@ implements Property {
 	@Override
 	public void setOwningClass(org.eclipse.ocl.pivot.Class newOwningClass)
 	{
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != PivotPackage.PROPERTY__OWNING_CLASS && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 15) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -1624,12 +1648,12 @@ implements Property {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, PivotPackage.CLASS__OWNED_PROPERTIES, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, TypeImpl.TYPE_FEATURE_COUNT + 12, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.PROPERTY__OWNING_CLASS, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 15, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -1643,7 +1667,7 @@ implements Property {
 	{
 		if (redefinedProperties == null)
 		{
-			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, PivotPackage.PROPERTY__REDEFINED_PROPERTIES);
+			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 16);
 		}
 		return redefinedProperties;
 	}

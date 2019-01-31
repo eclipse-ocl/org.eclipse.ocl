@@ -42,6 +42,23 @@ extends NamedElementImpl
 implements Type {
 
 	/**
+	 * The number of structural features of the '<em>Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
+	/**
+	 * The number of operations of the '<em>Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -120,17 +137,17 @@ implements Type {
 			throws InvocationTargetException {
 		switch (operationID)
 		{
-			case PivotPackage.TYPE___ALL_OWNED_ELEMENTS:
+			case 0:
 				return allOwnedElements();
-			case PivotPackage.TYPE___GET_VALUE__TYPE_STRING:
+			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case PivotPackage.TYPE___FLATTENED_TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
 				return flattenedType();
-			case PivotPackage.TYPE___IS_CLASS:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1:
 				return isClass();
-			case PivotPackage.TYPE___IS_TEMPLATE_PARAMETER:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 2:
 				return isTemplateParameter();
-			case PivotPackage.TYPE___SPECIALIZE_IN__CALLEXP_TYPE:
+			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 3:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
