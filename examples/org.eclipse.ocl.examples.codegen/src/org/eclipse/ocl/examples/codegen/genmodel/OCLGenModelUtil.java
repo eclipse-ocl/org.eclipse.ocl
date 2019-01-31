@@ -8,16 +8,19 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.build.genmodel;
+package org.eclipse.ocl.examples.codegen.genmodel;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenAnnotation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
+import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -27,11 +30,11 @@ import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAd
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 
-public class OCLBuildGenModelUtil
+public class OCLGenModelUtil
 {
-
 	public static final @NonNull String OCL_GENMODEL_COPY_AND_PASTE_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/CopyAndPaste";
 	public static final @NonNull String USE_NULL_ANNOTATIONS = "Use Null Annotations";
+	public static final @NonNull String GENERATE_CLASSIFIER_INTS = "Generate Classifier ints";
 
 	public static final @NonNull String OCL_GENMODEL_TO_STRING_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/ToString";
 
@@ -46,24 +49,24 @@ public class OCLBuildGenModelUtil
 		if (genAnnotation != null) {
 			String value = genAnnotation.getDetails().get(USE_NULL_ANNOTATIONS);
 			if (value != null) {
-			    boolean useAtNonNull = Boolean.valueOf(value);
-			    if (useAtNonNull) {
-			    	return "@" + genModel.getImportedName(DerivedConstants.ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL) + " ";
-			    }
+				boolean useAtNonNull = Boolean.valueOf(value);
+				if (useAtNonNull) {
+					return "@" + genModel.getImportedName(DerivedConstants.ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL) + " ";
+				}
 			}
 		}
 		return "";
 	}
-	
+
 	public static @NonNull String atNullable(@NonNull GenModel genModel) {
 		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
 		if (genAnnotation != null) {
 			String value = genAnnotation.getDetails().get(USE_NULL_ANNOTATIONS);
 			if (value != null) {
-			    boolean useAtNonNull = Boolean.valueOf(value);
-			    if (useAtNonNull) {
-			    	return "@" + genModel.getImportedName(DerivedConstants.ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE) + " ";
-			    }
+				boolean useAtNonNull = Boolean.valueOf(value);
+				if (useAtNonNull) {
+					return "@" + genModel.getImportedName(DerivedConstants.ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE) + " ";
+				}
 			}
 		}
 		return "";
@@ -104,8 +107,113 @@ public class OCLBuildGenModelUtil
 		return resolveImports(genModel, s.toString());
 	}
 
+	public static String getFeatureCountValue(GenClass genClass)
+	{
+		GenClass base = genClass.getBaseGenClass();
+		if (base == null)
+		{
+			return Integer.toString(genClass.getFeatureCount());
+		}
+
+		String baseCountID = getQualifiedFeatureCountID(base);
+		return baseCountID + " + " + Integer.toString(genClass.getFeatureCount() - base.getFeatureCount());
+	}
+
+	public static String getListConstructor(GenClass genClass, GenFeature genFeature) {
+		String listConstructor = genClass.getListConstructor(genFeature);
+		String f0 = genClass.getQualifiedFeatureID(genFeature);
+		String f2 = getQualifiedFeatureValue(genClass, genFeature);
+		listConstructor = listConstructor.replaceAll(f0, f2);
+		GenFeature reverseFeature = genFeature.getReverse();
+		if (reverseFeature != null) {
+			GenClass reverseGenClass = reverseFeature.getGenClass();
+			String r0 = reverseGenClass.getQualifiedFeatureID(reverseFeature);
+			String r2 = getQualifiedFeatureValue(reverseGenClass, reverseFeature);
+			listConstructor = listConstructor.replaceAll(r0, r2);
+		}
+		return listConstructor;
+	}
+
+	public static String getOperationCountValue(GenClass genClass)
+	{
+		GenClass base = genClass.getBaseGenClass();
+		if (base == null)
+		{
+			return Integer.toString(genClass.getOperationCount());
+		}
+
+		String baseCountID = getQualifiedOperationCountID(base);
+		return baseCountID + " + " + Integer.toString(genClass.getOperationCount() - base.getOperationCount());
+	}
+
+	public static String getQualifiedFeatureValue(GenClass genClass, GenFeature genFeature) {
+		List<GenFeature> allFeatures = genClass.getAllGenFeatures();
+		int i = allFeatures.indexOf(genFeature);
+		GenClass base = genClass.getBaseGenClass();
+
+		if (base == null)
+		{
+			return Integer.toString(i);
+		}
+
+		int baseCount = base.getFeatureCount();
+		if (i < baseCount)
+		{
+			return Integer.toString(i);
+		}
+		return getQualifiedFeatureCountID(base) + " + " + Integer.toString(i - baseCount);
+	}
+
+	public static String getQualifiedFeatureCountID(GenClass genClass)
+	{
+		return genClass.getGenModel().getImportedName(genClass.getQualifiedClassName()) + "." + genClass.getFeatureCountID();
+	}
+
+	public static String getQualifiedOperationValue(GenClass genClass, GenOperation genOperation)
+	{
+		List<GenOperation> allOperations = genClass.getAllGenOperations(false);
+		int i = allOperations.indexOf(genOperation);
+		GenClass base = genClass.getBaseGenClass();
+
+		if (base == null)
+		{
+			return Integer.toString(i);
+		}
+
+		int baseCount = base.getOperationCount();
+		if (i < baseCount)
+		{
+			return Integer.toString(i);
+		}
+		return getQualifiedOperationCountID(base) + " + " + Integer.toString(i - baseCount);
+	}
+
+	public static String getQualifiedOperationCountID(GenClass genClass)
+	{
+		return genClass.getGenModel().getImportedName(genClass.getQualifiedClassName())+ "." + genClass.getOperationCountID();
+	}
+
+	public static String getQualifiedOperationValue(GenClass genClass, GenOperation genOperation, boolean diagnosticCode)
+	{
+		return getQualifiedOperationValue(genClass, genOperation);
+	}
+
 	public static /*@Nullable*/ String getVisitableClass(@NonNull GenModel genModel) {		// @Nullable breaks Xtend
 		return GenModelUtil.getAnnotation(genModel, OCL_GENMODEL_VISITOR_URI, VISITABLE_INTERFACE);
+	}
+
+	public static boolean isGenerateClassifierInts(@NonNull GenModel genModel) {
+		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+		if (genAnnotation != null) {
+			String value = genAnnotation.getDetails().get(GENERATE_CLASSIFIER_INTS);
+			if (value != null) {
+				boolean generateClassifierInts = Boolean.valueOf(value);
+				if (generateClassifierInts) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public static boolean isRootVisitableClass(@NonNull GenClass genClass) {

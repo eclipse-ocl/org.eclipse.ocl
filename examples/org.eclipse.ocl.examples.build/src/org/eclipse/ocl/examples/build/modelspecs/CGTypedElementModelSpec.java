@@ -17,6 +17,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
+import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
+import org.eclipse.ocl.examples.codegen.genmodel.ModelSpec;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -42,7 +44,7 @@ public class CGTypedElementModelSpec extends ModelSpec
 			}
 		}
 
-		protected abstract @Nullable String getBody(@NonNull CGTypedElementModelSpec cgModelSpec, @NonNull GenModel genModel);		
+		protected abstract @Nullable String getBody(@NonNull CGTypedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class CGTypedElementModelSpec extends ModelSpec
 	public interface Ati {
 		@NonNull String generate();
 	}
-	
+
 	public static final @NonNull Ati ATI_ROOT = new Ati() { @Override public @NonNull String generate() {
 		return "return ast instanceof " + classRef(TypedElement.class) + " ? ((" + classRef(TypedElement.class) + ") ast).getTypeId() : null;";
 	}};
@@ -64,7 +66,7 @@ public class CGTypedElementModelSpec extends ModelSpec
 	public static final @NonNull Ati ATI_T_ID = new Ati() { @Override public @NonNull String generate() {
 		return "return (" + classRef(TypeId.class) + ")elementId;";
 	}};
-		
+
 	protected static MethodSpec getASTypeId = new MyMethodSpec(CGTypedElement.class, "@Nullable " + classRef(TypeId.class) + " getASTypeId()", null,
 		"Return the TypeId of the AS element.")
 		{
@@ -85,12 +87,12 @@ public class CGTypedElementModelSpec extends ModelSpec
 	}
 
 	protected final @Nullable Ati ati;
-	
+
 	protected CGTypedElementModelSpec(@NonNull Class<?> cgClass, @Nullable Ati ati) {
 		super(cgClass);
 		this.ati = ati;
 	}
-	
+
 	@Override
 	public void generate(@NonNull StringBuilder s, @NonNull GenModel genModel, boolean isImplementation) {
 		getASTypeId.generate(s, this, genModel, isImplementation);

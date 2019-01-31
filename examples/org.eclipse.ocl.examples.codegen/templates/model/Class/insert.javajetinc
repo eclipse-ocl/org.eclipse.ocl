@@ -2,27 +2,27 @@
 <% * http://www.eclipse.org/OCL/GenModel/Visitor support for non-abstract classes%>
 <% *-------------------------------------------------------------------------------------*/%>
 <%if (isInterface) {%>
-  <%boolean isRootVisitable = OCLBuildGenModelUtil.isRootVisitableClass(genClass);%>
-  <%GenAnnotation visitorAnnotation = genModel.getGenAnnotation(OCLBuildGenModelUtil.OCL_GENMODEL_VISITOR_URI);%>
+  <%boolean isRootVisitable = OCLGenModelUtil.isRootVisitableClass(genClass);%>
+  <%GenAnnotation visitorAnnotation = genModel.getGenAnnotation(OCLGenModelUtil.OCL_GENMODEL_VISITOR_URI);%>
   <%if (visitorAnnotation != null) {%>
     <%if (isRootVisitable) {%>
-      <%String rootVisitorClassName = visitorAnnotation.getDetails().get(OCLBuildGenModelUtil.ROOT_VISITOR_CLASS);%>
+      <%String rootVisitorClassName = visitorAnnotation.getDetails().get(OCLGenModelUtil.ROOT_VISITOR_CLASS);%>
 	/**
 	 * Accept a visit from a visitor and return the result of a call to the derived type-specific visitXXX in the visitor.
 	 * @generated
 	 */
 	// Generated from org.eclipse.ocl.examples.build/templates/model/Class/insert.javajetinc
-	public <R> R accept(<%=OCLBuildGenModelUtil.atNonNull(genModel)%><%=genModel.getImportedName(rootVisitorClassName)%><R> visitor);
+	public <R> R accept(<%=OCLGenModelUtil.atNonNull(genModel)%><%=genModel.getImportedName(rootVisitorClassName)%><R> visitor);
     <%}%>
   <%}%>
 <%}%>
 <%if (isImplementation) {%>
-  <%boolean isRootVisitable = OCLBuildGenModelUtil.isRootVisitableClass(genClass);%>
-  <%GenAnnotation visitorAnnotation = genModel.getGenAnnotation(OCLBuildGenModelUtil.OCL_GENMODEL_VISITOR_URI);%>
+  <%boolean isRootVisitable = OCLGenModelUtil.isRootVisitableClass(genClass);%>
+  <%GenAnnotation visitorAnnotation = genModel.getGenAnnotation(OCLGenModelUtil.OCL_GENMODEL_VISITOR_URI);%>
   <%if (visitorAnnotation != null) {%>
     <%if (!genClass.getEcoreClass().isAbstract() || isRootVisitable) {%>
-      <%String rootVisitorClassName = visitorAnnotation.getDetails().get(OCLBuildGenModelUtil.ROOT_VISITOR_CLASS);%>
-      <%String derivedVisitorClassName = visitorAnnotation.getDetails().get(OCLBuildGenModelUtil.DERIVED_VISITOR_CLASS);%>
+      <%String rootVisitorClassName = visitorAnnotation.getDetails().get(OCLGenModelUtil.ROOT_VISITOR_CLASS);%>
+      <%String derivedVisitorClassName = visitorAnnotation.getDetails().get(OCLGenModelUtil.DERIVED_VISITOR_CLASS);%>
       <%boolean isDerivedVisitor = (derivedVisitorClassName != null) && !rootVisitorClassName.equals(derivedVisitorClassName);%>
 	/**
 	 * {@inheritDoc}
@@ -34,7 +34,7 @@
     <%if (genModel.useClassOverrideAnnotation() && !isRootVisitable) {%>
 	@Override
     <%}%>
-	public <R> R accept(<%=OCLBuildGenModelUtil.atNonNull(genModel)%><%=genModel.getImportedName(rootVisitorClassName)%><R> visitor) {
+	public <R> R accept(<%=OCLGenModelUtil.atNonNull(genModel)%><%=genModel.getImportedName(rootVisitorClassName)%><R> visitor) {
       <%if (isDerivedVisitor) {%>
 		return (R) ((<%=genModel.getImportedName(derivedVisitorClassName)%><?>)visitor).visit<%=genClass.getInterfaceName()%>(this);
       <%} else {%>
@@ -48,7 +48,7 @@
 <% * http://www.eclipse.org/OCL/GenModel/CopyAndPaste support%>
 <% *-------------------------------------------------------------------------------------*/%>
 <%if (isImplementation) {%>
-<%=OCLBuildGenModelUtil.copyAndPaste(genClass)%>
+<%=OCLGenModelUtil.copyAndPaste(genClass)%>
 <%}%>
 <%/*-------------------------------------------------------------------------------------%>
 <% * Contributions from CGModelSpec instances%>

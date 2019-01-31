@@ -8,14 +8,13 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.build.modelspecs;
+package org.eclipse.ocl.examples.codegen.genmodel;
 
 import java.util.List;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelUtil;
 
 /**
  * MethodSpec captures the requirements for insering a merthod hierarchy into a genmodel interface/implementation hierarchy.
@@ -69,13 +68,13 @@ public abstract class MethodSpec
 	}
 
 	public void generate(@NonNull StringBuilder s, @NonNull ModelSpec modelSpec, @NonNull GenModel genModel, boolean isImplementation) {
-		if (!rootClass.isAssignableFrom(modelSpec.cgClass)) {
+		if (!rootClass.isAssignableFrom(modelSpec.getCgClass())) {
 			return;
 		}
-		boolean isRootSpec = modelSpec.cgClass == rootClass;
+		boolean isRootSpec = modelSpec.getCgClass() == rootClass;
 		if (!isImplementation) {
 			if (isRootSpec) {
-				String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
+				String resolvedDeclaration = OCLGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
 				appendHeader(s, comment);
 				s.append("\t// Generated from " + getClass().getName() + "\n");
 				s.append("\t" + resolvedDeclaration + ";\n");
@@ -89,8 +88,8 @@ public abstract class MethodSpec
 			String body = getBody(modelSpec, genModel);
 			String superBody = getSuperBody(modelSpec, genModel);
 			if ((body != null) && !body.equals(superBody)) {
-				String resolvedDeclaration = OCLBuildGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
-				String resolvedBody = OCLBuildGenModelUtil.resolveImports(genModel, body);
+				String resolvedDeclaration = OCLGenModelUtil.resolveImports(genModel, resolveJDTAnnotations(genModel, interfaceDecl));
+				String resolvedBody = OCLGenModelUtil.resolveImports(genModel, body);
 				appendHeader(s, null);
 				if (genModel.useClassOverrideAnnotation() && (superBody != null)) {
 					s.append("\t@Override\n");
@@ -112,7 +111,7 @@ public abstract class MethodSpec
 	 * or null if there is no inherited body.
 	 */
 	protected @Nullable String getSuperBody(@NonNull ModelSpec modelSpec, @NonNull GenModel genModel) {
-		Class<?> cgClass = modelSpec.cgClass;
+		Class<?> cgClass = modelSpec.getCgClass();
 		while (cgClass != null) {
 			List<ModelSpec> specs = null;
 			Class<?> cgSuperclass = cgClass.getSuperclass();
@@ -147,11 +146,11 @@ public abstract class MethodSpec
 
 	protected @NonNull String resolveJDTAnnotations(@NonNull GenModel genModel, @NonNull String text) {
 		if (text.contains("@NonNull ")) {
-			String atNonNull = OCLBuildGenModelUtil.atNonNull(genModel);
+			String atNonNull = OCLGenModelUtil.atNonNull(genModel);
 			text = text.replace("@NonNull ", atNonNull);
 		}
 		if (text.contains("@Nullable ")) {
-			String atNullable = OCLBuildGenModelUtil.atNullable(genModel);
+			String atNullable = OCLGenModelUtil.atNullable(genModel);
 			text = text.replace("@Nullable ", atNullable);
 		}
 		return text;

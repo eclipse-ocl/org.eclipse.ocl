@@ -62,7 +62,6 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.emf.codegen.jet.IJETNature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.m2m.qvt.oml.project.QVTONature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>

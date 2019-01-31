@@ -109,6 +109,8 @@ import org.eclipse.ocl.examples.codegen.cse.LocalPlace;
 import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
 import org.eclipse.ocl.examples.codegen.cse.StackPlace;
 import org.eclipse.ocl.examples.codegen.cse.ThrowPlace;
+import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
+import org.eclipse.ocl.examples.codegen.genmodel.ModelSpec;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -22,10 +22,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelUtil;
 import org.eclipse.ocl.examples.build.genmodel.SplitGenModelGeneratorAdapterFactory;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-
 
 public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 {
@@ -52,7 +51,7 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 		Collections.sort(sortedEClasses, NameUtil.ENamedElementComparator.INSTANCE);
 		return sortedEClasses;
 	}
-	
+
 	protected static @NonNull String getTemplatedName(@NonNull EClass eClass) {
 		StringBuilder s = new StringBuilder();
 		s.append(eClass.getName());
@@ -91,7 +90,7 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 			return qualifiedTypeName.substring(0, index+1) + "@Nullable " + qualifiedTypeName.substring(index+1);
 		}
 	}
-	
+
 	protected String getInterfaceModelDirectory(@NonNull GenModel genModel) {
 		String interfaceModelDirectory = SplitGenModelGeneratorAdapterFactory.getInterfaceModelDirectory(genModel);
 		if (interfaceModelDirectory == null) {
@@ -113,7 +112,7 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 	}
 
 	protected String getVisitableClassName(@NonNull GenModel genModel) {
-		String visitableClass = OCLBuildGenModelUtil.getVisitableClass(genModel);
+		String visitableClass = OCLGenModelUtil.getVisitableClass(genModel);
 		if (visitableClass != null) {
 			int lastDot = visitableClass.lastIndexOf(".");
 			if (lastDot >= 0) {
@@ -124,7 +123,7 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 	}
 
 	protected String getVisitablePackageName(@NonNull GenModel genModel) {
-		String visitableClass = OCLBuildGenModelUtil.getVisitableClass(genModel);
+		String visitableClass = OCLGenModelUtil.getVisitableClass(genModel);
 		if (visitableClass != null) {
 			int lastDot = visitableClass.lastIndexOf(".");
 			if (lastDot >= 0) {
@@ -133,8 +132,8 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 		}
 		return visitablePackageName;
 	}
-		
-/*		
+
+/*
 		var genModel = genPackage.getGenModel();
 		var interfaceModelDirectory = SplitGenClassGeneratorAdapter.getInterfaceModelDirectory(genModel);
 		System.out.println("javaFolder " + javaFolder);
@@ -164,6 +163,6 @@ public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent
 		}
 		var EPackage ePackage = genPackage.getEcorePackage();
 		var MergeWriter writer = new MergeWriter(outputFolder + visitableClassName + ".java");
-		
+
 	} */
 }

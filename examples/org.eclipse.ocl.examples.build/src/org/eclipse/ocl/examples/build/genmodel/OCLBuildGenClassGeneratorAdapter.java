@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 
 //
 //	Overridden to allow static templates to be invoked standalone.
@@ -40,7 +41,7 @@ public class OCLBuildGenClassGeneratorAdapter extends GenClassGeneratorAdapter
 	@Override
 	protected void generateClass(GenClass genClass, Monitor monitor) {
 		GenModel genModel = genClass.getGenModel();
-		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLBuildGenModelUtil.OCL_GENMODEL_TO_STRING_URI);
+		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLGenModelUtil.OCL_GENMODEL_TO_STRING_URI);
 		if (genAnnotation != null) {
 			if (genModel.isOperationReflection()) {
 				throw new RuntimeException("OperationReflection must be false to use ToString GenAnnotation, since EObject operations are not eInvokeable");

@@ -8,7 +8,7 @@
  * Contributors:
  *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.build.modelspecs;
+package org.eclipse.ocl.examples.codegen.genmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +80,7 @@ public abstract class ModelSpec
 	}
 
 	public abstract void generate(@NonNull StringBuilder s, @NonNull GenModel genModel, boolean isImplementation);
-	
+
 	public @NonNull Class<?> getCgClass() {
 		return cgClass;
 	}
