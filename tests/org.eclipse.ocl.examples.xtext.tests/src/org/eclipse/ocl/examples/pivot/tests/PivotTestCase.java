@@ -29,6 +29,8 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -798,6 +800,7 @@ public class PivotTestCase extends TestCase
 		OCLinEcoreStandaloneSetup.doTearDown();
 		OCLstdlibStandaloneSetup.doTearDown();
 		GlobalEnvironmentFactory.disposeInstance();
+		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(GenModelPackage.eNS_URI);
 		//		OCLstdlib.uninstall(); // should be able to persist
 		//		if (projectMap != null) {
 		//			projectMap.dispose();

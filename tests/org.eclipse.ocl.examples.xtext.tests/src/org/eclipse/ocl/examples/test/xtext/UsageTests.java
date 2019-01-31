@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +34,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
-import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicMonitor;
@@ -229,6 +231,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		String metaDataPackageSuffix = genOptions != null ? genOptions.get("metaDataPackageSuffix") : null;
 		String usedGenPackages = genOptions != null ? genOptions.get("usedGenPackages") : null;
 		String modelDirectory = genOptions != null ? genOptions.get("modelDirectory") : null;
+		String dynamicTemplates = genOptions != null ? genOptions.get("dynamicTemplates") : null;
+		String templateDirectory = genOptions != null ? genOptions.get("templateDirectory") : null;
 		if (modelDirectory == null) {
 			modelDirectory = getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME;
 		}
@@ -247,6 +251,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("    copyrightFields=\"false\"\n");
 		s.append("    bundleManifest=\"false\"\n");
 		s.append("    pluginKey=\"\"\n");
+		if (dynamicTemplates != null) {
+			s.append("    dynamicTemplates=\"" + dynamicTemplates + "\"\n");
+		}
+		if (templateDirectory != null) {
+			s.append("    templateDirectory=\"" + templateDirectory + "\"\n");
+		}
 		s.append("    usedGenPackages=\"");
 		if (usedGenPackages != null) {
 			s.append(usedGenPackages + " ");
@@ -340,8 +350,17 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		//FIXME this is needed so long as Pivot.genmodel is a UML genmodel
 		resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI,  org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new EcoreResourceFactoryImpl());
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, GenModelGeneratorAdapterFactory.DESCRIPTOR);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
+		// FIXME Bug 543870	GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, GenModelGeneratorAdapterFactory.DESCRIPTOR);
+		GeneratorAdapterFactory.Descriptor.Registry generatorAdapterFactoryRegistry = GeneratorAdapterFactory.Descriptor.Registry.INSTANCE;
+		Collection<Descriptor> descriptors = generatorAdapterFactoryRegistry.getDescriptors(GenModelPackage.eNS_URI);
+		@SuppressWarnings("deprecation") Descriptor betterEstructureDescriptor = org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelGeneratorAdapterFactory.DESCRIPTOR;
+		if (!descriptors.contains(betterEstructureDescriptor)) {
+			generatorAdapterFactoryRegistry.addDescriptor(GenModelPackage.eNS_URI, betterEstructureDescriptor);
+		}
+		Descriptor embeddedOCLDescriptor = OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR;
+		if (!descriptors.contains(embeddedOCLDescriptor)) {
+			generatorAdapterFactoryRegistry.addDescriptor(GenModelPackage.eNS_URI, embeddedOCLDescriptor);
+		}
 		if (resourceSet instanceof ResourceSetImpl) {
 			ResourceSetImpl resourceSetImpl = (ResourceSetImpl) resourceSet;
 			Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
@@ -901,6 +920,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    class ClassExtension extends pivot::Class {}\n"
 						+ "}\n";
 		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
+		genOptions.put("dynamicTemplates", "false");
+		genOptions.put("templateDirectory", "/org.eclipse.ocl.examples.codegen/templates");
 		genOptions.put("usedGenPackages", "platform:/plugin/org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot");
 		String genmodelFile = createGenModelContent(testFileStem, genOptions);
 		createManifestFile();
