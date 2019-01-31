@@ -133,7 +133,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		ownedCompleteModel = (CompleteModelInternal) newOwnedCompleteModel;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, oldOwnedCompleteModel, newOwnedCompleteModel);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL.getFeatureID(), oldOwnedCompleteModel, newOwnedCompleteModel);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -172,7 +172,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		ownedStandardLibrary = (StandardLibraryInternal) newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, oldOwnedStandardLibrary, newOwnedStandardLibrary);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY.getFeatureID(), oldOwnedStandardLibrary, newOwnedStandardLibrary);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;

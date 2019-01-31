@@ -1186,7 +1186,7 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 == null)
 		{
-			ownedOperations2 = ownedOperations = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.CLASS__OWNED_OPERATIONS, PivotPackage.OPERATION__OWNING_CLASS)
+			ownedOperations2 = ownedOperations = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -1218,7 +1218,7 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<Property> ownedProperties2 = ownedProperties;
 		if (ownedProperties2 == null)
 		{
-			ownedProperties2 = ownedProperties = new EObjectContainmentWithInverseEList<Property>(Property.class, this, PivotPackage.CLASS__OWNED_PROPERTIES, PivotPackage.PROPERTY__OWNING_CLASS)
+			ownedProperties2 = ownedProperties = new EObjectContainmentWithInverseEList<Property>(Property.class, this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES.getFeatureID(), PivotPackage.Literals.PROPERTY__OWNING_CLASS.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -1250,7 +1250,7 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<org.eclipse.ocl.pivot.Class> superClasses2 = superClasses;
 		if (superClasses2 == null)
 		{
-			superClasses2 = superClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.CLASS__SUPER_CLASSES)
+			superClasses2 = superClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.CLASS__SUPER_CLASSES.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 

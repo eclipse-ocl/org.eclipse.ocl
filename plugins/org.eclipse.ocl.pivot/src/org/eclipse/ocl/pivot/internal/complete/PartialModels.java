@@ -40,9 +40,9 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 
 
 	public PartialModels(@NonNull CompleteModelImpl owner) {
-		super(Model.class, owner, PivotPackage.COMPLETE_MODEL__PARTIAL_MODELS);
+		super(Model.class, owner, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS.getFeatureID());
 	}
-	
+
 	@Override
 	public void addUnique(Model partialModel) {
 		assert partialModel != null;
@@ -75,7 +75,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		getCompleteModel().didAddNestedPackage(partialPackage);
 	}
-	
+
 	@Override
 	protected void didRemove(int index, Model partialModel) {
 		assert partialModel != null;
@@ -100,7 +100,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		getCompleteModel().didRemoveNestedPackage(partialPackage);
 	}
-	
+
 	@SuppressWarnings("null")
 	protected @NonNull CompleteModelInternal getCompleteModel() {
 		return (CompleteModelInternal)owner;

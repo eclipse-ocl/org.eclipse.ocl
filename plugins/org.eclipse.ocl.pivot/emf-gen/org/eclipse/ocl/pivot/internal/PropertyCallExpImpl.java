@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -492,6 +493,7 @@ implements PropertyCallExp {
 	 * <!-- begin-user-doc -->
 	 * Reference types used by the auto-generated overridden body. - Bug 543180
 	 * {@link OclAnyOclAsTypeOperation}
+	 * {@link IdResolver}
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */

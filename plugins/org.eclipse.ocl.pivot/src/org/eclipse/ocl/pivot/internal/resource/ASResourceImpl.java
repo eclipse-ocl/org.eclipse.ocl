@@ -81,7 +81,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				if (eventType == Notification.SET) {
 					if (notifier instanceof Feature) {
 						int featureId = notification.getFeatureID(Feature.class);
-						if (featureId == PivotPackage.FEATURE__IMPLEMENTATION) {	// A known safe transient See Bug 535888#c6
+						if (featureId == PivotPackage.Literals.FEATURE__IMPLEMENTATION.getFeatureID()) {	// A known safe transient See Bug 535888#c6
 							Object oldValue = notification.getOldValue();
 							if (oldValue == null) {
 								return;

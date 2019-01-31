@@ -663,7 +663,7 @@ implements org.eclipse.ocl.pivot.Package {
 		EList<Class> ownedClasses2 = ownedClasses;
 		if (ownedClasses2 == null)
 		{
-			ownedClasses2 = ownedClasses = new EObjectContainmentWithInverseEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.PACKAGE__OWNED_CLASSES, PivotPackage.CLASS__OWNING_PACKAGE)
+			ownedClasses2 = ownedClasses = new EObjectContainmentWithInverseEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.PACKAGE__OWNED_CLASSES.getFeatureID(), PivotPackage.Literals.CLASS__OWNING_PACKAGE.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -691,7 +691,7 @@ implements org.eclipse.ocl.pivot.Package {
 		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
 		if (ownedPackages2 == null)
 		{
-			ownedPackages = ownedPackages2 = new EObjectContainmentWithInverseEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, PivotPackage.PACKAGE__OWNED_PACKAGES, PivotPackage.PACKAGE__OWNING_PACKAGE)
+			ownedPackages = ownedPackages2 = new EObjectContainmentWithInverseEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, PivotPackage.Literals.PACKAGE__OWNED_PACKAGES.getFeatureID(), PivotPackage.Literals.PACKAGE__OWNING_PACKAGE.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 

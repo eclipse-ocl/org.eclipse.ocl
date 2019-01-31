@@ -153,7 +153,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
 		if (ownedPackages2 == null)
 		{
-			ownedPackages = ownedPackages2 = new EObjectContainmentEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, PivotPackage.MODEL__OWNED_PACKAGES)
+			ownedPackages = ownedPackages2 = new EObjectContainmentEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, PivotPackage.Literals.MODEL__OWNED_PACKAGES.getFeatureID())
 			{
 				private static final long serialVersionUID = 1L;
 

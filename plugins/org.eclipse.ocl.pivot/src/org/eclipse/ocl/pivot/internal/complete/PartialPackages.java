@@ -52,7 +52,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	protected final @NonNull Map<String, CompleteInheritanceImpl> name2inheritance = new HashMap<String, CompleteInheritanceImpl>();
 
 	public PartialPackages(@NonNull CompletePackageImpl owner) {
-		super(org.eclipse.ocl.pivot.Package.class, owner, PivotPackage.COMPLETE_PACKAGE__PARTIAL_PACKAGES);
+		super(org.eclipse.ocl.pivot.Package.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES.getFeatureID());
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	private static final long serialVersionUID = 1L;
 
 	public NestedCompletePackages(@NonNull CompletePackageImpl owner) {
-		super(CompletePackage.class, owner, PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES,
-			PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE);
+		super(CompletePackage.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES.getFeatureID(),
+			PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE.getFeatureID());
 		doRefreshNestedPackages();
 	}
 

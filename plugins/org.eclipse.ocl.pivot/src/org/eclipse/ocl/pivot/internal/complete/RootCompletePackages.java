@@ -27,7 +27,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	private static final long serialVersionUID = 1L;
 
 	public RootCompletePackages(@NonNull CompleteModelImpl owner) {
-		super(CompletePackage.class, owner, PivotPackage.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, PivotPackage.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL);
+		super(CompletePackage.class, owner, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES.getFeatureID(), PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL.getFeatureID());
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 		completePackage.init(partialPackage.getName(), partialPackage.getNsPrefix(), partialPackage.getURI());
 		return completePackage;
 	}
-	
+
 	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		if (Orphanage.isTypeOrphanage(pivotPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();

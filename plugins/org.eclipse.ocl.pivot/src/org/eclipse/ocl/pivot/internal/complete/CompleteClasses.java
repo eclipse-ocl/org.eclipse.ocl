@@ -255,7 +255,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	protected @Nullable Map<String, CompleteClassInternal> name2completeClass = null;
 
 	public CompleteClasses(@NonNull CompletePackageImpl owner) {
-		super(CompleteClass.class, owner, PivotPackage.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, PivotPackage.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE);
+		super(CompleteClass.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES.getFeatureID(), PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE.getFeatureID());
 		if (COMPLETE_CLASSES.isActive()) {
 			COMPLETE_CLASSES.println("Create " + this);
 		}
