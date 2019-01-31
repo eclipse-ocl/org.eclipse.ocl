@@ -31,6 +31,15 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class FontElementImpl extends CompoundElementImpl implements FontElement {
 	/**
+	 * The number of structural features of the '<em>Font Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FONT_ELEMENT_FEATURE_COUNT = CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getFont() <em>Font</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +98,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 		String oldFont = font;
 		font = newFont;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FONT_ELEMENT__FONT, oldFont, font));
+			eNotify(new ENotificationImpl(this, Notification.SET, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0, oldFont, font));
 	}
 
 	/**
@@ -110,7 +119,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.FONT_ELEMENT__FONT:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				return getFont();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +133,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.FONT_ELEMENT__FONT:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				setFont((String)newValue);
 				return;
 		}
@@ -139,7 +148,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FONT_ELEMENT__FONT:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				setFont(FONT_EDEFAULT);
 				return;
 		}
@@ -154,7 +163,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FONT_ELEMENT__FONT:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				return FONT_EDEFAULT == null ? font != null : !FONT_EDEFAULT.equals(font);
 		}
 		return super.eIsSet(featureID);

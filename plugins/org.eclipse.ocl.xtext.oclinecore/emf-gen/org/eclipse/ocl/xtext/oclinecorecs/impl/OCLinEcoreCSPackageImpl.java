@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.impl.AnnotationElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ConstraintCSImpl;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS;
@@ -200,13 +202,13 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		isCreated = true;
 
 		// Create classes and their features
-		ocLinEcoreConstraintCSEClass = createEClass(OC_LIN_ECORE_CONSTRAINT_CS);
-		createEAttribute(ocLinEcoreConstraintCSEClass, OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE);
+		ocLinEcoreConstraintCSEClass = createEClass(0);
+		createEAttribute(ocLinEcoreConstraintCSEClass, ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0);
 
-		sysMLCSEClass = createEClass(SYS_MLCS);
-		createEAttribute(sysMLCSEClass, SYS_MLCS__VALUE);
+		sysMLCSEClass = createEClass(1);
+		createEAttribute(sysMLCSEClass, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0);
 
-		topLevelCSEClass = createEClass(TOP_LEVEL_CS);
+		topLevelCSEClass = createEClass(2);
 	}
 
 	/**

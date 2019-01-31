@@ -47,6 +47,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implements SquareBracketedClauseCS
 {
 	/**
+	 * The number of structural features of the '<em>Square Bracketed Clause CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SQUARE_BRACKETED_CLAUSE_CS_FEATURE_COUNT = ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2;
+	/**
 	 * The cached value of the '{@link #getOwnedTerms() <em>Owned Terms</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	@Override
 	public AbstractNameExpCS getOwningNameExp()
 	{
-		if (eContainerFeatureID() != EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP) return null;
+		if (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
 		return (AbstractNameExpCS)eInternalContainer();
 	}
 
@@ -95,7 +103,7 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	 */
 	public NotificationChain basicSetOwningNameExp(AbstractNameExpCS newOwningNameExp, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -107,7 +115,7 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	@Override
 	public void setOwningNameExp(AbstractNameExpCS newOwningNameExp)
 	{
-		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP && newOwningNameExp != null))
+		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1) && newOwningNameExp != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningNameExp))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -115,12 +123,12 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningNameExp != null)
-				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, AbstractNameExpCS.class, msgs);
+				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, AbstractNameExpCS.class, msgs);
 			msgs = basicSetOwningNameExp(newOwningNameExp, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, newOwningNameExp, newOwningNameExp));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, newOwningNameExp, newOwningNameExp));
 	}
 
 	/**
@@ -133,7 +141,7 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		if (ownedTerms == null)
 		{
-			ownedTerms = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
+			ownedTerms = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
 		}
 		return ownedTerms;
 	}
@@ -148,7 +156,7 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningNameExp((AbstractNameExpCS)otherEnd, msgs);
@@ -166,9 +174,9 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedTerms()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwningNameExp(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -184,8 +192,8 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (eContainerFeatureID())
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
-				return eInternalContainer().eInverseRemove(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, AbstractNameExpCS.class, msgs);
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, AbstractNameExpCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -200,9 +208,9 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedTerms();
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -219,11 +227,11 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedTerms().clear();
 				getOwnedTerms().addAll((Collection<? extends ExpCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)newValue);
 				return;
 		}
@@ -240,10 +248,10 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedTerms().clear();
 				return;
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)null);
 				return;
 		}
@@ -260,9 +268,9 @@ public class SquareBracketedClauseCSImpl extends ContextLessElementCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedTerms != null && !ownedTerms.isEmpty();
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp() != null;
 		}
 		return super.eIsSet(featureID);

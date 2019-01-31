@@ -34,6 +34,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class PathElementWithURICSImpl extends PathElementCSImpl implements PathElementWithURICS
 {
 	/**
+	 * The number of structural features of the '<em>Path Element With URICS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PATH_ELEMENT_WITH_URICS_FEATURE_COUNT = PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getUri() <em>Uri</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 		String oldUri = uri;
 		uri = newUri;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PATH_ELEMENT_WITH_URICS__URI, oldUri, uri));
+			eNotify(new ENotificationImpl(this, Notification.SET, PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0, oldUri, uri));
 	}
 
 	/**
@@ -119,7 +128,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS__URI:
+			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getUri();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -135,7 +144,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS__URI:
+			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
 				setUri((String)newValue);
 				return;
 		}
@@ -152,7 +161,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS__URI:
+			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
 				setUri(URI_EDEFAULT);
 				return;
 		}
@@ -169,7 +178,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS__URI:
+			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
 		}
 		return super.eIsSet(featureID);

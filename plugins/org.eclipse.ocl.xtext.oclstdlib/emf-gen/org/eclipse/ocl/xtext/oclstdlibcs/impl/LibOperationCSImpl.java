@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.OperationCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
@@ -45,6 +46,15 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
 public class LibOperationCSImpl
 		extends OperationCSImpl
 		implements LibOperationCS {
+
+	/**
+	 * The number of structural features of the '<em>Lib Operation CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_OPERATION_CS_FEATURE_COUNT = OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
@@ -159,7 +169,7 @@ public class LibOperationCSImpl
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -186,7 +196,7 @@ public class LibOperationCSImpl
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 	}
 
 	/**
@@ -203,7 +213,7 @@ public class LibOperationCSImpl
 			if (precedence != oldPrecedence)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE, oldPrecedence, precedence));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
 			}
 		}
 		return precedence;
@@ -228,7 +238,7 @@ public class LibOperationCSImpl
 		Precedence oldPrecedence = precedence;
 		precedence = newPrecedence;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE, oldPrecedence, precedence));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
 	}
 
 	/**
@@ -253,7 +263,7 @@ public class LibOperationCSImpl
 		boolean oldIsInvalidating = isInvalidating;
 		isInvalidating = newIsInvalidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_OPERATION_CS__IS_INVALIDATING, oldIsInvalidating, isInvalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1, oldIsInvalidating, isInvalidating));
 	}
 
 	/**
@@ -278,7 +288,7 @@ public class LibOperationCSImpl
 		boolean oldIsStatic = isStatic;
 		isStatic = newIsStatic;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_OPERATION_CS__IS_STATIC, oldIsStatic, isStatic));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2, oldIsStatic, isStatic));
 	}
 
 	/**
@@ -303,7 +313,7 @@ public class LibOperationCSImpl
 		boolean oldIsValidating = isValidating;
 		isValidating = newIsValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_OPERATION_CS__IS_VALIDATING, oldIsValidating, isValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldIsValidating, isValidating));
 	}
 
 	/**
@@ -315,16 +325,16 @@ public class LibOperationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isIsInvalidating();
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_STATIC:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isIsStatic();
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return isIsValidating();
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
 		}
@@ -340,19 +350,19 @@ public class LibOperationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				setIsInvalidating((Boolean)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_STATIC:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				setIsStatic((Boolean)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setIsValidating((Boolean)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				setPrecedence((Precedence)newValue);
 				return;
 		}
@@ -368,19 +378,19 @@ public class LibOperationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)null);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_STATIC:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				setPrecedence((Precedence)null);
 				return;
 		}
@@ -396,15 +406,15 @@ public class LibOperationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				return implementation != null;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isInvalidating != IS_INVALIDATING_EDEFAULT;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_STATIC:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isStatic != IS_STATIC_EDEFAULT;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return isValidating != IS_VALIDATING_EDEFAULT;
-			case OCLstdlibCSPackage.LIB_OPERATION_CS__PRECEDENCE:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return precedence != null;
 		}
 		return super.eIsSet(featureID);
@@ -421,7 +431,7 @@ public class LibOperationCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION;
+				case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -439,7 +449,7 @@ public class LibOperationCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.LIB_OPERATION_CS__IMPLEMENTATION;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

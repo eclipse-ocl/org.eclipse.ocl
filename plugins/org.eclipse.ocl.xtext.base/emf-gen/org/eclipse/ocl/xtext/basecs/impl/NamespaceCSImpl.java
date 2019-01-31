@@ -25,6 +25,15 @@ import org.eclipse.ocl.xtext.basecs.NamespaceCS;
 public abstract class NamespaceCSImpl extends NamedElementCSImpl implements NamespaceCS
 {
 	/**
+	 * The number of structural features of the '<em>Namespace CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAMESPACE_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

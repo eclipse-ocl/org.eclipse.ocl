@@ -53,6 +53,14 @@ extends ModelElementCSImpl
 implements ExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EXP_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8;
+	/**
 	 * The default value of the '{@link #isHasError() <em>Has Error</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,7 +130,7 @@ implements ExpCS {
 		boolean oldHasError = hasError;
 		hasError = newHasError;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.EXP_CS__HAS_ERROR, oldHasError, hasError));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldHasError, hasError));
 	}
 
 	/**
@@ -130,26 +138,25 @@ implements ExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isHasError();
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_LEFT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getLocalLeft();
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_LEFTMOST_DESCENDANT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getLocalLeftmostDescendant();
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_PARENT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getLocalParent();
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_RIGHT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getLocalRight();
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_RIGHTMOST_DESCENDANT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return getLocalRightmostDescendant();
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				return getPrecedence();
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE_ORDER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7:
 				return getPrecedenceOrder();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -164,7 +171,7 @@ implements ExpCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setHasError((Boolean)newValue);
 				return;
 		}
@@ -180,7 +187,7 @@ implements ExpCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setHasError(HAS_ERROR_EDEFAULT);
 				return;
 		}
@@ -192,26 +199,26 @@ implements ExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings({"null", "deprecation"})
+	@SuppressWarnings("null")
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_CS__HAS_ERROR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return hasError != HAS_ERROR_EDEFAULT;
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_LEFT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getLocalLeft() != null;
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_LEFTMOST_DESCENDANT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getLocalLeftmostDescendant() != null;
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_PARENT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getLocalParent() != null;
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_RIGHT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getLocalRight() != null;
-			case EssentialOCLCSPackage.EXP_CS__LOCAL_RIGHTMOST_DESCENDANT:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return getLocalRightmostDescendant() != null;
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				return getPrecedence() != null;
-			case EssentialOCLCSPackage.EXP_CS__PRECEDENCE_ORDER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7:
 				return getPrecedenceOrder() != PRECEDENCE_ORDER_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

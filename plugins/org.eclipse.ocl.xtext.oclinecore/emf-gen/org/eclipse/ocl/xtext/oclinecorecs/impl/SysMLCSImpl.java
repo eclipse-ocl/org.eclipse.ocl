@@ -38,6 +38,15 @@ import org.eclipse.ocl.xtext.oclinecorecs.util.OCLinEcoreCSVisitor;
 public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 {
 	/**
+	 * The number of structural features of the '<em>Sys MLCS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SYS_MLCS_FEATURE_COUNT = AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -100,7 +109,7 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLinEcoreCSPackage.SYS_MLCS__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0, oldValue, value));
 	}
 
 	/**
@@ -123,7 +132,7 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.SYS_MLCS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -139,7 +148,7 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.SYS_MLCS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				setValue((String)newValue);
 				return;
 		}
@@ -156,7 +165,7 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.SYS_MLCS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -173,7 +182,7 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.SYS_MLCS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

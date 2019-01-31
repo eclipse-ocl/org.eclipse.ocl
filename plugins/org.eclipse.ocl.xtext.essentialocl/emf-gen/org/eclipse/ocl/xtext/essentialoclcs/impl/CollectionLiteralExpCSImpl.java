@@ -47,6 +47,15 @@ public class CollectionLiteralExpCSImpl
 		implements CollectionLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Collection Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_LITERAL_EXP_CS_FEATURE_COUNT = LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -106,7 +115,7 @@ public class CollectionLiteralExpCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -123,14 +132,14 @@ public class CollectionLiteralExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -142,7 +151,7 @@ public class CollectionLiteralExpCSImpl
 	public EList<CollectionLiteralPartCS> getOwnedParts() {
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return ownedParts;
 	}
@@ -157,9 +166,9 @@ public class CollectionLiteralExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -174,9 +183,9 @@ public class CollectionLiteralExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedParts();
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -192,11 +201,11 @@ public class CollectionLiteralExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends CollectionLiteralPartCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedType((CollectionTypeCS)newValue);
 				return;
 		}
@@ -212,10 +221,10 @@ public class CollectionLiteralExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				return;
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedType((CollectionTypeCS)null);
 				return;
 		}
@@ -231,9 +240,9 @@ public class CollectionLiteralExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return ownedParts != null && !ownedParts.isEmpty();
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

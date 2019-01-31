@@ -97,7 +97,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-			case OCLstdlibCSPackage.JAVA_CLASS_CS:
+			case 0:
 			{
 				JavaClassCS javaClassCS = (JavaClassCS)theEObject;
 				T result = caseJavaClassCS(javaClassCS);
@@ -108,7 +108,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS:
+			case 1:
 			{
 				JavaImplementationCS javaImplementationCS = (JavaImplementationCS)theEObject;
 				T result = caseJavaImplementationCS(javaImplementationCS);
@@ -116,7 +116,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_CLASS_CS:
+			case 2:
 			{
 				LibClassCS libClassCS = (LibClassCS)theEObject;
 				T result = caseLibClassCS(libClassCS);
@@ -132,7 +132,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_COERCION_CS:
+			case 3:
 			{
 				LibCoercionCS libCoercionCS = (LibCoercionCS)theEObject;
 				T result = caseLibCoercionCS(libCoercionCS);
@@ -148,7 +148,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_CONSTRAINT_CS:
+			case 4:
 			{
 				LibConstraintCS libConstraintCS = (LibConstraintCS)theEObject;
 				T result = caseLibConstraintCS(libConstraintCS);
@@ -160,7 +160,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_ITERATION_CS:
+			case 5:
 			{
 				LibIterationCS libIterationCS = (LibIterationCS)theEObject;
 				T result = caseLibIterationCS(libIterationCS);
@@ -176,7 +176,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_OPERATION_CS:
+			case 6:
 			{
 				LibOperationCS libOperationCS = (LibOperationCS)theEObject;
 				T result = caseLibOperationCS(libOperationCS);
@@ -192,7 +192,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_PACKAGE_CS:
+			case 7:
 			{
 				LibPackageCS libPackageCS = (LibPackageCS)theEObject;
 				T result = caseLibPackageCS(libPackageCS);
@@ -206,7 +206,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS:
+			case 8:
 			{
 				LibPropertyCS libPropertyCS = (LibPropertyCS)theEObject;
 				T result = caseLibPropertyCS(libPropertyCS);
@@ -222,7 +222,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.LIB_ROOT_PACKAGE_CS:
+			case 9:
 			{
 				LibRootPackageCS libRootPackageCS = (LibRootPackageCS)theEObject;
 				T result = caseLibRootPackageCS(libRootPackageCS);
@@ -235,7 +235,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.METACLASS_NAME_CS:
+			case 10:
 			{
 				MetaclassNameCS metaclassNameCS = (MetaclassNameCS)theEObject;
 				T result = caseMetaclassNameCS(metaclassNameCS);
@@ -243,7 +243,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibCSPackage.PRECEDENCE_CS:
+			case 11:
 			{
 				PrecedenceCS precedenceCS = (PrecedenceCS)theEObject;
 				T result = casePrecedenceCS(precedenceCS);

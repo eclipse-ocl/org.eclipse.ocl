@@ -86,7 +86,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS:
+			case 0:
 			{
 				ClassifierContextDeclCS classifierContextDeclCS = (ClassifierContextDeclCS)theEObject;
 				T result = caseClassifierContextDeclCS(classifierContextDeclCS);
@@ -99,7 +99,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS:
+			case 1:
 			{
 				CompleteOCLDocumentCS completeOCLDocumentCS = (CompleteOCLDocumentCS)theEObject;
 				T result = caseCompleteOCLDocumentCS(completeOCLDocumentCS);
@@ -112,7 +112,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.CONTEXT_DECL_CS:
+			case 2:
 			{
 				ContextDeclCS contextDeclCS = (ContextDeclCS)theEObject;
 				T result = caseContextDeclCS(contextDeclCS);
@@ -123,7 +123,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.DEF_CS:
+			case 3:
 			{
 				DefCS defCS = (DefCS)theEObject;
 				T result = caseDefCS(defCS);
@@ -135,7 +135,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.DEF_OPERATION_CS:
+			case 4:
 			{
 				DefOperationCS defOperationCS = (DefOperationCS)theEObject;
 				T result = caseDefOperationCS(defOperationCS);
@@ -149,7 +149,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.DEF_PROPERTY_CS:
+			case 5:
 			{
 				DefPropertyCS defPropertyCS = (DefPropertyCS)theEObject;
 				T result = caseDefPropertyCS(defPropertyCS);
@@ -162,7 +162,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS:
+			case 6:
 			{
 				FeatureContextDeclCS featureContextDeclCS = (FeatureContextDeclCS)theEObject;
 				T result = caseFeatureContextDeclCS(featureContextDeclCS);
@@ -174,7 +174,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.OCL_MESSAGE_ARG_CS:
+			case 7:
 			{
 				OCLMessageArgCS oclMessageArgCS = (OCLMessageArgCS)theEObject;
 				T result = caseOCLMessageArgCS(oclMessageArgCS);
@@ -185,7 +185,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS:
+			case 8:
 			{
 				OperationContextDeclCS operationContextDeclCS = (OperationContextDeclCS)theEObject;
 				T result = caseOperationContextDeclCS(operationContextDeclCS);
@@ -199,7 +199,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS:
+			case 9:
 			{
 				PackageDeclarationCS packageDeclarationCS = (PackageDeclarationCS)theEObject;
 				T result = casePackageDeclarationCS(packageDeclarationCS);
@@ -210,7 +210,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS:
+			case 10:
 			{
 				PathNameDeclCS pathNameDeclCS = (PathNameDeclCS)theEObject;
 				T result = casePathNameDeclCS(pathNameDeclCS);
@@ -220,7 +220,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS:
+			case 11:
 			{
 				PropertyContextDeclCS propertyContextDeclCS = (PropertyContextDeclCS)theEObject;
 				T result = casePropertyContextDeclCS(propertyContextDeclCS);

@@ -27,6 +27,15 @@ public abstract class ContextDeclCSImpl
 		implements ContextDeclCS {
 
 	/**
+	 * The number of structural features of the '<em>Context Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONTEXT_DECL_CS_FEATURE_COUNT = PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

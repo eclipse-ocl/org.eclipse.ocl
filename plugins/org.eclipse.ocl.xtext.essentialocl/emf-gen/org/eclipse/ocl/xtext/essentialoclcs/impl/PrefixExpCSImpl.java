@@ -30,6 +30,15 @@ public class PrefixExpCSImpl
 		implements PrefixExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Prefix Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PREFIX_EXP_CS_FEATURE_COUNT = OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

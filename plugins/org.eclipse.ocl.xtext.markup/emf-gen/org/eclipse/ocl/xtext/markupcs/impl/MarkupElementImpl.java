@@ -38,6 +38,15 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class MarkupElementImpl extends MinimalEObjectImpl.Container implements MarkupElement {
 	/**
+	 * The number of structural features of the '<em>Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MARKUP_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
 	 * The default value of the '{@link #getUniqueId() <em>Unique Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,7 +92,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	 */
 	@Override
 	public CompoundElement getOwner() {
-		if (eContainerFeatureID() != MarkupPackage.MARKUP_ELEMENT__OWNER) return null;
+		if (eContainerFeatureID() != (0)) return null;
 		return (CompoundElement)eInternalContainer();
 	}
 
@@ -93,7 +102,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	 * @generated
 	 */
 	public NotificationChain basicSetOwner(CompoundElement newOwner, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newOwner, MarkupPackage.MARKUP_ELEMENT__OWNER, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwner, 0, msgs);
 		return msgs;
 	}
 
@@ -104,19 +113,19 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	 */
 	@Override
 	public void setOwner(CompoundElement newOwner) {
-		if (newOwner != eInternalContainer() || (eContainerFeatureID() != MarkupPackage.MARKUP_ELEMENT__OWNER && newOwner != null)) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID() != (0) && newOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, MarkupPackage.COMPOUND_ELEMENT__ELEMENTS, CompoundElement.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, CompoundElement.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.MARKUP_ELEMENT__OWNER, newOwner, newOwner));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, newOwner, newOwner));
 	}
 
 
@@ -149,7 +158,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwner((CompoundElement)otherEnd, msgs);
@@ -165,7 +174,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				return basicSetOwner(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -179,8 +188,8 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
-				return eInternalContainer().eInverseRemove(this, MarkupPackage.COMPOUND_ELEMENT__ELEMENTS, CompoundElement.class, msgs);
+			case 0:
+				return eInternalContainer().eInverseRemove(this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, CompoundElement.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -193,9 +202,9 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				return getOwner();
-			case MarkupPackage.MARKUP_ELEMENT__UNIQUE_ID:
+			case 1:
 				return getUniqueId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -209,7 +218,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				setOwner((CompoundElement)newValue);
 				return;
 		}
@@ -224,7 +233,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				setOwner((CompoundElement)null);
 				return;
 		}
@@ -239,9 +248,9 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.MARKUP_ELEMENT__OWNER:
+			case 0:
 				return getOwner() != null;
-			case MarkupPackage.MARKUP_ELEMENT__UNIQUE_ID:
+			case 1:
 				return uniqueId != UNIQUE_ID_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -29,6 +29,15 @@ public class PrimitiveLiteralExpCSImpl
 		implements PrimitiveLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Primitive Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT = LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

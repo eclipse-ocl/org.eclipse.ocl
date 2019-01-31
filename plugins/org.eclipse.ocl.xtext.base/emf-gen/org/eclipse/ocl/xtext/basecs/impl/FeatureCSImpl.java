@@ -25,6 +25,15 @@ import org.eclipse.ocl.xtext.basecs.FeatureCS;
 public abstract class FeatureCSImpl extends TypedElementCSImpl implements FeatureCS
 {
 	/**
+	 * The number of structural features of the '<em>Feature CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FEATURE_CS_FEATURE_COUNT = TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

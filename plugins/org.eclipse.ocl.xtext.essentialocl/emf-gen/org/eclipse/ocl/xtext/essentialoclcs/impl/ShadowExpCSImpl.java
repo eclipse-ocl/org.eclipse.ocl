@@ -40,6 +40,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements ShadowExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Shadow Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SHADOW_EXP_CS_FEATURE_COUNT = AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getParts() <em>Parts</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,7 +131,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 		TypeNameExpCS oldTypeName = typeName;
 		typeName = newTypeName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME, oldTypeName, typeName));
+			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1, oldTypeName, typeName));
 	}
 
 	/**
@@ -135,7 +144,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		if (parts == null)
 		{
-			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS);
+			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return parts;
 	}
@@ -162,7 +171,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2, oldValue, value));
 	}
 
 	/**
@@ -185,11 +194,11 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return getParts();
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				return getTypeName();
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,14 +215,14 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				getParts().clear();
 				getParts().addAll((Collection<? extends ShadowPartCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				setTypeName((TypeNameExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
 				setValue((String)newValue);
 				return;
 		}
@@ -230,13 +239,13 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				getParts().clear();
 				return;
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				setTypeName((TypeNameExpCS)null);
 				return;
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -253,11 +262,11 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return parts != null && !parts.isEmpty();
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				return typeName != null;
-			case EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

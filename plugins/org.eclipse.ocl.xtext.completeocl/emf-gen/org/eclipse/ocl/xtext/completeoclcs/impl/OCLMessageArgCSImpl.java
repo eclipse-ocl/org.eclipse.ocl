@@ -30,6 +30,15 @@ public class OCLMessageArgCSImpl
 		implements OCLMessageArgCS {
 
 	/**
+	 * The number of structural features of the '<em>OCL Message Arg CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OCL_MESSAGE_ARG_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

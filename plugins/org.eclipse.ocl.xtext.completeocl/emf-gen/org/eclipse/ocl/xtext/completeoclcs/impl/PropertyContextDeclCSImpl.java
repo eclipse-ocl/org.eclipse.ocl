@@ -50,6 +50,15 @@ public class PropertyContextDeclCSImpl
 		implements PropertyContextDeclCS {
 
 	/**
+	 * The number of structural features of the '<em>Property Context Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_CONTEXT_DECL_CS_FEATURE_COUNT = FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getOwnedDefaultExpressions() <em>Owned Default Expressions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -97,11 +106,11 @@ public class PropertyContextDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return getOwnedDefaultExpressions();
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return getOwnedDerivedInvariants();
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__REFERRED_PROPERTY:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return getReferredProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,11 +126,11 @@ public class PropertyContextDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				getOwnedDefaultExpressions().clear();
 				getOwnedDefaultExpressions().addAll((Collection<? extends ExpSpecificationCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedDerivedInvariants().clear();
 				getOwnedDerivedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
@@ -138,10 +147,10 @@ public class PropertyContextDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				getOwnedDefaultExpressions().clear();
 				return;
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedDerivedInvariants().clear();
 				return;
 		}
@@ -157,11 +166,11 @@ public class PropertyContextDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return ownedDefaultExpressions != null && !ownedDefaultExpressions.isEmpty();
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ownedDerivedInvariants != null && !ownedDerivedInvariants.isEmpty();
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__REFERRED_PROPERTY:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return getReferredProperty() != null;
 		}
 		return super.eIsSet(featureID);
@@ -202,7 +211,7 @@ public class PropertyContextDeclCSImpl
 	public EList<ExpSpecificationCS> getOwnedDefaultExpressions() {
 		if (ownedDefaultExpressions == null)
 		{
-			ownedDefaultExpressions = new EObjectContainmentEList<ExpSpecificationCS>(ExpSpecificationCS.class, this, CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS);
+			ownedDefaultExpressions = new EObjectContainmentEList<ExpSpecificationCS>(ExpSpecificationCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0);
 		}
 		return ownedDefaultExpressions;
 	}
@@ -216,7 +225,7 @@ public class PropertyContextDeclCSImpl
 	public EList<ConstraintCS> getOwnedDerivedInvariants() {
 		if (ownedDerivedInvariants == null)
 		{
-			ownedDerivedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS);
+			ownedDerivedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
 		}
 		return ownedDerivedInvariants;
 	}
@@ -231,9 +240,9 @@ public class PropertyContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedDefaultExpressions()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedDerivedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

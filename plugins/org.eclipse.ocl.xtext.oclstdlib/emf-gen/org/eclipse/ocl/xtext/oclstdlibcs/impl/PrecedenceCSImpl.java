@@ -38,6 +38,15 @@ public class PrecedenceCSImpl
 		implements PrecedenceCS {
 
 	/**
+	 * The number of structural features of the '<em>Precedence CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRECEDENCE_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #isIsRightAssociative() <em>Is Right Associative</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class PrecedenceCSImpl
 		boolean oldIsRightAssociative = isRightAssociative;
 		isRightAssociative = newIsRightAssociative;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE, oldIsRightAssociative, isRightAssociative));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldIsRightAssociative, isRightAssociative));
 	}
 
 	/**
@@ -108,7 +117,7 @@ public class PrecedenceCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isIsRightAssociative();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -123,7 +132,7 @@ public class PrecedenceCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsRightAssociative((Boolean)newValue);
 				return;
 		}
@@ -139,7 +148,7 @@ public class PrecedenceCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsRightAssociative(IS_RIGHT_ASSOCIATIVE_EDEFAULT);
 				return;
 		}
@@ -155,7 +164,7 @@ public class PrecedenceCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isRightAssociative != IS_RIGHT_ASSOCIATIVE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

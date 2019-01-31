@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.OperationCSImpl;
 
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -44,6 +45,14 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
  */
 public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 {
+	/**
+	 * The number of structural features of the '<em>Lib Coercion CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_COERCION_CS_FEATURE_COUNT = OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -90,7 +99,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -117,7 +126,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 	}
 
 	/**
@@ -130,7 +139,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
 		}
@@ -147,7 +156,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)newValue);
 				return;
 		}
@@ -164,7 +173,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)null);
 				return;
 		}
@@ -181,7 +190,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				return implementation != null;
 		}
 		return super.eIsSet(featureID);
@@ -199,7 +208,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 		{
 			switch (derivedFeatureID)
 			{
-				case OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION;
+				case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -218,7 +227,7 @@ public class LibCoercionCSImpl extends OperationCSImpl implements LibCoercionCS
 		{
 			switch (baseFeatureID)
 			{
-				case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.LIB_COERCION_CS__IMPLEMENTATION;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

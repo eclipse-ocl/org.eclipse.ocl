@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 public abstract class TemplateableElementCSImpl extends ElementCSImpl implements TemplateableElementCS
 {
 	/**
+	 * The number of structural features of the '<em>Templateable Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATEABLE_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +95,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -105,14 +113,14 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -125,9 +133,9 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -143,7 +151,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedSignature(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -159,7 +167,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedSignature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -175,7 +183,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
 		}
@@ -192,7 +200,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
 		}
@@ -209,7 +217,7 @@ public abstract class TemplateableElementCSImpl extends ElementCSImpl implements
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedSignature != null;
 		}
 		return super.eIsSet(featureID);

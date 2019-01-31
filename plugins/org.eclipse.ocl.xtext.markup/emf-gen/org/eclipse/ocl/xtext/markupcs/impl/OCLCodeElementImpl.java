@@ -23,6 +23,15 @@ import org.eclipse.ocl.xtext.markupcs.OCLCodeElement;
  */
 public class OCLCodeElementImpl extends CompoundElementImpl implements OCLCodeElement {
 	/**
+	 * The number of structural features of the '<em>OCL Code Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OCL_CODE_ELEMENT_FEATURE_COUNT = CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

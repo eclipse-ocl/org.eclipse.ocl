@@ -50,6 +50,15 @@ public class IfExpCSImpl
 		implements IfExpCS {
 
 	/**
+	 * The number of structural features of the '<em>If Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IF_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 5;
+
+	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,7 +158,7 @@ public class IfExpCSImpl
 		ownedCondition = newOwnedCondition;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION, oldOwnedCondition, newOwnedCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedCondition, newOwnedCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -166,14 +175,14 @@ public class IfExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedCondition != null)
-				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION, null, msgs);
+				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedCondition != null)
-				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION, null, msgs);
+				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedCondition(newOwnedCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION, newOwnedCondition, newOwnedCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedCondition, newOwnedCondition));
 	}
 
 	/**
@@ -197,7 +206,7 @@ public class IfExpCSImpl
 		ownedThenExpression = newOwnedThenExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION, oldOwnedThenExpression, newOwnedThenExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, oldOwnedThenExpression, newOwnedThenExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -214,14 +223,14 @@ public class IfExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedThenExpression != null)
-				msgs = ((InternalEObject)ownedThenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedThenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4), null, msgs);
 			if (newOwnedThenExpression != null)
-				msgs = ((InternalEObject)newOwnedThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4), null, msgs);
 			msgs = basicSetOwnedThenExpression(newOwnedThenExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION, newOwnedThenExpression, newOwnedThenExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, newOwnedThenExpression, newOwnedThenExpression));
 	}
 
 	/**
@@ -234,7 +243,7 @@ public class IfExpCSImpl
 	{
 		if (ownedIfThenExpressions == null)
 		{
-			ownedIfThenExpressions = new EObjectContainmentEList<IfThenExpCS>(IfThenExpCS.class, this, EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
+			ownedIfThenExpressions = new EObjectContainmentEList<IfThenExpCS>(IfThenExpCS.class, this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3);
 		}
 		return ownedIfThenExpressions;
 	}
@@ -260,7 +269,7 @@ public class IfExpCSImpl
 		ownedElseExpression = newOwnedElseExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION, oldOwnedElseExpression, newOwnedElseExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, oldOwnedElseExpression, newOwnedElseExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -278,14 +287,14 @@ public class IfExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedElseExpression != null)
-				msgs = ((InternalEObject)ownedElseExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedElseExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedElseExpression != null)
-				msgs = ((InternalEObject)newOwnedElseExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedElseExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedElseExpression(newOwnedElseExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION, newOwnedElseExpression, newOwnedElseExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, newOwnedElseExpression, newOwnedElseExpression));
 	}
 
 	/**
@@ -310,7 +319,7 @@ public class IfExpCSImpl
 		boolean oldIsImplicit = isImplicit;
 		isImplicit = newIsImplicit;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_EXP_CS__IS_IMPLICIT, oldIsImplicit, isImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldIsImplicit, isImplicit));
 	}
 
 	/**
@@ -333,13 +342,13 @@ public class IfExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedCondition(null, msgs);
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedElseExpression(null, msgs);
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedIfThenExpressions()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return basicSetOwnedThenExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -354,15 +363,15 @@ public class IfExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return isIsImplicit();
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedCondition();
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return getOwnedElseExpression();
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return getOwnedIfThenExpressions();
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return getOwnedThenExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -378,20 +387,20 @@ public class IfExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedCondition((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				setOwnedElseExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				getOwnedIfThenExpressions().clear();
 				getOwnedIfThenExpressions().addAll((Collection<? extends IfThenExpCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				setOwnedThenExpression((ExpCS)newValue);
 				return;
 		}
@@ -407,19 +416,19 @@ public class IfExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedCondition((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				setOwnedElseExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				getOwnedIfThenExpressions().clear();
 				return;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				setOwnedThenExpression((ExpCS)null);
 				return;
 		}
@@ -435,15 +444,15 @@ public class IfExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return isImplicit != IS_IMPLICIT_EDEFAULT;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return ownedCondition != null;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_ELSE_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return ownedElseExpression != null;
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return ownedIfThenExpressions != null && !ownedIfThenExpressions.isEmpty();
-			case EssentialOCLCSPackage.IF_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return ownedThenExpression != null;
 		}
 		return super.eIsSet(featureID);

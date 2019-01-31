@@ -33,6 +33,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class DocumentationCSImpl extends AnnotationElementCSImpl implements DocumentationCS {
 	/**
+	 * The number of structural features of the '<em>Documentation CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DOCUMENTATION_CS_FEATURE_COUNT = AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,7 +100,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.DOCUMENTATION_CS__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0, oldValue, value));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DOCUMENTATION_CS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -128,7 +137,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DOCUMENTATION_CS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				setValue((String)newValue);
 				return;
 		}
@@ -144,7 +153,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DOCUMENTATION_CS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -160,7 +169,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DOCUMENTATION_CS__VALUE:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

@@ -41,6 +41,15 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 public abstract class TypedElementCSImpl extends NamedElementCSImpl implements TypedElementCS
 {
 	/**
+	 * The number of structural features of the '<em>Typed Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPED_ELEMENT_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #isIsOptional() <em>Is Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,7 +132,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -141,14 +150,14 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -161,7 +170,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		if (qualifiers == null)
 		{
-			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, BaseCSPackage.TYPED_ELEMENT_CS__QUALIFIERS);
+			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2);
 		}
 		return qualifiers;
 	}
@@ -188,7 +197,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		boolean oldIsOptional = isOptional;
 		isOptional = newIsOptional;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TYPED_ELEMENT_CS__IS_OPTIONAL, oldIsOptional, isOptional));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldIsOptional, isOptional));
 	}
 
 	/**
@@ -211,7 +220,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -227,11 +236,11 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_ELEMENT_CS__IS_OPTIONAL:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isIsOptional();
-			case BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedType();
-			case BaseCSPackage.TYPED_ELEMENT_CS__QUALIFIERS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getQualifiers();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -248,13 +257,13 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_ELEMENT_CS__IS_OPTIONAL:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsOptional((Boolean)newValue);
 				return;
-			case BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)newValue);
 				return;
-			case BaseCSPackage.TYPED_ELEMENT_CS__QUALIFIERS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends String>)newValue);
 				return;
@@ -272,13 +281,13 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_ELEMENT_CS__IS_OPTIONAL:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsOptional(IS_OPTIONAL_EDEFAULT);
 				return;
-			case BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)null);
 				return;
-			case BaseCSPackage.TYPED_ELEMENT_CS__QUALIFIERS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
 				getQualifiers().clear();
 				return;
 		}
@@ -295,11 +304,11 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_ELEMENT_CS__IS_OPTIONAL:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isOptional != IS_OPTIONAL_EDEFAULT;
-			case BaseCSPackage.TYPED_ELEMENT_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedType != null;
-			case BaseCSPackage.TYPED_ELEMENT_CS__QUALIFIERS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return qualifiers != null && !qualifiers.isEmpty();
 		}
 		return super.eIsSet(featureID);

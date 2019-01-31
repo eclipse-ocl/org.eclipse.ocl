@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.oclinecorecs.util.OCLinEcoreCSVisitor;
  */
 public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLinEcoreConstraintCS {
 	/**
+	 * The number of structural features of the '<em>OC Lin Ecore Constraint CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OC_LIN_ECORE_CONSTRAINT_CS_FEATURE_COUNT = ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The default value of the '{@link #isIsCallable() <em>Is Callable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,7 +101,7 @@ public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLi
 		boolean oldIsCallable = isCallable;
 		isCallable = newIsCallable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, oldIsCallable, isCallable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0, oldIsCallable, isCallable));
 	}
 
 	/**
@@ -116,7 +124,7 @@ public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLi
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE:
+			case ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0:
 				return isIsCallable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -132,7 +140,7 @@ public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLi
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE:
+			case ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0:
 				setIsCallable((Boolean)newValue);
 				return;
 		}
@@ -149,7 +157,7 @@ public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLi
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE:
+			case ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0:
 				setIsCallable(IS_CALLABLE_EDEFAULT);
 				return;
 		}
@@ -166,7 +174,7 @@ public class OCLinEcoreConstraintCSImpl extends ConstraintCSImpl implements OCLi
 	{
 		switch (featureID)
 		{
-			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE:
+			case ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0:
 				return isCallable != IS_CALLABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

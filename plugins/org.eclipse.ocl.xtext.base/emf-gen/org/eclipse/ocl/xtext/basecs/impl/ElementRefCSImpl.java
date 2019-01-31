@@ -24,6 +24,15 @@ import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 public abstract class ElementRefCSImpl extends PivotableElementCSImpl implements ElementRefCS
 {
 	/**
+	 * The number of structural features of the '<em>Element Ref CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ELEMENT_REF_CS_FEATURE_COUNT = PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

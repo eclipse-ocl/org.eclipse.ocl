@@ -39,6 +39,14 @@ public class StringLiteralExpCSImpl
 		implements StringLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>String Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STRING_LITERAL_EXP_CS_FEATURE_COUNT = PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getSegments() <em>Segments</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,7 +84,7 @@ public class StringLiteralExpCSImpl
 	{
 		if (segments == null)
 		{
-			segments = new EDataTypeEList<String>(String.class, this, EssentialOCLCSPackage.STRING_LITERAL_EXP_CS__SEGMENTS);
+			segments = new EDataTypeEList<String>(String.class, this, PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return segments;
 	}
@@ -100,7 +108,7 @@ public class StringLiteralExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS__SEGMENTS:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return getSegments();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -116,7 +124,7 @@ public class StringLiteralExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS__SEGMENTS:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				getSegments().clear();
 				getSegments().addAll((Collection<? extends String>)newValue);
 				return;
@@ -133,7 +141,7 @@ public class StringLiteralExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS__SEGMENTS:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				getSegments().clear();
 				return;
 		}
@@ -149,7 +157,7 @@ public class StringLiteralExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS__SEGMENTS:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return segments != null && !segments.isEmpty();
 		}
 		return super.eIsSet(featureID);

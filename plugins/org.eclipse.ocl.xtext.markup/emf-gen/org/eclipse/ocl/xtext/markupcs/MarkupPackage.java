@@ -82,33 +82,6 @@ public interface MarkupPackage extends EPackage {
 	int MARKUP_ELEMENT = 8;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP_ELEMENT__OWNER = 0;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP_ELEMENT__UNIQUE_ID = 1;
-
-	/**
-	 * The number of structural features of the '<em>Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP_ELEMENT_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.CompoundElementImpl <em>Compound Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -117,42 +90,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int COMPOUND_ELEMENT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_ELEMENT__OWNER = MARKUP_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_ELEMENT__UNIQUE_ID = MARKUP_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_ELEMENT__ELEMENTS = MARKUP_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Compound Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_ELEMENT_FEATURE_COUNT = MARKUP_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.BulletElementImpl <em>Bullet Element</em>}' class.
@@ -165,51 +102,6 @@ public interface MarkupPackage extends EPackage {
 	int BULLET_ELEMENT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BULLET_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BULLET_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BULLET_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Level</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BULLET_ELEMENT__LEVEL = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Bullet Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BULLET_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.FigureElementImpl <em>Figure Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -218,105 +110,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int FIGURE_ELEMENT = 2;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__OWNER = MARKUP_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__UNIQUE_ID = MARKUP_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__ID = MARKUP_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Src</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__SRC = MARKUP_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Alt</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__ALT = MARKUP_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Def</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__DEF = MARKUP_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Required Width</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__REQUIRED_WIDTH = MARKUP_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Required Height</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__REQUIRED_HEIGHT = MARKUP_ELEMENT_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Actual Width</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__ACTUAL_WIDTH = MARKUP_ELEMENT_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Actual Height</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT__ACTUAL_HEIGHT = MARKUP_ELEMENT_FEATURE_COUNT + 7;
-
-	/**
-	 * The number of structural features of the '<em>Figure Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_ELEMENT_FEATURE_COUNT = MARKUP_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.FigureRefElementImpl <em>Figure Ref Element</em>}' class.
@@ -329,42 +122,6 @@ public interface MarkupPackage extends EPackage {
 	int FIGURE_REF_ELEMENT = 3;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_REF_ELEMENT__OWNER = MARKUP_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_REF_ELEMENT__UNIQUE_ID = MARKUP_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Ref</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_REF_ELEMENT__REF = MARKUP_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Figure Ref Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIGURE_REF_ELEMENT_FEATURE_COUNT = MARKUP_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.FontElementImpl <em>Font Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -373,51 +130,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int FONT_ELEMENT = 4;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FONT_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FONT_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FONT_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Font</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FONT_ELEMENT__FONT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Font Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FONT_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.FootnoteElementImpl <em>Footnote Element</em>}' class.
@@ -430,42 +142,6 @@ public interface MarkupPackage extends EPackage {
 	int FOOTNOTE_ELEMENT = 5;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOOTNOTE_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOOTNOTE_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOOTNOTE_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>Footnote Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOOTNOTE_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.HeadingElementImpl <em>Heading Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -474,51 +150,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int HEADING_ELEMENT = 6;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HEADING_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HEADING_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HEADING_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Level</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HEADING_ELEMENT__LEVEL = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Heading Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HEADING_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.MarkupImpl <em>Markup</em>}' class.
@@ -531,42 +162,6 @@ public interface MarkupPackage extends EPackage {
 	int MARKUP = 7;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>Markup</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARKUP_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.NewLineElementImpl <em>New Line Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -575,42 +170,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int NEW_LINE_ELEMENT = 9;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_LINE_ELEMENT__OWNER = MARKUP_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_LINE_ELEMENT__UNIQUE_ID = MARKUP_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_LINE_ELEMENT__TEXT = MARKUP_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>New Line Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_LINE_ELEMENT_FEATURE_COUNT = MARKUP_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.NullElementImpl <em>Null Element</em>}' class.
@@ -623,42 +182,6 @@ public interface MarkupPackage extends EPackage {
 	int NULL_ELEMENT = 10;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NULL_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NULL_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NULL_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>Null Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NULL_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.OCLCodeElementImpl <em>OCL Code Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -667,42 +190,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int OCL_CODE_ELEMENT = 11;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_CODE_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_CODE_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_CODE_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>OCL Code Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_CODE_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.OCLEvalElementImpl <em>OCL Eval Element</em>}' class.
@@ -715,42 +202,6 @@ public interface MarkupPackage extends EPackage {
 	int OCL_EVAL_ELEMENT = 12;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_EVAL_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_EVAL_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_EVAL_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>OCL Eval Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_EVAL_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.OCLTextElementImpl <em>OCL Text Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -761,42 +212,6 @@ public interface MarkupPackage extends EPackage {
 	int OCL_TEXT_ELEMENT = 13;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_TEXT_ELEMENT__OWNER = COMPOUND_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_TEXT_ELEMENT__UNIQUE_ID = COMPOUND_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_TEXT_ELEMENT__ELEMENTS = COMPOUND_ELEMENT__ELEMENTS;
-
-	/**
-	 * The number of structural features of the '<em>OCL Text Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OCL_TEXT_ELEMENT_FEATURE_COUNT = COMPOUND_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.markupcs.impl.TextElementImpl <em>Text Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -805,43 +220,6 @@ public interface MarkupPackage extends EPackage {
 	 * @generated
 	 */
 	int TEXT_ELEMENT = 14;
-
-	/**
-	 * The feature id for the '<em><b>Owner</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__OWNER = MARKUP_ELEMENT__OWNER;
-
-	/**
-	 * The feature id for the '<em><b>Unique Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__UNIQUE_ID = MARKUP_ELEMENT__UNIQUE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__TEXT = MARKUP_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Text Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT_FEATURE_COUNT = MARKUP_ELEMENT_FEATURE_COUNT + 1;
-
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.markupcs.BulletElement <em>Bullet Element</em>}'.

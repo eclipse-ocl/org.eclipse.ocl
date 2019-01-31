@@ -39,6 +39,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 {
 	/**
+	 * The number of structural features of the '<em>If Then Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IF_THEN_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedCondition() <em>Owned Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +110,7 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 		ownedCondition = newOwnedCondition;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION, oldOwnedCondition, newOwnedCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldOwnedCondition, newOwnedCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -119,14 +128,14 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 		{
 			NotificationChain msgs = null;
 			if (ownedCondition != null)
-				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION, null, msgs);
+				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedCondition != null)
-				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION, null, msgs);
+				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedCondition(newOwnedCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION, newOwnedCondition, newOwnedCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, newOwnedCondition, newOwnedCondition));
 	}
 
 	/**
@@ -151,7 +160,7 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 		ownedThenExpression = newOwnedThenExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, oldOwnedThenExpression, newOwnedThenExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedThenExpression, newOwnedThenExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -169,14 +178,14 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 		{
 			NotificationChain msgs = null;
 			if (ownedThenExpression != null)
-				msgs = ((InternalEObject)ownedThenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedThenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedThenExpression != null)
-				msgs = ((InternalEObject)newOwnedThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedThenExpression(newOwnedThenExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, newOwnedThenExpression, newOwnedThenExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedThenExpression, newOwnedThenExpression));
 	}
 
 	/**
@@ -189,9 +198,9 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedCondition(null, msgs);
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedThenExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -207,9 +216,9 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedCondition();
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedThenExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -225,10 +234,10 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedCondition((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedThenExpression((ExpCS)newValue);
 				return;
 		}
@@ -245,10 +254,10 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedCondition((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedThenExpression((ExpCS)null);
 				return;
 		}
@@ -265,9 +274,9 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_CONDITION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return ownedCondition != null;
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return ownedThenExpression != null;
 		}
 		return super.eIsSet(featureID);

@@ -43,6 +43,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 {
 	/**
+	 * The number of structural features of the '<em>Enumeration CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ENUMERATION_CS_FEATURE_COUNT = ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2;
+	/**
 	 * The default value of the '{@link #isIsSerializable() <em>Is Serializable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -112,7 +120,7 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 		boolean oldIsSerializable = isSerializable;
 		isSerializable = newIsSerializable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.ENUMERATION_CS__IS_SERIALIZABLE, oldIsSerializable, isSerializable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0, oldIsSerializable, isSerializable));
 	}
 
 	/**
@@ -125,7 +133,7 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		if (ownedLiterals == null)
 		{
-			ownedLiterals = new EObjectContainmentEList<EnumerationLiteralCS>(EnumerationLiteralCS.class, this, BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS);
+			ownedLiterals = new EObjectContainmentEList<EnumerationLiteralCS>(EnumerationLiteralCS.class, this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1);
 		}
 		return ownedLiterals;
 	}
@@ -150,7 +158,7 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedLiterals()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -166,9 +174,9 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ENUMERATION_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isIsSerializable();
-			case BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return getOwnedLiterals();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -185,10 +193,10 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ENUMERATION_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				getOwnedLiterals().clear();
 				getOwnedLiterals().addAll((Collection<? extends EnumerationLiteralCS>)newValue);
 				return;
@@ -206,10 +214,10 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ENUMERATION_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				getOwnedLiterals().clear();
 				return;
 		}
@@ -226,9 +234,9 @@ public class EnumerationCSImpl extends ClassCSImpl implements EnumerationCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ENUMERATION_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isSerializable != IS_SERIALIZABLE_EDEFAULT;
-			case BaseCSPackage.ENUMERATION_CS__OWNED_LITERALS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return ownedLiterals != null && !ownedLiterals.isEmpty();
 		}
 		return super.eIsSet(featureID);

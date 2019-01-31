@@ -43,6 +43,15 @@ public class VariableCSImpl
 		implements VariableCS {
 
 	/**
+	 * The number of structural features of the '<em>Variable CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedInitExpression() <em>Owned Init Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,7 +111,7 @@ public class VariableCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -119,14 +128,14 @@ public class VariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -150,7 +159,7 @@ public class VariableCSImpl
 		ownedInitExpression = newOwnedInitExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION, oldOwnedInitExpression, newOwnedInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedInitExpression, newOwnedInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -167,14 +176,14 @@ public class VariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedInitExpression != null)
-				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedInitExpression != null)
-				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedInitExpression(newOwnedInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION, newOwnedInitExpression, newOwnedInitExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedInitExpression, newOwnedInitExpression));
 	}
 
 	/**
@@ -187,9 +196,9 @@ public class VariableCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedInitExpression(null, msgs);
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -204,9 +213,9 @@ public class VariableCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedInitExpression();
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -221,10 +230,10 @@ public class VariableCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedInitExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)newValue);
 				return;
 		}
@@ -240,10 +249,10 @@ public class VariableCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedInitExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)null);
 				return;
 		}
@@ -259,9 +268,9 @@ public class VariableCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedInitExpression != null;
-			case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

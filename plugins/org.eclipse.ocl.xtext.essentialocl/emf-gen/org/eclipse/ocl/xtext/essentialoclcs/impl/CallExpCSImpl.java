@@ -38,6 +38,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements CallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CALL_EXP_CS_FEATURE_COUNT = AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getArguments() <em>Arguments</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -100,7 +109,7 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 		ExpCS oldSource = source;
 		source = newSource;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.CALL_EXP_CS__SOURCE, oldSource, source));
+			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1, oldSource, source));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		if (arguments == null)
 		{
-			arguments = new EObjectEList<ExpCS>(ExpCS.class, this, EssentialOCLCSPackage.CALL_EXP_CS__ARGUMENTS);
+			arguments = new EObjectEList<ExpCS>(ExpCS.class, this, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return arguments;
 	}
@@ -128,9 +137,9 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CALL_EXP_CS__ARGUMENTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return getArguments();
-			case EssentialOCLCSPackage.CALL_EXP_CS__SOURCE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -147,11 +156,11 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CALL_EXP_CS__ARGUMENTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends ExpCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.CALL_EXP_CS__SOURCE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				setSource((ExpCS)newValue);
 				return;
 		}
@@ -168,10 +177,10 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CALL_EXP_CS__ARGUMENTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				getArguments().clear();
 				return;
-			case EssentialOCLCSPackage.CALL_EXP_CS__SOURCE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				setSource((ExpCS)null);
 				return;
 		}
@@ -188,9 +197,9 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CALL_EXP_CS__ARGUMENTS:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return arguments != null && !arguments.isEmpty();
-			case EssentialOCLCSPackage.CALL_EXP_CS__SOURCE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
 				return source != null;
 		}
 		return super.eIsSet(featureID);

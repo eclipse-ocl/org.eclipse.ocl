@@ -42,6 +42,14 @@ public class TypeLiteralExpCSImpl
 		implements TypeLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Type Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_LITERAL_EXP_CS_FEATURE_COUNT = LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 2;
+	/**
 	 * The cached value of the '{@link #getOwnedPathName() <em>Owned Path Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +109,7 @@ public class TypeLiteralExpCSImpl
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -119,14 +127,14 @@ public class TypeLiteralExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -150,7 +158,7 @@ public class TypeLiteralExpCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -167,14 +175,14 @@ public class TypeLiteralExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -187,9 +195,9 @@ public class TypeLiteralExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedPathName(null, msgs);
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -204,9 +212,9 @@ public class TypeLiteralExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedPathName();
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -221,10 +229,10 @@ public class TypeLiteralExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)newValue);
 				return;
 		}
@@ -240,10 +248,10 @@ public class TypeLiteralExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)null);
 				return;
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedType((TypedRefCS)null);
 				return;
 		}
@@ -259,9 +267,9 @@ public class TypeLiteralExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return ownedPathName != null;
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS__OWNED_TYPE:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

@@ -36,6 +36,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	/**
+	 * The number of structural features of the '<em>Detail CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DETAIL_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getValues() <em>Values</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -73,7 +81,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	{
 		if (values == null)
 		{
-			values = new EDataTypeUniqueEList<String>(String.class, this, BaseCSPackage.DETAIL_CS__VALUES);
+			values = new EDataTypeUniqueEList<String>(String.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
 		}
 		return values;
 	}
@@ -97,7 +105,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DETAIL_CS__VALUES:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getValues();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -113,7 +121,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DETAIL_CS__VALUES:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				getValues().clear();
 				getValues().addAll((Collection<? extends String>)newValue);
 				return;
@@ -130,7 +138,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DETAIL_CS__VALUES:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				getValues().clear();
 				return;
 		}
@@ -146,7 +154,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.DETAIL_CS__VALUES:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return values != null && !values.isEmpty();
 		}
 		return super.eIsSet(featureID);

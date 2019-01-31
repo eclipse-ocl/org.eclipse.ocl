@@ -44,6 +44,15 @@ extends TypedRefCSImpl
 implements CollectionTypeCS {
 
 	/**
+	 * The number of structural features of the '<em>Collection Type CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_TYPE_CS_FEATURE_COUNT = TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,7 +131,7 @@ implements CollectionTypeCS {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -147,7 +156,7 @@ implements CollectionTypeCS {
 		ownedCollectionMultiplicity = newOwnedCollectionMultiplicity;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, oldOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, oldOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -165,14 +174,14 @@ implements CollectionTypeCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedCollectionMultiplicity != null)
-				msgs = ((InternalEObject)ownedCollectionMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)ownedCollectionMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedCollectionMultiplicity != null)
-				msgs = ((InternalEObject)newOwnedCollectionMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)newOwnedCollectionMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedCollectionMultiplicity(newOwnedCollectionMultiplicity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, newOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, newOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity));
 	}
 
 	/**
@@ -196,7 +205,7 @@ implements CollectionTypeCS {
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -213,14 +222,14 @@ implements CollectionTypeCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -243,9 +252,9 @@ implements CollectionTypeCS {
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedCollectionMultiplicity(null, msgs);
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -260,11 +269,11 @@ implements CollectionTypeCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return getName();
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return getOwnedCollectionMultiplicity();
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -279,13 +288,13 @@ implements CollectionTypeCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedCollectionMultiplicity((MultiplicityCS)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)newValue);
 				return;
 		}
@@ -301,13 +310,13 @@ implements CollectionTypeCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedCollectionMultiplicity((MultiplicityCS)null);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)null);
 				return;
 		}
@@ -323,11 +332,11 @@ implements CollectionTypeCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return ownedCollectionMultiplicity != null;
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

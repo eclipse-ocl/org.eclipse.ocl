@@ -29,6 +29,15 @@ public class TupleLiteralPartCSImpl
 		implements TupleLiteralPartCS {
 
 	/**
+	 * The number of structural features of the '<em>Tuple Literal Part CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TUPLE_LITERAL_PART_CS_FEATURE_COUNT = VariableCSImpl.VARIABLE_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

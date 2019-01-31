@@ -43,6 +43,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 {
 	/**
+	 * The number of structural features of the '<em>Tuple Type CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TUPLE_TYPE_CS_FEATURE_COUNT = TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2;
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,7 +121,7 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TUPLE_TYPE_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -126,7 +134,7 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<TuplePartCS>(TuplePartCS.class, this, BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<TuplePartCS>(TuplePartCS.class, this, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
 		}
 		return ownedParts;
 	}
@@ -151,7 +159,7 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -167,9 +175,9 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TUPLE_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return getName();
-			case BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return getOwnedParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -186,10 +194,10 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TUPLE_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
-			case BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends TuplePartCS>)newValue);
 				return;
@@ -207,10 +215,10 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TUPLE_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				getOwnedParts().clear();
 				return;
 		}
@@ -227,9 +235,9 @@ public class TupleTypeCSImpl extends TypedRefCSImpl implements TupleTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TUPLE_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case BaseCSPackage.TUPLE_TYPE_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return super.eIsSet(featureID);

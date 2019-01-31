@@ -41,6 +41,15 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  */
 public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	/**
+	 * The number of structural features of the '<em>Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ELEMENT_CS_FEATURE_COUNT = 2;
+
+	/**
 	 * The default value of the '{@link #getCsi() <em>Csi</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +110,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		CSI oldCsi = csi;
 		csi = newCsi;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.ELEMENT_CS__CSI, oldCsi, csi));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldCsi, csi));
 	}
 
 	/**
@@ -114,9 +123,9 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ELEMENT_CS__CSI:
+			case 0:
 				return getCsi();
-			case BaseCSPackage.ELEMENT_CS__PARENT:
+			case 1:
 				return getParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -132,7 +141,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ELEMENT_CS__CSI:
+			case 0:
 				setCsi((CSI)newValue);
 				return;
 		}
@@ -149,7 +158,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ELEMENT_CS__CSI:
+			case 0:
 				setCsi(CSI_EDEFAULT);
 				return;
 		}
@@ -166,9 +175,9 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ELEMENT_CS__CSI:
+			case 0:
 				return CSI_EDEFAULT == null ? csi != null : !CSI_EDEFAULT.equals(csi);
-			case BaseCSPackage.ELEMENT_CS__PARENT:
+			case 1:
 				return getParent() != null;
 		}
 		return super.eIsSet(featureID);

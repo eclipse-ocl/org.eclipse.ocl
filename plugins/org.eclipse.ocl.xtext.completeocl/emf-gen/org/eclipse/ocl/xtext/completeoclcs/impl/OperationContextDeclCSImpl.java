@@ -23,11 +23,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 import org.eclipse.ocl.xtext.completeoclcs.OperationContextDeclCS;
@@ -58,6 +59,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 public class OperationContextDeclCSImpl
 		extends FeatureContextDeclCSImpl
 		implements OperationContextDeclCS {
+
+	/**
+	 * The number of structural features of the '<em>Operation Context Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPERATION_CONTEXT_DECL_CS_FEATURE_COUNT = FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
@@ -160,7 +170,7 @@ public class OperationContextDeclCSImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -178,14 +188,14 @@ public class OperationContextDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -197,7 +207,7 @@ public class OperationContextDeclCSImpl
 	public EList<ParameterCS> getOwnedParameters() {
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS);
+			ownedParameters = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2);
 		}
 		return ownedParameters;
 	}
@@ -230,7 +240,7 @@ public class OperationContextDeclCSImpl
 		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT, oldOwnedResult, newOwnedResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5, oldOwnedResult, newOwnedResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -247,14 +257,14 @@ public class OperationContextDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedResult != null)
-				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT, null, msgs);
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5), null, msgs);
 			if (newOwnedResult != null)
-				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT, null, msgs);
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5), null, msgs);
 			msgs = basicSetOwnedResult(newOwnedResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT, newOwnedResult, newOwnedResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5, newOwnedResult, newOwnedResult));
 	}
 
 	/**
@@ -266,7 +276,7 @@ public class OperationContextDeclCSImpl
 	public EList<ConstraintCS> getOwnedPreconditions() {
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS);
+			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4);
 		}
 		return ownedPreconditions;
 	}
@@ -280,7 +290,7 @@ public class OperationContextDeclCSImpl
 	public EList<ConstraintCS> getOwnedPostconditions() {
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS);
+			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3);
 		}
 		return ownedPostconditions;
 	}
@@ -294,7 +304,7 @@ public class OperationContextDeclCSImpl
 	public EList<ExpSpecificationCS> getOwnedBodies() {
 		if (ownedBodies == null)
 		{
-			ownedBodies = new EObjectContainmentEList<ExpSpecificationCS>(ExpSpecificationCS.class, this, CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES);
+			ownedBodies = new EObjectContainmentEList<ExpSpecificationCS>(ExpSpecificationCS.class, this, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
 		}
 		return ownedBodies;
 	}
@@ -309,9 +319,9 @@ public class OperationContextDeclCSImpl
 	{
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -327,17 +337,17 @@ public class OperationContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedSignature(null, msgs);
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedBodies()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5:
 				return basicSetOwnedResult(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -352,19 +362,19 @@ public class OperationContextDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return getOwnedSignature();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return getOwnedBodies();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return getOwnedParameters();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				return getOwnedPostconditions();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				return getOwnedPreconditions();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5:
 				return getOwnedResult();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__REFERRED_OPERATION:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 6:
 				return getReferredOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -380,26 +390,26 @@ public class OperationContextDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedBodies().clear();
 				getOwnedBodies().addAll((Collection<? extends ExpSpecificationCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5:
 				setOwnedResult((VariableCS)newValue);
 				return;
 		}
@@ -415,22 +425,22 @@ public class OperationContextDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedBodies().clear();
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				getOwnedParameters().clear();
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				getOwnedPostconditions().clear();
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				getOwnedPreconditions().clear();
 				return;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5:
 				setOwnedResult((VariableCS)null);
 				return;
 		}
@@ -446,19 +456,19 @@ public class OperationContextDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return ownedSignature != null;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ownedBodies != null && !ownedBodies.isEmpty();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_RESULT:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5:
 				return ownedResult != null;
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__REFERRED_OPERATION:
+			case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 6:
 				return getReferredOperation() != null;
 		}
 		return super.eIsSet(featureID);
@@ -476,7 +486,7 @@ public class OperationContextDeclCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE: return BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE;
+				case FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -495,7 +505,7 @@ public class OperationContextDeclCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE: return CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS__OWNED_SIGNATURE;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

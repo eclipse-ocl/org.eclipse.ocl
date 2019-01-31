@@ -42,6 +42,15 @@ public class InfixExpCSImpl
 		implements InfixExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Infix Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INFIX_EXP_CS_FEATURE_COUNT = OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,7 +111,7 @@ public class InfixExpCSImpl
 		ownedLeft = newOwnedLeft;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT, oldOwnedLeft, newOwnedLeft);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1, oldOwnedLeft, newOwnedLeft);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -120,14 +129,14 @@ public class InfixExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedLeft != null)
-				msgs = ((InternalEObject)ownedLeft).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT, null, msgs);
+				msgs = ((InternalEObject)ownedLeft).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedLeft != null)
-				msgs = ((InternalEObject)newOwnedLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT, null, msgs);
+				msgs = ((InternalEObject)newOwnedLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedLeft(newOwnedLeft, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT, newOwnedLeft, newOwnedLeft));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1, newOwnedLeft, newOwnedLeft));
 	}
 
 	/**
@@ -140,7 +149,7 @@ public class InfixExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedLeft(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,9 +164,9 @@ public class InfixExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.INFIX_EXP_CS__ARGUMENT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0:
 				return getArgument();
-			case EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedLeft();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -172,7 +181,7 @@ public class InfixExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedLeft((ExpCS)newValue);
 				return;
 		}
@@ -188,7 +197,7 @@ public class InfixExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
 				setOwnedLeft((ExpCS)null);
 				return;
 		}
@@ -204,9 +213,9 @@ public class InfixExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.INFIX_EXP_CS__ARGUMENT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0:
 				return argument != null;
-			case EssentialOCLCSPackage.INFIX_EXP_CS__OWNED_LEFT:
+			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
 				return ownedLeft != null;
 		}
 		return super.eIsSet(featureID);

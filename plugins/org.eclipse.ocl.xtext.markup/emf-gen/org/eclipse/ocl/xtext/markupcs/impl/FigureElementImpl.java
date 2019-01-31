@@ -44,6 +44,15 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class FigureElementImpl extends MarkupElementImpl implements FigureElement {
 	/**
+	 * The number of structural features of the '<em>Figure Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FIGURE_ELEMENT_FEATURE_COUNT = MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,7 +231,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldSrc = src;
 		src = newSrc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_ELEMENT__SRC, oldSrc, src));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1, oldSrc, src));
 	}
 
 	/**
@@ -245,7 +254,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldAlt = alt;
 		alt = newAlt;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_ELEMENT__ALT, oldAlt, alt));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2, oldAlt, alt));
 	}
 
 	/**
@@ -268,7 +277,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldDef = def;
 		def = newDef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_ELEMENT__DEF, oldDef, def));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3, oldDef, def));
 	}
 
 	/**
@@ -291,7 +300,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldRequiredWidth = requiredWidth;
 		requiredWidth = newRequiredWidth;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_ELEMENT__REQUIRED_WIDTH, oldRequiredWidth, requiredWidth));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4, oldRequiredWidth, requiredWidth));
 	}
 
 	/**
@@ -314,7 +323,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldRequiredHeight = requiredHeight;
 		requiredHeight = newRequiredHeight;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_ELEMENT__REQUIRED_HEIGHT, oldRequiredHeight, requiredHeight));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5, oldRequiredHeight, requiredHeight));
 	}
 
 	/**
@@ -355,21 +364,21 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_ELEMENT__ID:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return getId();
-			case MarkupPackage.FIGURE_ELEMENT__SRC:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
 				return getSrc();
-			case MarkupPackage.FIGURE_ELEMENT__ALT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
 				return getAlt();
-			case MarkupPackage.FIGURE_ELEMENT__DEF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
 				return getDef();
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
 				return getRequiredWidth();
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
 				return getRequiredHeight();
-			case MarkupPackage.FIGURE_ELEMENT__ACTUAL_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6:
 				return getActualWidth();
-			case MarkupPackage.FIGURE_ELEMENT__ACTUAL_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7:
 				return getActualHeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -383,19 +392,19 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_ELEMENT__SRC:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
 				setSrc((String)newValue);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__ALT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
 				setAlt((String)newValue);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__DEF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
 				setDef((String)newValue);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
 				setRequiredWidth((String)newValue);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
 				setRequiredHeight((String)newValue);
 				return;
 		}
@@ -410,19 +419,19 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_ELEMENT__SRC:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
 				setSrc(SRC_EDEFAULT);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__ALT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
 				setAlt(ALT_EDEFAULT);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__DEF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
 				setDef(DEF_EDEFAULT);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
 				setRequiredWidth(REQUIRED_WIDTH_EDEFAULT);
 				return;
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
 				setRequiredHeight(REQUIRED_HEIGHT_EDEFAULT);
 				return;
 		}
@@ -437,21 +446,21 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_ELEMENT__ID:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return getId() != ID_EDEFAULT;
-			case MarkupPackage.FIGURE_ELEMENT__SRC:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
 				return SRC_EDEFAULT == null ? src != null : !SRC_EDEFAULT.equals(src);
-			case MarkupPackage.FIGURE_ELEMENT__ALT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
 				return ALT_EDEFAULT == null ? alt != null : !ALT_EDEFAULT.equals(alt);
-			case MarkupPackage.FIGURE_ELEMENT__DEF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
 				return DEF_EDEFAULT == null ? def != null : !DEF_EDEFAULT.equals(def);
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
 				return REQUIRED_WIDTH_EDEFAULT == null ? requiredWidth != null : !REQUIRED_WIDTH_EDEFAULT.equals(requiredWidth);
-			case MarkupPackage.FIGURE_ELEMENT__REQUIRED_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
 				return REQUIRED_HEIGHT_EDEFAULT == null ? requiredHeight != null : !REQUIRED_HEIGHT_EDEFAULT.equals(requiredHeight);
-			case MarkupPackage.FIGURE_ELEMENT__ACTUAL_WIDTH:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6:
 				return getActualWidth() != ACTUAL_WIDTH_EDEFAULT;
-			case MarkupPackage.FIGURE_ELEMENT__ACTUAL_HEIGHT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7:
 				return getActualHeight() != ACTUAL_HEIGHT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

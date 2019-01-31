@@ -87,7 +87,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-			case EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS:
+			case 0:
 			{
 				AbstractNameExpCS abstractNameExpCS = (AbstractNameExpCS)theEObject;
 				T result = caseAbstractNameExpCS(abstractNameExpCS);
@@ -98,7 +98,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS:
+			case 1:
 			{
 				AssociationClassCallExpCS associationClassCallExpCS = (AssociationClassCallExpCS)theEObject;
 				T result = caseAssociationClassCallExpCS(associationClassCallExpCS);
@@ -111,7 +111,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.BOOLEAN_LITERAL_EXP_CS:
+			case 2:
 			{
 				BooleanLiteralExpCS booleanLiteralExpCS = (BooleanLiteralExpCS)theEObject;
 				T result = caseBooleanLiteralExpCS(booleanLiteralExpCS);
@@ -124,7 +124,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.CALL_EXP_CS:
+			case 3:
 			{
 				CallExpCS callExpCS = (CallExpCS)theEObject;
 				T result = caseCallExpCS(callExpCS);
@@ -136,7 +136,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS:
+			case 4:
 			{
 				CollectionLiteralExpCS collectionLiteralExpCS = (CollectionLiteralExpCS)theEObject;
 				T result = caseCollectionLiteralExpCS(collectionLiteralExpCS);
@@ -148,7 +148,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_PART_CS:
+			case 5:
 			{
 				CollectionLiteralPartCS collectionLiteralPartCS = (CollectionLiteralPartCS)theEObject;
 				T result = caseCollectionLiteralPartCS(collectionLiteralPartCS);
@@ -158,7 +158,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS:
+			case 6:
 			{
 				CollectionPatternCS collectionPatternCS = (CollectionPatternCS)theEObject;
 				T result = caseCollectionPatternCS(collectionPatternCS);
@@ -170,7 +170,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS:
+			case 7:
 			{
 				CollectionTypeCS collectionTypeCS = (CollectionTypeCS)theEObject;
 				T result = caseCollectionTypeCS(collectionTypeCS);
@@ -182,7 +182,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.CONTEXT_CS:
+			case 8:
 			{
 				ContextCS contextCS = (ContextCS)theEObject;
 				T result = caseContextCS(contextCS);
@@ -194,7 +194,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS:
+			case 9:
 			{
 				CurlyBracketedClauseCS curlyBracketedClauseCS = (CurlyBracketedClauseCS)theEObject;
 				T result = caseCurlyBracketedClauseCS(curlyBracketedClauseCS);
@@ -203,7 +203,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.EXP_CS:
+			case 10:
 			{
 				ExpCS expCS = (ExpCS)theEObject;
 				T result = caseExpCS(expCS);
@@ -213,7 +213,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS:
+			case 11:
 			{
 				ExpSpecificationCS expSpecificationCS = (ExpSpecificationCS)theEObject;
 				T result = caseExpSpecificationCS(expSpecificationCS);
@@ -224,7 +224,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.IF_EXP_CS:
+			case 12:
 			{
 				IfExpCS ifExpCS = (IfExpCS)theEObject;
 				T result = caseIfExpCS(ifExpCS);
@@ -235,7 +235,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS:
+			case 13:
 			{
 				IfThenExpCS ifThenExpCS = (IfThenExpCS)theEObject;
 				T result = caseIfThenExpCS(ifThenExpCS);
@@ -246,7 +246,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.INFIX_EXP_CS:
+			case 14:
 			{
 				InfixExpCS infixExpCS = (InfixExpCS)theEObject;
 				T result = caseInfixExpCS(infixExpCS);
@@ -259,7 +259,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.INVALID_LITERAL_EXP_CS:
+			case 15:
 			{
 				InvalidLiteralExpCS invalidLiteralExpCS = (InvalidLiteralExpCS)theEObject;
 				T result = caseInvalidLiteralExpCS(invalidLiteralExpCS);
@@ -272,7 +272,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS:
+			case 16:
 			{
 				IterateCallExpCS iterateCallExpCS = (IterateCallExpCS)theEObject;
 				T result = caseIterateCallExpCS(iterateCallExpCS);
@@ -286,7 +286,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS:
+			case 17:
 			{
 				IterationCallExpCS iterationCallExpCS = (IterationCallExpCS)theEObject;
 				T result = caseIterationCallExpCS(iterationCallExpCS);
@@ -299,7 +299,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS:
+			case 18:
 			{
 				LambdaLiteralExpCS lambdaLiteralExpCS = (LambdaLiteralExpCS)theEObject;
 				T result = caseLambdaLiteralExpCS(lambdaLiteralExpCS);
@@ -311,7 +311,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.LET_EXP_CS:
+			case 19:
 			{
 				LetExpCS letExpCS = (LetExpCS)theEObject;
 				T result = caseLetExpCS(letExpCS);
@@ -322,7 +322,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.LET_VARIABLE_CS:
+			case 20:
 			{
 				LetVariableCS letVariableCS = (LetVariableCS)theEObject;
 				T result = caseLetVariableCS(letVariableCS);
@@ -335,7 +335,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.LITERAL_EXP_CS:
+			case 21:
 			{
 				LiteralExpCS literalExpCS = (LiteralExpCS)theEObject;
 				T result = caseLiteralExpCS(literalExpCS);
@@ -346,7 +346,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.MAP_LITERAL_EXP_CS:
+			case 22:
 			{
 				MapLiteralExpCS mapLiteralExpCS = (MapLiteralExpCS)theEObject;
 				T result = caseMapLiteralExpCS(mapLiteralExpCS);
@@ -358,7 +358,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS:
+			case 23:
 			{
 				MapLiteralPartCS mapLiteralPartCS = (MapLiteralPartCS)theEObject;
 				T result = caseMapLiteralPartCS(mapLiteralPartCS);
@@ -368,7 +368,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.MAP_TYPE_CS:
+			case 24:
 			{
 				MapTypeCS mapTypeCS = (MapTypeCS)theEObject;
 				T result = caseMapTypeCS(mapTypeCS);
@@ -380,7 +380,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.NAME_EXP_CS:
+			case 25:
 			{
 				NameExpCS nameExpCS = (NameExpCS)theEObject;
 				T result = caseNameExpCS(nameExpCS);
@@ -400,7 +400,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS:
+			case 26:
 			{
 				NavigatingArgCS navigatingArgCS = (NavigatingArgCS)theEObject;
 				T result = caseNavigatingArgCS(navigatingArgCS);
@@ -410,7 +410,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.NESTED_EXP_CS:
+			case 27:
 			{
 				NestedExpCS nestedExpCS = (NestedExpCS)theEObject;
 				T result = caseNestedExpCS(nestedExpCS);
@@ -421,7 +421,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.NULL_LITERAL_EXP_CS:
+			case 28:
 			{
 				NullLiteralExpCS nullLiteralExpCS = (NullLiteralExpCS)theEObject;
 				T result = caseNullLiteralExpCS(nullLiteralExpCS);
@@ -434,7 +434,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS:
+			case 29:
 			{
 				NumberLiteralExpCS numberLiteralExpCS = (NumberLiteralExpCS)theEObject;
 				T result = caseNumberLiteralExpCS(numberLiteralExpCS);
@@ -447,7 +447,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS:
+			case 30:
 			{
 				OperationCallExpCS operationCallExpCS = (OperationCallExpCS)theEObject;
 				T result = caseOperationCallExpCS(operationCallExpCS);
@@ -460,7 +460,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS:
+			case 31:
 			{
 				OperatorExpCS operatorExpCS = (OperatorExpCS)theEObject;
 				T result = caseOperatorExpCS(operatorExpCS);
@@ -472,7 +472,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.PATTERN_EXP_CS:
+			case 32:
 			{
 				PatternExpCS patternExpCS = (PatternExpCS)theEObject;
 				T result = casePatternExpCS(patternExpCS);
@@ -483,7 +483,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.PREFIX_EXP_CS:
+			case 33:
 			{
 				PrefixExpCS prefixExpCS = (PrefixExpCS)theEObject;
 				T result = casePrefixExpCS(prefixExpCS);
@@ -496,7 +496,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.PRIMITIVE_LITERAL_EXP_CS:
+			case 34:
 			{
 				PrimitiveLiteralExpCS primitiveLiteralExpCS = (PrimitiveLiteralExpCS)theEObject;
 				T result = casePrimitiveLiteralExpCS(primitiveLiteralExpCS);
@@ -508,7 +508,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS:
+			case 35:
 			{
 				PropertyCallExpCS propertyCallExpCS = (PropertyCallExpCS)theEObject;
 				T result = casePropertyCallExpCS(propertyCallExpCS);
@@ -521,7 +521,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS:
+			case 36:
 			{
 				RoundBracketedClauseCS roundBracketedClauseCS = (RoundBracketedClauseCS)theEObject;
 				T result = caseRoundBracketedClauseCS(roundBracketedClauseCS);
@@ -530,7 +530,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.SELF_EXP_CS:
+			case 37:
 			{
 				SelfExpCS selfExpCS = (SelfExpCS)theEObject;
 				T result = caseSelfExpCS(selfExpCS);
@@ -541,7 +541,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.SHADOW_EXP_CS:
+			case 38:
 			{
 				ShadowExpCS shadowExpCS = (ShadowExpCS)theEObject;
 				T result = caseShadowExpCS(shadowExpCS);
@@ -553,7 +553,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.SHADOW_PART_CS:
+			case 39:
 			{
 				ShadowPartCS shadowPartCS = (ShadowPartCS)theEObject;
 				T result = caseShadowPartCS(shadowPartCS);
@@ -563,7 +563,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS:
+			case 40:
 			{
 				SquareBracketedClauseCS squareBracketedClauseCS = (SquareBracketedClauseCS)theEObject;
 				T result = caseSquareBracketedClauseCS(squareBracketedClauseCS);
@@ -572,7 +572,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS:
+			case 41:
 			{
 				StringLiteralExpCS stringLiteralExpCS = (StringLiteralExpCS)theEObject;
 				T result = caseStringLiteralExpCS(stringLiteralExpCS);
@@ -585,7 +585,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.TUPLE_LITERAL_EXP_CS:
+			case 42:
 			{
 				TupleLiteralExpCS tupleLiteralExpCS = (TupleLiteralExpCS)theEObject;
 				T result = caseTupleLiteralExpCS(tupleLiteralExpCS);
@@ -597,7 +597,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.TUPLE_LITERAL_PART_CS:
+			case 43:
 			{
 				TupleLiteralPartCS tupleLiteralPartCS = (TupleLiteralPartCS)theEObject;
 				T result = caseTupleLiteralPartCS(tupleLiteralPartCS);
@@ -609,7 +609,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS:
+			case 44:
 			{
 				TypeLiteralExpCS typeLiteralExpCS = (TypeLiteralExpCS)theEObject;
 				T result = caseTypeLiteralExpCS(typeLiteralExpCS);
@@ -621,7 +621,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.TYPE_NAME_EXP_CS:
+			case 45:
 			{
 				TypeNameExpCS typeNameExpCS = (TypeNameExpCS)theEObject;
 				T result = caseTypeNameExpCS(typeNameExpCS);
@@ -633,7 +633,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS:
+			case 46:
 			{
 				UnlimitedNaturalLiteralExpCS unlimitedNaturalLiteralExpCS = (UnlimitedNaturalLiteralExpCS)theEObject;
 				T result = caseUnlimitedNaturalLiteralExpCS(unlimitedNaturalLiteralExpCS);
@@ -646,7 +646,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.VARIABLE_CS:
+			case 47:
 			{
 				VariableCS variableCS = (VariableCS)theEObject;
 				T result = caseVariableCS(variableCS);
@@ -657,7 +657,7 @@ public class EssentialOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EssentialOCLCSPackage.VARIABLE_EXP_CS:
+			case 48:
 			{
 				VariableExpCS variableExpCS = (VariableExpCS)theEObject;
 				T result = caseVariableExpCS(variableExpCS);

@@ -49,6 +49,14 @@ public class PackageDeclarationCSImpl
 		implements PackageDeclarationCS {
 
 	/**
+	 * The number of structural features of the '<em>Package Declaration CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PACKAGE_DECLARATION_CS_FEATURE_COUNT = PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 3;
+	/**
 	 * The cached value of the '{@link #getOwnedContexts() <em>Owned Contexts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +102,7 @@ public class PackageDeclarationCSImpl
 	public EList<ContextDeclCS> getOwnedContexts() {
 		if (ownedContexts == null)
 		{
-			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS);
+			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0);
 		}
 		return ownedContexts;
 	}
@@ -109,7 +117,7 @@ public class PackageDeclarationCSImpl
 	{
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS);
+			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1);
 		}
 		return ownedInvariants;
 	}
@@ -124,9 +132,9 @@ public class PackageDeclarationCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedContexts()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -141,11 +149,11 @@ public class PackageDeclarationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
 				return getOwnedContexts();
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
 				return getOwnedInvariants();
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__REFERRED_PACKAGE:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2:
 				return getReferredPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -161,11 +169,11 @@ public class PackageDeclarationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
 				getOwnedContexts().clear();
 				getOwnedContexts().addAll((Collection<? extends ContextDeclCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
@@ -182,10 +190,10 @@ public class PackageDeclarationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
 				getOwnedContexts().clear();
 				return;
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedInvariants().clear();
 				return;
 		}
@@ -201,11 +209,11 @@ public class PackageDeclarationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
 				return ownedContexts != null && !ownedContexts.isEmpty();
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS__REFERRED_PACKAGE:
+			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2:
 				return getReferredPackage() != null;
 		}
 		return super.eIsSet(featureID);

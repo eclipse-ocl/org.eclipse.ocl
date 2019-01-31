@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class FigureRefElementImpl extends MarkupElementImpl implements FigureRefElement {
 	/**
+	 * The number of structural features of the '<em>Figure Ref Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FIGURE_REF_ELEMENT_FEATURE_COUNT = MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -73,7 +81,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 			ref = (FigureElement)eResolveProxy(oldRef);
 			if (ref != oldRef) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MarkupPackage.FIGURE_REF_ELEMENT__REF, oldRef, ref));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldRef, ref));
 			}
 		}
 		return ref;
@@ -98,7 +106,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 		FigureElement oldRef = ref;
 		ref = newRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.FIGURE_REF_ELEMENT__REF, oldRef, ref));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldRef, ref));
 	}
 
 	/**
@@ -109,7 +117,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_REF_ELEMENT__REF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				if (resolve) return getRef();
 				return basicGetRef();
 		}
@@ -124,7 +132,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_REF_ELEMENT__REF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				setRef((FigureElement)newValue);
 				return;
 		}
@@ -139,7 +147,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_REF_ELEMENT__REF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				setRef((FigureElement)null);
 				return;
 		}
@@ -154,7 +162,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.FIGURE_REF_ELEMENT__REF:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return ref != null;
 		}
 		return super.eIsSet(featureID);

@@ -34,6 +34,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class SpecificationCSImpl extends ModelElementCSImpl implements SpecificationCS
 {
 	/**
+	 * The number of structural features of the '<em>Specification CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SPECIFICATION_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getExprString() <em>Expr String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 		String oldExprString = exprString;
 		exprString = newExprString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.SPECIFICATION_CS__EXPR_STRING, oldExprString, exprString));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldExprString, exprString));
 	}
 
 	/**
@@ -119,7 +128,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.SPECIFICATION_CS__EXPR_STRING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getExprString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -135,7 +144,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.SPECIFICATION_CS__EXPR_STRING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setExprString((String)newValue);
 				return;
 		}
@@ -152,7 +161,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.SPECIFICATION_CS__EXPR_STRING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setExprString(EXPR_STRING_EDEFAULT);
 				return;
 		}
@@ -169,7 +178,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.SPECIFICATION_CS__EXPR_STRING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return EXPR_STRING_EDEFAULT == null ? exprString != null : !EXPR_STRING_EDEFAULT.equals(exprString);
 		}
 		return super.eIsSet(featureID);

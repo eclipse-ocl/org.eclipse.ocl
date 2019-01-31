@@ -78,21 +78,21 @@ public class MarkupFactoryImpl extends EFactoryImpl implements MarkupFactory {
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case MarkupPackage.BULLET_ELEMENT: return createBulletElement();
-			case MarkupPackage.COMPOUND_ELEMENT: return createCompoundElement();
-			case MarkupPackage.FIGURE_ELEMENT: return createFigureElement();
-			case MarkupPackage.FIGURE_REF_ELEMENT: return createFigureRefElement();
-			case MarkupPackage.FONT_ELEMENT: return createFontElement();
-			case MarkupPackage.FOOTNOTE_ELEMENT: return createFootnoteElement();
-			case MarkupPackage.HEADING_ELEMENT: return createHeadingElement();
-			case MarkupPackage.MARKUP: return createMarkup();
-			case MarkupPackage.MARKUP_ELEMENT: return createMarkupElement();
-			case MarkupPackage.NEW_LINE_ELEMENT: return createNewLineElement();
-			case MarkupPackage.NULL_ELEMENT: return createNullElement();
-			case MarkupPackage.OCL_CODE_ELEMENT: return createOCLCodeElement();
-			case MarkupPackage.OCL_EVAL_ELEMENT: return createOCLEvalElement();
-			case MarkupPackage.OCL_TEXT_ELEMENT: return createOCLTextElement();
-			case MarkupPackage.TEXT_ELEMENT: return createTextElement();
+			case 0: return createBulletElement();
+			case 1: return createCompoundElement();
+			case 2: return createFigureElement();
+			case 3: return createFigureRefElement();
+			case 4: return createFontElement();
+			case 5: return createFootnoteElement();
+			case 6: return createHeadingElement();
+			case 7: return createMarkup();
+			case 8: return createMarkupElement();
+			case 9: return createNewLineElement();
+			case 10: return createNullElement();
+			case 11: return createOCLCodeElement();
+			case 12: return createOCLEvalElement();
+			case 13: return createOCLTextElement();
+			case 14: return createTextElement();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

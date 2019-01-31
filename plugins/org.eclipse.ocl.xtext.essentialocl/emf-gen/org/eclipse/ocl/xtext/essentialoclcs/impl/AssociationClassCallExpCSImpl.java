@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implements AssociationClassCallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Association Class Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT = CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredAssociation() <em>Referred Association</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 		AssociationClass oldReferredAssociation = referredAssociation;
 		referredAssociation = newReferredAssociation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION, oldReferredAssociation, referredAssociation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredAssociation, referredAssociation));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getReferredAssociation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +122,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredAssociation((AssociationClass)newValue);
 				return;
 		}
@@ -131,7 +139,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredAssociation((AssociationClass)null);
 				return;
 		}
@@ -148,7 +156,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return referredAssociation != null;
 		}
 		return super.eIsSet(featureID);

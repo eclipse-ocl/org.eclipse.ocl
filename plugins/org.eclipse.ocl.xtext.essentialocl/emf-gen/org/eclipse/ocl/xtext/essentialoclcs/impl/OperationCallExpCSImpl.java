@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.OperationCallExpCS;
 public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements OperationCallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Operation Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPERATION_CALL_EXP_CS_FEATURE_COUNT = CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredOperation() <em>Referred Operation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getReferredOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +122,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -131,7 +139,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredOperation((Operation)null);
 				return;
 		}
@@ -148,7 +156,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return referredOperation != null;
 		}
 		return super.eIsSet(featureID);

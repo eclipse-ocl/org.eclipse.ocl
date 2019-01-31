@@ -34,6 +34,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements MultiplicityStringCS
 {
 	/**
+	 * The number of structural features of the '<em>Multiplicity String CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MULTIPLICITY_STRING_CS_FEATURE_COUNT = MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getStringBounds() <em>String Bounds</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 		String oldStringBounds = stringBounds;
 		stringBounds = newStringBounds;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MULTIPLICITY_STRING_CS__STRING_BOUNDS, oldStringBounds, stringBounds));
+			eNotify(new ENotificationImpl(this, Notification.SET, MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0, oldStringBounds, stringBounds));
 	}
 
 	/**
@@ -119,7 +128,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_STRING_CS__STRING_BOUNDS:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				return getStringBounds();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -135,7 +144,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_STRING_CS__STRING_BOUNDS:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				setStringBounds((String)newValue);
 				return;
 		}
@@ -152,7 +161,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_STRING_CS__STRING_BOUNDS:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				setStringBounds(STRING_BOUNDS_EDEFAULT);
 				return;
 		}
@@ -169,7 +178,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_STRING_CS__STRING_BOUNDS:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				return STRING_BOUNDS_EDEFAULT == null ? stringBounds != null : !STRING_BOUNDS_EDEFAULT.equals(stringBounds);
 		}
 		return super.eIsSet(featureID);

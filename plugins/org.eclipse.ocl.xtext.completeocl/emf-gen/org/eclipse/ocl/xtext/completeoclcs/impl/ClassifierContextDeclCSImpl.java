@@ -24,11 +24,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -55,6 +57,15 @@ import org.eclipse.ocl.xtext.completeoclcs.util.CompleteOCLCSVisitor;
 public class ClassifierContextDeclCSImpl
 		extends ContextDeclCSImpl
 		implements ClassifierContextDeclCS {
+
+	/**
+	 * The number of structural features of the '<em>Classifier Context Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CLASSIFIER_CONTEXT_DECL_CS_FEATURE_COUNT = ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
@@ -147,7 +158,7 @@ public class ClassifierContextDeclCSImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -165,14 +176,14 @@ public class ClassifierContextDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -195,7 +206,7 @@ public class ClassifierContextDeclCSImpl
 		String oldSelfName = selfName;
 		selfName = newSelfName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, oldSelfName, selfName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4, oldSelfName, selfName));
 	}
 
 	/**
@@ -207,15 +218,15 @@ public class ClassifierContextDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return getOwnedSignature();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return getOwnedDefinitions();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return getOwnedInvariants();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__REFERRED_CLASS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				return getReferredClass();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				return getSelfName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -231,18 +242,18 @@ public class ClassifierContextDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedDefinitions().clear();
 				getOwnedDefinitions().addAll((Collection<? extends DefCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				setSelfName((String)newValue);
 				return;
 		}
@@ -258,16 +269,16 @@ public class ClassifierContextDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				getOwnedDefinitions().clear();
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				getOwnedInvariants().clear();
 				return;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				setSelfName(SELF_NAME_EDEFAULT);
 				return;
 		}
@@ -283,15 +294,15 @@ public class ClassifierContextDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return ownedSignature != null;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ownedDefinitions != null && !ownedDefinitions.isEmpty();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__REFERRED_CLASS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3:
 				return getReferredClass() != null;
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
 				return SELF_NAME_EDEFAULT == null ? selfName != null : !SELF_NAME_EDEFAULT.equals(selfName);
 		}
 		return super.eIsSet(featureID);
@@ -309,7 +320,7 @@ public class ClassifierContextDeclCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE: return BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE;
+				case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -328,7 +339,7 @@ public class ClassifierContextDeclCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE: return CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -369,7 +380,7 @@ public class ClassifierContextDeclCSImpl
 	public EList<ConstraintCS> getOwnedInvariants() {
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS);
+			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2);
 		}
 		return ownedInvariants;
 	}
@@ -383,7 +394,7 @@ public class ClassifierContextDeclCSImpl
 	public EList<DefCS> getOwnedDefinitions() {
 		if (ownedDefinitions == null)
 		{
-			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL);
+			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
 		}
 		return ownedDefinitions;
 	}
@@ -409,11 +420,11 @@ public class ClassifierContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE, null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedDefinitions()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -429,11 +440,11 @@ public class ClassifierContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_SIGNATURE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedSignature(null, msgs);
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedDefinitions()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

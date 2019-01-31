@@ -41,6 +41,14 @@ public class ExpSpecificationCSImpl
 		implements ExpSpecificationCS {
 
 	/**
+	 * The number of structural features of the '<em>Exp Specification CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EXP_SPECIFICATION_CS_FEATURE_COUNT = SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedExpression() <em>Owned Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +98,7 @@ public class ExpSpecificationCSImpl
 		ownedExpression = newOwnedExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, oldOwnedExpression, newOwnedExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0, oldOwnedExpression, newOwnedExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -107,14 +115,14 @@ public class ExpSpecificationCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedExpression != null)
-				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedExpression != null)
-				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedExpression(newOwnedExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, newOwnedExpression, newOwnedExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0, newOwnedExpression, newOwnedExpression));
 	}
 
 	/**
@@ -127,7 +135,7 @@ public class ExpSpecificationCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION:
+			case SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -142,7 +150,7 @@ public class ExpSpecificationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION:
+			case SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0:
 				return getOwnedExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -157,7 +165,7 @@ public class ExpSpecificationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION:
+			case SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0:
 				setOwnedExpression((ExpCS)newValue);
 				return;
 		}
@@ -173,7 +181,7 @@ public class ExpSpecificationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION:
+			case SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0:
 				setOwnedExpression((ExpCS)null);
 				return;
 		}
@@ -189,7 +197,7 @@ public class ExpSpecificationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS__OWNED_EXPRESSION:
+			case SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0:
 				return ownedExpression != null;
 		}
 		return super.eIsSet(featureID);

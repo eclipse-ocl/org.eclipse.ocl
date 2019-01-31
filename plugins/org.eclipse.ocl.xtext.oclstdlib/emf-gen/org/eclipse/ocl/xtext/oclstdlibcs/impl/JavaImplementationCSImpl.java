@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 public abstract class JavaImplementationCSImpl extends ElementCSImpl implements JavaImplementationCS
 {
 	/**
+	 * The number of structural features of the '<em>Java Implementation CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int JAVA_IMPLEMENTATION_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,7 +88,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -107,7 +115,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 	}
 
 	/**
@@ -120,7 +128,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
 		}
@@ -137,7 +145,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)newValue);
 				return;
 		}
@@ -154,7 +162,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)null);
 				return;
 		}
@@ -171,7 +179,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return implementation != null;
 		}
 		return super.eIsSet(featureID);

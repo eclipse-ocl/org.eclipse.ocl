@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.markupcs.TextElement;
  */
 public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	/**
+	 * The number of structural features of the '<em>Text Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEXT_ELEMENT_FEATURE_COUNT = MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getText() <em>Text</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,7 +77,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public EList<String> getText() {
 		if (text == null) {
-			text = new EDataTypeEList<String>(String.class, this, MarkupPackage.TEXT_ELEMENT__TEXT);
+			text = new EDataTypeEList<String>(String.class, this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return text;
 	}
@@ -92,7 +100,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.TEXT_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return getText();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -107,7 +115,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.TEXT_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				getText().clear();
 				getText().addAll((Collection<? extends String>)newValue);
 				return;
@@ -123,7 +131,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.TEXT_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				getText().clear();
 				return;
 		}
@@ -138,7 +146,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.TEXT_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return text != null && !text.isEmpty();
 		}
 		return super.eIsSet(featureID);

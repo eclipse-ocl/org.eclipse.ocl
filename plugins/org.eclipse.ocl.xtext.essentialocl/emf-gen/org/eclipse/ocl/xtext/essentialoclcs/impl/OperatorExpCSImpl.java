@@ -21,9 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.OperatorExpCS;
@@ -46,6 +46,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.OperatorExpCS;
 public abstract class OperatorExpCSImpl
 extends ExpCSImpl
 implements OperatorExpCS {
+
+	/**
+	 * The number of structural features of the '<em>Operator Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OPERATOR_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -128,7 +137,7 @@ implements OperatorExpCS {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -153,7 +162,7 @@ implements OperatorExpCS {
 		ownedRight = newOwnedRight;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT, oldOwnedRight, newOwnedRight);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedRight, newOwnedRight);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -171,14 +180,14 @@ implements OperatorExpCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedRight != null)
-				msgs = ((InternalEObject)ownedRight).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT, null, msgs);
+				msgs = ((InternalEObject)ownedRight).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedRight != null)
-				msgs = ((InternalEObject)newOwnedRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT, null, msgs);
+				msgs = ((InternalEObject)newOwnedRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedRight(newOwnedRight, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT, newOwnedRight, newOwnedRight));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedRight, newOwnedRight));
 	}
 
 	/**
@@ -190,11 +199,11 @@ implements OperatorExpCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getName();
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedRight();
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__SOURCE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -209,10 +218,10 @@ implements OperatorExpCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedRight((ExpCS)newValue);
 				return;
 		}
@@ -228,10 +237,10 @@ implements OperatorExpCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedRight((ExpCS)null);
 				return;
 		}
@@ -247,11 +256,11 @@ implements OperatorExpCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return ownedRight != null;
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__SOURCE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return source != null;
 		}
 		return super.eIsSet(featureID);
@@ -268,7 +277,7 @@ implements OperatorExpCS {
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME: return BaseCSPackage.NAMED_ELEMENT_CS__NAME;
+				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -286,7 +295,7 @@ implements OperatorExpCS {
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.NAMED_ELEMENT_CS__NAME: return EssentialOCLCSPackage.OPERATOR_EXP_CS__NAME;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -303,7 +312,7 @@ implements OperatorExpCS {
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.OPERATOR_EXP_CS__OWNED_RIGHT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedRight(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

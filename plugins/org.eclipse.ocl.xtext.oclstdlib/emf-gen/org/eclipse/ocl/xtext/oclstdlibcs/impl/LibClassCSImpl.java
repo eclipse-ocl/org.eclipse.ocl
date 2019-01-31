@@ -40,6 +40,14 @@ public class LibClassCSImpl
 		implements LibClassCS {
 
 	/**
+	 * The number of structural features of the '<em>Lib Class CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_CLASS_CS_FEATURE_COUNT = StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getMetaclassName() <em>Metaclass Name</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,7 +89,7 @@ public class LibClassCSImpl
 			if (metaclassName != oldMetaclassName)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME, oldMetaclassName, metaclassName));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldMetaclassName, metaclassName));
 			}
 		}
 		return metaclassName;
@@ -107,7 +115,7 @@ public class LibClassCSImpl
 		MetaclassNameCS oldMetaclassName = metaclassName;
 		metaclassName = newMetaclassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME, oldMetaclassName, metaclassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldMetaclassName, metaclassName));
 	}
 
 	/**
@@ -119,7 +127,7 @@ public class LibClassCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME:
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
 				if (resolve) return getMetaclassName();
 				return basicGetMetaclassName();
 		}
@@ -135,7 +143,7 @@ public class LibClassCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME:
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
 				setMetaclassName((MetaclassNameCS)newValue);
 				return;
 		}
@@ -151,7 +159,7 @@ public class LibClassCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME:
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
 				setMetaclassName((MetaclassNameCS)null);
 				return;
 		}
@@ -167,7 +175,7 @@ public class LibClassCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_CLASS_CS__METACLASS_NAME:
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
 				return metaclassName != null;
 		}
 		return super.eIsSet(featureID);

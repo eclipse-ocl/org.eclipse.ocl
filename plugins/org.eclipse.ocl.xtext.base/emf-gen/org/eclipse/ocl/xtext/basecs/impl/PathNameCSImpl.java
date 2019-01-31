@@ -48,6 +48,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 {
 	/**
+	 * The number of structural features of the '<em>Path Name CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 4;
+
+	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -127,7 +136,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		if (ownedPathElements == null)
 		{
-			ownedPathElements = new EObjectContainmentWithInverseEList<PathElementCS>(PathElementCS.class, this, BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS, BaseCSPackage.PATH_ELEMENT_CS__OWNING_PATH_NAME);
+			ownedPathElements = new EObjectContainmentWithInverseEList<PathElementCS>(PathElementCS.class, this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedPathElements;
 	}
@@ -142,7 +151,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedPathElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -158,14 +167,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__CONTEXT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return getContext();
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedPathElements();
-			case BaseCSPackage.PATH_NAME_CS__REFERRED_ELEMENT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
 				if (resolve) return getReferredElement();
 				return basicGetReferredElement();
-			case BaseCSPackage.PATH_NAME_CS__SCOPE_FILTER:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
 				return getScopeFilter();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -182,14 +191,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__CONTEXT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setContext((ElementCS)newValue);
 				return;
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedPathElements().clear();
 				getOwnedPathElements().addAll((Collection<? extends PathElementCS>)newValue);
 				return;
-			case BaseCSPackage.PATH_NAME_CS__SCOPE_FILTER:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
 				setScopeFilter((ScopeFilter)newValue);
 				return;
 		}
@@ -206,13 +215,13 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__CONTEXT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				unsetContext();
 				return;
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedPathElements().clear();
 				return;
-			case BaseCSPackage.PATH_NAME_CS__SCOPE_FILTER:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
 				setScopeFilter(SCOPE_FILTER_EDEFAULT);
 				return;
 		}
@@ -229,13 +238,13 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__CONTEXT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return isSetContext();
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedPathElements != null && !ownedPathElements.isEmpty();
-			case BaseCSPackage.PATH_NAME_CS__REFERRED_ELEMENT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
 				return basicGetReferredElement() != null;
-			case BaseCSPackage.PATH_NAME_CS__SCOPE_FILTER:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
 		}
 		return super.eIsSet(featureID);
@@ -261,7 +270,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PATH_NAME_CS__OWNED_PATH_ELEMENTS:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPathElements()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -291,7 +300,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		boolean oldContextESet = contextESet;
 		contextESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PATH_NAME_CS__CONTEXT, oldContext, context, !oldContextESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldContext, context, !oldContextESet));
 	}
 
 	/**
@@ -307,7 +316,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		context = null;
 		contextESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, BaseCSPackage.PATH_NAME_CS__CONTEXT, oldContext, null, oldContextESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldContext, null, oldContextESet));
 	}
 
 	/**
@@ -343,7 +352,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		ScopeFilter oldScopeFilter = scopeFilter;
 		scopeFilter = newScopeFilter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PATH_NAME_CS__SCOPE_FILTER, oldScopeFilter, scopeFilter));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3, oldScopeFilter, scopeFilter));
 	}
 
 	/**

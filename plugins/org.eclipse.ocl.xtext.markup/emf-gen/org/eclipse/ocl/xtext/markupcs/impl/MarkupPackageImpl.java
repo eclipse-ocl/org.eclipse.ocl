@@ -555,52 +555,52 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		bulletElementEClass = createEClass(BULLET_ELEMENT);
-		createEAttribute(bulletElementEClass, BULLET_ELEMENT__LEVEL);
+		bulletElementEClass = createEClass(0);
+		createEAttribute(bulletElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
 
-		compoundElementEClass = createEClass(COMPOUND_ELEMENT);
-		createEReference(compoundElementEClass, COMPOUND_ELEMENT__ELEMENTS);
+		compoundElementEClass = createEClass(1);
+		createEReference(compoundElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
 
-		figureElementEClass = createEClass(FIGURE_ELEMENT);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__ID);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__SRC);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__ALT);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__DEF);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__REQUIRED_WIDTH);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__REQUIRED_HEIGHT);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__ACTUAL_WIDTH);
-		createEAttribute(figureElementEClass, FIGURE_ELEMENT__ACTUAL_HEIGHT);
+		figureElementEClass = createEClass(2);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6);
+		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7);
 
-		figureRefElementEClass = createEClass(FIGURE_REF_ELEMENT);
-		createEReference(figureRefElementEClass, FIGURE_REF_ELEMENT__REF);
+		figureRefElementEClass = createEClass(3);
+		createEReference(figureRefElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
 
-		fontElementEClass = createEClass(FONT_ELEMENT);
-		createEAttribute(fontElementEClass, FONT_ELEMENT__FONT);
+		fontElementEClass = createEClass(4);
+		createEAttribute(fontElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
 
-		footnoteElementEClass = createEClass(FOOTNOTE_ELEMENT);
+		footnoteElementEClass = createEClass(5);
 
-		headingElementEClass = createEClass(HEADING_ELEMENT);
-		createEAttribute(headingElementEClass, HEADING_ELEMENT__LEVEL);
+		headingElementEClass = createEClass(6);
+		createEAttribute(headingElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
 
-		markupEClass = createEClass(MARKUP);
+		markupEClass = createEClass(7);
 
-		markupElementEClass = createEClass(MARKUP_ELEMENT);
-		createEReference(markupElementEClass, MARKUP_ELEMENT__OWNER);
-		createEAttribute(markupElementEClass, MARKUP_ELEMENT__UNIQUE_ID);
+		markupElementEClass = createEClass(8);
+		createEReference(markupElementEClass, 0);
+		createEAttribute(markupElementEClass, 1);
 
-		newLineElementEClass = createEClass(NEW_LINE_ELEMENT);
-		createEAttribute(newLineElementEClass, NEW_LINE_ELEMENT__TEXT);
+		newLineElementEClass = createEClass(9);
+		createEAttribute(newLineElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
 
-		nullElementEClass = createEClass(NULL_ELEMENT);
+		nullElementEClass = createEClass(10);
 
-		oclCodeElementEClass = createEClass(OCL_CODE_ELEMENT);
+		oclCodeElementEClass = createEClass(11);
 
-		oclEvalElementEClass = createEClass(OCL_EVAL_ELEMENT);
+		oclEvalElementEClass = createEClass(12);
 
-		oclTextElementEClass = createEClass(OCL_TEXT_ELEMENT);
+		oclTextElementEClass = createEClass(13);
 
-		textElementEClass = createEClass(TEXT_ELEMENT);
-		createEAttribute(textElementEClass, TEXT_ELEMENT__TEXT);
+		textElementEClass = createEClass(14);
+		createEAttribute(textElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
 	}
 
 	/**

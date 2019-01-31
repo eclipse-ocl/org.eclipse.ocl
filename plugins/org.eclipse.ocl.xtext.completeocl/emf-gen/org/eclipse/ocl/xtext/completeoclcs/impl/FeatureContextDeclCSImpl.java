@@ -38,6 +38,14 @@ public abstract class FeatureContextDeclCSImpl
 		implements FeatureContextDeclCS {
 
 	/**
+	 * The number of structural features of the '<em>Feature Context Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT = ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +95,7 @@ public abstract class FeatureContextDeclCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -104,14 +112,14 @@ public abstract class FeatureContextDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -124,7 +132,7 @@ public abstract class FeatureContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -139,7 +147,7 @@ public abstract class FeatureContextDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -154,7 +162,7 @@ public abstract class FeatureContextDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedType((TypedRefCS)newValue);
 				return;
 		}
@@ -170,7 +178,7 @@ public abstract class FeatureContextDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				setOwnedType((TypedRefCS)null);
 				return;
 		}
@@ -186,7 +194,7 @@ public abstract class FeatureContextDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE:
+			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

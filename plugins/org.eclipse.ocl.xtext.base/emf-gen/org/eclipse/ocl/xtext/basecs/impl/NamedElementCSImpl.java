@@ -32,6 +32,14 @@ import org.eclipse.ocl.xtext.basecs.NamedElementCS;
  */
 public abstract class NamedElementCSImpl extends ModelElementCSImpl implements NamedElementCS {
 	/**
+	 * The number of structural features of the '<em>Named Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAMED_ELEMENT_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,7 +99,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.NAMED_ELEMENT_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -114,7 +122,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.NAMED_ELEMENT_CS__NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -130,7 +138,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.NAMED_ELEMENT_CS__NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
 		}
@@ -147,7 +155,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.NAMED_ELEMENT_CS__NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -164,7 +172,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.NAMED_ELEMENT_CS__NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

@@ -88,7 +88,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case MarkupPackage.BULLET_ELEMENT: {
+			case 0: {
 				BulletElement bulletElement = (BulletElement)theEObject;
 				T result = caseBulletElement(bulletElement);
 				if (result == null) result = caseCompoundElement(bulletElement);
@@ -96,28 +96,28 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.COMPOUND_ELEMENT: {
+			case 1: {
 				CompoundElement compoundElement = (CompoundElement)theEObject;
 				T result = caseCompoundElement(compoundElement);
 				if (result == null) result = caseMarkupElement(compoundElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.FIGURE_ELEMENT: {
+			case 2: {
 				FigureElement figureElement = (FigureElement)theEObject;
 				T result = caseFigureElement(figureElement);
 				if (result == null) result = caseMarkupElement(figureElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.FIGURE_REF_ELEMENT: {
+			case 3: {
 				FigureRefElement figureRefElement = (FigureRefElement)theEObject;
 				T result = caseFigureRefElement(figureRefElement);
 				if (result == null) result = caseMarkupElement(figureRefElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.FONT_ELEMENT: {
+			case 4: {
 				FontElement fontElement = (FontElement)theEObject;
 				T result = caseFontElement(fontElement);
 				if (result == null) result = caseCompoundElement(fontElement);
@@ -125,7 +125,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.FOOTNOTE_ELEMENT: {
+			case 5: {
 				FootnoteElement footnoteElement = (FootnoteElement)theEObject;
 				T result = caseFootnoteElement(footnoteElement);
 				if (result == null) result = caseCompoundElement(footnoteElement);
@@ -133,7 +133,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.HEADING_ELEMENT: {
+			case 6: {
 				HeadingElement headingElement = (HeadingElement)theEObject;
 				T result = caseHeadingElement(headingElement);
 				if (result == null) result = caseCompoundElement(headingElement);
@@ -141,7 +141,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.MARKUP: {
+			case 7: {
 				Markup markup = (Markup)theEObject;
 				T result = caseMarkup(markup);
 				if (result == null) result = caseCompoundElement(markup);
@@ -149,20 +149,20 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.MARKUP_ELEMENT: {
+			case 8: {
 				MarkupElement markupElement = (MarkupElement)theEObject;
 				T result = caseMarkupElement(markupElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.NEW_LINE_ELEMENT: {
+			case 9: {
 				NewLineElement newLineElement = (NewLineElement)theEObject;
 				T result = caseNewLineElement(newLineElement);
 				if (result == null) result = caseMarkupElement(newLineElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.NULL_ELEMENT: {
+			case 10: {
 				NullElement nullElement = (NullElement)theEObject;
 				T result = caseNullElement(nullElement);
 				if (result == null) result = caseCompoundElement(nullElement);
@@ -170,7 +170,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.OCL_CODE_ELEMENT: {
+			case 11: {
 				OCLCodeElement oclCodeElement = (OCLCodeElement)theEObject;
 				T result = caseOCLCodeElement(oclCodeElement);
 				if (result == null) result = caseCompoundElement(oclCodeElement);
@@ -178,7 +178,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.OCL_EVAL_ELEMENT: {
+			case 12: {
 				OCLEvalElement oclEvalElement = (OCLEvalElement)theEObject;
 				T result = caseOCLEvalElement(oclEvalElement);
 				if (result == null) result = caseCompoundElement(oclEvalElement);
@@ -186,7 +186,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.OCL_TEXT_ELEMENT: {
+			case 13: {
 				OCLTextElement oclTextElement = (OCLTextElement)theEObject;
 				T result = caseOCLTextElement(oclTextElement);
 				if (result == null) result = caseCompoundElement(oclTextElement);
@@ -194,7 +194,7 @@ public class MarkupSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MarkupPackage.TEXT_ELEMENT: {
+			case 14: {
 				TextElement textElement = (TextElement)theEObject;
 				T result = caseTextElement(textElement);
 				if (result == null) result = caseMarkupElement(textElement);

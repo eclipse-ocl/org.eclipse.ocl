@@ -48,6 +48,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 {
 	/**
+	 * The number of structural features of the '<em>Map Type CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_TYPE_CS_FEATURE_COUNT = TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -130,7 +139,7 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_TYPE_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -155,7 +164,7 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		ownedKeyType = newOwnedKeyType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE, oldOwnedKeyType, newOwnedKeyType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, oldOwnedKeyType, newOwnedKeyType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -173,14 +182,14 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		{
 			NotificationChain msgs = null;
 			if (ownedKeyType != null)
-				msgs = ((InternalEObject)ownedKeyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedKeyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedKeyType != null)
-				msgs = ((InternalEObject)newOwnedKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedKeyType(newOwnedKeyType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE, newOwnedKeyType, newOwnedKeyType));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, newOwnedKeyType, newOwnedKeyType));
 	}
 
 	/**
@@ -205,7 +214,7 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		ownedValueType = newOwnedValueType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE, oldOwnedValueType, newOwnedValueType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, oldOwnedValueType, newOwnedValueType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -223,14 +232,14 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		{
 			NotificationChain msgs = null;
 			if (ownedValueType != null)
-				msgs = ((InternalEObject)ownedValueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedValueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedValueType != null)
-				msgs = ((InternalEObject)newOwnedValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedValueType(newOwnedValueType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE, newOwnedValueType, newOwnedValueType));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, newOwnedValueType, newOwnedValueType));
 	}
 
 	/**
@@ -253,9 +262,9 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedKeyType(null, msgs);
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedValueType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -271,11 +280,11 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return getName();
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return getOwnedKeyType();
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return getOwnedValueType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -291,13 +300,13 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedKeyType((TypedRefCS)newValue);
 				return;
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedValueType((TypedRefCS)newValue);
 				return;
 		}
@@ -314,13 +323,13 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedKeyType((TypedRefCS)null);
 				return;
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedValueType((TypedRefCS)null);
 				return;
 		}
@@ -337,11 +346,11 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_TYPE_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_KEY_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return ownedKeyType != null;
-			case EssentialOCLCSPackage.MAP_TYPE_CS__OWNED_VALUE_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return ownedValueType != null;
 		}
 		return super.eIsSet(featureID);

@@ -19,6 +19,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.impl.ContextLessElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.SpecificationCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.TypedRefCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.AssociationClassCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.BooleanLiteralExpCS;
@@ -2106,210 +2111,209 @@ implements EssentialOCLCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("deprecation")
 	public void createPackageContents() {
 		if (isCreated) return;
 		isCreated = true;
 
 		// Create classes and their features
-		abstractNameExpCSEClass = createEClass(ABSTRACT_NAME_EXP_CS);
-		createEAttribute(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__IS_PRE);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__SOURCE_TYPE);
-		createEReference(abstractNameExpCSEClass, ABSTRACT_NAME_EXP_CS__SOURCE_TYPE_VALUE);
+		abstractNameExpCSEClass = createEClass(0);
+		createEAttribute(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 5);
+		createEReference(abstractNameExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 6);
 
-		associationClassCallExpCSEClass = createEClass(ASSOCIATION_CLASS_CALL_EXP_CS);
-		createEReference(associationClassCallExpCSEClass, ASSOCIATION_CLASS_CALL_EXP_CS__REFERRED_ASSOCIATION);
+		associationClassCallExpCSEClass = createEClass(1);
+		createEReference(associationClassCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
 
-		booleanLiteralExpCSEClass = createEClass(BOOLEAN_LITERAL_EXP_CS);
-		createEAttribute(booleanLiteralExpCSEClass, BOOLEAN_LITERAL_EXP_CS__SYMBOL);
+		booleanLiteralExpCSEClass = createEClass(2);
+		createEAttribute(booleanLiteralExpCSEClass, PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0);
 
-		callExpCSEClass = createEClass(CALL_EXP_CS);
-		createEReference(callExpCSEClass, CALL_EXP_CS__ARGUMENTS);
-		createEReference(callExpCSEClass, CALL_EXP_CS__SOURCE);
+		callExpCSEClass = createEClass(3);
+		createEReference(callExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(callExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1);
 
-		collectionLiteralExpCSEClass = createEClass(COLLECTION_LITERAL_EXP_CS);
-		createEReference(collectionLiteralExpCSEClass, COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
-		createEReference(collectionLiteralExpCSEClass, COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
+		collectionLiteralExpCSEClass = createEClass(4);
+		createEReference(collectionLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(collectionLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1);
 
-		collectionLiteralPartCSEClass = createEClass(COLLECTION_LITERAL_PART_CS);
-		createEReference(collectionLiteralPartCSEClass, COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
-		createEReference(collectionLiteralPartCSEClass, COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
+		collectionLiteralPartCSEClass = createEClass(5);
+		createEReference(collectionLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(collectionLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		collectionPatternCSEClass = createEClass(COLLECTION_PATTERN_CS);
-		createEReference(collectionPatternCSEClass, COLLECTION_PATTERN_CS__OWNED_PARTS);
-		createEReference(collectionPatternCSEClass, COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD);
-		createEReference(collectionPatternCSEClass, COLLECTION_PATTERN_CS__OWNED_TYPE);
-		createEAttribute(collectionPatternCSEClass, COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
+		collectionPatternCSEClass = createEClass(6);
+		createEReference(collectionPatternCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
+		createEReference(collectionPatternCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
+		createEReference(collectionPatternCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
+		createEAttribute(collectionPatternCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3);
 
-		collectionTypeCSEClass = createEClass(COLLECTION_TYPE_CS);
-		createEAttribute(collectionTypeCSEClass, COLLECTION_TYPE_CS__NAME);
-		createEReference(collectionTypeCSEClass, COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
-		createEReference(collectionTypeCSEClass, COLLECTION_TYPE_CS__OWNED_TYPE);
+		collectionTypeCSEClass = createEClass(7);
+		createEAttribute(collectionTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
+		createEReference(collectionTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
+		createEReference(collectionTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
 
-		contextCSEClass = createEClass(CONTEXT_CS);
-		createEReference(contextCSEClass, CONTEXT_CS__OWNED_EXPRESSION);
+		contextCSEClass = createEClass(8);
+		createEReference(contextCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		curlyBracketedClauseCSEClass = createEClass(CURLY_BRACKETED_CLAUSE_CS);
-		createEReference(curlyBracketedClauseCSEClass, CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
-		createEReference(curlyBracketedClauseCSEClass, CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP);
-		createEAttribute(curlyBracketedClauseCSEClass, CURLY_BRACKETED_CLAUSE_CS__VALUE);
+		curlyBracketedClauseCSEClass = createEClass(9);
+		createEReference(curlyBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(curlyBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEAttribute(curlyBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2);
 
-		expCSEClass = createEClass(EXP_CS);
-		createEAttribute(expCSEClass, EXP_CS__HAS_ERROR);
-		createEReference(expCSEClass, EXP_CS__LOCAL_LEFT);
-		createEReference(expCSEClass, EXP_CS__LOCAL_LEFTMOST_DESCENDANT);
-		createEReference(expCSEClass, EXP_CS__LOCAL_PARENT);
-		createEReference(expCSEClass, EXP_CS__LOCAL_RIGHT);
-		createEReference(expCSEClass, EXP_CS__LOCAL_RIGHTMOST_DESCENDANT);
-		createEReference(expCSEClass, EXP_CS__PRECEDENCE);
-		createEAttribute(expCSEClass, EXP_CS__PRECEDENCE_ORDER);
+		expCSEClass = createEClass(10);
+		createEAttribute(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
+		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6);
+		createEAttribute(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7);
 
-		expSpecificationCSEClass = createEClass(EXP_SPECIFICATION_CS);
-		createEReference(expSpecificationCSEClass, EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
+		expSpecificationCSEClass = createEClass(11);
+		createEReference(expSpecificationCSEClass, SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0);
 
-		ifExpCSEClass = createEClass(IF_EXP_CS);
-		createEAttribute(ifExpCSEClass, IF_EXP_CS__IS_IMPLICIT);
-		createEReference(ifExpCSEClass, IF_EXP_CS__OWNED_CONDITION);
-		createEReference(ifExpCSEClass, IF_EXP_CS__OWNED_ELSE_EXPRESSION);
-		createEReference(ifExpCSEClass, IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
-		createEReference(ifExpCSEClass, IF_EXP_CS__OWNED_THEN_EXPRESSION);
+		ifExpCSEClass = createEClass(12);
+		createEAttribute(ifExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
+		createEReference(ifExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
+		createEReference(ifExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2);
+		createEReference(ifExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3);
+		createEReference(ifExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4);
 
-		ifThenExpCSEClass = createEClass(IF_THEN_EXP_CS);
-		createEReference(ifThenExpCSEClass, IF_THEN_EXP_CS__OWNED_CONDITION);
-		createEReference(ifThenExpCSEClass, IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
+		ifThenExpCSEClass = createEClass(13);
+		createEReference(ifThenExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
+		createEReference(ifThenExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
 
-		infixExpCSEClass = createEClass(INFIX_EXP_CS);
-		createEReference(infixExpCSEClass, INFIX_EXP_CS__ARGUMENT);
-		createEReference(infixExpCSEClass, INFIX_EXP_CS__OWNED_LEFT);
+		infixExpCSEClass = createEClass(14);
+		createEReference(infixExpCSEClass, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(infixExpCSEClass, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1);
 
-		invalidLiteralExpCSEClass = createEClass(INVALID_LITERAL_EXP_CS);
+		invalidLiteralExpCSEClass = createEClass(15);
 
-		iterateCallExpCSEClass = createEClass(ITERATE_CALL_EXP_CS);
-		createEReference(iterateCallExpCSEClass, ITERATE_CALL_EXP_CS__ACCUMULATORS);
+		iterateCallExpCSEClass = createEClass(16);
+		createEReference(iterateCallExpCSEClass, IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0);
 
-		iterationCallExpCSEClass = createEClass(ITERATION_CALL_EXP_CS);
-		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__CO_ITERATORS);
-		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__ITERATORS);
-		createEReference(iterationCallExpCSEClass, ITERATION_CALL_EXP_CS__REFERRED_ITERATION);
+		iterationCallExpCSEClass = createEClass(17);
+		createEReference(iterationCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(iterationCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1);
+		createEReference(iterationCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2);
 
-		lambdaLiteralExpCSEClass = createEClass(LAMBDA_LITERAL_EXP_CS);
-		createEReference(lambdaLiteralExpCSEClass, LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
+		lambdaLiteralExpCSEClass = createEClass(18);
+		createEReference(lambdaLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
 
-		letExpCSEClass = createEClass(LET_EXP_CS);
-		createEAttribute(letExpCSEClass, LET_EXP_CS__IS_IMPLICIT);
-		createEReference(letExpCSEClass, LET_EXP_CS__OWNED_IN_EXPRESSION);
-		createEReference(letExpCSEClass, LET_EXP_CS__OWNED_VARIABLES);
+		letExpCSEClass = createEClass(19);
+		createEAttribute(letExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
+		createEReference(letExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
+		createEReference(letExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2);
 
-		letVariableCSEClass = createEClass(LET_VARIABLE_CS);
-		createEReference(letVariableCSEClass, LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		createEReference(letVariableCSEClass, LET_VARIABLE_CS__OWNING_LET_EXPRESSION);
+		letVariableCSEClass = createEClass(20);
+		createEReference(letVariableCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3);
+		createEReference(letVariableCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4);
 
-		literalExpCSEClass = createEClass(LITERAL_EXP_CS);
+		literalExpCSEClass = createEClass(21);
 
-		mapLiteralExpCSEClass = createEClass(MAP_LITERAL_EXP_CS);
-		createEReference(mapLiteralExpCSEClass, MAP_LITERAL_EXP_CS__OWNED_PARTS);
-		createEReference(mapLiteralExpCSEClass, MAP_LITERAL_EXP_CS__OWNED_TYPE);
+		mapLiteralExpCSEClass = createEClass(22);
+		createEReference(mapLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(mapLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1);
 
-		mapLiteralPartCSEClass = createEClass(MAP_LITERAL_PART_CS);
-		createEReference(mapLiteralPartCSEClass, MAP_LITERAL_PART_CS__OWNED_KEY);
-		createEReference(mapLiteralPartCSEClass, MAP_LITERAL_PART_CS__OWNED_VALUE);
+		mapLiteralPartCSEClass = createEClass(23);
+		createEReference(mapLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(mapLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		mapTypeCSEClass = createEClass(MAP_TYPE_CS);
-		createEAttribute(mapTypeCSEClass, MAP_TYPE_CS__NAME);
-		createEReference(mapTypeCSEClass, MAP_TYPE_CS__OWNED_KEY_TYPE);
-		createEReference(mapTypeCSEClass, MAP_TYPE_CS__OWNED_VALUE_TYPE);
+		mapTypeCSEClass = createEClass(24);
+		createEAttribute(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
+		createEReference(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
+		createEReference(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
 
-		nameExpCSEClass = createEClass(NAME_EXP_CS);
+		nameExpCSEClass = createEClass(25);
 
-		navigatingArgCSEClass = createEClass(NAVIGATING_ARG_CS);
-		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION);
-		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
-		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNED_TYPE);
-		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE);
-		createEAttribute(navigatingArgCSEClass, NAVIGATING_ARG_CS__PREFIX);
-		createEAttribute(navigatingArgCSEClass, NAVIGATING_ARG_CS__ROLE);
-		createEReference(navigatingArgCSEClass, NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
+		navigatingArgCSEClass = createEClass(26);
+		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
+		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
+		createEAttribute(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
+		createEAttribute(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
+		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6);
 
-		nestedExpCSEClass = createEClass(NESTED_EXP_CS);
-		createEReference(nestedExpCSEClass, NESTED_EXP_CS__OWNED_EXPRESSION);
+		nestedExpCSEClass = createEClass(27);
+		createEReference(nestedExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
 
-		nullLiteralExpCSEClass = createEClass(NULL_LITERAL_EXP_CS);
+		nullLiteralExpCSEClass = createEClass(28);
 
-		numberLiteralExpCSEClass = createEClass(NUMBER_LITERAL_EXP_CS);
-		createEAttribute(numberLiteralExpCSEClass, NUMBER_LITERAL_EXP_CS__SYMBOL);
+		numberLiteralExpCSEClass = createEClass(29);
+		createEAttribute(numberLiteralExpCSEClass, PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0);
 
-		operationCallExpCSEClass = createEClass(OPERATION_CALL_EXP_CS);
-		createEReference(operationCallExpCSEClass, OPERATION_CALL_EXP_CS__REFERRED_OPERATION);
+		operationCallExpCSEClass = createEClass(30);
+		createEReference(operationCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
 
-		operatorExpCSEClass = createEClass(OPERATOR_EXP_CS);
-		createEReference(operatorExpCSEClass, OPERATOR_EXP_CS__OWNED_RIGHT);
-		createEReference(operatorExpCSEClass, OPERATOR_EXP_CS__SOURCE);
+		operatorExpCSEClass = createEClass(31);
+		createEReference(operatorExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
+		createEReference(operatorExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2);
 
-		patternExpCSEClass = createEClass(PATTERN_EXP_CS);
-		createEReference(patternExpCSEClass, PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
-		createEAttribute(patternExpCSEClass, PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
+		patternExpCSEClass = createEClass(32);
+		createEReference(patternExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
+		createEAttribute(patternExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1);
 
-		prefixExpCSEClass = createEClass(PREFIX_EXP_CS);
+		prefixExpCSEClass = createEClass(33);
 
-		primitiveLiteralExpCSEClass = createEClass(PRIMITIVE_LITERAL_EXP_CS);
+		primitiveLiteralExpCSEClass = createEClass(34);
 
-		propertyCallExpCSEClass = createEClass(PROPERTY_CALL_EXP_CS);
-		createEReference(propertyCallExpCSEClass, PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY);
+		propertyCallExpCSEClass = createEClass(35);
+		createEReference(propertyCallExpCSEClass, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
 
-		roundBracketedClauseCSEClass = createEClass(ROUND_BRACKETED_CLAUSE_CS);
-		createEReference(roundBracketedClauseCSEClass, ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
-		createEReference(roundBracketedClauseCSEClass, ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP);
+		roundBracketedClauseCSEClass = createEClass(36);
+		createEReference(roundBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(roundBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		selfExpCSEClass = createEClass(SELF_EXP_CS);
-		createEAttribute(selfExpCSEClass, SELF_EXP_CS__NAME);
+		selfExpCSEClass = createEClass(37);
+		createEAttribute(selfExpCSEClass, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0);
 
-		shadowExpCSEClass = createEClass(SHADOW_EXP_CS);
-		createEReference(shadowExpCSEClass, SHADOW_EXP_CS__PARTS);
-		createEReference(shadowExpCSEClass, SHADOW_EXP_CS__TYPE_NAME);
-		createEAttribute(shadowExpCSEClass, SHADOW_EXP_CS__VALUE);
+		shadowExpCSEClass = createEClass(38);
+		createEReference(shadowExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(shadowExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1);
+		createEAttribute(shadowExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2);
 
-		shadowPartCSEClass = createEClass(SHADOW_PART_CS);
-		createEReference(shadowPartCSEClass, SHADOW_PART_CS__OWNED_INIT_EXPRESSION);
-		createEReference(shadowPartCSEClass, SHADOW_PART_CS__OWNING_CURLY_BRACKET_CLAUSE);
-		createEReference(shadowPartCSEClass, SHADOW_PART_CS__REFERRED_PROPERTY);
+		shadowPartCSEClass = createEClass(39);
+		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 
-		squareBracketedClauseCSEClass = createEClass(SQUARE_BRACKETED_CLAUSE_CS);
-		createEReference(squareBracketedClauseCSEClass, SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
-		createEReference(squareBracketedClauseCSEClass, SQUARE_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP);
+		squareBracketedClauseCSEClass = createEClass(40);
+		createEReference(squareBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(squareBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		stringLiteralExpCSEClass = createEClass(STRING_LITERAL_EXP_CS);
-		createEAttribute(stringLiteralExpCSEClass, STRING_LITERAL_EXP_CS__SEGMENTS);
+		stringLiteralExpCSEClass = createEClass(41);
+		createEAttribute(stringLiteralExpCSEClass, PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0);
 
-		tupleLiteralExpCSEClass = createEClass(TUPLE_LITERAL_EXP_CS);
-		createEReference(tupleLiteralExpCSEClass, TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
+		tupleLiteralExpCSEClass = createEClass(42);
+		createEReference(tupleLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
 
-		tupleLiteralPartCSEClass = createEClass(TUPLE_LITERAL_PART_CS);
+		tupleLiteralPartCSEClass = createEClass(43);
 
-		typeLiteralExpCSEClass = createEClass(TYPE_LITERAL_EXP_CS);
-		createEReference(typeLiteralExpCSEClass, TYPE_LITERAL_EXP_CS__OWNED_PATH_NAME);
-		createEReference(typeLiteralExpCSEClass, TYPE_LITERAL_EXP_CS__OWNED_TYPE);
+		typeLiteralExpCSEClass = createEClass(44);
+		createEReference(typeLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
+		createEReference(typeLiteralExpCSEClass, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1);
 
-		typeNameExpCSEClass = createEClass(TYPE_NAME_EXP_CS);
-		createEReference(typeNameExpCSEClass, TYPE_NAME_EXP_CS__ELEMENT);
-		createEReference(typeNameExpCSEClass, TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		createEReference(typeNameExpCSEClass, TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
-		createEReference(typeNameExpCSEClass, TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
+		typeNameExpCSEClass = createEClass(45);
+		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
+		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
+		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
+		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3);
 
-		unlimitedNaturalLiteralExpCSEClass = createEClass(UNLIMITED_NATURAL_LITERAL_EXP_CS);
+		unlimitedNaturalLiteralExpCSEClass = createEClass(46);
 
-		variableCSEClass = createEClass(VARIABLE_CS);
-		createEReference(variableCSEClass, VARIABLE_CS__OWNED_INIT_EXPRESSION);
-		createEReference(variableCSEClass, VARIABLE_CS__OWNED_TYPE);
+		variableCSEClass = createEClass(47);
+		createEReference(variableCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(variableCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		variableExpCSEClass = createEClass(VARIABLE_EXP_CS);
-		createEReference(variableExpCSEClass, VARIABLE_EXP_CS__REFERRED_VARIABLE);
+		variableExpCSEClass = createEClass(48);
+		createEReference(variableExpCSEClass, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
 
 		// Create enums
-		navigationRoleEEnum = createEEnum(NAVIGATION_ROLE);
+		navigationRoleEEnum = createEEnum(49);
 	}
 
 	/**

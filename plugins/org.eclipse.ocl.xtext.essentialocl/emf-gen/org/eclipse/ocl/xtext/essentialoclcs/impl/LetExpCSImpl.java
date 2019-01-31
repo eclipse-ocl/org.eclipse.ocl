@@ -48,6 +48,15 @@ public class LetExpCSImpl
 		implements LetExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Let Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LET_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -115,7 +124,7 @@ public class LetExpCSImpl
 	public EList<LetVariableCS> getOwnedVariables() {
 		if (ownedVariables == null)
 		{
-			ownedVariables = new EObjectContainmentWithInverseEList<LetVariableCS>(LetVariableCS.class, this, EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION);
+			ownedVariables = new EObjectContainmentWithInverseEList<LetVariableCS>(LetVariableCS.class, this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4);
 		}
 		return ownedVariables;
 	}
@@ -141,7 +150,7 @@ public class LetExpCSImpl
 		ownedInExpression = newOwnedInExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION, oldOwnedInExpression, newOwnedInExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedInExpression, newOwnedInExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -158,14 +167,14 @@ public class LetExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedInExpression != null)
-				msgs = ((InternalEObject)ownedInExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedInExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedInExpression != null)
-				msgs = ((InternalEObject)newOwnedInExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedInExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedInExpression(newOwnedInExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION, newOwnedInExpression, newOwnedInExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedInExpression, newOwnedInExpression));
 	}
 
 	/**
@@ -190,7 +199,7 @@ public class LetExpCSImpl
 		boolean oldIsImplicit = isImplicit;
 		isImplicit = newIsImplicit;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_EXP_CS__IS_IMPLICIT, oldIsImplicit, isImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldIsImplicit, isImplicit));
 	}
 
 	/**
@@ -214,7 +223,7 @@ public class LetExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedVariables()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -230,9 +239,9 @@ public class LetExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedInExpression(null, msgs);
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedVariables()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -247,11 +256,11 @@ public class LetExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return isIsImplicit();
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedInExpression();
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return getOwnedVariables();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -267,13 +276,13 @@ public class LetExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedInExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				getOwnedVariables().clear();
 				getOwnedVariables().addAll((Collection<? extends LetVariableCS>)newValue);
 				return;
@@ -290,13 +299,13 @@ public class LetExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedInExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				getOwnedVariables().clear();
 				return;
 		}
@@ -312,11 +321,11 @@ public class LetExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_EXP_CS__IS_IMPLICIT:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return isImplicit != IS_IMPLICIT_EDEFAULT;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_IN_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return ownedInExpression != null;
-			case EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return ownedVariables != null && !ownedVariables.isEmpty();
 		}
 		return super.eIsSet(featureID);

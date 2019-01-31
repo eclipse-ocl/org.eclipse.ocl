@@ -30,6 +30,15 @@ import org.eclipse.ocl.xtext.oclinecorecs.util.OCLinEcoreCSVisitor;
 public class TopLevelCSImpl extends RootPackageCSImpl implements TopLevelCS
 {
 	/**
+	 * The number of structural features of the '<em>Top Level CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TOP_LEVEL_CS_FEATURE_COUNT = RootPackageCSImpl.ROOT_PACKAGE_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

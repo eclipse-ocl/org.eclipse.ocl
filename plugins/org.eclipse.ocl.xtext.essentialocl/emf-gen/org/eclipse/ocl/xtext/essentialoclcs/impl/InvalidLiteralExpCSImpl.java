@@ -29,6 +29,15 @@ public class InvalidLiteralExpCSImpl
 		implements InvalidLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Invalid Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INVALID_LITERAL_EXP_CS_FEATURE_COUNT = PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

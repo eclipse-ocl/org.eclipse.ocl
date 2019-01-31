@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  */
 public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS {
 	/**
+	 * The number of structural features of the '<em>Typed Ref CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPED_REF_CS_FEATURE_COUNT = TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedMultiplicity() <em>Owned Multiplicity</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 		ownedMultiplicity = newOwnedMultiplicity;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY, oldOwnedMultiplicity, newOwnedMultiplicity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0, oldOwnedMultiplicity, newOwnedMultiplicity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -102,14 +110,14 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 		{
 			NotificationChain msgs = null;
 			if (ownedMultiplicity != null)
-				msgs = ((InternalEObject)ownedMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)ownedMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedMultiplicity != null)
-				msgs = ((InternalEObject)newOwnedMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)newOwnedMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedMultiplicity(newOwnedMultiplicity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY, newOwnedMultiplicity, newOwnedMultiplicity));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0, newOwnedMultiplicity, newOwnedMultiplicity));
 	}
 
 	/**
@@ -122,7 +130,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY:
+			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedMultiplicity(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,7 +146,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY:
+			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
 				return getOwnedMultiplicity();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -154,7 +162,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY:
+			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
 				setOwnedMultiplicity((MultiplicityCS)newValue);
 				return;
 		}
@@ -171,7 +179,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY:
+			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
 				setOwnedMultiplicity((MultiplicityCS)null);
 				return;
 		}
@@ -188,7 +196,7 @@ public abstract class TypedRefCSImpl extends TypeRefCSImpl implements TypedRefCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPED_REF_CS__OWNED_MULTIPLICITY:
+			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
 				return ownedMultiplicity != null;
 		}
 		return super.eIsSet(featureID);

@@ -31,6 +31,15 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class HeadingElementImpl extends CompoundElementImpl implements HeadingElement {
 	/**
+	 * The number of structural features of the '<em>Heading Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int HEADING_ELEMENT_FEATURE_COUNT = CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getLevel() <em>Level</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +98,7 @@ public class HeadingElementImpl extends CompoundElementImpl implements HeadingEl
 		String oldLevel = level;
 		level = newLevel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.HEADING_ELEMENT__LEVEL, oldLevel, level));
+			eNotify(new ENotificationImpl(this, Notification.SET, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0, oldLevel, level));
 	}
 
 	/**
@@ -110,7 +119,7 @@ public class HeadingElementImpl extends CompoundElementImpl implements HeadingEl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.HEADING_ELEMENT__LEVEL:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				return getLevel();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +133,7 @@ public class HeadingElementImpl extends CompoundElementImpl implements HeadingEl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.HEADING_ELEMENT__LEVEL:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				setLevel((String)newValue);
 				return;
 		}
@@ -139,7 +148,7 @@ public class HeadingElementImpl extends CompoundElementImpl implements HeadingEl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.HEADING_ELEMENT__LEVEL:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				setLevel(LEVEL_EDEFAULT);
 				return;
 		}
@@ -154,7 +163,7 @@ public class HeadingElementImpl extends CompoundElementImpl implements HeadingEl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.HEADING_ELEMENT__LEVEL:
+			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
 				return LEVEL_EDEFAULT == null ? level != null : !LEVEL_EDEFAULT.equals(level);
 		}
 		return super.eIsSet(featureID);

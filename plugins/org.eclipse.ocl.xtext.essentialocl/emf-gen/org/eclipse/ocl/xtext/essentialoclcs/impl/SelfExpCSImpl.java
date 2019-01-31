@@ -37,6 +37,15 @@ public class SelfExpCSImpl
 		implements SelfExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Self Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SELF_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,7 +104,7 @@ public class SelfExpCSImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.SELF_EXP_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -117,7 +126,7 @@ public class SelfExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SELF_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -132,7 +141,7 @@ public class SelfExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SELF_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
 		}
@@ -148,7 +157,7 @@ public class SelfExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SELF_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -164,7 +173,7 @@ public class SelfExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.SELF_EXP_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

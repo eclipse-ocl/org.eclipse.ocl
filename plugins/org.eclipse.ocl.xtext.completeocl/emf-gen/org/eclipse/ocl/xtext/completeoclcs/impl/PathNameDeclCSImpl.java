@@ -44,6 +44,14 @@ public abstract class PathNameDeclCSImpl
 		implements PathNameDeclCS {
 
 	/**
+	 * The number of structural features of the '<em>Path Name Decl CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PATH_NAME_DECL_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedPathName() <em>Owned Path Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +100,7 @@ public abstract class PathNameDeclCSImpl
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -109,14 +117,14 @@ public abstract class PathNameDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -129,7 +137,7 @@ public abstract class PathNameDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -144,7 +152,7 @@ public abstract class PathNameDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedPathName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -159,7 +167,7 @@ public abstract class PathNameDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -175,7 +183,7 @@ public abstract class PathNameDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -191,7 +199,7 @@ public abstract class PathNameDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.PATH_NAME_DECL_CS__OWNED_PATH_NAME:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedPathName != null;
 		}
 		return super.eIsSet(featureID);

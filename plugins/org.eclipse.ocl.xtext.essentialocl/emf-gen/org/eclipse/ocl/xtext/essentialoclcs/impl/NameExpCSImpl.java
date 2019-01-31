@@ -66,6 +66,15 @@ public class NameExpCSImpl
 		implements NameExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Name Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAME_EXP_CS_FEATURE_COUNT = AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 10;
+
+	/**
 	 * The cached value of the '{@link #getParts() <em>Parts</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -216,7 +225,7 @@ public class NameExpCSImpl
 		TypeNameExpCS oldTypeName = typeName;
 		typeName = newTypeName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME, oldTypeName, typeName));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1, oldTypeName, typeName));
 	}
 
 	/**
@@ -229,7 +238,7 @@ public class NameExpCSImpl
 	{
 		if (parts == null)
 		{
-			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, EssentialOCLCSPackage.NAME_EXP_CS__PARTS);
+			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return parts;
 	}
@@ -256,7 +265,7 @@ public class NameExpCSImpl
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2, oldValue, value));
 	}
 
 	/**
@@ -269,7 +278,7 @@ public class NameExpCSImpl
 	{
 		if (coIterators == null)
 		{
-			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS);
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3);
 		}
 		return coIterators;
 	}
@@ -296,7 +305,7 @@ public class NameExpCSImpl
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -309,7 +318,7 @@ public class NameExpCSImpl
 	{
 		if (iterators == null)
 		{
-			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS);
+			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4);
 		}
 		return iterators;
 	}
@@ -324,7 +333,7 @@ public class NameExpCSImpl
 	{
 		if (accumulators == null)
 		{
-			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS);
+			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6);
 		}
 		return accumulators;
 	}
@@ -351,7 +360,7 @@ public class NameExpCSImpl
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -376,7 +385,7 @@ public class NameExpCSImpl
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -401,7 +410,7 @@ public class NameExpCSImpl
 		Variable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -444,25 +453,25 @@ public class NameExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAME_EXP_CS__PARTS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getParts();
-			case EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
 				return getTypeName();
-			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
 				return getValue();
-			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
 				return getCoIterators();
-			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
 				return getIterators();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
 				return getReferredIteration();
-			case EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
 				return getAccumulators();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
 				return getReferredOperation();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
 				return getReferredProperty();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -478,38 +487,38 @@ public class NameExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAME_EXP_CS__PARTS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
 				getParts().clear();
 				getParts().addAll((Collection<? extends ShadowPartCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
 				setTypeName((TypeNameExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
 				setValue((String)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
 				setReferredIteration((Iteration)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
 				getAccumulators().clear();
 				getAccumulators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
 				setReferredOperation((Operation)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
 				setReferredProperty((Property)newValue);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
 				setReferredVariable((Variable)newValue);
 				return;
 		}
@@ -525,34 +534,34 @@ public class NameExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAME_EXP_CS__PARTS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
 				getParts().clear();
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
 				setTypeName((TypeNameExpCS)null);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
 				setValue(VALUE_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
 				getCoIterators().clear();
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
 				getIterators().clear();
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
 				setReferredIteration((Iteration)null);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
 				getAccumulators().clear();
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
 				setReferredOperation((Operation)null);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
 				setReferredProperty((Property)null);
 				return;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
 				setReferredVariable((Variable)null);
 				return;
 		}
@@ -568,25 +577,25 @@ public class NameExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAME_EXP_CS__PARTS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
 				return parts != null && !parts.isEmpty();
-			case EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
 				return typeName != null;
-			case EssentialOCLCSPackage.NAME_EXP_CS__VALUE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
 				return coIterators != null && !coIterators.isEmpty();
-			case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
 				return iterators != null && !iterators.isEmpty();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
 				return referredIteration != null;
-			case EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
 				return accumulators != null && !accumulators.isEmpty();
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
 				return referredOperation != null;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
 				return referredProperty != null;
-			case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE:
+			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);
@@ -604,9 +613,9 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__PARTS: return EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS;
-				case EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME: return EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME;
-				case EssentialOCLCSPackage.NAME_EXP_CS__VALUE: return EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -614,9 +623,9 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS;
-				case EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS;
-				case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION: return EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -624,7 +633,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS: return EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6: return IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -632,7 +641,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION: return EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -640,7 +649,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY: return EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -648,7 +657,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE: return EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE;
+				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -667,9 +676,9 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.SHADOW_EXP_CS__PARTS: return EssentialOCLCSPackage.NAME_EXP_CS__PARTS;
-				case EssentialOCLCSPackage.SHADOW_EXP_CS__TYPE_NAME: return EssentialOCLCSPackage.NAME_EXP_CS__TYPE_NAME;
-				case EssentialOCLCSPackage.SHADOW_EXP_CS__VALUE: return EssentialOCLCSPackage.NAME_EXP_CS__VALUE;
+				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0;
+				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1;
+				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}
@@ -677,9 +686,9 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS: return EssentialOCLCSPackage.NAME_EXP_CS__CO_ITERATORS;
-				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS: return EssentialOCLCSPackage.NAME_EXP_CS__ITERATORS;
-				case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION: return EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_ITERATION;
+				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3;
+				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4;
+				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5;
 				default: return -1;
 			}
 		}
@@ -687,7 +696,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS: return EssentialOCLCSPackage.NAME_EXP_CS__ACCUMULATORS;
+				case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6;
 				default: return -1;
 			}
 		}
@@ -695,7 +704,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.OPERATION_CALL_EXP_CS__REFERRED_OPERATION: return EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_OPERATION;
+				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7;
 				default: return -1;
 			}
 		}
@@ -703,7 +712,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY: return EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_PROPERTY;
+				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8;
 				default: return -1;
 			}
 		}
@@ -711,7 +720,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE: return EssentialOCLCSPackage.NAME_EXP_CS__REFERRED_VARIABLE;
+				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9;
 				default: return -1;
 			}
 		}

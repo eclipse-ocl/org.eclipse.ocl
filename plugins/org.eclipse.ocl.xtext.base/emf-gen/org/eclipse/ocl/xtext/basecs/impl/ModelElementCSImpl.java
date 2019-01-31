@@ -41,6 +41,15 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
  */
 public abstract class ModelElementCSImpl extends PivotableElementCSImpl implements ModelElementCS {
 	/**
+	 * The number of structural features of the '<em>Model Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MODEL_ELEMENT_CS_FEATURE_COUNT = PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getOriginalXmiId() <em>Original Xmi Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -99,7 +108,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	{
 		if (ownedAnnotations == null)
 		{
-			ownedAnnotations = new EObjectContainmentEList<AnnotationElementCS>(AnnotationElementCS.class, this, BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+			ownedAnnotations = new EObjectContainmentEList<AnnotationElementCS>(AnnotationElementCS.class, this, PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedAnnotations;
 	}
@@ -124,7 +133,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 		String oldOriginalXmiId = originalXmiId;
 		originalXmiId = newOriginalXmiId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID, oldOriginalXmiId, originalXmiId));
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0, oldOriginalXmiId, originalXmiId));
 	}
 
 	/**
@@ -146,7 +155,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -161,9 +170,9 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOriginalXmiId();
-			case BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedAnnotations();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -179,10 +188,10 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOriginalXmiId((String)newValue);
 				return;
-			case BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends AnnotationElementCS>)newValue);
 				return;
@@ -199,10 +208,10 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOriginalXmiId(ORIGINAL_XMI_ID_EDEFAULT);
 				return;
-			case BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedAnnotations().clear();
 				return;
 		}
@@ -218,9 +227,9 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ORIGINAL_XMI_ID_EDEFAULT == null ? originalXmiId != null : !ORIGINAL_XMI_ID_EDEFAULT.equals(originalXmiId);
-			case BaseCSPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS:
+			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
 		}
 		return super.eIsSet(featureID);

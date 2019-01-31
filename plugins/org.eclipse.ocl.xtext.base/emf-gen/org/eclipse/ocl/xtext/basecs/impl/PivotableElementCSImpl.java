@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 public abstract class PivotableElementCSImpl extends ElementCSImpl implements PivotableElementCS
 {
 	/**
+	 * The number of structural features of the '<em>Pivotable Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PIVOTABLE_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getPivot() <em>Pivot</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		Element oldPivot = pivot;
 		pivot = newPivot;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PIVOTABLE_ELEMENT_CS__PIVOT, oldPivot, pivot));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldPivot, pivot));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS__PIVOT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return getPivot();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +122,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS__PIVOT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setPivot((Element)newValue);
 				return;
 		}
@@ -131,7 +139,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS__PIVOT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setPivot((Element)null);
 				return;
 		}
@@ -148,7 +156,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS__PIVOT:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return pivot != null;
 		}
 		return super.eIsSet(featureID);

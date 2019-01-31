@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implements IterateCallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Iterate Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ITERATE_CALL_EXP_CS_FEATURE_COUNT = IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getAccumulators() <em>Accumulators</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,7 +82,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		if (accumulators == null)
 		{
-			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS);
+			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return accumulators;
 	}
@@ -89,7 +97,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS:
+			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getAccumulators();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -106,7 +114,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS:
+			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
 				getAccumulators().clear();
 				getAccumulators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
@@ -124,7 +132,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS:
+			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
 				getAccumulators().clear();
 				return;
 		}
@@ -141,7 +149,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATE_CALL_EXP_CS__ACCUMULATORS:
+			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
 				return accumulators != null && !accumulators.isEmpty();
 		}
 		return super.eIsSet(featureID);

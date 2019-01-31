@@ -49,6 +49,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class CollectionPatternCSImpl extends TypedRefCSImpl implements CollectionPatternCS
 {
 	/**
+	 * The number of structural features of the '<em>Collection Pattern CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_PATTERN_CS_FEATURE_COUNT = TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4;
+
+	/**
 	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -141,7 +150,7 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -159,14 +168,14 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -179,7 +188,7 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<PatternExpCS>(PatternExpCS.class, this, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<PatternExpCS>(PatternExpCS.class, this, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
 		}
 		return ownedParts;
 	}
@@ -206,7 +215,7 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 		String oldRestVariableName = restVariableName;
 		restVariableName = newRestVariableName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, oldRestVariableName, restVariableName));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3, oldRestVariableName, restVariableName));
 	}
 
 	/**
@@ -231,7 +240,7 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 		ownedPatternGuard = newOwnedPatternGuard;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD, oldOwnedPatternGuard, newOwnedPatternGuard);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, oldOwnedPatternGuard, newOwnedPatternGuard);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -249,14 +258,14 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 		{
 			NotificationChain msgs = null;
 			if (ownedPatternGuard != null)
-				msgs = ((InternalEObject)ownedPatternGuard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD, null, msgs);
+				msgs = ((InternalEObject)ownedPatternGuard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedPatternGuard != null)
-				msgs = ((InternalEObject)newOwnedPatternGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD, null, msgs);
+				msgs = ((InternalEObject)newOwnedPatternGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedPatternGuard(newOwnedPatternGuard, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD, newOwnedPatternGuard, newOwnedPatternGuard));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, newOwnedPatternGuard, newOwnedPatternGuard));
 	}
 
 	/**
@@ -279,11 +288,11 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedPatternGuard(null, msgs);
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -299,13 +308,13 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return getOwnedParts();
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return getOwnedPatternGuard();
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return getOwnedType();
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
 				return getRestVariableName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -322,17 +331,17 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends PatternExpCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedPatternGuard((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedType((CollectionTypeCS)newValue);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
 				setRestVariableName((String)newValue);
 				return;
 		}
@@ -349,16 +358,16 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				setOwnedPatternGuard((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				setOwnedType((CollectionTypeCS)null);
 				return;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
 				setRestVariableName(REST_VARIABLE_NAME_EDEFAULT);
 				return;
 		}
@@ -375,13 +384,13 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PARTS:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return ownedParts != null && !ownedParts.isEmpty();
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_PATTERN_GUARD:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
 				return ownedPatternGuard != null;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__OWNED_TYPE:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
 				return ownedType != null;
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
 				return REST_VARIABLE_NAME_EDEFAULT == null ? restVariableName != null : !REST_VARIABLE_NAME_EDEFAULT.equals(restVariableName);
 		}
 		return super.eIsSet(featureID);

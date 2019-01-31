@@ -77,7 +77,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-			case BaseCSPackage.ANNOTATION_CS:
+			case 0:
 			{
 				AnnotationCS annotationCS = (AnnotationCS)theEObject;
 				T result = caseAnnotationCS(annotationCS);
@@ -89,7 +89,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS:
+			case 1:
 			{
 				AnnotationElementCS annotationElementCS = (AnnotationElementCS)theEObject;
 				T result = caseAnnotationElementCS(annotationElementCS);
@@ -100,7 +100,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ATTRIBUTE_CS:
+			case 2:
 			{
 				AttributeCS attributeCS = (AttributeCS)theEObject;
 				T result = caseAttributeCS(attributeCS);
@@ -114,7 +114,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.CLASS_CS:
+			case 3:
 			{
 				ClassCS classCS = (ClassCS)theEObject;
 				T result = caseClassCS(classCS);
@@ -127,7 +127,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.CONSTRAINT_CS:
+			case 4:
 			{
 				ConstraintCS constraintCS = (ConstraintCS)theEObject;
 				T result = caseConstraintCS(constraintCS);
@@ -138,7 +138,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.CONTEXT_LESS_ELEMENT_CS:
+			case 5:
 			{
 				ContextLessElementCS contextLessElementCS = (ContextLessElementCS)theEObject;
 				T result = caseContextLessElementCS(contextLessElementCS);
@@ -146,7 +146,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.DATA_TYPE_CS:
+			case 6:
 			{
 				DataTypeCS dataTypeCS = (DataTypeCS)theEObject;
 				T result = caseDataTypeCS(dataTypeCS);
@@ -161,7 +161,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.DETAIL_CS:
+			case 7:
 			{
 				DetailCS detailCS = (DetailCS)theEObject;
 				T result = caseDetailCS(detailCS);
@@ -172,7 +172,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.DOCUMENTATION_CS:
+			case 8:
 			{
 				DocumentationCS documentationCS = (DocumentationCS)theEObject;
 				T result = caseDocumentationCS(documentationCS);
@@ -184,14 +184,14 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ELEMENT_CS:
+			case 9:
 			{
 				ElementCS elementCS = (ElementCS)theEObject;
 				T result = caseElementCS(elementCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ELEMENT_REF_CS:
+			case 10:
 			{
 				ElementRefCS elementRefCS = (ElementRefCS)theEObject;
 				T result = caseElementRefCS(elementRefCS);
@@ -200,7 +200,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ENUMERATION_CS:
+			case 11:
 			{
 				EnumerationCS enumerationCS = (EnumerationCS)theEObject;
 				T result = caseEnumerationCS(enumerationCS);
@@ -215,7 +215,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ENUMERATION_LITERAL_CS:
+			case 12:
 			{
 				EnumerationLiteralCS enumerationLiteralCS = (EnumerationLiteralCS)theEObject;
 				T result = caseEnumerationLiteralCS(enumerationLiteralCS);
@@ -226,7 +226,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.FEATURE_CS:
+			case 13:
 			{
 				FeatureCS featureCS = (FeatureCS)theEObject;
 				T result = caseFeatureCS(featureCS);
@@ -238,7 +238,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.IMPORT_CS:
+			case 14:
 			{
 				ImportCS importCS = (ImportCS)theEObject;
 				T result = caseImportCS(importCS);
@@ -250,7 +250,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.LAMBDA_TYPE_CS:
+			case 15:
 			{
 				LambdaTypeCS lambdaTypeCS = (LambdaTypeCS)theEObject;
 				T result = caseLambdaTypeCS(lambdaTypeCS);
@@ -263,7 +263,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.MODEL_ELEMENT_CS:
+			case 16:
 			{
 				ModelElementCS modelElementCS = (ModelElementCS)theEObject;
 				T result = caseModelElementCS(modelElementCS);
@@ -272,7 +272,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS:
+			case 17:
 			{
 				ModelElementRefCS modelElementRefCS = (ModelElementRefCS)theEObject;
 				T result = caseModelElementRefCS(modelElementRefCS);
@@ -282,7 +282,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS:
+			case 18:
 			{
 				MultiplicityBoundsCS multiplicityBoundsCS = (MultiplicityBoundsCS)theEObject;
 				T result = caseMultiplicityBoundsCS(multiplicityBoundsCS);
@@ -291,7 +291,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.MULTIPLICITY_CS:
+			case 19:
 			{
 				MultiplicityCS multiplicityCS = (MultiplicityCS)theEObject;
 				T result = caseMultiplicityCS(multiplicityCS);
@@ -299,7 +299,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.MULTIPLICITY_STRING_CS:
+			case 20:
 			{
 				MultiplicityStringCS multiplicityStringCS = (MultiplicityStringCS)theEObject;
 				T result = caseMultiplicityStringCS(multiplicityStringCS);
@@ -308,7 +308,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.NAMED_ELEMENT_CS:
+			case 21:
 			{
 				NamedElementCS namedElementCS = (NamedElementCS)theEObject;
 				T result = caseNamedElementCS(namedElementCS);
@@ -318,7 +318,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.NAMESPACE_CS:
+			case 22:
 			{
 				NamespaceCS namespaceCS = (NamespaceCS)theEObject;
 				T result = caseNamespaceCS(namespaceCS);
@@ -329,7 +329,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.OPERATION_CS:
+			case 23:
 			{
 				OperationCS operationCS = (OperationCS)theEObject;
 				T result = caseOperationCS(operationCS);
@@ -343,7 +343,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PACKAGE_CS:
+			case 24:
 			{
 				PackageCS packageCS = (PackageCS)theEObject;
 				T result = casePackageCS(packageCS);
@@ -356,7 +356,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PACKAGE_OWNER_CS:
+			case 25:
 			{
 				PackageOwnerCS packageOwnerCS = (PackageOwnerCS)theEObject;
 				T result = casePackageOwnerCS(packageOwnerCS);
@@ -366,7 +366,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PARAMETER_CS:
+			case 26:
 			{
 				ParameterCS parameterCS = (ParameterCS)theEObject;
 				T result = caseParameterCS(parameterCS);
@@ -378,7 +378,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PATH_ELEMENT_CS:
+			case 27:
 			{
 				PathElementCS pathElementCS = (PathElementCS)theEObject;
 				T result = casePathElementCS(pathElementCS);
@@ -386,7 +386,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS:
+			case 28:
 			{
 				PathElementWithURICS pathElementWithURICS = (PathElementWithURICS)theEObject;
 				T result = casePathElementWithURICS(pathElementWithURICS);
@@ -395,7 +395,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PATH_NAME_CS:
+			case 29:
 			{
 				PathNameCS pathNameCS = (PathNameCS)theEObject;
 				T result = casePathNameCS(pathNameCS);
@@ -403,7 +403,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS:
+			case 30:
 			{
 				PivotableElementCS pivotableElementCS = (PivotableElementCS)theEObject;
 				T result = casePivotableElementCS(pivotableElementCS);
@@ -411,7 +411,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
+			case 31:
 			{
 				PrimitiveTypeRefCS primitiveTypeRefCS = (PrimitiveTypeRefCS)theEObject;
 				T result = casePrimitiveTypeRefCS(primitiveTypeRefCS);
@@ -423,7 +423,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.REFERENCE_CS:
+			case 32:
 			{
 				ReferenceCS referenceCS = (ReferenceCS)theEObject;
 				T result = caseReferenceCS(referenceCS);
@@ -437,7 +437,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ROOT_CS:
+			case 33:
 			{
 				RootCS rootCS = (RootCS)theEObject;
 				T result = caseRootCS(rootCS);
@@ -447,7 +447,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.ROOT_PACKAGE_CS:
+			case 34:
 			{
 				RootPackageCS rootPackageCS = (RootPackageCS)theEObject;
 				T result = caseRootPackageCS(rootPackageCS);
@@ -459,7 +459,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.SPECIFICATION_CS:
+			case 35:
 			{
 				SpecificationCS specificationCS = (SpecificationCS)theEObject;
 				T result = caseSpecificationCS(specificationCS);
@@ -469,7 +469,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.STRUCTURAL_FEATURE_CS:
+			case 36:
 			{
 				StructuralFeatureCS structuralFeatureCS = (StructuralFeatureCS)theEObject;
 				T result = caseStructuralFeatureCS(structuralFeatureCS);
@@ -482,7 +482,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.STRUCTURED_CLASS_CS:
+			case 37:
 			{
 				StructuredClassCS structuredClassCS = (StructuredClassCS)theEObject;
 				T result = caseStructuredClassCS(structuredClassCS);
@@ -497,7 +497,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TEMPLATE_BINDING_CS:
+			case 38:
 			{
 				TemplateBindingCS templateBindingCS = (TemplateBindingCS)theEObject;
 				T result = caseTemplateBindingCS(templateBindingCS);
@@ -507,7 +507,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TEMPLATE_PARAMETER_CS:
+			case 39:
 			{
 				TemplateParameterCS templateParameterCS = (TemplateParameterCS)theEObject;
 				T result = caseTemplateParameterCS(templateParameterCS);
@@ -518,7 +518,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS:
+			case 40:
 			{
 				TemplateParameterSubstitutionCS templateParameterSubstitutionCS = (TemplateParameterSubstitutionCS)theEObject;
 				T result = caseTemplateParameterSubstitutionCS(templateParameterSubstitutionCS);
@@ -528,7 +528,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TEMPLATE_SIGNATURE_CS:
+			case 41:
 			{
 				TemplateSignatureCS templateSignatureCS = (TemplateSignatureCS)theEObject;
 				T result = caseTemplateSignatureCS(templateSignatureCS);
@@ -538,7 +538,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS:
+			case 42:
 			{
 				TemplateableElementCS templateableElementCS = (TemplateableElementCS)theEObject;
 				T result = caseTemplateableElementCS(templateableElementCS);
@@ -546,7 +546,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TUPLE_PART_CS:
+			case 43:
 			{
 				TuplePartCS tuplePartCS = (TuplePartCS)theEObject;
 				T result = caseTuplePartCS(tuplePartCS);
@@ -558,7 +558,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TUPLE_TYPE_CS:
+			case 44:
 			{
 				TupleTypeCS tupleTypeCS = (TupleTypeCS)theEObject;
 				T result = caseTupleTypeCS(tupleTypeCS);
@@ -570,7 +570,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPE_CS:
+			case 45:
 			{
 				TypeCS typeCS = (TypeCS)theEObject;
 				T result = caseTypeCS(typeCS);
@@ -580,7 +580,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPE_PARAMETER_CS:
+			case 46:
 			{
 				TypeParameterCS typeParameterCS = (TypeParameterCS)theEObject;
 				T result = caseTypeParameterCS(typeParameterCS);
@@ -593,7 +593,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPE_REF_CS:
+			case 47:
 			{
 				TypeRefCS typeRefCS = (TypeRefCS)theEObject;
 				T result = caseTypeRefCS(typeRefCS);
@@ -603,7 +603,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPED_ELEMENT_CS:
+			case 48:
 			{
 				TypedElementCS typedElementCS = (TypedElementCS)theEObject;
 				T result = caseTypedElementCS(typedElementCS);
@@ -614,7 +614,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPED_REF_CS:
+			case 49:
 			{
 				TypedRefCS typedRefCS = (TypedRefCS)theEObject;
 				T result = caseTypedRefCS(typedRefCS);
@@ -625,7 +625,7 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.TYPED_TYPE_REF_CS:
+			case 50:
 			{
 				TypedTypeRefCS typedTypeRefCS = (TypedTypeRefCS)theEObject;
 				T result = caseTypedTypeRefCS(typedTypeRefCS);
@@ -637,14 +637,14 @@ public class BaseCSSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.VISITABLE_CS:
+			case 51:
 			{
 				VisitableCS visitableCS = (VisitableCS)theEObject;
 				T result = caseVisitableCS(visitableCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BaseCSPackage.WILDCARD_TYPE_REF_CS:
+			case 52:
 			{
 				WildcardTypeRefCS wildcardTypeRefCS = (WildcardTypeRefCS)theEObject;
 				T result = caseWildcardTypeRefCS(wildcardTypeRefCS);

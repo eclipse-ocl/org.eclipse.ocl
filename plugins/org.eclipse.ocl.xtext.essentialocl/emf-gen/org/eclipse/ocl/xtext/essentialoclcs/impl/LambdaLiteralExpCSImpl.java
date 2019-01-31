@@ -38,6 +38,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLiteralExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Lambda Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LAMBDA_LITERAL_EXP_CS_FEATURE_COUNT = LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedExpressionCS() <em>Owned Expression CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +97,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 		ownedExpressionCS = newOwnedExpressionCS;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, oldOwnedExpressionCS, newOwnedExpressionCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0, oldOwnedExpressionCS, newOwnedExpressionCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -107,14 +115,14 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 		{
 			NotificationChain msgs = null;
 			if (ownedExpressionCS != null)
-				msgs = ((InternalEObject)ownedExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)ownedExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedExpressionCS != null)
-				msgs = ((InternalEObject)newOwnedExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)newOwnedExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedExpressionCS(newOwnedExpressionCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, newOwnedExpressionCS, newOwnedExpressionCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0, newOwnedExpressionCS, newOwnedExpressionCS));
 	}
 
 	/**
@@ -127,7 +135,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedExpressionCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -143,7 +151,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedExpressionCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -159,7 +167,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setOwnedExpressionCS((ExpCS)newValue);
 				return;
 		}
@@ -176,7 +184,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setOwnedExpressionCS((ExpCS)null);
 				return;
 		}
@@ -193,7 +201,7 @@ public class LambdaLiteralExpCSImpl extends LiteralExpCSImpl implements LambdaLi
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS:
+			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return ownedExpressionCS != null;
 		}
 		return super.eIsSet(featureID);

@@ -46,6 +46,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiteralPartCS
 {
 	/**
+	 * The number of structural features of the '<em>Map Literal Part CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_LITERAL_PART_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedKey() <em>Owned Key</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -108,7 +117,7 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 		ownedKey = newOwnedKey;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY, oldOwnedKey, newOwnedKey);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedKey, newOwnedKey);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -126,14 +135,14 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 		{
 			NotificationChain msgs = null;
 			if (ownedKey != null)
-				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY, null, msgs);
+				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedKey != null)
-				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY, null, msgs);
+				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedKey(newOwnedKey, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY, newOwnedKey, newOwnedKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedKey, newOwnedKey));
 	}
 
 	/**
@@ -158,7 +167,7 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 		ownedValue = newOwnedValue;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE, oldOwnedValue, newOwnedValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedValue, newOwnedValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -176,14 +185,14 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 		{
 			NotificationChain msgs = null;
 			if (ownedValue != null)
-				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE, null, msgs);
+				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedValue != null)
-				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE, null, msgs);
+				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedValue(newOwnedValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE, newOwnedValue, newOwnedValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedValue, newOwnedValue));
 	}
 
 	/**
@@ -196,9 +205,9 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedKey(null, msgs);
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -214,9 +223,9 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedKey();
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -232,10 +241,10 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedKey((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedValue((ExpCS)newValue);
 				return;
 		}
@@ -252,10 +261,10 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedKey((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedValue((ExpCS)null);
 				return;
 		}
@@ -272,9 +281,9 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_KEY:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedKey != null;
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS__OWNED_VALUE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedValue != null;
 		}
 		return super.eIsSet(featureID);

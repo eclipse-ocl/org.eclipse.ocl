@@ -18,6 +18,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.impl.AttributeCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.OperationCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.PackageCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.StructuredClassCSImpl;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
@@ -499,43 +505,43 @@ implements OCLstdlibCSPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		javaClassCSEClass = createEClass(JAVA_CLASS_CS);
+		javaClassCSEClass = createEClass(0);
 
-		javaImplementationCSEClass = createEClass(JAVA_IMPLEMENTATION_CS);
-		createEReference(javaImplementationCSEClass, JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
+		javaImplementationCSEClass = createEClass(1);
+		createEReference(javaImplementationCSEClass, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0);
 
-		libClassCSEClass = createEClass(LIB_CLASS_CS);
-		createEReference(libClassCSEClass, LIB_CLASS_CS__METACLASS_NAME);
+		libClassCSEClass = createEClass(2);
+		createEReference(libClassCSEClass, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0);
 
-		libCoercionCSEClass = createEClass(LIB_COERCION_CS);
+		libCoercionCSEClass = createEClass(3);
 
-		libConstraintCSEClass = createEClass(LIB_CONSTRAINT_CS);
+		libConstraintCSEClass = createEClass(4);
 
-		libIterationCSEClass = createEClass(LIB_ITERATION_CS);
-		createEAttribute(libIterationCSEClass, LIB_ITERATION_CS__IS_INVALIDATING);
-		createEAttribute(libIterationCSEClass, LIB_ITERATION_CS__IS_VALIDATING);
-		createEReference(libIterationCSEClass, LIB_ITERATION_CS__OWNED_ACCUMULATORS);
-		createEReference(libIterationCSEClass, LIB_ITERATION_CS__OWNED_ITERATORS);
+		libIterationCSEClass = createEClass(5);
+		createEAttribute(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1);
+		createEAttribute(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2);
+		createEReference(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
+		createEReference(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
 
-		libOperationCSEClass = createEClass(LIB_OPERATION_CS);
-		createEAttribute(libOperationCSEClass, LIB_OPERATION_CS__IS_INVALIDATING);
-		createEAttribute(libOperationCSEClass, LIB_OPERATION_CS__IS_STATIC);
-		createEAttribute(libOperationCSEClass, LIB_OPERATION_CS__IS_VALIDATING);
-		createEReference(libOperationCSEClass, LIB_OPERATION_CS__PRECEDENCE);
+		libOperationCSEClass = createEClass(6);
+		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1);
+		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2);
+		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
+		createEReference(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
 
-		libPackageCSEClass = createEClass(LIB_PACKAGE_CS);
-		createEReference(libPackageCSEClass, LIB_PACKAGE_CS__OWNED_PRECEDENCES);
+		libPackageCSEClass = createEClass(7);
+		createEReference(libPackageCSEClass, PackageCSImpl.PACKAGE_CS_FEATURE_COUNT + 0);
 
-		libPropertyCSEClass = createEClass(LIB_PROPERTY_CS);
-		createEAttribute(libPropertyCSEClass, LIB_PROPERTY_CS__IS_STATIC);
+		libPropertyCSEClass = createEClass(8);
+		createEAttribute(libPropertyCSEClass, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1);
 
-		libRootPackageCSEClass = createEClass(LIB_ROOT_PACKAGE_CS);
+		libRootPackageCSEClass = createEClass(9);
 
-		metaclassNameCSEClass = createEClass(METACLASS_NAME_CS);
-		createEAttribute(metaclassNameCSEClass, METACLASS_NAME_CS__NAME);
+		metaclassNameCSEClass = createEClass(10);
+		createEAttribute(metaclassNameCSEClass, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0);
 
-		precedenceCSEClass = createEClass(PRECEDENCE_CS);
-		createEAttribute(precedenceCSEClass, PRECEDENCE_CS__IS_RIGHT_ASSOCIATIVE);
+		precedenceCSEClass = createEClass(11);
+		createEAttribute(precedenceCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
 	}
 
 	/**

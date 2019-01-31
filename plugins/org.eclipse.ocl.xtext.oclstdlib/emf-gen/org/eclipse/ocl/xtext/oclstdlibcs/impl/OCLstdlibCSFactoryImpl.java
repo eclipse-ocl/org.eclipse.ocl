@@ -82,17 +82,17 @@ implements OCLstdlibCSFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case OCLstdlibCSPackage.JAVA_CLASS_CS: return createJavaClassCS();
-			case OCLstdlibCSPackage.LIB_CLASS_CS: return createLibClassCS();
-			case OCLstdlibCSPackage.LIB_COERCION_CS: return createLibCoercionCS();
-			case OCLstdlibCSPackage.LIB_CONSTRAINT_CS: return createLibConstraintCS();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS: return createLibIterationCS();
-			case OCLstdlibCSPackage.LIB_OPERATION_CS: return createLibOperationCS();
-			case OCLstdlibCSPackage.LIB_PACKAGE_CS: return createLibPackageCS();
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS: return createLibPropertyCS();
-			case OCLstdlibCSPackage.LIB_ROOT_PACKAGE_CS: return createLibRootPackageCS();
-			case OCLstdlibCSPackage.METACLASS_NAME_CS: return createMetaclassNameCS();
-			case OCLstdlibCSPackage.PRECEDENCE_CS: return createPrecedenceCS();
+			case 0: return createJavaClassCS();
+			case 2: return createLibClassCS();
+			case 3: return createLibCoercionCS();
+			case 4: return createLibConstraintCS();
+			case 5: return createLibIterationCS();
+			case 6: return createLibOperationCS();
+			case 7: return createLibPackageCS();
+			case 8: return createLibPropertyCS();
+			case 9: return createLibRootPackageCS();
+			case 10: return createMetaclassNameCS();
+			case 11: return createPrecedenceCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

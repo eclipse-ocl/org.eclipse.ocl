@@ -39,6 +39,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class TypeParameterCSImpl extends TemplateParameterCSImpl implements TypeParameterCS {
 	/**
+	 * The number of structural features of the '<em>Type Parameter CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_PARAMETER_CS_FEATURE_COUNT = TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedExtends() <em>Owned Extends</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,7 +84,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public EList<TypedRefCS> getOwnedExtends() {
 		if (ownedExtends == null)
 		{
-			ownedExtends = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+			ownedExtends = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0);
 		}
 		return ownedExtends;
 	}
@@ -90,7 +98,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS:
+			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedExtends()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -105,7 +113,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS:
+			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
 				return getOwnedExtends();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -121,7 +129,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS:
+			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
 				getOwnedExtends().clear();
 				getOwnedExtends().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
@@ -138,7 +146,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS:
+			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
 				getOwnedExtends().clear();
 				return;
 		}
@@ -154,7 +162,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TYPE_PARAMETER_CS__OWNED_EXTENDS:
+			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
 				return ownedExtends != null && !ownedExtends.isEmpty();
 		}
 		return super.eIsSet(featureID);

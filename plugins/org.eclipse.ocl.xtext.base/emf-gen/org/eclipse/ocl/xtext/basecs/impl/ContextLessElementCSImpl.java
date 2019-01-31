@@ -24,6 +24,15 @@ import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 public abstract class ContextLessElementCSImpl extends ElementCSImpl implements ContextLessElementCS
 {
 	/**
+	 * The number of structural features of the '<em>Context Less Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

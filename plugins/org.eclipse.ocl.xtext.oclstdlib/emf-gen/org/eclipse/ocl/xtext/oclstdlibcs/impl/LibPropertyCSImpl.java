@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.impl.AttributeCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
@@ -41,6 +42,15 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
 public class LibPropertyCSImpl
 		extends AttributeCSImpl
 		implements LibPropertyCS {
+
+	/**
+	 * The number of structural features of the '<em>Lib Property CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_PROPERTY_CS_FEATURE_COUNT = AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
@@ -105,7 +115,7 @@ public class LibPropertyCSImpl
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -132,7 +142,7 @@ public class LibPropertyCSImpl
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 	}
 
 	/**
@@ -155,7 +165,7 @@ public class LibPropertyCSImpl
 		boolean oldIsStatic = isStatic;
 		isStatic = newIsStatic;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_PROPERTY_CS__IS_STATIC, oldIsStatic, isStatic));
+			eNotify(new ENotificationImpl(this, Notification.SET, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1, oldIsStatic, isStatic));
 	}
 
 	/**
@@ -167,10 +177,10 @@ public class LibPropertyCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IS_STATIC:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				return isIsStatic();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -185,10 +195,10 @@ public class LibPropertyCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IS_STATIC:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				setIsStatic((Boolean)newValue);
 				return;
 		}
@@ -204,10 +214,10 @@ public class LibPropertyCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)null);
 				return;
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IS_STATIC:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
 		}
@@ -223,9 +233,9 @@ public class LibPropertyCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0:
 				return implementation != null;
-			case OCLstdlibCSPackage.LIB_PROPERTY_CS__IS_STATIC:
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				return isStatic != IS_STATIC_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -242,7 +252,7 @@ public class LibPropertyCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION: return OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION;
+				case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -260,7 +270,7 @@ public class LibPropertyCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.LIB_PROPERTY_CS__IMPLEMENTATION;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

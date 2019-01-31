@@ -88,7 +88,7 @@ protected T doSwitch(int classifierID, EObject theEObject)
   {
 		switch (classifierID)
 		{
-			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS:
+			case 0:
 			{
 				OCLinEcoreConstraintCS ocLinEcoreConstraintCS = (OCLinEcoreConstraintCS)theEObject;
 				T result = caseOCLinEcoreConstraintCS(ocLinEcoreConstraintCS);
@@ -100,7 +100,7 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLinEcoreCSPackage.SYS_MLCS:
+			case 1:
 			{
 				SysMLCS sysMLCS = (SysMLCS)theEObject;
 				T result = caseSysMLCS(sysMLCS);
@@ -112,7 +112,7 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLinEcoreCSPackage.TOP_LEVEL_CS:
+			case 2:
 			{
 				TopLevelCS topLevelCS = (TopLevelCS)theEObject;
 				T result = caseTopLevelCS(topLevelCS);

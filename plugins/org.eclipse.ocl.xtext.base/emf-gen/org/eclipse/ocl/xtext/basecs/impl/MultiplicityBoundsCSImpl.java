@@ -35,6 +35,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements MultiplicityBoundsCS
 {
 	/**
+	 * The number of structural features of the '<em>Multiplicity Bounds CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MULTIPLICITY_BOUNDS_CS_FEATURE_COUNT = MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -117,7 +126,7 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 		int oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0, oldLowerBound, lowerBound));
 	}
 
 	/**
@@ -142,7 +151,7 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 		Integer oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -165,9 +174,9 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				return getLowerBound();
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1:
 				return getUpperBound();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +192,10 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				setLowerBound((Integer)newValue);
 				return;
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1:
 				setUpperBound((Integer)newValue);
 				return;
 		}
@@ -203,10 +212,10 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				setLowerBound(LOWER_BOUND_EDEFAULT);
 				return;
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1:
 				setUpperBound(UPPER_BOUND_EDEFAULT);
 				return;
 		}
@@ -223,9 +232,9 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
 				return lowerBound != LOWER_BOUND_EDEFAULT;
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND:
+			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 1:
 				return UPPER_BOUND_EDEFAULT == null ? upperBound != null : !UPPER_BOUND_EDEFAULT.equals(upperBound);
 		}
 		return super.eIsSet(featureID);

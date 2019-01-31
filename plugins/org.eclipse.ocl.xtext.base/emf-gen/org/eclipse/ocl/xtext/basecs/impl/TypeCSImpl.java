@@ -25,6 +25,15 @@ import org.eclipse.ocl.xtext.basecs.TypeCS;
 public abstract class TypeCSImpl extends ModelElementCSImpl implements TypeCS
 {
 	/**
+	 * The number of structural features of the '<em>Type CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

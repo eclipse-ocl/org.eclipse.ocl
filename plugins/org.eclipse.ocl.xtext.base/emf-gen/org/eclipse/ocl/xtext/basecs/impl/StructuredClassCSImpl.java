@@ -49,6 +49,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClassCS {
 	/**
+	 * The number of structural features of the '<em>Structured Class CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STRUCTURED_CLASS_CS_FEATURE_COUNT = ClassCSImpl.CLASS_CS_FEATURE_COUNT + 6;
+
+	/**
 	 * The default value of the '{@link #isIsAbstract() <em>Is Abstract</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -169,7 +178,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 		boolean oldIsAbstract = isAbstract;
 		isAbstract = newIsAbstract;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.STRUCTURED_CLASS_CS__IS_ABSTRACT, oldIsAbstract, isAbstract));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0, oldIsAbstract, isAbstract));
 	}
 
 	/**
@@ -194,7 +203,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 		boolean oldIsInterface = isInterface;
 		isInterface = newIsInterface;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.STRUCTURED_CLASS_CS__IS_INTERFACE, oldIsInterface, isInterface));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1, oldIsInterface, isInterface));
 	}
 
 	/**
@@ -206,7 +215,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public EList<TypedRefCS> getOwnedSuperTypes() {
 		if (ownedSuperTypes == null)
 		{
-			ownedSuperTypes = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
+			ownedSuperTypes = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5);
 		}
 		return ownedSuperTypes;
 	}
@@ -230,7 +239,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public EList<OperationCS> getOwnedOperations() {
 		if (ownedOperations == null)
 		{
-			ownedOperations = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, BaseCSPackage.OPERATION_CS__OWNING_CLASS);
+			ownedOperations = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6);
 		}
 		return ownedOperations;
 	}
@@ -244,7 +253,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public EList<StructuralFeatureCS> getOwnedProperties() {
 		if (ownedProperties == null)
 		{
-			ownedProperties = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, BaseCSPackage.STRUCTURAL_FEATURE_CS__OWNING_CLASS);
+			ownedProperties = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2);
 		}
 		return ownedProperties;
 	}
@@ -271,7 +280,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 		ownedMetaclass = newOwnedMetaclass;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS, oldOwnedMetaclass, newOwnedMetaclass);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2, oldOwnedMetaclass, newOwnedMetaclass);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -289,14 +298,14 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 		{
 			NotificationChain msgs = null;
 			if (ownedMetaclass != null)
-				msgs = ((InternalEObject)ownedMetaclass).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS, null, msgs);
+				msgs = ((InternalEObject)ownedMetaclass).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedMetaclass != null)
-				msgs = ((InternalEObject)newOwnedMetaclass).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS, null, msgs);
+				msgs = ((InternalEObject)newOwnedMetaclass).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedMetaclass(newOwnedMetaclass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS, newOwnedMetaclass, newOwnedMetaclass));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2, newOwnedMetaclass, newOwnedMetaclass));
 	}
 
 	/**
@@ -309,9 +318,9 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -326,13 +335,13 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedMetaclass(null, msgs);
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5:
 				return ((InternalEList<?>)getOwnedSuperTypes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -347,17 +356,17 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_ABSTRACT:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isIsAbstract();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_INTERFACE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return isIsInterface();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2:
 				return getOwnedMetaclass();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				return getOwnedOperations();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				return getOwnedProperties();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5:
 				return getOwnedSuperTypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -373,24 +382,24 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_ABSTRACT:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_INTERFACE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				setIsInterface((Boolean)newValue);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2:
 				setOwnedMetaclass((TypedRefCS)newValue);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends OperationCS>)newValue);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends StructuralFeatureCS>)newValue);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5:
 				getOwnedSuperTypes().clear();
 				getOwnedSuperTypes().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
@@ -407,22 +416,22 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_ABSTRACT:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_INTERFACE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2:
 				setOwnedMetaclass((TypedRefCS)null);
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				getOwnedOperations().clear();
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				getOwnedProperties().clear();
 				return;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5:
 				getOwnedSuperTypes().clear();
 				return;
 		}
@@ -438,17 +447,17 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_ABSTRACT:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isAbstract != IS_ABSTRACT_EDEFAULT;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__IS_INTERFACE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return isInterface != IS_INTERFACE_EDEFAULT;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_METACLASS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2:
 				return ownedMetaclass != null;
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_OPERATIONS:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3:
 				return ownedOperations != null && !ownedOperations.isEmpty();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_PROPERTIES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4:
 				return ownedProperties != null && !ownedProperties.isEmpty();
-			case BaseCSPackage.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 5:
 				return ownedSuperTypes != null && !ownedSuperTypes.isEmpty();
 		}
 		return super.eIsSet(featureID);

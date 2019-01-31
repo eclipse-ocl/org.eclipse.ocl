@@ -111,45 +111,45 @@ implements EssentialOCLCSFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case EssentialOCLCSPackage.BOOLEAN_LITERAL_EXP_CS: return createBooleanLiteralExpCS();
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS: return createCollectionLiteralExpCS();
-			case EssentialOCLCSPackage.COLLECTION_LITERAL_PART_CS: return createCollectionLiteralPartCS();
-			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS: return createCollectionPatternCS();
-			case EssentialOCLCSPackage.COLLECTION_TYPE_CS: return createCollectionTypeCS();
-			case EssentialOCLCSPackage.CONTEXT_CS: return createContextCS();
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS: return createCurlyBracketedClauseCS();
-			case EssentialOCLCSPackage.EXP_CS: return createExpCS();
-			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS: return createExpSpecificationCS();
-			case EssentialOCLCSPackage.IF_EXP_CS: return createIfExpCS();
-			case EssentialOCLCSPackage.IF_THEN_EXP_CS: return createIfThenExpCS();
-			case EssentialOCLCSPackage.INFIX_EXP_CS: return createInfixExpCS();
-			case EssentialOCLCSPackage.INVALID_LITERAL_EXP_CS: return createInvalidLiteralExpCS();
-			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS: return createLambdaLiteralExpCS();
-			case EssentialOCLCSPackage.LET_EXP_CS: return createLetExpCS();
-			case EssentialOCLCSPackage.LET_VARIABLE_CS: return createLetVariableCS();
-			case EssentialOCLCSPackage.LITERAL_EXP_CS: return createLiteralExpCS();
-			case EssentialOCLCSPackage.MAP_LITERAL_EXP_CS: return createMapLiteralExpCS();
-			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS: return createMapLiteralPartCS();
-			case EssentialOCLCSPackage.MAP_TYPE_CS: return createMapTypeCS();
-			case EssentialOCLCSPackage.NAME_EXP_CS: return createNameExpCS();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS: return createNavigatingArgCS();
-			case EssentialOCLCSPackage.NESTED_EXP_CS: return createNestedExpCS();
-			case EssentialOCLCSPackage.NULL_LITERAL_EXP_CS: return createNullLiteralExpCS();
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS: return createNumberLiteralExpCS();
-			case EssentialOCLCSPackage.PATTERN_EXP_CS: return createPatternExpCS();
-			case EssentialOCLCSPackage.PREFIX_EXP_CS: return createPrefixExpCS();
-			case EssentialOCLCSPackage.PRIMITIVE_LITERAL_EXP_CS: return createPrimitiveLiteralExpCS();
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS: return createRoundBracketedClauseCS();
-			case EssentialOCLCSPackage.SELF_EXP_CS: return createSelfExpCS();
-			case EssentialOCLCSPackage.SHADOW_PART_CS: return createShadowPartCS();
-			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS: return createSquareBracketedClauseCS();
-			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS: return createStringLiteralExpCS();
-			case EssentialOCLCSPackage.TUPLE_LITERAL_EXP_CS: return createTupleLiteralExpCS();
-			case EssentialOCLCSPackage.TUPLE_LITERAL_PART_CS: return createTupleLiteralPartCS();
-			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS: return createTypeLiteralExpCS();
-			case EssentialOCLCSPackage.TYPE_NAME_EXP_CS: return createTypeNameExpCS();
-			case EssentialOCLCSPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS: return createUnlimitedNaturalLiteralExpCS();
-			case EssentialOCLCSPackage.VARIABLE_CS: return createVariableCS();
+			case 2: return createBooleanLiteralExpCS();
+			case 4: return createCollectionLiteralExpCS();
+			case 5: return createCollectionLiteralPartCS();
+			case 6: return createCollectionPatternCS();
+			case 7: return createCollectionTypeCS();
+			case 8: return createContextCS();
+			case 9: return createCurlyBracketedClauseCS();
+			case 10: return createExpCS();
+			case 11: return createExpSpecificationCS();
+			case 12: return createIfExpCS();
+			case 13: return createIfThenExpCS();
+			case 14: return createInfixExpCS();
+			case 15: return createInvalidLiteralExpCS();
+			case 18: return createLambdaLiteralExpCS();
+			case 19: return createLetExpCS();
+			case 20: return createLetVariableCS();
+			case 21: return createLiteralExpCS();
+			case 22: return createMapLiteralExpCS();
+			case 23: return createMapLiteralPartCS();
+			case 24: return createMapTypeCS();
+			case 25: return createNameExpCS();
+			case 26: return createNavigatingArgCS();
+			case 27: return createNestedExpCS();
+			case 28: return createNullLiteralExpCS();
+			case 29: return createNumberLiteralExpCS();
+			case 32: return createPatternExpCS();
+			case 33: return createPrefixExpCS();
+			case 34: return createPrimitiveLiteralExpCS();
+			case 36: return createRoundBracketedClauseCS();
+			case 37: return createSelfExpCS();
+			case 39: return createShadowPartCS();
+			case 40: return createSquareBracketedClauseCS();
+			case 41: return createStringLiteralExpCS();
+			case 42: return createTupleLiteralExpCS();
+			case 43: return createTupleLiteralPartCS();
+			case 44: return createTypeLiteralExpCS();
+			case 45: return createTypeNameExpCS();
+			case 46: return createUnlimitedNaturalLiteralExpCS();
+			case 47: return createVariableCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -164,7 +164,7 @@ implements EssentialOCLCSFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case EssentialOCLCSPackage.NAVIGATION_ROLE:
+			case 49:
 				return createNavigationRoleFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -180,7 +180,7 @@ implements EssentialOCLCSFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case EssentialOCLCSPackage.NAVIGATION_ROLE:
+			case 49:
 				return convertNavigationRoleToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

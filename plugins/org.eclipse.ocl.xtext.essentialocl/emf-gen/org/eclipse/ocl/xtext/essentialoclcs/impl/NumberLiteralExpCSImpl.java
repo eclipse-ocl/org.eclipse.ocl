@@ -38,6 +38,15 @@ public class NumberLiteralExpCSImpl
 		implements NumberLiteralExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Number Literal Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NUMBER_LITERAL_EXP_CS_FEATURE_COUNT = PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getSymbol() <em>Symbol</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class NumberLiteralExpCSImpl
 		Number oldSymbol = symbol;
 		symbol = newSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS__SYMBOL, oldSymbol, symbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0, oldSymbol, symbol));
 	}
 
 	/**
@@ -118,7 +127,7 @@ public class NumberLiteralExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS__SYMBOL:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return getSymbol();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -133,7 +142,7 @@ public class NumberLiteralExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS__SYMBOL:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setSymbol((Number)newValue);
 				return;
 		}
@@ -149,7 +158,7 @@ public class NumberLiteralExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS__SYMBOL:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				setSymbol(SYMBOL_EDEFAULT);
 				return;
 		}
@@ -165,7 +174,7 @@ public class NumberLiteralExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS__SYMBOL:
+			case PrimitiveLiteralExpCSImpl.PRIMITIVE_LITERAL_EXP_CS_FEATURE_COUNT + 0:
 				return SYMBOL_EDEFAULT == null ? symbol != null : !SYMBOL_EDEFAULT.equals(symbol);
 		}
 		return super.eIsSet(featureID);

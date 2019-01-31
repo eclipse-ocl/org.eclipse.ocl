@@ -102,38 +102,38 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case BaseCSPackage.ANNOTATION_CS: return createAnnotationCS();
-			case BaseCSPackage.ATTRIBUTE_CS: return createAttributeCS();
-			case BaseCSPackage.CONSTRAINT_CS: return createConstraintCS();
-			case BaseCSPackage.DATA_TYPE_CS: return createDataTypeCS();
-			case BaseCSPackage.DETAIL_CS: return createDetailCS();
-			case BaseCSPackage.DOCUMENTATION_CS: return createDocumentationCS();
-			case BaseCSPackage.ENUMERATION_CS: return createEnumerationCS();
-			case BaseCSPackage.ENUMERATION_LITERAL_CS: return createEnumerationLiteralCS();
-			case BaseCSPackage.IMPORT_CS: return createImportCS();
-			case BaseCSPackage.LAMBDA_TYPE_CS: return createLambdaTypeCS();
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS: return createModelElementRefCS();
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS: return createMultiplicityBoundsCS();
-			case BaseCSPackage.MULTIPLICITY_STRING_CS: return createMultiplicityStringCS();
-			case BaseCSPackage.OPERATION_CS: return createOperationCS();
-			case BaseCSPackage.PACKAGE_CS: return createPackageCS();
-			case BaseCSPackage.PARAMETER_CS: return createParameterCS();
-			case BaseCSPackage.PATH_ELEMENT_CS: return createPathElementCS();
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS: return createPathElementWithURICS();
-			case BaseCSPackage.PATH_NAME_CS: return createPathNameCS();
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS: return createPrimitiveTypeRefCS();
-			case BaseCSPackage.REFERENCE_CS: return createReferenceCS();
-			case BaseCSPackage.ROOT_PACKAGE_CS: return createRootPackageCS();
-			case BaseCSPackage.SPECIFICATION_CS: return createSpecificationCS();
-			case BaseCSPackage.STRUCTURED_CLASS_CS: return createStructuredClassCS();
-			case BaseCSPackage.TEMPLATE_BINDING_CS: return createTemplateBindingCS();
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS: return createTemplateParameterSubstitutionCS();
-			case BaseCSPackage.TEMPLATE_SIGNATURE_CS: return createTemplateSignatureCS();
-			case BaseCSPackage.TUPLE_PART_CS: return createTuplePartCS();
-			case BaseCSPackage.TUPLE_TYPE_CS: return createTupleTypeCS();
-			case BaseCSPackage.TYPE_PARAMETER_CS: return createTypeParameterCS();
-			case BaseCSPackage.TYPED_TYPE_REF_CS: return createTypedTypeRefCS();
-			case BaseCSPackage.WILDCARD_TYPE_REF_CS: return createWildcardTypeRefCS();
+			case 0: return createAnnotationCS();
+			case 2: return createAttributeCS();
+			case 4: return createConstraintCS();
+			case 6: return createDataTypeCS();
+			case 7: return createDetailCS();
+			case 8: return createDocumentationCS();
+			case 11: return createEnumerationCS();
+			case 12: return createEnumerationLiteralCS();
+			case 14: return createImportCS();
+			case 15: return createLambdaTypeCS();
+			case 17: return createModelElementRefCS();
+			case 18: return createMultiplicityBoundsCS();
+			case 20: return createMultiplicityStringCS();
+			case 23: return createOperationCS();
+			case 24: return createPackageCS();
+			case 26: return createParameterCS();
+			case 27: return createPathElementCS();
+			case 28: return createPathElementWithURICS();
+			case 29: return createPathNameCS();
+			case 31: return createPrimitiveTypeRefCS();
+			case 32: return createReferenceCS();
+			case 34: return createRootPackageCS();
+			case 35: return createSpecificationCS();
+			case 37: return createStructuredClassCS();
+			case 38: return createTemplateBindingCS();
+			case 40: return createTemplateParameterSubstitutionCS();
+			case 41: return createTemplateSignatureCS();
+			case 43: return createTuplePartCS();
+			case 44: return createTupleTypeCS();
+			case 46: return createTypeParameterCS();
+			case 50: return createTypedTypeRefCS();
+			case 52: return createWildcardTypeRefCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -149,9 +149,9 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case BaseCSPackage.BIG_NUMBER:
+			case 53:
 				return createBigNumberFromString(eDataType, initialValue);
-			case BaseCSPackage.SCOPE_FILTER:
+			case 55:
 				return createScopeFilterFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -168,9 +168,9 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case BaseCSPackage.BIG_NUMBER:
+			case 53:
 				return convertBigNumberToString(eDataType, instanceValue);
-			case BaseCSPackage.SCOPE_FILTER:
+			case 55:
 				return convertScopeFilterToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

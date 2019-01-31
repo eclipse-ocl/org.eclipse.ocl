@@ -37,6 +37,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	/**
+	 * The number of structural features of the '<em>Parameter CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PARAMETER_CS_FEATURE_COUNT = TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -62,7 +71,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	@Override
 	public OperationCS getOwningOperation() {
-		if (eContainerFeatureID() != BaseCSPackage.PARAMETER_CS__OWNING_OPERATION) return null;
+		if (eContainerFeatureID() != (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0)) return null;
 		return (OperationCS)eInternalContainer();
 	}
 
@@ -73,7 +82,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	public NotificationChain basicSetOwningOperation(OperationCS newOwningOperation, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, BaseCSPackage.PARAMETER_CS__OWNING_OPERATION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, msgs);
 		return msgs;
 	}
 
@@ -84,7 +93,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	@Override
 	public void setOwningOperation(OperationCS newOwningOperation) {
-		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != BaseCSPackage.PARAMETER_CS__OWNING_OPERATION && newOwningOperation != null))
+		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0) && newOwningOperation != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -92,12 +101,12 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningOperation != null)
-				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, BaseCSPackage.OPERATION_CS__OWNED_PARAMETERS, OperationCS.class, msgs);
+				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3, OperationCS.class, msgs);
 			msgs = basicSetOwningOperation(newOwningOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PARAMETER_CS__OWNING_OPERATION, newOwningOperation, newOwningOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, newOwningOperation, newOwningOperation));
 	}
 
 	/**
@@ -109,7 +118,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningOperation((OperationCS)otherEnd, msgs);
@@ -126,7 +135,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwningOperation(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -141,8 +150,8 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
-				return eInternalContainer().eInverseRemove(this, BaseCSPackage.OPERATION_CS__OWNED_PARAMETERS, OperationCS.class, msgs);
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
+				return eInternalContainer().eInverseRemove(this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3, OperationCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -156,7 +165,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwningOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -171,7 +180,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwningOperation((OperationCS)newValue);
 				return;
 		}
@@ -187,7 +196,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwningOperation((OperationCS)null);
 				return;
 		}
@@ -203,7 +212,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.PARAMETER_CS__OWNING_OPERATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwningOperation() != null;
 		}
 		return super.eIsSet(featureID);

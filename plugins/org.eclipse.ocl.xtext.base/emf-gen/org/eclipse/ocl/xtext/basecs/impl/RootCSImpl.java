@@ -38,6 +38,14 @@ import org.eclipse.ocl.xtext.basecs.RootCS;
 public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 {
 	/**
+	 * The number of structural features of the '<em>Root CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedImports() <em>Owned Imports</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,7 +86,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, BaseCSPackage.ROOT_CS__OWNED_IMPORTS);
+			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 		}
 		return ownedImports;
 	}
@@ -93,7 +101,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_CS__OWNED_IMPORTS:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -109,7 +117,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_CS__OWNED_IMPORTS:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -126,7 +134,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_CS__OWNED_IMPORTS:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends ImportCS>)newValue);
 				return;
@@ -144,7 +152,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_CS__OWNED_IMPORTS:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				return;
 		}
@@ -161,7 +169,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_CS__OWNED_IMPORTS:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedImports != null && !ownedImports.isEmpty();
 		}
 		return super.eIsSet(featureID);

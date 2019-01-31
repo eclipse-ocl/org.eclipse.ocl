@@ -78,14 +78,14 @@ implements CompleteOCLCSFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS: return createClassifierContextDeclCS();
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS: return createCompleteOCLDocumentCS();
-			case CompleteOCLCSPackage.DEF_OPERATION_CS: return createDefOperationCS();
-			case CompleteOCLCSPackage.DEF_PROPERTY_CS: return createDefPropertyCS();
-			case CompleteOCLCSPackage.OCL_MESSAGE_ARG_CS: return createOCLMessageArgCS();
-			case CompleteOCLCSPackage.OPERATION_CONTEXT_DECL_CS: return createOperationContextDeclCS();
-			case CompleteOCLCSPackage.PACKAGE_DECLARATION_CS: return createPackageDeclarationCS();
-			case CompleteOCLCSPackage.PROPERTY_CONTEXT_DECL_CS: return createPropertyContextDeclCS();
+			case 0: return createClassifierContextDeclCS();
+			case 1: return createCompleteOCLDocumentCS();
+			case 4: return createDefOperationCS();
+			case 5: return createDefPropertyCS();
+			case 7: return createOCLMessageArgCS();
+			case 8: return createOperationContextDeclCS();
+			case 9: return createPackageDeclarationCS();
+			case 11: return createPropertyContextDeclCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

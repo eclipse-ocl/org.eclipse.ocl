@@ -32,6 +32,14 @@ import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 public abstract class MultiplicityCSImpl extends ElementCSImpl implements MultiplicityCS
 {
 	/**
+	 * The number of structural features of the '<em>Multiplicity CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MULTIPLICITY_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The default value of the '{@link #isIsNullFree() <em>Is Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,7 +101,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		boolean oldIsNullFree = isNullFree;
 		isNullFree = newIsNullFree;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MULTIPLICITY_CS__IS_NULL_FREE, oldIsNullFree, isNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldIsNullFree, isNullFree));
 	}
 
 	/**
@@ -142,7 +150,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_CS__IS_NULL_FREE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return isIsNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -158,7 +166,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_CS__IS_NULL_FREE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsNullFree((Boolean)newValue);
 				return;
 		}
@@ -175,7 +183,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_CS__IS_NULL_FREE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsNullFree(IS_NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -192,7 +200,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MULTIPLICITY_CS__IS_NULL_FREE:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return isNullFree != IS_NULL_FREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

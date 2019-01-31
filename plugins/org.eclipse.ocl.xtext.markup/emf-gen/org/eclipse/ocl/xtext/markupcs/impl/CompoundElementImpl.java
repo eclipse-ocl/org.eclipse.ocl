@@ -37,6 +37,14 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class CompoundElementImpl extends MarkupElementImpl implements CompoundElement {
 	/**
+	 * The number of structural features of the '<em>Compound Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPOUND_ELEMENT_FEATURE_COUNT = MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -73,7 +81,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public EList<MarkupElement> getElements() {
 		if (elements == null) {
-			elements = new EObjectContainmentWithInverseEList<MarkupElement>(MarkupElement.class, this, MarkupPackage.COMPOUND_ELEMENT__ELEMENTS, MarkupPackage.MARKUP_ELEMENT__OWNER);
+			elements = new EObjectContainmentWithInverseEList<MarkupElement>(MarkupElement.class, this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, 0);
 		}
 		return elements;
 	}
@@ -87,7 +95,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getElements()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -101,7 +109,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -115,7 +123,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return getElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -130,7 +138,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				getElements().clear();
 				getElements().addAll((Collection<? extends MarkupElement>)newValue);
 				return;
@@ -146,7 +154,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				getElements().clear();
 				return;
 		}
@@ -161,7 +169,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.COMPOUND_ELEMENT__ELEMENTS:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return elements != null && !elements.isEmpty();
 		}
 		return super.eIsSet(featureID);

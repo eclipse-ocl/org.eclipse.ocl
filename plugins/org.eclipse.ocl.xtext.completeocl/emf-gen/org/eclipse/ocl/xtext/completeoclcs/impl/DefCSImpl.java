@@ -41,6 +41,15 @@ public abstract class DefCSImpl
 		implements DefCS {
 
 	/**
+	 * The number of structural features of the '<em>Def CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEF_CS_FEATURE_COUNT = TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public abstract class DefCSImpl
 	 */
 	@Override
 	public ClassifierContextDeclCS getOwningClassifierContextDecl() {
-		if (eContainerFeatureID() != CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL) return null;
+		if (eContainerFeatureID() != (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2)) return null;
 		return (ClassifierContextDeclCS)eInternalContainer();
 	}
 
@@ -121,7 +130,7 @@ public abstract class DefCSImpl
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -138,14 +147,14 @@ public abstract class DefCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION, null, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION, null, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION, newOwnedSpecification, newOwnedSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -170,7 +179,7 @@ public abstract class DefCSImpl
 		boolean oldIsStatic = isStatic;
 		isStatic = newIsStatic;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompleteOCLCSPackage.DEF_CS__IS_STATIC, oldIsStatic, isStatic));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, oldIsStatic, isStatic));
 	}
 
 	/**
@@ -193,10 +202,10 @@ public abstract class DefCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL, msgs);
+				return eBasicSetContainer(otherEnd, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -211,10 +220,10 @@ public abstract class DefCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedSpecification(null, msgs);
-			case CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL:
-				return eBasicSetContainer(null, CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL, msgs);
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+				return eBasicSetContainer(null, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -229,8 +238,8 @@ public abstract class DefCSImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL:
-				return eInternalContainer().eInverseRemove(this, CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, ClassifierContextDeclCS.class, msgs);
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1, ClassifierContextDeclCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -244,11 +253,11 @@ public abstract class DefCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__IS_STATIC:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isIsStatic();
-			case CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedSpecification();
-			case CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwningClassifierContextDecl();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -263,10 +272,10 @@ public abstract class DefCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__IS_STATIC:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsStatic((Boolean)newValue);
 				return;
-			case CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSpecification((ExpSpecificationCS)newValue);
 				return;
 		}
@@ -282,10 +291,10 @@ public abstract class DefCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__IS_STATIC:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSpecification((ExpSpecificationCS)null);
 				return;
 		}
@@ -301,11 +310,11 @@ public abstract class DefCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.DEF_CS__IS_STATIC:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return isStatic != IS_STATIC_EDEFAULT;
-			case CompleteOCLCSPackage.DEF_CS__OWNED_SPECIFICATION:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedSpecification != null;
-			case CompleteOCLCSPackage.DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwningClassifierContextDecl() != null;
 		}
 		return super.eIsSet(featureID);

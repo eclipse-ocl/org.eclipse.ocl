@@ -23,6 +23,15 @@ import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
  */
 public class MarkupImpl extends CompoundElementImpl implements Markup {
 	/**
+	 * The number of structural features of the '<em>Markup</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MARKUP_FEATURE_COUNT = CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

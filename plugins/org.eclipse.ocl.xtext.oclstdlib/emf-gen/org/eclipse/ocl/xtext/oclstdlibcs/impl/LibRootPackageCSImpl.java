@@ -28,6 +28,15 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
 public class LibRootPackageCSImpl extends RootPackageCSImpl implements LibRootPackageCS
 {
 	/**
+	 * The number of structural features of the '<em>Lib Root Package CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_ROOT_PACKAGE_CS_FEATURE_COUNT = RootPackageCSImpl.ROOT_PACKAGE_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

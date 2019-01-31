@@ -29,6 +29,15 @@ public class DefPropertyCSImpl
 		implements DefPropertyCS {
 
 	/**
+	 * The number of structural features of the '<em>Def Property CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEF_PROPERTY_CS_FEATURE_COUNT = DefCSImpl.DEF_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

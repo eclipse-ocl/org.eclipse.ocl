@@ -17,9 +17,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
@@ -50,6 +51,14 @@ public class LetVariableCSImpl
 		extends ExpCSImpl
 		implements LetVariableCS {
 
+	/**
+	 * The number of structural features of the '<em>Let Variable CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LET_VARIABLE_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 5;
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -137,7 +146,7 @@ public class LetVariableCSImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -162,7 +171,7 @@ public class LetVariableCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -180,14 +189,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -212,7 +221,7 @@ public class LetVariableCSImpl
 		ownedInitExpression = newOwnedInitExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION, oldOwnedInitExpression, newOwnedInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedInitExpression, newOwnedInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -230,14 +239,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedInitExpression != null)
-				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedInitExpression != null)
-				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedInitExpression(newOwnedInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION, newOwnedInitExpression, newOwnedInitExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedInitExpression, newOwnedInitExpression));
 	}
 
 	/**
@@ -247,7 +256,7 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public LetExpCS getOwningLetExpression() {
-		if (eContainerFeatureID() != EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION) return null;
+		if (eContainerFeatureID() != (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4)) return null;
 		return (LetExpCS)eInternalContainer();
 	}
 
@@ -258,7 +267,7 @@ public class LetVariableCSImpl
 	 */
 	public NotificationChain basicSetOwningLetExpression(LetExpCS newOwningLetExpression, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningLetExpression, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningLetExpression, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, msgs);
 		return msgs;
 	}
 
@@ -269,7 +278,7 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public void setOwningLetExpression(LetExpCS newOwningLetExpression) {
-		if (newOwningLetExpression != eInternalContainer() || (eContainerFeatureID() != EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION && newOwningLetExpression != null))
+		if (newOwningLetExpression != eInternalContainer() || (eContainerFeatureID() != (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4) && newOwningLetExpression != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningLetExpression))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -277,12 +286,12 @@ public class LetVariableCSImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningLetExpression != null)
-				msgs = ((InternalEObject)newOwningLetExpression).eInverseAdd(this, EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES, LetExpCS.class, msgs);
+				msgs = ((InternalEObject)newOwningLetExpression).eInverseAdd(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, LetExpCS.class, msgs);
 			msgs = basicSetOwningLetExpression(newOwningLetExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION, newOwningLetExpression, newOwningLetExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, newOwningLetExpression, newOwningLetExpression));
 	}
 
 	/**
@@ -307,7 +316,7 @@ public class LetVariableCSImpl
 		ownedRoundBracketedClause = newOwnedRoundBracketedClause;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -325,14 +334,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedRoundBracketedClause != null)
-				msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, null, msgs);
+				msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 3), null, msgs);
 			if (newOwnedRoundBracketedClause != null)
-				msgs = ((InternalEObject)newOwnedRoundBracketedClause).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, null, msgs);
+				msgs = ((InternalEObject)newOwnedRoundBracketedClause).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 3), null, msgs);
 			msgs = basicSetOwnedRoundBracketedClause(newOwnedRoundBracketedClause, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
 	}
 
 	/**
@@ -345,7 +354,7 @@ public class LetVariableCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningLetExpression((LetExpCS)otherEnd, msgs);
@@ -363,13 +372,13 @@ public class LetVariableCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedInitExpression(null, msgs);
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedType(null, msgs);
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return basicSetOwnedRoundBracketedClause(null, msgs);
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return basicSetOwningLetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -385,8 +394,8 @@ public class LetVariableCSImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
-				return eInternalContainer().eInverseRemove(this, EssentialOCLCSPackage.LET_EXP_CS__OWNED_VARIABLES, LetExpCS.class, msgs);
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+				return eInternalContainer().eInverseRemove(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, LetExpCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -400,15 +409,15 @@ public class LetVariableCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getName();
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getOwnedInitExpression();
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return getOwnedType();
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return getOwnedRoundBracketedClause();
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return getOwningLetExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -423,19 +432,19 @@ public class LetVariableCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedInitExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)newValue);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				setOwningLetExpression((LetExpCS)newValue);
 				return;
 		}
@@ -451,19 +460,19 @@ public class LetVariableCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setOwnedInitExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)null);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)null);
 				return;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				setOwningLetExpression((LetExpCS)null);
 				return;
 		}
@@ -479,15 +488,15 @@ public class LetVariableCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return ownedInitExpression != null;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
 				return ownedType != null;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
 				return ownedRoundBracketedClause != null;
-			case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNING_LET_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
 				return getOwningLetExpression() != null;
 		}
 		return super.eIsSet(featureID);
@@ -504,7 +513,7 @@ public class LetVariableCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.LET_VARIABLE_CS__NAME: return BaseCSPackage.NAMED_ELEMENT_CS__NAME;
+				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -512,8 +521,8 @@ public class LetVariableCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION: return EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION;
-				case EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE: return EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE;
+				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
 				default: return -1;
 			}
 		}
@@ -531,7 +540,7 @@ public class LetVariableCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.NAMED_ELEMENT_CS__NAME: return EssentialOCLCSPackage.LET_VARIABLE_CS__NAME;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -539,8 +548,8 @@ public class LetVariableCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case EssentialOCLCSPackage.VARIABLE_CS__OWNED_INIT_EXPRESSION: return EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_INIT_EXPRESSION;
-				case EssentialOCLCSPackage.VARIABLE_CS__OWNED_TYPE: return EssentialOCLCSPackage.LET_VARIABLE_CS__OWNED_TYPE;
+				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 1;
+				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}

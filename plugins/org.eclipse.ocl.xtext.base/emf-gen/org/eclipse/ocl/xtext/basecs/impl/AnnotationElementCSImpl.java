@@ -38,6 +38,14 @@ import org.eclipse.ocl.xtext.basecs.DetailCS;
  */
 public abstract class AnnotationElementCSImpl extends NamedElementCSImpl implements AnnotationElementCS {
 	/**
+	 * The number of structural features of the '<em>Annotation Element CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ANNOTATION_ELEMENT_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedDetails() <em>Owned Details</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -75,7 +83,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	{
 		if (ownedDetails == null)
 		{
-			ownedDetails = new EObjectContainmentEList<DetailCS>(DetailCS.class, this, BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
+			ownedDetails = new EObjectContainmentEList<DetailCS>(DetailCS.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
 		}
 		return ownedDetails;
 	}
@@ -89,7 +97,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedDetails()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -104,7 +112,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedDetails();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -120,7 +128,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedDetails().clear();
 				getOwnedDetails().addAll((Collection<? extends DetailCS>)newValue);
 				return;
@@ -137,7 +145,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedDetails().clear();
 				return;
 		}
@@ -153,7 +161,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS__OWNED_DETAILS:
+			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedDetails != null && !ownedDetails.isEmpty();
 		}
 		return super.eIsSet(featureID);

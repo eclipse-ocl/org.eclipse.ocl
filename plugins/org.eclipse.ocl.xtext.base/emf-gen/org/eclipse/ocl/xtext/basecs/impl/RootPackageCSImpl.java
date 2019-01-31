@@ -43,6 +43,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackageCS
 {
 	/**
+	 * The number of structural features of the '<em>Root Package CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_PACKAGE_CS_FEATURE_COUNT = PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedImports() <em>Owned Imports</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,7 +91,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS);
+			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0);
 		}
 		return ownedImports;
 	}
@@ -98,7 +106,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS:
+			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -114,7 +122,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS:
+			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
 				return getOwnedImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -131,7 +139,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS:
+			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends ImportCS>)newValue);
 				return;
@@ -149,7 +157,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS:
+			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				return;
 		}
@@ -166,7 +174,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS:
+			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
 				return ownedImports != null && !ownedImports.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -184,7 +192,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 		{
 			switch (derivedFeatureID)
 			{
-				case BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS: return BaseCSPackage.ROOT_CS__OWNED_IMPORTS;
+				case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -203,7 +211,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.ROOT_CS__OWNED_IMPORTS: return BaseCSPackage.ROOT_PACKAGE_CS__OWNED_IMPORTS;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

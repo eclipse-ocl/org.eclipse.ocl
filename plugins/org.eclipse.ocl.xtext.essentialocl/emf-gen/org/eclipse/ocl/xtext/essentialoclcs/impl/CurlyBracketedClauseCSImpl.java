@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.impl.ContextLessElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
@@ -47,6 +48,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  */
 public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl implements CurlyBracketedClauseCS
 {
+	/**
+	 * The number of structural features of the '<em>Curly Bracketed Clause CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CURLY_BRACKETED_CLAUSE_CS_FEATURE_COUNT = ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 3;
+
 	/**
 	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -106,7 +116,7 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	@Override
 	public AbstractNameExpCS getOwningNameExp()
 	{
-		if (eContainerFeatureID() != EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP) return null;
+		if (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
 		return (AbstractNameExpCS)eInternalContainer();
 	}
 
@@ -117,7 +127,7 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	 */
 	public NotificationChain basicSetOwningNameExp(AbstractNameExpCS newOwningNameExp, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -129,7 +139,7 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	@Override
 	public void setOwningNameExp(AbstractNameExpCS newOwningNameExp)
 	{
-		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP && newOwningNameExp != null))
+		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1) && newOwningNameExp != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningNameExp))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -137,12 +147,12 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningNameExp != null)
-				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, AbstractNameExpCS.class, msgs);
+				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, AbstractNameExpCS.class, msgs);
 			msgs = basicSetOwningNameExp(newOwningNameExp, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, newOwningNameExp, newOwningNameExp));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, newOwningNameExp, newOwningNameExp));
 	}
 
 	/**
@@ -155,7 +165,7 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentWithInverseEList<ShadowPartCS>(ShadowPartCS.class, this, EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, EssentialOCLCSPackage.SHADOW_PART_CS__OWNING_CURLY_BRACKET_CLAUSE);
+			ownedParts = new EObjectContainmentWithInverseEList<ShadowPartCS>(ShadowPartCS.class, this, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedParts;
 	}
@@ -182,7 +192,7 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2, oldValue, value));
 	}
 
 	/**
@@ -206,9 +216,9 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParts()).basicAdd(otherEnd, msgs);
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningNameExp((AbstractNameExpCS)otherEnd, msgs);
@@ -226,9 +236,9 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwningNameExp(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -244,8 +254,8 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (eContainerFeatureID())
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
-				return eInternalContainer().eInverseRemove(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, AbstractNameExpCS.class, msgs);
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, AbstractNameExpCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -260,11 +270,11 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedParts();
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp();
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__VALUE:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -281,14 +291,14 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends ShadowPartCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__VALUE:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2:
 				setValue((String)newValue);
 				return;
 		}
@@ -305,13 +315,13 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedParts().clear();
 				return;
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)null);
 				return;
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__VALUE:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -328,11 +338,11 @@ public class CurlyBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedParts != null && !ownedParts.isEmpty();
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp() != null;
-			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS__VALUE:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

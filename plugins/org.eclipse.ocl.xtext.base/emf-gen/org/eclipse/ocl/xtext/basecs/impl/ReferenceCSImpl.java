@@ -41,6 +41,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class ReferenceCSImpl extends StructuralFeatureCSImpl implements ReferenceCS
 {
 	/**
+	 * The number of structural features of the '<em>Reference CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REFERENCE_CS_FEATURE_COUNT = StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getReferredKeys() <em>Referred Keys</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 			if (referredOpposite != oldReferredOpposite)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE, oldReferredOpposite, referredOpposite));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1, oldReferredOpposite, referredOpposite));
 			}
 		}
 		return referredOpposite;
@@ -123,7 +132,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 		Property oldReferredOpposite = referredOpposite;
 		referredOpposite = newReferredOpposite;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE, oldReferredOpposite, referredOpposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1, oldReferredOpposite, referredOpposite));
 	}
 
 	/**
@@ -136,7 +145,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		if (referredKeys == null)
 		{
-			referredKeys = new EObjectResolvingEList<Property>(Property.class, this, BaseCSPackage.REFERENCE_CS__REFERRED_KEYS);
+			referredKeys = new EObjectResolvingEList<Property>(Property.class, this, StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0);
 		}
 		return referredKeys;
 	}
@@ -151,9 +160,9 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.REFERENCE_CS__REFERRED_KEYS:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0:
 				return getReferredKeys();
-			case BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1:
 				if (resolve) return getReferredOpposite();
 				return basicGetReferredOpposite();
 		}
@@ -171,11 +180,11 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.REFERENCE_CS__REFERRED_KEYS:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0:
 				getReferredKeys().clear();
 				getReferredKeys().addAll((Collection<? extends Property>)newValue);
 				return;
-			case BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1:
 				setReferredOpposite((Property)newValue);
 				return;
 		}
@@ -192,10 +201,10 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.REFERENCE_CS__REFERRED_KEYS:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0:
 				getReferredKeys().clear();
 				return;
-			case BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1:
 				setReferredOpposite((Property)null);
 				return;
 		}
@@ -212,9 +221,9 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.REFERENCE_CS__REFERRED_KEYS:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0:
 				return referredKeys != null && !referredKeys.isEmpty();
-			case BaseCSPackage.REFERENCE_CS__REFERRED_OPPOSITE:
+			case StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 1:
 				return referredOpposite != null;
 		}
 		return super.eIsSet(featureID);

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.OperationCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
@@ -51,6 +52,15 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
 public class LibIterationCSImpl
 		extends OperationCSImpl
 		implements LibIterationCS {
+
+	/**
+	 * The number of structural features of the '<em>Lib Iteration CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_ITERATION_CS_FEATURE_COUNT = OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
@@ -155,7 +165,7 @@ public class LibIterationCSImpl
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -182,7 +192,7 @@ public class LibIterationCSImpl
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
 	}
 
 	/**
@@ -195,7 +205,7 @@ public class LibIterationCSImpl
 	{
 		if (ownedIterators == null)
 		{
-			ownedIterators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS);
+			ownedIterators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
 		}
 		return ownedIterators;
 	}
@@ -210,7 +220,7 @@ public class LibIterationCSImpl
 	{
 		if (ownedAccumulators == null)
 		{
-			ownedAccumulators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS);
+			ownedAccumulators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
 		}
 		return ownedAccumulators;
 	}
@@ -237,7 +247,7 @@ public class LibIterationCSImpl
 		boolean oldIsInvalidating = isInvalidating;
 		isInvalidating = newIsInvalidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_ITERATION_CS__IS_INVALIDATING, oldIsInvalidating, isInvalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1, oldIsInvalidating, isInvalidating));
 	}
 
 	/**
@@ -262,7 +272,7 @@ public class LibIterationCSImpl
 		boolean oldIsValidating = isValidating;
 		isValidating = newIsValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.LIB_ITERATION_CS__IS_VALIDATING, oldIsValidating, isValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2, oldIsValidating, isValidating));
 	}
 
 	/**
@@ -275,9 +285,9 @@ public class LibIterationCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedAccumulators()).basicRemove(otherEnd, msgs);
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -292,16 +302,16 @@ public class LibIterationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isIsInvalidating();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isIsValidating();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return getOwnedAccumulators();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return getOwnedIterators();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -317,20 +327,20 @@ public class LibIterationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				setIsInvalidating((Boolean)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				setIsValidating((Boolean)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				getOwnedAccumulators().clear();
 				getOwnedAccumulators().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
@@ -347,19 +357,19 @@ public class LibIterationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				setImplementation((JavaClassCS)null);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				getOwnedAccumulators().clear();
 				return;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				getOwnedIterators().clear();
 				return;
 		}
@@ -375,15 +385,15 @@ public class LibIterationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0:
 				return implementation != null;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_INVALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isInvalidating != IS_INVALIDATING_EDEFAULT;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__IS_VALIDATING:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isValidating != IS_VALIDATING_EDEFAULT;
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ACCUMULATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return ownedAccumulators != null && !ownedAccumulators.isEmpty();
-			case OCLstdlibCSPackage.LIB_ITERATION_CS__OWNED_ITERATORS:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -400,7 +410,7 @@ public class LibIterationCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION;
+				case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -418,7 +428,7 @@ public class LibIterationCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case OCLstdlibCSPackage.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION: return OCLstdlibCSPackage.LIB_ITERATION_CS__IMPLEMENTATION;
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

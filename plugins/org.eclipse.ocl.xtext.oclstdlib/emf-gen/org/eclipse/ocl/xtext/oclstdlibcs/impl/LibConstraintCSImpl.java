@@ -30,6 +30,15 @@ public class LibConstraintCSImpl
 		implements LibConstraintCS {
 
 	/**
+	 * The number of structural features of the '<em>Lib Constraint CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LIB_CONSTRAINT_CS_FEATURE_COUNT = ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

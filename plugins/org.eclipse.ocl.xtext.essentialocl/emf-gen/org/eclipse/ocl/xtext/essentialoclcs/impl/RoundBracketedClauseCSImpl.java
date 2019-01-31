@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.impl.ContextLessElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -46,6 +47,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  */
 public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl implements RoundBracketedClauseCS
 {
+	/**
+	 * The number of structural features of the '<em>Round Bracketed Clause CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROUND_BRACKETED_CLAUSE_CS_FEATURE_COUNT = ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2;
 	/**
 	 * The cached value of the '{@link #getOwnedArguments() <em>Owned Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -84,7 +93,7 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	@Override
 	public AbstractNameExpCS getOwningNameExp()
 	{
-		if (eContainerFeatureID() != EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP) return null;
+		if (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
 		return (AbstractNameExpCS)eInternalContainer();
 	}
 
@@ -95,7 +104,7 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	 */
 	public NotificationChain basicSetOwningNameExp(AbstractNameExpCS newOwningNameExp, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningNameExp, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -107,7 +116,7 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	@Override
 	public void setOwningNameExp(AbstractNameExpCS newOwningNameExp)
 	{
-		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP && newOwningNameExp != null))
+		if (newOwningNameExp != eInternalContainer() || (eContainerFeatureID() != (ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1) && newOwningNameExp != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningNameExp))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -115,12 +124,12 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningNameExp != null)
-				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, AbstractNameExpCS.class, msgs);
+				msgs = ((InternalEObject)newOwningNameExp).eInverseAdd(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, AbstractNameExpCS.class, msgs);
 			msgs = basicSetOwningNameExp(newOwningNameExp, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP, newOwningNameExp, newOwningNameExp));
+			eNotify(new ENotificationImpl(this, Notification.SET, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1, newOwningNameExp, newOwningNameExp));
 	}
 
 	/**
@@ -134,7 +143,7 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		if (ownedArguments == null)
 		{
-			ownedArguments = new EObjectContainmentWithInverseEList<NavigatingArgCS>(NavigatingArgCS.class, this, EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE);
+			ownedArguments = new EObjectContainmentWithInverseEList<NavigatingArgCS>(NavigatingArgCS.class, this, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 		}
 		return ownedArguments;
 	}
@@ -150,9 +159,9 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedArguments()).basicAdd(otherEnd, msgs);
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningNameExp((AbstractNameExpCS)otherEnd, msgs);
@@ -170,9 +179,9 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedArguments()).basicRemove(otherEnd, msgs);
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwningNameExp(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -188,8 +197,8 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (eContainerFeatureID())
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
-				return eInternalContainer().eInverseRemove(this, EssentialOCLCSPackage.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, AbstractNameExpCS.class, msgs);
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, AbstractNameExpCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -204,9 +213,9 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedArguments();
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -223,11 +232,11 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedArguments().clear();
 				getOwnedArguments().addAll((Collection<? extends NavigatingArgCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)newValue);
 				return;
 		}
@@ -244,10 +253,10 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedArguments().clear();
 				return;
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningNameExp((AbstractNameExpCS)null);
 				return;
 		}
@@ -264,9 +273,9 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedArguments != null && !ownedArguments.isEmpty();
-			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNING_NAME_EXP:
+			case ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningNameExp() != null;
 		}
 		return super.eIsSet(featureID);

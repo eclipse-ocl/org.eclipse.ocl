@@ -24,6 +24,15 @@ import org.eclipse.ocl.xtext.basecs.TypeRefCS;
  */
 public abstract class TypeRefCSImpl extends ElementRefCSImpl implements TypeRefCS {
 	/**
+	 * The number of structural features of the '<em>Type Ref CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TYPE_REF_CS_FEATURE_COUNT = ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.NamespaceCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -50,6 +50,15 @@ import org.eclipse.ocl.xtext.completeoclcs.util.CompleteOCLCSVisitor;
 public class CompleteOCLDocumentCSImpl
 		extends NamespaceCSImpl
 		implements CompleteOCLDocumentCS {
+
+	/**
+	 * The number of structural features of the '<em>Complete OCL Document CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPLETE_OCL_DOCUMENT_CS_FEATURE_COUNT = NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The cached value of the '{@link #getOwnedImports() <em>Owned Imports</em>}' containment reference list.
@@ -110,7 +119,7 @@ public class CompleteOCLDocumentCSImpl
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS);
+			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0);
 		}
 		return ownedImports;
 	}
@@ -124,7 +133,7 @@ public class CompleteOCLDocumentCSImpl
 	public EList<PackageDeclarationCS> getOwnedPackages() {
 		if (ownedPackages == null)
 		{
-			ownedPackages = new EObjectContainmentEList<PackageDeclarationCS>(PackageDeclarationCS.class, this, CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES);
+			ownedPackages = new EObjectContainmentEList<PackageDeclarationCS>(PackageDeclarationCS.class, this, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2);
 		}
 		return ownedPackages;
 	}
@@ -138,7 +147,7 @@ public class CompleteOCLDocumentCSImpl
 	public EList<ContextDeclCS> getOwnedContexts() {
 		if (ownedContexts == null)
 		{
-			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS);
+			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1);
 		}
 		return ownedContexts;
 	}
@@ -153,11 +162,11 @@ public class CompleteOCLDocumentCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedContexts()).basicRemove(otherEnd, msgs);
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -172,11 +181,11 @@ public class CompleteOCLDocumentCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				return getOwnedImports();
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return getOwnedContexts();
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				return getOwnedPackages();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -192,15 +201,15 @@ public class CompleteOCLDocumentCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends ImportCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				getOwnedContexts().clear();
 				getOwnedContexts().addAll((Collection<? extends ContextDeclCS>)newValue);
 				return;
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends PackageDeclarationCS>)newValue);
 				return;
@@ -217,13 +226,13 @@ public class CompleteOCLDocumentCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				getOwnedImports().clear();
 				return;
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				getOwnedContexts().clear();
 				return;
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				getOwnedPackages().clear();
 				return;
 		}
@@ -239,11 +248,11 @@ public class CompleteOCLDocumentCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				return ownedImports != null && !ownedImports.isEmpty();
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return ownedContexts != null && !ownedContexts.isEmpty();
-			case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				return ownedPackages != null && !ownedPackages.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -261,7 +270,7 @@ public class CompleteOCLDocumentCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS: return BaseCSPackage.ROOT_CS__OWNED_IMPORTS;
+				case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}
@@ -280,7 +289,7 @@ public class CompleteOCLDocumentCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case BaseCSPackage.ROOT_CS__OWNED_IMPORTS: return CompleteOCLCSPackage.COMPLETE_OCL_DOCUMENT_CS__OWNED_IMPORTS;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

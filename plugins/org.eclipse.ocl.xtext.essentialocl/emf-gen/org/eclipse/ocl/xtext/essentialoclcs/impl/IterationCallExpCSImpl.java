@@ -40,6 +40,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements IterationCallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Iteration Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ITERATION_CALL_EXP_CS_FEATURE_COUNT = CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getCoIterators() <em>Co Iterators</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -100,7 +109,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		if (coIterators == null)
 		{
-			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS);
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
 		}
 		return coIterators;
 	}
@@ -127,7 +136,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -140,7 +149,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		if (iterators == null)
 		{
-			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS);
+			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1);
 		}
 		return iterators;
 	}
@@ -155,11 +164,11 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getCoIterators();
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
 				return getIterators();
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
 				return getReferredIteration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -176,15 +185,15 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
 				setReferredIteration((Iteration)newValue);
 				return;
 		}
@@ -201,13 +210,13 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				getCoIterators().clear();
 				return;
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
 				getIterators().clear();
 				return;
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
 				setReferredIteration((Iteration)null);
 				return;
 		}
@@ -224,11 +233,11 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__CO_ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return coIterators != null && !coIterators.isEmpty();
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__ITERATORS:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
 				return iterators != null && !iterators.isEmpty();
-			case EssentialOCLCSPackage.ITERATION_CALL_EXP_CS__REFERRED_ITERATION:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
 				return referredIteration != null;
 		}
 		return super.eIsSet(featureID);

@@ -41,6 +41,14 @@ public class NestedExpCSImpl
 		implements NestedExpCS {
 
 	/**
+	 * The number of structural features of the '<em>Nested Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NESTED_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getOwnedExpression() <em>Owned Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +97,7 @@ public class NestedExpCSImpl
 		ownedExpression = newOwnedExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION, oldOwnedExpression, newOwnedExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldOwnedExpression, newOwnedExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -106,14 +114,14 @@ public class NestedExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedExpression != null)
-				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedExpression != null)
-				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedExpression(newOwnedExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION, newOwnedExpression, newOwnedExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, newOwnedExpression, newOwnedExpression));
 	}
 
 	/**
@@ -126,7 +134,7 @@ public class NestedExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -141,7 +149,7 @@ public class NestedExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,7 +164,7 @@ public class NestedExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedExpression((ExpCS)newValue);
 				return;
 		}
@@ -172,7 +180,7 @@ public class NestedExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedExpression((ExpCS)null);
 				return;
 		}
@@ -188,7 +196,7 @@ public class NestedExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NESTED_EXP_CS__OWNED_EXPRESSION:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return ownedExpression != null;
 		}
 		return super.eIsSet(featureID);

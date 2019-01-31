@@ -39,6 +39,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElementRefCS
 {
 	/**
+	 * The number of structural features of the '<em>Model Element Ref CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MODEL_ELEMENT_REF_CS_FEATURE_COUNT = ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2;
+	/**
 	 * The cached value of the '{@link #getOwnedPathName() <em>Owned Path Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +98,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +116,14 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -128,7 +136,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -144,9 +152,9 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return getOwnedPathName();
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__REFERRED_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return getReferredElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -162,7 +170,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -179,7 +187,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -196,9 +204,9 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return ownedPathName != null;
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS__REFERRED_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return getReferredElement() != null;
 		}
 		return super.eIsSet(featureID);

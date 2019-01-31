@@ -38,6 +38,15 @@ public class MetaclassNameCSImpl
 		implements MetaclassNameCS {
 
 	/**
+	 * The number of structural features of the '<em>Metaclass Name CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int METACLASS_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,7 +105,7 @@ public class MetaclassNameCSImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLstdlibCSPackage.METACLASS_NAME_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -108,7 +117,7 @@ public class MetaclassNameCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.METACLASS_NAME_CS__NAME:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -123,7 +132,7 @@ public class MetaclassNameCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.METACLASS_NAME_CS__NAME:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
 		}
@@ -139,7 +148,7 @@ public class MetaclassNameCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.METACLASS_NAME_CS__NAME:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -155,7 +164,7 @@ public class MetaclassNameCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OCLstdlibCSPackage.METACLASS_NAME_CS__NAME:
+			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

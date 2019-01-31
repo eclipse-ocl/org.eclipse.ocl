@@ -39,6 +39,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Pattern Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PATTERN_EXP_CS_FEATURE_COUNT = ExpCSImpl.EXP_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedPatternType() <em>Owned Pattern Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,7 +120,7 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 		String oldPatternVariableName = patternVariableName;
 		patternVariableName = newPatternVariableName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, oldPatternVariableName, patternVariableName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldPatternVariableName, patternVariableName));
 	}
 
 	/**
@@ -136,7 +145,7 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 		ownedPatternType = newOwnedPatternType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, oldOwnedPatternType, newOwnedPatternType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldOwnedPatternType, newOwnedPatternType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -154,14 +163,14 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 		{
 			NotificationChain msgs = null;
 			if (ownedPatternType != null)
-				msgs = ((InternalEObject)ownedPatternType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedPatternType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedPatternType != null)
-				msgs = ((InternalEObject)newOwnedPatternType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedPatternType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedPatternType(newOwnedPatternType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, newOwnedPatternType, newOwnedPatternType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, newOwnedPatternType, newOwnedPatternType));
 	}
 
 	/**
@@ -184,7 +193,7 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedPatternType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -200,9 +209,9 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return getOwnedPatternType();
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return getPatternVariableName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -218,10 +227,10 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedPatternType((TypeRefCS)newValue);
 				return;
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setPatternVariableName((String)newValue);
 				return;
 		}
@@ -238,10 +247,10 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				setOwnedPatternType((TypeRefCS)null);
 				return;
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				setPatternVariableName(PATTERN_VARIABLE_NAME_EDEFAULT);
 				return;
 		}
@@ -258,9 +267,9 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__OWNED_PATTERN_TYPE:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
 				return ownedPatternType != null;
-			case EssentialOCLCSPackage.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME:
+			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
 				return PATTERN_VARIABLE_NAME_EDEFAULT == null ? patternVariableName != null : !PATTERN_VARIABLE_NAME_EDEFAULT.equals(patternVariableName);
 		}
 		return super.eIsSet(featureID);

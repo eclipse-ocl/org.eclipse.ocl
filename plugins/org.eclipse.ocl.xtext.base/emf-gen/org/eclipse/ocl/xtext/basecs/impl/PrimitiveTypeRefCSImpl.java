@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveTypeRefCS {
 	/**
+	 * The number of structural features of the '<em>Primitive Type Ref CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRIMITIVE_TYPE_REF_CS_FEATURE_COUNT = TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1;
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +100,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.PRIMITIVE_TYPE_REF_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldName, name));
 	}
 
 	/**
@@ -115,7 +123,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -131,7 +139,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName((String)newValue);
 				return;
 		}
@@ -148,7 +156,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -165,7 +173,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS__NAME:
+			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

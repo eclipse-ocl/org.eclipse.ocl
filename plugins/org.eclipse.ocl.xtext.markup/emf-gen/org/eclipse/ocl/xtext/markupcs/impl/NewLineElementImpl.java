@@ -31,6 +31,15 @@ import org.eclipse.ocl.xtext.markupcs.NewLineElement;
  */
 public class NewLineElementImpl extends MarkupElementImpl implements NewLineElement {
 	/**
+	 * The number of structural features of the '<em>New Line Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NEW_LINE_ELEMENT_FEATURE_COUNT = MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getText() <em>Text</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +98,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 		String oldText = text;
 		text = newText;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupPackage.NEW_LINE_ELEMENT__TEXT, oldText, text));
+			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldText, text));
 	}
 
 	/**
@@ -110,7 +119,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupPackage.NEW_LINE_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return getText();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +133,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupPackage.NEW_LINE_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				setText((String)newValue);
 				return;
 		}
@@ -139,7 +148,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.NEW_LINE_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				setText(TEXT_EDEFAULT);
 				return;
 		}
@@ -154,7 +163,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupPackage.NEW_LINE_ELEMENT__TEXT:
+			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
 				return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
 		}
 		return super.eIsSet(featureID);

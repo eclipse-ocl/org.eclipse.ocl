@@ -41,6 +41,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class AnnotationCSImpl extends AnnotationElementCSImpl implements AnnotationCS {
 	/**
+	 * The number of structural features of the '<em>Annotation CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ANNOTATION_CS_FEATURE_COUNT = AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getOwnedContents() <em>Owned Contents</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -89,7 +98,7 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	{
 		if (ownedContents == null)
 		{
-			ownedContents = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS);
+			ownedContents = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0);
 		}
 		return ownedContents;
 	}
@@ -104,7 +113,7 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	{
 		if (ownedReferences == null)
 		{
-			ownedReferences = new EObjectContainmentEList<ModelElementRefCS>(ModelElementRefCS.class, this, BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES);
+			ownedReferences = new EObjectContainmentEList<ModelElementRefCS>(ModelElementRefCS.class, this, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedReferences;
 	}
@@ -118,9 +127,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getOwnedContents()).basicRemove(otherEnd, msgs);
-			case BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedReferences()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -135,9 +144,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedContents();
-			case BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedReferences();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -153,11 +162,11 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedContents().clear();
 				getOwnedContents().addAll((Collection<? extends ModelElementCS>)newValue);
 				return;
-			case BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedReferences().clear();
 				getOwnedReferences().addAll((Collection<? extends ModelElementRefCS>)newValue);
 				return;
@@ -174,10 +183,10 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				getOwnedContents().clear();
 				return;
-			case BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedReferences().clear();
 				return;
 		}
@@ -193,9 +202,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.ANNOTATION_CS__OWNED_CONTENTS:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedContents != null && !ownedContents.isEmpty();
-			case BaseCSPackage.ANNOTATION_CS__OWNED_REFERENCES:
+			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedReferences != null && !ownedReferences.isEmpty();
 		}
 		return super.eIsSet(featureID);

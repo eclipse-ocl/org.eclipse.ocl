@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.PropertyCallExpCS;
 public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements PropertyCallExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Property Call Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PROPERTY_CALL_EXP_CS_FEATURE_COUNT = CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return getReferredProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +122,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -131,7 +139,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -148,7 +156,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.PROPERTY_CALL_EXP_CS__REFERRED_PROPERTY:
+			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
 				return referredProperty != null;
 		}
 		return super.eIsSet(featureID);

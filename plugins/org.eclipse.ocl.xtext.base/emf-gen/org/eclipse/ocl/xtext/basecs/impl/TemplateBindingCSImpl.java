@@ -46,6 +46,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateBindingCS {
 	/**
+	 * The number of structural features of the '<em>Template Binding CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATE_BINDING_CS_FEATURE_COUNT = ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 3;
+	/**
 	 * The cached value of the '{@link #getOwnedMultiplicity() <em>Owned Multiplicity</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,7 +112,7 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 		ownedMultiplicity = newOwnedMultiplicity;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, oldOwnedMultiplicity, newOwnedMultiplicity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, oldOwnedMultiplicity, newOwnedMultiplicity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -122,14 +130,14 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 		{
 			NotificationChain msgs = null;
 			if (ownedMultiplicity != null)
-				msgs = ((InternalEObject)ownedMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)ownedMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedMultiplicity != null)
-				msgs = ((InternalEObject)newOwnedMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)newOwnedMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedMultiplicity(newOwnedMultiplicity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, newOwnedMultiplicity, newOwnedMultiplicity));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, newOwnedMultiplicity, newOwnedMultiplicity));
 	}
 
 	/**
@@ -139,7 +147,7 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	 */
 	@Override
 	public TypedTypeRefCS getOwningElement() {
-		if (eContainerFeatureID() != BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT) return null;
+		if (eContainerFeatureID() != (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2)) return null;
 		return (TypedTypeRefCS)eInternalContainer();
 	}
 
@@ -150,7 +158,7 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	 */
 	public NotificationChain basicSetOwningElement(TypedTypeRefCS newOwningElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningElement, BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningElement, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2, msgs);
 		return msgs;
 	}
 
@@ -162,7 +170,7 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	@Override
 	public void setOwningElement(TypedTypeRefCS newOwningElement)
 	{
-		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT && newOwningElement != null))
+		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2) && newOwningElement != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -170,12 +178,12 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, BaseCSPackage.TYPED_TYPE_REF_CS__OWNED_BINDING, TypedTypeRefCS.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, TypedTypeRefCS.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT, newOwningElement, newOwningElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2, newOwningElement, newOwningElement));
 	}
 
 	/**
@@ -187,7 +195,7 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public EList<TemplateParameterSubstitutionCS> getOwnedSubstitutions() {
 		if (ownedSubstitutions == null)
 		{
-			ownedSubstitutions = new EObjectContainmentWithInverseEList<TemplateParameterSubstitutionCS>(TemplateParameterSubstitutionCS.class, this, BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING);
+			ownedSubstitutions = new EObjectContainmentWithInverseEList<TemplateParameterSubstitutionCS>(TemplateParameterSubstitutionCS.class, this, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedSubstitutions;
 	}
@@ -202,9 +210,9 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSubstitutions()).basicAdd(otherEnd, msgs);
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningElement((TypedTypeRefCS)otherEnd, msgs);
@@ -221,11 +229,11 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedMultiplicity(null, msgs);
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedSubstitutions()).basicRemove(otherEnd, msgs);
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				return basicSetOwningElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -240,8 +248,8 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
-				return eInternalContainer().eInverseRemove(this, BaseCSPackage.TYPED_TYPE_REF_CS__OWNED_BINDING, TypedTypeRefCS.class, msgs);
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, TypedTypeRefCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -255,11 +263,11 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return getOwnedMultiplicity();
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return getOwnedSubstitutions();
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				return getOwningElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -275,14 +283,14 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				setOwnedMultiplicity((MultiplicityCS)newValue);
 				return;
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				getOwnedSubstitutions().clear();
 				getOwnedSubstitutions().addAll((Collection<? extends TemplateParameterSubstitutionCS>)newValue);
 				return;
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				setOwningElement((TypedTypeRefCS)newValue);
 				return;
 		}
@@ -298,13 +306,13 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				setOwnedMultiplicity((MultiplicityCS)null);
 				return;
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				getOwnedSubstitutions().clear();
 				return;
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				setOwningElement((TypedTypeRefCS)null);
 				return;
 		}
@@ -320,11 +328,11 @@ public class TemplateBindingCSImpl extends ElementRefCSImpl implements TemplateB
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
 				return ownedMultiplicity != null;
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
 				return ownedSubstitutions != null && !ownedSubstitutions.isEmpty();
-			case BaseCSPackage.TEMPLATE_BINDING_CS__OWNING_ELEMENT:
+			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2:
 				return getOwningElement() != null;
 		}
 		return super.eIsSet(featureID);

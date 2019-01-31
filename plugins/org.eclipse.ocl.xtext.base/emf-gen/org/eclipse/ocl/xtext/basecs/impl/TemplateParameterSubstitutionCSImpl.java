@@ -39,6 +39,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl implements TemplateParameterSubstitutionCS {
 	/**
+	 * The number of structural features of the '<em>Template Parameter Substitution CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEMPLATE_PARAMETER_SUBSTITUTION_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2;
+	/**
 	 * The cached value of the '{@link #getOwnedActualParameter() <em>Owned Actual Parameter</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,7 +82,7 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	 */
 	@Override
 	public TemplateBindingCS getOwningBinding() {
-		if (eContainerFeatureID() != BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING) return null;
+		if (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
 		return (TemplateBindingCS)eInternalContainer();
 	}
 
@@ -85,7 +93,7 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	 */
 	public NotificationChain basicSetOwningBinding(TemplateBindingCS newOwningBinding, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningBinding, BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningBinding, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		return msgs;
 	}
 
@@ -96,7 +104,7 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	 */
 	@Override
 	public void setOwningBinding(TemplateBindingCS newOwningBinding) {
-		if (newOwningBinding != eInternalContainer() || (eContainerFeatureID() != BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING && newOwningBinding != null))
+		if (newOwningBinding != eInternalContainer() || (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1) && newOwningBinding != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningBinding))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -104,12 +112,12 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningBinding != null)
-				msgs = ((InternalEObject)newOwningBinding).eInverseAdd(this, BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, TemplateBindingCS.class, msgs);
+				msgs = ((InternalEObject)newOwningBinding).eInverseAdd(this, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1, TemplateBindingCS.class, msgs);
 			msgs = basicSetOwningBinding(newOwningBinding, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING, newOwningBinding, newOwningBinding));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, newOwningBinding, newOwningBinding));
 	}
 
 	/**
@@ -157,7 +165,7 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 		ownedActualParameter = newOwnedActualParameter;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, oldOwnedActualParameter, newOwnedActualParameter);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedActualParameter, newOwnedActualParameter);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -175,14 +183,14 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 		{
 			NotificationChain msgs = null;
 			if (ownedActualParameter != null)
-				msgs = ((InternalEObject)ownedActualParameter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, null, msgs);
+				msgs = ((InternalEObject)ownedActualParameter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedActualParameter != null)
-				msgs = ((InternalEObject)newOwnedActualParameter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, null, msgs);
+				msgs = ((InternalEObject)newOwnedActualParameter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedActualParameter(newOwnedActualParameter, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, newOwnedActualParameter, newOwnedActualParameter));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedActualParameter, newOwnedActualParameter));
 	}
 
 	/**
@@ -194,7 +202,7 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningBinding((TemplateBindingCS)otherEnd, msgs);
@@ -211,9 +219,9 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedActualParameter(null, msgs);
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwningBinding(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -228,8 +236,8 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
-				return eInternalContainer().eInverseRemove(this, BaseCSPackage.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, TemplateBindingCS.class, msgs);
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1, TemplateBindingCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -243,9 +251,9 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedActualParameter();
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningBinding();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -260,10 +268,10 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedActualParameter((TypeRefCS)newValue);
 				return;
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningBinding((TemplateBindingCS)newValue);
 				return;
 		}
@@ -279,10 +287,10 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedActualParameter((TypeRefCS)null);
 				return;
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwningBinding((TemplateBindingCS)null);
 				return;
 		}
@@ -298,9 +306,9 @@ public class TemplateParameterSubstitutionCSImpl extends ModelElementCSImpl impl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedActualParameter != null;
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNING_BINDING:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningBinding() != null;
 		}
 		return super.eIsSet(featureID);

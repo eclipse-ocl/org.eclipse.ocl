@@ -35,6 +35,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 {
 	/**
+	 * The number of structural features of the '<em>Data Type CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DATA_TYPE_CS_FEATURE_COUNT = ClassCSImpl.CLASS_CS_FEATURE_COUNT + 2;
+	/**
 	 * The default value of the '{@link #isIsPrimitive() <em>Is Primitive</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -115,7 +123,7 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 		boolean oldIsPrimitive = isPrimitive;
 		isPrimitive = newIsPrimitive;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.DATA_TYPE_CS__IS_PRIMITIVE, oldIsPrimitive, isPrimitive));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0, oldIsPrimitive, isPrimitive));
 	}
 
 	/**
@@ -140,7 +148,7 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 		boolean oldIsSerializable = isSerializable;
 		isSerializable = newIsSerializable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.DATA_TYPE_CS__IS_SERIALIZABLE, oldIsSerializable, isSerializable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1, oldIsSerializable, isSerializable));
 	}
 
 	/**
@@ -163,9 +171,9 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.DATA_TYPE_CS__IS_PRIMITIVE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isIsPrimitive();
-			case BaseCSPackage.DATA_TYPE_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return isIsSerializable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -181,10 +189,10 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.DATA_TYPE_CS__IS_PRIMITIVE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsPrimitive((Boolean)newValue);
 				return;
-			case BaseCSPackage.DATA_TYPE_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				setIsSerializable((Boolean)newValue);
 				return;
 		}
@@ -201,10 +209,10 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.DATA_TYPE_CS__IS_PRIMITIVE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				setIsPrimitive(IS_PRIMITIVE_EDEFAULT);
 				return;
-			case BaseCSPackage.DATA_TYPE_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 		}
@@ -221,9 +229,9 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.DATA_TYPE_CS__IS_PRIMITIVE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
 				return isPrimitive != IS_PRIMITIVE_EDEFAULT;
-			case BaseCSPackage.DATA_TYPE_CS__IS_SERIALIZABLE:
+			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
 				return isSerializable != IS_SERIALIZABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

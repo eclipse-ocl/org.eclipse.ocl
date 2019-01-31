@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
+import org.eclipse.ocl.xtext.basecs.impl.ContextLessElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -50,6 +51,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 public class NavigatingArgCSImpl
 		extends ModelElementCSImpl
 		implements NavigatingArgCS {
+
+	/**
+	 * The number of structural features of the '<em>Navigating Arg CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NAVIGATING_ARG_CS_FEATURE_COUNT = ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The cached value of the '{@link #getOwnedInitExpression() <em>Owned Init Expression</em>}' containment reference.
@@ -158,7 +168,7 @@ public class NavigatingArgCSImpl
 	@Override
 	public RoundBracketedClauseCS getOwningRoundBracketedClause()
 	{
-		if (eContainerFeatureID() != EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE) return null;
+		if (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3)) return null;
 		return (RoundBracketedClauseCS)eInternalContainer();
 	}
 
@@ -169,7 +179,7 @@ public class NavigatingArgCSImpl
 	 */
 	public NotificationChain basicSetOwningRoundBracketedClause(RoundBracketedClauseCS newOwningRoundBracketedClause, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningRoundBracketedClause, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningRoundBracketedClause, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3, msgs);
 		return msgs;
 	}
 
@@ -181,7 +191,7 @@ public class NavigatingArgCSImpl
 	@Override
 	public void setOwningRoundBracketedClause(RoundBracketedClauseCS newOwningRoundBracketedClause)
 	{
-		if (newOwningRoundBracketedClause != eInternalContainer() || (eContainerFeatureID() != EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE && newOwningRoundBracketedClause != null))
+		if (newOwningRoundBracketedClause != eInternalContainer() || (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3) && newOwningRoundBracketedClause != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningRoundBracketedClause))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -189,12 +199,12 @@ public class NavigatingArgCSImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningRoundBracketedClause != null)
-				msgs = ((InternalEObject)newOwningRoundBracketedClause).eInverseAdd(this, EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, RoundBracketedClauseCS.class, msgs);
+				msgs = ((InternalEObject)newOwningRoundBracketedClause).eInverseAdd(this, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0, RoundBracketedClauseCS.class, msgs);
 			msgs = basicSetOwningRoundBracketedClause(newOwningRoundBracketedClause, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE, newOwningRoundBracketedClause, newOwningRoundBracketedClause));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3, newOwningRoundBracketedClause, newOwningRoundBracketedClause));
 	}
 
 	/**
@@ -217,7 +227,7 @@ public class NavigatingArgCSImpl
 		NavigationRole oldRole = role;
 		role = newRole == null ? ROLE_EDEFAULT : newRole;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE, oldRole, role));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5, oldRole, role));
 	}
 
 	/**
@@ -242,7 +252,7 @@ public class NavigatingArgCSImpl
 		ownedCoIterator = newOwnedCoIterator;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, oldOwnedCoIterator, newOwnedCoIterator);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6, oldOwnedCoIterator, newOwnedCoIterator);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -260,14 +270,14 @@ public class NavigatingArgCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedCoIterator != null)
-				msgs = ((InternalEObject)ownedCoIterator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, null, msgs);
+				msgs = ((InternalEObject)ownedCoIterator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6), null, msgs);
 			if (newOwnedCoIterator != null)
-				msgs = ((InternalEObject)newOwnedCoIterator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, null, msgs);
+				msgs = ((InternalEObject)newOwnedCoIterator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6), null, msgs);
 			msgs = basicSetOwnedCoIterator(newOwnedCoIterator, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, newOwnedCoIterator, newOwnedCoIterator));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6, newOwnedCoIterator, newOwnedCoIterator));
 	}
 
 	/**
@@ -290,7 +300,7 @@ public class NavigatingArgCSImpl
 		String oldPrefix = prefix;
 		prefix = newPrefix;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__PREFIX, oldPrefix, prefix));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4, oldPrefix, prefix));
 	}
 
 	/**
@@ -314,7 +324,7 @@ public class NavigatingArgCSImpl
 		ownedNameExpression = newOwnedNameExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, oldOwnedNameExpression, newOwnedNameExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedNameExpression, newOwnedNameExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -331,14 +341,14 @@ public class NavigatingArgCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedNameExpression != null)
-				msgs = ((InternalEObject)ownedNameExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedNameExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedNameExpression != null)
-				msgs = ((InternalEObject)newOwnedNameExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedNameExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedNameExpression(newOwnedNameExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, newOwnedNameExpression, newOwnedNameExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedNameExpression, newOwnedNameExpression));
 	}
 
 	/**
@@ -362,7 +372,7 @@ public class NavigatingArgCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -379,14 +389,14 @@ public class NavigatingArgCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE, null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -410,7 +420,7 @@ public class NavigatingArgCSImpl
 		ownedInitExpression = newOwnedInitExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, oldOwnedInitExpression, newOwnedInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedInitExpression, newOwnedInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -427,14 +437,14 @@ public class NavigatingArgCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedInitExpression != null)
-				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedInitExpression != null)
-				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedInitExpression(newOwnedInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, newOwnedInitExpression, newOwnedInitExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedInitExpression, newOwnedInitExpression));
 	}
 
 	/**
@@ -457,7 +467,7 @@ public class NavigatingArgCSImpl
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRoundBracketedClause((RoundBracketedClauseCS)otherEnd, msgs);
@@ -475,15 +485,15 @@ public class NavigatingArgCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedInitExpression(null, msgs);
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedNameExpression(null, msgs);
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedType(null, msgs);
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return basicSetOwningRoundBracketedClause(null, msgs);
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				return basicSetOwnedCoIterator(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -499,8 +509,8 @@ public class NavigatingArgCSImpl
 	{
 		switch (eContainerFeatureID())
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
-				return eInternalContainer().eInverseRemove(this, EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, RoundBracketedClauseCS.class, msgs);
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
+				return eInternalContainer().eInverseRemove(this, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0, RoundBracketedClauseCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -514,19 +524,19 @@ public class NavigatingArgCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return getOwnedInitExpression();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedNameExpression();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwnedType();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getOwningRoundBracketedClause();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__PREFIX:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getPrefix();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return getRole();
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				return getOwnedCoIterator();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -541,25 +551,25 @@ public class NavigatingArgCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedInitExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedNameExpression((ExpCS)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				setOwningRoundBracketedClause((RoundBracketedClauseCS)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__PREFIX:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				setPrefix((String)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				setRole((NavigationRole)newValue);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				setOwnedCoIterator((VariableCS)newValue);
 				return;
 		}
@@ -575,25 +585,25 @@ public class NavigatingArgCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				setOwnedInitExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedNameExpression((ExpCS)null);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				setOwnedType((TypedRefCS)null);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				setOwningRoundBracketedClause((RoundBracketedClauseCS)null);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__PREFIX:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				setPrefix(PREFIX_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				setRole(ROLE_EDEFAULT);
 				return;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				setOwnedCoIterator((VariableCS)null);
 				return;
 		}
@@ -609,19 +619,19 @@ public class NavigatingArgCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
 				return ownedInitExpression != null;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedNameExpression != null;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_TYPE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ownedType != null;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNING_ROUND_BRACKETED_CLAUSE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getOwningRoundBracketedClause() != null;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__PREFIX:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__ROLE:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return role != ROLE_EDEFAULT;
-			case EssentialOCLCSPackage.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6:
 				return ownedCoIterator != null;
 		}
 		return super.eIsSet(featureID);

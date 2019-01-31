@@ -17,6 +17,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.NamespaceCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -604,53 +607,53 @@ implements CompleteOCLCSPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		classifierContextDeclCSEClass = createEClass(CLASSIFIER_CONTEXT_DECL_CS);
-		createEReference(classifierContextDeclCSEClass, CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS);
-		createEReference(classifierContextDeclCSEClass, CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS);
-		createEReference(classifierContextDeclCSEClass, CLASSIFIER_CONTEXT_DECL_CS__REFERRED_CLASS);
-		createEAttribute(classifierContextDeclCSEClass, CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME);
+		classifierContextDeclCSEClass = createEClass(0);
+		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1);
+		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2);
+		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3);
+		createEAttribute(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4);
 
-		completeOCLDocumentCSEClass = createEClass(COMPLETE_OCL_DOCUMENT_CS);
-		createEReference(completeOCLDocumentCSEClass, COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS);
-		createEReference(completeOCLDocumentCSEClass, COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES);
+		completeOCLDocumentCSEClass = createEClass(1);
+		createEReference(completeOCLDocumentCSEClass, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1);
+		createEReference(completeOCLDocumentCSEClass, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2);
 
-		contextDeclCSEClass = createEClass(CONTEXT_DECL_CS);
+		contextDeclCSEClass = createEClass(2);
 
-		defCSEClass = createEClass(DEF_CS);
-		createEAttribute(defCSEClass, DEF_CS__IS_STATIC);
-		createEReference(defCSEClass, DEF_CS__OWNED_SPECIFICATION);
-		createEReference(defCSEClass, DEF_CS__OWNING_CLASSIFIER_CONTEXT_DECL);
+		defCSEClass = createEClass(3);
+		createEAttribute(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
 
-		defOperationCSEClass = createEClass(DEF_OPERATION_CS);
-		createEReference(defOperationCSEClass, DEF_OPERATION_CS__OWNED_PARAMETERS);
+		defOperationCSEClass = createEClass(4);
+		createEReference(defOperationCSEClass, DefCSImpl.DEF_CS_FEATURE_COUNT + 1);
 
-		defPropertyCSEClass = createEClass(DEF_PROPERTY_CS);
+		defPropertyCSEClass = createEClass(5);
 
-		featureContextDeclCSEClass = createEClass(FEATURE_CONTEXT_DECL_CS);
-		createEReference(featureContextDeclCSEClass, FEATURE_CONTEXT_DECL_CS__OWNED_TYPE);
+		featureContextDeclCSEClass = createEClass(6);
+		createEReference(featureContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0);
 
-		oclMessageArgCSEClass = createEClass(OCL_MESSAGE_ARG_CS);
+		oclMessageArgCSEClass = createEClass(7);
 
-		operationContextDeclCSEClass = createEClass(OPERATION_CONTEXT_DECL_CS);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__OWNED_BODIES);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__OWNED_RESULT);
-		createEReference(operationContextDeclCSEClass, OPERATION_CONTEXT_DECL_CS__REFERRED_OPERATION);
+		operationContextDeclCSEClass = createEClass(8);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5);
+		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 6);
 
-		packageDeclarationCSEClass = createEClass(PACKAGE_DECLARATION_CS);
-		createEReference(packageDeclarationCSEClass, PACKAGE_DECLARATION_CS__OWNED_CONTEXTS);
-		createEReference(packageDeclarationCSEClass, PACKAGE_DECLARATION_CS__OWNED_INVARIANTS);
-		createEReference(packageDeclarationCSEClass, PACKAGE_DECLARATION_CS__REFERRED_PACKAGE);
+		packageDeclarationCSEClass = createEClass(9);
+		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0);
+		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1);
+		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2);
 
-		pathNameDeclCSEClass = createEClass(PATH_NAME_DECL_CS);
-		createEReference(pathNameDeclCSEClass, PATH_NAME_DECL_CS__OWNED_PATH_NAME);
+		pathNameDeclCSEClass = createEClass(10);
+		createEReference(pathNameDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 
-		propertyContextDeclCSEClass = createEClass(PROPERTY_CONTEXT_DECL_CS);
-		createEReference(propertyContextDeclCSEClass, PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS);
-		createEReference(propertyContextDeclCSEClass, PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS);
-		createEReference(propertyContextDeclCSEClass, PROPERTY_CONTEXT_DECL_CS__REFERRED_PROPERTY);
+		propertyContextDeclCSEClass = createEClass(11);
+		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0);
+		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
+		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2);
 	}
 
 	/**

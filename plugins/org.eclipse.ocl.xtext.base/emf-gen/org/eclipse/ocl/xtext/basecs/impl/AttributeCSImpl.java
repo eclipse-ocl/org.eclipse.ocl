@@ -26,6 +26,15 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 public class AttributeCSImpl extends StructuralFeatureCSImpl implements AttributeCS
 {
 	/**
+	 * The number of structural features of the '<em>Attribute CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ATTRIBUTE_CS_FEATURE_COUNT = StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

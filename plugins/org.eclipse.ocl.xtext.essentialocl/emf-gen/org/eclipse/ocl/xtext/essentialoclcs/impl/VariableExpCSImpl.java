@@ -33,6 +33,14 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableExpCS;
 public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements VariableExpCS
 {
 	/**
+	 * The number of structural features of the '<em>Variable Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VARIABLE_EXP_CS_FEATURE_COUNT = AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredVariable() <em>Referred Variable</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 		Variable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +122,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				setReferredVariable((Variable)newValue);
 				return;
 		}
@@ -131,7 +139,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				setReferredVariable((Variable)null);
 				return;
 		}
@@ -148,7 +156,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case EssentialOCLCSPackage.VARIABLE_EXP_CS__REFERRED_VARIABLE:
+			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);

@@ -40,6 +40,14 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	/**
+	 * The number of structural features of the '<em>Import CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IMPORT_CS_FEATURE_COUNT = NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 3;
+	/**
 	 * The default value of the '{@link #isIsAll() <em>Is All</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +115,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -125,14 +133,14 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -157,7 +165,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		boolean oldIsAll = isAll;
 		isAll = newIsAll;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BaseCSPackage.IMPORT_CS__IS_ALL, oldIsAll, isAll));
+			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0, oldIsAll, isAll));
 	}
 
 	/**
@@ -180,7 +188,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	{
 		switch (featureID)
 		{
-			case BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -195,11 +203,11 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case BaseCSPackage.IMPORT_CS__IS_ALL:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				return isIsAll();
-			case BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return getOwnedPathName();
-			case BaseCSPackage.IMPORT_CS__REFERRED_NAMESPACE:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				return getReferredNamespace();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -214,10 +222,10 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case BaseCSPackage.IMPORT_CS__IS_ALL:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				setIsAll((Boolean)newValue);
 				return;
-			case BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -233,10 +241,10 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.IMPORT_CS__IS_ALL:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				setIsAll(IS_ALL_EDEFAULT);
 				return;
-			case BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -252,11 +260,11 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case BaseCSPackage.IMPORT_CS__IS_ALL:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
 				return isAll != IS_ALL_EDEFAULT;
-			case BaseCSPackage.IMPORT_CS__OWNED_PATH_NAME:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
 				return ownedPathName != null;
-			case BaseCSPackage.IMPORT_CS__REFERRED_NAMESPACE:
+			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
 				return getReferredNamespace() != null;
 		}
 		return super.eIsSet(featureID);
