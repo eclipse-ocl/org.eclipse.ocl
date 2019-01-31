@@ -46,6 +46,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	/**
+	 * The number of structural features of the '<em>CG Let Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LET_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getInit() <em>Init</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +112,7 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 		CGVariable oldInit = init;
 		init = newInit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LET_EXP__INIT, oldInit, newInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldInit, newInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -119,14 +128,14 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
-				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LET_EXP__INIT, null, msgs);
+				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newInit != null)
-				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LET_EXP__INIT, null, msgs);
+				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetInit(newInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LET_EXP__INIT, newInit, newInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newInit, newInit));
 	}
 
 	/**
@@ -148,7 +157,7 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 		CGValuedElement oldIn = in;
 		in = newIn;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LET_EXP__IN, oldIn, newIn);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldIn, newIn);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -164,14 +173,14 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 		if (newIn != in) {
 			NotificationChain msgs = null;
 			if (in != null)
-				msgs = ((InternalEObject)in).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LET_EXP__IN, null, msgs);
+				msgs = ((InternalEObject)in).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newIn != null)
-				msgs = ((InternalEObject)newIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LET_EXP__IN, null, msgs);
+				msgs = ((InternalEObject)newIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetIn(newIn, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LET_EXP__IN, newIn, newIn));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newIn, newIn));
 	}
 
 	/**
@@ -182,9 +191,9 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_LET_EXP__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetInit(null, msgs);
-			case CGModelPackage.CG_LET_EXP__IN:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return basicSetIn(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -198,9 +207,9 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_LET_EXP__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getInit();
-			case CGModelPackage.CG_LET_EXP__IN:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getIn();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -214,10 +223,10 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_LET_EXP__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGVariable)newValue);
 				return;
-			case CGModelPackage.CG_LET_EXP__IN:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setIn((CGValuedElement)newValue);
 				return;
 		}
@@ -232,10 +241,10 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LET_EXP__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGVariable)null);
 				return;
-			case CGModelPackage.CG_LET_EXP__IN:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setIn((CGValuedElement)null);
 				return;
 		}
@@ -250,9 +259,9 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LET_EXP__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return init != null;
-			case CGModelPackage.CG_LET_EXP__IN:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return in != null;
 		}
 		return super.eIsSet(featureID);

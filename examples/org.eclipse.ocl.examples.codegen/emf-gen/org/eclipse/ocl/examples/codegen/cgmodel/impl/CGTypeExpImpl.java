@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	/**
+	 * The number of structural features of the '<em>CG Type Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_TYPE_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getExecutorType() <em>Executor Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,7 +91,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_TYPE_EXP__EXECUTOR_TYPE, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldExecutorType, executorType));
 	}
 
 	/**
@@ -94,7 +102,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPE_EXP__EXECUTOR_TYPE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -108,7 +116,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPE_EXP__EXECUTOR_TYPE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -123,7 +131,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPE_EXP__EXECUTOR_TYPE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -138,7 +146,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPE_EXP__EXECUTOR_TYPE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

@@ -54,6 +54,15 @@ import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
 public abstract class CGValuedElementImpl extends CGTypedElementImpl implements CGValuedElement
 {
 	/**
+	 * The number of structural features of the '<em>CG Valued Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_VALUED_ELEMENT_FEATURE_COUNT = CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getDependsOn() <em>Depends On</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +112,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public List<CGValuedElement> getDependsOn()
 	{
 		if (dependsOn == null) {
-			dependsOn = new EObjectEList<CGValuedElement>(CGValuedElement.class, this, CGModelPackage.CG_VALUED_ELEMENT__DEPENDS_ON);
+			dependsOn = new EObjectEList<CGValuedElement>(CGValuedElement.class, this, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return dependsOn;
 	}
@@ -117,7 +126,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public List<CGValuedElement> getOwns()
 	{
 		if (owns == null) {
-			owns = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGModelPackage.CG_VALUED_ELEMENT__OWNS);
+			owns = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1);
 		}
 		return owns;
 	}
@@ -131,7 +140,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID) {
-			case CGModelPackage.CG_VALUED_ELEMENT__OWNS:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwns()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -146,9 +155,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
-			case CGModelPackage.CG_VALUED_ELEMENT__DEPENDS_ON:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return getDependsOn();
-			case CGModelPackage.CG_VALUED_ELEMENT__OWNS:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
 				return getOwns();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -164,11 +173,11 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID) {
-			case CGModelPackage.CG_VALUED_ELEMENT__DEPENDS_ON:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
 				getDependsOn().clear();
 				getDependsOn().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case CGModelPackage.CG_VALUED_ELEMENT__OWNS:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
 				getOwns().clear();
 				getOwns().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
@@ -185,10 +194,10 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void eUnset(int featureID)
 	{
 		switch (featureID) {
-			case CGModelPackage.CG_VALUED_ELEMENT__DEPENDS_ON:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
 				getDependsOn().clear();
 				return;
-			case CGModelPackage.CG_VALUED_ELEMENT__OWNS:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
 				getOwns().clear();
 				return;
 		}
@@ -204,9 +213,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public boolean eIsSet(int featureID)
 	{
 		switch (featureID) {
-			case CGModelPackage.CG_VALUED_ELEMENT__DEPENDS_ON:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
 				return dependsOn != null && !dependsOn.isEmpty();
-			case CGModelPackage.CG_VALUED_ELEMENT__OWNS:
+			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
 				return owns != null && !owns.isEmpty();
 		}
 		return super.eIsSet(featureID);

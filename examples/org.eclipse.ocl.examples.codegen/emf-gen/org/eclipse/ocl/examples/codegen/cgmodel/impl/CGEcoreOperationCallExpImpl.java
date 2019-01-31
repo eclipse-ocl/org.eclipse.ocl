@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implements CGEcoreOperationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Ecore Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ECORE_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getEOperation() <em>EOperation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 		EOperation oldEOperation = eOperation;
 		eOperation = newEOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ECORE_OPERATION_CALL_EXP__EOPERATION, oldEOperation, eOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldEOperation, eOperation));
 	}
 
 	/**
@@ -95,7 +103,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION_CALL_EXP__EOPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getEOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +117,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION_CALL_EXP__EOPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setEOperation((EOperation)newValue);
 				return;
 		}
@@ -124,7 +132,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION_CALL_EXP__EOPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setEOperation((EOperation)null);
 				return;
 		}
@@ -139,7 +147,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION_CALL_EXP__EOPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return eOperation != null;
 		}
 		return super.eIsSet(featureID);

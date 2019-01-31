@@ -34,6 +34,15 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  */
 public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implements CGLibraryOperationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Library Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LIBRARY_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getLibraryOperation() <em>Library Operation</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +101,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		LibraryOperation oldLibraryOperation = libraryOperation;
 		libraryOperation = newLibraryOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION, oldLibraryOperation, libraryOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldLibraryOperation, libraryOperation));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getLibraryOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -127,7 +136,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryOperation((LibraryOperation)newValue);
 				return;
 		}
@@ -142,7 +151,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryOperation(LIBRARY_OPERATION_EDEFAULT);
 				return;
 		}
@@ -157,7 +166,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return LIBRARY_OPERATION_EDEFAULT == null ? libraryOperation != null : !LIBRARY_OPERATION_EDEFAULT.equals(libraryOperation);
 		}
 		return super.eIsSet(featureID);

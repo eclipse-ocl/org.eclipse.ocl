@@ -42,6 +42,15 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	/**
+	 * The number of structural features of the '<em>CG Invalid</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_INVALID_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getMessageTemplate() <em>Message Template</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,7 +119,7 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 		String oldMessageTemplate = messageTemplate;
 		messageTemplate = newMessageTemplate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_INVALID__MESSAGE_TEMPLATE, oldMessageTemplate, messageTemplate));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldMessageTemplate, messageTemplate));
 	}
 
 	/**
@@ -121,7 +130,7 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public List<Object> getBindings() {
 		if (bindings == null) {
-			bindings = new EDataTypeUniqueEList<Object>(Object.class, this, CGModelPackage.CG_INVALID__BINDINGS);
+			bindings = new EDataTypeUniqueEList<Object>(Object.class, this, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1);
 		}
 		return bindings;
 	}
@@ -144,9 +153,9 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_INVALID__MESSAGE_TEMPLATE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return getMessageTemplate();
-			case CGModelPackage.CG_INVALID__BINDINGS:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1:
 				return getBindings();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -161,10 +170,10 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_INVALID__MESSAGE_TEMPLATE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setMessageTemplate((String)newValue);
 				return;
-			case CGModelPackage.CG_INVALID__BINDINGS:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1:
 				getBindings().clear();
 				getBindings().addAll((Collection<? extends Object>)newValue);
 				return;
@@ -180,10 +189,10 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_INVALID__MESSAGE_TEMPLATE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setMessageTemplate(MESSAGE_TEMPLATE_EDEFAULT);
 				return;
-			case CGModelPackage.CG_INVALID__BINDINGS:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1:
 				getBindings().clear();
 				return;
 		}
@@ -198,9 +207,9 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_INVALID__MESSAGE_TEMPLATE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return MESSAGE_TEMPLATE_EDEFAULT == null ? messageTemplate != null : !MESSAGE_TEMPLATE_EDEFAULT.equals(messageTemplate);
-			case CGModelPackage.CG_INVALID__BINDINGS:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1:
 				return bindings != null && !bindings.isEmpty();
 		}
 		return super.eIsSet(featureID);

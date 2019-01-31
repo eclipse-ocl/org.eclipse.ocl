@@ -28,6 +28,15 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class CGUnlimitedImpl extends CGConstantImpl implements CGUnlimited {
 	/**
+	 * The number of structural features of the '<em>CG Unlimited</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_UNLIMITED_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

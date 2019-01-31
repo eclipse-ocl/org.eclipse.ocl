@@ -37,6 +37,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	/**
+	 * The number of structural features of the '<em>CG Element Id</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ELEMENT_ID_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getElementId() <em>Element Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,7 +104,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 		ElementId oldElementId = elementId;
 		elementId = newElementId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ELEMENT_ID__ELEMENT_ID, oldElementId, elementId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldElementId, elementId));
 	}
 
 	/**
@@ -116,7 +125,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ELEMENT_ID__ELEMENT_ID:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return getElementId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -130,7 +139,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ELEMENT_ID__ELEMENT_ID:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setElementId((ElementId)newValue);
 				return;
 		}
@@ -145,7 +154,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ELEMENT_ID__ELEMENT_ID:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setElementId(ELEMENT_ID_EDEFAULT);
 				return;
 		}
@@ -160,7 +169,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ELEMENT_ID__ELEMENT_ID:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return ELEMENT_ID_EDEFAULT == null ? elementId != null : !ELEMENT_ID_EDEFAULT.equals(elementId);
 		}
 		return super.eIsSet(featureID);

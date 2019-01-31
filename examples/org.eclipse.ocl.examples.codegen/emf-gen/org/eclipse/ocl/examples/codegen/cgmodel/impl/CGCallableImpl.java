@@ -48,6 +48,15 @@ import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
  */
 public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCallable {
 	/**
+	 * The number of structural features of the '<em>CG Callable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CALLABLE_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,7 +104,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public @NonNull List<CGParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, CGModelPackage.CG_CALLABLE__PARAMETERS, CGModelPackage.CG_PARAMETER__CALLABLE);
+			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0);
 		}
 		return parameters;
 	}
@@ -119,7 +128,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALLABLE__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -135,14 +144,14 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_CALLABLE__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_CALLABLE__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALLABLE__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newBody, newBody));
 	}
 
 	/**
@@ -154,7 +163,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -168,9 +177,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-			case CGModelPackage.CG_CALLABLE__BODY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -184,9 +193,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getParameters();
-			case CGModelPackage.CG_CALLABLE__BODY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -201,11 +210,11 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
-			case CGModelPackage.CG_CALLABLE__BODY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setBody((CGValuedElement)newValue);
 				return;
 		}
@@ -220,10 +229,10 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				getParameters().clear();
 				return;
-			case CGModelPackage.CG_CALLABLE__BODY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setBody((CGValuedElement)null);
 				return;
 		}
@@ -238,9 +247,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALLABLE__PARAMETERS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return parameters != null && !parameters.isEmpty();
-			case CGModelPackage.CG_CALLABLE__BODY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

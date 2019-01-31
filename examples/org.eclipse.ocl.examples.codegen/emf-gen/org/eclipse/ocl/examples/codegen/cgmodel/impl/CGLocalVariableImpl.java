@@ -27,6 +27,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGLocalVariableImpl extends CGVariableImpl implements CGLocalVariable {
 	/**
+	 * The number of structural features of the '<em>CG Local Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LOCAL_VARIABLE_FEATURE_COUNT = CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

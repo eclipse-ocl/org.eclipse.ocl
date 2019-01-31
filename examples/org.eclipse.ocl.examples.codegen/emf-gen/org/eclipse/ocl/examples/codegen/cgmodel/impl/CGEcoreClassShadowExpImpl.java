@@ -37,6 +37,14 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcoreClassShadowExp {
 	/**
+	 * The number of structural features of the '<em>CG Ecore Class Shadow Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ECORE_CLASS_SHADOW_EXP_FEATURE_COUNT = CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getEClass() <em>EClass</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 		EClass oldEClass = eClass;
 		eClass = newEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP__ECLASS, oldEClass, eClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0, oldEClass, eClass));
 	}
 
 	/**
@@ -96,7 +104,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP__ECLASS:
+			case CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0:
 				return getEClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -110,7 +118,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP__ECLASS:
+			case CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0:
 				setEClass((EClass)newValue);
 				return;
 		}
@@ -125,7 +133,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP__ECLASS:
+			case CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0:
 				setEClass((EClass)null);
 				return;
 		}
@@ -140,7 +148,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP__ECLASS:
+			case CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0:
 				return eClass != null;
 		}
 		return super.eIsSet(featureID);

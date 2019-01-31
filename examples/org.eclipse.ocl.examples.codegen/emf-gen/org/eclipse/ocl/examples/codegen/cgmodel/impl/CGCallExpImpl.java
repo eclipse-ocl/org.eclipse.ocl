@@ -39,6 +39,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CALL_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #isInvalidating() <em>Invalidating</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -127,7 +136,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldInvalidating = invalidating;
 		invalidating = newInvalidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALL_EXP__INVALIDATING, oldInvalidating, invalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldInvalidating, invalidating));
 	}
 
 	/**
@@ -150,7 +159,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldValidating = validating;
 		validating = newValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALL_EXP__VALIDATING, oldValidating, validating));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldValidating, validating));
 	}
 
 	/**
@@ -172,7 +181,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		CGValuedElement oldSource = source;
 		source = newSource;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALL_EXP__SOURCE, oldSource, newSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, oldSource, newSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -188,14 +197,14 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		if (newSource != source) {
 			NotificationChain msgs = null;
 			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_CALL_EXP__SOURCE, null, msgs);
+				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_CALL_EXP__SOURCE, null, msgs);
+				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetSource(newSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CALL_EXP__SOURCE, newSource, newSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, newSource, newSource));
 	}
 
 	/**
@@ -216,7 +225,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALL_EXP__SOURCE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return basicSetSource(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -230,11 +239,11 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALL_EXP__INVALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return isInvalidating();
-			case CGModelPackage.CG_CALL_EXP__VALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return isValidating();
-			case CGModelPackage.CG_CALL_EXP__SOURCE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -248,13 +257,13 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALL_EXP__INVALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInvalidating((Boolean)newValue);
 				return;
-			case CGModelPackage.CG_CALL_EXP__VALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setValidating((Boolean)newValue);
 				return;
-			case CGModelPackage.CG_CALL_EXP__SOURCE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setSource((CGValuedElement)newValue);
 				return;
 		}
@@ -269,13 +278,13 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALL_EXP__INVALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInvalidating(INVALIDATING_EDEFAULT);
 				return;
-			case CGModelPackage.CG_CALL_EXP__VALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setValidating(VALIDATING_EDEFAULT);
 				return;
-			case CGModelPackage.CG_CALL_EXP__SOURCE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setSource((CGValuedElement)null);
 				return;
 		}
@@ -290,11 +299,11 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CALL_EXP__INVALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return invalidating != INVALIDATING_EDEFAULT;
-			case CGModelPackage.CG_CALL_EXP__VALIDATING:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return validating != VALIDATING_EDEFAULT;
-			case CGModelPackage.CG_CALL_EXP__SOURCE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return source != null;
 		}
 		return super.eIsSet(featureID);

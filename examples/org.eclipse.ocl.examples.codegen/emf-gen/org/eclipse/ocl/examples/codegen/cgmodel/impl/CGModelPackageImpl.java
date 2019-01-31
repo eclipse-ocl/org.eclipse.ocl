@@ -3089,310 +3089,310 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		cgAccumulatorEClass = createEClass(CG_ACCUMULATOR);
+		cgAccumulatorEClass = createEClass(0);
 
-		cgAssertNonNullExpEClass = createEClass(CG_ASSERT_NON_NULL_EXP);
+		cgAssertNonNullExpEClass = createEClass(1);
 
-		cgBooleanEClass = createEClass(CG_BOOLEAN);
-		createEAttribute(cgBooleanEClass, CG_BOOLEAN__BOOLEAN_VALUE);
+		cgBooleanEClass = createEClass(2);
+		createEAttribute(cgBooleanEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
 
-		cgBoxExpEClass = createEClass(CG_BOX_EXP);
+		cgBoxExpEClass = createEClass(3);
 
-		cgBuiltInIterationCallExpEClass = createEClass(CG_BUILT_IN_ITERATION_CALL_EXP);
-		createEReference(cgBuiltInIterationCallExpEClass, CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR);
+		cgBuiltInIterationCallExpEClass = createEClass(4);
+		createEReference(cgBuiltInIterationCallExpEClass, CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgCachedOperationEClass = createEClass(CG_CACHED_OPERATION);
-		createEReference(cgCachedOperationEClass, CG_CACHED_OPERATION__FINAL_OPERATIONS);
-		createEReference(cgCachedOperationEClass, CG_CACHED_OPERATION__VIRTUAL_OPERATIONS);
+		cgCachedOperationEClass = createEClass(5);
+		createEReference(cgCachedOperationEClass, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0);
+		createEReference(cgCachedOperationEClass, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1);
 
-		cgCachedOperationCallExpEClass = createEClass(CG_CACHED_OPERATION_CALL_EXP);
-		createEAttribute(cgCachedOperationCallExpEClass, CG_CACHED_OPERATION_CALL_EXP__METHOD);
-		createEAttribute(cgCachedOperationCallExpEClass, CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF);
+		cgCachedOperationCallExpEClass = createEClass(6);
+		createEAttribute(cgCachedOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(cgCachedOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1);
 
-		cgCallableEClass = createEClass(CG_CALLABLE);
-		createEReference(cgCallableEClass, CG_CALLABLE__PARAMETERS);
-		createEReference(cgCallableEClass, CG_CALLABLE__BODY);
+		cgCallableEClass = createEClass(7);
+		createEReference(cgCallableEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgCallableEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgCallExpEClass = createEClass(CG_CALL_EXP);
-		createEAttribute(cgCallExpEClass, CG_CALL_EXP__INVALIDATING);
-		createEAttribute(cgCallExpEClass, CG_CALL_EXP__VALIDATING);
-		createEReference(cgCallExpEClass, CG_CALL_EXP__SOURCE);
+		cgCallExpEClass = createEClass(8);
+		createEAttribute(cgCallExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(cgCallExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgCallExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgCastExpEClass = createEClass(CG_CAST_EXP);
-		createEReference(cgCastExpEClass, CG_CAST_EXP__EXECUTOR_TYPE);
+		cgCastExpEClass = createEClass(9);
+		createEReference(cgCastExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgCatchExpEClass = createEClass(CG_CATCH_EXP);
+		cgCatchExpEClass = createEClass(10);
 
-		cgClassEClass = createEClass(CG_CLASS);
-		createEReference(cgClassEClass, CG_CLASS__CONTAINING_PACKAGE);
-		createEReference(cgClassEClass, CG_CLASS__OPERATIONS);
-		createEReference(cgClassEClass, CG_CLASS__PROPERTIES);
-		createEReference(cgClassEClass, CG_CLASS__INVARIANTS);
-		createEReference(cgClassEClass, CG_CLASS__SUPER_TYPES);
-		createEAttribute(cgClassEClass, CG_CLASS__INTERFACE);
-		createEReference(cgClassEClass, CG_CLASS__TEMPLATE_PARAMETERS);
-		createEReference(cgClassEClass, CG_CLASS__CLASSES);
-		createEReference(cgClassEClass, CG_CLASS__CONTAINING_CLASS);
+		cgClassEClass = createEClass(11);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 3);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 4);
+		createEAttribute(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 5);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 6);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 7);
+		createEReference(cgClassEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 8);
 
-		cgCollectionExpEClass = createEClass(CG_COLLECTION_EXP);
-		createEReference(cgCollectionExpEClass, CG_COLLECTION_EXP__PARTS);
+		cgCollectionExpEClass = createEClass(12);
+		createEReference(cgCollectionExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgCollectionPartEClass = createEClass(CG_COLLECTION_PART);
-		createEReference(cgCollectionPartEClass, CG_COLLECTION_PART__FIRST);
-		createEReference(cgCollectionPartEClass, CG_COLLECTION_PART__LAST);
-		createEReference(cgCollectionPartEClass, CG_COLLECTION_PART__COLLECTION_EXP);
+		cgCollectionPartEClass = createEClass(13);
+		createEReference(cgCollectionPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgCollectionPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgCollectionPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgConstantEClass = createEClass(CG_CONSTANT);
+		cgConstantEClass = createEClass(14);
 
-		cgConstantExpEClass = createEClass(CG_CONSTANT_EXP);
-		createEReference(cgConstantExpEClass, CG_CONSTANT_EXP__REFERRED_CONSTANT);
+		cgConstantExpEClass = createEClass(15);
+		createEReference(cgConstantExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgConstraintEClass = createEClass(CG_CONSTRAINT);
+		cgConstraintEClass = createEClass(16);
 
-		cgEcoreClassShadowExpEClass = createEClass(CG_ECORE_CLASS_SHADOW_EXP);
-		createEReference(cgEcoreClassShadowExpEClass, CG_ECORE_CLASS_SHADOW_EXP__ECLASS);
+		cgEcoreClassShadowExpEClass = createEClass(17);
+		createEReference(cgEcoreClassShadowExpEClass, CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0);
 
-		cgEcoreDataTypeShadowExpEClass = createEClass(CG_ECORE_DATA_TYPE_SHADOW_EXP);
-		createEReference(cgEcoreDataTypeShadowExpEClass, CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE);
+		cgEcoreDataTypeShadowExpEClass = createEClass(18);
+		createEReference(cgEcoreDataTypeShadowExpEClass, CGShadowExpImpl.CG_SHADOW_EXP_FEATURE_COUNT + 0);
 
-		cgEcoreExpEClass = createEClass(CG_ECORE_EXP);
-		createEReference(cgEcoreExpEClass, CG_ECORE_EXP__ECLASSIFIER);
+		cgEcoreExpEClass = createEClass(19);
+		createEReference(cgEcoreExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgEcoreOperationEClass = createEClass(CG_ECORE_OPERATION);
-		createEReference(cgEcoreOperationEClass, CG_ECORE_OPERATION__EOPERATION);
+		cgEcoreOperationEClass = createEClass(20);
+		createEReference(cgEcoreOperationEClass, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0);
 
-		cgEcoreOperationCallExpEClass = createEClass(CG_ECORE_OPERATION_CALL_EXP);
-		createEReference(cgEcoreOperationCallExpEClass, CG_ECORE_OPERATION_CALL_EXP__EOPERATION);
+		cgEcoreOperationCallExpEClass = createEClass(21);
+		createEReference(cgEcoreOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgEcoreOppositePropertyCallExpEClass = createEClass(CG_ECORE_OPPOSITE_PROPERTY_CALL_EXP);
-		createEReference(cgEcoreOppositePropertyCallExpEClass, CG_ECORE_OPPOSITE_PROPERTY_CALL_EXP__ESTRUCTURAL_FEATURE);
+		cgEcoreOppositePropertyCallExpEClass = createEClass(22);
+		createEReference(cgEcoreOppositePropertyCallExpEClass, CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgEcorePropertyCallExpEClass = createEClass(CG_ECORE_PROPERTY_CALL_EXP);
-		createEReference(cgEcorePropertyCallExpEClass, CG_ECORE_PROPERTY_CALL_EXP__ESTRUCTURAL_FEATURE);
+		cgEcorePropertyCallExpEClass = createEClass(23);
+		createEReference(cgEcorePropertyCallExpEClass, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgElementEClass = createEClass(CG_ELEMENT);
+		cgElementEClass = createEClass(24);
 
-		cgElementIdEClass = createEClass(CG_ELEMENT_ID);
-		createEAttribute(cgElementIdEClass, CG_ELEMENT_ID__ELEMENT_ID);
+		cgElementIdEClass = createEClass(25);
+		createEAttribute(cgElementIdEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
 
-		cgExecutorCompositionPropertyEClass = createEClass(CG_EXECUTOR_COMPOSITION_PROPERTY);
+		cgExecutorCompositionPropertyEClass = createEClass(26);
 
-		cgExecutorNavigationPropertyEClass = createEClass(CG_EXECUTOR_NAVIGATION_PROPERTY);
+		cgExecutorNavigationPropertyEClass = createEClass(27);
 
-		cgExecutorOppositePropertyEClass = createEClass(CG_EXECUTOR_OPPOSITE_PROPERTY);
+		cgExecutorOppositePropertyEClass = createEClass(28);
 
-		cgExecutorOperationEClass = createEClass(CG_EXECUTOR_OPERATION);
-		createEReference(cgExecutorOperationEClass, CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID);
+		cgExecutorOperationEClass = createEClass(29);
+		createEReference(cgExecutorOperationEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgExecutorOperationCallExpEClass = createEClass(CG_EXECUTOR_OPERATION_CALL_EXP);
-		createEReference(cgExecutorOperationCallExpEClass, CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION);
+		cgExecutorOperationCallExpEClass = createEClass(30);
+		createEReference(cgExecutorOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgExecutorOppositePropertyCallExpEClass = createEClass(CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP);
-		createEReference(cgExecutorOppositePropertyCallExpEClass, CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY);
+		cgExecutorOppositePropertyCallExpEClass = createEClass(31);
+		createEReference(cgExecutorOppositePropertyCallExpEClass, CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgExecutorPropertyEClass = createEClass(CG_EXECUTOR_PROPERTY);
-		createEReference(cgExecutorPropertyEClass, CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID);
+		cgExecutorPropertyEClass = createEClass(32);
+		createEReference(cgExecutorPropertyEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgExecutorPropertyCallExpEClass = createEClass(CG_EXECUTOR_PROPERTY_CALL_EXP);
-		createEReference(cgExecutorPropertyCallExpEClass, CG_EXECUTOR_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY);
+		cgExecutorPropertyCallExpEClass = createEClass(33);
+		createEReference(cgExecutorPropertyCallExpEClass, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgExecutorShadowPartEClass = createEClass(CG_EXECUTOR_SHADOW_PART);
+		cgExecutorShadowPartEClass = createEClass(34);
 
-		cgExecutorTypeEClass = createEClass(CG_EXECUTOR_TYPE);
-		createEReference(cgExecutorTypeEClass, CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID);
+		cgExecutorTypeEClass = createEClass(35);
+		createEReference(cgExecutorTypeEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgFinalVariableEClass = createEClass(CG_FINAL_VARIABLE);
+		cgFinalVariableEClass = createEClass(36);
 
-		cgGuardExpEClass = createEClass(CG_GUARD_EXP);
-		createEAttribute(cgGuardExpEClass, CG_GUARD_EXP__MESSAGE);
-		createEAttribute(cgGuardExpEClass, CG_GUARD_EXP__SAFE);
+		cgGuardExpEClass = createEClass(37);
+		createEAttribute(cgGuardExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(cgGuardExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1);
 
-		cgIfExpEClass = createEClass(CG_IF_EXP);
-		createEReference(cgIfExpEClass, CG_IF_EXP__CONDITION);
-		createEReference(cgIfExpEClass, CG_IF_EXP__THEN_EXPRESSION);
-		createEReference(cgIfExpEClass, CG_IF_EXP__ELSE_EXPRESSION);
+		cgIfExpEClass = createEClass(38);
+		createEReference(cgIfExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgIfExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgIfExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgIntegerEClass = createEClass(CG_INTEGER);
+		cgIntegerEClass = createEClass(39);
 
-		cgInvalidEClass = createEClass(CG_INVALID);
-		createEAttribute(cgInvalidEClass, CG_INVALID__MESSAGE_TEMPLATE);
-		createEAttribute(cgInvalidEClass, CG_INVALID__BINDINGS);
+		cgInvalidEClass = createEClass(40);
+		createEAttribute(cgInvalidEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
+		createEAttribute(cgInvalidEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1);
 
-		cgIsEqualExpEClass = createEClass(CG_IS_EQUAL_EXP);
-		createEReference(cgIsEqualExpEClass, CG_IS_EQUAL_EXP__ARGUMENT);
-		createEAttribute(cgIsEqualExpEClass, CG_IS_EQUAL_EXP__NOT_EQUALS);
+		cgIsEqualExpEClass = createEClass(41);
+		createEReference(cgIsEqualExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(cgIsEqualExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1);
 
-		cgIsEqual2ExpEClass = createEClass(CG_IS_EQUAL2_EXP);
-		createEReference(cgIsEqual2ExpEClass, CG_IS_EQUAL2_EXP__ARGUMENT);
+		cgIsEqual2ExpEClass = createEClass(42);
+		createEReference(cgIsEqual2ExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgIsInvalidExpEClass = createEClass(CG_IS_INVALID_EXP);
+		cgIsInvalidExpEClass = createEClass(43);
 
-		cgIsKindOfExpEClass = createEClass(CG_IS_KIND_OF_EXP);
-		createEReference(cgIsKindOfExpEClass, CG_IS_KIND_OF_EXP__EXECUTOR_TYPE);
+		cgIsKindOfExpEClass = createEClass(44);
+		createEReference(cgIsKindOfExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgIsUndefinedExpEClass = createEClass(CG_IS_UNDEFINED_EXP);
+		cgIsUndefinedExpEClass = createEClass(45);
 
-		cgIterationCallExpEClass = createEClass(CG_ITERATION_CALL_EXP);
-		createEAttribute(cgIterationCallExpEClass, CG_ITERATION_CALL_EXP__REFERRED_ITERATION);
-		createEReference(cgIterationCallExpEClass, CG_ITERATION_CALL_EXP__ITERATORS);
-		createEReference(cgIterationCallExpEClass, CG_ITERATION_CALL_EXP__BODY);
-		createEReference(cgIterationCallExpEClass, CG_ITERATION_CALL_EXP__CO_ITERATORS);
+		cgIterationCallExpEClass = createEClass(46);
+		createEAttribute(cgIterationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
+		createEReference(cgIterationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1);
+		createEReference(cgIterationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2);
+		createEReference(cgIterationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3);
 
-		cgIteratorEClass = createEClass(CG_ITERATOR);
+		cgIteratorEClass = createEClass(47);
 
-		cgLetExpEClass = createEClass(CG_LET_EXP);
-		createEReference(cgLetExpEClass, CG_LET_EXP__INIT);
-		createEReference(cgLetExpEClass, CG_LET_EXP__IN);
+		cgLetExpEClass = createEClass(48);
+		createEReference(cgLetExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgLetExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgLibraryIterateCallExpEClass = createEClass(CG_LIBRARY_ITERATE_CALL_EXP);
-		createEReference(cgLibraryIterateCallExpEClass, CG_LIBRARY_ITERATE_CALL_EXP__RESULT);
+		cgLibraryIterateCallExpEClass = createEClass(49);
+		createEReference(cgLibraryIterateCallExpEClass, CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgLibraryIterationCallExpEClass = createEClass(CG_LIBRARY_ITERATION_CALL_EXP);
-		createEAttribute(cgLibraryIterationCallExpEClass, CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION);
+		cgLibraryIterationCallExpEClass = createEClass(50);
+		createEAttribute(cgLibraryIterationCallExpEClass, CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgLibraryOperationEClass = createEClass(CG_LIBRARY_OPERATION);
+		cgLibraryOperationEClass = createEClass(51);
 
-		cgLibraryOperationCallExpEClass = createEClass(CG_LIBRARY_OPERATION_CALL_EXP);
-		createEAttribute(cgLibraryOperationCallExpEClass, CG_LIBRARY_OPERATION_CALL_EXP__LIBRARY_OPERATION);
+		cgLibraryOperationCallExpEClass = createEClass(52);
+		createEAttribute(cgLibraryOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgLibraryPropertyCallExpEClass = createEClass(CG_LIBRARY_PROPERTY_CALL_EXP);
-		createEAttribute(cgLibraryPropertyCallExpEClass, CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY);
+		cgLibraryPropertyCallExpEClass = createEClass(53);
+		createEAttribute(cgLibraryPropertyCallExpEClass, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgLocalVariableEClass = createEClass(CG_LOCAL_VARIABLE);
+		cgLocalVariableEClass = createEClass(54);
 
-		cgMapExpEClass = createEClass(CG_MAP_EXP);
-		createEReference(cgMapExpEClass, CG_MAP_EXP__PARTS);
+		cgMapExpEClass = createEClass(55);
+		createEReference(cgMapExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgMapPartEClass = createEClass(CG_MAP_PART);
-		createEReference(cgMapPartEClass, CG_MAP_PART__KEY);
-		createEReference(cgMapPartEClass, CG_MAP_PART__VALUE);
-		createEReference(cgMapPartEClass, CG_MAP_PART__MAP_EXP);
+		cgMapPartEClass = createEClass(56);
+		createEReference(cgMapPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgMapPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgMapPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgModelEClass = createEClass(CG_MODEL);
-		createEReference(cgModelEClass, CG_MODEL__GLOBALS);
-		createEReference(cgModelEClass, CG_MODEL__PACKAGES);
+		cgModelEClass = createEClass(57);
+		createEReference(cgModelEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgModelEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgNamedElementEClass = createEClass(CG_NAMED_ELEMENT);
-		createEAttribute(cgNamedElementEClass, CG_NAMED_ELEMENT__AST);
-		createEAttribute(cgNamedElementEClass, CG_NAMED_ELEMENT__NAME);
+		cgNamedElementEClass = createEClass(58);
+		createEAttribute(cgNamedElementEClass, CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(cgNamedElementEClass, CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1);
 
-		cgNativeOperationEClass = createEClass(CG_NATIVE_OPERATION);
+		cgNativeOperationEClass = createEClass(59);
 
-		cgNativeOperationCallExpEClass = createEClass(CG_NATIVE_OPERATION_CALL_EXP);
-		createEAttribute(cgNativeOperationCallExpEClass, CG_NATIVE_OPERATION_CALL_EXP__METHOD);
-		createEAttribute(cgNativeOperationCallExpEClass, CG_NATIVE_OPERATION_CALL_EXP__THIS_IS_SELF);
+		cgNativeOperationCallExpEClass = createEClass(60);
+		createEAttribute(cgNativeOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(cgNativeOperationCallExpEClass, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1);
 
-		cgNativePropertyEClass = createEClass(CG_NATIVE_PROPERTY);
+		cgNativePropertyEClass = createEClass(61);
 
-		cgNativePropertyCallExpEClass = createEClass(CG_NATIVE_PROPERTY_CALL_EXP);
-		createEAttribute(cgNativePropertyCallExpEClass, CG_NATIVE_PROPERTY_CALL_EXP__FIELD);
+		cgNativePropertyCallExpEClass = createEClass(62);
+		createEAttribute(cgNativePropertyCallExpEClass, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgNavigationCallExpEClass = createEClass(CG_NAVIGATION_CALL_EXP);
-		createEAttribute(cgNavigationCallExpEClass, CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY);
+		cgNavigationCallExpEClass = createEClass(63);
+		createEAttribute(cgNavigationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgNullEClass = createEClass(CG_NULL);
+		cgNullEClass = createEClass(64);
 
-		cgNumberEClass = createEClass(CG_NUMBER);
-		createEAttribute(cgNumberEClass, CG_NUMBER__NUMERIC_VALUE);
+		cgNumberEClass = createEClass(65);
+		createEAttribute(cgNumberEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
 
-		cgOperationEClass = createEClass(CG_OPERATION);
-		createEReference(cgOperationEClass, CG_OPERATION__PRECONDITIONS);
-		createEReference(cgOperationEClass, CG_OPERATION__POSTCONDITIONS);
-		createEReference(cgOperationEClass, CG_OPERATION__CONTAINING_CLASS);
+		cgOperationEClass = createEClass(66);
+		createEReference(cgOperationEClass, CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 0);
+		createEReference(cgOperationEClass, CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 1);
+		createEReference(cgOperationEClass, CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 2);
 
-		cgOperationCallExpEClass = createEClass(CG_OPERATION_CALL_EXP);
-		createEReference(cgOperationCallExpEClass, CG_OPERATION_CALL_EXP__ARGUMENTS);
-		createEAttribute(cgOperationCallExpEClass, CG_OPERATION_CALL_EXP__REFERRED_OPERATION);
+		cgOperationCallExpEClass = createEClass(67);
+		createEReference(cgOperationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(cgOperationCallExpEClass, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1);
 
-		cgOppositePropertyCallExpEClass = createEClass(CG_OPPOSITE_PROPERTY_CALL_EXP);
+		cgOppositePropertyCallExpEClass = createEClass(68);
 
-		cgPackageEClass = createEClass(CG_PACKAGE);
-		createEReference(cgPackageEClass, CG_PACKAGE__CLASSES);
-		createEReference(cgPackageEClass, CG_PACKAGE__PACKAGES);
-		createEReference(cgPackageEClass, CG_PACKAGE__CONTAINING_PACKAGE);
+		cgPackageEClass = createEClass(69);
+		createEReference(cgPackageEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgPackageEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgPackageEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgParameterEClass = createEClass(CG_PARAMETER);
-		createEReference(cgParameterEClass, CG_PARAMETER__CALLABLE);
+		cgParameterEClass = createEClass(70);
+		createEReference(cgParameterEClass, CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0);
 
-		cgPropertyEClass = createEClass(CG_PROPERTY);
-		createEReference(cgPropertyEClass, CG_PROPERTY__CONTAINING_CLASS);
-		createEReference(cgPropertyEClass, CG_PROPERTY__BODY);
+		cgPropertyEClass = createEClass(71);
+		createEReference(cgPropertyEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgPropertyEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgPropertyCallExpEClass = createEClass(CG_PROPERTY_CALL_EXP);
+		cgPropertyCallExpEClass = createEClass(72);
 
-		cgRealEClass = createEClass(CG_REAL);
+		cgRealEClass = createEClass(73);
 
-		cgSettableVariableEClass = createEClass(CG_SETTABLE_VARIABLE);
+		cgSettableVariableEClass = createEClass(74);
 
-		cgShadowExpEClass = createEClass(CG_SHADOW_EXP);
-		createEReference(cgShadowExpEClass, CG_SHADOW_EXP__PARTS);
-		createEReference(cgShadowExpEClass, CG_SHADOW_EXP__EXECUTOR_TYPE);
+		cgShadowExpEClass = createEClass(75);
+		createEReference(cgShadowExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgShadowExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgShadowPartEClass = createEClass(CG_SHADOW_PART);
-		createEReference(cgShadowPartEClass, CG_SHADOW_PART__INIT);
-		createEReference(cgShadowPartEClass, CG_SHADOW_PART__SHADOW_EXP);
-		createEReference(cgShadowPartEClass, CG_SHADOW_PART__EXECUTOR_PART);
+		cgShadowPartEClass = createEClass(76);
+		createEReference(cgShadowPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgShadowPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(cgShadowPartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 
-		cgStringEClass = createEClass(CG_STRING);
-		createEAttribute(cgStringEClass, CG_STRING__STRING_VALUE);
+		cgStringEClass = createEClass(77);
+		createEAttribute(cgStringEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
 
-		cgTextEClass = createEClass(CG_TEXT);
-		createEAttribute(cgTextEClass, CG_TEXT__TEXT_VALUE);
+		cgTextEClass = createEClass(78);
+		createEAttribute(cgTextEClass, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0);
 
-		cgThrowExpEClass = createEClass(CG_THROW_EXP);
+		cgThrowExpEClass = createEClass(79);
 
-		cgTupleExpEClass = createEClass(CG_TUPLE_EXP);
-		createEReference(cgTupleExpEClass, CG_TUPLE_EXP__PARTS);
+		cgTupleExpEClass = createEClass(80);
+		createEReference(cgTupleExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgTuplePartEClass = createEClass(CG_TUPLE_PART);
-		createEReference(cgTuplePartEClass, CG_TUPLE_PART__INIT);
-		createEReference(cgTuplePartEClass, CG_TUPLE_PART__TUPLE_EXP);
+		cgTuplePartEClass = createEClass(81);
+		createEReference(cgTuplePartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgTuplePartEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgTuplePartCallExpEClass = createEClass(CG_TUPLE_PART_CALL_EXP);
-		createEAttribute(cgTuplePartCallExpEClass, CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID);
+		cgTuplePartCallExpEClass = createEClass(82);
+		createEAttribute(cgTuplePartCallExpEClass, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0);
 
-		cgTypeIdEClass = createEClass(CG_TYPE_ID);
+		cgTypeIdEClass = createEClass(83);
 
-		cgTypeExpEClass = createEClass(CG_TYPE_EXP);
-		createEReference(cgTypeExpEClass, CG_TYPE_EXP__EXECUTOR_TYPE);
+		cgTypeExpEClass = createEClass(84);
+		createEReference(cgTypeExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgTypedElementEClass = createEClass(CG_TYPED_ELEMENT);
-		createEReference(cgTypedElementEClass, CG_TYPED_ELEMENT__TYPE_ID);
-		createEAttribute(cgTypedElementEClass, CG_TYPED_ELEMENT__REQUIRED);
+		cgTypedElementEClass = createEClass(85);
+		createEReference(cgTypedElementEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(cgTypedElementEClass, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgUnboxExpEClass = createEClass(CG_UNBOX_EXP);
+		cgUnboxExpEClass = createEClass(86);
 
-		cgUnlimitedEClass = createEClass(CG_UNLIMITED);
+		cgUnlimitedEClass = createEClass(87);
 
-		cgValuedElementEClass = createEClass(CG_VALUED_ELEMENT);
-		createEReference(cgValuedElementEClass, CG_VALUED_ELEMENT__DEPENDS_ON);
-		createEReference(cgValuedElementEClass, CG_VALUED_ELEMENT__OWNS);
+		cgValuedElementEClass = createEClass(88);
+		createEReference(cgValuedElementEClass, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(cgValuedElementEClass, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1);
 
-		cgVariableEClass = createEClass(CG_VARIABLE);
-		createEReference(cgVariableEClass, CG_VARIABLE__INIT);
+		cgVariableEClass = createEClass(89);
+		createEReference(cgVariableEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		cgVariableExpEClass = createEClass(CG_VARIABLE_EXP);
-		createEReference(cgVariableExpEClass, CG_VARIABLE_EXP__REFERRED_VARIABLE);
+		cgVariableExpEClass = createEClass(90);
+		createEReference(cgVariableExpEClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0);
 
-		nameableEClass = createEClass(NAMEABLE);
+		nameableEClass = createEClass(91);
 
 		// Create data types
-		elementEDataType = createEDataType(ELEMENT);
-		elementIdEDataType = createEDataType(ELEMENT_ID);
-		enumerationLiteralIdEDataType = createEDataType(ENUMERATION_LITERAL_ID);
-		iterationEDataType = createEDataType(ITERATION);
-		fieldEDataType = createEDataType(FIELD);
-		libraryIterationEDataType = createEDataType(LIBRARY_ITERATION);
-		libraryOperationEDataType = createEDataType(LIBRARY_OPERATION);
-		libraryPropertyEDataType = createEDataType(LIBRARY_PROPERTY);
-		methodEDataType = createEDataType(METHOD);
-		numberEDataType = createEDataType(NUMBER);
-		objectEDataType = createEDataType(OBJECT);
-		operationEDataType = createEDataType(OPERATION);
-		propertyEDataType = createEDataType(PROPERTY);
-		tuplePartIdEDataType = createEDataType(TUPLE_PART_ID);
-		typeEDataType = createEDataType(TYPE);
-		typeIdEDataType = createEDataType(TYPE_ID);
+		elementEDataType = createEDataType(92);
+		elementIdEDataType = createEDataType(93);
+		enumerationLiteralIdEDataType = createEDataType(94);
+		iterationEDataType = createEDataType(95);
+		fieldEDataType = createEDataType(96);
+		libraryIterationEDataType = createEDataType(97);
+		libraryOperationEDataType = createEDataType(98);
+		libraryPropertyEDataType = createEDataType(99);
+		methodEDataType = createEDataType(100);
+		numberEDataType = createEDataType(101);
+		objectEDataType = createEDataType(102);
+		operationEDataType = createEDataType(103);
+		propertyEDataType = createEDataType(104);
+		tuplePartIdEDataType = createEDataType(105);
+		typeEDataType = createEDataType(106);
+		typeIdEDataType = createEDataType(107);
 	}
 
 	/**

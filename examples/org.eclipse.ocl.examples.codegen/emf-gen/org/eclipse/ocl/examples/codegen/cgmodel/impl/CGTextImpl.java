@@ -37,6 +37,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CGTextImpl extends CGConstantImpl implements CGText {
 	/**
+	 * The number of structural features of the '<em>CG Text</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_TEXT_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getTextValue() <em>Text Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,7 +104,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 		String oldTextValue = textValue;
 		textValue = newTextValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_TEXT__TEXT_VALUE, oldTextValue, textValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldTextValue, textValue));
 	}
 
 	/**
@@ -116,7 +125,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_TEXT__TEXT_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return getTextValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -130,7 +139,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_TEXT__TEXT_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setTextValue((String)newValue);
 				return;
 		}
@@ -145,7 +154,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TEXT__TEXT_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setTextValue(TEXT_VALUE_EDEFAULT);
 				return;
 		}
@@ -160,7 +169,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TEXT__TEXT_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return TEXT_VALUE_EDEFAULT == null ? textValue != null : !TEXT_VALUE_EDEFAULT.equals(textValue);
 		}
 		return super.eIsSet(featureID);

@@ -42,6 +42,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	/**
+	 * The number of structural features of the '<em>CG Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_MODEL_FEATURE_COUNT = CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getGlobals() <em>Globals</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -88,7 +97,7 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public List<CGConstant> getGlobals() {
 		if (globals == null) {
-			globals = new EObjectContainmentEList<CGConstant>(CGConstant.class, this, CGModelPackage.CG_MODEL__GLOBALS);
+			globals = new EObjectContainmentEList<CGConstant>(CGConstant.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
 		}
 		return globals;
 	}
@@ -101,7 +110,7 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public List<CGPackage> getPackages() {
 		if (packages == null) {
-			packages = new EObjectContainmentEList<CGPackage>(CGPackage.class, this, CGModelPackage.CG_MODEL__PACKAGES);
+			packages = new EObjectContainmentEList<CGPackage>(CGPackage.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
 		}
 		return packages;
 	}
@@ -114,9 +123,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_MODEL__GLOBALS:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getGlobals()).basicRemove(otherEnd, msgs);
-			case CGModelPackage.CG_MODEL__PACKAGES:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -130,9 +139,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_MODEL__GLOBALS:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getGlobals();
-			case CGModelPackage.CG_MODEL__PACKAGES:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return getPackages();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -147,11 +156,11 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_MODEL__GLOBALS:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getGlobals().clear();
 				getGlobals().addAll((Collection<? extends CGConstant>)newValue);
 				return;
-			case CGModelPackage.CG_MODEL__PACKAGES:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getPackages().clear();
 				getPackages().addAll((Collection<? extends CGPackage>)newValue);
 				return;
@@ -167,10 +176,10 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MODEL__GLOBALS:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				getGlobals().clear();
 				return;
-			case CGModelPackage.CG_MODEL__PACKAGES:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				getPackages().clear();
 				return;
 		}
@@ -185,9 +194,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MODEL__GLOBALS:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return globals != null && !globals.isEmpty();
-			case CGModelPackage.CG_MODEL__PACKAGES:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGSettableVariableImpl extends CGVariableImpl implements CGSettableVariable {
 	/**
+	 * The number of structural features of the '<em>CG Settable Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_SETTABLE_VARIABLE_FEATURE_COUNT = CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

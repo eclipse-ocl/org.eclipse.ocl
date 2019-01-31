@@ -39,6 +39,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implements CGNativePropertyCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Native Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_NATIVE_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getField() <em>Field</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -97,7 +106,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 		Field oldField = field;
 		field = newField;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_NATIVE_PROPERTY_CALL_EXP__FIELD, oldField, field));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldField, field));
 	}
 
 	/**
@@ -118,7 +127,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_NATIVE_PROPERTY_CALL_EXP__FIELD:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return getField();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -132,7 +141,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_NATIVE_PROPERTY_CALL_EXP__FIELD:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setField((Field)newValue);
 				return;
 		}
@@ -147,7 +156,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NATIVE_PROPERTY_CALL_EXP__FIELD:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setField(FIELD_EDEFAULT);
 				return;
 		}
@@ -162,7 +171,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NATIVE_PROPERTY_CALL_EXP__FIELD:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return FIELD_EDEFAULT == null ? field != null : !FIELD_EDEFAULT.equals(field);
 		}
 		return super.eIsSet(featureID);

@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGIntegerImpl extends CGNumberImpl implements CGInteger {
 	/**
+	 * The number of structural features of the '<em>CG Integer</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_INTEGER_FEATURE_COUNT = CGNumberImpl.CG_NUMBER_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

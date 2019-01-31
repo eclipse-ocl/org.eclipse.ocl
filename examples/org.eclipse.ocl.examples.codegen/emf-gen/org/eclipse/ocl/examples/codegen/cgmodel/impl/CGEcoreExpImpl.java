@@ -44,6 +44,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	/**
+	 * The number of structural features of the '<em>CG Ecore Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ECORE_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getEClassifier() <em>EClassifier</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 			eClassifier = (EClassifier)eResolveProxy(oldEClassifier);
 			if (eClassifier != oldEClassifier) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGModelPackage.CG_ECORE_EXP__ECLASSIFIER, oldEClassifier, eClassifier));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldEClassifier, eClassifier));
 			}
 		}
 		return eClassifier;
@@ -109,7 +117,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 		EClassifier oldEClassifier = eClassifier;
 		eClassifier = newEClassifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ECORE_EXP__ECLASSIFIER, oldEClassifier, eClassifier));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldEClassifier, eClassifier));
 	}
 
 	/**
@@ -120,7 +128,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_EXP__ECLASSIFIER:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				if (resolve) return getEClassifier();
 				return basicGetEClassifier();
 		}
@@ -135,7 +143,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_EXP__ECLASSIFIER:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setEClassifier((EClassifier)newValue);
 				return;
 		}
@@ -150,7 +158,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_EXP__ECLASSIFIER:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setEClassifier((EClassifier)null);
 				return;
 		}
@@ -165,7 +173,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_EXP__ECLASSIFIER:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return eClassifier != null;
 		}
 		return super.eIsSet(featureID);

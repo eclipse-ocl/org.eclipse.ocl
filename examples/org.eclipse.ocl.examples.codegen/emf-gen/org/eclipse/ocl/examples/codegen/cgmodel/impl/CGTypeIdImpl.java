@@ -28,6 +28,15 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public class CGTypeIdImpl extends CGElementIdImpl implements CGTypeId {
 	/**
+	 * The number of structural features of the '<em>CG Type Id</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_TYPE_ID_FEATURE_COUNT = CGElementIdImpl.CG_ELEMENT_ID_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGRealImpl extends CGNumberImpl implements CGReal {
 	/**
+	 * The number of structural features of the '<em>CG Real</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_REAL_FEATURE_COUNT = CGNumberImpl.CG_NUMBER_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

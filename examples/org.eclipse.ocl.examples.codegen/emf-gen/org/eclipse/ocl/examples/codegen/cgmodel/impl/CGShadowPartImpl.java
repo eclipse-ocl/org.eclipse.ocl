@@ -42,6 +42,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPart {
 	/**
+	 * The number of structural features of the '<em>CG Shadow Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_SHADOW_PART_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getInit() <em>Init</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -99,7 +108,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		CGValuedElement oldInit = init;
 		init = newInit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_SHADOW_PART__INIT, oldInit, newInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldInit, newInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -115,14 +124,14 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
-				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_SHADOW_PART__INIT, null, msgs);
+				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newInit != null)
-				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_SHADOW_PART__INIT, null, msgs);
+				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetInit(newInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_SHADOW_PART__INIT, newInit, newInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newInit, newInit));
 	}
 
 	/**
@@ -132,7 +141,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 */
 	@Override
 	public CGShadowExp getShadowExp() {
-		if (eContainerFeatureID() != CGModelPackage.CG_SHADOW_PART__SHADOW_EXP) return null;
+		if (eContainerFeatureID() != (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1)) return null;
 		return (CGShadowExp)eInternalContainer();
 	}
 
@@ -156,7 +165,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		CGExecutorShadowPart oldExecutorPart = executorPart;
 		executorPart = newExecutorPart;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_SHADOW_PART__EXECUTOR_PART, oldExecutorPart, executorPart));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, oldExecutorPart, executorPart));
 	}
 
 	/**
@@ -167,10 +176,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__SHADOW_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, CGModelPackage.CG_SHADOW_PART__SHADOW_EXP, msgs);
+				return eBasicSetContainer(otherEnd, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -183,10 +192,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetInit(null, msgs);
-			case CGModelPackage.CG_SHADOW_PART__SHADOW_EXP:
-				return eBasicSetContainer(null, CGModelPackage.CG_SHADOW_PART__SHADOW_EXP, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+				return eBasicSetContainer(null, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -199,8 +208,8 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGModelPackage.CG_SHADOW_PART__SHADOW_EXP:
-				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_SHADOW_EXP__PARTS, CGShadowExp.class, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+				return eInternalContainer().eInverseRemove(this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGShadowExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -213,11 +222,11 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getInit();
-			case CGModelPackage.CG_SHADOW_PART__SHADOW_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getShadowExp();
-			case CGModelPackage.CG_SHADOW_PART__EXECUTOR_PART:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getExecutorPart();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -231,10 +240,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_SHADOW_PART__EXECUTOR_PART:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setExecutorPart((CGExecutorShadowPart)newValue);
 				return;
 		}
@@ -249,10 +258,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_SHADOW_PART__EXECUTOR_PART:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setExecutorPart((CGExecutorShadowPart)null);
 				return;
 		}
@@ -267,11 +276,11 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_SHADOW_PART__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return init != null;
-			case CGModelPackage.CG_SHADOW_PART__SHADOW_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getShadowExp() != null;
-			case CGModelPackage.CG_SHADOW_PART__EXECUTOR_PART:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return executorPart != null;
 		}
 		return super.eIsSet(featureID);

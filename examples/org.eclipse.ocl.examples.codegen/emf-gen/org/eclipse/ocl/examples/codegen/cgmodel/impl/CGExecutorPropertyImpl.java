@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl implements CGExecutorProperty {
 	/**
+	 * The number of structural features of the '<em>CG Executor Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getUnderlyingPropertyId() <em>Underlying Property Id</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 		CGElementId oldUnderlyingPropertyId = underlyingPropertyId;
 		underlyingPropertyId = newUnderlyingPropertyId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID, oldUnderlyingPropertyId, underlyingPropertyId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingPropertyId, underlyingPropertyId));
 	}
 
 	/**
@@ -95,7 +103,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getUnderlyingPropertyId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +117,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingPropertyId((CGElementId)newValue);
 				return;
 		}
@@ -124,7 +132,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingPropertyId((CGElementId)null);
 				return;
 		}
@@ -139,7 +147,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_PROPERTY__UNDERLYING_PROPERTY_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return underlyingPropertyId != null;
 		}
 		return super.eIsSet(featureID);

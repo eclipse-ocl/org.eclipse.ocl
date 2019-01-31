@@ -39,6 +39,14 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecutorType {
 	/**
+	 * The number of structural features of the '<em>CG Executor Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_TYPE_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getUnderlyingTypeId() <em>Underlying Type Id</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +95,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 		CGTypeId oldUnderlyingTypeId = underlyingTypeId;
 		underlyingTypeId = newUnderlyingTypeId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID, oldUnderlyingTypeId, underlyingTypeId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingTypeId, underlyingTypeId));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getUnderlyingTypeId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -112,7 +120,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingTypeId((CGTypeId)newValue);
 				return;
 		}
@@ -127,7 +135,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingTypeId((CGTypeId)null);
 				return;
 		}
@@ -142,7 +150,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return underlyingTypeId != null;
 		}
 		return super.eIsSet(featureID);

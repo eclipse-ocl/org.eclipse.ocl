@@ -36,6 +36,15 @@ import org.eclipse.ocl.pivot.Property;
  */
 public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements CGNavigationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Navigation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getReferredProperty() <em>Referred Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +103,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -115,7 +124,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getReferredProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +138,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -144,7 +153,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredProperty(REFERRED_PROPERTY_EDEFAULT);
 				return;
 		}
@@ -159,7 +168,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return REFERRED_PROPERTY_EDEFAULT == null ? referredProperty != null : !REFERRED_PROPERTY_EDEFAULT.equals(referredProperty);
 		}
 		return super.eIsSet(featureID);

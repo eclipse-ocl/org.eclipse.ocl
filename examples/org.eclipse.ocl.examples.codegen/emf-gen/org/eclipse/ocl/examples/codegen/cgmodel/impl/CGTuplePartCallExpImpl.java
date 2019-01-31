@@ -34,6 +34,15 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
  */
 public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGTuplePartCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Tuple Part Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_TUPLE_PART_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getAstTuplePartId() <em>Ast Tuple Part Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +101,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 		TuplePartId oldAstTuplePartId = astTuplePartId;
 		astTuplePartId = newAstTuplePartId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID, oldAstTuplePartId, astTuplePartId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldAstTuplePartId, astTuplePartId));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return getAstTuplePartId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -127,7 +136,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setAstTuplePartId((TuplePartId)newValue);
 				return;
 		}
@@ -142,7 +151,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setAstTuplePartId(AST_TUPLE_PART_ID_EDEFAULT);
 				return;
 		}
@@ -157,7 +166,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return AST_TUPLE_PART_ID_EDEFAULT == null ? astTuplePartId != null : !AST_TUPLE_PART_ID_EDEFAULT.equals(astTuplePartId);
 		}
 		return super.eIsSet(featureID);

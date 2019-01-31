@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGConstraintImpl extends CGCallableImpl implements CGConstraint {
 	/**
+	 * The number of structural features of the '<em>CG Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CONSTRAINT_FEATURE_COUNT = CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

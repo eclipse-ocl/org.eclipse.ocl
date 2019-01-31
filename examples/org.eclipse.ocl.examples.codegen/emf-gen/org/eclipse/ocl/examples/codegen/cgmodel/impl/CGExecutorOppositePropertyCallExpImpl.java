@@ -39,6 +39,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCallExpImpl implements CGExecutorOppositePropertyCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Executor Opposite Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT = CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getExecutorProperty() <em>Executor Property</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +95,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 		CGExecutorProperty oldExecutorProperty = executorProperty;
 		executorProperty = newExecutorProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY, oldExecutorProperty, executorProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldExecutorProperty, executorProperty));
 	}
 
 	/**
@@ -98,7 +106,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY:
+			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return getExecutorProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -112,7 +120,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY:
+			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorProperty((CGExecutorProperty)newValue);
 				return;
 		}
@@ -127,7 +135,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY:
+			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorProperty((CGExecutorProperty)null);
 				return;
 		}
@@ -142,7 +150,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPPOSITE_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY:
+			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return executorProperty != null;
 		}
 		return super.eIsSet(featureID);

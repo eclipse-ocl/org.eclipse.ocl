@@ -27,6 +27,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGExecutorShadowPartImpl extends CGExecutorPropertyImpl implements CGExecutorShadowPart {
 	/**
+	 * The number of structural features of the '<em>CG Executor Shadow Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_SHADOW_PART_FEATURE_COUNT = CGExecutorPropertyImpl.CG_EXECUTOR_PROPERTY_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

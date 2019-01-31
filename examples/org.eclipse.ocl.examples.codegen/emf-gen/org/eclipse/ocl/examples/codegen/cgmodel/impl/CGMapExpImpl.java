@@ -58,6 +58,14 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	/**
+	 * The number of structural features of the '<em>CG Map Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_MAP_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getParts() <em>Parts</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +102,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public List<CGMapPart> getParts() {
 		if (parts == null) {
-			parts = new EObjectContainmentWithInverseEList<CGMapPart>(CGMapPart.class, this, CGModelPackage.CG_MAP_EXP__PARTS, CGModelPackage.CG_MAP_PART__MAP_EXP);
+			parts = new EObjectContainmentWithInverseEList<CGMapPart>(CGMapPart.class, this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2);
 		}
 		return parts;
 	}
@@ -108,7 +116,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParts()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -122,7 +130,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -136,7 +144,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -151,7 +159,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				getParts().clear();
 				getParts().addAll((Collection<? extends CGMapPart>)newValue);
 				return;
@@ -167,7 +175,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				getParts().clear();
 				return;
 		}
@@ -182,7 +190,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_EXP__PARTS:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return parts != null && !parts.isEmpty();
 		}
 		return super.eIsSet(featureID);

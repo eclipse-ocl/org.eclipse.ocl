@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstantExp {
 	/**
+	 * The number of structural features of the '<em>CG Constant Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CONSTANT_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredConstant() <em>Referred Constant</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 		CGValuedElement oldReferredConstant = referredConstant;
 		referredConstant = newReferredConstant;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CONSTANT_EXP__REFERRED_CONSTANT, oldReferredConstant, referredConstant));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldReferredConstant, referredConstant));
 	}
 
 	/**
@@ -95,7 +103,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_CONSTANT_EXP__REFERRED_CONSTANT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getReferredConstant();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +117,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_CONSTANT_EXP__REFERRED_CONSTANT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setReferredConstant((CGValuedElement)newValue);
 				return;
 		}
@@ -124,7 +132,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CONSTANT_EXP__REFERRED_CONSTANT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setReferredConstant((CGValuedElement)null);
 				return;
 		}
@@ -139,7 +147,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CONSTANT_EXP__REFERRED_CONSTANT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return referredConstant != null;
 		}
 		return super.eIsSet(featureID);

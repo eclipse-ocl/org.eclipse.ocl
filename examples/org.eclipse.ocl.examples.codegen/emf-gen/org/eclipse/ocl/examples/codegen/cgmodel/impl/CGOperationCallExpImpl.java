@@ -46,6 +46,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CGOperationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_OPERATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +112,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@SuppressWarnings("null")
 	public @NonNull List<CGValuedElement> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS);
+			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
 		}
 		return arguments;
 	}
@@ -128,7 +137,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_OPERATION_CALL_EXP__REFERRED_OPERATION, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -149,7 +158,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -163,9 +172,9 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getArguments();
-			case CGModelPackage.CG_OPERATION_CALL_EXP__REFERRED_OPERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return getReferredOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,11 +189,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case CGModelPackage.CG_OPERATION_CALL_EXP__REFERRED_OPERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -199,10 +208,10 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				getArguments().clear();
 				return;
-			case CGModelPackage.CG_OPERATION_CALL_EXP__REFERRED_OPERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				setReferredOperation(REFERRED_OPERATION_EDEFAULT);
 				return;
 		}
@@ -217,9 +226,9 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_OPERATION_CALL_EXP__ARGUMENTS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return arguments != null && !arguments.isEmpty();
-			case CGModelPackage.CG_OPERATION_CALL_EXP__REFERRED_OPERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return REFERRED_OPERATION_EDEFAULT == null ? referredOperation != null : !REFERRED_OPERATION_EDEFAULT.equals(referredOperation);
 		}
 		return super.eIsSet(featureID);

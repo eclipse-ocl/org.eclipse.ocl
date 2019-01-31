@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGExecutorOperation {
 	/**
+	 * The number of structural features of the '<em>CG Executor Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_OPERATION_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getUnderlyingOperationId() <em>Underlying Operation Id</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +92,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 		CGElementId oldUnderlyingOperationId = underlyingOperationId;
 		underlyingOperationId = newUnderlyingOperationId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID, oldUnderlyingOperationId, underlyingOperationId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingOperationId, underlyingOperationId));
 	}
 
 	/**
@@ -95,7 +103,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getUnderlyingOperationId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +117,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingOperationId((CGElementId)newValue);
 				return;
 		}
@@ -124,7 +132,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setUnderlyingOperationId((CGElementId)null);
 				return;
 		}
@@ -139,7 +147,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return underlyingOperationId != null;
 		}
 		return super.eIsSet(featureID);

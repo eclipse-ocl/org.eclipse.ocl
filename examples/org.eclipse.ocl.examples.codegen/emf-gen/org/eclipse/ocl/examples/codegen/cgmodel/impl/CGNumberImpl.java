@@ -36,6 +36,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	/**
+	 * The number of structural features of the '<em>CG Number</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_NUMBER_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getNumericValue() <em>Numeric Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +103,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 		Number oldNumericValue = numericValue;
 		numericValue = newNumericValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_NUMBER__NUMERIC_VALUE, oldNumericValue, numericValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldNumericValue, numericValue));
 	}
 
 	/**
@@ -115,7 +124,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_NUMBER__NUMERIC_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return getNumericValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +138,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_NUMBER__NUMERIC_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setNumericValue((Number)newValue);
 				return;
 		}
@@ -144,7 +153,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NUMBER__NUMERIC_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setNumericValue(NUMERIC_VALUE_EDEFAULT);
 				return;
 		}
@@ -159,7 +168,7 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_NUMBER__NUMERIC_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return NUMERIC_VALUE_EDEFAULT == null ? numericValue != null : !NUMERIC_VALUE_EDEFAULT.equals(numericValue);
 		}
 		return super.eIsSet(featureID);

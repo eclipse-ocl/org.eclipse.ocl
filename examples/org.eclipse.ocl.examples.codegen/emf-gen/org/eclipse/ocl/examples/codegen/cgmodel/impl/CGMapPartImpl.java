@@ -51,6 +51,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	/**
+	 * The number of structural features of the '<em>CG Map Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_MAP_PART_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getKey() <em>Key</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -108,7 +117,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		CGValuedElement oldKey = key;
 		key = newKey;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_MAP_PART__KEY, oldKey, newKey);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldKey, newKey);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +133,14 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		if (newKey != key) {
 			NotificationChain msgs = null;
 			if (key != null)
-				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_MAP_PART__KEY, null, msgs);
+				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newKey != null)
-				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_MAP_PART__KEY, null, msgs);
+				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetKey(newKey, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_MAP_PART__KEY, newKey, newKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newKey, newKey));
 	}
 
 	/**
@@ -153,7 +162,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		CGValuedElement oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_MAP_PART__VALUE, oldValue, newValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldValue, newValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -169,14 +178,14 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_MAP_PART__VALUE, null, msgs);
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_MAP_PART__VALUE, null, msgs);
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_MAP_PART__VALUE, newValue, newValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newValue, newValue));
 	}
 
 	/**
@@ -186,7 +195,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	 */
 	@Override
 	public CGMapExp getMapExp() {
-		if (eContainerFeatureID() != CGModelPackage.CG_MAP_PART__MAP_EXP) return null;
+		if (eContainerFeatureID() != (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (CGMapExp)eInternalContainer();
 	}
 
@@ -198,10 +207,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__MAP_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, CGModelPackage.CG_MAP_PART__MAP_EXP, msgs);
+				return eBasicSetContainer(otherEnd, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -214,12 +223,12 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__KEY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetKey(null, msgs);
-			case CGModelPackage.CG_MAP_PART__VALUE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return basicSetValue(null, msgs);
-			case CGModelPackage.CG_MAP_PART__MAP_EXP:
-				return eBasicSetContainer(null, CGModelPackage.CG_MAP_PART__MAP_EXP, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+				return eBasicSetContainer(null, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -232,8 +241,8 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGModelPackage.CG_MAP_PART__MAP_EXP:
-				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_MAP_EXP__PARTS, CGMapExp.class, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGMapExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -246,11 +255,11 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__KEY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getKey();
-			case CGModelPackage.CG_MAP_PART__VALUE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getValue();
-			case CGModelPackage.CG_MAP_PART__MAP_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getMapExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -264,10 +273,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__KEY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setKey((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_MAP_PART__VALUE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setValue((CGValuedElement)newValue);
 				return;
 		}
@@ -282,10 +291,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__KEY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setKey((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_MAP_PART__VALUE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setValue((CGValuedElement)null);
 				return;
 		}
@@ -300,11 +309,11 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_MAP_PART__KEY:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return key != null;
-			case CGModelPackage.CG_MAP_PART__VALUE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return value != null;
-			case CGModelPackage.CG_MAP_PART__MAP_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getMapExp() != null;
 		}
 		return super.eIsSet(featureID);

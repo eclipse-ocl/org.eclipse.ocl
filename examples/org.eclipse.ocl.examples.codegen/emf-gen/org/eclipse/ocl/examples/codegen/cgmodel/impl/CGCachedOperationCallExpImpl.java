@@ -45,6 +45,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl implements CGCachedOperationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Cached Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CACHED_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getMethod() <em>Method</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,7 +132,7 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__METHOD, oldMethod, method));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldMethod, method));
 	}
 
 	/**
@@ -146,7 +155,7 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldThisIsSelf = thisIsSelf;
 		thisIsSelf = newThisIsSelf;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF, oldThisIsSelf, thisIsSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1, oldThisIsSelf, thisIsSelf));
 	}
 
 	/**
@@ -167,9 +176,9 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__METHOD:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getMethod();
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
 				return isThisIsSelf();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +192,10 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__METHOD:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setMethod((Method)newValue);
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
 				setThisIsSelf((Boolean)newValue);
 				return;
 		}
@@ -201,10 +210,10 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__METHOD:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setMethod(METHOD_EDEFAULT);
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
 				setThisIsSelf(THIS_IS_SELF_EDEFAULT);
 				return;
 		}
@@ -219,9 +228,9 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__METHOD:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
-			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
 				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

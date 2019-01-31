@@ -35,6 +35,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	/**
+	 * The number of structural features of the '<em>CG Boolean</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_BOOLEAN_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #isBooleanValue() <em>Boolean Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,7 +102,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 		boolean oldBooleanValue = booleanValue;
 		booleanValue = newBooleanValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_BOOLEAN__BOOLEAN_VALUE, oldBooleanValue, booleanValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldBooleanValue, booleanValue));
 	}
 
 	/**
@@ -114,7 +123,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_BOOLEAN__BOOLEAN_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return isBooleanValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -128,7 +137,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_BOOLEAN__BOOLEAN_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setBooleanValue((Boolean)newValue);
 				return;
 		}
@@ -143,7 +152,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_BOOLEAN__BOOLEAN_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setBooleanValue(BOOLEAN_VALUE_EDEFAULT);
 				return;
 		}
@@ -158,7 +167,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_BOOLEAN__BOOLEAN_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return booleanValue != BOOLEAN_VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

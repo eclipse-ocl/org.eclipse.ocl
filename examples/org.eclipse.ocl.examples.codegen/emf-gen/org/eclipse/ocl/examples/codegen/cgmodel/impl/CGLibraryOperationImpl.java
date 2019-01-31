@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGLibraryOperationImpl extends CGOperationImpl implements CGLibraryOperation {
 	/**
+	 * The number of structural features of the '<em>CG Library Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LIBRARY_OPERATION_FEATURE_COUNT = CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

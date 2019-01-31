@@ -36,6 +36,15 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public abstract class CGTypedElementImpl extends CGNamedElementImpl implements CGTypedElement {
 	/**
+	 * The number of structural features of the '<em>CG Typed Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_TYPED_ELEMENT_FEATURE_COUNT = CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getTypeId() <em>Type Id</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,7 +113,7 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 		CGTypeId oldTypeId = typeId;
 		typeId = newTypeId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_TYPED_ELEMENT__TYPE_ID, oldTypeId, typeId));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0, oldTypeId, typeId));
 	}
 
 	/**
@@ -127,7 +136,7 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 		boolean oldRequired = required;
 		required = newRequired;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_TYPED_ELEMENT__REQUIRED, oldRequired, required));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1, oldRequired, required));
 	}
 
 	/**
@@ -148,9 +157,9 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPED_ELEMENT__TYPE_ID:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return getTypeId();
-			case CGModelPackage.CG_TYPED_ELEMENT__REQUIRED:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return isRequired();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -164,10 +173,10 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPED_ELEMENT__TYPE_ID:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setTypeId((CGTypeId)newValue);
 				return;
-			case CGModelPackage.CG_TYPED_ELEMENT__REQUIRED:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setRequired((Boolean)newValue);
 				return;
 		}
@@ -182,10 +191,10 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPED_ELEMENT__TYPE_ID:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				setTypeId((CGTypeId)null);
 				return;
-			case CGModelPackage.CG_TYPED_ELEMENT__REQUIRED:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				setRequired(REQUIRED_EDEFAULT);
 				return;
 		}
@@ -200,9 +209,9 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_TYPED_ELEMENT__TYPE_ID:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
 				return typeId != null;
-			case CGModelPackage.CG_TYPED_ELEMENT__REQUIRED:
+			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
 				return required != REQUIRED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

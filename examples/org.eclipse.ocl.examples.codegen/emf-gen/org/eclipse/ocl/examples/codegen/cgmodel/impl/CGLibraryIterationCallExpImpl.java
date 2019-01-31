@@ -34,6 +34,15 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
  */
 public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implements CGLibraryIterationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Library Iteration Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT = CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getLibraryIteration() <em>Library Iteration</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +101,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 		LibraryIteration oldLibraryIteration = libraryIteration;
 		libraryIteration = newLibraryIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION, oldLibraryIteration, libraryIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0, oldLibraryIteration, libraryIteration));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getLibraryIteration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -127,7 +136,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryIteration((LibraryIteration)newValue);
 				return;
 		}
@@ -142,7 +151,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryIteration(LIBRARY_ITERATION_EDEFAULT);
 				return;
 		}
@@ -157,7 +166,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATION_CALL_EXP__LIBRARY_ITERATION:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return LIBRARY_ITERATION_EDEFAULT == null ? libraryIteration != null : !LIBRARY_ITERATION_EDEFAULT.equals(libraryIteration);
 		}
 		return super.eIsSet(featureID);

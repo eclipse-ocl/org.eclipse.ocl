@@ -47,6 +47,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	/**
+	 * The number of structural features of the '<em>CG Is Equal2 Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_IS_EQUAL2_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +102,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 		CGValuedElement oldArgument = argument;
 		argument = newArgument;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT, oldArgument, newArgument);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldArgument, newArgument);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -110,14 +118,14 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 		if (newArgument != argument) {
 			NotificationChain msgs = null;
 			if (argument != null)
-				msgs = ((InternalEObject)argument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT, null, msgs);
+				msgs = ((InternalEObject)argument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			if (newArgument != null)
-				msgs = ((InternalEObject)newArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT, null, msgs);
+				msgs = ((InternalEObject)newArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetArgument(newArgument, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT, newArgument, newArgument));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, newArgument, newArgument));
 	}
 
 	/**
@@ -128,7 +136,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return basicSetArgument(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -142,7 +150,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getArgument();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,7 +164,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setArgument((CGValuedElement)newValue);
 				return;
 		}
@@ -171,7 +179,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setArgument((CGValuedElement)null);
 				return;
 		}
@@ -186,7 +194,7 @@ public class CGIsEqual2ExpImpl extends CGCallExpImpl implements CGIsEqual2Exp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_EQUAL2_EXP__ARGUMENT:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return argument != null;
 		}
 		return super.eIsSet(featureID);

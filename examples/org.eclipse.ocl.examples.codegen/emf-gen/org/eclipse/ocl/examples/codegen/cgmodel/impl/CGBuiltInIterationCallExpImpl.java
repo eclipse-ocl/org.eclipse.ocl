@@ -36,6 +36,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implements CGBuiltInIterationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Built In Iteration Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_BUILT_IN_ITERATION_CALL_EXP_FEATURE_COUNT = CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getAccumulator() <em>Accumulator</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,7 +91,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		CGIterator oldAccumulator = accumulator;
 		accumulator = newAccumulator;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR, oldAccumulator, newAccumulator);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0, oldAccumulator, newAccumulator);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -99,14 +107,14 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		if (newAccumulator != accumulator) {
 			NotificationChain msgs = null;
 			if (accumulator != null)
-				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR, null, msgs);
+				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			if (newAccumulator != null)
-				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR, null, msgs);
+				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetAccumulator(newAccumulator, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR, newAccumulator, newAccumulator));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0, newAccumulator, newAccumulator));
 	}
 
 	/**
@@ -117,7 +125,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return basicSetAccumulator(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -131,7 +139,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getAccumulator();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -145,7 +153,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setAccumulator((CGIterator)newValue);
 				return;
 		}
@@ -160,7 +168,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setAccumulator((CGIterator)null);
 				return;
 		}
@@ -175,7 +183,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR:
+			case CGIterationCallExpImpl.CG_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return accumulator != null;
 		}
 		return super.eIsSet(featureID);

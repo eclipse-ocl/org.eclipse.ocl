@@ -34,6 +34,15 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implements CGLibraryPropertyCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Library Property Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LIBRARY_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getLibraryProperty() <em>Library Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +101,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 		LibraryProperty oldLibraryProperty = libraryProperty;
 		libraryProperty = newLibraryProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY, oldLibraryProperty, libraryProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldLibraryProperty, libraryProperty));
 	}
 
 	/**
@@ -113,7 +122,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return getLibraryProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -127,7 +136,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryProperty((LibraryProperty)newValue);
 				return;
 		}
@@ -142,7 +151,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				setLibraryProperty(LIBRARY_PROPERTY_EDEFAULT);
 				return;
 		}
@@ -157,7 +166,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_PROPERTY_CALL_EXP__LIBRARY_PROPERTY:
+			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
 				return LIBRARY_PROPERTY_EDEFAULT == null ? libraryProperty != null : !LIBRARY_PROPERTY_EDEFAULT.equals(libraryProperty);
 		}
 		return super.eIsSet(featureID);

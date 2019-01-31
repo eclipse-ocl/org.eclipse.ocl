@@ -37,6 +37,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariableExp {
 	/**
+	 * The number of structural features of the '<em>CG Variable Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_VARIABLE_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getReferredVariable() <em>Referred Variable</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 		CGVariable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_VARIABLE_EXP__REFERRED_VARIABLE, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -96,7 +104,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE_EXP__REFERRED_VARIABLE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -110,7 +118,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE_EXP__REFERRED_VARIABLE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setReferredVariable((CGVariable)newValue);
 				return;
 		}
@@ -125,7 +133,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE_EXP__REFERRED_VARIABLE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setReferredVariable((CGVariable)null);
 				return;
 		}
@@ -140,7 +148,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE_EXP__REFERRED_VARIABLE:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);

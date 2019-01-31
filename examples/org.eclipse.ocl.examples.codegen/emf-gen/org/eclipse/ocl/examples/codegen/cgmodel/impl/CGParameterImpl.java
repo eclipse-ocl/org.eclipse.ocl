@@ -56,6 +56,15 @@ import org.eclipse.ocl.pivot.Variable;
  */
 public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	/**
+	 * The number of structural features of the '<em>CG Parameter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_PARAMETER_FEATURE_COUNT = CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -81,7 +90,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 */
 	@Override
 	public CGCallable getCallable() {
-		if (eContainerFeatureID() != CGModelPackage.CG_PARAMETER__CALLABLE) return null;
+		if (eContainerFeatureID() != (CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0)) return null;
 		return (CGCallable)eInternalContainer();
 	}
 
@@ -91,7 +100,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @generated
 	 */
 	public NotificationChain basicSetCallable(CGCallable newCallable, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newCallable, CGModelPackage.CG_PARAMETER__CALLABLE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newCallable, CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0, msgs);
 		return msgs;
 	}
 
@@ -102,19 +111,19 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 */
 	@Override
 	public void setCallable(CGCallable newCallable) {
-		if (newCallable != eInternalContainer() || (eContainerFeatureID() != CGModelPackage.CG_PARAMETER__CALLABLE && newCallable != null)) {
+		if (newCallable != eInternalContainer() || (eContainerFeatureID() != (CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0) && newCallable != null)) {
 			if (EcoreUtil.isAncestor(this, newCallable))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newCallable != null)
-				msgs = ((InternalEObject)newCallable).eInverseAdd(this, CGModelPackage.CG_CALLABLE__PARAMETERS, CGCallable.class, msgs);
+				msgs = ((InternalEObject)newCallable).eInverseAdd(this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGCallable.class, msgs);
 			msgs = basicSetCallable(newCallable, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_PARAMETER__CALLABLE, newCallable, newCallable));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0, newCallable, newCallable));
 	}
 
 	/**
@@ -125,7 +134,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetCallable((CGCallable)otherEnd, msgs);
@@ -141,7 +150,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				return basicSetCallable(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,8 +164,8 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
-				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_CALLABLE__PARAMETERS, CGCallable.class, msgs);
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
+				return eInternalContainer().eInverseRemove(this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGCallable.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -169,7 +178,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				return getCallable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,7 +192,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				setCallable((CGCallable)newValue);
 				return;
 		}
@@ -198,7 +207,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				setCallable((CGCallable)null);
 				return;
 		}
@@ -213,7 +222,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_PARAMETER__CALLABLE:
+			case CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0:
 				return getCallable() != null;
 		}
 		return super.eIsSet(featureID);

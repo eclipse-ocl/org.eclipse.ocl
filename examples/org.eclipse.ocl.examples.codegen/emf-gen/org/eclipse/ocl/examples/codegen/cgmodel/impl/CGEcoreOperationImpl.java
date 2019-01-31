@@ -37,6 +37,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOperation {
 	/**
+	 * The number of structural features of the '<em>CG Ecore Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ECORE_OPERATION_FEATURE_COUNT = CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getEOperation() <em>EOperation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -77,7 +85,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 			eOperation = (EOperation)eResolveProxy(oldEOperation);
 			if (eOperation != oldEOperation) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGModelPackage.CG_ECORE_OPERATION__EOPERATION, oldEOperation, eOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0, oldEOperation, eOperation));
 			}
 		}
 		return eOperation;
@@ -102,7 +110,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 		EOperation oldEOperation = eOperation;
 		eOperation = newEOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ECORE_OPERATION__EOPERATION, oldEOperation, eOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0, oldEOperation, eOperation));
 	}
 
 	/**
@@ -113,7 +121,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION__EOPERATION:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				if (resolve) return getEOperation();
 				return basicGetEOperation();
 		}
@@ -128,7 +136,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION__EOPERATION:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				setEOperation((EOperation)newValue);
 				return;
 		}
@@ -143,7 +151,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION__EOPERATION:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				setEOperation((EOperation)null);
 				return;
 		}
@@ -158,7 +166,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ECORE_OPERATION__EOPERATION:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				return eOperation != null;
 		}
 		return super.eIsSet(featureID);

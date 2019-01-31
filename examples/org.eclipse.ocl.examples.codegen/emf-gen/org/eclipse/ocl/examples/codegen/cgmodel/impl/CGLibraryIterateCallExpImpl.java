@@ -38,6 +38,14 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl implements CGLibraryIterateCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Library Iterate Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_LIBRARY_ITERATE_CALL_EXP_FEATURE_COUNT = CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		CGIterator oldResult = result;
 		result = newResult;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT, oldResult, newResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0, oldResult, newResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -101,14 +109,14 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		if (newResult != result) {
 			NotificationChain msgs = null;
 			if (result != null)
-				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT, null, msgs);
+				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			if (newResult != null)
-				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT, null, msgs);
+				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetResult(newResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT, newResult, newResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0, newResult, newResult));
 	}
 
 	/**
@@ -119,7 +127,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT:
+			case CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return basicSetResult(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -133,7 +141,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT:
+			case CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -147,7 +155,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT:
+			case CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setResult((CGIterator)newValue);
 				return;
 		}
@@ -162,7 +170,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT:
+			case CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setResult((CGIterator)null);
 				return;
 		}
@@ -177,7 +185,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_LIBRARY_ITERATE_CALL_EXP__RESULT:
+			case CGLibraryIterationCallExpImpl.CG_LIBRARY_ITERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return result != null;
 		}
 		return super.eIsSet(featureID);

@@ -25,6 +25,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
  */
 public abstract class CGConstantImpl extends CGValuedElementImpl implements CGConstant {
 	/**
+	 * The number of structural features of the '<em>CG Constant</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CONSTANT_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

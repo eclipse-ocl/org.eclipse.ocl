@@ -36,6 +36,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CGStringImpl extends CGConstantImpl implements CGString {
 	/**
+	 * The number of structural features of the '<em>CG String</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_STRING_FEATURE_COUNT = CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getStringValue() <em>String Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,7 +103,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 		String oldStringValue = stringValue;
 		stringValue = newStringValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_STRING__STRING_VALUE, oldStringValue, stringValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldStringValue, stringValue));
 	}
 
 	/**
@@ -115,7 +124,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_STRING__STRING_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return getStringValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +138,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_STRING__STRING_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setStringValue((String)newValue);
 				return;
 		}
@@ -144,7 +153,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_STRING__STRING_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				setStringValue(STRING_VALUE_EDEFAULT);
 				return;
 		}
@@ -159,7 +168,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_STRING__STRING_VALUE:
+			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
 				return STRING_VALUE_EDEFAULT == null ? stringValue != null : !STRING_VALUE_EDEFAULT.equals(stringValue);
 		}
 		return super.eIsSet(featureID);

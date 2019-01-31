@@ -44,6 +44,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOperation {
 	/**
+	 * The number of structural features of the '<em>CG Cached Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_CACHED_OPERATION_FEATURE_COUNT = CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getFinalOperations() <em>Final Operations</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +99,7 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public List<CGCachedOperation> getFinalOperations() {
 		if (finalOperations == null) {
-			finalOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS);
+			finalOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1);
 		}
 		return finalOperations;
 	}
@@ -103,7 +112,7 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public List<CGCachedOperation> getVirtualOperations() {
 		if (virtualOperations == null) {
-			virtualOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS);
+			virtualOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0);
 		}
 		return virtualOperations;
 	}
@@ -117,9 +126,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFinalOperations()).basicAdd(otherEnd, msgs);
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getVirtualOperations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -133,9 +142,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				return ((InternalEList<?>)getFinalOperations()).basicRemove(otherEnd, msgs);
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getVirtualOperations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -149,9 +158,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				return getFinalOperations();
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				return getVirtualOperations();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -166,11 +175,11 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				getFinalOperations().clear();
 				getFinalOperations().addAll((Collection<? extends CGCachedOperation>)newValue);
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				getVirtualOperations().clear();
 				getVirtualOperations().addAll((Collection<? extends CGCachedOperation>)newValue);
 				return;
@@ -186,10 +195,10 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				getFinalOperations().clear();
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				getVirtualOperations().clear();
 				return;
 		}
@@ -204,9 +213,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
 				return finalOperations != null && !finalOperations.isEmpty();
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 1:
 				return virtualOperations != null && !virtualOperations.isEmpty();
 		}
 		return super.eIsSet(featureID);

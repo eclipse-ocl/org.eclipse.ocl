@@ -34,6 +34,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl implements CGExecutorOperationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Executor Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_EXECUTOR_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getExecutorOperation() <em>Executor Operation</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -82,7 +90,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 		CGExecutorOperation oldExecutorOperation = executorOperation;
 		executorOperation = newExecutorOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION, oldExecutorOperation, executorOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldExecutorOperation, executorOperation));
 	}
 
 	/**
@@ -93,7 +101,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return getExecutorOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -107,7 +115,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorOperation((CGExecutorOperation)newValue);
 				return;
 		}
@@ -122,7 +130,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorOperation((CGExecutorOperation)null);
 				return;
 		}
@@ -137,7 +145,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION:
+			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
 				return executorOperation != null;
 		}
 		return super.eIsSet(featureID);

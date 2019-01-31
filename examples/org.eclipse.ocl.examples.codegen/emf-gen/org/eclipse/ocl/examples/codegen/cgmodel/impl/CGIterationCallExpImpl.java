@@ -53,6 +53,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CGIterationCallExp {
 	/**
+	 * The number of structural features of the '<em>CG Iteration Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_ITERATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 4;
+
+	/**
 	 * The default value of the '{@link #getReferredIteration() <em>Referred Iteration</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -141,7 +150,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ITERATION_CALL_EXP__REFERRED_ITERATION, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -153,7 +162,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@SuppressWarnings("null")
 	public @NonNull List<CGIterator> getIterators() {
 		if (iterators == null) {
-			iterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS);
+			iterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1);
 		}
 		return iterators;
 	}
@@ -177,7 +186,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ITERATION_CALL_EXP__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -193,14 +202,14 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_ITERATION_CALL_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_ITERATION_CALL_EXP__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ITERATION_CALL_EXP__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2, newBody, newBody));
 	}
 
 	/**
@@ -211,7 +220,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public List<CGIterator> getCoIterators() {
 		if (coIterators == null) {
-			coIterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS);
+			coIterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3);
 		}
 		return coIterators;
 	}
@@ -234,11 +243,11 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getIterators()).basicRemove(otherEnd, msgs);
-			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2:
 				return basicSetBody(null, msgs);
-			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getCoIterators()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -252,13 +261,13 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_ITERATION_CALL_EXP__REFERRED_ITERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getReferredIteration();
-			case CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return getIterators();
-			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2:
 				return getBody();
-			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3:
 				return getCoIterators();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -273,17 +282,17 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_ITERATION_CALL_EXP__REFERRED_ITERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredIteration((Iteration)newValue);
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends CGIterator>)newValue);
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2:
 				setBody((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends CGIterator>)newValue);
 				return;
@@ -299,16 +308,16 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ITERATION_CALL_EXP__REFERRED_ITERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setReferredIteration(REFERRED_ITERATION_EDEFAULT);
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				getIterators().clear();
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2:
 				setBody((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3:
 				getCoIterators().clear();
 				return;
 		}
@@ -323,13 +332,13 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_ITERATION_CALL_EXP__REFERRED_ITERATION:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return REFERRED_ITERATION_EDEFAULT == null ? referredIteration != null : !REFERRED_ITERATION_EDEFAULT.equals(referredIteration);
-			case CGModelPackage.CG_ITERATION_CALL_EXP__ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return iterators != null && !iterators.isEmpty();
-			case CGModelPackage.CG_ITERATION_CALL_EXP__BODY:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2:
 				return body != null;
-			case CGModelPackage.CG_ITERATION_CALL_EXP__CO_ITERATORS:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3:
 				return coIterators != null && !coIterators.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -39,6 +39,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  */
 public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	/**
+	 * The number of structural features of the '<em>CG Guard Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_GUARD_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2;
+	/**
 	 * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -115,7 +123,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 		String oldMessage = message;
 		message = newMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_GUARD_EXP__MESSAGE, oldMessage, message));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldMessage, message));
 	}
 
 	/**
@@ -138,7 +146,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 		boolean oldSafe = safe;
 		safe = newSafe;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_GUARD_EXP__SAFE, oldSafe, safe));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1, oldSafe, safe));
 	}
 
 	/**
@@ -159,9 +167,9 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_GUARD_EXP__MESSAGE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getMessage();
-			case CGModelPackage.CG_GUARD_EXP__SAFE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return isSafe();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -175,10 +183,10 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_GUARD_EXP__MESSAGE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setMessage((String)newValue);
 				return;
-			case CGModelPackage.CG_GUARD_EXP__SAFE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				setSafe((Boolean)newValue);
 				return;
 		}
@@ -193,10 +201,10 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_GUARD_EXP__MESSAGE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setMessage(MESSAGE_EDEFAULT);
 				return;
-			case CGModelPackage.CG_GUARD_EXP__SAFE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				setSafe(SAFE_EDEFAULT);
 				return;
 		}
@@ -211,9 +219,9 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_GUARD_EXP__MESSAGE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
-			case CGModelPackage.CG_GUARD_EXP__SAFE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
 				return safe != SAFE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

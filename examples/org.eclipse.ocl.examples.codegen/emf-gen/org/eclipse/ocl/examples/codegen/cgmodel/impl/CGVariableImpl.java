@@ -38,6 +38,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
  */
 public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVariable {
 	/**
+	 * The number of structural features of the '<em>CG Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_VARIABLE_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getInit() <em>Init</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,7 +93,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		CGValuedElement oldInit = init;
 		init = newInit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_VARIABLE__INIT, oldInit, newInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldInit, newInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -101,14 +109,14 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
-				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_VARIABLE__INIT, null, msgs);
+				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newInit != null)
-				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_VARIABLE__INIT, null, msgs);
+				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetInit(newInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_VARIABLE__INIT, newInit, newInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newInit, newInit));
 	}
 
 	/**
@@ -119,7 +127,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetInit(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -133,7 +141,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getInit();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -147,7 +155,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGValuedElement)newValue);
 				return;
 		}
@@ -162,7 +170,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setInit((CGValuedElement)null);
 				return;
 		}
@@ -177,7 +185,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_VARIABLE__INIT:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return init != null;
 		}
 		return super.eIsSet(featureID);

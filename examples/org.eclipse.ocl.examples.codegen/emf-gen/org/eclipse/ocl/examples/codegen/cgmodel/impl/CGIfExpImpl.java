@@ -46,6 +46,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	/**
+	 * The number of structural features of the '<em>CG If Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_IF_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,7 +122,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		CGValuedElement oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -129,14 +138,14 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newCondition, newCondition));
 	}
 
 	/**
@@ -158,7 +167,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		CGValuedElement oldThenExpression = thenExpression;
 		thenExpression = newThenExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__THEN_EXPRESSION, oldThenExpression, newThenExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldThenExpression, newThenExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -174,14 +183,14 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		if (newThenExpression != thenExpression) {
 			NotificationChain msgs = null;
 			if (thenExpression != null)
-				msgs = ((InternalEObject)thenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)thenExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newThenExpression != null)
-				msgs = ((InternalEObject)newThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__THEN_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newThenExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetThenExpression(newThenExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__THEN_EXPRESSION, newThenExpression, newThenExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newThenExpression, newThenExpression));
 	}
 
 	/**
@@ -203,7 +212,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		CGValuedElement oldElseExpression = elseExpression;
 		elseExpression = newElseExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION, oldElseExpression, newElseExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, oldElseExpression, newElseExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -219,14 +228,14 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 		if (newElseExpression != elseExpression) {
 			NotificationChain msgs = null;
 			if (elseExpression != null)
-				msgs = ((InternalEObject)elseExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)elseExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			if (newElseExpression != null)
-				msgs = ((InternalEObject)newElseExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newElseExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
 			msgs = basicSetElseExpression(newElseExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION, newElseExpression, newElseExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, newElseExpression, newElseExpression));
 	}
 
 	/**
@@ -237,11 +246,11 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_IF_EXP__CONDITION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetCondition(null, msgs);
-			case CGModelPackage.CG_IF_EXP__THEN_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return basicSetThenExpression(null, msgs);
-			case CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return basicSetElseExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -255,11 +264,11 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_IF_EXP__CONDITION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getCondition();
-			case CGModelPackage.CG_IF_EXP__THEN_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getThenExpression();
-			case CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getElseExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -273,13 +282,13 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_IF_EXP__CONDITION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setCondition((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_IF_EXP__THEN_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setThenExpression((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setElseExpression((CGValuedElement)newValue);
 				return;
 		}
@@ -294,13 +303,13 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IF_EXP__CONDITION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setCondition((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_IF_EXP__THEN_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setThenExpression((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				setElseExpression((CGValuedElement)null);
 				return;
 		}
@@ -315,11 +324,11 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IF_EXP__CONDITION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return condition != null;
-			case CGModelPackage.CG_IF_EXP__THEN_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return thenExpression != null;
-			case CGModelPackage.CG_IF_EXP__ELSE_EXPRESSION:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return elseExpression != null;
 		}
 		return super.eIsSet(featureID);

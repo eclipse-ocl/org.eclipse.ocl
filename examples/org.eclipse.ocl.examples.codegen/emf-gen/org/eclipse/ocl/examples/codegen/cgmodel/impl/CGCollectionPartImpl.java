@@ -42,6 +42,15 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  */
 public class CGCollectionPartImpl extends CGValuedElementImpl implements CGCollectionPart {
 	/**
+	 * The number of structural features of the '<em>CG Collection Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_COLLECTION_PART_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getFirst() <em>First</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -99,7 +108,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		CGValuedElement oldFirst = first;
 		first = newFirst;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_COLLECTION_PART__FIRST, oldFirst, newFirst);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldFirst, newFirst);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -115,14 +124,14 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		if (newFirst != first) {
 			NotificationChain msgs = null;
 			if (first != null)
-				msgs = ((InternalEObject)first).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_COLLECTION_PART__FIRST, null, msgs);
+				msgs = ((InternalEObject)first).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			if (newFirst != null)
-				msgs = ((InternalEObject)newFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_COLLECTION_PART__FIRST, null, msgs);
+				msgs = ((InternalEObject)newFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetFirst(newFirst, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_COLLECTION_PART__FIRST, newFirst, newFirst));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newFirst, newFirst));
 	}
 
 	/**
@@ -144,7 +153,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		CGValuedElement oldLast = last;
 		last = newLast;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_COLLECTION_PART__LAST, oldLast, newLast);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldLast, newLast);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -160,14 +169,14 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		if (newLast != last) {
 			NotificationChain msgs = null;
 			if (last != null)
-				msgs = ((InternalEObject)last).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_COLLECTION_PART__LAST, null, msgs);
+				msgs = ((InternalEObject)last).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			if (newLast != null)
-				msgs = ((InternalEObject)newLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CGModelPackage.CG_COLLECTION_PART__LAST, null, msgs);
+				msgs = ((InternalEObject)newLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
 			msgs = basicSetLast(newLast, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_COLLECTION_PART__LAST, newLast, newLast));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newLast, newLast));
 	}
 
 	/**
@@ -177,7 +186,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	 */
 	@Override
 	public CGCollectionExp getCollectionExp() {
-		if (eContainerFeatureID() != CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP) return null;
+		if (eContainerFeatureID() != (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2)) return null;
 		return (CGCollectionExp)eInternalContainer();
 	}
 
@@ -189,10 +198,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP, msgs);
+				return eBasicSetContainer(otherEnd, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -205,12 +214,12 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__FIRST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return basicSetFirst(null, msgs);
-			case CGModelPackage.CG_COLLECTION_PART__LAST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return basicSetLast(null, msgs);
-			case CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP:
-				return eBasicSetContainer(null, CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+				return eBasicSetContainer(null, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -223,8 +232,8 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP:
-				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_COLLECTION_EXP__PARTS, CGCollectionExp.class, msgs);
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+				return eInternalContainer().eInverseRemove(this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGCollectionExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -237,11 +246,11 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__FIRST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return getFirst();
-			case CGModelPackage.CG_COLLECTION_PART__LAST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return getLast();
-			case CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getCollectionExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -255,10 +264,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__FIRST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setFirst((CGValuedElement)newValue);
 				return;
-			case CGModelPackage.CG_COLLECTION_PART__LAST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setLast((CGValuedElement)newValue);
 				return;
 		}
@@ -273,10 +282,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__FIRST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				setFirst((CGValuedElement)null);
 				return;
-			case CGModelPackage.CG_COLLECTION_PART__LAST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				setLast((CGValuedElement)null);
 				return;
 		}
@@ -291,11 +300,11 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_COLLECTION_PART__FIRST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
 				return first != null;
-			case CGModelPackage.CG_COLLECTION_PART__LAST:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
 				return last != null;
-			case CGModelPackage.CG_COLLECTION_PART__COLLECTION_EXP:
+			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
 				return getCollectionExp() != null;
 		}
 		return super.eIsSet(featureID);

@@ -41,6 +41,14 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  */
 public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	/**
+	 * The number of structural features of the '<em>CG Is Kind Of Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CG_IS_KIND_OF_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getExecutorType() <em>Executor Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -88,7 +96,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_IS_KIND_OF_EXP__EXECUTOR_TYPE, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldExecutorType, executorType));
 	}
 
 	/**
@@ -99,7 +107,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_KIND_OF_EXP__EXECUTOR_TYPE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -113,7 +121,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_KIND_OF_EXP__EXECUTOR_TYPE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -128,7 +136,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_KIND_OF_EXP__EXECUTOR_TYPE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -143,7 +151,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGModelPackage.CG_IS_KIND_OF_EXP__EXECUTOR_TYPE:
+			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);
