@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
+import javax.tools.FileObject;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
@@ -112,8 +113,28 @@ public abstract class JavaFileUtil
 				return null;
 			}
 			StringBuilder s = new StringBuilder();
+			Object currentSource = null;
 			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
-				s.append("\n" + diagnostic.getLineNumber() + ":" + diagnostic.getColumnNumber() + " " + diagnostic.getMessage(null));
+				s.append("\n");
+				Object source = diagnostic.getSource();
+				if (source != currentSource) {
+					currentSource = source;
+					if (currentSource instanceof FileObject) {
+						s.append(((FileObject)currentSource).toUri());
+					}
+					else if (currentSource != null) {
+						s.append(currentSource);
+					}
+					s.append("\n");
+				}
+				if (currentSource != null) {
+					s.append("\t");
+				}
+				s.append(diagnostic.getLineNumber());
+				s.append(":");
+				s.append(diagnostic.getColumnNumber());
+				s.append(" ");
+				s.append(diagnostic.getMessage(null));
 			}
 			String message;
 			if (s.length() > 0) {
