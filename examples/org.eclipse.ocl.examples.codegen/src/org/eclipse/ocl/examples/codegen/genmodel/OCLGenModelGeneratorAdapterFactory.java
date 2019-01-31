@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2018 Willink Transformations and others.
+ * Copyright (c) 2019 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,14 +8,18 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.build.genmodel;
+package org.eclipse.ocl.examples.codegen.genmodel;
 
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenClassGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
 
-public class OCLBuildGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapterFactory
+/**
+ * OCLGenModelGeneratorAdapterFactory is a hopefully temporary facility awaiting a fix for EMF Bug 543870.
+ */
+@Deprecated		/* @deprecated temporary workaround for Bug 543870 */
+public class OCLGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapterFactory
 {
 	/**
 	 * A descriptor for this adapter factory, which can be used to programatically
@@ -28,23 +32,21 @@ public class OCLBuildGenModelGeneratorAdapterFactory extends GenModelGeneratorAd
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory()
 		{
-			return new OCLBuildGenModelGeneratorAdapterFactory();
+			return new OCLGenModelGeneratorAdapterFactory();
 		}
 	};
 
-	public OCLBuildGenModelGeneratorAdapterFactory()
+	public OCLGenModelGeneratorAdapterFactory()
 	{
 		super();
 	}
 
 	@Override
-	public Adapter createGenModelAdapter() {
-		return null;
-	}
-
-	@Override
 	public Adapter createGenPackageAdapter() {
-		return null;
+		if (genPackageGeneratorAdapter == null) {
+			genPackageGeneratorAdapter = new OCLGenPackageGeneratorAdapter(this);
+		}
+		return genPackageGeneratorAdapter;
 	}
 
 	/**
@@ -53,8 +55,16 @@ public class OCLBuildGenModelGeneratorAdapterFactory extends GenModelGeneratorAd
 	@Override
 	public Adapter createGenClassAdapter() {
 		if (genClassGeneratorAdapter == null) {
-			genClassGeneratorAdapter = new OCLBuildGenClassGeneratorAdapter(this);
+			genClassGeneratorAdapter = new OCLGenClassGeneratorAdapter(this);
 		}
 		return genClassGeneratorAdapter;
+	}
+
+	@Override
+	public Adapter createGenModelAdapter() {
+		if (genModelGeneratorAdapter == null) {
+			genModelGeneratorAdapter = new OCLGenModelGeneratorAdapter(this);
+		}
+		return genModelGeneratorAdapter;
 	}
 }
