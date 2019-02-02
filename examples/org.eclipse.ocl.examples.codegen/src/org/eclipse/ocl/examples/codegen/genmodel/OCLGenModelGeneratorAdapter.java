@@ -11,7 +11,6 @@
 package org.eclipse.ocl.examples.codegen.genmodel;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -23,27 +22,22 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapter;
 import org.eclipse.emf.codegen.jet.JETEmitter;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 
 //
-//	Overridden to allow static templates to be invoked standalone.
+//	Overridden to allow static templates to be invoked.
 //
 @Deprecated		/* @deprecated temporary workaround for Bug 543870 */
 public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
@@ -65,7 +59,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 		/**
 		 * The root (qualified, but not-nested) template class names handled by this TemplateClassLoader.
 		 */
-		private final Set<String> templateClassNames = new HashSet<String>();
+		private final @NonNull Set<@NonNull String> templateClassNames = new HashSet<>();
 
 		public TemplateClassLoader(@NonNull URL url, @NonNull ClassLoader classLoader) {
 			super(new URL[]{url}, null);		// Suppress default fall-back to parent.
@@ -94,7 +88,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 		 * Load and return the templateClassName using the templateClassPath configuring the template
 		 * class loader to also load the templateClassName's nested classes.
 		 */
-		public Class<?> loadTemplateClass(String templateClassName) throws ClassNotFoundException {
+		public Class<?> loadTemplateClass(@NonNull String templateClassName) throws ClassNotFoundException {
 			assert templateClassName != null;
 			Class<?> templateClass = super.loadClass(templateClassName, true);
 			if (templateClass != null) {
@@ -114,49 +108,10 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 	 * remain loaded for the lifetime of this AbstractGeneratorAdapter. i.e. Re-open the GenModel
 	 * editor to respond to changed classes.
 	 */
-	private Map<@NonNull URL, @NonNull TemplateClassLoader> templatePath2classLoader = null;
+	private Map<@NonNull File, @NonNull TemplateClassLoader> templatePath2classLoader = null;
 
 	public OCLGenModelGeneratorAdapter(@NonNull GeneratorAdapterFactory generatorAdapterFactory) {
 		super(generatorAdapterFactory);
-	}
-
-	/**
-	 * Return the absolute path to the 'bin' folder of bundle.
-	 */
-	protected URL getOSGITemplateClassPath(@NonNull Bundle bundle) throws IOException {
-		//
-		//  We could be helpful and use the classes from  a project, but that would be really confusing
-		//  since template classes would come from the development project whereas referenced classes
-		//  would come from the run-time plugin. Ignore the project files.
-		//
-		String outputPath = getOutputClassPath(bundle);
-		return FileLocator.resolve(bundle.getEntry("/" + outputPath));
-	}
-
-	/**
-	 * Search the .classpath of bundle to locate the output classpathEntry and return the corresponding path.
-	 */
-	private @Nullable String getOutputClassPath(@NonNull Bundle bundle) throws IOException {
-		URL url = FileLocator.resolve(bundle.getEntry("/.classpath"));
-		URI uri = URI.createURI(url.toString());
-		Resource resource = new GenericXMLResourceFactoryImpl().createResource(uri);
-		resource.load(null);
-		for (EObject eRoot : resource.getContents()) {
-			EClass eDocumentRoot = eRoot.eClass();
-			EStructuralFeature classpathentryRef = eDocumentRoot.getEStructuralFeature("classpathentry");
-			EStructuralFeature kindRef = eDocumentRoot.getEStructuralFeature("kind");
-			EStructuralFeature pathRef = eDocumentRoot.getEStructuralFeature("path");
-			for (EObject eObject : eRoot.eContents()) {
-				for (EObject eChild : eObject.eContents()) {
-					if (eChild.eContainmentFeature() == classpathentryRef) {
-						if ("output".equals(eChild.eGet(kindRef))) {
-							return String.valueOf(eChild.eGet(pathRef));
-						}
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -164,7 +119,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 	 * This is only useful when running standalone. When using OSGI, the appropriate bundle-specific
 	 * class loader should be used instead.
 	 */
-	protected String getStandaloneTemplateClassPath(String workspaceName) {
+	protected @Nullable String getStandaloneTemplateClassPath(@NonNull String workspaceName) {
 		URI absoluteTemplateURI = EcorePlugin.resolvePlatformResourcePath(workspaceName);
 		if (absoluteTemplateURI == null) {
 			return null;
@@ -257,7 +212,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 		for (String templateElement : userTemplatePath) {
 			try {
 				ClassLoader classLoader = getClass().getClassLoader();
-				URL templateClassPath = null;
+				File templateClassPathFile = null;					// e.g. E:\...
 				URI uri = URI.createURI(templateElement);
 				if (uri.isPlatform()) {
 					URI deresolveURI = uri.isPlatformResource() ? URI.createPlatformResourceURI("/", false) : URI.createPlatformPluginURI("/", false);
@@ -269,31 +224,35 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 						Bundle bundle = Platform.getBundle(projectName);
 						BundleWiring bundleWiring = ClassUtil.nonNullState(bundle.adapt(BundleWiring.class));
 						classLoader = bundleWiring.getClassLoader();
-						templateClassPath = getOSGITemplateClassPath(bundle);
+						templateClassPathFile = JavaFileUtil.getOSGIClassPath(bundle);
 					}
 					else {
 						String templateClassPath2 = getStandaloneTemplateClassPath(workspaceName);
 						if (templateClassPath2 != null) {
-							templateClassPath = new URL("file:/" + templateClassPath2);
+							templateClassPathFile = new File(templateClassPath2);
 						}
 					}
 				}
-				else {
-					templateClassPath = new URL(uri.toString());
+				else if (uri.isFile()) {
+					templateClassPathFile = new File(uri.toString());
 				}
-				if (templateClassPath != null) {
-					TemplateClassLoader templatePathClassLoader = templatePath2classLoader.get(templateClassPath);
+				else {
+					templateClassPathFile = new File(uri.toFileString());
+				}
+				if (templateClassPathFile != null) {
+					TemplateClassLoader templatePathClassLoader = templatePath2classLoader.get(templateClassPathFile);
 					if (templatePathClassLoader == null) {
 						assert classLoader != null;
-						File file = new File(templateClassPath.toURI());
-						URL url = file.isFile() ? templateClassPath : new URL(templateClassPath.toString() + "/");
-						templatePathClassLoader = new TemplateClassLoader(url, classLoader);
-						templatePath2classLoader.put(templateClassPath, templatePathClassLoader);
+						String templateClassPathString = URI.createFileURI(templateClassPathFile.toString()).toString();		// e.g. file:/E:/...
+						URL templateClassPathURL = new URL(templateClassPathFile.isFile() ? templateClassPathString : templateClassPathString + "/");	// e.g. file:/E:/... ...jar or .../bin/
+						templatePathClassLoader = new TemplateClassLoader(templateClassPathURL, classLoader);
+						templatePath2classLoader.put(templateClassPathFile, templatePathClassLoader);
 					}
 					return templatePathClassLoader.loadTemplateClass(className);
 				}
 			}
 			catch (Exception e) {
+				getClass();
 				// If some template path attempt fails just move on to the next one.}
 			}
 		}

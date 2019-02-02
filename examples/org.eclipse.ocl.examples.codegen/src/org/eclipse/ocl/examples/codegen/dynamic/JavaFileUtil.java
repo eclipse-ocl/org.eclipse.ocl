@@ -30,11 +30,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
@@ -382,57 +388,15 @@ public abstract class JavaFileUtil
 		URI platformURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
 		URI pathURI = uriConverter.normalize(platformURI);
 		String location = null;
-		if (EMFPlugin.IS_ECLIPSE_RUNNING && pathURI.isPlatform()) {
-			if (pathURI.isPlatformPlugin()) {
-				Bundle bundle = Platform.getBundle(projectName);
-				if (bundle != null) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			Bundle bundle = Platform.getBundle(projectName);
+			if (bundle != null) {
+				try {
+					File bundleFilePath = getOSGIClassPath(bundle);
 					location = bundle.getLocation();
-					if (location != null) {
-						if ("System Bundle".equals(location)) {					// FIXME BUG 527111
-							URI uri = URI.createURI(Platform.getBundle("org.eclipse.core.runtime").getLocation(), true);
-							if (uri.hasOpaquePart()) {
-								String opaquePart = uri.opaquePart();
-								assert opaquePart != null;
-								if (opaquePart.startsWith("file:") && !opaquePart.startsWith("file:/")) {
-									String file = new File(opaquePart.substring(5)).getAbsolutePath();
-									uri = URI.createFileURI(file);		// trim initial@reference:file:
-								}
-								else {
-									uri = URI.createURI(uri.opaquePart());			// trim reference:
-								}
-							}
-							uri = uri.trimSegments(1).appendSegment(bundle.getSymbolicName() + "_" + bundle.getVersion() + ".jar");
-							path = uri.toFileString();
-						}
-						else {
-							URI uri = URI.createURI(location, true);
-							if (uri.hasOpaquePart()) {
-								String opaquePart = uri.opaquePart();
-								assert opaquePart != null;
-								if (opaquePart.startsWith("file:../../../../")) {		// Workaround Bug 527242 for Tycho
-									String file = new File(opaquePart.substring(11)).getAbsolutePath();
-									uri = URI.createFileURI(file);		// trim initial@reference:file:../../
-								}
-								else if (opaquePart.equals("file:../../")) {		// Workaround Bug 527242 for Tycho
-									String file = new File(binDir).getAbsolutePath();
-									uri = URI.createFileURI(file);		// trim initial@reference:file:../../
-								}
-								else if (opaquePart.startsWith("file:") && !opaquePart.startsWith("file:/")) {
-									String file = new File(opaquePart.substring(5)).getAbsolutePath();
-									uri = URI.createFileURI(file);		// trim initial@reference:file:
-								}
-								else {
-									uri = URI.createURI(opaquePart);					// trim reference:
-								}
-							}
-							if (uri.isPrefix()) {
-								path = uri.toFileString() + binDir;
-							}
-							else {
-								path = uri.toFileString();
-							}
-						}
-					}
+					path = bundleFilePath.toString();
+				} catch (IOException e) {
+					// Doesn't fail for sensible names.
 				}
 			}
 			if (path == null) {					// platform:/resource
@@ -475,5 +439,54 @@ public abstract class JavaFileUtil
 			System.out.println(s.toString());
 		}
 		return path != null ? new File(path) : null;
+	}
+
+	/**
+	 * Return the absolute path to the 'bin' folder of a workspace bundle or the jar of a plugin.
+	 */
+	public static @NonNull File getOSGIClassPath(@NonNull Bundle bundle) throws IOException {
+		//
+		//  We could be helpful and use the classes from  a project, but that would be really confusing
+		//  since template classes would come from the development project whereas referenced classes
+		//  would come from the run-time plugin. Ignore the project files.
+		//
+		File bundleFile = FileLocator.getBundleFile(bundle);
+		if (bundleFile.isDirectory()) {
+			File outputPath = getOutputClassPath(bundleFile);
+			if (outputPath != null) {
+				return outputPath;
+			}
+		}
+		return bundleFile;
+	}
+
+	/**
+	 * Search the .classpath of bundle to locate the output classpathEntry and return the corresponding path
+	 * or null if no .classpath or output classpathentry.
+	 */
+	private static @Nullable File getOutputClassPath(@NonNull File bundleDirectory) throws IOException {
+		File classpathEntry = new File(bundleDirectory, ".classpath");
+		if (classpathEntry.isFile()) {
+			URI uri = URI.createFileURI(classpathEntry.toString());
+			Resource resource = new GenericXMLResourceFactoryImpl().createResource(uri);
+			resource.load(null);
+			for (EObject eRoot : resource.getContents()) {
+				EClass eDocumentRoot = eRoot.eClass();
+				EStructuralFeature classpathentryRef = eDocumentRoot.getEStructuralFeature("classpathentry");
+				EStructuralFeature kindRef = eDocumentRoot.getEStructuralFeature("kind");
+				EStructuralFeature pathRef = eDocumentRoot.getEStructuralFeature("path");
+				for (EObject eObject : eRoot.eContents()) {
+					for (EObject eChild : eObject.eContents()) {
+						if (eChild.eContainmentFeature() == classpathentryRef) {
+							if ("output".equals(eChild.eGet(kindRef))) {
+								String outputPath = String.valueOf(eChild.eGet(pathRef));
+								return new File(bundleDirectory, outputPath);
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 }
