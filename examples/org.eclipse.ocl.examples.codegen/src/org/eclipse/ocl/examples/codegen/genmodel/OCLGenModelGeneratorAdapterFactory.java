@@ -14,6 +14,7 @@ import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenClassGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * OCLGenModelGeneratorAdapterFactory is a hopefully temporary facility awaiting a fix for EMF Bug 543870.
@@ -27,7 +28,7 @@ public class OCLGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapter
 	 * it.
 	 * @see org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry
 	 */
-	public static final GeneratorAdapterFactory.Descriptor DESCRIPTOR = new GeneratorAdapterFactory.Descriptor()
+	public static final GeneratorAdapterFactory.@NonNull Descriptor DESCRIPTOR = new GeneratorAdapterFactory.Descriptor()
 	{
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory()

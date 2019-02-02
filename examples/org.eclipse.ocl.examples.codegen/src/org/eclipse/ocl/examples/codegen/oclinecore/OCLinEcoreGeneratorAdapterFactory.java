@@ -17,6 +17,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * The OCLinEcoreGeneratorAdapterFactory registers the OCLinEcore code generation capabilities.
@@ -34,7 +35,7 @@ public class OCLinEcoreGeneratorAdapterFactory extends GenModelAdapterFactory im
 	 *
 	 * @see org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry
 	 */
-	public static final GeneratorAdapterFactory.Descriptor DESCRIPTOR = new GeneratorAdapterFactory.Descriptor()
+	public static final GeneratorAdapterFactory.@NonNull Descriptor DESCRIPTOR = new GeneratorAdapterFactory.Descriptor()
 	{
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory() {

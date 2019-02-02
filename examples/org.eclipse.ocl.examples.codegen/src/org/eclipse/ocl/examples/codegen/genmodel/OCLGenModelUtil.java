@@ -14,12 +14,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
 import org.eclipse.emf.codegen.ecore.genmodel.GenAnnotation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.URI;
@@ -27,6 +32,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 
@@ -119,6 +125,16 @@ public class OCLGenModelUtil
 		return baseCountID + " + " + Integer.toString(genClass.getFeatureCount() - base.getFeatureCount());
 	}
 
+	public static @NonNull Iterable<GeneratorAdapterFactory.@NonNull Descriptor> getGeneratorAdapterFactoryDescriptors() {
+		List<GeneratorAdapterFactory.@NonNull Descriptor> descriptors = new ArrayList<>();
+		// Replacement for EMF to fix BUG 543870
+		@SuppressWarnings("deprecation") GeneratorAdapterFactory.@NonNull Descriptor betterEstructureDescriptor = org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelGeneratorAdapterFactory.DESCRIPTOR;
+		descriptors.add(betterEstructureDescriptor);
+		// OCLinEcore embedded support - BUG 485764, BUG 485089
+		descriptors.add(OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
+		return descriptors;
+	}
+
 	public static String getListConstructor(GenClass genClass, GenFeature genFeature) {
 		String listConstructor = genClass.getListConstructor(genFeature);
 		String f0 = genClass.getQualifiedFeatureID(genFeature);
@@ -193,13 +209,22 @@ public class OCLGenModelUtil
 		return genClass.getGenModel().getImportedName(genClass.getQualifiedClassName())+ "." + genClass.getOperationCountID();
 	}
 
-	public static String getQualifiedOperationValue(GenClass genClass, GenOperation genOperation, boolean diagnosticCode)
-	{
+	public static String getQualifiedOperationValue(GenClass genClass, GenOperation genOperation, boolean diagnosticCode) {
 		return getQualifiedOperationValue(genClass, genOperation);
 	}
 
 	public static /*@Nullable*/ String getVisitableClass(@NonNull GenModel genModel) {		// @Nullable breaks Xtend
 		return GenModelUtil.getAnnotation(genModel, OCL_GENMODEL_VISITOR_URI, VISITABLE_INTERFACE);
+	}
+
+	public static void initializeGeneratorAdapterFactoryRegistry() {
+		GeneratorAdapterFactory.Descriptor.Registry registry = GeneratorAdapterFactory.Descriptor.Registry.INSTANCE;
+		Collection<Descriptor> registryDescriptors = registry.getDescriptors(GenModelPackage.eNS_URI);
+		for (GeneratorAdapterFactory.@NonNull Descriptor descriptor : getGeneratorAdapterFactoryDescriptors()) {
+			if (!registryDescriptors.contains(descriptor)) {
+				registry.addDescriptor(GenModelPackage.eNS_URI, descriptor);
+			}
+		}
 	}
 
 	public static boolean isGenerateClassifierInts(@NonNull GenModel genModel) {

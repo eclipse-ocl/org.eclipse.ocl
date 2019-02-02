@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +32,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.EMFPlugin;
@@ -61,7 +57,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
-import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
@@ -350,17 +346,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		//FIXME this is needed so long as Pivot.genmodel is a UML genmodel
 		resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI,  org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new EcoreResourceFactoryImpl());
-		// FIXME Bug 543870	GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, GenModelGeneratorAdapterFactory.DESCRIPTOR);
-		GeneratorAdapterFactory.Descriptor.Registry generatorAdapterFactoryRegistry = GeneratorAdapterFactory.Descriptor.Registry.INSTANCE;
-		Collection<Descriptor> descriptors = generatorAdapterFactoryRegistry.getDescriptors(GenModelPackage.eNS_URI);
-		@SuppressWarnings("deprecation") Descriptor betterEstructureDescriptor = org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelGeneratorAdapterFactory.DESCRIPTOR;
-		if (!descriptors.contains(betterEstructureDescriptor)) {
-			generatorAdapterFactoryRegistry.addDescriptor(GenModelPackage.eNS_URI, betterEstructureDescriptor);
-		}
-		Descriptor embeddedOCLDescriptor = OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR;
-		if (!descriptors.contains(embeddedOCLDescriptor)) {
-			generatorAdapterFactoryRegistry.addDescriptor(GenModelPackage.eNS_URI, embeddedOCLDescriptor);
-		}
+		OCLGenModelUtil.initializeGeneratorAdapterFactoryRegistry();
 		if (resourceSet instanceof ResourceSetImpl) {
 			ResourceSetImpl resourceSetImpl = (ResourceSetImpl) resourceSet;
 			Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();

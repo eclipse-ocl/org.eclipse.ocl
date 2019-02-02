@@ -70,7 +70,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 
 		/**
 		 * Re-implement to load any nested class of any of the templateClassNames direct from its class file.
-		 * Other classes are loaded by the classLoader.
+		 * Other classes are loaded by the normal classLoader.
 		 */
 		@Override
 		protected Class<?> loadClass(String className, boolean resolve) throws ClassNotFoundException {
@@ -86,7 +86,9 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 
 		/**
 		 * Load and return the templateClassName using the templateClassPath configuring the template
-		 * class loader to also load the templateClassName's nested classes.
+		 * class loader to also load the templateClassName's nested classes. Returns null if no
+		 * template class found. This allows a variety of explicit template class paths to be tried
+		 * before a fall back to the normal class loader.
 		 */
 		public Class<?> loadTemplateClass(@NonNull String templateClassName) throws ClassNotFoundException {
 			assert templateClassName != null;

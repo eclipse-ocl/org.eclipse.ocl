@@ -10,18 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import java.util.Collection;
-
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor.Registry;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelGeneratorAdapterFactory;
-import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 
 /**
  * Initializes the Ecore-based genmodel support for GenerateModel.mwe2. This includes registration of the
@@ -51,17 +45,7 @@ public class EcoreGenModelSetup
 		this.resourceSet = resourceSet;
 		resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new EcoreResourceFactoryImpl());
-		Registry generatorAdapterFactoryInstance = GeneratorAdapterFactory.Descriptor.Registry.INSTANCE;
-		Collection<Descriptor> descriptors = generatorAdapterFactoryInstance.getDescriptors(GenModelPackage.eNS_URI);
-	//	if (!descriptors.contains(GenModelGeneratorAdapterFactory.DESCRIPTOR)) {
-	//		generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, GenModelGeneratorAdapterFactory.DESCRIPTOR);
-	//	}
-		if (!descriptors.contains(OCLBuildGenModelGeneratorAdapterFactory.DESCRIPTOR)) {
-			generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, OCLBuildGenModelGeneratorAdapterFactory.DESCRIPTOR);
-		}
-		if (!descriptors.contains(OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR)) {
-			generatorAdapterFactoryInstance.addDescriptor(GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
-		}
+		OCLGenModelUtil.initializeGeneratorAdapterFactoryRegistry();
 		org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup.doSetup();
 	}
 }
