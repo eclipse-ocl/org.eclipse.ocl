@@ -1,7 +1,7 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="PackageClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="PackageClass"%>
 <%
 /**
- * Copyright (c) 2002-2019 IBM Corporation and others.
+ * Copyright (c) 2002-2010 IBM Corporation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -144,7 +144,6 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 */
 	<%=publicStaticFinalFlag%><%=genPackage.getPackageInterfaceName()%> eINSTANCE = <%=genPackage.getQualifiedPackageClassName()%>.init();
 
-  <%if (OCLGenModelUtil.isGenerateClassifierInts(genModel)) {%>
   <%for (GenClassifier genClassifier : genPackage.getOrderedGenClassifiers()) {%>
 	/**
     <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
@@ -182,9 +181,78 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	@Deprecated
   <%}%>
 	<%=publicStaticFinalFlag%>int <%=genPackage.getClassifierID(genClassifier)%> = <%=genPackage.getClassifierValue(genClassifier)%>;
-  <%}%>
-  <%}%>
 
+    <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
+      <%for (GenFeature genFeature : genClass.getAllGenFeatures()) {%>
+	/**
+	 * The feature id for the '<em><b><%=genFeature.getFormattedName()%></b></em>' <%=genFeature.getFeatureKind()%>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+    <%if (genFeature.hasImplicitAPITags()) {%>
+	 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
+	 * @generated
+	 * @ordered
+	 */
+  <%if (isJDK50 && genFeature.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
+	<%=publicStaticFinalFlag%>int <%=genClass.getFeatureID(genFeature)%> = <%=genClass.getFeatureValue(genFeature)%>;
+
+      <%}%>
+	/**
+	 * The number of structural features of the '<em><%=genClass.getFormattedName()%></em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+    <%if (genClass.hasAPITags()) {%>
+	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
+	 * @generated
+	 * @ordered
+	 */
+  <%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
+	<%=publicStaticFinalFlag%>int <%=genClass.getFeatureCountID()%> = <%=genClass.getFeatureCountValue()%>;
+
+      <%if (genModel.isOperationReflection()) {%>
+        <%for (GenOperation genOperation : genClass.getAllGenOperations(false)) {%>
+          <%if (genClass.getOverrideGenOperation(genOperation) == null) {%>
+	/**
+	 * The operation id for the '<em><%=genOperation.getFormattedName()%></em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+    <%if (genOperation.hasImplicitAPITags()) {%>
+	 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
+	 * @generated
+	 * @ordered
+	 */
+  <%if (isJDK50 && genOperation.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
+	<%=publicStaticFinalFlag%>int <%=genClass.getOperationID(genOperation, false)%> = <%=genClass.getOperationValue(genOperation)%>;
+
+          <%}%>
+        <%}%>
+	/**
+	 * The number of operations of the '<em><%=genClass.getFormattedName()%></em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+    <%if (genClass.hasAPITags()) {%>
+	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
+	 * @generated
+	 * @ordered
+	 */
+  <%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
+	<%=publicStaticFinalFlag%>int <%=genClass.getOperationCountID()%> = <%=genClass.getOperationCountValue()%>;
+
+      <%}%>
+    <%}%>
+  <%}%>
 <%}%>
 <%if (isImplementation) {%>
   <%if (genPackage.isLoadingInitialization()) {%>
@@ -667,13 +735,13 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 
 		// Create classes and their features
       <%for (Iterator<GenClass> c=genPackage.getGenClasses().iterator(); c.hasNext();) { GenClass genClass = c.next();%>
-		<%=genClass.getClassifierInstanceName()%> = create<%=genClass.getMetaType()%>(<%=genPackage.getClassifierValue(genClass)%>);
+		<%=genClass.getClassifierInstanceName()%> = create<%=genClass.getMetaType()%>(<%=genClass.getClassifierID()%>);
         <%for (GenFeature genFeature : genClass.getGenFeatures()) {%>
-		create<%=genFeature.getMetaType()%>(<%=genClass.getClassifierInstanceName()%>, <%=OCLGenModelUtil.getQualifiedFeatureValue(genClass, genFeature)%>);
+		create<%=genFeature.getMetaType()%>(<%=genClass.getClassifierInstanceName()%>, <%=genClass.getFeatureID(genFeature)%>);
         <%}%>
         <%if (genModel.isOperationReflection()) {%>
           <%for (GenOperation genOperation : genClass.getGenOperations()) {%>
-		createEOperation(<%=genClass.getClassifierInstanceName()%>, <%=OCLGenModelUtil.getQualifiedOperationValue(genClass, genOperation, false)%>);
+		createEOperation(<%=genClass.getClassifierInstanceName()%>, <%=genClass.getOperationID(genOperation, false)%>);
           <%}%>
         <%}%>
         <%if (c.hasNext()) {%>
@@ -685,14 +753,14 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 
 		// Create enums
       <%for (GenEnum genEnum : genPackage.getGenEnums()) {%>
-		<%=genEnum.getClassifierInstanceName()%> = createEEnum(<%=genPackage.getClassifierValue(genEnum)%>);
+		<%=genEnum.getClassifierInstanceName()%> = createEEnum(<%=genEnum.getClassifierID()%>);
       <%}%>
     <%}%>
     <%if (!genPackage.getGenDataTypes().isEmpty()) {%>
 
 		// Create data types
       <%for (GenDataType genDataType : genPackage.getGenDataTypes()) {%>
-		<%=genDataType.getClassifierInstanceName()%> = createEDataType(<%=genPackage.getClassifierValue(genDataType)%>);
+		<%=genDataType.getClassifierInstanceName()%> = createEDataType(<%=genDataType.getClassifierID()%>);
       <%}%>
     <%}%>
 	}
