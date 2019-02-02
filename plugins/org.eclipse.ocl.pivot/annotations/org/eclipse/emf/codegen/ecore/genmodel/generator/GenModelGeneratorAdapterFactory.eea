@@ -1,0 +1,4 @@
+class org/eclipse/emf/codegen/ecore/genmodel/generator/GenModelGeneratorAdapterFactory
+DESCRIPTOR
+ Lorg/eclipse/emf/codegen/ecore/generator/GeneratorAdapterFactory$Descriptor;
+ L1org/eclipse/emf/codegen/ecore/generator/GeneratorAdapterFactory$Descriptor;

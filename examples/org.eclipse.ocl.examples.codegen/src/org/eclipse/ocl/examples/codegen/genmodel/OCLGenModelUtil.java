@@ -26,6 +26,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
+import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -127,9 +128,8 @@ public class OCLGenModelUtil
 
 	public static @NonNull Iterable<GeneratorAdapterFactory.@NonNull Descriptor> getGeneratorAdapterFactoryDescriptors() {
 		List<GeneratorAdapterFactory.@NonNull Descriptor> descriptors = new ArrayList<>();
-		// Replacement for EMF to fix BUG 543870
-		@SuppressWarnings("deprecation") GeneratorAdapterFactory.@NonNull Descriptor betterEstructureDescriptor = org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelGeneratorAdapterFactory.DESCRIPTOR;
-		descriptors.add(betterEstructureDescriptor);
+		// Regular EMF support
+		descriptors.add(GenModelGeneratorAdapterFactory.DESCRIPTOR);
 		// OCLinEcore embedded support - BUG 485764, BUG 485089
 		descriptors.add(OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
 		return descriptors;

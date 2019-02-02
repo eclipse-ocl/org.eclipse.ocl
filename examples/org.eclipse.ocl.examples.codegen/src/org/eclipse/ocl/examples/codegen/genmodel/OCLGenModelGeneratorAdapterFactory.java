@@ -11,15 +11,13 @@
 package org.eclipse.ocl.examples.codegen.genmodel;
 
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
-import org.eclipse.emf.codegen.ecore.genmodel.generator.GenClassGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * OCLGenModelGeneratorAdapterFactory is a hopefully temporary facility awaiting a fix for EMF Bug 543870.
  */
-@Deprecated		/* @deprecated temporary workaround for Bug 543870 */
+@Deprecated		/* @deprecated residue of temporary workaround for Bug 543870 */
 public class OCLGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapterFactory
 {
 	/**
@@ -33,39 +31,12 @@ public class OCLGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapter
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory()
 		{
-			return new OCLGenModelGeneratorAdapterFactory();
+			return new GenModelGeneratorAdapterFactory();
 		}
 	};
 
 	public OCLGenModelGeneratorAdapterFactory()
 	{
 		super();
-	}
-
-	@Override
-	public Adapter createGenPackageAdapter() {
-		if (genPackageGeneratorAdapter == null) {
-			genPackageGeneratorAdapter = new OCLGenPackageGeneratorAdapter(this);
-		}
-		return genPackageGeneratorAdapter;
-	}
-
-	/**
-	 * Returns a singleton {@link GenClassGeneratorAdapter}.
-	 */
-	@Override
-	public Adapter createGenClassAdapter() {
-		if (genClassGeneratorAdapter == null) {
-			genClassGeneratorAdapter = new OCLGenClassGeneratorAdapter(this);
-		}
-		return genClassGeneratorAdapter;
-	}
-
-	@Override
-	public Adapter createGenModelAdapter() {
-		if (genModelGeneratorAdapter == null) {
-			genModelGeneratorAdapter = new OCLGenModelGeneratorAdapter(this);
-		}
-		return genModelGeneratorAdapter;
 	}
 }
