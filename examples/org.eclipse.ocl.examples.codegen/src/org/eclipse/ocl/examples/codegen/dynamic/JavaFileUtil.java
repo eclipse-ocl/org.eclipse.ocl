@@ -119,6 +119,13 @@ public abstract class JavaFileUtil
 				return null;
 			}
 			StringBuilder s = new StringBuilder();
+			for (String compilationOption : compilationOptions) {
+				if (compilationOption.startsWith("-")) {
+					s.append("\n");
+				}
+				s.append(compilationOption);
+				s.append(" ");
+			}
 			Object currentSource = null;
 			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
 				s.append("\n");
