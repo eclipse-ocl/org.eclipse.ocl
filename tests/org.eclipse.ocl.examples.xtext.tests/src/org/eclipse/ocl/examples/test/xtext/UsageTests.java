@@ -56,6 +56,7 @@ import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
+import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
@@ -312,22 +313,23 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return genModelURI;
 	}
 
-	protected boolean doCompile(@NonNull OCL ocl, @NonNull String testProjectName) throws Exception {
-		TestFile srcTestFile = getTestProject().getOutputFile(JavaFileUtil.TEST_SRC_FOLDER_NAME + "/" + testProjectName);
-		List<@NonNull JavaFileObject> compilationUnits = JavaFileUtil.getCompilationUnits(srcTestFile.getFile());
+	protected boolean doCompile(@NonNull OCL ocl, @NonNull String... testProjectNames) throws Exception {
+		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
+		StringBuilder sources = new StringBuilder();
+		if (testProjectNames != null) {
+			for (@NonNull String testProjectName : testProjectNames) {
+				TestFile srcTestFile = getTestProject().getOutputFile(JavaFileUtil.TEST_SRC_FOLDER_NAME + "/" + testProjectName);
+				JavaFileUtil.gatherCompilationUnits(compilationUnits, srcTestFile.getFile());
+				if (sources.length() > 0) {
+					sources.append(", ");
+				}
+				sources.append(srcTestFile.getFileString());
+			}
+		}
 		String objectPath = getTestProject().getOutputFile(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFileString();
-		List<@NonNull String> projectNames = new ArrayList<>();
-		projectNames.add(getTestProject().getName());
-		projectNames.add("org.eclipse.emf.common");
-		projectNames.add("org.eclipse.emf.ecore");
-		projectNames.add("org.eclipse.jdt.annotation");
-		projectNames.add("org.eclipse.ocl.pivot");
-		projectNames.add("org.eclipse.osgi");
-		// System.out.println("projectNames = " + projectNames);
-		List<@NonNull String> classpathProjects = JavaFileUtil.createClassPathProjectList(ocl.getResourceSet().getURIConverter(), projectNames);
-		// System.out.println("objectPath = " + objectPath);
-		// System.out.println("classpathProjects = " + classpathProjects);
-		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, srcTestFile.getFileString(), objectPath, classpathProjects);
+		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
+		classpath.addClass(getClass());
+		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, sources.toString(), objectPath, classpath);
 		if (problemMessage != null) {
 			fail(problemMessage);
 		}
@@ -985,8 +987,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		// B first demonstrates the demand load of Bug416421A to fix Bug 416421
 		doGenModel(genModelURIB);
 		doGenModel(genModelURIA);
-		doCompile(ocl, testProjectNameA);
-		doCompile(ocl, testProjectNameB);
+		doCompile(ocl, testProjectNameA, testProjectNameB);
 		createManifestFile();
 		ocl.dispose();
 	}

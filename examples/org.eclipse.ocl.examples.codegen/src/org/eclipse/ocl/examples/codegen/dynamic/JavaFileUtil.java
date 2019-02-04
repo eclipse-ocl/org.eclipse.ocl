@@ -12,6 +12,8 @@ package org.eclipse.ocl.examples.codegen.dynamic;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,10 +28,13 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -64,6 +69,7 @@ public abstract class JavaFileUtil
 
 	private static @Nullable JavaCompiler compiler = getJavaCompiler();
 
+	@Deprecated /* @deprecated caller is in a better position to determine a project URL */
 	public static @Nullable String compileClass(@NonNull String sourcePath, @NonNull String javaCodeSource, @NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws IOException {
 		List<@NonNull JavaFileObject> compilationUnits = Collections.singletonList(new OCL2JavaFileObject(sourcePath, javaCodeSource));
 		return JavaFileUtil.compileClasses(compilationUnits, sourcePath, objectPath, classpathProjects);
@@ -73,6 +79,7 @@ public abstract class JavaFileUtil
 	 * Compile all *.java files on sourcePath to objectPath.
 	 * e.g. from ../xyzzy/src/a/b/c to ../xyzzy/bin
 	 */
+	@Deprecated /* @deprecated caller is in a better position to determine a project URL */
 	public static @Nullable String compileClasses(@NonNull String sourcePath, @NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws IOException {
 		try {
 			List<@NonNull JavaFileObject> compilationUnits = gatherCompilationUnits(new File(sourcePath), null);
@@ -86,8 +93,23 @@ public abstract class JavaFileUtil
 	/**
 	 * Returns a non-null string describing any problems, null if all ok.
 	 */
+	@Deprecated /* @deprecated caller is in a better position to determine a project URL */
 	public static @Nullable String compileClasses(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
-			@NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects)  {
+			@NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects) throws MalformedURLException  {
+		JavaClasspath classpath = new JavaClasspath();
+		if (classpathProjects != null) {
+			for (@NonNull String classpathProject : classpathProjects) {
+				classpath.addURL(new URL(classpathProject));		// FIXME fudge
+			}
+		}
+		return compileClasses(compilationUnits, sourcePath, objectPath, classpath);
+	}
+
+	/**
+	 * Returns a non-null string describing any problems, null if all ok.
+	 */
+	public static @Nullable String compileClasses(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
+			@NonNull String objectPath, @Nullable JavaClasspath classpath)  {
 		JavaCompiler compiler2 = compiler;
 		if (compiler2 == null) {
 			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
@@ -107,9 +129,9 @@ public abstract class JavaFileUtil
 			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
 			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
 			//			}
-			if ((classpathProjects != null) && (classpathProjects.size() > 0)) {
+			if ((classpath != null) && (classpath.size() > 0)) {
 				compilationOptions.add("-cp");
-				compilationOptions.add(createClassPath(classpathProjects));
+				compilationOptions.add(classpath.getClasspath());
 			}
 
 			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
@@ -178,13 +200,14 @@ public abstract class JavaFileUtil
 	 *
 	 * The projectPaths should be OS-specific filesystems paths, but may for backward compatibility
 	 * purposes by simple dit-separated project names.
+	 * @throws MalformedURLException
 	 */
-	public static @NonNull String createClassPath(@NonNull List<@NonNull String> projectPaths) {
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			String pathSeparator = null;
-			StringBuilder s = new StringBuilder();
-			for (String projectName : projectPaths) {
+	@Deprecated /* @deprecated use JavaClasspath; caller is in a better position to determine a project URL */
+	public static @NonNull String createClassPath(@NonNull List<@NonNull String> projectPaths) throws MalformedURLException {
+		JavaClasspath classpath = new JavaClasspath();
+		for (String projectName : projectPaths) {
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 				String projectPath = null;
 				if (projectName.contains("/") || projectName.contains("\\")) {
 					projectPath = projectName;
@@ -203,7 +226,6 @@ public abstract class JavaFileUtil
 							projectPath = bundle.getLocation();
 						}
 					}
-
 					if (projectPath != null) {
 						if (projectPath.startsWith("reference:")) {
 							projectPath = projectPath.substring(10);
@@ -214,38 +236,31 @@ public abstract class JavaFileUtil
 						}
 						assert projectPath != null;
 						if (projectPath.endsWith("/")) {
-							projectPath = projectPath + REGULAR_BIN_FOLDER_NAME;
+							projectPath = projectPath + JavaFileUtil.REGULAR_BIN_FOLDER_NAME;
 						}
 					}
 				}
-				if (projectPath != null) {
-					if (pathSeparator != null) {
-						s.append(pathSeparator);
-					}
-					else {
-						pathSeparator = System.getProperty("path.separator");
-					}
-					s.append(projectPath);
-				}
+				classpath.addURL(new URL(projectPath));		// FIXME fudge
 			}
-			return s.toString();
+			/*			else {
+					String pathSeparator = null;
+					StringBuilder s = new StringBuilder();
+					for (String projectPath : projectPaths) {
+						if (pathSeparator != null) {
+							s.append(pathSeparator);
+						}
+						else {
+							pathSeparator = System.getProperty("path.separator");
+						}
+						s.append(projectPath);
+					}
+					return s.toString();
+				} */
 		}
-		else {
-			String pathSeparator = null;
-			StringBuilder s = new StringBuilder();
-			for (String projectPath : projectPaths) {
-				if (pathSeparator != null) {
-					s.append(pathSeparator);
-				}
-				else {
-					pathSeparator = System.getProperty("path.separator");
-				}
-				s.append(projectPath);
-			}
-			return s.toString();
-		}
+		return classpath.getClasspath();
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	public static @NonNull List<@NonNull String> createClassPathProjectList(@NonNull URIConverter uriConverter, @NonNull List<@NonNull String> projectNames) {
 		List<@NonNull String> classpathProjectList = new ArrayList<@NonNull String>();
 		for (@NonNull String projectName : projectNames) {
@@ -259,7 +274,69 @@ public abstract class JavaFileUtil
 	}
 
 	/**
-	 * Compile all *.java files on sourcePath
+	 * Return a new list of exemplar classes whose projects need to be on the class path.
+	 */
+	@Deprecated /* @deprecated use createDefaultOCLclasspath() and then addClass(). */
+	public static @NonNull JavaClasspath createClasspathProjectNameList(@NonNull Class<?>... exemplarClasses) {
+		JavaClasspath classpath = createDefaultOCLClasspath();
+		if (exemplarClasses != null) {
+			for (@NonNull Class<?> exemplarClass : exemplarClasses) {
+				classpath.addClass(/*0,*/ exemplarClass);
+			}
+		}
+		return classpath;
+	}
+
+	/*
+	public static @NonNull List<@NonNull String> createClassPathProjectList(@NonNull URIConverter uriConverter, @NonNull List<@NonNull Class<?>> exemplarProjectClasses) {
+		List<@NonNull String> classpathProjectList = new ArrayList<>();
+		for (@NonNull Class<?> exemplarProjectClass : exemplarProjectClasses) {
+		//	File path = getProjectBinFolder(uriConverter, projectName);
+		//	if (path != null) {
+		//		classpathProjectList.add(String.valueOf(path));
+		//	}
+			String modifiedName = "/" + exemplarProjectClass.getName().replace('.', '/') + ".class";
+			URL projectURL = exemplarProjectClass.getResource(modifiedName);
+			if (projectURL != null) {
+				if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+					try {
+						projectURL = FileLocator.resolve(projectURL);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				String projectURLstring = projectURL.toString();
+				projectURLstring = projectURLstring.substring(0, projectURLstring.length() - modifiedName.length());
+				if (projectURLstring.startsWith("jar:") && projectURLstring.endsWith("!")) {
+					projectURLstring = projectURLstring.substring(4, projectURLstring.length()-1);
+				}
+				URI projectURI = URI.createURI(projectURLstring);
+				String projectString = projectURI.isFile() ? projectURI.toFileString() : projectURI.toString();
+				if (projectString != null) {
+					classpathProjectList.add(projectString);
+				}
+			}
+		}
+		//		}
+		return classpathProjectList;
+	} */
+
+	/**
+	 * Return a new JavaClasspath preloaded with the paths needed for OCLinEcore compilation.
+	 */
+	public static @NonNull JavaClasspath createDefaultOCLClasspath() {
+		JavaClasspath classpath = new JavaClasspath();
+		classpath.addClass(org.eclipse.ocl.pivot.Model.class);
+		classpath.addClass(org.eclipse.emf.ecore.EPackage.class);
+		classpath.addClass(org.eclipse.emf.common.EMFPlugin.class);
+		classpath.addClass(org.eclipse.jdt.annotation.NonNull.class);
+		classpath.addClass(org.eclipse.osgi.util.NLS.class);
+		return classpath;
+	}
+
+	/**
+	 * Delete all *.java files on sourcePath
 	 */
 	public static void deleteJavaFiles(@NonNull String sourcePath) {
 		deleteJavaFiles(new File(sourcePath));
@@ -283,6 +360,20 @@ public abstract class JavaFileUtil
 			}
 		}
 		return;
+	}
+
+	public static void gatherCompilationUnits(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull File directory) {
+		File[] files = directory.listFiles();
+		if (files != null) {
+			for (File file : files) {
+				if (file.isDirectory()) {
+					gatherCompilationUnits(compilationUnits, file);
+				} else if (file.isFile()) {
+					//					System.out.println("Compiling " + file);
+					compilationUnits.add(new JavaSourceFileObject(file.toURI()));
+				}
+			}
+		}
 	}
 
 	/**
@@ -333,28 +424,20 @@ public abstract class JavaFileUtil
 		}
 	}
 
-	public static @NonNull List<@NonNull JavaFileObject> getCompilationUnits(@NonNull File srcFile)
+	@Deprecated /* @deprecated Use gatherCompilationUnits */
+	public static @NonNull List<@NonNull JavaFileObject> getCompilationUnits(@NonNull File... srcFiles)
 			throws Exception {
 		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
-		getCompilationUnits(compilationUnits, srcFile);
-		return compilationUnits;
-	}
-	private static void getCompilationUnits(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull File directory) throws Exception {
-		File[] files = directory.listFiles();
-		if (files != null) {
-			for (File file : files) {
-				if (file.isDirectory()) {
-					getCompilationUnits(compilationUnits, file);
-				} else if (file.isFile()) {
-					//					System.out.println("Compiling " + file);
-					compilationUnits.add(new JavaSourceFileObject(file.toURI()));
-				}
+		if (srcFiles != null) {
+			for (@NonNull File srcFile : srcFiles) {
+				gatherCompilationUnits(compilationUnits, srcFile);
 			}
 		}
+		return compilationUnits;
 	}
 
-	/*	protected void getCompilationUnits(@NonNull List<JavaFileObject> compilationUnits,
-			@NonNull IContainer container) throws CoreException {
+	@Deprecated /* @deprecated Use gatherCompilationUnits */
+	protected void getCompilationUnits(@NonNull List<JavaFileObject> compilationUnits, @NonNull IContainer container) throws CoreException {
 		for (IResource member : container.members()) {
 			if (member instanceof IContainer) {
 				getCompilationUnits(compilationUnits, (IContainer) member);
@@ -366,7 +449,7 @@ public abstract class JavaFileUtil
 				compilationUnits.add(new JavaSourceFileObject(locationURI));
 			}
 		}
-	} */
+	}
 
 	private static @Nullable JavaCompiler getJavaCompiler() {
 		//
@@ -389,9 +472,9 @@ public abstract class JavaFileUtil
 	 *
 	 * For workspace projects this is the "bin" folder. For plugins it is the jar file.
 	 */
+	@Deprecated /* @deprecated Use JavaClasspath */
 	public static @Nullable File getProjectBinFolder(@NonNull URIConverter uriConverter, @NonNull String projectName) {
 		String path = null;
-		String binDir = CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire() ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
 		URI platformURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
 		URI pathURI = uriConverter.normalize(platformURI);
 		String location = null;
@@ -428,6 +511,7 @@ public abstract class JavaFileUtil
 					path = path + TEST_BIN_FOLDER_NAME;
 				}
 				else {
+					String binDir = CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire() ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
 					path = path + binDir;
 				}
 			}
@@ -451,6 +535,7 @@ public abstract class JavaFileUtil
 	/**
 	 * Return the absolute path to the 'bin' folder of a workspace bundle or the jar of a plugin.
 	 */
+	@Deprecated /* @deprecated Use JavaClasspath */
 	public static @NonNull File getOSGIClassPath(@NonNull Bundle bundle) throws IOException {
 		//
 		//  We could be helpful and use the classes from  a project, but that would be really confusing
@@ -471,7 +556,11 @@ public abstract class JavaFileUtil
 	 * Search the .classpath of bundle to locate the output classpathEntry and return the corresponding path
 	 * or null if no .classpath or output classpathentry.
 	 */
+	@Deprecated /* @deprecated Use JavaClasspath */
 	private static @Nullable File getOutputClassPath(@NonNull File bundleDirectory) throws IOException {
+	//	if (CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire()) {
+	//		return new File(bundleDirectory, MAVEN_TYCHO_BIN_FOLDER_NAME);
+	//	}
 		File classpathEntry = new File(bundleDirectory, ".classpath");
 		if (classpathEntry.isFile()) {
 			URI uri = URI.createFileURI(classpathEntry.toString());
