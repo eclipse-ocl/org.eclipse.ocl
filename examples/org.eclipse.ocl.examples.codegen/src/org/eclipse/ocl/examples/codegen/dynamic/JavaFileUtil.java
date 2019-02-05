@@ -556,8 +556,7 @@ public abstract class JavaFileUtil
 	 * Search the .classpath of bundle to locate the output classpathEntry and return the corresponding path
 	 * or null if no .classpath or output classpathentry.
 	 */
-	@Deprecated /* @deprecated Use JavaClasspath */
-	private static @Nullable File getOutputClassPath(@NonNull File bundleDirectory) throws IOException {
+	public static @Nullable File getOutputClassPath(@NonNull File bundleDirectory) throws IOException {
 	//	if (CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire()) {
 	//		return new File(bundleDirectory, MAVEN_TYCHO_BIN_FOLDER_NAME);
 	//	}

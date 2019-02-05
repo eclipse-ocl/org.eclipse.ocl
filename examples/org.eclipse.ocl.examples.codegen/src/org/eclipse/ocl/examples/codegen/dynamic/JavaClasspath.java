@@ -64,7 +64,64 @@ public class JavaClasspath
 	 */
 	public void addFile(@NonNull File file) throws MalformedURLException {
 		URI fileURI = URI.createFileURI(file.toString());
-		urls.add(new URL(fileURI.toString()));
+		addURL(new URL(fileURI.toString()));
+	}
+
+/*	public void addProject(@NonNull String projectName) throws IOException {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+			IResource project = workspaceRoot.findMember(projectName);
+			if (project != null) {
+				String location = String.valueOf(project.getLocation());
+				File projectFile = new File(location);
+				File outputClassPath = JavaFileUtil.getOutputClassPath(projectFile);
+				String path = location + "/" + ""; //TEST_BIN_FOLDER_NAME;
+				if (outputClassPath != null) {
+					addFile(outputClassPath);
+				}
+				return;
+			}
+			String path = null;
+			Bundle bundle = Platform.getBundle(projectName);
+			if (bundle != null) {
+				try {
+					File bundleFile = FileLocator.getBundleFile(bundle);
+					if (bundleFile.isDirectory()) {
+					//	File outputPath = getOutputClassPath(bundleFile);
+					//	if (outputPath != null) {
+					//		addFile(outputPath);
+					//	}
+					}
+
+				//	File bundleFilePath = getOSGIClassPath(bundle);
+				//	location = bundle.getLocation();
+				//	path = bundleFilePath.toString();
+				} catch (IOException e) {
+					// Doesn't fail for sensible names.
+				}
+			}
+			if (path == null) {					// platform:/resource
+			}
+		}
+	} */
+
+	/**
+	 * Add the optionally protocolled string to the list of classpath elememnts.
+	 *
+	 * @throws MalformedURLException
+	 */
+	public void addString(@NonNull String string) throws MalformedURLException {
+		URI uri = URI.createURI(string);
+		addURI(uri);
+	}
+
+	/**
+	 * Add the URI to the list of classpath elememnts.
+	 *
+	 * @throws MalformedURLException
+	 */
+	public void addURI(@NonNull URI uri) throws MalformedURLException {
+		addURL(new URL(uri.isFile() ? uri.toString() : uri.toFileString()));
 	}
 
 	/**
@@ -73,10 +130,6 @@ public class JavaClasspath
 	public void addURL(@NonNull URL classpathURL) {
 		urls.add(classpathURL);
 	}
-
-//	public void addURL(int index, @NonNull URL classpathURL) {
-//		urls.add(index, classpathURL);
-//	}
 
 	public @NonNull String getClasspath() {
 		StringBuilder s = new StringBuilder();
@@ -96,7 +149,7 @@ public class JavaClasspath
 		return s.toString();
 	}
 
-	public @NonNull List<@NonNull String> getClasspathProjectList() {
+	public @NonNull List<@NonNull String> getClasspathElements() {
 		List<@NonNull String> classpathProjectList = new ArrayList<>();
 		for (@NonNull URL url : urls) {
 			String classpathElement = getClasspathElement(url);
@@ -112,9 +165,9 @@ public class JavaClasspath
 		return classpathURI.isFile() ? classpathURI.toFileString() : classpathURI.toString();
 	}
 
-	//		public @NonNull Iterable<@NonNull URL> getClasspathURLs() {
-	//			return urls;
-	//		}
+	public @NonNull Iterable<@NonNull URL> getClasspathURLs() {
+		return urls;
+	}
 
 	public int size() {
 		return urls.size();
