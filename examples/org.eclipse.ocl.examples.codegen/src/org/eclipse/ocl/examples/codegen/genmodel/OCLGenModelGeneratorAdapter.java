@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.genmodel;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -120,8 +121,9 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 	 * Return the java.class.path entry that resolves absoluteTemplateName references.
 	 * This is only useful when running standalone. When using OSGI, the appropriate bundle-specific
 	 * class loader should be used instead.
+	 * @throws IOException
 	 */
-	protected @Nullable String getStandaloneTemplateClassPath(@NonNull String workspaceName) {
+	protected @Nullable String getStandaloneTemplateClassPath(@NonNull String workspaceName) throws IOException {
 		URI absoluteTemplateURI = EcorePlugin.resolvePlatformResourcePath(workspaceName);
 		if (absoluteTemplateURI == null) {
 			return null;
@@ -133,8 +135,12 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 		if (absoluteTemplateName == null) {			// Never happens
 			return null;
 		}
+		absoluteTemplateName = new File(absoluteTemplateName).getCanonicalPath();
 		if (sortedClasspath == null) {
 			sortedClasspath = System.getProperty("java.class.path").split(System.getProperty("path.separator"));
+			for (int i = 0; i < sortedClasspath.length; i++) {
+				sortedClasspath[i] = new File(sortedClasspath[i]).getCanonicalPath();
+			}
 			Arrays.sort(sortedClasspath);
 		}
 		int matchIndex  = Arrays.binarySearch(sortedClasspath, absoluteTemplateName);
