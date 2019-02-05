@@ -34,7 +34,7 @@
       <!-- @generated extlibrary -->
       <content-type
             base-type="org.eclipse.emf.ecore.xmi"
-            file-extensions=""
+            file-extensions="extlibrary"
             id="org.eclipse.ocl.ecore.tests.extendedLibrary"
             name="%_UI_EXTLibrary_content_type"
             priority="normal">
