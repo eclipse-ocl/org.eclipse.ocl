@@ -15,9 +15,11 @@ package org.eclipse.ocl.ecore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -647,7 +649,9 @@ implements EnvironmentWithHiddenOpposites {
 		}
 
 		String name = packageNames.get(0);
-		for (Object next : registry.values()) {
+		Set<String> registryKeys = new HashSet<String>(registry.keySet());
+		for (String registryKey : registryKeys) {
+			Object next = registry.get(registryKey);
 			if (next instanceof EPackage.Descriptor) {
 				next = ((EPackage.Descriptor)next).getEPackage();
 			}
