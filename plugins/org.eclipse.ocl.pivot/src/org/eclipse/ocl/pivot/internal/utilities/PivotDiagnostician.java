@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -60,7 +61,10 @@ public abstract class PivotDiagnostician extends Diagnostician
 			asResourceFactory.initializeEValidatorRegistry(localEValidatorRegistry);
 		}
 		if (globalEValidatorRegistry != null) {
-			for (EPackage ePackage : globalEValidatorRegistry.keySet()) {
+			// If we are unlucky, this validation could occur in a builder more or less
+			// concurrently with a launch that lazily loads new EPackages (see Bug 544245).
+			Iterable<EPackage> stableKeySet = new ArrayList<>(globalEValidatorRegistry.keySet());
+			for (EPackage ePackage : stableKeySet) {
 				if (ePackage != null) {
 					Object localEValidator = localEValidatorRegistry.get(ePackage);
 					Object globalEValidator = globalEValidatorRegistry.get(ePackage);
