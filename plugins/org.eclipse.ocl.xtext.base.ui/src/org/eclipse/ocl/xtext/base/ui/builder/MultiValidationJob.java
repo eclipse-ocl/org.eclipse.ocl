@@ -55,6 +55,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.osgi.util.NLS;
@@ -75,6 +77,8 @@ import org.osgi.framework.wiring.BundleWiring;
  */
 public class MultiValidationJob extends Job
 {
+	public static final @NonNull TracingOption VALIDATOR = new TracingOption(BaseUiPluginHelper.PLUGIN_ID, "validator");
+
 	/**
 	 * An AddMarkersOperation accumulates the future markers for an IResource via the accept methods.
 	 * Old markers are deleted and the new markers are installed by a single execution per resource.
@@ -655,9 +659,13 @@ public class MultiValidationJob extends Job
 				if (subMonitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
+				long start = System.currentTimeMillis();
 				try {
 					String message = NLS.bind(BaseUIMessages.MultiValidationJob_Validating, entry.getFile().getFullPath().toString());
-					//					System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + message);
+//					if (VALIDATOR.isActive()) {
+//						VALIDATOR.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + message);
+//						VALIDATOR.println(entry.getFile().getFullPath().toString());
+//					}
 					subMonitor.subTask(message);
 					doValidate(entry, subMonitor);
 				} catch (OperationCanceledException canceled) {
@@ -665,6 +673,12 @@ public class MultiValidationJob extends Job
 				} catch (Throwable e) {
 					log.error("Error running " + getName(), e);
 					//					return Status.OK_STATUS;
+				}
+				finally {
+					if (VALIDATOR.isActive()) {
+						long end = System.currentTimeMillis();
+						VALIDATOR.println((end -start) + " ms for \"" + entry.getFile().getFullPath().toString() + "\" on \"" + Thread.currentThread().getName() + "\"");
+					}
 				}
 				validationQueue.remove(entry);		// Remove so that failure does not repeat
 				//				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: " + 1);

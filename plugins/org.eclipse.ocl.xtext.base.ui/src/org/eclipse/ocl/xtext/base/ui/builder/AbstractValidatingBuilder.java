@@ -24,7 +24,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.compiler.CharOperation;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
+import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 
 /**
@@ -37,6 +39,8 @@ import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
  */
 public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilder
 {
+	public static final @NonNull TracingOption BUILDER = new TracingOption(BaseUiPluginHelper.PLUGIN_ID, "builder");
+
 	// FIXME delete after Photon M7 (once QVTd has caught up)
 	@Deprecated
 	public static class BuildSelector extends AbstractBuildSelector
@@ -96,17 +100,22 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 
 	@Override
 	protected IProject[] build(final int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException {
-		//		System.out.println(NameUtil.debugSimpleName(this) + " build " + getKindAsString(kind));
-		//		long startTime = System.currentTimeMillis();
+		if (BUILDER.isActive()) {
+			BUILDER.println(getDebugName() + " build " + getKindAsString(kind));
+		}
+		long startTime = System.currentTimeMillis();
+		int selectionSize = -1;
+		int unselectionSize = -1;
 		IProject project = getProject();
 		assert project != null;
+		String builderName = getBuilderName();
+		String projectName = project.getName();
 		try {
-			String builderName = getBuilderName();
-			String projectName = project.getName();
 			String initializingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Initializing, builderName, projectName);
 			SubMonitor subMonitor = SubMonitor.convert(monitor, initializingMessage, 3);
-			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " converted from: " + NameUtil.debugSimpleName(monitor));
-			//
+		//	if (BUILDER.isActive()) {
+		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " converted from: " + NameUtil.debugSimpleName(monitor));
+		//	}
 			//	Work item 1: MultiValidationJob_Initializing
 			//
 			AbstractBuildSelector buildSelector;
@@ -115,33 +124,49 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 				buildSelector = createBuildSelector(project, BuildType.FULL, args, subMonitor);
 				delta = null;
 			} else {
-				delta = getDelta(getProject());
-				buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
+			//	delta = getDelta(getProject());
+			//	buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
+				return null; 		// FIXME BUG 544189 there is no incrdmental support.
 			}
-			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked 1");
+		//	if (BUILDER.isActive()) {
+		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked 1");
+		//	}
 			subMonitor.worked(1);
 			//
 			//	Work item 2: MultiValidationJob_Selecting
 			//
 			String selectingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Selecting, builderName, projectName);
-			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + selectingMessage);
+		//	if (BUILDER.isActive()) {
+		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + selectingMessage);
+		//	}
 			subMonitor.subTask(selectingMessage);
-			int selectionSize = buildSelector.selectResources(delta);
-			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+			selectionSize = buildSelector.selectResources(delta);
+			unselectionSize = buildSelector.deleteRemovedResourceMarkers();
+		//	if (BUILDER.isActive()) {
+		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+		//	}
 			subMonitor.worked(1);
 			//
 			//	Work item 3: MultiValidationJob_Queuing
 			//
 			if (selectionSize > 0) {
 				String queueingMessage = StringUtil.bind(BaseUIMessages.MultiValidationJob_Queuing, builderName, selectionSize, projectName);
-				//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + queueingMessage);
+			//	if (BUILDER.isActive()) {
+			//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " subTask: " + queueingMessage);
+			//	}
 				subMonitor.subTask(queueingMessage);
 				buildSelector.buildResources();
-				//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+			//	if (BUILDER.isActive()) {
+			//		long endTime = System.currentTimeMillis();
+			//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked: 1");
+			//		BUILDER.println("Selected " + selectionSize + " elements in " + (endTime-startTime) + " ms for " + projectName + " on " + Thread.currentThread().getName());
+			//	}
 				subMonitor.worked(1);
 			}
 			//
-			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " done");
+		//	if (BUILDER.isActive()) {
+		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " done");
+		//	}
 			subMonitor.done();
 		} catch (CoreException e) {
 			getLog().error(e.getMessage(), e);
@@ -152,20 +177,31 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			getLog().error(e.getMessage(), e);
 			forgetLastBuiltState();
 		} finally {
+			if (BUILDER.isActive()) {
+				long endTime = System.currentTimeMillis();
+				BUILDER.println((endTime-startTime) + " ms to select/unselect " + selectionSize + "/" + unselectionSize + " elements on \"" + Thread.currentThread().getName() + "\"");
+			}
 			if (monitor != null) {
-				//				System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done2");
+			//	if (BUILDER.isActive()) {
+			//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done2");
+			//	}
 				monitor.done();
 			}
-			//			String message = "Pre-build " + getProject().getName() + " in " + (System.currentTimeMillis() - startTime) + " ms";
+		//	if (BUILDER.isActive()) {
+		//				String message = "Pre-build " + getProject().getName() + " in " + (System.currentTimeMillis() - startTime) + " ms";
 			//			getLog().info(message);
-			//			System.out.println(Thread.currentThread().getName() + " log " + message);
+		//				BUILDER.println(Thread.currentThread().getName() + " log " + message);
+		//	}
 		}
 		return null;
 	}
 
 	@Override
 	protected void clean(IProgressMonitor monitor) throws CoreException {
-		//		System.out.println(NameUtil.debugSimpleName(this) + " clean");
+		if (BUILDER.isActive()) {
+			BUILDER.println(getDebugName() + " clean");
+		}
+		BaseUIActivator.cancelMultiValidationJob();
 	}
 
 	// FIXME change to abstract after Photon M7 (once QVTd has caught up)
@@ -175,6 +211,22 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	}
 
 	protected abstract @NonNull String getBuilderName();
+
+	protected String getDebugName() {
+		String name = getClass().getName();
+		int lastIndex = name.lastIndexOf(".");
+		return (lastIndex >= 0 ? name.substring(lastIndex+1) : name) + "-" + getBuildConfig(); // + "@" + Integer.toHexString(System.identityHashCode(this));
+	}
+
+	private String getKindAsString(int kind) {
+		switch (kind) {
+			case IncrementalProjectBuilder.AUTO_BUILD: return "AUTO_BUILD";
+			case IncrementalProjectBuilder.CLEAN_BUILD: return "CLEAN_BUILD";
+			case IncrementalProjectBuilder.FULL_BUILD: return "FULL_BUILD";
+			case IncrementalProjectBuilder.INCREMENTAL_BUILD: return "INCREMENTAL_BUILD";
+		}
+		return "OTHER_BUILD";
+	}
 
 	protected abstract Logger getLog();
 

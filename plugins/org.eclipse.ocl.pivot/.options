@@ -21,6 +21,9 @@ org.eclipse.ocl.pivot/projectMap/get=false
 # Turn on tracing of the install/uninstall of EPackage.Registry descriptors
 org.eclipse.ocl.pivot/projectMap/install=false
 
+# Turn on tracing of the resource changes 
+org.eclipse.ocl.pivot/projectMap/resourceChange=false
+
 # Turn on tracing of the resolution of EPackage.Registry and ResourceSet.URIResourceMap entries 
 org.eclipse.ocl.pivot/projectMap/resolve=false
 

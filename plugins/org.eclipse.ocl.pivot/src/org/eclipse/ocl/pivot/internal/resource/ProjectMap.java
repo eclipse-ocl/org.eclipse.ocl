@@ -38,7 +38,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * ProjectMap extends {@link ProjectManager} to support polymorphic access in either plugin or standalone environments
@@ -86,6 +87,11 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class ProjectMap extends StandaloneProjectMap implements IResourceChangeListener, IResourceDeltaVisitor
 {
+	/**
+	 * @since 1.7
+	 */
+	public static final @NonNull TracingOption PROJECT_MAP_RESOURCE_CHANGE = new TracingOption(PivotPlugin.PLUGIN_ID, "projectMap/resourceChange");
+
 	public static class ProjectDescriptor extends StandaloneProjectMap.ProjectDescriptor
 	{
 		public ProjectDescriptor(@NonNull ProjectMap projectMap, @NonNull String name, @NonNull URI locationURI) {
@@ -298,22 +304,26 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				@SuppressWarnings("unused")
 				IProjectDescriptor projectDescriptor = projectDescriptors.remove(projectName);
 				//	projectDescriptor.dispose();
-				System.out.println(NameUtil.debugSimpleName(this) + " closing " + projectName);
+				if (PROJECT_MAP_RESOURCE_CHANGE.isActive()) {
+					PROJECT_MAP_RESOURCE_CHANGE.println(/*NameUtil.debugSimpleName(this) +*/ "Closing " + projectName);
+				}
 			}
 			else {
-				System.out.println(NameUtil.debugSimpleName(this) + " still open " + projectName);
+			//	System.out.println(NameUtil.debugSimpleName(this) + " still open " + projectName);
 			}
 		}
 		else {
 			if (isOpen) {
-				System.out.println(NameUtil.debugSimpleName(this) + " opening " + projectName);
+				if (PROJECT_MAP_RESOURCE_CHANGE.isActive()) {
+					PROJECT_MAP_RESOURCE_CHANGE.println(/*NameUtil.debugSimpleName(this) +*/ "Opening " + projectName);
+				}
 				String projectKey = "/" + projectName + "/";
 				@NonNull URI platformResourceURI = URI.createPlatformResourceURI(projectKey, true);
 				IProjectDescriptor projectDescriptor = createProjectDescriptor(projectName, platformResourceURI);
 				projectDescriptors.put(projectName, projectDescriptor);
 			}
 			else {
-				System.out.println(NameUtil.debugSimpleName(this) + " still closed " + projectName);
+			//	System.out.println(NameUtil.debugSimpleName(this) + " still closed " + projectName);
 			}
 		}
 	}

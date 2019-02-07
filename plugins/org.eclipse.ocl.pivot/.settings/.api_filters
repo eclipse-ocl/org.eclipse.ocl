@@ -21126,6 +21126,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/ProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.ProjectMap">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ProjectMap"/>
+                <message_argument value="PROJECT_MAP_RESOURCE_CHANGE"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
         <filter id="336658481">
             <message_arguments>

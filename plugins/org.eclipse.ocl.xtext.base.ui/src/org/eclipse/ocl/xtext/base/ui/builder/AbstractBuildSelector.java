@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -24,7 +25,6 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.ecore.EValidator;
@@ -46,7 +46,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	private final char[][] exclusionPatterns;
 	private final char[][] inclusionPatterns;
 
-	private final @NonNull Set<@NonNull IPath> removedPaths = new HashSet<>();
+	private final @NonNull Set<@NonNull IFile> removedFiles = new HashSet<>();
 	private final @NonNull Set<@NonNull ValidationEntry> selectedEntries = new HashSet<>();
 
 	protected AbstractBuildSelector(@NonNull IProject project, @NonNull BuildType buildType, @Nullable Map<String, String> args, @NonNull IProgressMonitor monitor) {
@@ -113,7 +113,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	}
 
 	/**
-	 * Return the appropriate Problem Marked Id for the resuklts of validating iFile.
+	 * Return the appropriate Problem Marked Id for the results of validating iFile.
 	 * Defaults to "org.eclipse.emf.ecore.diagnostic". Subclasses should override.
 	 */
 	@SuppressWarnings("null")
@@ -147,10 +147,10 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 
 	public int selectResources(@Nullable IResourceDelta delta) throws CoreException {
 		//			progress.subTask(selectingResourcesMessage);
-		if (delta == null) {
+		if (delta == null) {			// full
 			project.accept(this, IResource.DEPTH_INFINITE, IResource.NONE);
 		}
-		else {
+		else {							// auto / incremental
 			delta.accept(this);
 		}
 		return selectedEntries.size();
@@ -184,14 +184,17 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 		if (resource instanceof IProject) {
 			return resource == project;
 		}
+		if (resource instanceof IContainer) {
+			return true;
+		}
 		if (resource instanceof IStorage) {
 			if (delta.getKind() == IResourceDelta.REMOVED) {
 				//					System.out.println(NameUtil.debugSimpleName(this) + " remove " + resource);
 				Boolean isSelected = isSelected(resource);
 				if (isSelected == Boolean.TRUE) {
-					IPath fullPath = ((IFile) resource).getFullPath();
-					assert fullPath != null;
-					removedPaths.add(fullPath);
+				//	IPath fullPath = ((IFile) resource).getFullPath();
+				//	assert fullPath != null;
+					removedFiles.add((IFile) resource);
 					return true;
 				}
 				else if (isSelected == null) {
@@ -216,7 +219,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public void deleteMarkers() {
@@ -227,5 +230,20 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 				// e.printStackTrace();  -- if deleteMarkers fails we probably don't want extra noise
 			}
 		}
+	}
+
+	protected int deleteRemovedResourceMarkers() {
+		for (@NonNull IFile removedFile : removedFiles) {
+			try {
+				String markerId = getMarkerId(removedFile);
+			//	if (AbstractValidatingBuilder.BUILDER.isActive()) {
+			//		AbstractValidatingBuilder.BUILDER.println("Remove \"" + markerId + "\" markers from \"" + removedFile.getFullPath() + "\"");
+			//	}
+				removedFile.deleteMarkers(markerId, true, IResource.DEPTH_ZERO);
+			} catch (CoreException e) {
+			//	e.printStackTrace();
+			}
+		}
+		return removedFiles.size();
 	}
 }

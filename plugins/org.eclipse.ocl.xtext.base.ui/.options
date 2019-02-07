@@ -1,5 +1,8 @@
 # Debugging options for the org.eclipse.ocl.xtext.base.ui plug-in
 
+# Turn on tracing of validatuion builder activation
+org.eclipse.ocl.xtext.base.ui/builder=false
+
 # Turn on tracing of the deferred editor job
 # @deprecated - deferred editor job no longer used
 org.eclipse.ocl.xtext.base.ui/editor/deferred=false
@@ -9,3 +12,7 @@ org.eclipse.ocl.xtext.base.ui/outline/create=false
 
 # Turn on tracing of outline node location
 org.eclipse.ocl.xtext.base.ui/outline/locate=false
+
+# Turn on tracing of validator progress
+org.eclipse.ocl.xtext.base.ui/validator=false
+
