@@ -18,8 +18,15 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -31,6 +38,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * ProjectMap extends {@link ProjectManager} to support polymorphic access in either plugin or standalone environments
@@ -71,8 +79,12 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
  * accessible as <tt>platform:/plugin/<i>project</i></tt> or
  * <tt>platform:/resource/<i>project</i></tt>, without needing to create an
  * explicit URI map entry for each of the many hundreds of bundles in typical use.
+ *
+ * A global ProjectMap tracks workpsace project changes to synchronize the known open projects and the list
+ * of IProjectDescriptor. This ensures that when the global ProjectMap initializes a ResourceSet it uses
+ * the prevailing open projects. It does not update previously initialized ResourceSets.
  */
-public class ProjectMap extends StandaloneProjectMap
+public class ProjectMap extends StandaloneProjectMap implements IResourceChangeListener, IResourceDeltaVisitor
 {
 	public static class ProjectDescriptor extends StandaloneProjectMap.ProjectDescriptor
 	{
@@ -125,6 +137,11 @@ public class ProjectMap extends StandaloneProjectMap
 		return adapter;
 	}
 
+	/**
+	 * non-null visitor when this ProjectMap is listening to resource chnages in the workspace.
+	 */
+	private IResourceDeltaVisitor visitor = null;
+
 	public ProjectMap(boolean isGlobal) {
 		super(isGlobal);
 	}
@@ -132,6 +149,17 @@ public class ProjectMap extends StandaloneProjectMap
 	@Override
 	protected @NonNull IProjectDescriptor createProjectDescriptor(@NonNull String projectName, @NonNull URI locationURI) {
 		return new ProjectDescriptor(this, projectName, locationURI);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public void dispose() {
+	//	super.dispose() {
+		if (visitor != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+			visitor = null;
+		}
 	}
 
 	@Override
@@ -171,6 +199,21 @@ public class ProjectMap extends StandaloneProjectMap
 	@Override
 	public boolean isAdapterForType(Object type) {
 		return (type instanceof Class<?>) && ((Class<?>)type).isAssignableFrom(ProjectMap.class);
+	}
+
+	/**
+	 * Internal call-back for a resource change visits the delta to respond to chnaged open/closed projects.
+	 * Changes are synchronized on this.
+	 */
+	@Override
+	public void resourceChanged(IResourceChangeEvent event) {
+		try {
+			synchronized (this) {
+				event.getDelta().accept(visitor);
+			}
+		} catch (CoreException e) {
+		//	log.error(e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -238,15 +281,62 @@ public class ProjectMap extends StandaloneProjectMap
 		}
 	}
 
-	protected void scanProjects(@NonNull Map<String, IProjectDescriptor> projectDescriptors) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		for (IProject project : root.getProjects()) {
-			if (project.isOpen()) {
-				@SuppressWarnings("null")@NonNull String projectName = project.getName();
-				String projectKey = "/" + projectName + "/";
-				@NonNull URI platformResourceURI = URI.createPlatformResourceURI(projectKey, true);
-				projectDescriptors.put(projectName, createProjectDescriptor(projectName, platformResourceURI));
+	private void refreshProject(@NonNull Map<String, IProjectDescriptor> projectDescriptors, @NonNull IProject project) {
+		//	Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+		//	if (projectDescriptors != null) {
+		@SuppressWarnings("null")@NonNull String projectName = project.getName();
+		boolean wasOpen = projectDescriptors.containsKey(projectName);
+		boolean isOpen = project.isOpen();
+		if (wasOpen) {
+			if (!isOpen) {
+				IProjectDescriptor projectDescriptor = projectDescriptors.remove(projectName);
+				//	projectDescriptor.dispose();
+				System.out.println(NameUtil.debugSimpleName(this) + " closing " + projectName);
+			}
+			else {
+				System.out.println(NameUtil.debugSimpleName(this) + " still open " + projectName);
 			}
 		}
+		else {
+			if (isOpen) {
+				System.out.println(NameUtil.debugSimpleName(this) + " opening " + projectName);
+				String projectKey = "/" + projectName + "/";
+				@NonNull URI platformResourceURI = URI.createPlatformResourceURI(projectKey, true);
+				IProjectDescriptor projectDescriptor = createProjectDescriptor(projectName, platformResourceURI);
+				projectDescriptors.put(projectName, projectDescriptor);
+			}
+			else {
+				System.out.println(NameUtil.debugSimpleName(this) + " still closed " + projectName);
+			}
+		}
+	}
+
+	protected void scanProjects(@NonNull Map<String, IProjectDescriptor> projectDescriptors) {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		if (isGlobal && (visitor == null)) {			// Lazily install listening for a/the global ProjectMap
+			visitor = this;
+			workspace.addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
+		}
+		for (IProject project : workspace.getRoot().getProjects()) {
+			if (project != null) {
+				refreshProject(projectDescriptors, project);
+			}
+		}
+	}
+
+	/**
+	 * Internal cCall-back from a resoyrceChanged() add/s/removes IProjectDescriptor for newly opened/closed projects.
+	 */
+	@Override
+	public boolean visit(IResourceDelta delta) throws CoreException {
+		IResource resource = delta.getResource();
+		if (resource instanceof IWorkspaceRoot)
+			return true;
+		if (resource instanceof IProject) {
+			Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors2 = getProjectDescriptors();
+			assert projectDescriptors2 != null;
+			refreshProject(projectDescriptors2, (IProject)resource);
+		}
+		return false;
 	}
 }

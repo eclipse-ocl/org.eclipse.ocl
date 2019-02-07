@@ -47,7 +47,6 @@ import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -488,7 +487,6 @@ public class MultiValidationJob extends Job
 	private static final @NonNull IDiagnosticConverter converter = new PivotDiagnosticConverter();
 
 	private final @NonNull ValidationQueue validationQueue = new ValidationQueue();
-	private @Nullable ProjectManager projectManager = null;
 
 	public MultiValidationJob() {
 		super(BaseUIMessages.MultiValidationJob_Name);
@@ -510,7 +508,6 @@ public class MultiValidationJob extends Job
 	@Override
 	protected synchronized void canceling() {
 		validationQueue.clear();
-		projectManager = null;		// FIXME track project open/closes
 		super.canceling();
 	}
 
@@ -589,11 +586,7 @@ public class MultiValidationJob extends Job
 		final @NonNull String markerType = entry.getMarkerId();
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		//		System.out.println("OCL:Validating " + uri.toString());
-		ProjectManager projectManager2 = projectManager;
-		if (projectManager2 == null) {
-			projectManager = projectManager2 = new ProjectMap(false);
-		}
-		OCL ocl = OCL.newInstance(projectManager2);
+		OCL ocl = OCL.newInstance(ProjectManager.CLASS_PATH);
 		//
 		//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
 		//
@@ -684,7 +677,6 @@ public class MultiValidationJob extends Job
 			//			System.out.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(monitor) + " done");
 			monitor.done();
 		}
-		projectManager = null;			// FIXME track changes to avoid reanalysis
 		return Status.OK_STATUS;
 	}
 }
