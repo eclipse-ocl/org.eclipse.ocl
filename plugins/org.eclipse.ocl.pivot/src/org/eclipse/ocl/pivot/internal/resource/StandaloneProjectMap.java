@@ -229,6 +229,15 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final @NonNull TracingOption PROJECT_MAP_INSTALL = new TracingOption(PLUGIN_ID, "projectMap/install");
 	public static final @NonNull TracingOption PROJECT_MAP_RESOLVE = new TracingOption(PLUGIN_ID, "projectMap/resolve");
 
+	/**
+	 * Test flag that normally conforms that no attempt is made to intrerfere with global registries
+	 * when Eclipse is running. IT is automatically false when running standalone. It may be set false for testing.
+	 * See Bug 544187.
+	 *
+	 * @since 1.7
+	 */
+	public static boolean TEST_MAY_INITIALIZE_GLOBAL_FACILITIES = !EMFPlugin.IS_ECLIPSE_RUNNING;
+
 	{
 		//		PROJECT_MAP_ADD_EPACKAGE.setState(true);
 		//		PROJECT_MAP_ADD_GEN_MODEL.setState(true);
@@ -2268,6 +2277,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry#INSTANCE} if resourceSet is null.
 	 */
 	public static EPackage.@NonNull Registry getPackageRegistry(@Nullable ResourceSet resourceSet) {
+		assert (resourceSet != null) || TEST_MAY_INITIALIZE_GLOBAL_FACILITIES;
 		if (resourceSet == null) {
 			@SuppressWarnings("null") EPackage.@NonNull Registry globalRegistry = EPackage.Registry.INSTANCE;
 			return globalRegistry;
@@ -2282,6 +2292,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * {@link org.eclipse.emf.ecore.resource.Resource.Factory.Registry#INSTANCE} if resourceSet is null.
 	 */
 	public static Resource.Factory.Registry getResourceFactoryRegistry(@Nullable ResourceSet resourceSet) {
+		assert (resourceSet != null) || TEST_MAY_INITIALIZE_GLOBAL_FACILITIES;
 		return resourceSet != null
 				? resourceSet.getResourceFactoryRegistry()
 					: Resource.Factory.Registry.INSTANCE;
@@ -2293,6 +2304,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	@SuppressWarnings("null")
 	public static @NonNull URIConverter getURIConverter(@Nullable ResourceSet resourceSet) {
+		assert (resourceSet != null) || TEST_MAY_INITIALIZE_GLOBAL_FACILITIES;
 		return resourceSet != null ? resourceSet.getURIConverter() : URIConverter.INSTANCE;
 	}
 
@@ -2302,6 +2314,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	@SuppressWarnings("null")
 	public static @NonNull Map<URI, URI> getURIMap(@Nullable ResourceSet resourceSet) {
+		assert (resourceSet != null) || TEST_MAY_INITIALIZE_GLOBAL_FACILITIES;
 		return resourceSet != null ? resourceSet.getURIConverter().getURIMap() : URIConverter.URI_MAP;
 	}
 

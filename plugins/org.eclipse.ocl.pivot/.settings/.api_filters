@@ -21127,6 +21127,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap"/>
+                <message_argument value="TEST_MAY_INITIALIZE_GLOBAL_FACILITIES"/>
+            </message_arguments>
+        </filter>
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="ProjectManager"/>

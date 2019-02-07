@@ -186,6 +186,12 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	}
 
 	@Override
+	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
+		assert (resourceSet != null) || !EMFPlugin.IS_ECLIPSE_RUNNING;		// Diagnosing for Bug 544187.
+		super.initializeResourceSet(resourceSet);
+	}
+
+	@Override
 	public synchronized void initializeURIMap(@Nullable ResourceSet resourceSet) {
 		super.initializeURIMap(resourceSet);
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -289,6 +295,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		boolean isOpen = project.isOpen();
 		if (wasOpen) {
 			if (!isOpen) {
+				@SuppressWarnings("unused")
 				IProjectDescriptor projectDescriptor = projectDescriptors.remove(projectName);
 				//	projectDescriptor.dispose();
 				System.out.println(NameUtil.debugSimpleName(this) + " closing " + projectName);
