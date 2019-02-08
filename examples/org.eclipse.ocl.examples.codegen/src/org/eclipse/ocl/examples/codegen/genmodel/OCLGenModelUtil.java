@@ -49,6 +49,7 @@ public abstract class OCLGenModelUtil
 {
 	public static @NonNull OCLGenModelUtil INSTANCE =
 			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :
+			GenRuntimeVersion.get("2.16") != null ? new EMF_CodeGen_2_16() :
 			GenRuntimeVersion.get("2.14") != null ? new EMF_CodeGen_2_14() :
 			new EMF_CodeGen_Default();
 
@@ -446,7 +447,14 @@ public abstract class OCLGenModelUtil
 		public boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements) {
 			return GenModelUtil.hasImplicitAPIDeprecatedTag(elements);
 		}
+	}
 
+	/**
+	 * EMF_CodeGen_2_17 redirects GenModel facilities available in an EMF >= 2.16 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_16 extends EMF_CodeGen_2_14
+	{
 		@Override
 		public boolean useInterfaceOverrideAnnotation(GenModel genModel) {
 			return genModel.useInterfaceOverrideAnnotation();
@@ -457,7 +465,7 @@ public abstract class OCLGenModelUtil
 	 * EMF_CodeGen_2_17 redirects GenModel facilities available in an EMF >= 2.17 platform to the
 	 * standard implementation.
 	 */
-	private static class EMF_CodeGen_2_17 extends EMF_CodeGen_2_14
+	private static class EMF_CodeGen_2_17 extends EMF_CodeGen_2_16
 	{
 		@Override
 		public boolean useNestedImports() {
