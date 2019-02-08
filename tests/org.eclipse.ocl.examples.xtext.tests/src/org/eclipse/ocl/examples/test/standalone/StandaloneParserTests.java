@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.standalone;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,16 +45,21 @@ public class StandaloneParserTests extends StandaloneTestCase
 		assertTrue(status);
 	}
 
-	protected List<String> normalize(List<String> strings) {
+	protected List<String> normalize(List<String> strings) throws IOException {
 		List<String> normalized = new ArrayList<String>(strings.size());
 		for (String string : strings) {
-			normalized.add(string.replace("\\", "/"));
+			normalized.add(normalize(string));
 		}
 		return normalized;
 	}
 
-	protected String normalize(String string) {
-		return string.replace("\\", "/");
+	protected String normalize(String string) throws IOException {
+		try {
+			return new File(string).getCanonicalPath();
+		}
+		catch (Exception e) {
+			return string;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -108,7 +115,7 @@ public class StandaloneParserTests extends StandaloneTestCase
 			assertEquals(null, command.exporterToken.getExporter(token2strings));
 			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
 			assertEquals(null, command.outputToken.getOutputFile(token2strings));
-			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(normalize(Lists.newArrayList(String.valueOf(inputOCLURI))), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -183,8 +190,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof TextExporter);
 			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
-			assertEquals(getTextLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), Lists.newArrayList(normalize(command.rulesToken.getOCLFileNames(token2strings).get(0))));
+			assertEquals(normalize(getTextLogFileName()), normalize(command.outputToken.getOutputFile(token2strings).toString()));
+			assertEquals(normalize(Lists.newArrayList(String.valueOf(inputOCLURI))), Lists.newArrayList(normalize(command.rulesToken.getOCLFileNames(token2strings).get(0))));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -202,8 +209,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof HTMLExporter);
 			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
-			assertEquals(getHTMLLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(normalize(getHTMLLogFileName()), normalize(command.outputToken.getOutputFile(token2strings).toString()));
+			assertEquals(normalize(Lists.newArrayList(String.valueOf(inputOCLURI))), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
@@ -291,8 +298,8 @@ public class StandaloneParserTests extends StandaloneTestCase
 			assertCommandValid(command, token2strings);
 			assertTrue(command.exporterToken.getExporter(token2strings) instanceof TextExporter);
 			assertEquals(String.valueOf(inputModelURI), command.modelToken.getModelFileName(token2strings));
-			assertEquals(getTextLogFileName(), normalize(command.outputToken.getOutputFile(token2strings).toString()));
-			assertEquals(Lists.newArrayList(String.valueOf(inputOCLURI), String.valueOf(inputOCLURI2)), normalize(command.rulesToken.getOCLFileNames(token2strings)));
+			assertEquals(normalize(getTextLogFileName()), normalize(command.outputToken.getOutputFile(token2strings).toString()));
+			assertEquals(normalize(Lists.newArrayList(String.valueOf(inputOCLURI), String.valueOf(inputOCLURI2))), normalize(command.rulesToken.getOCLFileNames(token2strings)));
 			assertEquals(true, command.usingToken.doRunJavaConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunOCLConstraints(token2strings));
 			assertEquals(true, command.usingToken.doRunUMLConstraints(token2strings));
