@@ -27,7 +27,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenEnum;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
-import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -86,8 +85,6 @@ import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
 {
-	private static final boolean USE_NESTED_IMPORTS = GenRuntimeVersion.get("2.17") != null;	// nested <%...%> JET support added by EMF 2.17.
-
 	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
 		@Override
@@ -220,10 +217,6 @@ public class OCLinEcoreTablesUtils
 		GenPackage genPackage = genModel.getGenPackages().get(0);
 		assert genPackage != null;
 		return genPackage;
-	}
-
-	public static boolean useNestedImports() {
-		return USE_NESTED_IMPORTS;
 	}
 
 	public static class CodeGenString

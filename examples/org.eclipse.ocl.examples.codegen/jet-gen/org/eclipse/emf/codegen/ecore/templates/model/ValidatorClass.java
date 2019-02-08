@@ -3,7 +3,7 @@ package org.eclipse.emf.codegen.ecore.templates.model;
 import java.util.*;
 import org.eclipse.emf.codegen.ecore.genmodel.*;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
-import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 
 public class ValidatorClass
 {
@@ -285,14 +285,14 @@ public class ValidatorClass
     genModel.addPseudoImport("org.eclipse.emf.ecore.EValidator.PatternMatcher");
     stringBuffer.append(TEXT_6);
     stringBuffer.append(genPackage.getQualifiedPackageInterfaceName());
-    if (genPackage.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {
     stringBuffer.append(TEXT_3);
-    stringBuffer.append(genPackage.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_7);
-    if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {
     stringBuffer.append(TEXT_8);
-    } else if (isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getGenClassifiers())) {
+    } else if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getGenClassifiers())) {
     stringBuffer.append(TEXT_9);
     }
     stringBuffer.append(TEXT_10);
@@ -430,12 +430,12 @@ public class ValidatorClass
     stringBuffer.append(TEXT_60);
     for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {String result = "result".equals(genClassifier.getSafeUncapName()) ? "theResult" : "result"; String diagnostics = "diagnostics".equals(genClassifier.getSafeUncapName()) ? "theDiagnostics" : "diagnostics"; String item = "item".equals(genClassifier.getSafeUncapName()) ? "theItem" : "item"; String context = "context".equals(genClassifier.getSafeUncapName()) ? "theContext" : "context";
     stringBuffer.append(TEXT_61);
-    if (genClassifier.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClassifier)) {
     stringBuffer.append(TEXT_62);
-    stringBuffer.append(genClassifier.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClassifier, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_63);
-    if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClassifier)) {
     stringBuffer.append(TEXT_64);
     }
     stringBuffer.append(TEXT_65);

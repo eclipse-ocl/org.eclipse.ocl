@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.util.CodeGenUtil org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="ValidatorClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.util.CodeGenUtil org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="ValidatorClass"%>
 <%
 /**
  * Copyright (c) 2002-2019 IBM Corporation and others.
@@ -34,14 +34,14 @@ package <%=genPackage.getUtilitiesPackageName()%>;
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
  * @see <%=genPackage.getQualifiedPackageInterfaceName()%>
-<%if (genPackage.hasAPITags()) {%>
- * <%=genPackage.getAPITags(genModel.getIndentation(stringBuffer))%>
+<%if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {%>
+ * <%=OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer))%>
 <%}%>
  * @generated
  */
-<%if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {%>
+<%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {%>
 @Deprecated
-<%} else if (isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getGenClassifiers())) {%>
+<%} else if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getGenClassifiers())) {%>
 @SuppressWarnings("deprecation")
 <%}%>
 public class <%=genPackage.getValidatorClassName()%> extends <%=genModel.getImportedName("org.eclipse.emf.ecore.util.EObjectValidator")%>
@@ -196,12 +196,12 @@ public class <%=genPackage.getValidatorClassName()%> extends <%=genModel.getImpo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-    <%if (genClassifier.hasAPITags()) {%>
-	 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genClassifier)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genClassifier, genModel.getIndentation(stringBuffer))%>
     <%}%>
 	 * @generated
 	 */
-  <%if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClassifier)) {%>
 	@Deprecated
   <%}%>
 	public boolean validate<%=genClassifier.getName()%>(<%=genClassifier.getImportedWildcardInstanceClassName()%> <%=genClassifier.getSafeUncapName()%>, DiagnosticChain <%=diagnostics%>, <%=_Map%> <%=context%>)

@@ -28,6 +28,7 @@ import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -156,7 +157,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		int i = 0;
 		int iMax = constants.length();
-		if (useNestedImports()) {
+		if (OCLGenModelUtil.INSTANCE.useNestedImports()) {
 			while (i < iMax) {
 				char c = constants.charAt(i++);
 				if ((c == '<') && (i < iMax) && (constants.charAt(i) == '%')) {

@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="FactoryClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="FactoryClass"%>
 <%
 /**
  * Copyright (c) 2002-2019 IBM Corporation and others.
@@ -13,7 +13,7 @@
 %>
 <%GenPackage genPackage = (GenPackage)((Object[])argument)[0]; GenModel genModel=genPackage.getGenModel(); /* Trick to import java.util.* without warnings */Iterator.class.getName();%>
 <%final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;%>
-<%boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]); boolean useInterfaceOverrideAnnotation = genModel.useInterfaceOverrideAnnotation() && !(isInterface && isImplementation);%>
+<%boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]); boolean useInterfaceOverrideAnnotation = OCLGenModelUtil.INSTANCE.useInterfaceOverrideAnnotation(genModel) && !(isInterface && isImplementation);%>
 <%String publicStaticFinalFlag = isImplementation ? "public static final " : "";%>
 <%@ include file="../Header.javajetinc"%>
 <%if (isInterface || genModel.isSuppressInterfaces()) {%>
@@ -40,8 +40,8 @@ package <%=genPackage.getClassPackageName()%>;
 <%if (!genModel.isSuppressEMFMetaData()) {%>
  * @see <%=genPackage.getQualifiedPackageInterfaceName()%>
 <%}%>
-<%if (genPackage.hasAPITags()) {%>
- * <%=genPackage.getAPITags(genModel.getIndentation(stringBuffer))%>
+<%if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {%>
+ * <%=OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer))%>
 <%}%>
  * @generated
  */
@@ -50,17 +50,17 @@ package <%=genPackage.getClassPackageName()%>;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
-<%if (genPackage.hasAPITags()) {%>
- * <%=genPackage.getAPITags(genModel.getIndentation(stringBuffer))%>
+<%if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {%>
+ * <%=OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer))%>
 <%}%>
  * @generated
  */
 <%}%>
-<%if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {%>
+<%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {%>
 @Deprecated
 <%}%>
 <%if (isImplementation) {%>
-  <%if (isJDK50 && !genPackage.hasAPIDeprecatedTag()) { List<GenClassifier> genClassifiers = new ArrayList<GenClassifier>(genPackage.getGenClassifiers()); for (Iterator<GenClassifier> i = genClassifiers.iterator(); i.hasNext(); ) { GenClassifier genClassifier = i.next(); if (genClassifier instanceof GenClass && ((GenClass)genClassifier).isAbstract()) i.remove(); } if (GenModelUtil.hasAPIDeprecatedTag(genClassifiers)) {%>
+  <%if (isJDK50 && !OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) { List<GenClassifier> genClassifiers = new ArrayList<GenClassifier>(genPackage.getGenClassifiers()); for (Iterator<GenClassifier> i = genClassifiers.iterator(); i.hasNext(); ) { GenClassifier genClassifier = i.next(); if (genClassifier instanceof GenClass && ((GenClass)genClassifier).isAbstract()) i.remove(); } if (OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClassifiers)) {%>
 @SuppressWarnings("deprecation")
   <%}}%>
 public class <%=genPackage.getFactoryClassName()%> extends <%=genModel.getImportedName("org.eclipse.emf.ecore.impl.EFactoryImpl")%><%if (!genModel.isSuppressInterfaces()) {%> implements <%=genPackage.getImportedFactoryInterfaceName()%><%}%>
@@ -217,12 +217,12 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-    <%if (genClass.hasAPITags()) {%>
-	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer))%>
     <%}%>
 	 * @generated
 	 */
-<%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+<%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {%>
 	@Deprecated
 <%}%>
 <%if (useInterfaceOverrideAnnotation && !genClass.isMapEntry()) {%>
@@ -246,15 +246,15 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
     <%if (genModel.useGenerics() && genDataType.isUncheckedCast() && !genDataType.hasCreatorBody()) {%>
 	@SuppressWarnings("unchecked")
     <%}%>
-    <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+    <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
     <%}%>
   <%if (genPackage.isDataTypeConverters() && useInterfaceOverrideAnnotation) {%>
@@ -361,15 +361,15 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
     <%if (!genPackage.isDataTypeConverters() && genModel.useGenerics() && genDataType.isUncheckedCast() && !genDataType.hasCreatorBody()) {%>
 	@SuppressWarnings("unchecked")
     <%}%>
-    <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+    <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
     <%}%>
 	public <%=genDataType.getImportedParameterizedObjectInstanceClassName()%> create<%=genDataType.getName()%>FromString(<%=genModel.getImportedName("org.eclipse.emf.ecore.EDataType")%> eDataType, String initialValue)
@@ -461,12 +461,12 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
-  <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
   <%}%>
   <%if (genPackage.isDataTypeConverters() && useInterfaceOverrideAnnotation) {%>
@@ -594,15 +594,15 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
     <%if (genModel.useGenerics() && (genDataType.getItemType() != null || genDataType.isUncheckedCast()) && (genPackage.isDataTypeConverters() || genDataType.hasCreatorBody())) {%>
 	@SuppressWarnings("unchecked")
     <%}%>
-  <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
   <%}%>
 	public String convert<%=genDataType.getName()%>ToString(<%=genModel.getImportedName("org.eclipse.emf.ecore.EDataType")%> eDataType, Object instanceValue)
@@ -698,12 +698,12 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return a new object of class '<em><%=genClass.getFormattedName()%></em>'.
-      <%if (genClass.hasAPITags()) {%>
-	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+      <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer))%>
       <%}%>
 	 * @generated
 	 */
-<%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+<%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {%>
 	@Deprecated
 <%}%>
 	<%=genClass.getTypeParameters()%><%=genClass.getImportedInterfaceName()%><%=genClass.getInterfaceTypeArguments()%> create<%=genClass.getName()%>();
@@ -719,12 +719,12 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	 * <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
-  <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
   <%}%>
 	<%=genDataType.getImportedParameterizedInstanceClassName()%> create<%=genDataType.getName()%>(String literal);
@@ -735,12 +735,12 @@ public interface <%=genPackage.getFactoryInterfaceName()%><%if (!genModel.isSupp
 	 * <!-- end-user-doc -->
 	 * @param instanceValue an instance value of the data type.
 	 * @return a literal representation of the instance value.
-  <%if (genDataType.hasAPITags()) {%>
-	 * <%=genDataType.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
-  <%if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {%>
 	@Deprecated
   <%}%>
 	String convert<%=genDataType.getName()%>(<%=genDataType.getImportedBoundedWildcardInstanceClassName()%> instanceValue);

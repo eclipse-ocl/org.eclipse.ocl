@@ -2,7 +2,7 @@ package org.eclipse.emf.codegen.ecore.templates.model;
 
 import java.util.*;
 import org.eclipse.emf.codegen.ecore.genmodel.*;
-import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 
 public class FactoryClass
 {
@@ -253,7 +253,7 @@ public class FactoryClass
 
     GenPackage genPackage = (GenPackage)((Object[])argument)[0]; GenModel genModel=genPackage.getGenModel(); /* Trick to import java.util.* without warnings */Iterator.class.getName();
     final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;
-    boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]); boolean useInterfaceOverrideAnnotation = genModel.useInterfaceOverrideAnnotation() && !(isInterface && isImplementation);
+    boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]); boolean useInterfaceOverrideAnnotation = OCLGenModelUtil.INSTANCE.useInterfaceOverrideAnnotation(genModel) && !(isInterface && isImplementation);
     String publicStaticFinalFlag = isImplementation ? "public static final " : "";
     stringBuffer.append(TEXT_1);
     stringBuffer.append(TEXT_2);
@@ -288,24 +288,24 @@ public class FactoryClass
     stringBuffer.append(TEXT_9);
     stringBuffer.append(genPackage.getQualifiedPackageInterfaceName());
     }
-    if (genPackage.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {
     stringBuffer.append(TEXT_3);
-    stringBuffer.append(genPackage.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_10);
     } else {
     stringBuffer.append(TEXT_11);
-    if (genPackage.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {
     stringBuffer.append(TEXT_3);
-    stringBuffer.append(genPackage.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_10);
     }
-    if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {
     stringBuffer.append(TEXT_12);
     }
     if (isImplementation) {
-    if (isJDK50 && !genPackage.hasAPIDeprecatedTag()) { List<GenClassifier> genClassifiers = new ArrayList<GenClassifier>(genPackage.getGenClassifiers()); for (Iterator<GenClassifier> i = genClassifiers.iterator(); i.hasNext(); ) { GenClassifier genClassifier = i.next(); if (genClassifier instanceof GenClass && ((GenClass)genClassifier).isAbstract()) i.remove(); } if (GenModelUtil.hasAPIDeprecatedTag(genClassifiers)) {
+    if (isJDK50 && !OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) { List<GenClassifier> genClassifiers = new ArrayList<GenClassifier>(genPackage.getGenClassifiers()); for (Iterator<GenClassifier> i = genClassifiers.iterator(); i.hasNext(); ) { GenClassifier genClassifier = i.next(); if (genClassifier instanceof GenClass && ((GenClass)genClassifier).isAbstract()) i.remove(); } if (OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClassifiers)) {
     stringBuffer.append(TEXT_13);
     }}
     stringBuffer.append(TEXT_14);
@@ -445,12 +445,12 @@ public class FactoryClass
     for (GenClass genClass : genPackage.getGenClasses()) {
     if (!genClass.isAbstract()) {
     stringBuffer.append(TEXT_59);
-    if (genClass.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genClass.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
-    if (isJDK50 && genClass.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {
     stringBuffer.append(TEXT_62);
     }
     if (useInterfaceOverrideAnnotation && !genClass.isMapEntry()) {
@@ -498,15 +498,15 @@ public class FactoryClass
     if (genDataType.isSerializable()) {
     if (genPackage.isDataTypeConverters() || genDataType.hasCreatorBody()) { String eDataType = genDataType.getQualifiedClassifierAccessor();
     stringBuffer.append(TEXT_59);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
     if (genModel.useGenerics() && genDataType.isUncheckedCast() && !genDataType.hasCreatorBody()) {
     stringBuffer.append(TEXT_76);
     }
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     if (genPackage.isDataTypeConverters() && useInterfaceOverrideAnnotation) {
@@ -728,15 +728,15 @@ public class FactoryClass
     stringBuffer.append(TEXT_137);
     }
     stringBuffer.append(TEXT_59);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
     if (!genPackage.isDataTypeConverters() && genModel.useGenerics() && genDataType.isUncheckedCast() && !genDataType.hasCreatorBody()) {
     stringBuffer.append(TEXT_76);
     }
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     stringBuffer.append(TEXT_63);
@@ -913,12 +913,12 @@ public class FactoryClass
     stringBuffer.append(TEXT_137);
     if (genPackage.isDataTypeConverters() || genDataType.hasConverterBody()) { String eDataType = genDataType.getQualifiedClassifierAccessor();
     stringBuffer.append(TEXT_59);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     if (genPackage.isDataTypeConverters() && useInterfaceOverrideAnnotation) {
@@ -1155,15 +1155,15 @@ public class FactoryClass
     stringBuffer.append(TEXT_137);
     }
     stringBuffer.append(TEXT_59);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
     if (genModel.useGenerics() && (genDataType.getItemType() != null || genDataType.isUncheckedCast()) && (genPackage.isDataTypeConverters() || genDataType.hasCreatorBody())) {
     stringBuffer.append(TEXT_76);
     }
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     stringBuffer.append(TEXT_152);
@@ -1329,12 +1329,12 @@ public class FactoryClass
     stringBuffer.append(TEXT_203);
     stringBuffer.append(genClass.getFormattedName());
     stringBuffer.append(TEXT_204);
-    if (genClass.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genClass.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
-    if (isJDK50 && genClass.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {
     stringBuffer.append(TEXT_62);
     }
     stringBuffer.append(TEXT_205);
@@ -1352,12 +1352,12 @@ public class FactoryClass
     stringBuffer.append(TEXT_207);
     stringBuffer.append(genDataType.getFormattedName());
     stringBuffer.append(TEXT_208);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     stringBuffer.append(TEXT_205);
@@ -1367,12 +1367,12 @@ public class FactoryClass
     stringBuffer.append(TEXT_209);
     stringBuffer.append(genDataType.getFormattedName());
     stringBuffer.append(TEXT_210);
-    if (genDataType.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genDataType)) {
     stringBuffer.append(TEXT_60);
-    stringBuffer.append(genDataType.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genDataType, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_61);
-    if (isJDK50 && genDataType.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genDataType)) {
     stringBuffer.append(TEXT_62);
     }
     stringBuffer.append(TEXT_211);

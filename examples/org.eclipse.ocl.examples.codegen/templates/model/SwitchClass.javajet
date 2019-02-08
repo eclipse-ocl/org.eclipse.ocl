@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="SwitchClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="SwitchClass"%>
 <%
 /**
  * Copyright (c) 2002-2019 IBM Corporation and others.
@@ -69,14 +69,14 @@ if (genModel.useGenerics())
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * @see <%=genPackage.getQualifiedPackageInterfaceName()%>
-<%if (genPackage.hasAPITags()) {%>
- * <%=genPackage.getAPITags(genModel.getIndentation(stringBuffer))%>
+<%if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {%>
+ * <%=OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer))%>
 <%}%>
  * @generated
  */
-<%if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {%>
+<%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {%>
 @Deprecated
-<%} else if (isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getGenClasses())) {%>
+<%} else if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getGenClasses())) {%>
 	@SuppressWarnings("deprecation")
 <%}%>
 public class <%=genPackage.getSwitchClassName()%><@Nullable <%=templateParameters.substring(1)%><%if (supportsComposition){%> extends Switch<%=templateParameters%><%}%>
@@ -209,12 +209,12 @@ public class <%=genPackage.getSwitchClassName()%><@Nullable <%=templateParameter
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em><%=genClass.getFormattedName()%></em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-  <%if (genClass.hasAPITags()) {%>
-	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {%>
+	 * <%=OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer))%>
   <%}%>
 	 * @generated
 	 */
-  <%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+  <%if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {%>
 	@Deprecated
   <%}%>
 	public <%=genClass.getTypeParameters()%><%=returnType%> case<%=genPackage.getClassUniqueName(genClass)%>(<%=genClass.getImportedInterfaceName()%><%=genClass.getInterfaceTypeArguments()%> object)

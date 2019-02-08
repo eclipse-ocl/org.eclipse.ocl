@@ -21,13 +21,17 @@ import java.util.List;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory.Descriptor;
 import org.eclipse.emf.codegen.ecore.genmodel.GenAnnotation;
+import org.eclipse.emf.codegen.ecore.genmodel.GenBase;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
+import org.eclipse.emf.codegen.ecore.genmodel.GenJDKLevel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
+import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
@@ -35,9 +39,19 @@ import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAd
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
-
-public class OCLGenModelUtil
+/**
+ * OCLGenModelUtil provides helpers for use by OCL's JET templates.
+ *
+ * The OCLGenModelUtil INSTANCE provides an appropriate implementation of facilities that are not
+ * available on older EMF codegen distributions.
+ */
+public abstract class OCLGenModelUtil
 {
+	public static @NonNull OCLGenModelUtil INSTANCE =
+			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :
+			GenRuntimeVersion.get("2.14") != null ? new EMF_CodeGen_2_14() :
+			new EMF_CodeGen_Default();
+
 	public static final @NonNull String OCL_GENMODEL_COPY_AND_PASTE_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/CopyAndPaste";
 	public static final @NonNull String USE_NULL_ANNOTATIONS = "Use Null Annotations";
 	public static final @NonNull String GENERATE_CLASSIFIER_INTS = "Generate Classifier ints";
@@ -268,5 +282,186 @@ public class OCLGenModelUtil
 		}
 		s.append(source, iStart, iMax);
 		return s.toString();
+	}
+
+	public abstract String getAPITags(GenBase genBase, String indentation);
+	public abstract String getImplicitAPITags(GenBase genBase, String indentation);
+	public abstract String getImplicitAPITags(GenBase genBase, String indentation, boolean excludeOwnDocumentation);
+	public abstract String getRawQualifiedInterfaceName(GenClass genClass);
+	public abstract boolean hasAPIDeprecatedTag(GenBase genBase);
+	public abstract boolean hasAPIDeprecatedTag(Collection<?>... elements);
+	public abstract boolean hasAPITags(GenBase genBase);
+	public abstract boolean hasImplicitAPITags(GenBase genBase);
+	public abstract boolean hasImplicitAPITags(GenBase genBase, boolean excludeOwnDocumentation);
+	public abstract boolean hasImplicitAPIDeprecatedTag(GenBase genBase);
+	public abstract boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements);
+	public abstract boolean useInterfaceOverrideAnnotation(GenModel genModel);
+
+	/**
+	 * Whether the ImportManager supports <%...%> within <%...%>
+	 */
+	public abstract boolean useNestedImports();
+
+	/**
+	 * EMF_CodeGen_Default provides fall-back implementations of GenModel facilities not available on the
+	 * the current platform.
+	 */
+	private static class EMF_CodeGen_Default extends OCLGenModelUtil
+	{
+		@Override
+		public String getAPITags(GenBase genBase, String indentation) {
+			return "";
+		}
+
+		@Override
+		public String getImplicitAPITags(GenBase genBase, String indentation) {
+			return getImplicitAPITags(genBase, indentation, false);
+		}
+
+		@Override
+		public String getImplicitAPITags(GenBase genBase, String indentation, boolean excludeOwnDocumentation) {
+			return "";
+		}
+
+		@Override
+		public String getRawQualifiedInterfaceName(GenClass genClass) {
+			return getInternalQualifiedInterfaceName(genClass, false).replace('$', '.');
+		}
+		private static String getInternalQualifiedInterfaceName(GenClass genClassArg, boolean includeTemplateArguments)
+		{
+			if (genClassArg.isDynamic()) {
+				GenClass genClass = genClassArg.getBaseGenClass();
+				return genClass == null ? "org.eclipse.emf.ecore.EObject" : getInternalQualifiedInterfaceName(genClass, false);
+			}
+			EClass ecoreClass = genClassArg.getEcoreClass();
+			String instanceClassName = ecoreClass.getInstanceClassName();
+			return instanceClassName != null ?
+				includeTemplateArguments ? ecoreClass.getInstanceTypeName() : instanceClassName :
+					genClassArg.getGenPackage().getInterfacePackageName() + "." + genClassArg.getInterfaceName();
+		}
+
+		@Override
+		public boolean hasAPIDeprecatedTag(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasAPIDeprecatedTag(Collection<?>... elements) {
+			return false;
+		}
+
+		@Override
+		public boolean hasAPITags(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasImplicitAPITags(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasImplicitAPITags(GenBase genBase, boolean excludeOwnDocumentation) {
+			return false;
+		}
+
+		@Override
+		public boolean hasImplicitAPIDeprecatedTag(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements) {
+			return false;
+		}
+
+		@Override
+		public boolean useInterfaceOverrideAnnotation(GenModel genModel) {
+			return genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK60;
+		}
+
+		@Override
+		public boolean useNestedImports() {
+			return false;
+		}
+	}
+
+	/**
+	 * EMF_CodeGen_2_14 redirects GenModel facilities available in an EMF >= 2.14 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_14 extends EMF_CodeGen_Default
+	{
+		@Override
+		public String getAPITags(GenBase genBase, String indentation) {
+			return genBase.getAPITags(indentation);
+		}
+
+		@Override
+		public String getImplicitAPITags(GenBase genBase, String indentation) {
+			return genBase.getImplicitAPITags(indentation);
+		}
+
+		@Override
+		public String getImplicitAPITags(GenBase genBase, String indentation, boolean excludeOwnDocumentation) {
+			return genBase.getImplicitAPITags(indentation, excludeOwnDocumentation);
+		}
+
+		@Override
+		public String getRawQualifiedInterfaceName(GenClass genClass) {
+			return genClass.getRawQualifiedInterfaceName();
+		}
+
+		@Override
+		public boolean hasAPIDeprecatedTag(GenBase genBase) {
+			return genBase.hasAPIDeprecatedTag();
+		}
+
+		@Override
+		public boolean hasAPIDeprecatedTag(Collection<?>... elements) {
+			return GenModelUtil.hasAPIDeprecatedTag(elements);
+		}
+
+		@Override
+		public boolean hasAPITags(GenBase genBase) {
+			return genBase.hasAPITags();
+		}
+
+		@Override
+		public boolean hasImplicitAPITags(GenBase genBase) {
+			return genBase.hasImplicitAPITags();
+		}
+
+		@Override
+		public boolean hasImplicitAPITags(GenBase genBase, boolean excludeOwnDocumentation) {
+			return genBase.hasImplicitAPITags(excludeOwnDocumentation);
+		}
+
+		@Override
+		public boolean hasImplicitAPIDeprecatedTag(GenBase genBase) {
+			return genBase.hasImplicitAPIDeprecatedTag();
+		}
+
+		@Override
+		public boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements) {
+			return GenModelUtil.hasImplicitAPIDeprecatedTag(elements);
+		}
+
+		@Override
+		public boolean useInterfaceOverrideAnnotation(GenModel genModel) {
+			return genModel.useInterfaceOverrideAnnotation();
+		}
+	}
+
+	/**
+	 * EMF_CodeGen_2_17 redirects GenModel facilities available in an EMF >= 2.17 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_17 extends EMF_CodeGen_2_14
+	{
+		@Override
+		public boolean useNestedImports() {
+			return true;
+		}
 	}
 }

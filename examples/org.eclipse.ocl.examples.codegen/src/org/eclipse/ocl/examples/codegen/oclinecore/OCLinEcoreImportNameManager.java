@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.codegen.java.AbstractImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 
@@ -50,7 +51,7 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 			if (index >= 0) {
 				s.append(className.substring(0, index+1));
 			}
-			if (OCLinEcoreTablesUtils.useNestedImports()) {
+			if (OCLGenModelUtil.INSTANCE.useNestedImports()) {
 				s.append(ImportUtils.IMPORTS_PREFIX);
 				s.append("@");
 				s.append(ImportUtils.IMPORTS_PREFIX);

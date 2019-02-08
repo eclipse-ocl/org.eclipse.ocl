@@ -2,7 +2,7 @@ package org.eclipse.emf.codegen.ecore.templates.model;
 
 import java.util.*;
 import org.eclipse.emf.codegen.ecore.genmodel.*;
-import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 
 public class AdapterFactoryClass
 {
@@ -100,14 +100,14 @@ public class AdapterFactoryClass
     genModel.markImportLocation(stringBuffer);
     stringBuffer.append(TEXT_6);
     stringBuffer.append(genPackage.getQualifiedPackageInterfaceName());
-    if (genPackage.hasAPITags()) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genPackage)) {
     stringBuffer.append(TEXT_3);
-    stringBuffer.append(genPackage.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genPackage, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_7);
-    if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage)) {
     stringBuffer.append(TEXT_8);
-    } else if (isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getAllSwitchGenClasses())) {
+    } else if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getAllSwitchGenClasses())) {
     stringBuffer.append(TEXT_9);
     }
     stringBuffer.append(TEXT_10);
@@ -173,17 +173,17 @@ public class AdapterFactoryClass
     stringBuffer.append(TEXT_34);
     for (GenClass genClass : genPackage.getAllSwitchGenClasses()) {
     stringBuffer.append(TEXT_35);
-    stringBuffer.append(genClass.getRawQualifiedInterfaceName());
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getRawQualifiedInterfaceName(genClass));
     stringBuffer.append(TEXT_36);
     stringBuffer.append(genClass.getFormattedName());
     stringBuffer.append(TEXT_37);
-    stringBuffer.append(genClass.getRawQualifiedInterfaceName());
-    if (genClass.hasAPITags()) {
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getRawQualifiedInterfaceName(genClass));
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClass)) {
     stringBuffer.append(TEXT_38);
-    stringBuffer.append(genClass.getAPITags(genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClass, genModel.getIndentation(stringBuffer)));
     }
     stringBuffer.append(TEXT_39);
-    if (isJDK50 && genClass.hasAPIDeprecatedTag()) {
+    if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClass)) {
     stringBuffer.append(TEXT_40);
     }
     stringBuffer.append(TEXT_41);
