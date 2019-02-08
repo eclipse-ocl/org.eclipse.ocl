@@ -1,4 +1,4 @@
-The Tycho build automatically promotes downloads and updates, so no cron job help is necessary.
+TESTING: The Tycho build automatically promotes downloads and updates, so no cron job help is necessary.
 
 The updates can be checked by looking for the new entry on http://www.eclipse.org/modeling/mdt/downloads/?project=ocl
 or installing new software from e.g. http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.7.0/S201408191307
