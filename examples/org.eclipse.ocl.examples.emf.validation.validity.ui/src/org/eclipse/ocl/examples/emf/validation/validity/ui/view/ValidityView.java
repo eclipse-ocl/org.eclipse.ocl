@@ -113,7 +113,7 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * The ValidityView provides a dual view of ValidatableNode model elements and
- * ConstrainingNode model classes to browse, filter and control model validation. 
+ * ConstrainingNode model classes to browse, filter and control model validation.
  */
 public class ValidityView extends ViewPart implements ISelectionListener
 {
@@ -237,51 +237,51 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	protected FilteredCheckboxTree filteredValidatableNodesTree;
 	protected FilteredCheckboxTree filteredConstrainingNodesTree;
-	
+
 	private final @NonNull ValidityViewRefreshJob refreshJob = new ValidityViewRefreshJob();
 
 	protected final @NonNull IDEValidityManager validityManager;
-	
+
 	/** Keeps a reference to the toolkit used to create our form. */
 	private FormToolkit formToolkit;
-	
+
 	/** Form that will contain the Validity View itself. */
 	private Form validityViewForm;
-	
+
 	/** Allows us to display error/warning messages directly on the form. */
 	private FormMessageManager messageManager;
 
 	/** Form that will contain the Validatable column View. */
 	private SashForm validateableElementsForm;
-	
+
 	/** Form that will contain the Constraining column View. */
 	private SashForm constrainingElementsForm;
-	
+
 	/** We'll create this {@link SashForm} as the main body of the Validity view form. */
 	private SashForm formBody;
-	
+
 	/**
 	 * Keeps a reference to the "validateable Elements" section of the Validity view form.
 	 */
 	private Section validatableNodesSection;
-	
+
 	/** The message key. */
 	private final String messageKey = "ValidityViewMessageKey";
 
 	/** Kept as an instance member, this will allow us to set unique identifiers to the status messages. */
 	private int messageCount;
-	
+
 	/**
 	 * Keeps a reference to the "constraining Nodes" section of the Validity view form.
 	 */
 	private Section constrainingNodesSection;
-	
+
 	protected ResourceSet modelResourceSet;
-	
+
 	/**Context Menu.*/
 	private ShowElementInEditorAction showValidatableElementInEditorAction;
 	private ShowElementInEditorAction showConstrainingElementInEditorAction;
-	
+
 	/**Local Tool Bar.*/
 	private Action expandAllNodesAction;
 	private Action collapseAllNodesAction;
@@ -342,7 +342,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private void contributeToActionBars() {
 		IToolBarManager toolBarManager = getForm().getToolBarManager();
 		fillLocalToolBar(toolBarManager);
-		
+
 		// validatable Column
 		ToolBarManager validatableSectionToolBarManager = createSectionToolBar(validatableNodesSection);
 		fillValidatableColumnToolBar(validatableSectionToolBarManager);
@@ -354,7 +354,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	/**
 	 * Creates a tool bar for the given section.
-	 * 
+	 *
 	 * @param section
 	 *            The section for which we need a tool bar.
 	 * @return The created tool bar.
@@ -367,6 +367,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		toolBar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
 		toolBar.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (!handCursor.isDisposed()) {
 					handCursor.dispose();
@@ -378,14 +379,15 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		toolBar.setData(toolBarManager);
 		// Do not keep a reference to the manager when we dispose the tool bar
 		toolBar.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				toolBar.setData(null);
 			}
 		});
-		
+
 		return toolBarManager;
 	}
-	
+
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
@@ -393,26 +395,13 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	@Override
 	public void createPartControl(Composite parent) {
 	    Composite sash = new SashForm(parent, SWT.HORIZONTAL);
-	    {
-			GridLayout layout = new GridLayout();
-			layout.marginHeight = 0;
-			layout.marginWidth = 0;
-			layout.verticalSpacing = 0;
-			layout.horizontalSpacing = 0;
-			sash.setLayout(layout);
-			GridData gridData = new GridData(GridData.FILL_BOTH);
-			gridData.horizontalIndent = 1;
-			sash.setLayoutData(gridData);
-	    }
-
 		formToolkit = new FormToolkit(sash.getDisplay());
-		
 		createValidityViewForm(formToolkit, sash);
 	}
-	
+
 	/**
 	 * This will be called in order to create the actual body of the validity view, the "Validity" form.
-	 * 
+	 *
 	 * @param toolkit
 	 *            Toolkit that can be used to create the form.
 	 * @param parent
@@ -428,15 +417,15 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		IContentProvider constrainingNodeContentProvider = new ConstrainingNodeContentProvider(validityManager);
 		ICheckStateProvider nodeCheckStateProvider = new NodeCheckStateProvider();
 	    ILabelProvider nodeDecoratingLabelProvider = new DecoratingNodeLabelProvider(nodeLabelProvider);
-		
+
 		validityViewForm = toolkit.createForm(parent);
 		messageManager = new FormMessageManager(getForm());
 		messageManager.setDecorationPosition(SWT.LEFT | SWT.TOP);
 		toolkit.decorateFormHeading(getForm());
-		
+
 		getForm().setText(ValidityUIMessages.ValidityView_viewTitle);
 		messageManager.addMessage(messageKey + messageCount++, ValidityUIMessages.ValidityView_Messages_NoSelection, IStatus.WARNING, getForm());
-		
+
 		Composite mainBody = getForm().getBody();
 		mainBody.setLayout(new GridLayout());
 		formBody = new SashForm(mainBody, SWT.HORIZONTAL | SWT.SMOOTH);
@@ -448,7 +437,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 		validatableNodesSection = toolkit.createSection(validateableElementsForm, ExpandableComposite.TITLE_BAR);
 		validatableNodesSection.setText(ValidityUIMessages.ValidityView_validatableNodesSectionName);
-		
+
 		CheckboxTreeViewer validatableNodesViewer;
 		{
 			Composite validatableNodesSectionBody = toolkit.createComposite(validatableNodesSection);
@@ -464,24 +453,24 @@ public class ValidityView extends ViewPart implements ISelectionListener
 				gridData.grabExcessVerticalSpace = true;
 				validatableNodesSectionBody.setLayoutData(gridData);
 			}
-			
+
 			PatternFilter filter = new PatternFilter();
 			filteredValidatableNodesTree = new FilteredCheckboxTree(validatableNodesSectionBody, SWT.CHECK | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL, filter);
 			filteredValidatableNodesTree.disableTextWidget();
 			filteredValidatableNodesTree.getViewer().setUseHashlookup(true);
-			
+
 			GridData gridData = new GridData(GridData.FILL_BOTH);
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.grabExcessVerticalSpace = true;
 			filteredValidatableNodesTree.setLayoutData(gridData);
-			
+
 			validatableNodesViewer = getValidatableNodesViewer();
 			validatableNodesViewer.getControl().setLayoutData(gridData);
-			
+
 			toolkit.paintBordersFor(validatableNodesSectionBody);
 			validatableNodesSection.setClient(validatableNodesSectionBody);
 		}
-		
+
 		constrainingElementsForm = new SashForm(formBody, SWT.VERTICAL | SWT.SMOOTH);
 		toolkit.adapt(constrainingElementsForm);
 
@@ -503,20 +492,20 @@ public class ValidityView extends ViewPart implements ISelectionListener
 				gridData.grabExcessVerticalSpace = true;
 				constrainingNodesSectionBody.setLayoutData(gridData);
 			}
-			
+
 			PatternFilter filter = new PatternFilter();
 			filteredConstrainingNodesTree = new FilteredCheckboxTree(constrainingNodesSectionBody, SWT.CHECK | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL, filter);
 			filteredConstrainingNodesTree.disableTextWidget();
 			filteredConstrainingNodesTree.getViewer().setUseHashlookup(true);
-			
+
 			GridData gridData = new GridData(GridData.FILL_BOTH);
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.grabExcessVerticalSpace = true;
 			filteredConstrainingNodesTree.setLayoutData(gridData);
-			
+
 			constrainingNodesViewer = getConstrainingNodesViewer();
 			constrainingNodesViewer.getControl().setLayoutData(gridData);
-			
+
 			toolkit.paintBordersFor(constrainingNodesSectionBody);
 			constrainingNodesSection.setClient(constrainingNodesSectionBody);
 		}
@@ -526,26 +515,26 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		validatableNodesViewer.setCheckStateProvider(nodeCheckStateProvider);
 		validatableNodesViewer.addCheckStateListener(nodeCheckStateListener);
 //		validatableNodesViewer.addFilter(validatableNodesFilterByKind);
-		
+
 		constrainingNodesViewer.setContentProvider(constrainingNodeContentProvider);
 		constrainingNodesViewer.setLabelProvider(nodeDecoratingLabelProvider);
 		constrainingNodesViewer.setCheckStateProvider(nodeCheckStateProvider);
 		constrainingNodesViewer.addCheckStateListener(nodeCheckStateListener);
 //		constrainingNodesViewer.addFilter(constrainingNodesFilterByKind);
-		
+
 		formBody.setWeights(new int[] {1, 1, });
-		
+
 		// Create the help context id for the viewer's control
 		makeActions();
 		hookContextMenu();
 		hookConstrainingNodesDoubleClickAction();
 		hookValidatableNodesDoubleClickAction();
 		contributeToActionBars();
-		
+
 		IWorkbenchPage page = getSite().getPage();
 		assert page != null;
 
-		ISelectionService service = (ISelectionService) getSite().getService(ISelectionService.class);
+		ISelectionService service = getSite().getService(ISelectionService.class);
 		if (service != null) {
 			IEditorPart activeEditor = page.getActiveEditor();
 			service.addSelectionListener(this);
@@ -560,13 +549,13 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		}
 		refreshJob.initViewers(this, validatableNodesViewer, constrainingNodesViewer);
 		Dialog.applyDialogFont(parent);
-		
+
 		ColumnViewerToolTipSupport.enableFor(validatableNodesViewer);
 		ColumnViewerToolTipSupport.enableFor(constrainingNodesViewer);
 	}
 
 	/**
-	 * Return the most recent selection as IResource, if it can be converted possibly by resolving the Resource of an EObject. 
+	 * Return the most recent selection as IResource, if it can be converted possibly by resolving the Resource of an EObject.
 	 */
 	public @Nullable IResource getSelectedResource() {
 		Object selection = null;
@@ -604,19 +593,19 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		}
 		return selection instanceof IResource ? (IResource)selection : null;
 	}
-	
+
 	/**
 	 * Returns the validity view form.
-	 * 
+	 *
 	 * @return The validity view form.
 	 */
 	protected Form getForm() {
 		return validityViewForm;
 	}
-	
+
 	@Override
 	public void dispose() {
-		ISelectionService service = (ISelectionService) getSite().getService(ISelectionService.class);
+		ISelectionService service = getSite().getService(ISelectionService.class);
 		if (service != null) {
 			service.removeSelectionListener(this);
 		}
@@ -624,7 +613,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		filteredConstrainingNodesTree.dispose();
 		super.dispose();
 	}
-	
+
 	private void fillConstrainingColumnToolBar(IContributionManager manager) {
 		manager.add(expandAllConstrainingNodesAction);
 		manager.add(collapseAllConstrainingNodesAction);
@@ -636,7 +625,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 		manager.update(true);
 	}
-	
+
 	private void fillConstrainingContextMenu(@NonNull IContributionManager manager) {
 		manager.add(expandAllConstrainingNodesAction);
 		manager.add(collapseAllConstrainingNodesAction);
@@ -646,7 +635,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllConstrainingNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedConstrainingNodesAction);
-		
+
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(new Separator());
@@ -693,7 +682,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllValidatableNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedValidatableNodesAction);
-		
+
 		// Other plug-ins can contribute their actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(new Separator());
@@ -705,7 +694,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	/**
 	 * gets the Constraining Nodes Viewer
-	 * 
+	 *
 	 * @return the constrainingNodesViewer
 	 */
 	public @NonNull CheckboxTreeViewer getConstrainingNodesViewer(){
@@ -714,19 +703,19 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		assert viewer != null;
 		return viewer;
 	}
-	
+
 	/**
 	 * gets the Validity Manager
-	 * 
+	 *
 	 * @return the validityManager
 	 */
 	public @NonNull IDEValidityManager getValidityManager(){
 		return validityManager;
 	}
-	
+
 	/**
 	 * gets the validatable Nodes Viewer
-	 * 
+	 *
 	 * @return the validatableNodesViewer
 	 */
 	public @NonNull CheckboxTreeViewer getValidatableNodesViewer(){
@@ -741,6 +730,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		MenuManager menuMgrValidatable = new MenuManager("#PopupMenu");//$NON-NLS-1$
 		menuMgrValidatable.setRemoveAllWhenShown(true);
 		menuMgrValidatable.addMenuListener(new IMenuListener() {
+			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				@SuppressWarnings("null")@NonNull IMenuManager manager2 = manager;
 				ValidityView.this.fillValidatableContextMenu(manager2);
@@ -754,6 +744,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		MenuManager menuMgrConstraining = new MenuManager("#PopupMenu");//$NON-NLS-1$
 		menuMgrConstraining.setRemoveAllWhenShown(true);
 		menuMgrConstraining.addMenuListener(new IMenuListener() {
+			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				@SuppressWarnings("null")@NonNull IMenuManager manager2 = manager;
 				ValidityView.this.fillConstrainingContextMenu(manager2);
@@ -766,6 +757,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	private void hookConstrainingNodesDoubleClickAction() {
 		getConstrainingNodesViewer().addDoubleClickListener(new IDoubleClickListener() {
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				constrainingNodesDoubleClickAction.run();
 			}
@@ -774,6 +766,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	private void hookValidatableNodesDoubleClickAction() {
 		getValidatableNodesViewer().addDoubleClickListener(new IDoubleClickListener() {
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				validatableNodesDoubleClickAction.run();
 			}
@@ -790,7 +783,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		forceValidityViewRefreshAction = new ForceValidityViewRefreshAction(validityManager, this);
 		showValidatableElementInEditorAction = new ShowElementInEditorAction(validityManager, getValidatableNodesViewer());
 		showConstrainingElementInEditorAction = new ShowElementInEditorAction(validityManager, getConstrainingNodesViewer());
-		
+
 		/*Toolbar actions*/
 		expandAllNodesAction = new ExpandAllNodesAction(this, true, true);
 		collapseAllNodesAction = new CollapseAllNodesAction(this, true, true);
@@ -806,16 +799,16 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		/* Validatable Tool bar actions*/
 		expandAllValidatableNodesAction = new ExpandAllNodesAction(this, true, false);
 		collapseAllValidatableNodesAction = new CollapseAllNodesAction(this, true, false);
-		enableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, true, true);	
-		disableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, false, true);	
-		disableAllUnusedValidatableNodesAction = new DisableAllUnusedNodesAction(this, true);	
-		
+		enableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, true, true);
+		disableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, false, true);
+		disableAllUnusedValidatableNodesAction = new DisableAllUnusedNodesAction(this, true);
+
 		/* Constraining Tool bar actions*/
 		expandAllConstrainingNodesAction = new ExpandAllNodesAction(this, false, true);
 		collapseAllConstrainingNodesAction = new CollapseAllNodesAction(this, false, true);
 		enableAllConstrainingNodesAction = new EnableDisableAllNodesAction(this, true, false);
 		disableAllConstrainingNodesAction = new EnableDisableAllNodesAction(this, false, false);
-		disableAllUnusedConstrainingNodesAction = new DisableAllUnusedNodesAction(this, false);	
+		disableAllUnusedConstrainingNodesAction = new DisableAllUnusedNodesAction(this, false);
 
 		/*Double Click actions*/
 		constrainingNodesDoubleClickAction = new Action() {
@@ -858,7 +851,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 			}
 		};
 	}
-	
+
 	/**
 	 * Schedule a redraw of validatable and constraining trees.
 	 */
@@ -875,12 +868,13 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		}
 		redraw();
 	}
-	
+
 	public void removeFilteredSeverity(@NonNull Severity severity) {
 		validityManager.removeFilteredSeverity(severity);
 		redraw();
 	}
 
+	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		currentPart = part;
 		currentSelection = selection;
@@ -904,7 +898,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 			setSelection(input);
 		}
 	}
-	
+
 	protected synchronized void setSelection(final Notifier newSelection) {
 		if (newSelection != selection) {
 			selection = newSelection;
@@ -921,14 +915,14 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	private void validationRootChanged(RootNode rootNode) {
 		messageManager.removeMessages(getForm());
-		
+
 		String currentMessagekey = null;
 		String currentMessageText = null;
 		int currentStatus = 0;
 		if (rootNode != null) {
 			if (rootNode.getValidatableNodes().isEmpty()) {
 				filteredValidatableNodesTree.disableTextWidget();
-				
+
 				currentMessagekey = messageKey + messageCount++;
 				currentMessageText = ValidityUIMessages.ValidityView_Messages_NoModelElement;
 				currentStatus = IStatus.INFO;
@@ -947,12 +941,12 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		} else {
 			filteredValidatableNodesTree.disableTextWidget();
 			filteredConstrainingNodesTree.disableTextWidget();
-			
+
 			currentMessagekey = messageKey + messageCount++;
 			currentMessageText = ValidityUIMessages.ValidityView_Messages_NoSelection;
 			currentStatus = IStatus.WARNING;
 		}
-		
+
 		if (currentMessagekey != null) {
 			messageManager.addMessage(currentMessagekey, currentMessageText, currentStatus, getForm());
 		}
@@ -965,7 +959,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	@Override
 	public void setFocus() {
 		getValidatableNodesViewer().getControl().setFocus();
-		
+
 		// Refresh the view
 		filteredValidatableNodesTree.resetFilter();
 		filteredConstrainingNodesTree.resetFilter();
