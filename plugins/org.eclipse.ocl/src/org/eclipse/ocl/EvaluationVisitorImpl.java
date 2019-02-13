@@ -282,7 +282,7 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 				OCLPlugin
 				.catching(getClass(), "visitOperationCallExp", e);//$NON-NLS-1$
 				OCLPlugin.log(
-					Diagnostic.ERROR,
+					Diagnostic.WARNING,
 					OCLStatusCodes.IGNORED_EXCEPTION_WARNING,
 					OCLMessages.bind(
 						OCLMessages.ErrorMessage_ERROR_,

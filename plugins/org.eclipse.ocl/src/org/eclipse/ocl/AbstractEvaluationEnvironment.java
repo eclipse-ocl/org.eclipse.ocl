@@ -43,46 +43,46 @@ import org.eclipse.ocl.utilities.PredefinedType;
  * an evaluation environment "from scratch."
  * <p>
  * See the {@link Environment} class for a description of the
- * generic type parameters of this class. 
+ * generic type parameters of this class.
  * </p><p>
  * Since the 1.2 release, this interface is {@link Adaptable} to support the
  * optional adapter protocols such as {@link EvaluationEnvironment.Enumerations}
  * and {@link Customizable}.
  * </p>
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 		implements EvaluationEnvironment<C, O, P, CLS, E>, Adaptable, Customizable {
-	
+
     private final EvaluationEnvironment<C, O, P, CLS, E> parent;
     private final Map<String, Object> map = new HashMap<String, Object>();
 
     private final Map<Option<?>, Object> options =
         new java.util.HashMap<Option<?>, Object>();
-    
+
     protected AbstractEvaluationEnvironment() {
     	this(null);
     }
-    
+
     protected AbstractEvaluationEnvironment(
     		EvaluationEnvironment<C, O, P, CLS, E> parent) {
-    	
+
     	this.parent = parent;
     }
-    
+
     /**
      * Obtains my parent (nesting) environment.
-     * 
+     *
      * @return my parent environment, or <code>null</code> if none
      */
     protected EvaluationEnvironment<C, O, P, CLS, E> getParent() {
     	return parent;
     }
-    
+
     /**
      * Returns the value associated with the supplied name
-     * 
+     *
      * @param name
      *            the name whose value is to be returned
      * @return the value associated with the name
@@ -93,7 +93,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 
     /**
      * Replaces the current value of the supplied name with the supplied value.
-     * 
+     *
      * @param name
      *            the name
      * @param value
@@ -105,7 +105,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 
     /**
      * Adds the supplied name and value binding to the environment
-     * 
+     *
      * @param name
      *            the name to add
      * @param value
@@ -125,7 +125,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
     /**
      * Removes the supplied name and binding from the environment (if it exists)
      * and returns it.
-     * 
+     *
      * @param name
      *            the name to remove
      * @return the value associated with the removed name
@@ -148,7 +148,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
     public String toString() {
         return map.toString();
     }
-    
+
     /**
      * By default, a subclass will not support overriding the operations defined
      * by the OCL Standard Library.  This implementation delegates to the
@@ -163,20 +163,20 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      * Java method in the actual type of the <tt>source</tt> object and invoking
      * it.  On failure to find or invoke the method (e.g., an exception), the
      * <tt>OclInvalid</tt> result is returned.
-     * 
+     *
      * @return the result of the Java method invocation, or <tt>OclInvalid</tt>
      *    on failure of the method invocation
      */
     public Object callOperation(O operation, int opcode, Object source, Object[] args)
-    
+
 		throws IllegalArgumentException {
-    	
+
     	if (getParent() != null) {
     		return getParent().callOperation(operation, opcode, source, args);
     	}
-    	
+
     	Method method = getJavaMethodFor(operation, source);
-    	
+
     	if (method != null) {
     		try {
     		    // coerce any collection arguments to EList as necessary
@@ -194,22 +194,23 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
     		            }
     		        }
     		    }
-    		    
+
 				return method.invoke(source, args);
 			} catch (Exception e) {
-				OCLPlugin.catching(getClass(), "callOperation", e);//$NON-NLS-1$
+				String context = "callOperation - " + method.toString(); //$NON-NLS-1$
+				OCLPlugin.catching(getClass(), context, e);
 				OCLPlugin.log(
-					Diagnostic.ERROR,
+					Diagnostic.WARNING,
 					OCLStatusCodes.IGNORED_EXCEPTION_WARNING,
 					OCLMessages.bind(
 						OCLMessages.ErrorMessage_ERROR_,
-						"calloperation", //$NON-NLS-1$
+						context,
 						e.getLocalizedMessage()),
 					e);
 				return getInvalidResult();
 			}
     	}
-    	
+
     	// maybe it's a comparison operation that is implemented implicitly
     	// via the Comparable interface?
     	switch (opcode) {
@@ -221,7 +222,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
                 @SuppressWarnings("unchecked")
                 Comparable<Object> comparable = (Comparable<Object>) source;
                 Object other = args[0];
-                
+
             	switch (opcode) {
                     case PredefinedType.LESS_THAN:
                         return comparable.compareTo(other) < 0;
@@ -235,28 +236,28 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
             }
             break;
     	}
-    	
+
     	throw new IllegalArgumentException();
     }
-    
+
 	/**
 	 * Returns the java method that corresponds to the supplied
 	 * <code>EOperation</code>
-	 * 
+	 *
 	 * @param operation
 	 *            the operation
 	 * @return a java method
 	 */
 	protected abstract Method getJavaMethodFor(O operation, Object receiver);
-	
+
 	/**
 	 * Obtains the language-binding-specific representation of the predefined
 	 * <tt>OclInvalid</tt> object.
-	 * 
+	 *
 	 * @return <tt>OclInvalid</tt>
 	 */
 	protected abstract Object getInvalidResult();
-	
+
 	/**
 	 * Implements the interface method by testing whether I am an instance of
 	 * the requested adapter type.
@@ -264,81 +265,81 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Class<T> adapterType) {
 		T result;
-		
+
 		if (adapterType.isInstance(this)) {
 			result = (T) this;
 		} else {
 			result = null;
 		}
-		
+
 		return result;
 	}
-    
+
     protected Map<Option<?>, Object> basicGetOptions() {
         return options;
     }
-    
+
     public Map<Option<?>, Object> getOptions() {
         Customizable parent = (getParent() != null)?
             OCLUtil.getAdapter(getParent(), Customizable.class) : null;
-            
+
         Map<Option<?>, Object> result = (parent != null)
         	? new java.util.HashMap<Option<?>, Object>(parent.getOptions())
             : new java.util.HashMap<Option<?>, Object>();
-        
+
         result.putAll(basicGetOptions());
-        
+
         return result;
     }
-    
+
     public <T> void setOption(Option<T> option, T value) {
         basicGetOptions().put(option, value);
     }
-    
+
     public <T> void putOptions(Map<? extends Option<T>, ? extends T> options) {
         Map<Option<?>, Object> myOptions = basicGetOptions();
-        
+
         myOptions.clear();
         myOptions.putAll(options);
     }
-    
+
     public <T> T removeOption(Option<T> option) {
         T result = getValue(option);
-        
+
         basicGetOptions().remove(option);
-        
+
         return result;
     }
-    
+
     public <T> Map<Option<T>, T> removeOptions(Collection<Option<T>> options) {
         Map<Option<T>, T> result = new java.util.HashMap<Option<T>, T>();
-        
+
         Map<Option<?>, Object> myOptions = basicGetOptions();
-        
+
         for (Option<T> next : options) {
             result.put(next, getValue(next));
             myOptions.remove(next);
         }
-        
+
         return result;
     }
-    
+
     public Map<Option<?>, Object> clearOptions() {
         Map<Option<?>, Object> myOptions = basicGetOptions();
-        
+
         Map<Option<?>, Object> result = new java.util.HashMap<Option<?>, Object>(
                 myOptions);
-        
+
         myOptions.clear();
-        
+
         return result;
     }
-    
+
     public boolean isEnabled(Option<Boolean> option) {
         Boolean result = getValue(option);
         return (result == null)? false : result.booleanValue();
     }
-    
+
     public <T> T getValue(Option<T> option) {
 		Map<Option<?>, Object> options = basicGetOptions();
         @SuppressWarnings("unchecked")
@@ -346,7 +347,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 		if ((result == null) && !options.containsKey(option)) {
             Customizable parent = (getParent() != null)?
                 OCLUtil.getAdapter(getParent(), Customizable.class) : null;
-                
+
             if (parent != null) {
             	result = parent.getValue(option);
             }
@@ -362,14 +363,14 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 				options.put(option, result);
 			}
         }
-        
+
         return result;
     }
-    
+
 
     /**
      * UML implementation of a tuple value.
-     * 
+     *
      * @author Christian W. Damus (cdamus)
      * @since 3.2
      */
@@ -382,7 +383,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 
         /**
          * Initializes me with a map of part values.
-         * 
+         *
          * @param type
          *            my type
          * @param values
@@ -398,7 +399,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         }
 
         protected abstract String getName(P part);
-        
+
         // implements the inherited specification
         public TupleType<O, P> getTupleType() {
             return type;
@@ -443,30 +444,30 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         	}
     		return hashCode;
          }
-        
+
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
             result.append("Tuple{"); //$NON-NLS-1$
-            
+
             for (Iterator<P> iter =  getTupleType().oclProperties().iterator();
                     iter.hasNext();) {
-                
+
             	P p = iter.next();
-                
+
                 result.append(getName(p));
                 result.append(" = "); //$NON-NLS-1$
                 result.append(toString(getValue(p)));
-                
+
                 if (iter.hasNext()) {
                     result.append(", "); //$NON-NLS-1$
                 }
             }
-            
+
             result.append("}"); //$NON-NLS-1$
             return result.toString();
         }
-        
+
         private String toString(Object o) {
             if (o instanceof String) {
                 return "'" + (String) o + "'"; //$NON-NLS-1$ //$NON-NLS-2$
