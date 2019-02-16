@@ -182,7 +182,7 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 			throw new OperationCanceledException();
 		IResource resource = delta.getResource();
 		if (resource instanceof IProject) {
-			return resource == project;
+			return (resource == project) && project.isOpen();
 		}
 		if (resource instanceof IContainer) {
 			return true;

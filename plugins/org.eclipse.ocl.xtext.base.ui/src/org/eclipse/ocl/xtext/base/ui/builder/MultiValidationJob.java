@@ -587,27 +587,28 @@ public class MultiValidationJob extends Job
 
 	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull SubMonitor monitor) throws CoreException {
 		final @NonNull IFile file = entry.getFile();
-		final @NonNull String markerType = entry.getMarkerId();
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-		//		System.out.println("OCL:Validating " + uri.toString());
-		OCL ocl = OCL.newInstance(ProjectManager.CLASS_PATH);
+		IProject project = file.getProject();
+		if ((project == null) || !project.isOpen()) {
+			return;
+		}
 		//
 		//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
 		//
-		IProject project = file.getProject();
-		if (project != null) {
-			Bundle bundle = Platform.getBundle(project.getName());
-			if (bundle != null) {
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-				if (bundleWiring != null) {
-					ClassLoader classLoader = bundleWiring.getClassLoader();
-					if (classLoader != null) {
-						((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
-					}
+		OCL ocl = OCL.newInstance(ProjectManager.CLASS_PATH);
+		Bundle bundle = Platform.getBundle(project.getName());
+		if (bundle != null) {
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+			if (bundleWiring != null) {
+				ClassLoader classLoader = bundleWiring.getClassLoader();
+				if (classLoader != null) {
+					((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
 				}
 			}
 		}
 		monitor.worked(1);			// Work Item 1 - Initialize done
+		final @NonNull String markerType = entry.getMarkerId();
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		//		System.out.println("OCL:Validating " + uri.toString());
 		ResourceSet resourceSet = ocl.getResourceSet();
 		Resource resource = resourceSet.getResource(uri, true);
 		monitor.worked(1);			// Work Item 2 - Load done
