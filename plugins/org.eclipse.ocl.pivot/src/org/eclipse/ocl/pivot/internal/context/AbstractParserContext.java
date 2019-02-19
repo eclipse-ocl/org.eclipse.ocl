@@ -153,6 +153,11 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		return null;
 	}
 
+	@Override
+	public @Nullable Element getElementContext() {
+		return getClassContext();
+	}
+
 	protected @NonNull String getDoSetupMessage() {
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
 			return "";

@@ -34,6 +34,11 @@ public class OperationContext extends ClassContext
 	}
 
 	@Override
+	public @Nullable Element getElementContext() {
+		return operation;
+	}
+
+	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
 		conversion.setParameterVariables(expression, ClassUtil.nonNullEMF(operation.getOwnedParameters()));

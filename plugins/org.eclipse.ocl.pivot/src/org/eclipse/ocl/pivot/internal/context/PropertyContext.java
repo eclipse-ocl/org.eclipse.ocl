@@ -30,6 +30,11 @@ public class PropertyContext extends ClassContext
 		this.property = property;
 	}
 
+	@Override
+	public @Nullable Element getElementContext() {
+		return property;
+	}
+
 	/**
 	 * @since 1.4
 	 */
