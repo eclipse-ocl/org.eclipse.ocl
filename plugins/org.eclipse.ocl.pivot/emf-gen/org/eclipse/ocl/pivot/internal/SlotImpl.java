@@ -124,7 +124,7 @@ public class SlotImpl extends ElementImpl implements Slot
 			if (definingProperty != oldDefiningProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldDefiningProperty, definingProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldDefiningProperty, definingProperty));
 			}
 		}
 		return definingProperty;
@@ -151,7 +151,7 @@ public class SlotImpl extends ElementImpl implements Slot
 		Property oldDefiningProperty = definingProperty;
 		definingProperty = newDefiningProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldDefiningProperty, definingProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldDefiningProperty, definingProperty));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class SlotImpl extends ElementImpl implements Slot
 	{
 		if (ownedValues == null)
 		{
-			ownedValues = new EObjectContainmentEList<ValueSpecification>(ValueSpecification.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+			ownedValues = new EObjectContainmentEList<ValueSpecification>(ValueSpecification.class, this, 5);
 		}
 		return ownedValues;
 	}
@@ -177,7 +177,7 @@ public class SlotImpl extends ElementImpl implements Slot
 	@Override
 	public InstanceSpecification getOwningInstance()
 	{
-		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (InstanceSpecification)eInternalContainer();
 	}
 
@@ -188,7 +188,7 @@ public class SlotImpl extends ElementImpl implements Slot
 	 */
 	public NotificationChain basicSetOwningInstance(InstanceSpecification newOwningInstance, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningInstance, ElementImpl.ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningInstance, 6, msgs);
 		return msgs;
 	}
 
@@ -200,7 +200,7 @@ public class SlotImpl extends ElementImpl implements Slot
 	@Override
 	public void setOwningInstance(InstanceSpecification newOwningInstance)
 	{
-		if (newOwningInstance != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2) && newOwningInstance != null))
+		if (newOwningInstance != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningInstance != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningInstance))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -208,12 +208,12 @@ public class SlotImpl extends ElementImpl implements Slot
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningInstance != null)
-				msgs = ((InternalEObject)newOwningInstance).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, InstanceSpecification.class, msgs);
+				msgs = ((InternalEObject)newOwningInstance).eInverseAdd(this, 6, InstanceSpecification.class, msgs);
 			msgs = basicSetOwningInstance(newOwningInstance, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newOwningInstance, newOwningInstance));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningInstance, newOwningInstance));
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class SlotImpl extends ElementImpl implements Slot
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningInstance((InstanceSpecification)otherEnd, msgs);
@@ -259,9 +259,9 @@ public class SlotImpl extends ElementImpl implements Slot
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ((InternalEList<?>)getOwnedValues()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return basicSetOwningInstance(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -277,8 +277,8 @@ public class SlotImpl extends ElementImpl implements Slot
 	{
 		switch (eContainerFeatureID())
 		{
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, InstanceSpecification.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 6, InstanceSpecification.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -301,12 +301,12 @@ public class SlotImpl extends ElementImpl implements Slot
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				if (resolve) return getDefiningProperty();
 				return basicGetDefiningProperty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getOwnedValues();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return getOwningInstance();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -339,14 +339,14 @@ public class SlotImpl extends ElementImpl implements Slot
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setDefiningProperty((Property)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				getOwnedValues().clear();
 				getOwnedValues().addAll((Collection<? extends ValueSpecification>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setOwningInstance((InstanceSpecification)newValue);
 				return;
 		}
@@ -375,13 +375,13 @@ public class SlotImpl extends ElementImpl implements Slot
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setDefiningProperty((Property)null);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				getOwnedValues().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setOwningInstance((InstanceSpecification)null);
 				return;
 		}
@@ -406,11 +406,11 @@ public class SlotImpl extends ElementImpl implements Slot
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return definingProperty != null;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ownedValues != null && !ownedValues.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return getOwningInstance() != null;
 		}
 		return eDynamicIsSet(featureID);

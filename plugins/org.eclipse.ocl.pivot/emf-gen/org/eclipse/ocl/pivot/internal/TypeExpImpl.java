@@ -107,7 +107,7 @@ implements TypeExp {
 			if (referredType != oldReferredType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredType, referredType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 9, oldReferredType, referredType));
 			}
 		}
 		return referredType;
@@ -132,7 +132,7 @@ implements TypeExp {
 		Type oldReferredType = referredType;
 		referredType = newReferredType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredType, referredType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredType, referredType));
 	}
 
 	/**
@@ -163,7 +163,7 @@ implements TypeExp {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				if (resolve) return getReferredType();
 				return basicGetReferredType();
 		}
@@ -208,7 +208,7 @@ implements TypeExp {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setReferredType((Type)newValue);
 				return;
 		}
@@ -248,7 +248,7 @@ implements TypeExp {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setReferredType((Type)null);
 				return;
 		}
@@ -282,7 +282,7 @@ implements TypeExp {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return referredType != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -300,7 +300,7 @@ implements TypeExp {
 		{
 			switch (baseOperationID)
 			{
-				case 0: return OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0;
+				case 0: return 6;
 				default: return -1;
 			}
 		}
@@ -330,7 +330,7 @@ implements TypeExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return getReferredElement();
 		}
 		return eDynamicInvoke(operationID, arguments);

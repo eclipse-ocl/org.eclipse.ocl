@@ -135,7 +135,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public CompleteEnvironment getOwningCompleteEnvironment()
 	{
-		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (4)) return null;
 		return (CompleteEnvironment)eInternalContainer();
 	}
 
@@ -146,7 +146,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	 */
 	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, ElementImpl.ELEMENT_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, 4, msgs);
 		return msgs;
 	}
 
@@ -158,7 +158,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
 	{
-		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 0) && newOwningCompleteEnvironment != null))
+		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (4) && newOwningCompleteEnvironment != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -166,12 +166,12 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompleteEnvironment != null)
-				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, CompleteEnvironment.class, msgs);
+				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, 5, CompleteEnvironment.class, msgs);
 			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompleteEnvironment((CompleteEnvironment)otherEnd, msgs);
@@ -217,7 +217,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return basicSetOwningCompleteEnvironment(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -233,8 +233,8 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	{
 		switch (eContainerFeatureID())
 		{
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
-				return eInternalContainer().eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, CompleteEnvironment.class, msgs);
+			case 4:
+				return eInternalContainer().eInverseRemove(this, 5, CompleteEnvironment.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -257,7 +257,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getOwningCompleteEnvironment();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -290,7 +290,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwningCompleteEnvironment((CompleteEnvironment)newValue);
 				return;
 		}
@@ -319,7 +319,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwningCompleteEnvironment((CompleteEnvironment)null);
 				return;
 		}
@@ -344,7 +344,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getOwningCompleteEnvironment() != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -125,7 +125,7 @@ public class CommentImpl
 	{
 		if (annotatedElements == null)
 		{
-			annotatedElements = new EObjectWithInverseResolvingEList.ManyInverse<Element>(Element.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, 0);
+			annotatedElements = new EObjectWithInverseResolvingEList.ManyInverse<Element>(Element.class, this, 4, 0);
 		}
 		return annotatedElements;
 	}
@@ -150,7 +150,7 @@ public class CommentImpl
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldBody, body));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldBody, body));
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class CommentImpl
 	@Override
 	public Element getOwningElement()
 	{
-		if (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (Element)eInternalContainer();
 	}
 
@@ -172,7 +172,7 @@ public class CommentImpl
 	 */
 	public NotificationChain basicSetOwningElement(Element newOwningElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningElement, ElementImpl.ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningElement, 6, msgs);
 		return msgs;
 	}
 
@@ -184,7 +184,7 @@ public class CommentImpl
 	@Override
 	public void setOwningElement(Element newOwningElement)
 	{
-		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (ElementImpl.ELEMENT_FEATURE_COUNT + 2) && newOwningElement != null))
+		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningElement != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -197,7 +197,7 @@ public class CommentImpl
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newOwningElement, newOwningElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningElement, newOwningElement));
 	}
 
 	/**
@@ -217,9 +217,9 @@ public class CommentImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatedElements()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningElement((Element)otherEnd, msgs);
@@ -245,9 +245,9 @@ public class CommentImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ((InternalEList<?>)getAnnotatedElements()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return basicSetOwningElement(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -263,7 +263,7 @@ public class CommentImpl
 	{
 		switch (eContainerFeatureID())
 		{
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return eInternalContainer().eInverseRemove(this, 2, Element.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
@@ -286,11 +286,11 @@ public class CommentImpl
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getAnnotatedElements();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getBody();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return getOwningElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -322,14 +322,14 @@ public class CommentImpl
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getAnnotatedElements().clear();
 				getAnnotatedElements().addAll((Collection<? extends Element>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setBody((String)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setOwningElement((Element)newValue);
 				return;
 		}
@@ -357,13 +357,13 @@ public class CommentImpl
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getAnnotatedElements().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setBody(BODY_EDEFAULT);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setOwningElement((Element)null);
 				return;
 		}
@@ -387,11 +387,11 @@ public class CommentImpl
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return annotatedElements != null && !annotatedElements.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return getOwningElement() != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -181,7 +181,7 @@ public abstract class CallExpImpl
 		ownedSource = newOwnedSource;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, oldOwnedSource, newOwnedSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedSource, newOwnedSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -198,14 +198,14 @@ public abstract class CallExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSource != null)
-				msgs = ((InternalEObject)ownedSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newOwnedSource != null)
-				msgs = ((InternalEObject)newOwnedSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetOwnedSource(newOwnedSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, newOwnedSource, newOwnedSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedSource, newOwnedSource));
 	}
 
 	/**
@@ -438,7 +438,7 @@ public abstract class CallExpImpl
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -463,7 +463,7 @@ public abstract class CallExpImpl
 		boolean oldIsSafe = (eFlags & IS_SAFE_EFLAG) != 0;
 		if (newIsSafe) eFlags |= IS_SAFE_EFLAG; else eFlags &= ~IS_SAFE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldIsSafe, newIsSafe));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldIsSafe, newIsSafe));
 	}
 
 	/**
@@ -484,7 +484,7 @@ public abstract class CallExpImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return basicSetOwnedSource(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -518,11 +518,11 @@ public abstract class CallExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return isIsImplicit();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return isIsSafe();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return getOwnedSource();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -566,13 +566,13 @@ public abstract class CallExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setIsSafe((Boolean)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
 		}
@@ -612,13 +612,13 @@ public abstract class CallExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
 		}
@@ -652,11 +652,11 @@ public abstract class CallExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return ownedSource != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -685,11 +685,11 @@ public abstract class CallExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2:
+			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

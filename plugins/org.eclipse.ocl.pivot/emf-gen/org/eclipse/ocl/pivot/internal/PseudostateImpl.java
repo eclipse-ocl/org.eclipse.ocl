@@ -157,7 +157,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 		if (newKind == null) newKind = KIND_EDEFAULT;
 		eFlags = eFlags & ~KIND_EFLAG | newKind.ordinal() << KIND_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 0, oldKind, newKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldKind, newKind));
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (9)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -179,7 +179,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, VertexImpl.VERTEX_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, 9, msgs);
 		return msgs;
 	}
 
@@ -191,7 +191,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 1) && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (9) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -199,12 +199,12 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, 13, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 1, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwningState, newOwningState));
 	}
 
 	/**
@@ -215,7 +215,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public StateMachine getOwningStateMachine()
 	{
-		if (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (StateMachine)eInternalContainer();
 	}
 
@@ -226,7 +226,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	 */
 	public NotificationChain basicSetOwningStateMachine(StateMachine newOwningStateMachine, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, VertexImpl.VERTEX_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, 10, msgs);
 		return msgs;
 	}
 
@@ -238,7 +238,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 	@Override
 	public void setOwningStateMachine(StateMachine newOwningStateMachine)
 	{
-		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2) && newOwningStateMachine != null))
+		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningStateMachine != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningStateMachine))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -246,12 +246,12 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStateMachine != null)
-				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 22, StateMachine.class, msgs);
 			msgs = basicSetOwningStateMachine(newOwningStateMachine, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 2, newOwningStateMachine, newOwningStateMachine));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningStateMachine, newOwningStateMachine));
 	}
 
 	/**
@@ -279,11 +279,11 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningStateMachine((StateMachine)otherEnd, msgs);
@@ -315,9 +315,9 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
 			case 7:
 				return basicSetOwningRegion(null, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				return basicSetOwningState(null, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return basicSetOwningStateMachine(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -334,11 +334,11 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 		switch (eContainerFeatureID())
 		{
 			case 7:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, State.class, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1, StateMachine.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 7, Region.class, msgs);
+			case 9:
+				return eInternalContainer().eInverseRemove(this, 13, State.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 22, StateMachine.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -369,11 +369,11 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 				return getOutgoingTransitions();
 			case 7:
 				return getOwningRegion();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				return getKind();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				return getOwningState();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningStateMachine();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -412,13 +412,13 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			case 7:
 				setOwningRegion((Region)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				setKind((PseudostateKind)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				setOwningState((State)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				setOwningStateMachine((StateMachine)newValue);
 				return;
 		}
@@ -453,13 +453,13 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			case 7:
 				setOwningRegion((Region)null);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				setKind(KIND_EDEFAULT);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				setOwningState((State)null);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				setOwningStateMachine((StateMachine)null);
 				return;
 		}
@@ -492,11 +492,11 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
 			case 7:
 				return getOwningRegion() != null;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				return (eFlags & KIND_EFLAG) != KIND_EFLAG_DEFAULT;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				return getOwningState() != null;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningStateMachine() != null;
 		}
 		return eDynamicIsSet(featureID);

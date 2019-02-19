@@ -163,7 +163,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<ShadowPart>(ShadowPart.class, this, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
+			ownedParts = new EObjectContainmentEList<ShadowPart>(ShadowPart.class, this, 9);
 		}
 		return ownedParts;
 	}
@@ -190,7 +190,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldValue, value));
 	}
 
 	/**
@@ -846,7 +846,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -881,9 +881,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return getOwnedParts();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return getValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -928,11 +928,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends ShadowPart>)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setValue((String)newValue);
 				return;
 		}
@@ -973,10 +973,10 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedParts().clear();
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -1011,9 +1011,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ownedParts != null && !ownedParts.isEmpty();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return eDynamicIsSet(featureID);
@@ -1042,17 +1042,17 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateClassHasNoStringValueInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateDataTypeHasNoPartInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2:
+			case 8:
 				return validateDataTypeHasOnePartInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 3:
+			case 9:
 				return validateDataTypeHasStringValueInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 4:
+			case 10:
 				return validateInitializesAllClassProperties((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 5:
+			case 11:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

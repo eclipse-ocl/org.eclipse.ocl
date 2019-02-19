@@ -149,7 +149,7 @@ implements VariableExp {
 			if (referredVariable != oldReferredVariable)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldReferredVariable, referredVariable));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 10, oldReferredVariable, referredVariable));
 			}
 		}
 		return referredVariable;
@@ -174,7 +174,7 @@ implements VariableExp {
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -232,7 +232,7 @@ implements VariableExp {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -263,9 +263,9 @@ implements VariableExp {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return isIsImplicit();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				if (resolve) return getReferredVariable();
 				return basicGetReferredVariable();
 		}
@@ -310,10 +310,10 @@ implements VariableExp {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setReferredVariable((VariableDeclaration)newValue);
 				return;
 		}
@@ -353,10 +353,10 @@ implements VariableExp {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setReferredVariable((VariableDeclaration)null);
 				return;
 		}
@@ -390,9 +390,9 @@ implements VariableExp {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return referredVariable != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -410,7 +410,7 @@ implements VariableExp {
 		{
 			switch (baseOperationID)
 			{
-				case 0: return OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0;
+				case 0: return 6;
 				default: return -1;
 			}
 		}
@@ -440,9 +440,9 @@ implements VariableExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return getReferredElement();
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

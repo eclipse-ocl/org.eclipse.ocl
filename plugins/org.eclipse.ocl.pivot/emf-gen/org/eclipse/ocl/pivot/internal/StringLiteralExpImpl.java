@@ -118,7 +118,7 @@ public class StringLiteralExpImpl
 		String oldStringSymbol = stringSymbol;
 		stringSymbol = newStringSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0, oldStringSymbol, stringSymbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldStringSymbol, stringSymbol));
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class StringLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getStringSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -193,7 +193,7 @@ public class StringLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setStringSymbol((String)newValue);
 				return;
 		}
@@ -233,7 +233,7 @@ public class StringLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setStringSymbol(STRING_SYMBOL_EDEFAULT);
 				return;
 		}
@@ -267,7 +267,7 @@ public class StringLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return STRING_SYMBOL_EDEFAULT == null ? stringSymbol != null : !STRING_SYMBOL_EDEFAULT.equals(stringSymbol);
 		}
 		return eDynamicIsSet(featureID);

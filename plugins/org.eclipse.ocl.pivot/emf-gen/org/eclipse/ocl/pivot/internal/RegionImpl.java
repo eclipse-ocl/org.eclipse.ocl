@@ -140,15 +140,15 @@ public class RegionImpl extends NamespaceImpl implements Region
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSubvertexes()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTransitions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningStateMachine((StateMachine)otherEnd, msgs);
@@ -171,7 +171,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 			if (extendedRegion != oldExtendedRegion)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldExtendedRegion, extendedRegion));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldExtendedRegion, extendedRegion));
 			}
 		}
 		return extendedRegion;
@@ -198,7 +198,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 		Region oldExtendedRegion = extendedRegion;
 		extendedRegion = newExtendedRegion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldExtendedRegion, extendedRegion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExtendedRegion, extendedRegion));
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	{
 		if (ownedSubvertexes == null)
 		{
-			ownedSubvertexes = new EObjectContainmentWithInverseEList<Vertex>(Vertex.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
+			ownedSubvertexes = new EObjectContainmentWithInverseEList<Vertex>(Vertex.class, this, 7, 7);
 		}
 		return ownedSubvertexes;
 	}
@@ -226,7 +226,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	{
 		if (ownedTransitions == null)
 		{
-			ownedTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
+			ownedTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, 8, 10);
 		}
 		return ownedTransitions;
 	}
@@ -239,7 +239,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3)) return null;
+		if (eContainerFeatureID() != (9)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -250,7 +250,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, 9, msgs);
 		return msgs;
 	}
 
@@ -262,7 +262,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3) && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (9) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -270,12 +270,12 @@ public class RegionImpl extends NamespaceImpl implements Region
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, 19, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwningState, newOwningState));
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	@Override
 	public StateMachine getOwningStateMachine()
 	{
-		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (StateMachine)eInternalContainer();
 	}
 
@@ -297,7 +297,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	 */
 	public NotificationChain basicSetOwningStateMachine(StateMachine newOwningStateMachine, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningStateMachine, 10, msgs);
 		return msgs;
 	}
 
@@ -309,7 +309,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 	@Override
 	public void setOwningStateMachine(StateMachine newOwningStateMachine)
 	{
-		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4) && newOwningStateMachine != null))
+		if (newOwningStateMachine != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningStateMachine != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningStateMachine))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -317,12 +317,12 @@ public class RegionImpl extends NamespaceImpl implements Region
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStateMachine != null)
-				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 23, StateMachine.class, msgs);
 			msgs = basicSetOwningStateMachine(newOwningStateMachine, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, newOwningStateMachine, newOwningStateMachine));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningStateMachine, newOwningStateMachine));
 	}
 
 	/**
@@ -345,13 +345,13 @@ public class RegionImpl extends NamespaceImpl implements Region
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ((InternalEList<?>)getOwnedSubvertexes()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ((InternalEList<?>)getOwnedTransitions()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return basicSetOwningState(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return basicSetOwningStateMachine(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -367,10 +367,10 @@ public class RegionImpl extends NamespaceImpl implements Region
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13, State.class, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
-				return eInternalContainer().eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2, StateMachine.class, msgs);
+			case 9:
+				return eInternalContainer().eInverseRemove(this, 19, State.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 23, StateMachine.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -397,16 +397,16 @@ public class RegionImpl extends NamespaceImpl implements Region
 				return getName();
 			case 5:
 				return getOwnedConstraints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				if (resolve) return getExtendedRegion();
 				return basicGetExtendedRegion();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedSubvertexes();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getOwnedTransitions();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return getOwningState();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return getOwningStateMachine();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -446,21 +446,21 @@ public class RegionImpl extends NamespaceImpl implements Region
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setExtendedRegion((Region)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getOwnedSubvertexes().clear();
 				getOwnedSubvertexes().addAll((Collection<? extends Vertex>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedTransitions().clear();
 				getOwnedTransitions().addAll((Collection<? extends Transition>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				setOwningState((State)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				setOwningStateMachine((StateMachine)newValue);
 				return;
 		}
@@ -495,19 +495,19 @@ public class RegionImpl extends NamespaceImpl implements Region
 			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setExtendedRegion((Region)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getOwnedSubvertexes().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedTransitions().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				setOwningState((State)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				setOwningStateMachine((StateMachine)null);
 				return;
 		}
@@ -536,15 +536,15 @@ public class RegionImpl extends NamespaceImpl implements Region
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return extendedRegion != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ownedSubvertexes != null && !ownedSubvertexes.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ownedTransitions != null && !ownedTransitions.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return getOwningState() != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return getOwningStateMachine() != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -123,7 +123,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			if (lowerBound != oldLowerBound)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 0, oldLowerBound, lowerBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldLowerBound, lowerBound));
 			}
 		}
 		return lowerBound;
@@ -150,7 +150,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		Type oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldLowerBound, lowerBound));
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			if (upperBound != oldUpperBound)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 1, oldUpperBound, upperBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldUpperBound, upperBound));
 			}
 		}
 		return upperBound;
@@ -195,7 +195,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		Type oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 1, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -248,10 +248,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (resolve) return getLowerBound();
 				return basicGetLowerBound();
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				if (resolve) return getUpperBound();
 				return basicGetUpperBound();
 		}
@@ -341,10 +341,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setLowerBound((Type)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setUpperBound((Type)newValue);
 				return;
 		}
@@ -421,10 +421,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setLowerBound((Type)null);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setUpperBound((Type)null);
 				return;
 		}
@@ -481,9 +481,9 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return lowerBound != null;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return upperBound != null;
 		}
 		return eDynamicIsSet(featureID);

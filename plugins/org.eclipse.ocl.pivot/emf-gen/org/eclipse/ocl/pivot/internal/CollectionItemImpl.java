@@ -125,7 +125,7 @@ public class CollectionItemImpl
 		ownedItem = newOwnedItem;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, oldOwnedItem, newOwnedItem);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedItem, newOwnedItem);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -142,14 +142,14 @@ public class CollectionItemImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedItem != null)
-				msgs = ((InternalEObject)ownedItem).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedItem).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedItem != null)
-				msgs = ((InternalEObject)newOwnedItem).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedItem).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedItem(newOwnedItem, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, newOwnedItem, newOwnedItem));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedItem, newOwnedItem));
 	}
 
 	/**
@@ -215,7 +215,7 @@ public class CollectionItemImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return basicSetOwnedItem(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -247,7 +247,7 @@ public class CollectionItemImpl
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return getOwnedItem();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -288,7 +288,7 @@ public class CollectionItemImpl
 			case 7:
 				setType((Type)newValue);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedItem((OCLExpression)newValue);
 				return;
 		}
@@ -325,7 +325,7 @@ public class CollectionItemImpl
 			case 7:
 				setType((Type)null);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedItem((OCLExpression)null);
 				return;
 		}
@@ -357,7 +357,7 @@ public class CollectionItemImpl
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return ownedItem != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -382,7 +382,7 @@ public class CollectionItemImpl
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case 3:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_OPERATION_COUNT + 0:
+			case 4:
 				return validateTypeIsItemType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

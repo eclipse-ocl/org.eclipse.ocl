@@ -344,7 +344,7 @@ implements Operation {
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 0);
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, 11);
 		}
 		return ownedConstraints;
 	}
@@ -359,7 +359,7 @@ implements Operation {
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 1, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 12, 5);
 		}
 		return ownedBindings;
 	}
@@ -375,7 +375,7 @@ implements Operation {
 	{
 		if (raisedExceptions == null)
 		{
-			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 14);
+			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, 25);
 		}
 		return raisedExceptions;
 	}
@@ -391,7 +391,7 @@ implements Operation {
 	{
 		if (redefinedOperations == null)
 		{
-			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 15);
+			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, 26);
 		}
 		return redefinedOperations;
 	}
@@ -407,7 +407,7 @@ implements Operation {
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1);
+			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, 20, 10);
 		}
 		return ownedParameters;
 	}
@@ -423,7 +423,7 @@ implements Operation {
 	{
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4);
+			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 21, 9);
 		}
 		return ownedPostconditions;
 	}
@@ -439,7 +439,7 @@ implements Operation {
 	{
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5);
+			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 22, 10);
 		}
 		return ownedPreconditions;
 	}
@@ -465,7 +465,7 @@ implements Operation {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -483,14 +483,14 @@ implements Operation {
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -530,7 +530,7 @@ implements Operation {
 			if (precedence != oldPrecedence)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldPrecedence, precedence));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 24, oldPrecedence, precedence));
 			}
 		}
 		return precedence;
@@ -555,7 +555,7 @@ implements Operation {
 		Precedence oldPrecedence = precedence;
 		precedence = newPrecedence;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldPrecedence, precedence));
+			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldPrecedence, precedence));
 	}
 
 	/**
@@ -580,7 +580,7 @@ implements Operation {
 		bodyExpression = newBodyExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, oldBodyExpression, newBodyExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 15, oldBodyExpression, newBodyExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -598,14 +598,14 @@ implements Operation {
 		{
 			NotificationChain msgs = null;
 			if (bodyExpression != null)
-				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 4), null, msgs);
+				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
 			if (newBodyExpression != null)
-				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 4), null, msgs);
+				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
 			msgs = basicSetBodyExpression(newBodyExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, newBodyExpression, newBodyExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, newBodyExpression, newBodyExpression));
 	}
 
 	/**
@@ -630,7 +630,7 @@ implements Operation {
 		boolean oldIsInvalidating = (eFlags & IS_INVALIDATING_EFLAG) != 0;
 		if (newIsInvalidating) eFlags |= IS_INVALIDATING_EFLAG; else eFlags &= ~IS_INVALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 5, oldIsInvalidating, newIsInvalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, oldIsInvalidating, newIsInvalidating));
 	}
 
 	/**
@@ -657,7 +657,7 @@ implements Operation {
 		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
 		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 6, oldIsTransient, newIsTransient));
+			eNotify(new ENotificationImpl(this, Notification.SET, 17, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -682,7 +682,7 @@ implements Operation {
 		boolean oldIsTypeof = (eFlags & IS_TYPEOF_EFLAG) != 0;
 		if (newIsTypeof) eFlags |= IS_TYPEOF_EFLAG; else eFlags &= ~IS_TYPEOF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 7, oldIsTypeof, newIsTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, 18, oldIsTypeof, newIsTypeof));
 	}
 
 	/**
@@ -707,7 +707,7 @@ implements Operation {
 		boolean oldIsValidating = (eFlags & IS_VALIDATING_EFLAG) != 0;
 		if (newIsValidating) eFlags |= IS_VALIDATING_EFLAG; else eFlags &= ~IS_VALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 8, oldIsValidating, newIsValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 19, oldIsValidating, newIsValidating));
 	}
 
 	/**
@@ -717,7 +717,7 @@ implements Operation {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Class getOwningClass() {
-		if (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 12)) return null;
+		if (eContainerFeatureID() != (23)) return null;
 		return (org.eclipse.ocl.pivot.Class)eInternalContainer();
 	}
 
@@ -728,7 +728,7 @@ implements Operation {
 	 */
 	public NotificationChain basicSetOwningClass(org.eclipse.ocl.pivot.Class newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureImpl.FEATURE_FEATURE_COUNT + 12, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 23, msgs);
 		return msgs;
 	}
 
@@ -740,7 +740,7 @@ implements Operation {
 	@Override
 	public void setOwningClass(org.eclipse.ocl.pivot.Class newOwningClass)
 	{
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 12) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (23) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -748,12 +748,12 @@ implements Operation {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, TypeImpl.TYPE_FEATURE_COUNT + 11, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 16, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 12, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -1016,19 +1016,19 @@ implements Operation {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 2), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPostconditions()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPreconditions()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
@@ -1054,21 +1054,21 @@ implements Operation {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				return basicSetOwnedSignature(null, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				return basicSetBodyExpression(null, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				return basicSetOwningClass(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1084,8 +1084,8 @@ implements Operation {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
-				return eInternalContainer().eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 11, org.eclipse.ocl.pivot.Class.class, msgs);
+			case 23:
+				return eInternalContainer().eInverseRemove(this, 16, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1122,38 +1122,38 @@ implements Operation {
 				return getImplementationClass();
 			case 10:
 				return isIsStatic();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				return getOwnedConstraints();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return getOwnedBindings();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				return getOwnedSignature();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				return getUnspecializedElement();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				return getBodyExpression();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				return isIsInvalidating();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				return isIsTransient();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				return isIsTypeof();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				return isIsValidating();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return getOwnedParameters();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return getOwnedPostconditions();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return getOwnedPreconditions();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				return getOwningClass();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				return getRaisedExceptions();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				return getRedefinedOperations();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -1203,58 +1203,58 @@ implements Operation {
 			case 10:
 				setIsStatic((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				setBodyExpression((LanguageExpression)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				setIsInvalidating((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				setIsTransient((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				setIsTypeof((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				setIsValidating((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				setPrecedence((Precedence)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				getRaisedExceptions().clear();
 				getRaisedExceptions().addAll((Collection<? extends Type>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				getRedefinedOperations().clear();
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
@@ -1301,52 +1301,52 @@ implements Operation {
 			case 10:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				getOwnedConstraints().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				getOwnedBindings().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				setBodyExpression((LanguageExpression)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				getOwnedParameters().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				getOwnedPostconditions().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				getOwnedPreconditions().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				setPrecedence((Precedence)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				getRaisedExceptions().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				getRedefinedOperations().clear();
 				return;
 		}
@@ -1384,37 +1384,37 @@ implements Operation {
 				return IMPLEMENTATION_CLASS_EDEFAULT == null ? implementationClass != null : !IMPLEMENTATION_CLASS_EDEFAULT.equals(implementationClass);
 			case 10:
 				return ((eFlags & IS_STATIC_EFLAG) != 0) != IS_STATIC_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				return ownedSignature != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				return unspecializedElement != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				return bodyExpression != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				return getOwningClass() != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				return precedence != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				return raisedExceptions != null && !raisedExceptions.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				return redefinedOperations != null && !redefinedOperations.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1431,7 +1431,7 @@ implements Operation {
 		{
 			switch (derivedFeatureID)
 			{
-				case FeatureImpl.FEATURE_FEATURE_COUNT + 0: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
+				case 11: return 5;
 				default: return -1;
 			}
 		}
@@ -1439,9 +1439,9 @@ implements Operation {
 		{
 			switch (derivedFeatureID)
 			{
-				case FeatureImpl.FEATURE_FEATURE_COUNT + 1: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
-				case FeatureImpl.FEATURE_FEATURE_COUNT + 2: return ElementImpl.ELEMENT_FEATURE_COUNT + 1;
-				case FeatureImpl.FEATURE_FEATURE_COUNT + 3: return ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+				case 12: return 4;
+				case 13: return 5;
+				case 14: return 6;
 				default: return -1;
 			}
 		}
@@ -1459,7 +1459,7 @@ implements Operation {
 		{
 			switch (baseFeatureID)
 			{
-				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0: return FeatureImpl.FEATURE_FEATURE_COUNT + 0;
+				case 5: return 11;
 				default: return -1;
 			}
 		}
@@ -1467,9 +1467,9 @@ implements Operation {
 		{
 			switch (baseFeatureID)
 			{
-				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return FeatureImpl.FEATURE_FEATURE_COUNT + 1;
-				case ElementImpl.ELEMENT_FEATURE_COUNT + 1: return FeatureImpl.FEATURE_FEATURE_COUNT + 2;
-				case ElementImpl.ELEMENT_FEATURE_COUNT + 2: return FeatureImpl.FEATURE_FEATURE_COUNT + 3;
+				case 4: return 12;
+				case 5: return 13;
+				case 6: return 14;
 				default: return -1;
 			}
 		}
@@ -1499,13 +1499,13 @@ implements Operation {
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 0:
+			case 6:
 				return validateCompatibleReturn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 1:
+			case 7:
 				return validateLoadableImplementation((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 2:
+			case 8:
 				return validateUniquePostconditionName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 3:
+			case 9:
 				return validateUniquePreconditionName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

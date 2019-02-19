@@ -163,7 +163,7 @@ implements Variable {
 		ownedInit = newOwnedInit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, oldOwnedInit, newOwnedInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldOwnedInit, newOwnedInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -180,14 +180,14 @@ implements Variable {
 		{
 			NotificationChain msgs = null;
 			if (ownedInit != null)
-				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			if (newOwnedInit != null)
-				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			msgs = basicSetOwnedInit(newOwnedInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, newOwnedInit, newOwnedInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwnedInit, newOwnedInit));
 	}
 
 	/**
@@ -204,7 +204,7 @@ implements Variable {
 			if (representedParameter != oldRepresentedParameter)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2, oldRepresentedParameter, representedParameter));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 11, oldRepresentedParameter, representedParameter));
 			}
 		}
 		return representedParameter;
@@ -229,7 +229,7 @@ implements Variable {
 		Parameter oldRepresentedParameter = representedParameter;
 		representedParameter = newRepresentedParameter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2, oldRepresentedParameter, representedParameter));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldRepresentedParameter, representedParameter));
 	}
 
 	/**
@@ -257,7 +257,7 @@ implements Variable {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -278,7 +278,7 @@ implements Variable {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwnedInit(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -312,11 +312,11 @@ implements Variable {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				return isIsImplicit();
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedInit();
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
+			case 11:
 				if (resolve) return getRepresentedParameter();
 				return basicGetRepresentedParameter();
 		}
@@ -361,13 +361,13 @@ implements Variable {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedInit((OCLExpression)newValue);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
+			case 11:
 				setRepresentedParameter((Parameter)newValue);
 				return;
 		}
@@ -407,13 +407,13 @@ implements Variable {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedInit((OCLExpression)null);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
+			case 11:
 				setRepresentedParameter((Parameter)null);
 				return;
 		}
@@ -447,11 +447,11 @@ implements Variable {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return ownedInit != null;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2:
+			case 11:
 				return representedParameter != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -480,7 +480,7 @@ implements Variable {
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 0:
+			case 6:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

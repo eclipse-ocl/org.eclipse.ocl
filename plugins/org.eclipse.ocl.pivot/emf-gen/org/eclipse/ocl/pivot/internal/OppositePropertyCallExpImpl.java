@@ -123,7 +123,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -150,7 +150,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -338,7 +338,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				return basicGetNavigationSource();
 			case 14:
 				return getQualifiers();
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -403,7 +403,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -462,7 +462,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			case 14:
 				getQualifiers().clear();
 				return;
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -509,7 +509,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				return navigationSource != null;
 			case 14:
 				return qualifiers != null && !qualifiers.isEmpty();
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -527,7 +527,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		{
 			switch (baseOperationID)
 			{
-				case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0: return NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0;
+				case 6: return 9;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -557,13 +557,13 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0:
+			case 9:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 1:
+			case 10:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

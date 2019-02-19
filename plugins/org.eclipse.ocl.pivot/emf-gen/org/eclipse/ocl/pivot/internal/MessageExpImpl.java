@@ -172,7 +172,7 @@ public class MessageExpImpl
 		ownedTarget = newOwnedTarget;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, oldOwnedTarget, newOwnedTarget);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedTarget, newOwnedTarget);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -189,14 +189,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedTarget != null)
-				msgs = ((InternalEObject)ownedTarget).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)ownedTarget).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			if (newOwnedTarget != null)
-				msgs = ((InternalEObject)newOwnedTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)newOwnedTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			msgs = basicSetOwnedTarget(newOwnedTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, newOwnedTarget, newOwnedTarget));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedTarget, newOwnedTarget));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class MessageExpImpl
 	{
 		if (ownedArguments == null)
 		{
-			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
+			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 9);
 		}
 		return ownedArguments;
 	}
@@ -236,7 +236,7 @@ public class MessageExpImpl
 		ownedCalledOperation = newOwnedCalledOperation;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldOwnedCalledOperation, newOwnedCalledOperation);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldOwnedCalledOperation, newOwnedCalledOperation);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -254,14 +254,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedCalledOperation != null)
-				msgs = ((InternalEObject)ownedCalledOperation).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedCalledOperation).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			if (newOwnedCalledOperation != null)
-				msgs = ((InternalEObject)newOwnedCalledOperation).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedCalledOperation).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			msgs = basicSetOwnedCalledOperation(newOwnedCalledOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, newOwnedCalledOperation, newOwnedCalledOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwnedCalledOperation, newOwnedCalledOperation));
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class MessageExpImpl
 		ownedSentSignal = newOwnedSentSignal;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, oldOwnedSentSignal, newOwnedSentSignal);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedSentSignal, newOwnedSentSignal);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -303,14 +303,14 @@ public class MessageExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSentSignal != null)
-				msgs = ((InternalEObject)ownedSentSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedSentSignal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newOwnedSentSignal != null)
-				msgs = ((InternalEObject)newOwnedSentSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedSentSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetOwnedSentSignal(newOwnedSentSignal, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, newOwnedSentSignal, newOwnedSentSignal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedSentSignal, newOwnedSentSignal));
 	}
 
 	/**
@@ -444,13 +444,13 @@ public class MessageExpImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ((InternalEList<?>)getOwnedArguments()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwnedCalledOperation(null, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return basicSetOwnedSentSignal(null, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return basicSetOwnedTarget(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -484,13 +484,13 @@ public class MessageExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return getOwnedArguments();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedCalledOperation();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return getOwnedSentSignal();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return getOwnedTarget();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -534,17 +534,17 @@ public class MessageExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedArguments().clear();
 				getOwnedArguments().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedCalledOperation((CallOperationAction)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedSentSignal((SendSignalAction)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				setOwnedTarget((OCLExpression)newValue);
 				return;
 		}
@@ -584,16 +584,16 @@ public class MessageExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedArguments().clear();
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedCalledOperation((CallOperationAction)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedSentSignal((SendSignalAction)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				setOwnedTarget((OCLExpression)null);
 				return;
 		}
@@ -627,13 +627,13 @@ public class MessageExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ownedArguments != null && !ownedArguments.isEmpty();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return ownedCalledOperation != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return ownedSentSignal != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return ownedTarget != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -662,9 +662,9 @@ public class MessageExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateOneCallOrOneSend((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateTargetIsNotACollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

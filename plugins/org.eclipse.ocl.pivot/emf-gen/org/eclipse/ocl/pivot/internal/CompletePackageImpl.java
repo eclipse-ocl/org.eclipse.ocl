@@ -119,15 +119,15 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompleteClasses()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompletePackages()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompleteModel((CompleteModel)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompletePackage((CompletePackage)otherEnd, msgs);
@@ -153,13 +153,13 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedCompleteClasses()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<?>)getOwnedCompletePackages()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return basicSetOwningCompleteModel(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return basicSetOwningCompletePackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -175,10 +175,10 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompleteModel.class, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
-				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompletePackage.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 6, CompleteModel.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, 6, CompletePackage.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -203,15 +203,15 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedCompleteClasses();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOwnedCompletePackages();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningCompleteModel();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return getOwningCompletePackage();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return getPartialPackages();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -247,21 +247,21 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedCompleteClasses().clear();
 				getOwnedCompleteClasses().addAll((Collection<? extends CompleteClass>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedCompletePackages().clear();
 				getOwnedCompletePackages().addAll((Collection<? extends CompletePackage>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningCompleteModel((CompleteModel)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				setOwningCompletePackage((CompletePackage)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				getPartialPackages().clear();
 				getPartialPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
@@ -294,19 +294,19 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedCompleteClasses().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedCompletePackages().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningCompleteModel((CompleteModel)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				setOwningCompletePackage((CompletePackage)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				getPartialPackages().clear();
 				return;
 		}
@@ -334,15 +334,15 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ownedCompleteClasses != null && !ownedCompleteClasses.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ownedCompletePackages != null && !ownedCompletePackages.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningCompleteModel() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return getOwningCompletePackage() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return partialPackages != null && !partialPackages.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -362,7 +362,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return allOwnedElements();
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
+			case 2:
 				return getOwnedCompleteClass((String)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -617,7 +617,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public CompleteModel getOwningCompleteModel()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (CompleteModel)eInternalContainer();
 	}
 
@@ -628,7 +628,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	public NotificationChain basicSetOwningCompleteModel(CompleteModel newOwningCompleteModel, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteModel, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteModel, 7, msgs);
 		return msgs;
 	}
 
@@ -640,7 +640,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void setOwningCompleteModel(CompleteModel newOwningCompleteModel)
 	{
-		if (newOwningCompleteModel != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2) && newOwningCompleteModel != null))
+		if (newOwningCompleteModel != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningCompleteModel != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompleteModel))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -648,12 +648,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompleteModel != null)
-				msgs = ((InternalEObject)newOwningCompleteModel).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)newOwningCompleteModel).eInverseAdd(this, 6, CompleteModel.class, msgs);
 			msgs = basicSetOwningCompleteModel(newOwningCompleteModel, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, newOwningCompleteModel, newOwningCompleteModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningCompleteModel, newOwningCompleteModel));
 	}
 
 	/**
@@ -663,7 +663,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	@Override
 	public @Nullable CompletePackage getOwningCompletePackage() {
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3)) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (CompletePackage)eInternalContainer();
 	}
 
@@ -674,7 +674,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	public NotificationChain basicSetOwningCompletePackage(CompletePackage newOwningCompletePackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompletePackage, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompletePackage, 8, msgs);
 		return msgs;
 	}
 
@@ -686,7 +686,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void setOwningCompletePackage(CompletePackage newOwningCompletePackage)
 	{
-		if (newOwningCompletePackage != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3) && newOwningCompletePackage != null))
+		if (newOwningCompletePackage != eInternalContainer() || (eContainerFeatureID() != (8) && newOwningCompletePackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompletePackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -694,12 +694,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompletePackage != null)
-				msgs = ((InternalEObject)newOwningCompletePackage).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, CompletePackage.class, msgs);
+				msgs = ((InternalEObject)newOwningCompletePackage).eInverseAdd(this, 6, CompletePackage.class, msgs);
 			msgs = basicSetOwningCompletePackage(newOwningCompletePackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, newOwningCompletePackage, newOwningCompletePackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningCompletePackage, newOwningCompletePackage));
 	}
 
 	@Override

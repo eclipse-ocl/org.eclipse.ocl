@@ -156,7 +156,7 @@ implements TypedElement {
 			if (type != oldType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 7, oldType, type));
 			}
 		}
 		return type;
@@ -181,7 +181,7 @@ implements TypedElement {
 		Type oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldType, type));
 	}
 
 	/**
@@ -224,7 +224,7 @@ implements TypedElement {
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -246,11 +246,11 @@ implements TypedElement {
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return isIsMany();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return isIsRequired();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				if (resolve) return getType();
 				return basicGetType();
 		}
@@ -286,10 +286,10 @@ implements TypedElement {
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setIsRequired((Boolean)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setType((Type)newValue);
 				return;
 		}
@@ -320,10 +320,10 @@ implements TypedElement {
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setType((Type)null);
 				return;
 		}
@@ -349,11 +349,11 @@ implements TypedElement {
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return isIsMany() != IS_MANY_EDEFAULT;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return type != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -373,7 +373,7 @@ implements TypedElement {
 				return allOwnedElements();
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
+			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);

@@ -123,7 +123,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 	{
 		if (ownedIterators == null)
 		{
-			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, OperationImpl.OPERATION_FEATURE_COUNT + 1);
+			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 28);
 		}
 		return ownedIterators;
 	}
@@ -139,7 +139,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 	{
 		if (ownedAccumulators == null)
 		{
-			ownedAccumulators = new EObjectContainmentEList<Parameter>(Parameter.class, this, OperationImpl.OPERATION_FEATURE_COUNT + 0);
+			ownedAccumulators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 27);
 		}
 		return ownedAccumulators;
 	}
@@ -178,9 +178,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
 			case 23:
 				return basicSetOwningClass(null, msgs);
-			case OperationImpl.OPERATION_FEATURE_COUNT + 0:
+			case 27:
 				return ((InternalEList<?>)getOwnedAccumulators()).basicRemove(otherEnd, msgs);
-			case OperationImpl.OPERATION_FEATURE_COUNT + 1:
+			case 28:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -252,9 +252,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return getRaisedExceptions();
 			case 26:
 				return getRedefinedOperations();
-			case OperationImpl.OPERATION_FEATURE_COUNT + 0:
+			case 27:
 				return getOwnedAccumulators();
-			case OperationImpl.OPERATION_FEATURE_COUNT + 1:
+			case 28:
 				return getOwnedIterators();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -360,11 +360,11 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getRedefinedOperations().clear();
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case OperationImpl.OPERATION_FEATURE_COUNT + 0:
+			case 27:
 				getOwnedAccumulators().clear();
 				getOwnedAccumulators().addAll((Collection<? extends Parameter>)newValue);
 				return;
-			case OperationImpl.OPERATION_FEATURE_COUNT + 1:
+			case 28:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends Parameter>)newValue);
 				return;
@@ -460,10 +460,10 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 26:
 				getRedefinedOperations().clear();
 				return;
-			case OperationImpl.OPERATION_FEATURE_COUNT + 0:
+			case 27:
 				getOwnedAccumulators().clear();
 				return;
-			case OperationImpl.OPERATION_FEATURE_COUNT + 1:
+			case 28:
 				getOwnedIterators().clear();
 				return;
 		}
@@ -534,9 +534,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return raisedExceptions != null && !raisedExceptions.isEmpty();
 			case 26:
 				return redefinedOperations != null && !redefinedOperations.isEmpty();
-			case OperationImpl.OPERATION_FEATURE_COUNT + 0:
+			case 27:
 				return ownedAccumulators != null && !ownedAccumulators.isEmpty();
-			case OperationImpl.OPERATION_FEATURE_COUNT + 1:
+			case 28:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

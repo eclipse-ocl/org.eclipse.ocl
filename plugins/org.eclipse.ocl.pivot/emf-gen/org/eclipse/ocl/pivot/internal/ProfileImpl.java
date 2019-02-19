@@ -101,7 +101,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 	{
 		if (profileApplications == null)
 		{
-			profileApplications = new EObjectWithInverseResolvingEList<ProfileApplication>(ProfileApplication.class, this, PackageImpl.PACKAGE_FEATURE_COUNT + 0, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+			profileApplications = new EObjectWithInverseResolvingEList<ProfileApplication>(ProfileApplication.class, this, 14, 4);
 		}
 		return profileApplications;
 	}
@@ -135,7 +135,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getProfileApplications()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -171,7 +171,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 				return ((InternalEList<?>)getOwnedProfileApplications()).basicRemove(otherEnd, msgs);
 			case 13:
 				return basicSetOwningPackage(null, msgs);
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return ((InternalEList<?>)getProfileApplications()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -215,7 +215,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 				return getOwnedProfileApplications();
 			case 13:
 				return getOwningPackage();
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return getProfileApplications();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -284,7 +284,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				getProfileApplications().clear();
 				getProfileApplications().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
@@ -344,7 +344,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				getProfileApplications().clear();
 				return;
 		}
@@ -389,7 +389,7 @@ public class ProfileImpl extends PackageImpl implements Profile
 				return ownedProfileApplications != null && !ownedProfileApplications.isEmpty();
 			case 13:
 				return getOwningPackage() != null;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return profileApplications != null && !profileApplications.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

@@ -119,7 +119,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 	{
 		if (entries == null)
 		{
-			entries = new EObjectResolvingEList<Pseudostate>(Pseudostate.class, this, VertexImpl.VERTEX_FEATURE_COUNT + 0);
+			entries = new EObjectResolvingEList<Pseudostate>(Pseudostate.class, this, 8);
 		}
 		return entries;
 	}
@@ -134,7 +134,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 	{
 		if (exits == null)
 		{
-			exits = new EObjectResolvingEList<Pseudostate>(Pseudostate.class, this, VertexImpl.VERTEX_FEATURE_COUNT + 1);
+			exits = new EObjectResolvingEList<Pseudostate>(Pseudostate.class, this, 9);
 		}
 		return exits;
 	}
@@ -147,7 +147,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -158,7 +158,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, VertexImpl.VERTEX_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, 10, msgs);
 		return msgs;
 	}
 
@@ -170,7 +170,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (VertexImpl.VERTEX_FEATURE_COUNT + 2) && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -178,12 +178,12 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, 14, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VertexImpl.VERTEX_FEATURE_COUNT + 2, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningState, newOwningState));
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
@@ -243,7 +243,7 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
 			case 7:
 				return basicSetOwningRegion(null, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return basicSetOwningState(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -260,9 +260,9 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 		switch (eContainerFeatureID())
 		{
 			case 7:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8, State.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 7, Region.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 14, State.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -293,11 +293,11 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 				return getOutgoingTransitions();
 			case 7:
 				return getOwningRegion();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				return getEntries();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				return getExits();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningState();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -336,15 +336,15 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 			case 7:
 				setOwningRegion((Region)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				getEntries().clear();
 				getEntries().addAll((Collection<? extends Pseudostate>)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				getExits().clear();
 				getExits().addAll((Collection<? extends Pseudostate>)newValue);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				setOwningState((State)newValue);
 				return;
 		}
@@ -379,13 +379,13 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 			case 7:
 				setOwningRegion((Region)null);
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				getEntries().clear();
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				getExits().clear();
 				return;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				setOwningState((State)null);
 				return;
 		}
@@ -418,11 +418,11 @@ public class ConnectionPointReferenceImpl extends VertexImpl implements Connecti
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
 			case 7:
 				return getOwningRegion() != null;
-			case VertexImpl.VERTEX_FEATURE_COUNT + 0:
+			case 8:
 				return entries != null && !entries.isEmpty();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 1:
+			case 9:
 				return exits != null && !exits.isEmpty();
-			case VertexImpl.VERTEX_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningState() != null;
 		}
 		return eDynamicIsSet(featureID);

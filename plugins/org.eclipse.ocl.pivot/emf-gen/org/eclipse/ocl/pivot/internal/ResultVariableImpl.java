@@ -302,11 +302,11 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 6:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case VariableImpl.VARIABLE_OPERATION_COUNT + 0:
+			case 7:
 				return validateCompatibleNullityForInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case VariableImpl.VARIABLE_OPERATION_COUNT + 1:
+			case 8:
 				return validateCompatibleTypeForInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case VariableImpl.VARIABLE_OPERATION_COUNT + 2:
+			case 9:
 				return validateHasInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

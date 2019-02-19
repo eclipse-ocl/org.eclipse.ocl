@@ -187,7 +187,7 @@ implements OperationCallExp {
 		boolean oldIsVirtual = (eFlags & IS_VIRTUAL_EFLAG) != 0;
 		if (newIsVirtual) eFlags |= IS_VIRTUAL_EFLAG; else eFlags &= ~IS_VIRTUAL_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0, oldIsVirtual, newIsVirtual));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldIsVirtual, newIsVirtual));
 	}
 
 	/**
@@ -201,7 +201,7 @@ implements OperationCallExp {
 	{
 		if (ownedArguments == null)
 		{
-			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1);
+			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 14);
 		}
 		return ownedArguments;
 	}
@@ -220,7 +220,7 @@ implements OperationCallExp {
 			if (referredOperation != oldReferredOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2, oldReferredOperation, referredOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredOperation, referredOperation));
 			}
 		}
 		return referredOperation;
@@ -245,7 +245,7 @@ implements OperationCallExp {
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -268,7 +268,7 @@ implements OperationCallExp {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return basicSetOwnedSource(null, msgs);
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				return ((InternalEList<?>)getOwnedArguments()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -310,11 +310,11 @@ implements OperationCallExp {
 				return getOwnedSource();
 			case 12:
 				return isIsPre();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				return isIsVirtual();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				return getOwnedArguments();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2:
+			case 15:
 				if (resolve) return getReferredOperation();
 				return basicGetReferredOperation();
 		}
@@ -371,14 +371,14 @@ implements OperationCallExp {
 			case 12:
 				setIsPre((Boolean)newValue);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				setIsVirtual((Boolean)newValue);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				getOwnedArguments().clear();
 				getOwnedArguments().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2:
+			case 15:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -430,13 +430,13 @@ implements OperationCallExp {
 			case 12:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				setIsVirtual(IS_VIRTUAL_EDEFAULT);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				getOwnedArguments().clear();
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2:
+			case 15:
 				setReferredOperation((Operation)null);
 				return;
 		}
@@ -478,11 +478,11 @@ implements OperationCallExp {
 				return ownedSource != null;
 			case 12:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				return ((eFlags & IS_VIRTUAL_EFLAG) != 0) != IS_VIRTUAL_EDEFAULT;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				return ownedArguments != null && !ownedArguments.isEmpty();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2:
+			case 15:
 				return referredOperation != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -500,7 +500,7 @@ implements OperationCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0: return FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 4;
+				case 6: return 13;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -508,7 +508,7 @@ implements OperationCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case 0: return FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 0;
+				case 0: return 9;
 				default: return -1;
 			}
 		}
@@ -538,21 +538,21 @@ implements OperationCallExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 4:
+			case 13:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 0:
+			case 9:
 				return getReferredElement();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 1:
+			case 10:
 				return hasOclVoidOverload();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 2:
+			case 11:
 				return validateArgumentCount((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 3:
+			case 12:
 				return validateArgumentTypeIsConformant((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 5:
+			case 14:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

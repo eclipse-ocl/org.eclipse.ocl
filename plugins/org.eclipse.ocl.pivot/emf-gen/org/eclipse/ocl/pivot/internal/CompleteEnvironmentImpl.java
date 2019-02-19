@@ -151,14 +151,14 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		{
 			NotificationChain msgs = null;
 			if (ownedCompleteModel != null)
-				msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, 7, CompleteModel.class, msgs);
 			if (newOwnedCompleteModel != null)
-				msgs = ((InternalEObject)newOwnedCompleteModel).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, CompleteModel.class, msgs);
+				msgs = ((InternalEObject)newOwnedCompleteModel).eInverseAdd(this, 7, CompleteModel.class, msgs);
 			msgs = basicSetOwnedCompleteModel(newOwnedCompleteModel, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwnedCompleteModel, newOwnedCompleteModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwnedCompleteModel, newOwnedCompleteModel));
 	}
 
 	/**
@@ -190,14 +190,14 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		{
 			NotificationChain msgs = null;
 			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, StandardLibrary.class, msgs);
 			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, StandardLibrary.class, msgs);
 			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedStandardLibrary, newOwnedStandardLibrary));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedStandardLibrary, newOwnedStandardLibrary));
 	}
 
 	/**
@@ -217,13 +217,13 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				if (ownedCompleteModel != null)
-					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
+					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 				return basicSetOwnedCompleteModel((CompleteModel)otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				if (ownedStandardLibrary != null)
-					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
+					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 				return basicSetOwnedStandardLibrary((StandardLibrary)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -247,9 +247,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return basicSetOwnedCompleteModel(null, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return basicSetOwnedStandardLibrary(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -273,9 +273,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getOwnedCompleteModel();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getOwnedStandardLibrary();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -308,10 +308,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedStandardLibrary((StandardLibrary)newValue);
 				return;
 		}
@@ -340,10 +340,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedStandardLibrary((StandardLibrary)null);
 				return;
 		}
@@ -368,9 +368,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ownedCompleteModel != null;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ownedStandardLibrary != null;
 		}
 		return eDynamicIsSet(featureID);

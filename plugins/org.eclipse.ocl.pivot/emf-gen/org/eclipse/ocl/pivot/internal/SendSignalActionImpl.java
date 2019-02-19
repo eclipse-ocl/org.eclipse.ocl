@@ -101,7 +101,7 @@ public class SendSignalActionImpl
 			if (signal != oldSignal)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldSignal, signal));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 5, oldSignal, signal));
 			}
 		}
 		return signal;
@@ -126,7 +126,7 @@ public class SendSignalActionImpl
 		Signal oldSignal = signal;
 		signal = newSignal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldSignal, signal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldSignal, signal));
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class SendSignalActionImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				if (resolve) return getSignal();
 				return basicGetSignal();
 		}
@@ -184,7 +184,7 @@ public class SendSignalActionImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setSignal((Signal)newValue);
 				return;
 		}
@@ -215,7 +215,7 @@ public class SendSignalActionImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setSignal((Signal)null);
 				return;
 		}
@@ -241,7 +241,7 @@ public class SendSignalActionImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return signal != null;
 		}
 		return eDynamicIsSet(featureID);

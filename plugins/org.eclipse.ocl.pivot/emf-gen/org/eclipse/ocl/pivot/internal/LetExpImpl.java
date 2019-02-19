@@ -141,7 +141,7 @@ implements LetExp {
 		ownedIn = newOwnedIn;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldOwnedIn, newOwnedIn);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldOwnedIn, newOwnedIn);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -158,14 +158,14 @@ implements LetExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedIn != null)
-				msgs = ((InternalEObject)ownedIn).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedIn).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			if (newOwnedIn != null)
-				msgs = ((InternalEObject)newOwnedIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedIn).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			msgs = basicSetOwnedIn(newOwnedIn, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, newOwnedIn, newOwnedIn));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwnedIn, newOwnedIn));
 	}
 
 	/**
@@ -189,7 +189,7 @@ implements LetExp {
 		ownedVariable = newOwnedVariable;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldOwnedVariable, newOwnedVariable);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldOwnedVariable, newOwnedVariable);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -206,14 +206,14 @@ implements LetExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedVariable != null)
-				msgs = ((InternalEObject)ownedVariable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedVariable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			if (newOwnedVariable != null)
-				msgs = ((InternalEObject)newOwnedVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			msgs = basicSetOwnedVariable(newOwnedVariable, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, newOwnedVariable, newOwnedVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwnedVariable, newOwnedVariable));
 	}
 
 	/**
@@ -369,9 +369,9 @@ implements LetExp {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return basicSetOwnedIn(null, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwnedVariable(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -405,9 +405,9 @@ implements LetExp {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return getOwnedIn();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedVariable();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -451,10 +451,10 @@ implements LetExp {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setOwnedIn((OCLExpression)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedVariable((Variable)newValue);
 				return;
 		}
@@ -494,10 +494,10 @@ implements LetExp {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setOwnedIn((OCLExpression)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedVariable((Variable)null);
 				return;
 		}
@@ -531,9 +531,9 @@ implements LetExp {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ownedIn != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return ownedVariable != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -562,11 +562,11 @@ implements LetExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateCompatibleNullityForIn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateTypeIsInType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2:
+			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

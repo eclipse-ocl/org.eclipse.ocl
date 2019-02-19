@@ -123,7 +123,7 @@ public class ParameterImpl
 		boolean oldIsTypeof = (eFlags & IS_TYPEOF_EFLAG) != 0;
 		if (newIsTypeof) eFlags |= IS_TYPEOF_EFLAG; else eFlags &= ~IS_TYPEOF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0, oldIsTypeof, newIsTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsTypeof, newIsTypeof));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class ParameterImpl
 	@Override
 	public Operation getOwningOperation()
 	{
-		if (eContainerFeatureID() != (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -145,7 +145,7 @@ public class ParameterImpl
 	 */
 	public NotificationChain basicSetOwningOperation(Operation newOwningOperation, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, 10, msgs);
 		return msgs;
 	}
 
@@ -157,7 +157,7 @@ public class ParameterImpl
 	@Override
 	public void setOwningOperation(Operation newOwningOperation)
 	{
-		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1) && newOwningOperation != null))
+		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningOperation != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -165,12 +165,12 @@ public class ParameterImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningOperation != null)
-				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, 20, Operation.class, msgs);
 			msgs = basicSetOwningOperation(newOwningOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1, newOwningOperation, newOwningOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningOperation, newOwningOperation));
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class ParameterImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningOperation((Operation)otherEnd, msgs);
@@ -216,7 +216,7 @@ public class ParameterImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwningOperation(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -232,8 +232,8 @@ public class ParameterImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 9, Operation.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 20, Operation.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -266,9 +266,9 @@ public class ParameterImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				return isIsTypeof();
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwningOperation();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -312,10 +312,10 @@ public class ParameterImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				setIsTypeof((Boolean)newValue);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwningOperation((Operation)newValue);
 				return;
 		}
@@ -355,10 +355,10 @@ public class ParameterImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwningOperation((Operation)null);
 				return;
 		}
@@ -392,9 +392,9 @@ public class ParameterImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0:
+			case 9:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
-			case VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwningOperation() != null;
 		}
 		return eDynamicIsSet(featureID);

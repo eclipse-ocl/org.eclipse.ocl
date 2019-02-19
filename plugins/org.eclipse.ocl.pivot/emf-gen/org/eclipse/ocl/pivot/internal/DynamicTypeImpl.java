@@ -130,7 +130,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 			if (metaType != oldMetaType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 0, oldMetaType, metaType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldMetaType, metaType));
 			}
 		}
 		return metaType;
@@ -157,7 +157,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 		Type oldMetaType = metaType;
 		metaType = newMetaType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, oldMetaType, metaType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldMetaType, metaType));
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 	{
 		if (ownedDynamicProperties == null)
 		{
-			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, ClassImpl.CLASS_FEATURE_COUNT + 1);
+			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, 21);
 		}
 		return ownedDynamicProperties;
 	}
@@ -212,7 +212,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return ((InternalEList<?>)getOwnedDynamicProperties()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -268,10 +268,10 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (resolve) return getMetaType();
 				return basicGetMetaType();
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return getOwnedDynamicProperties();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -360,10 +360,10 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setMetaType((Type)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				getOwnedDynamicProperties().clear();
 				getOwnedDynamicProperties().addAll((Collection<? extends DynamicProperty>)newValue);
 				return;
@@ -441,10 +441,10 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setMetaType((Type)null);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				getOwnedDynamicProperties().clear();
 				return;
 		}
@@ -501,9 +501,9 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return metaType != null;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return ownedDynamicProperties != null && !ownedDynamicProperties.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -521,7 +521,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 		{
 			switch (derivedFeatureID)
 			{
-				case ClassImpl.CLASS_FEATURE_COUNT + 0: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
+				case 20: return 4;
 				default: return -1;
 			}
 		}
@@ -540,7 +540,7 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 		{
 			switch (baseFeatureID)
 			{
-				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return ClassImpl.CLASS_FEATURE_COUNT + 0;
+				case 4: return 20;
 				default: return -1;
 			}
 		}

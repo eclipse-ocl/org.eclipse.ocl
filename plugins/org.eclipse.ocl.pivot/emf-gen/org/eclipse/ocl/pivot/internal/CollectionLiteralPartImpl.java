@@ -143,7 +143,7 @@ implements CollectionLiteralPart {
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
+			case 3:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

@@ -183,7 +183,7 @@ implements CollectionLiteralExp {
 		if (newKind == null) newKind = KIND_EDEFAULT;
 		eFlags = eFlags & ~KIND_EFLAG | newKind.ordinal() << KIND_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0, oldKind, newKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldKind, newKind));
 	}
 
 	/**
@@ -197,7 +197,7 @@ implements CollectionLiteralExp {
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<CollectionLiteralPart>(CollectionLiteralPart.class, this, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1);
+			ownedParts = new EObjectContainmentEList<CollectionLiteralPart>(CollectionLiteralPart.class, this, 10);
 		}
 		return ownedParts;
 	}
@@ -521,7 +521,7 @@ implements CollectionLiteralExp {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -555,9 +555,9 @@ implements CollectionLiteralExp {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getKind();
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedParts();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -601,10 +601,10 @@ implements CollectionLiteralExp {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setKind((CollectionKind)newValue);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends CollectionLiteralPart>)newValue);
 				return;
@@ -645,10 +645,10 @@ implements CollectionLiteralExp {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setKind(KIND_EDEFAULT);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedParts().clear();
 				return;
 		}
@@ -682,9 +682,9 @@ implements CollectionLiteralExp {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return (eFlags & KIND_EFLAG) != KIND_EFLAG_DEFAULT;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -713,15 +713,15 @@ implements CollectionLiteralExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 0:
+			case 6:
 				return validateBagKindIsBag((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 1:
+			case 7:
 				return validateCollectionKindIsConcrete((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 2:
+			case 8:
 				return validateOrderedSetKindIsOrderedSet((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 3:
+			case 9:
 				return validateSequenceKindIsSequence((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 4:
+			case 10:
 				return validateSetKindIsSet((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

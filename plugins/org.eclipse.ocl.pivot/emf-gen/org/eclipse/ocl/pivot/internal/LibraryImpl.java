@@ -102,7 +102,7 @@ public class LibraryImpl extends PackageImpl implements Library
 	{
 		if (ownedPrecedences == null)
 		{
-			ownedPrecedences = new EObjectContainmentEList<Precedence>(Precedence.class, this, PackageImpl.PACKAGE_FEATURE_COUNT + 0);
+			ownedPrecedences = new EObjectContainmentEList<Precedence>(Precedence.class, this, 14);
 		}
 		return ownedPrecedences;
 	}
@@ -137,7 +137,7 @@ public class LibraryImpl extends PackageImpl implements Library
 				return ((InternalEList<?>)getOwnedProfileApplications()).basicRemove(otherEnd, msgs);
 			case 13:
 				return basicSetOwningPackage(null, msgs);
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return ((InternalEList<?>)getOwnedPrecedences()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -181,7 +181,7 @@ public class LibraryImpl extends PackageImpl implements Library
 				return getOwnedProfileApplications();
 			case 13:
 				return getOwningPackage();
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return getOwnedPrecedences();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -250,7 +250,7 @@ public class LibraryImpl extends PackageImpl implements Library
 			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				getOwnedPrecedences().clear();
 				getOwnedPrecedences().addAll((Collection<? extends Precedence>)newValue);
 				return;
@@ -310,7 +310,7 @@ public class LibraryImpl extends PackageImpl implements Library
 			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				getOwnedPrecedences().clear();
 				return;
 		}
@@ -355,7 +355,7 @@ public class LibraryImpl extends PackageImpl implements Library
 				return ownedProfileApplications != null && !ownedProfileApplications.isEmpty();
 			case 13:
 				return getOwningPackage() != null;
-			case PackageImpl.PACKAGE_FEATURE_COUNT + 0:
+			case 14:
 				return ownedPrecedences != null && !ownedPrecedences.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

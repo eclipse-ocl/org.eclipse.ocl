@@ -174,7 +174,7 @@ implements Constraint {
 	{
 		if (constrainedElements == null)
 		{
-			constrainedElements = new EObjectResolvingEList<Element>(Element.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+			constrainedElements = new EObjectResolvingEList<Element>(Element.class, this, 5);
 		}
 		return constrainedElements;
 	}
@@ -200,7 +200,7 @@ implements Constraint {
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -218,14 +218,14 @@ implements Constraint {
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, LanguageExpression.class, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, 10, LanguageExpression.class, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, LanguageExpression.class, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, 10, LanguageExpression.class, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, newOwnedSpecification, newOwnedSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -236,7 +236,7 @@ implements Constraint {
 	@Override
 	public Operation getOwningPostContext()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4)) return null;
+		if (eContainerFeatureID() != (9)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -247,7 +247,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningPostContext(Operation newOwningPostContext, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPostContext, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPostContext, 9, msgs);
 		return msgs;
 	}
 
@@ -259,7 +259,7 @@ implements Constraint {
 	@Override
 	public void setOwningPostContext(Operation newOwningPostContext)
 	{
-		if (newOwningPostContext != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4) && newOwningPostContext != null))
+		if (newOwningPostContext != eInternalContainer() || (eContainerFeatureID() != (9) && newOwningPostContext != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPostContext))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -267,12 +267,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPostContext != null)
-				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, 21, Operation.class, msgs);
 			msgs = basicSetOwningPostContext(newOwningPostContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4, newOwningPostContext, newOwningPostContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwningPostContext, newOwningPostContext));
 	}
 
 	/**
@@ -283,7 +283,7 @@ implements Constraint {
 	@Override
 	public Operation getOwningPreContext()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (Operation)eInternalContainer();
 	}
 
@@ -294,7 +294,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningPreContext(Operation newOwningPreContext, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPreContext, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPreContext, 10, msgs);
 		return msgs;
 	}
 
@@ -306,7 +306,7 @@ implements Constraint {
 	@Override
 	public void setOwningPreContext(Operation newOwningPreContext)
 	{
-		if (newOwningPreContext != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5) && newOwningPreContext != null))
+		if (newOwningPreContext != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningPreContext != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPreContext))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -314,12 +314,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPreContext != null)
-				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, 22, Operation.class, msgs);
 			msgs = basicSetOwningPreContext(newOwningPreContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5, newOwningPreContext, newOwningPreContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningPreContext, newOwningPreContext));
 	}
 
 	/**
@@ -333,7 +333,7 @@ implements Constraint {
 		boolean oldIsCallable = (eFlags & IS_CALLABLE_EFLAG) != 0;
 		if (newIsCallable) eFlags |= IS_CALLABLE_EFLAG; else eFlags &= ~IS_CALLABLE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, oldIsCallable, newIsCallable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldIsCallable, newIsCallable));
 	}
 
 	/**
@@ -344,7 +344,7 @@ implements Constraint {
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6)) return null;
+		if (eContainerFeatureID() != (11)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -355,7 +355,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, 11, msgs);
 		return msgs;
 	}
 
@@ -367,7 +367,7 @@ implements Constraint {
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6) && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (11) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -375,12 +375,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, 20, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwningState, newOwningState));
 	}
 
 	/**
@@ -391,7 +391,7 @@ implements Constraint {
 	@Override
 	public Transition getOwningTransition()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7)) return null;
+		if (eContainerFeatureID() != (12)) return null;
 		return (Transition)eInternalContainer();
 	}
 
@@ -402,7 +402,7 @@ implements Constraint {
 	 */
 	public NotificationChain basicSetOwningTransition(Transition newOwningTransition, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, 12, msgs);
 		return msgs;
 	}
 
@@ -414,7 +414,7 @@ implements Constraint {
 	@Override
 	public void setOwningTransition(Transition newOwningTransition)
 	{
-		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7) && newOwningTransition != null))
+		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (12) && newOwningTransition != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningTransition))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -422,12 +422,12 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningTransition != null)
-				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Transition.class, msgs);
+				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, 8, Transition.class, msgs);
 			msgs = basicSetOwningTransition(newOwningTransition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, newOwningTransition, newOwningTransition));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwningTransition, newOwningTransition));
 	}
 
 	/**
@@ -440,7 +440,7 @@ implements Constraint {
 	{
 		if (redefinedConstraints == null)
 		{
-			redefinedConstraints = new EObjectResolvingEList<Constraint>(Constraint.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8);
+			redefinedConstraints = new EObjectResolvingEList<Constraint>(Constraint.class, this, 13);
 		}
 		return redefinedConstraints;
 	}
@@ -539,23 +539,23 @@ implements Constraint {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				if (ownedSpecification != null)
-					msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3), null, msgs);
+					msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 				return basicSetOwnedSpecification((LanguageExpression)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPostContext((Operation)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPreContext((Operation)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningTransition((Transition)otherEnd, msgs);
@@ -581,15 +581,15 @@ implements Constraint {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return basicSetOwnedSpecification(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return basicSetOwningPostContext(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				return basicSetOwningPreContext(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				return basicSetOwningState(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				return basicSetOwningTransition(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -605,14 +605,14 @@ implements Constraint {
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
-				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 10, Operation.class, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
-				return eInternalContainer().eInverseRemove(this, FeatureImpl.FEATURE_FEATURE_COUNT + 11, Operation.class, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, State.class, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Transition.class, msgs);
+			case 9:
+				return eInternalContainer().eInverseRemove(this, 21, Operation.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 22, Operation.class, msgs);
+			case 11:
+				return eInternalContainer().eInverseRemove(this, 20, State.class, msgs);
+			case 12:
+				return eInternalContainer().eInverseRemove(this, 8, Transition.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -636,23 +636,23 @@ implements Constraint {
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getConstrainedElements();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getContext();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return isIsCallable();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return getOwnedSpecification();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return getOwningPostContext();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				return getOwningPreContext();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				return getOwningState();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				return getOwningTransition();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
+			case 13:
 				return getRedefinedConstraints();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -687,29 +687,29 @@ implements Constraint {
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getConstrainedElements().clear();
 				getConstrainedElements().addAll((Collection<? extends Element>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setIsCallable((Boolean)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				setOwnedSpecification((LanguageExpression)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				setOwningPostContext((Operation)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				setOwningPreContext((Operation)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				setOwningState((State)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				setOwningTransition((Transition)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
+			case 13:
 				getRedefinedConstraints().clear();
 				getRedefinedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
@@ -741,28 +741,28 @@ implements Constraint {
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getConstrainedElements().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setIsCallable(IS_CALLABLE_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				setOwnedSpecification((LanguageExpression)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				setOwningPostContext((Operation)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				setOwningPreContext((Operation)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				setOwningState((State)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				setOwningTransition((Transition)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
+			case 13:
 				getRedefinedConstraints().clear();
 				return;
 		}
@@ -788,23 +788,23 @@ implements Constraint {
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return constrainedElements != null && !constrainedElements.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getContext() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return ((eFlags & IS_CALLABLE_EFLAG) != 0) != IS_CALLABLE_EDEFAULT;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return ownedSpecification != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return getOwningPostContext() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5:
+			case 10:
 				return getOwningPreContext() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6:
+			case 11:
 				return getOwningState() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7:
+			case 12:
 				return getOwningTransition() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8:
+			case 13:
 				return redefinedConstraints != null && !redefinedConstraints.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -825,9 +825,9 @@ implements Constraint {
 				return allOwnedElements();
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
+			case 2:
 				return validateBooleanValued((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1:
+			case 3:
 				return validateUniqueName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

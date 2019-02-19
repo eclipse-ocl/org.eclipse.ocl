@@ -173,7 +173,7 @@ implements Feature {
 		String oldImplementationClass = implementationClass;
 		implementationClass = newImplementationClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1, oldImplementationClass, implementationClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldImplementationClass, implementationClass));
 	}
 
 	/**
@@ -198,7 +198,7 @@ implements Feature {
 		boolean oldIsStatic = (eFlags & IS_STATIC_EFLAG) != 0;
 		if (newIsStatic) eFlags |= IS_STATIC_EFLAG; else eFlags &= ~IS_STATIC_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2, oldIsStatic, newIsStatic));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldIsStatic, newIsStatic));
 	}
 
 	/**
@@ -353,7 +353,7 @@ implements Feature {
 		LibraryFeature oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldImplementation, implementation));
 	}
 
 	/**
@@ -383,11 +383,11 @@ implements Feature {
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return getImplementation();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				return getImplementationClass();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2:
+			case 10:
 				return isIsStatic();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -429,13 +429,13 @@ implements Feature {
 			case 7:
 				setType((Type)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setImplementation((LibraryFeature)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				setImplementationClass((String)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2:
+			case 10:
 				setIsStatic((Boolean)newValue);
 				return;
 		}
@@ -473,13 +473,13 @@ implements Feature {
 			case 7:
 				setType((Type)null);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setImplementation(IMPLEMENTATION_EDEFAULT);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				setImplementationClass(IMPLEMENTATION_CLASS_EDEFAULT);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2:
+			case 10:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
 		}
@@ -512,11 +512,11 @@ implements Feature {
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return IMPLEMENTATION_EDEFAULT == null ? implementation != null : !IMPLEMENTATION_EDEFAULT.equals(implementation);
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				return IMPLEMENTATION_CLASS_EDEFAULT == null ? implementationClass != null : !IMPLEMENTATION_CLASS_EDEFAULT.equals(implementationClass);
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2:
+			case 10:
 				return ((eFlags & IS_STATIC_EFLAG) != 0) != IS_STATIC_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
@@ -539,11 +539,11 @@ implements Feature {
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
+			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

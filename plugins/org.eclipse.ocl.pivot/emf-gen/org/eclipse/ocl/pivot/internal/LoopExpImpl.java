@@ -177,7 +177,7 @@ implements LoopExp {
 		ownedBody = newOwnedBody;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0, oldOwnedBody, newOwnedBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedBody, newOwnedBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -194,14 +194,14 @@ implements LoopExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedBody != null)
-				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CallExpImpl.CALL_EXP_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			if (newOwnedBody != null)
-				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CallExpImpl.CALL_EXP_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			msgs = basicSetOwnedBody(newOwnedBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0, newOwnedBody, newOwnedBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedBody, newOwnedBody));
 	}
 
 	/**
@@ -214,7 +214,7 @@ implements LoopExp {
 	{
 		if (ownedCoIterators == null)
 		{
-			ownedCoIterators = new EObjectContainmentEList<Variable>(Variable.class, this, CallExpImpl.CALL_EXP_FEATURE_COUNT + 1);
+			ownedCoIterators = new EObjectContainmentEList<Variable>(Variable.class, this, 13);
 		}
 		return ownedCoIterators;
 	}
@@ -229,7 +229,7 @@ implements LoopExp {
 	{
 		if (ownedIterators == null)
 		{
-			ownedIterators = new EObjectContainmentEList<Variable>(Variable.class, this, CallExpImpl.CALL_EXP_FEATURE_COUNT + 2);
+			ownedIterators = new EObjectContainmentEList<Variable>(Variable.class, this, 14);
 		}
 		return ownedIterators;
 	}
@@ -249,7 +249,7 @@ implements LoopExp {
 			if (referredIteration != oldReferredIteration)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CallExpImpl.CALL_EXP_FEATURE_COUNT + 3, oldReferredIteration, referredIteration));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredIteration, referredIteration));
 			}
 		}
 		return referredIteration;
@@ -276,7 +276,7 @@ implements LoopExp {
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpImpl.CALL_EXP_FEATURE_COUNT + 3, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -723,11 +723,11 @@ implements LoopExp {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return basicSetOwnedSource(null, msgs);
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				return basicSetOwnedBody(null, msgs);
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 1:
+			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 2:
+			case 14:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -767,13 +767,13 @@ implements LoopExp {
 				return isIsSafe();
 			case 11:
 				return getOwnedSource();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				return getOwnedBody();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 1:
+			case 13:
 				return getOwnedCoIterators();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 2:
+			case 14:
 				return getOwnedIterators();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 3:
+			case 15:
 				if (resolve) return getReferredIteration();
 				return basicGetReferredIteration();
 		}
@@ -827,18 +827,18 @@ implements LoopExp {
 			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				setOwnedBody((OCLExpression)newValue);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 1:
+			case 13:
 				getOwnedCoIterators().clear();
 				getOwnedCoIterators().addAll((Collection<? extends Variable>)newValue);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 2:
+			case 14:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends Variable>)newValue);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 3:
+			case 15:
 				setReferredIteration((Iteration)newValue);
 				return;
 		}
@@ -887,16 +887,16 @@ implements LoopExp {
 			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				setOwnedBody((OCLExpression)null);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 1:
+			case 13:
 				getOwnedCoIterators().clear();
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 2:
+			case 14:
 				getOwnedIterators().clear();
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 3:
+			case 15:
 				setReferredIteration((Iteration)null);
 				return;
 		}
@@ -936,13 +936,13 @@ implements LoopExp {
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
 				return ownedSource != null;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				return ownedBody != null;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 1:
+			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 2:
+			case 14:
 				return ownedIterators != null && !ownedIterators.isEmpty();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 3:
+			case 15:
 				return referredIteration != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -977,17 +977,17 @@ implements LoopExp {
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 0:
+			case 9:
 				return validateMatchingMapCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 1:
+			case 10:
 				return validateNoCoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 2:
+			case 11:
 				return validateNoCollectionCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 3:
+			case 12:
 				return validateNoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 4:
+			case 13:
 				return validateSourceIsCollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case CallExpImpl.CALL_EXP_OPERATION_COUNT + 5:
+			case 14:
 				return validateSourceIsIterable((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

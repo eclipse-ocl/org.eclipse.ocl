@@ -106,7 +106,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 	{
 		if (ownedExtenders == null)
 		{
-			ownedExtenders = new EObjectContainmentWithInverseEList<StereotypeExtender>(StereotypeExtender.class, this, ClassImpl.CLASS_FEATURE_COUNT + 0, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+			ownedExtenders = new EObjectContainmentWithInverseEList<StereotypeExtender>(StereotypeExtender.class, this, 20, 6);
 		}
 		return ownedExtenders;
 	}
@@ -144,7 +144,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtenders()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -186,7 +186,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return ((InternalEList<?>)getOwnedExtenders()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -242,7 +242,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getOwnedExtenders();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -331,7 +331,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				getOwnedExtenders().clear();
 				getOwnedExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
@@ -409,7 +409,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				getOwnedExtenders().clear();
 				return;
 		}
@@ -466,7 +466,7 @@ public class StereotypeImpl extends ClassImpl implements Stereotype
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return ownedExtenders != null && !ownedExtenders.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

@@ -123,7 +123,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 			if (importedNamespace != oldImportedNamespace)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldImportedNamespace, importedNamespace));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 5, oldImportedNamespace, importedNamespace));
 			}
 		}
 		return importedNamespace;
@@ -150,7 +150,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldImportedNamespace, importedNamespace));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldImportedNamespace, importedNamespace));
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 		Number oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldXmiidVersion, xmiidVersion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldXmiidVersion, xmiidVersion));
 	}
 
 	/**
@@ -200,10 +200,10 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				if (resolve) return getImportedNamespace();
 				return basicGetImportedNamespace();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -239,10 +239,10 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setImportedNamespace((Namespace)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setXmiidVersion((Number)newValue);
 				return;
 		}
@@ -274,10 +274,10 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setImportedNamespace((Namespace)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setXmiidVersion(XMIID_VERSION_EDEFAULT);
 				return;
 		}
@@ -304,9 +304,9 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return importedNamespace != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);

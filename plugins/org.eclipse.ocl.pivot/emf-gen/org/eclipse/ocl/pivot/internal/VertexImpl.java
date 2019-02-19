@@ -114,7 +114,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	{
 		if (incomingTransitions == null)
 		{
-			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
+			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, 5, 12);
 		}
 		return incomingTransitions;
 	}
@@ -129,7 +129,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	{
 		if (outgoingTransitions == null)
 		{
-			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
+			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, 6, 11);
 		}
 		return outgoingTransitions;
 	}
@@ -142,7 +142,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	@Override
 	public Region getOwningRegion()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (Region)eInternalContainer();
 	}
 
@@ -153,7 +153,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	 */
 	public NotificationChain basicSetOwningRegion(Region newOwningRegion, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, 7, msgs);
 		return msgs;
 	}
 
@@ -165,7 +165,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	@Override
 	public void setOwningRegion(Region newOwningRegion)
 	{
-		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2) && newOwningRegion != null))
+		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningRegion != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningRegion))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -173,12 +173,12 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningRegion != null)
-				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
+				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, 7, Region.class, msgs);
 			msgs = basicSetOwningRegion(newOwningRegion, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, newOwningRegion, newOwningRegion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningRegion, newOwningRegion));
 	}
 
 	/**
@@ -198,11 +198,11 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
@@ -228,11 +228,11 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return basicSetOwningRegion(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -248,8 +248,8 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 7, Region.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -274,11 +274,11 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getIncomingTransitions();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOutgoingTransitions();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningRegion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -314,7 +314,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningRegion((Region)newValue);
 				return;
 		}
@@ -346,7 +346,7 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningRegion((Region)null);
 				return;
 		}
@@ -373,11 +373,11 @@ public abstract class VertexImpl extends NamedElementImpl implements Vertex
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return incomingTransitions != null && !incomingTransitions.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningRegion() != null;
 		}
 		return eDynamicIsSet(featureID);

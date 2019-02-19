@@ -125,7 +125,7 @@ public class CollectionRangeImpl
 		ownedFirst = newOwnedFirst;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, oldOwnedFirst, newOwnedFirst);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedFirst, newOwnedFirst);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -142,14 +142,14 @@ public class CollectionRangeImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedFirst != null)
-				msgs = ((InternalEObject)ownedFirst).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedFirst).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedFirst != null)
-				msgs = ((InternalEObject)newOwnedFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedFirst(newOwnedFirst, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0, newOwnedFirst, newOwnedFirst));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedFirst, newOwnedFirst));
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class CollectionRangeImpl
 		ownedLast = newOwnedLast;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1, oldOwnedLast, newOwnedLast);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldOwnedLast, newOwnedLast);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -190,14 +190,14 @@ public class CollectionRangeImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedLast != null)
-				msgs = ((InternalEObject)ownedLast).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedLast).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			if (newOwnedLast != null)
-				msgs = ((InternalEObject)newOwnedLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			msgs = basicSetOwnedLast(newOwnedLast, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1, newOwnedLast, newOwnedLast));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwnedLast, newOwnedLast));
 	}
 
 	/**
@@ -218,9 +218,9 @@ public class CollectionRangeImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return basicSetOwnedFirst(null, msgs);
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
+			case 9:
 				return basicSetOwnedLast(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -252,9 +252,9 @@ public class CollectionRangeImpl
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return getOwnedFirst();
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
+			case 9:
 				return getOwnedLast();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -295,10 +295,10 @@ public class CollectionRangeImpl
 			case 7:
 				setType((Type)newValue);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedFirst((OCLExpression)newValue);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
+			case 9:
 				setOwnedLast((OCLExpression)newValue);
 				return;
 		}
@@ -335,10 +335,10 @@ public class CollectionRangeImpl
 			case 7:
 				setType((Type)null);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedFirst((OCLExpression)null);
 				return;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
+			case 9:
 				setOwnedLast((OCLExpression)null);
 				return;
 		}
@@ -370,9 +370,9 @@ public class CollectionRangeImpl
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0:
+			case 8:
 				return ownedFirst != null;
-			case CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1:
+			case 9:
 				return ownedLast != null;
 		}
 		return eDynamicIsSet(featureID);

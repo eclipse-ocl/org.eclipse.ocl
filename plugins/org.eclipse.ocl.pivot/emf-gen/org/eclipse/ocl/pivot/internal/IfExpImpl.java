@@ -177,7 +177,7 @@ implements IfExp {
 		boolean oldIsElseIf = (eFlags & IS_ELSE_IF_EFLAG) != 0;
 		if (newIsElseIf) eFlags |= IS_ELSE_IF_EFLAG; else eFlags &= ~IS_ELSE_IF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldIsElseIf, newIsElseIf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsElseIf, newIsElseIf));
 	}
 
 	/**
@@ -201,7 +201,7 @@ implements IfExp {
 		ownedCondition = newOwnedCondition;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, oldOwnedCondition, newOwnedCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldOwnedCondition, newOwnedCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -218,14 +218,14 @@ implements IfExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedCondition != null)
-				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			if (newOwnedCondition != null)
-				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			msgs = basicSetOwnedCondition(newOwnedCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1, newOwnedCondition, newOwnedCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwnedCondition, newOwnedCondition));
 	}
 
 	/**
@@ -249,7 +249,7 @@ implements IfExp {
 		ownedThen = newOwnedThen;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, oldOwnedThen, newOwnedThen);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedThen, newOwnedThen);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -266,14 +266,14 @@ implements IfExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedThen != null)
-				msgs = ((InternalEObject)ownedThen).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)ownedThen).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			if (newOwnedThen != null)
-				msgs = ((InternalEObject)newOwnedThen).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)newOwnedThen).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			msgs = basicSetOwnedThen(newOwnedThen, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3, newOwnedThen, newOwnedThen));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedThen, newOwnedThen));
 	}
 
 	/**
@@ -297,7 +297,7 @@ implements IfExp {
 		ownedElse = newOwnedElse;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, oldOwnedElse, newOwnedElse);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedElse, newOwnedElse);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -314,14 +314,14 @@ implements IfExp {
 		{
 			NotificationChain msgs = null;
 			if (ownedElse != null)
-				msgs = ((InternalEObject)ownedElse).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedElse).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newOwnedElse != null)
-				msgs = ((InternalEObject)newOwnedElse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedElse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetOwnedElse(newOwnedElse, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2, newOwnedElse, newOwnedElse));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedElse, newOwnedElse));
 	}
 
 	/**
@@ -432,11 +432,11 @@ implements IfExp {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwnedCondition(null, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return basicSetOwnedElse(null, msgs);
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return basicSetOwnedThen(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -470,13 +470,13 @@ implements IfExp {
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return isIsElseIf();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedCondition();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return getOwnedElse();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return getOwnedThen();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -520,16 +520,16 @@ implements IfExp {
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsElseIf((Boolean)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedCondition((OCLExpression)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedElse((OCLExpression)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				setOwnedThen((OCLExpression)newValue);
 				return;
 		}
@@ -569,16 +569,16 @@ implements IfExp {
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setIsElseIf(IS_ELSE_IF_EDEFAULT);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				setOwnedCondition((OCLExpression)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				setOwnedElse((OCLExpression)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				setOwnedThen((OCLExpression)null);
 				return;
 		}
@@ -612,13 +612,13 @@ implements IfExp {
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return ((eFlags & IS_ELSE_IF_EFLAG) != 0) != IS_ELSE_IF_EDEFAULT;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1:
+			case 10:
 				return ownedCondition != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2:
+			case 11:
 				return ownedElse != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3:
+			case 12:
 				return ownedThen != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -647,9 +647,9 @@ implements IfExp {
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateConditionTypeIsBoolean((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1:
+			case 7:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

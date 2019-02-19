@@ -106,7 +106,7 @@ public class PrimitiveTypeImpl
 	{
 		if (coercions == null)
 		{
-			coercions = new EObjectResolvingEList<Operation>(Operation.class, this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0);
+			coercions = new EObjectResolvingEList<Operation>(Operation.class, this, 23);
 		}
 		return coercions;
 	}
@@ -168,7 +168,7 @@ public class PrimitiveTypeImpl
 				return isIsSerializable();
 			case 22:
 				return getValue();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return getCoercions();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -263,7 +263,7 @@ public class PrimitiveTypeImpl
 			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				getCoercions().clear();
 				getCoercions().addAll((Collection<? extends Operation>)newValue);
 				return;
@@ -347,7 +347,7 @@ public class PrimitiveTypeImpl
 			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				getCoercions().clear();
 				return;
 		}
@@ -410,7 +410,7 @@ public class PrimitiveTypeImpl
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return coercions != null && !coercions.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

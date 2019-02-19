@@ -143,17 +143,17 @@ public abstract class ValueSpecificationImpl
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
+			case 3:
 				return booleanValue();
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
+			case 4:
 				return integerValue();
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
+			case 5:
 				return isComputable();
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 3:
+			case 6:
 				return isNull();
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 4:
+			case 7:
 				return stringValue();
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 5:
+			case 8:
 				return unlimitedValue();
 		}
 		return eDynamicInvoke(operationID, arguments);

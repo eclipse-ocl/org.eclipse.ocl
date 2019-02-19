@@ -451,7 +451,7 @@ implements Property {
 			if (associationClass != oldAssociationClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 0, oldAssociationClass, associationClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 11, oldAssociationClass, associationClass));
 			}
 		}
 		return associationClass;
@@ -478,7 +478,7 @@ implements Property {
 		associationClass = newAssociationClass;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 0, oldAssociationClass, newAssociationClass);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldAssociationClass, newAssociationClass);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -496,14 +496,14 @@ implements Property {
 		{
 			NotificationChain msgs = null;
 			if (associationClass != null)
-				msgs = ((InternalEObject)associationClass).eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)associationClass).eInverseRemove(this, 20, AssociationClass.class, msgs);
 			if (newAssociationClass != null)
-				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, 20, AssociationClass.class, msgs);
 			msgs = basicSetAssociationClass(newAssociationClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 0, newAssociationClass, newAssociationClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newAssociationClass, newAssociationClass));
 	}
 
 	/**
@@ -516,7 +516,7 @@ implements Property {
 		boolean oldIsReadOnly = (eFlags & IS_READ_ONLY_EFLAG) != 0;
 		if (newIsReadOnly) eFlags |= IS_READ_ONLY_EFLAG; else eFlags &= ~IS_READ_ONLY_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 7, oldIsReadOnly, newIsReadOnly));
+			eNotify(new ENotificationImpl(this, Notification.SET, 18, oldIsReadOnly, newIsReadOnly));
 	}
 
 	/**
@@ -540,7 +540,7 @@ implements Property {
 		boolean oldIsComposite = (eFlags & IS_COMPOSITE_EFLAG) != 0;
 		if (newIsComposite) eFlags |= IS_COMPOSITE_EFLAG; else eFlags &= ~IS_COMPOSITE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 3, oldIsComposite, newIsComposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldIsComposite, newIsComposite));
 	}
 
 	/**
@@ -564,7 +564,7 @@ implements Property {
 		boolean oldIsDerived = (eFlags & IS_DERIVED_EFLAG) != 0;
 		if (newIsDerived) eFlags |= IS_DERIVED_EFLAG; else eFlags &= ~IS_DERIVED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 4, oldIsDerived, newIsDerived));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldIsDerived, newIsDerived));
 	}
 
 	/**
@@ -592,7 +592,7 @@ implements Property {
 			if (opposite != oldOpposite)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldOpposite, opposite));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 24, oldOpposite, opposite));
 			}
 		}
 		return opposite;
@@ -617,7 +617,7 @@ implements Property {
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 13, oldOpposite, opposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldOpposite, opposite));
 	}
 
 	/**
@@ -642,7 +642,7 @@ implements Property {
 		ownedExpression = newOwnedExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 14, oldOwnedExpression, newOwnedExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 25, oldOwnedExpression, newOwnedExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -660,14 +660,14 @@ implements Property {
 		{
 			NotificationChain msgs = null;
 			if (ownedExpression != null)
-				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 14), null, msgs);
+				msgs = ((InternalEObject)ownedExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (25), null, msgs);
 			if (newOwnedExpression != null)
-				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (FeatureImpl.FEATURE_FEATURE_COUNT + 14), null, msgs);
+				msgs = ((InternalEObject)newOwnedExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (25), null, msgs);
 			msgs = basicSetOwnedExpression(newOwnedExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 14, newOwnedExpression, newOwnedExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, newOwnedExpression, newOwnedExpression));
 	}
 
 	/**
@@ -681,7 +681,7 @@ implements Property {
 		boolean oldIsImplicit = (eFlags & IS_IMPLICIT_EFLAG) != 0;
 		if (newIsImplicit) eFlags |= IS_IMPLICIT_EFLAG; else eFlags &= ~IS_IMPLICIT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 6, oldIsImplicit, newIsImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 17, oldIsImplicit, newIsImplicit));
 	}
 
 	/**
@@ -790,7 +790,7 @@ implements Property {
 		String oldDefaultValueString = defaultValueString;
 		defaultValueString = newDefaultValueString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 2, oldDefaultValueString, defaultValueString));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldDefaultValueString, defaultValueString));
 	}
 	@Override
 	public void setDefaultValueString(String newDefaultValueString)
@@ -824,7 +824,7 @@ implements Property {
 		boolean oldIsID = (eFlags & IS_ID_EFLAG) != 0;
 		if (newIsID) eFlags |= IS_ID_EFLAG; else eFlags &= ~IS_ID_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 5, oldIsID, newIsID));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, oldIsID, newIsID));
 	}
 
 	/**
@@ -849,7 +849,7 @@ implements Property {
 	{
 		if (keys == null)
 		{
-			keys = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 12);
+			keys = new EObjectResolvingEList<Property>(Property.class, this, 23);
 		}
 		return keys;
 	}
@@ -865,7 +865,7 @@ implements Property {
 		boolean oldIsResolveProxies = (eFlags & IS_RESOLVE_PROXIES_EFLAG) != 0;
 		if (newIsResolveProxies) eFlags |= IS_RESOLVE_PROXIES_EFLAG; else eFlags &= ~IS_RESOLVE_PROXIES_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 8, oldIsResolveProxies, newIsResolveProxies));
+			eNotify(new ENotificationImpl(this, Notification.SET, 19, oldIsResolveProxies, newIsResolveProxies));
 	}
 
 	/**
@@ -890,7 +890,7 @@ implements Property {
 		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
 		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 9, oldIsTransient, newIsTransient));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -915,7 +915,7 @@ implements Property {
 		boolean oldIsUnsettable = (eFlags & IS_UNSETTABLE_EFLAG) != 0;
 		if (newIsUnsettable) eFlags |= IS_UNSETTABLE_EFLAG; else eFlags &= ~IS_UNSETTABLE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 10, oldIsUnsettable, newIsUnsettable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldIsUnsettable, newIsUnsettable));
 	}
 
 	/**
@@ -940,7 +940,7 @@ implements Property {
 		boolean oldIsVolatile = (eFlags & IS_VOLATILE_EFLAG) != 0;
 		if (newIsVolatile) eFlags |= IS_VOLATILE_EFLAG; else eFlags &= ~IS_VOLATILE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 11, oldIsVolatile, newIsVolatile));
+			eNotify(new ENotificationImpl(this, Notification.SET, 22, oldIsVolatile, newIsVolatile));
 	}
 
 	/**
@@ -953,7 +953,7 @@ implements Property {
 	{
 		if (subsettedProperty == null)
 		{
-			subsettedProperty = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 18);
+			subsettedProperty = new EObjectResolvingEList<Property>(Property.class, this, 29);
 		}
 		return subsettedProperty;
 	}
@@ -973,7 +973,7 @@ implements Property {
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureImpl.FEATURE_FEATURE_COUNT + 17, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 28, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -1000,7 +1000,7 @@ implements Property {
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 17, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 28, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -1150,11 +1150,11 @@ implements Property {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				if (associationClass != null)
-					msgs = ((InternalEObject)associationClass).eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, AssociationClass.class, msgs);
+					msgs = ((InternalEObject)associationClass).eInverseRemove(this, 20, AssociationClass.class, msgs);
 				return basicSetAssociationClass((AssociationClass)otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
@@ -1180,11 +1180,11 @@ implements Property {
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				return basicSetAssociationClass(null, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				return basicSetOwnedExpression(null, msgs);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				return basicSetOwningClass(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1200,8 +1200,8 @@ implements Property {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
-				return eInternalContainer().eInverseRemove(this, TypeImpl.TYPE_FEATURE_COUNT + 12, org.eclipse.ocl.pivot.Class.class, msgs);
+			case 26:
+				return eInternalContainer().eInverseRemove(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1238,46 +1238,46 @@ implements Property {
 				return getImplementationClass();
 			case 10:
 				return isIsStatic();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				if (resolve) return getAssociationClass();
 				return basicGetAssociationClass();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return getDefaultValue();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				return getDefaultValueString();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				return isIsComposite();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				return isIsDerived();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				return isIsID();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				return isIsImplicit();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				return isIsReadOnly();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				return isIsResolveProxies();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return isIsTransient();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return isIsUnsettable();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return isIsVolatile();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				return getKeys();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				if (resolve) return getOpposite();
 				return basicGetOpposite();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				return getOwnedExpression();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				return getOwningClass();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
+			case 27:
 				return getRedefinedProperties();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
+			case 28:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
+			case 29:
 				return getSubsettedProperty();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -1327,63 +1327,63 @@ implements Property {
 			case 10:
 				setIsStatic((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				setAssociationClass((AssociationClass)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				setDefaultValue(newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				setDefaultValueString((String)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				setIsComposite((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				setIsDerived((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				setIsID((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				setIsImplicit((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				setIsReadOnly((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				setIsResolveProxies((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				setIsTransient((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				setIsUnsettable((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				setIsVolatile((Boolean)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				getKeys().clear();
 				getKeys().addAll((Collection<? extends Property>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				setOpposite((Property)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				setOwnedExpression((LanguageExpression)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
+			case 27:
 				getRedefinedProperties().clear();
 				getRedefinedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
+			case 28:
 				setReferredProperty((Property)newValue);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
+			case 29:
 				getSubsettedProperty().clear();
 				getSubsettedProperty().addAll((Collection<? extends Property>)newValue);
 				return;
@@ -1430,61 +1430,61 @@ implements Property {
 			case 10:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				setAssociationClass((AssociationClass)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				setDefaultValueString(DEFAULT_VALUE_STRING_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				setIsComposite(IS_COMPOSITE_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				setIsDerived(IS_DERIVED_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				setIsID(IS_ID_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				setIsReadOnly(IS_READ_ONLY_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				setIsResolveProxies(IS_RESOLVE_PROXIES_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				setIsUnsettable(IS_UNSETTABLE_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				setIsVolatile(IS_VOLATILE_EDEFAULT);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				getKeys().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				setOpposite((Property)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				setOwnedExpression((LanguageExpression)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
+			case 27:
 				getRedefinedProperties().clear();
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
+			case 28:
 				setReferredProperty((Property)null);
 				return;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
+			case 29:
 				getSubsettedProperty().clear();
 				return;
 		}
@@ -1522,43 +1522,43 @@ implements Property {
 				return IMPLEMENTATION_CLASS_EDEFAULT == null ? implementationClass != null : !IMPLEMENTATION_CLASS_EDEFAULT.equals(implementationClass);
 			case 10:
 				return ((eFlags & IS_STATIC_EFLAG) != 0) != IS_STATIC_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 0:
+			case 11:
 				return associationClass != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 1:
+			case 12:
 				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 2:
+			case 13:
 				return DEFAULT_VALUE_STRING_EDEFAULT == null ? defaultValueString != null : !DEFAULT_VALUE_STRING_EDEFAULT.equals(defaultValueString);
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 3:
+			case 14:
 				return ((eFlags & IS_COMPOSITE_EFLAG) != 0) != IS_COMPOSITE_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 4:
+			case 15:
 				return ((eFlags & IS_DERIVED_EFLAG) != 0) != IS_DERIVED_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 5:
+			case 16:
 				return ((eFlags & IS_ID_EFLAG) != 0) != IS_ID_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 6:
+			case 17:
 				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 7:
+			case 18:
 				return ((eFlags & IS_READ_ONLY_EFLAG) != 0) != IS_READ_ONLY_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 8:
+			case 19:
 				return ((eFlags & IS_RESOLVE_PROXIES_EFLAG) != 0) != IS_RESOLVE_PROXIES_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 9:
+			case 20:
 				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 10:
+			case 21:
 				return ((eFlags & IS_UNSETTABLE_EFLAG) != 0) != IS_UNSETTABLE_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 11:
+			case 22:
 				return ((eFlags & IS_VOLATILE_EFLAG) != 0) != IS_VOLATILE_EDEFAULT;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 12:
+			case 23:
 				return keys != null && !keys.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 13:
+			case 24:
 				return opposite != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 14:
+			case 25:
 				return ownedExpression != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 15:
+			case 26:
 				return getOwningClass() != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 16:
+			case 27:
 				return redefinedProperties != null && !redefinedProperties.isEmpty();
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 17:
+			case 28:
 				return referredProperty != null;
-			case FeatureImpl.FEATURE_FEATURE_COUNT + 18:
+			case 29:
 				return subsettedProperty != null && !subsettedProperty.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1587,9 +1587,9 @@ implements Property {
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 0:
+			case 6:
 				return isAttribute((Property)arguments.get(0));
-			case FeatureImpl.FEATURE_OPERATION_COUNT + 1:
+			case 7:
 				return validateCompatibleDefaultExpression((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -1617,7 +1617,7 @@ implements Property {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Class getOwningClass() {
-		if (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 15)) return null;
+		if (eContainerFeatureID() != (26)) return null;
 		return (org.eclipse.ocl.pivot.Class)eInternalContainer();
 	}
 
@@ -1628,7 +1628,7 @@ implements Property {
 	 */
 	public NotificationChain basicSetOwningClass(org.eclipse.ocl.pivot.Class newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureImpl.FEATURE_FEATURE_COUNT + 15, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 26, msgs);
 		return msgs;
 	}
 
@@ -1640,7 +1640,7 @@ implements Property {
 	@Override
 	public void setOwningClass(org.eclipse.ocl.pivot.Class newOwningClass)
 	{
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureImpl.FEATURE_FEATURE_COUNT + 15) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (26) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -1648,12 +1648,12 @@ implements Property {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, TypeImpl.TYPE_FEATURE_COUNT + 12, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureImpl.FEATURE_FEATURE_COUNT + 15, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 26, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -1667,7 +1667,7 @@ implements Property {
 	{
 		if (redefinedProperties == null)
 		{
-			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, FeatureImpl.FEATURE_FEATURE_COUNT + 16);
+			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, 27);
 		}
 		return redefinedProperties;
 	}

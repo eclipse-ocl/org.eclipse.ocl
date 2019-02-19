@@ -152,7 +152,7 @@ public class ExpressionInOCLImpl
 		ownedBody = newOwnedBody;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0, oldOwnedBody, newOwnedBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedBody, newOwnedBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -169,14 +169,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedBody != null)
-				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newOwnedBody != null)
-				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetOwnedBody(newOwnedBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0, newOwnedBody, newOwnedBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedBody, newOwnedBody));
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class ExpressionInOCLImpl
 		ownedContext = newOwnedContext;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1, oldOwnedContext, newOwnedContext);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedContext, newOwnedContext);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -217,14 +217,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedContext != null)
-				msgs = ((InternalEObject)ownedContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			if (newOwnedContext != null)
-				msgs = ((InternalEObject)newOwnedContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			msgs = basicSetOwnedContext(newOwnedContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1, newOwnedContext, newOwnedContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedContext, newOwnedContext));
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class ExpressionInOCLImpl
 		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3, oldOwnedResult, newOwnedResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldOwnedResult, newOwnedResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -265,14 +265,14 @@ public class ExpressionInOCLImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedResult != null)
-				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
 			if (newOwnedResult != null)
-				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
 			msgs = basicSetOwnedResult(newOwnedResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3, newOwnedResult, newOwnedResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, newOwnedResult, newOwnedResult));
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class ExpressionInOCLImpl
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentEList<Variable>(Variable.class, this, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2);
+			ownedParameters = new EObjectContainmentEList<Variable>(Variable.class, this, 13);
 		}
 		return ownedParameters;
 	}
@@ -311,13 +311,13 @@ public class ExpressionInOCLImpl
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 10:
 				return basicSetOwningConstraint(null, msgs);
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
+			case 11:
 				return basicSetOwnedBody(null, msgs);
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
+			case 12:
 				return basicSetOwnedContext(null, msgs);
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
+			case 13:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
+			case 14:
 				return basicSetOwnedResult(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -355,13 +355,13 @@ public class ExpressionInOCLImpl
 				return getLanguage();
 			case 10:
 				return getOwningConstraint();
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
+			case 11:
 				return getOwnedBody();
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
+			case 12:
 				return getOwnedContext();
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
+			case 13:
 				return getOwnedParameters();
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
+			case 14:
 				return getOwnedResult();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -408,17 +408,17 @@ public class ExpressionInOCLImpl
 			case 10:
 				setOwningConstraint((Constraint)newValue);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
+			case 11:
 				setOwnedBody((OCLExpression)newValue);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
+			case 12:
 				setOwnedContext((Variable)newValue);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
+			case 13:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Variable>)newValue);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
+			case 14:
 				setOwnedResult((Variable)newValue);
 				return;
 		}
@@ -461,16 +461,16 @@ public class ExpressionInOCLImpl
 			case 10:
 				setOwningConstraint((Constraint)null);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
+			case 11:
 				setOwnedBody((OCLExpression)null);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
+			case 12:
 				setOwnedContext((Variable)null);
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
+			case 13:
 				getOwnedParameters().clear();
 				return;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
+			case 14:
 				setOwnedResult((Variable)null);
 				return;
 		}
@@ -508,13 +508,13 @@ public class ExpressionInOCLImpl
 				return LANGUAGE_EDEFAULT == null ? getLanguage() != null : !LANGUAGE_EDEFAULT.equals(getLanguage());
 			case 10:
 				return getOwningConstraint() != null;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0:
+			case 11:
 				return ownedBody != null;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1:
+			case 12:
 				return ownedContext != null;
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2:
+			case 13:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3:
+			case 14:
 				return ownedResult != null;
 		}
 		return eDynamicIsSet(featureID);

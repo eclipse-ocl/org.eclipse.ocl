@@ -125,7 +125,7 @@ public abstract class TemplateableElementImpl
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 4, 5);
 		}
 		return ownedBindings;
 	}
@@ -151,7 +151,7 @@ public abstract class TemplateableElementImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -169,14 +169,14 @@ public abstract class TemplateableElementImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 1, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -201,7 +201,7 @@ public abstract class TemplateableElementImpl
 		TemplateableElement oldUnspecializedElement = unspecializedElement;
 		unspecializedElement = newUnspecializedElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -221,11 +221,11 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -249,9 +249,9 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return basicSetOwnedSignature(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -274,11 +274,11 @@ public abstract class TemplateableElementImpl
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getOwnedBindings();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getOwnedSignature();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return getUnspecializedElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -310,14 +310,14 @@ public abstract class TemplateableElementImpl
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setUnspecializedElement((TemplateableElement)newValue);
 				return;
 		}
@@ -345,13 +345,13 @@ public abstract class TemplateableElementImpl
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getOwnedBindings().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedSignature((TemplateSignature)null);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				setUnspecializedElement((TemplateableElement)null);
 				return;
 		}
@@ -375,11 +375,11 @@ public abstract class TemplateableElementImpl
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ownedBindings != null && !ownedBindings.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ownedSignature != null;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
+			case 6:
 				return unspecializedElement != null;
 		}
 		return eDynamicIsSet(featureID);

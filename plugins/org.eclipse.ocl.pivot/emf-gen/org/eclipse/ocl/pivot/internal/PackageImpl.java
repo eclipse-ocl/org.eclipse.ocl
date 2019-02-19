@@ -212,7 +212,7 @@ implements org.eclipse.ocl.pivot.Package {
 		String oldNsPrefix = nsPrefix;
 		nsPrefix = newNsPrefix;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, oldNsPrefix, nsPrefix));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldNsPrefix, nsPrefix));
 	}
 
 	/**
@@ -224,7 +224,7 @@ implements org.eclipse.ocl.pivot.Package {
 		String oldURI = uri;
 		uri = newURI;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldURI, uri));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldURI, uri));
 	}
 
 	/**
@@ -248,7 +248,7 @@ implements org.eclipse.ocl.pivot.Package {
 	{
 		if (importedPackages == null)
 		{
-			importedPackages = new EObjectResolvingEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
+			importedPackages = new EObjectResolvingEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, 7);
 		}
 		return importedPackages;
 	}
@@ -263,7 +263,7 @@ implements org.eclipse.ocl.pivot.Package {
 	{
 		if (ownedInstances == null)
 		{
-			ownedInstances = new EObjectContainmentWithInverseEList<InstanceSpecification>(InstanceSpecification.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3);
+			ownedInstances = new EObjectContainmentWithInverseEList<InstanceSpecification>(InstanceSpecification.class, this, 10, 8);
 		}
 		return ownedInstances;
 	}
@@ -275,7 +275,7 @@ implements org.eclipse.ocl.pivot.Package {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage() {
-		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7)) return null;
+		if (eContainerFeatureID() != (13)) return null;
 		return (org.eclipse.ocl.pivot.Package)eInternalContainer();
 	}
 
@@ -286,7 +286,7 @@ implements org.eclipse.ocl.pivot.Package {
 	 */
 	public NotificationChain basicSetOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, 13, msgs);
 		return msgs;
 	}
 
@@ -298,7 +298,7 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public void setOwningPackage(
 			org.eclipse.ocl.pivot.Package newOwningPackage) {
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7) && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (13) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -306,12 +306,12 @@ implements org.eclipse.ocl.pivot.Package {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPackage != null)
-				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5, org.eclipse.ocl.pivot.Package.class, msgs);
+				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, 11, org.eclipse.ocl.pivot.Package.class, msgs);
 			msgs = basicSetOwningPackage(newOwningPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -331,15 +331,15 @@ implements org.eclipse.ocl.pivot.Package {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedClasses()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedInstances()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPackages()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProfileApplications()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
@@ -367,15 +367,15 @@ implements org.eclipse.ocl.pivot.Package {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<?>)getOwnedClasses()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return ((InternalEList<?>)getOwnedInstances()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return ((InternalEList<?>)getOwnedProfileApplications()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -391,8 +391,8 @@ implements org.eclipse.ocl.pivot.Package {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5, org.eclipse.ocl.pivot.Package.class, msgs);
+			case 13:
+				return eInternalContainer().eInverseRemove(this, 11, org.eclipse.ocl.pivot.Package.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -418,21 +418,21 @@ implements org.eclipse.ocl.pivot.Package {
 				return getName();
 			case 5:
 				return getOwnedConstraints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return getURI();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return getImportedPackages();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getNsPrefix();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return getOwnedClasses();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return getOwnedInstances();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return getOwnedPackages();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return getOwnedProfileApplications();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return getOwningPackage();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -471,33 +471,33 @@ implements org.eclipse.ocl.pivot.Package {
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setURI((String)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getImportedPackages().clear();
 				getImportedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setNsPrefix((String)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedClasses().clear();
 				getOwnedClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				getOwnedInstances().clear();
 				getOwnedInstances().addAll((Collection<? extends InstanceSpecification>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				getOwnedProfileApplications().clear();
 				getOwnedProfileApplications().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
 		}
@@ -531,28 +531,28 @@ implements org.eclipse.ocl.pivot.Package {
 			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setURI(URI_EDEFAULT);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getImportedPackages().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setNsPrefix(NS_PREFIX_EDEFAULT);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedClasses().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				getOwnedInstances().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				getOwnedPackages().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				getOwnedProfileApplications().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 		}
@@ -580,21 +580,21 @@ implements org.eclipse.ocl.pivot.Package {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return importedPackages != null && !importedPackages.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return NS_PREFIX_EDEFAULT == null ? nsPrefix != null : !NS_PREFIX_EDEFAULT.equals(nsPrefix);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ownedClasses != null && !ownedClasses.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return ownedInstances != null && !ownedInstances.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return ownedPackages != null && !ownedPackages.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return ownedProfileApplications != null && !ownedProfileApplications.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return getOwningPackage() != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -723,7 +723,7 @@ implements org.eclipse.ocl.pivot.Package {
 	{
 		if (ownedProfileApplications == null)
 		{
-			ownedProfileApplications = new EObjectContainmentWithInverseEList<ProfileApplication>(ProfileApplication.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+			ownedProfileApplications = new EObjectContainmentWithInverseEList<ProfileApplication>(ProfileApplication.class, this, 12, 6);
 		}
 		return ownedProfileApplications;
 	}

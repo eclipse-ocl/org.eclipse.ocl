@@ -125,7 +125,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 5, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -152,7 +152,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 		String oldDefault = default_;
 		default_ = newDefault;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldDefault, default_));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldDefault, default_));
 	}
 
 	/**
@@ -198,9 +198,9 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getDefault();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -234,10 +234,10 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setDefault((String)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -266,10 +266,10 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setDefault(DEFAULT_EDEFAULT);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -294,9 +294,9 @@ public class DynamicPropertyImpl extends ElementImpl implements DynamicProperty
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return DEFAULT_EDEFAULT == null ? default_ != null : !DEFAULT_EDEFAULT.equals(default_);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);

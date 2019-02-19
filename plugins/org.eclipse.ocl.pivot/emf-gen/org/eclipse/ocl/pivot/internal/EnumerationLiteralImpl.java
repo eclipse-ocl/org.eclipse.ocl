@@ -152,7 +152,7 @@ implements EnumerationLiteral {
 		String oldLiteral = literal;
 		literal = newLiteral;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0, oldLiteral, literal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldLiteral, literal));
 	}
 
 	/**
@@ -163,7 +163,7 @@ implements EnumerationLiteral {
 	@Override
 	public Enumeration getOwningEnumeration()
 	{
-		if (eContainerFeatureID() != (InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (Enumeration)eInternalContainer();
 	}
 
@@ -174,7 +174,7 @@ implements EnumerationLiteral {
 	 */
 	public NotificationChain basicSetOwningEnumeration(Enumeration newOwningEnumeration, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningEnumeration, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningEnumeration, 10, msgs);
 		return msgs;
 	}
 
@@ -186,7 +186,7 @@ implements EnumerationLiteral {
 	@Override
 	public void setOwningEnumeration(Enumeration newOwningEnumeration)
 	{
-		if (newOwningEnumeration != eInternalContainer() || (eContainerFeatureID() != (InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1) && newOwningEnumeration != null))
+		if (newOwningEnumeration != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningEnumeration != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningEnumeration))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -194,12 +194,12 @@ implements EnumerationLiteral {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningEnumeration != null)
-				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, Enumeration.class, msgs);
+				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, 23, Enumeration.class, msgs);
 			msgs = basicSetOwningEnumeration(newOwningEnumeration, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1, newOwningEnumeration, newOwningEnumeration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningEnumeration, newOwningEnumeration));
 	}
 
 	/**
@@ -224,7 +224,7 @@ implements EnumerationLiteral {
 		Number oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldValue, value));
 	}
 
 	/**
@@ -250,7 +250,7 @@ implements EnumerationLiteral {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningEnumeration((Enumeration)otherEnd, msgs);
@@ -282,7 +282,7 @@ implements EnumerationLiteral {
 				return basicSetOwnedSpecification(null, msgs);
 			case 8:
 				return basicSetOwningPackage(null, msgs);
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				return basicSetOwningEnumeration(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -299,9 +299,9 @@ implements EnumerationLiteral {
 		switch (eContainerFeatureID())
 		{
 			case 8:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, org.eclipse.ocl.pivot.Package.class, msgs);
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, Enumeration.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 10, org.eclipse.ocl.pivot.Package.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 23, Enumeration.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -333,11 +333,11 @@ implements EnumerationLiteral {
 				return getOwnedSpecification();
 			case 8:
 				return getOwningPackage();
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 9:
 				return getLiteral();
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwningEnumeration();
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 11:
 				return getValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -386,13 +386,13 @@ implements EnumerationLiteral {
 			case 8:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 9:
 				setLiteral((String)newValue);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwningEnumeration((Enumeration)newValue);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 11:
 				setValue((Number)newValue);
 				return;
 		}
@@ -435,13 +435,13 @@ implements EnumerationLiteral {
 			case 8:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 9:
 				setLiteral(LITERAL_EDEFAULT);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				setOwningEnumeration((Enumeration)null);
 				return;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 11:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -475,11 +475,11 @@ implements EnumerationLiteral {
 				return ownedSpecification != null;
 			case 8:
 				return getOwningPackage() != null;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 9:
 				return LITERAL_EDEFAULT == null ? literal != null : !LITERAL_EDEFAULT.equals(literal);
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 10:
 				return getOwningEnumeration() != null;
-			case InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 11:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return eDynamicIsSet(featureID);

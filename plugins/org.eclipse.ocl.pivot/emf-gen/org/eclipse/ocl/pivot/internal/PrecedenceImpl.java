@@ -158,7 +158,7 @@ public class PrecedenceImpl
 		if (newAssociativity == null) newAssociativity = ASSOCIATIVITY_EDEFAULT;
 		eFlags = eFlags & ~ASSOCIATIVITY_EFLAG | newAssociativity.ordinal() << ASSOCIATIVITY_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldAssociativity, newAssociativity));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldAssociativity, newAssociativity));
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class PrecedenceImpl
 		Number oldOrder = order;
 		order = newOrder;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, oldOrder, order));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldOrder, order));
 	}
 
 	/**
@@ -214,9 +214,9 @@ public class PrecedenceImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getAssociativity();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOrder();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -251,10 +251,10 @@ public class PrecedenceImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setAssociativity((AssociativityKind)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setOrder((Number)newValue);
 				return;
 		}
@@ -285,10 +285,10 @@ public class PrecedenceImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setAssociativity(ASSOCIATIVITY_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setOrder(ORDER_EDEFAULT);
 				return;
 		}
@@ -314,9 +314,9 @@ public class PrecedenceImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return (eFlags & ASSOCIATIVITY_EFLAG) != ASSOCIATIVITY_EFLAG_DEFAULT;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ORDER_EDEFAULT == null ? order != null : !ORDER_EDEFAULT.equals(order);
 		}
 		return eDynamicIsSet(featureID);

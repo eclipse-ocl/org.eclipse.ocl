@@ -106,7 +106,7 @@ public class AssociationClassImpl
 	{
 		if (unownedAttributes == null)
 		{
-			unownedAttributes = new EObjectWithInverseResolvingEList<Property>(Property.class, this, ClassImpl.CLASS_FEATURE_COUNT + 0, FeatureImpl.FEATURE_FEATURE_COUNT + 0);
+			unownedAttributes = new EObjectWithInverseResolvingEList<Property>(Property.class, this, 20, 11);
 		}
 		return unownedAttributes;
 	}
@@ -144,7 +144,7 @@ public class AssociationClassImpl
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getUnownedAttributes()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -186,7 +186,7 @@ public class AssociationClassImpl
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return ((InternalEList<?>)getUnownedAttributes()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -241,7 +241,7 @@ public class AssociationClassImpl
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getUnownedAttributes();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -329,7 +329,7 @@ public class AssociationClassImpl
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				getUnownedAttributes().clear();
 				getUnownedAttributes().addAll((Collection<? extends Property>)newValue);
 				return;
@@ -406,7 +406,7 @@ public class AssociationClassImpl
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				getUnownedAttributes().clear();
 				return;
 		}
@@ -462,7 +462,7 @@ public class AssociationClassImpl
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return unownedAttributes != null && !unownedAttributes.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

@@ -122,7 +122,7 @@ public class MessageTypeImpl
 			if (referredSignal != oldReferredSignal)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 1, oldReferredSignal, referredSignal));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldReferredSignal, referredSignal));
 			}
 		}
 		return referredSignal;
@@ -147,7 +147,7 @@ public class MessageTypeImpl
 		Signal oldReferredSignal = referredSignal;
 		referredSignal = newReferredSignal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 1, oldReferredSignal, referredSignal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldReferredSignal, referredSignal));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class MessageTypeImpl
 			if (referredOperation != oldReferredOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 0, oldReferredOperation, referredOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldReferredOperation, referredOperation));
 			}
 		}
 		return referredOperation;
@@ -189,7 +189,7 @@ public class MessageTypeImpl
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -241,10 +241,10 @@ public class MessageTypeImpl
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (resolve) return getReferredOperation();
 				return basicGetReferredOperation();
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				if (resolve) return getReferredSignal();
 				return basicGetReferredSignal();
 		}
@@ -333,10 +333,10 @@ public class MessageTypeImpl
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setReferredOperation((Operation)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setReferredSignal((Signal)newValue);
 				return;
 		}
@@ -412,10 +412,10 @@ public class MessageTypeImpl
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setReferredOperation((Operation)null);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setReferredSignal((Signal)null);
 				return;
 		}
@@ -471,9 +471,9 @@ public class MessageTypeImpl
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return referredOperation != null;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return referredSignal != null;
 		}
 		return eDynamicIsSet(featureID);

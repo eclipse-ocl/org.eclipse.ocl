@@ -145,7 +145,7 @@ public class BooleanLiteralExpImpl
 		boolean oldBooleanSymbolESet = (eFlags & BOOLEAN_SYMBOL_ESETFLAG) != 0;
 		eFlags |= BOOLEAN_SYMBOL_ESETFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0, oldBooleanSymbol, newBooleanSymbol, !oldBooleanSymbolESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldBooleanSymbol, newBooleanSymbol, !oldBooleanSymbolESet));
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class BooleanLiteralExpImpl
 		if (BOOLEAN_SYMBOL_EDEFAULT) eFlags |= BOOLEAN_SYMBOL_EFLAG; else eFlags &= ~BOOLEAN_SYMBOL_EFLAG;
 		eFlags &= ~BOOLEAN_SYMBOL_ESETFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0, oldBooleanSymbol, BOOLEAN_SYMBOL_EDEFAULT, oldBooleanSymbolESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 9, oldBooleanSymbol, BOOLEAN_SYMBOL_EDEFAULT, oldBooleanSymbolESet));
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class BooleanLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return isBooleanSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -289,7 +289,7 @@ public class BooleanLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setBooleanSymbol((Boolean)newValue);
 				return;
 		}
@@ -329,7 +329,7 @@ public class BooleanLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				unsetBooleanSymbol();
 				return;
 		}
@@ -363,7 +363,7 @@ public class BooleanLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return isSetBooleanSymbol();
 		}
 		return eDynamicIsSet(featureID);
@@ -392,7 +392,7 @@ public class BooleanLiteralExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_OPERATION_COUNT + 0:
+			case 6:
 				return validateTypeIsBoolean((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

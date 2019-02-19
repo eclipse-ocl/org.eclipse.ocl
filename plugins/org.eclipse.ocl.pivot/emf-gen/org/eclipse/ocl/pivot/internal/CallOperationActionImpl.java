@@ -101,7 +101,7 @@ public class CallOperationActionImpl
 			if (operation != oldOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldOperation, operation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 5, oldOperation, operation));
 			}
 		}
 		return operation;
@@ -126,7 +126,7 @@ public class CallOperationActionImpl
 		Operation oldOperation = operation;
 		operation = newOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, oldOperation, operation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldOperation, operation));
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class CallOperationActionImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				if (resolve) return getOperation();
 				return basicGetOperation();
 		}
@@ -184,7 +184,7 @@ public class CallOperationActionImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setOperation((Operation)newValue);
 				return;
 		}
@@ -215,7 +215,7 @@ public class CallOperationActionImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setOperation((Operation)null);
 				return;
 		}
@@ -241,7 +241,7 @@ public class CallOperationActionImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return operation != null;
 		}
 		return eDynamicIsSet(featureID);

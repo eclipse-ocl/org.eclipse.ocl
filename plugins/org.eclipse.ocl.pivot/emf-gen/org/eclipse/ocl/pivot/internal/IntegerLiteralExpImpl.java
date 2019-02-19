@@ -135,7 +135,7 @@ public class IntegerLiteralExpImpl
 		Number oldIntegerSymbol = integerSymbol;
 		integerSymbol = newIntegerSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0, oldIntegerSymbol, integerSymbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIntegerSymbol, integerSymbol));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class IntegerLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getIntegerSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -254,7 +254,7 @@ public class IntegerLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setIntegerSymbol((Number)newValue);
 				return;
 		}
@@ -294,7 +294,7 @@ public class IntegerLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setIntegerSymbol(INTEGER_SYMBOL_EDEFAULT);
 				return;
 		}
@@ -328,7 +328,7 @@ public class IntegerLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return INTEGER_SYMBOL_EDEFAULT == null ? integerSymbol != null : !INTEGER_SYMBOL_EDEFAULT.equals(integerSymbol);
 		}
 		return eDynamicIsSet(featureID);
@@ -357,7 +357,7 @@ public class IntegerLiteralExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_OPERATION_COUNT + 0:
+			case 6:
 				return validateTypeIsInteger((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

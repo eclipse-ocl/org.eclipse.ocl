@@ -120,7 +120,7 @@ public abstract class FeatureCallExpImpl
 		boolean oldIsPre = (eFlags & IS_PRE_EFLAG) != 0;
 		if (newIsPre) eFlags |= IS_PRE_EFLAG; else eFlags &= ~IS_PRE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0, oldIsPre, newIsPre));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldIsPre, newIsPre));
 	}
 
 	/**
@@ -157,7 +157,7 @@ public abstract class FeatureCallExpImpl
 				return isIsSafe();
 			case 11:
 				return getOwnedSource();
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				return isIsPre();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -210,7 +210,7 @@ public abstract class FeatureCallExpImpl
 			case 11:
 				setOwnedSource((OCLExpression)newValue);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				setIsPre((Boolean)newValue);
 				return;
 		}
@@ -259,7 +259,7 @@ public abstract class FeatureCallExpImpl
 			case 11:
 				setOwnedSource((OCLExpression)null);
 				return;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
 		}
@@ -299,7 +299,7 @@ public abstract class FeatureCallExpImpl
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
 				return ownedSource != null;
-			case CallExpImpl.CALL_EXP_FEATURE_COUNT + 0:
+			case 12:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);

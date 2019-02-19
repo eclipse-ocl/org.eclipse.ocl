@@ -149,7 +149,7 @@ public abstract class ElementImpl
 	{
 		if (annotatingComments == null)
 		{
-			annotatingComments = new EObjectWithInverseResolvingEList.ManyInverse<Comment>(Comment.class, this, 0, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+			annotatingComments = new EObjectWithInverseResolvingEList.ManyInverse<Comment>(Comment.class, this, 0, 4);
 		}
 		return annotatingComments;
 	}
@@ -165,7 +165,7 @@ public abstract class ElementImpl
 	{
 		if (ownedExtensions == null)
 		{
-			ownedExtensions = new EObjectContainmentWithInverseEList<ElementExtension>(ElementExtension.class, this, 3, ClassImpl.CLASS_FEATURE_COUNT + 0);
+			ownedExtensions = new EObjectContainmentWithInverseEList<ElementExtension>(ElementExtension.class, this, 3, 20);
 		}
 		return ownedExtensions;
 	}
@@ -196,7 +196,7 @@ public abstract class ElementImpl
 	{
 		if (ownedComments == null)
 		{
-			ownedComments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, 2, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+			ownedComments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, 2, 6);
 		}
 		return ownedComments;
 	}

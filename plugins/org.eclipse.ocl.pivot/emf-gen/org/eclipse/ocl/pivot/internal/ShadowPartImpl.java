@@ -136,7 +136,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 9, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -163,7 +163,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		ownedInit = newOwnedInit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, oldOwnedInit, newOwnedInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedInit, newOwnedInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -354,14 +354,14 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		{
 			NotificationChain msgs = null;
 			if (ownedInit != null)
-				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedInit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedInit != null)
-				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedInit(newOwnedInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, newOwnedInit, newOwnedInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedInit, newOwnedInit));
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return basicSetOwnedInit(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -415,9 +415,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return getOwnedInit();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -460,10 +460,10 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			case 7:
 				setType((Type)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedInit((OCLExpression)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -501,10 +501,10 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			case 7:
 				setType((Type)null);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setOwnedInit((OCLExpression)null);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -537,9 +537,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return ownedInit != null;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 9:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -562,11 +562,11 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
+			case 3:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

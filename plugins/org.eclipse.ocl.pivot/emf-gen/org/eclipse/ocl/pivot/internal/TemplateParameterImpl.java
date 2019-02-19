@@ -119,7 +119,7 @@ public class TemplateParameterImpl
 	{
 		if (constrainingClasses == null)
 		{
-			constrainingClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, TypeImpl.TYPE_FEATURE_COUNT + 0);
+			constrainingClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, 5);
 		}
 		return constrainingClasses;
 	}
@@ -131,7 +131,7 @@ public class TemplateParameterImpl
 	 */
 	@Override
 	public TemplateSignature getOwningSignature() {
-		if (eContainerFeatureID() != (TypeImpl.TYPE_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (TemplateSignature)eInternalContainer();
 	}
 
@@ -142,7 +142,7 @@ public class TemplateParameterImpl
 	 */
 	public NotificationChain basicSetOwningSignature(TemplateSignature newOwningSignature, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningSignature, TypeImpl.TYPE_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningSignature, 6, msgs);
 		return msgs;
 	}
 
@@ -154,7 +154,7 @@ public class TemplateParameterImpl
 	@Override
 	public void setOwningSignature(TemplateSignature newOwningSignature)
 	{
-		if (newOwningSignature != eInternalContainer() || (eContainerFeatureID() != (TypeImpl.TYPE_FEATURE_COUNT + 1) && newOwningSignature != null))
+		if (newOwningSignature != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningSignature != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningSignature))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -162,12 +162,12 @@ public class TemplateParameterImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningSignature != null)
-				msgs = ((InternalEObject)newOwningSignature).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, TemplateSignature.class, msgs);
+				msgs = ((InternalEObject)newOwningSignature).eInverseAdd(this, 4, TemplateSignature.class, msgs);
 			msgs = basicSetOwningSignature(newOwningSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeImpl.TYPE_FEATURE_COUNT + 1, newOwningSignature, newOwningSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningSignature, newOwningSignature));
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class TemplateParameterImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningSignature((TemplateSignature)otherEnd, msgs);
@@ -213,7 +213,7 @@ public class TemplateParameterImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				return basicSetOwningSignature(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -229,8 +229,8 @@ public class TemplateParameterImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, TemplateSignature.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 4, TemplateSignature.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -254,9 +254,9 @@ public class TemplateParameterImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case TypeImpl.TYPE_FEATURE_COUNT + 0:
+			case 5:
 				return getConstrainingClasses();
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningSignature();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -291,11 +291,11 @@ public class TemplateParameterImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case TypeImpl.TYPE_FEATURE_COUNT + 0:
+			case 5:
 				getConstrainingClasses().clear();
 				getConstrainingClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				setOwningSignature((TemplateSignature)newValue);
 				return;
 		}
@@ -326,10 +326,10 @@ public class TemplateParameterImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case TypeImpl.TYPE_FEATURE_COUNT + 0:
+			case 5:
 				getConstrainingClasses().clear();
 				return;
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				setOwningSignature((TemplateSignature)null);
 				return;
 		}
@@ -355,9 +355,9 @@ public class TemplateParameterImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case TypeImpl.TYPE_FEATURE_COUNT + 0:
+			case 5:
 				return constrainingClasses != null && !constrainingClasses.isEmpty();
-			case TypeImpl.TYPE_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningSignature() != null;
 		}
 		return eDynamicIsSet(featureID);

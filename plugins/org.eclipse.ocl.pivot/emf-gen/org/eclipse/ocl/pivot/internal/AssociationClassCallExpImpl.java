@@ -104,7 +104,7 @@ public class AssociationClassCallExpImpl
 			if (referredAssociationClass != oldReferredAssociationClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredAssociationClass, referredAssociationClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredAssociationClass, referredAssociationClass));
 			}
 		}
 		return referredAssociationClass;
@@ -130,7 +130,7 @@ public class AssociationClassCallExpImpl
 		AssociationClass oldReferredAssociationClass = referredAssociationClass;
 		referredAssociationClass = newReferredAssociationClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0, oldReferredAssociationClass, referredAssociationClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredAssociationClass, referredAssociationClass));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class AssociationClassCallExpImpl
 				return basicGetNavigationSource();
 			case 14:
 				return getQualifiers();
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				if (resolve) return getReferredAssociationClass();
 				return basicGetReferredAssociationClass();
 		}
@@ -238,7 +238,7 @@ public class AssociationClassCallExpImpl
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				setReferredAssociationClass((AssociationClass)newValue);
 				return;
 		}
@@ -296,7 +296,7 @@ public class AssociationClassCallExpImpl
 			case 14:
 				getQualifiers().clear();
 				return;
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				setReferredAssociationClass((AssociationClass)null);
 				return;
 		}
@@ -342,7 +342,7 @@ public class AssociationClassCallExpImpl
 				return navigationSource != null;
 			case 14:
 				return qualifiers != null && !qualifiers.isEmpty();
-			case NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 15:
 				return referredAssociationClass != null;
 		}
 		return eDynamicIsSet(featureID);

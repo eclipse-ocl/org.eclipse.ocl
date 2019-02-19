@@ -126,7 +126,7 @@ public class AnnotationImpl
 	{
 		if (ownedContents == null)
 		{
-			ownedContents = new EObjectContainmentEList<Element>(Element.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+			ownedContents = new EObjectContainmentEList<Element>(Element.class, this, 5);
 		}
 		return ownedContents;
 	}
@@ -142,7 +142,7 @@ public class AnnotationImpl
 	{
 		if (ownedDetails == null)
 		{
-			ownedDetails = new EObjectContainmentEList<Detail>(Detail.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+			ownedDetails = new EObjectContainmentEList<Detail>(Detail.class, this, 6);
 		}
 		return ownedDetails;
 	}
@@ -158,7 +158,7 @@ public class AnnotationImpl
 	{
 		if (references == null)
 		{
-			references = new EObjectResolvingEList<Element>(Element.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
+			references = new EObjectResolvingEList<Element>(Element.class, this, 7);
 		}
 		return references;
 	}
@@ -181,9 +181,9 @@ public class AnnotationImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedContents()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<?>)getOwnedDetails()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -208,11 +208,11 @@ public class AnnotationImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedContents();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOwnedDetails();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getReferences();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -247,15 +247,15 @@ public class AnnotationImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedContents().clear();
 				getOwnedContents().addAll((Collection<? extends Element>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedDetails().clear();
 				getOwnedDetails().addAll((Collection<? extends Detail>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				getReferences().clear();
 				getReferences().addAll((Collection<? extends Element>)newValue);
 				return;
@@ -287,13 +287,13 @@ public class AnnotationImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedContents().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedDetails().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				getReferences().clear();
 				return;
 		}
@@ -319,11 +319,11 @@ public class AnnotationImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ownedContents != null && !ownedContents.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ownedDetails != null && !ownedDetails.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return references != null && !references.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

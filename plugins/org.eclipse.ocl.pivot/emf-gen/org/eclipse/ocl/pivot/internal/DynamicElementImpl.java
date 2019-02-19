@@ -102,7 +102,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 			if (metaType != oldMetaType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldMetaType, metaType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldMetaType, metaType));
 			}
 		}
 		return metaType;
@@ -129,7 +129,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 		Type oldMetaType = metaType;
 		metaType = newMetaType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldMetaType, metaType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldMetaType, metaType));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				if (resolve) return getMetaType();
 				return basicGetMetaType();
 		}
@@ -184,7 +184,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setMetaType((Type)newValue);
 				return;
 		}
@@ -213,7 +213,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setMetaType((Type)null);
 				return;
 		}
@@ -238,7 +238,7 @@ public class DynamicElementImpl extends ElementImpl implements DynamicElement
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return metaType != null;
 		}
 		return eDynamicIsSet(featureID);

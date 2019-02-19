@@ -117,7 +117,7 @@ public class EnumLiteralExpImpl
 			if (referredLiteral != oldReferredLiteral)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0, oldReferredLiteral, referredLiteral));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 9, oldReferredLiteral, referredLiteral));
 			}
 		}
 		return referredLiteral;
@@ -143,7 +143,7 @@ public class EnumLiteralExpImpl
 		EnumerationLiteral oldReferredLiteral = referredLiteral;
 		referredLiteral = newReferredLiteral;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0, oldReferredLiteral, referredLiteral));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredLiteral, referredLiteral));
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class EnumLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				if (resolve) return getReferredLiteral();
 				return basicGetReferredLiteral();
 		}
@@ -281,7 +281,7 @@ public class EnumLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setReferredLiteral((EnumerationLiteral)newValue);
 				return;
 		}
@@ -321,7 +321,7 @@ public class EnumLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setReferredLiteral((EnumerationLiteral)null);
 				return;
 		}
@@ -355,7 +355,7 @@ public class EnumLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return referredLiteral != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -384,7 +384,7 @@ public class EnumLiteralExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 0:
+			case 6:
 				return validateTypeIsEnumerationType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

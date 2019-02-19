@@ -141,7 +141,7 @@ implements DataType {
 		boolean oldIsSerializable = (eFlags & IS_SERIALIZABLE_EFLAG) != 0;
 		if (newIsSerializable) eFlags |= IS_SERIALIZABLE_EFLAG; else eFlags &= ~IS_SERIALIZABLE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 1, oldIsSerializable, newIsSerializable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldIsSerializable, newIsSerializable));
 	}
 
 	/**
@@ -159,7 +159,7 @@ implements DataType {
 			if (behavioralClass != oldBehavioralClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 0, oldBehavioralClass, behavioralClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldBehavioralClass, behavioralClass));
 			}
 		}
 		return behavioralClass;
@@ -186,7 +186,7 @@ implements DataType {
 		org.eclipse.ocl.pivot.Class oldBehavioralClass = behavioralClass;
 		behavioralClass = newBehavioralClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, oldBehavioralClass, behavioralClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldBehavioralClass, behavioralClass));
 	}
 
 	/**
@@ -250,12 +250,12 @@ implements DataType {
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (resolve) return getBehavioralClass();
 				return basicGetBehavioralClass();
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return isIsSerializable();
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				return getValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -344,10 +344,10 @@ implements DataType {
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setBehavioralClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
 		}
@@ -424,10 +424,10 @@ implements DataType {
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setBehavioralClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 		}
@@ -484,11 +484,11 @@ implements DataType {
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return behavioralClass != null;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 		}
 		return eDynamicIsSet(featureID);

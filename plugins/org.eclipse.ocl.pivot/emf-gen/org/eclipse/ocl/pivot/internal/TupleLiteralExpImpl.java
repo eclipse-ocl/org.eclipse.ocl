@@ -100,7 +100,7 @@ public class TupleLiteralExpImpl
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<TupleLiteralPart>(TupleLiteralPart.class, this, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
+			ownedParts = new EObjectContainmentEList<TupleLiteralPart>(TupleLiteralPart.class, this, 9);
 		}
 		return ownedParts;
 	}
@@ -123,7 +123,7 @@ public class TupleLiteralExpImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -157,7 +157,7 @@ public class TupleLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getOwnedParts();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -201,7 +201,7 @@ public class TupleLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends TupleLiteralPart>)newValue);
 				return;
@@ -242,7 +242,7 @@ public class TupleLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				getOwnedParts().clear();
 				return;
 		}
@@ -276,7 +276,7 @@ public class TupleLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

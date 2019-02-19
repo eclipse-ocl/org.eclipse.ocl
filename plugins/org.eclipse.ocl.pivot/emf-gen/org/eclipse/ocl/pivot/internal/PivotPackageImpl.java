@@ -7094,145 +7094,145 @@ implements PivotPackage  {
 
 		// Create classes and their features
 		annotationEClass = createEClass(0);
-		createEReference(annotationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(annotationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(annotationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
+		createEReference(annotationEClass, 5);
+		createEReference(annotationEClass, 6);
+		createEReference(annotationEClass, 7);
 
 		anyTypeEClass = createEClass(1);
 
 		associationClassEClass = createEClass(2);
-		createEReference(associationClassEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
+		createEReference(associationClassEClass, 20);
 
 		associationClassCallExpEClass = createEClass(3);
-		createEReference(associationClassCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0);
+		createEReference(associationClassCallExpEClass, 15);
 
 		bagTypeEClass = createEClass(4);
 
 		behaviorEClass = createEClass(5);
-		createEReference(behaviorEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
+		createEReference(behaviorEClass, 20);
 
 		booleanLiteralExpEClass = createEClass(6);
-		createEAttribute(booleanLiteralExpEClass, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0);
-		createEOperation(booleanLiteralExpEClass, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_OPERATION_COUNT + 0);
+		createEAttribute(booleanLiteralExpEClass, 9);
+		createEOperation(booleanLiteralExpEClass, 6);
 
 		callExpEClass = createEClass(7);
-		createEAttribute(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEAttribute(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEReference(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2);
-		createEOperation(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
-		createEOperation(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
-		createEOperation(callExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2);
+		createEAttribute(callExpEClass, 9);
+		createEAttribute(callExpEClass, 10);
+		createEReference(callExpEClass, 11);
+		createEOperation(callExpEClass, 6);
+		createEOperation(callExpEClass, 7);
+		createEOperation(callExpEClass, 8);
 
 		callOperationActionEClass = createEClass(8);
-		createEReference(callOperationActionEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(callOperationActionEClass, 5);
 
 		classEClass = createEClass(9);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 4);
-		createEAttribute(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 5);
-		createEAttribute(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 6);
-		createEAttribute(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 7);
-		createEAttribute(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 8);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 9);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 10);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 11);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 12);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 13);
-		createEReference(classEClass, TypeImpl.TYPE_FEATURE_COUNT + 14);
-		createEOperation(classEClass, TypeImpl.TYPE_OPERATION_COUNT + 0);
-		createEOperation(classEClass, TypeImpl.TYPE_OPERATION_COUNT + 1);
+		createEReference(classEClass, 9);
+		createEAttribute(classEClass, 10);
+		createEAttribute(classEClass, 11);
+		createEAttribute(classEClass, 12);
+		createEAttribute(classEClass, 13);
+		createEReference(classEClass, 14);
+		createEReference(classEClass, 15);
+		createEReference(classEClass, 16);
+		createEReference(classEClass, 17);
+		createEReference(classEClass, 18);
+		createEReference(classEClass, 19);
+		createEOperation(classEClass, 6);
+		createEOperation(classEClass, 7);
 
 		collectionItemEClass = createEClass(10);
-		createEReference(collectionItemEClass, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0);
-		createEOperation(collectionItemEClass, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_OPERATION_COUNT + 0);
+		createEReference(collectionItemEClass, 8);
+		createEOperation(collectionItemEClass, 4);
 
 		collectionLiteralExpEClass = createEClass(11);
-		createEAttribute(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
-		createEReference(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 1);
-		createEOperation(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 0);
-		createEOperation(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 1);
-		createEOperation(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 2);
-		createEOperation(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 3);
-		createEOperation(collectionLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 4);
+		createEAttribute(collectionLiteralExpEClass, 9);
+		createEReference(collectionLiteralExpEClass, 10);
+		createEOperation(collectionLiteralExpEClass, 6);
+		createEOperation(collectionLiteralExpEClass, 7);
+		createEOperation(collectionLiteralExpEClass, 8);
+		createEOperation(collectionLiteralExpEClass, 9);
+		createEOperation(collectionLiteralExpEClass, 10);
 
 		collectionLiteralPartEClass = createEClass(12);
-		createEOperation(collectionLiteralPartEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
+		createEOperation(collectionLiteralPartEClass, 3);
 
 		collectionRangeEClass = createEClass(13);
-		createEReference(collectionRangeEClass, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 0);
-		createEReference(collectionRangeEClass, CollectionLiteralPartImpl.COLLECTION_LITERAL_PART_FEATURE_COUNT + 1);
+		createEReference(collectionRangeEClass, 8);
+		createEReference(collectionRangeEClass, 9);
 
 		collectionTypeEClass = createEClass(14);
-		createEReference(collectionTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0);
-		createEAttribute(collectionTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1);
-		createEAttribute(collectionTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2);
-		createEAttribute(collectionTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3);
+		createEReference(collectionTypeEClass, 23);
+		createEAttribute(collectionTypeEClass, 24);
+		createEAttribute(collectionTypeEClass, 25);
+		createEAttribute(collectionTypeEClass, 26);
 
 		commentEClass = createEClass(15);
-		createEReference(commentEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(commentEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(commentEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(commentEClass, 4);
+		createEAttribute(commentEClass, 5);
+		createEReference(commentEClass, 6);
 
 		completeClassEClass = createEClass(16);
-		createEReference(completeClassEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(completeClassEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(completeClassEClass, 5);
+		createEReference(completeClassEClass, 6);
 
 		completeEnvironmentEClass = createEClass(17);
-		createEReference(completeEnvironmentEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(completeEnvironmentEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+		createEReference(completeEnvironmentEClass, 4);
+		createEReference(completeEnvironmentEClass, 5);
 
 		completeModelEClass = createEClass(18);
-		createEReference(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
-		createEReference(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3);
-		createEReference(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4);
-		createEOperation(completeModelEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0);
+		createEReference(completeModelEClass, 5);
+		createEReference(completeModelEClass, 6);
+		createEReference(completeModelEClass, 7);
+		createEReference(completeModelEClass, 8);
+		createEReference(completeModelEClass, 9);
+		createEOperation(completeModelEClass, 2);
 
 		completePackageEClass = createEClass(19);
-		createEReference(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
-		createEReference(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3);
-		createEReference(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4);
-		createEOperation(completePackageEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0);
+		createEReference(completePackageEClass, 5);
+		createEReference(completePackageEClass, 6);
+		createEReference(completePackageEClass, 7);
+		createEReference(completePackageEClass, 8);
+		createEReference(completePackageEClass, 9);
+		createEOperation(completePackageEClass, 2);
 
 		connectionPointReferenceEClass = createEClass(20);
-		createEReference(connectionPointReferenceEClass, VertexImpl.VERTEX_FEATURE_COUNT + 0);
-		createEReference(connectionPointReferenceEClass, VertexImpl.VERTEX_FEATURE_COUNT + 1);
-		createEReference(connectionPointReferenceEClass, VertexImpl.VERTEX_FEATURE_COUNT + 2);
+		createEReference(connectionPointReferenceEClass, 8);
+		createEReference(connectionPointReferenceEClass, 9);
+		createEReference(connectionPointReferenceEClass, 10);
 
 		constraintEClass = createEClass(21);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEAttribute(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7);
-		createEReference(constraintEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 8);
-		createEOperation(constraintEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(constraintEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1);
+		createEReference(constraintEClass, 5);
+		createEReference(constraintEClass, 6);
+		createEAttribute(constraintEClass, 7);
+		createEReference(constraintEClass, 8);
+		createEReference(constraintEClass, 9);
+		createEReference(constraintEClass, 10);
+		createEReference(constraintEClass, 11);
+		createEReference(constraintEClass, 12);
+		createEReference(constraintEClass, 13);
+		createEOperation(constraintEClass, 2);
+		createEOperation(constraintEClass, 3);
 
 		dataTypeEClass = createEClass(22);
-		createEReference(dataTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
-		createEAttribute(dataTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 1);
-		createEAttribute(dataTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 2);
+		createEReference(dataTypeEClass, 20);
+		createEAttribute(dataTypeEClass, 21);
+		createEAttribute(dataTypeEClass, 22);
 
 		detailEClass = createEClass(23);
-		createEAttribute(detailEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(detailEClass, 5);
 
 		dynamicBehaviorEClass = createEClass(24);
 
 		dynamicElementEClass = createEClass(25);
-		createEReference(dynamicElementEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+		createEReference(dynamicElementEClass, 4);
 
 		dynamicPropertyEClass = createEClass(26);
-		createEAttribute(dynamicPropertyEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(dynamicPropertyEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+		createEAttribute(dynamicPropertyEClass, 4);
+		createEReference(dynamicPropertyEClass, 5);
 
 		dynamicTypeEClass = createEClass(27);
-		createEReference(dynamicTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 1);
+		createEReference(dynamicTypeEClass, 21);
 
 		dynamicValueSpecificationEClass = createEClass(28);
 
@@ -7245,63 +7245,63 @@ implements PivotPackage  {
 		createEOperation(elementEClass, 1);
 
 		elementExtensionEClass = createEClass(30);
-		createEReference(elementExtensionEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
-		createEAttribute(elementExtensionEClass, ClassImpl.CLASS_FEATURE_COUNT + 1);
-		createEAttribute(elementExtensionEClass, ClassImpl.CLASS_FEATURE_COUNT + 2);
-		createEReference(elementExtensionEClass, ClassImpl.CLASS_FEATURE_COUNT + 3);
+		createEReference(elementExtensionEClass, 20);
+		createEAttribute(elementExtensionEClass, 21);
+		createEAttribute(elementExtensionEClass, 22);
+		createEReference(elementExtensionEClass, 23);
 
 		enumLiteralExpEClass = createEClass(31);
-		createEReference(enumLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
-		createEOperation(enumLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_OPERATION_COUNT + 0);
+		createEReference(enumLiteralExpEClass, 9);
+		createEOperation(enumLiteralExpEClass, 6);
 
 		enumerationEClass = createEClass(32);
-		createEReference(enumerationEClass, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0);
+		createEReference(enumerationEClass, 23);
 
 		enumerationLiteralEClass = createEClass(33);
-		createEAttribute(enumerationLiteralEClass, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 0);
-		createEReference(enumerationLiteralEClass, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1);
-		createEAttribute(enumerationLiteralEClass, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 2);
+		createEAttribute(enumerationLiteralEClass, 9);
+		createEReference(enumerationLiteralEClass, 10);
+		createEAttribute(enumerationLiteralEClass, 11);
 
 		expressionInOCLEClass = createEClass(34);
-		createEReference(expressionInOCLEClass, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 0);
-		createEReference(expressionInOCLEClass, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 1);
-		createEReference(expressionInOCLEClass, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 2);
-		createEReference(expressionInOCLEClass, LanguageExpressionImpl.LANGUAGE_EXPRESSION_FEATURE_COUNT + 3);
+		createEReference(expressionInOCLEClass, 11);
+		createEReference(expressionInOCLEClass, 12);
+		createEReference(expressionInOCLEClass, 13);
+		createEReference(expressionInOCLEClass, 14);
 
 		featureEClass = createEClass(35);
-		createEAttribute(featureEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(featureEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1);
-		createEAttribute(featureEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 2);
-		createEOperation(featureEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(featureEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(featureEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2);
+		createEAttribute(featureEClass, 8);
+		createEAttribute(featureEClass, 9);
+		createEAttribute(featureEClass, 10);
+		createEOperation(featureEClass, 3);
+		createEOperation(featureEClass, 4);
+		createEOperation(featureEClass, 5);
 
 		featureCallExpEClass = createEClass(36);
-		createEAttribute(featureCallExpEClass, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(featureCallExpEClass, 12);
 
 		finalStateEClass = createEClass(37);
 
 		ifExpEClass = createEClass(38);
-		createEAttribute(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEReference(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEReference(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2);
-		createEReference(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3);
-		createEOperation(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
-		createEOperation(ifExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
+		createEAttribute(ifExpEClass, 9);
+		createEReference(ifExpEClass, 10);
+		createEReference(ifExpEClass, 11);
+		createEReference(ifExpEClass, 12);
+		createEOperation(ifExpEClass, 6);
+		createEOperation(ifExpEClass, 7);
 
 		importEClass = createEClass(39);
-		createEReference(importEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(importEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(importEClass, 5);
+		createEAttribute(importEClass, 6);
 
 		instanceSpecificationEClass = createEClass(40);
-		createEReference(instanceSpecificationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(instanceSpecificationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(instanceSpecificationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
-		createEReference(instanceSpecificationEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3);
+		createEReference(instanceSpecificationEClass, 5);
+		createEReference(instanceSpecificationEClass, 6);
+		createEReference(instanceSpecificationEClass, 7);
+		createEReference(instanceSpecificationEClass, 8);
 
 		integerLiteralExpEClass = createEClass(41);
-		createEAttribute(integerLiteralExpEClass, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0);
-		createEOperation(integerLiteralExpEClass, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_OPERATION_COUNT + 0);
+		createEAttribute(integerLiteralExpEClass, 9);
+		createEOperation(integerLiteralExpEClass, 6);
 
 		invalidLiteralExpEClass = createEClass(42);
 
@@ -7310,446 +7310,446 @@ implements PivotPackage  {
 		iterableTypeEClass = createEClass(44);
 
 		iterateExpEClass = createEClass(45);
-		createEReference(iterateExpEClass, LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 0);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 1);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 2);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 3);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 4);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 5);
-		createEOperation(iterateExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 6);
+		createEReference(iterateExpEClass, 16);
+		createEOperation(iterateExpEClass, 16);
+		createEOperation(iterateExpEClass, 17);
+		createEOperation(iterateExpEClass, 18);
+		createEOperation(iterateExpEClass, 19);
+		createEOperation(iterateExpEClass, 20);
+		createEOperation(iterateExpEClass, 21);
 
 		iterationEClass = createEClass(46);
-		createEReference(iterationEClass, OperationImpl.OPERATION_FEATURE_COUNT + 0);
-		createEReference(iterationEClass, OperationImpl.OPERATION_FEATURE_COUNT + 1);
+		createEReference(iterationEClass, 27);
+		createEReference(iterationEClass, 28);
 
 		iteratorExpEClass = createEClass(47);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 1);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 2);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 3);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 4);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 5);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 6);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 7);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 8);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 9);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 10);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 11);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 12);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 13);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 14);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 15);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 16);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 17);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 18);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 19);
-		createEOperation(iteratorExpEClass, LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 20);
+		createEOperation(iteratorExpEClass, 16);
+		createEOperation(iteratorExpEClass, 17);
+		createEOperation(iteratorExpEClass, 18);
+		createEOperation(iteratorExpEClass, 19);
+		createEOperation(iteratorExpEClass, 20);
+		createEOperation(iteratorExpEClass, 21);
+		createEOperation(iteratorExpEClass, 22);
+		createEOperation(iteratorExpEClass, 23);
+		createEOperation(iteratorExpEClass, 24);
+		createEOperation(iteratorExpEClass, 25);
+		createEOperation(iteratorExpEClass, 26);
+		createEOperation(iteratorExpEClass, 27);
+		createEOperation(iteratorExpEClass, 28);
+		createEOperation(iteratorExpEClass, 29);
+		createEOperation(iteratorExpEClass, 30);
+		createEOperation(iteratorExpEClass, 31);
+		createEOperation(iteratorExpEClass, 32);
+		createEOperation(iteratorExpEClass, 33);
+		createEOperation(iteratorExpEClass, 34);
+		createEOperation(iteratorExpEClass, 35);
 
 		iteratorVariableEClass = createEClass(48);
-		createEOperation(iteratorVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 0);
+		createEOperation(iteratorVariableEClass, 7);
 
 		lambdaTypeEClass = createEClass(49);
-		createEReference(lambdaTypeEClass, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0);
-		createEReference(lambdaTypeEClass, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1);
-		createEReference(lambdaTypeEClass, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2);
+		createEReference(lambdaTypeEClass, 23);
+		createEReference(lambdaTypeEClass, 24);
+		createEReference(lambdaTypeEClass, 25);
 
 		languageExpressionEClass = createEClass(50);
-		createEAttribute(languageExpressionEClass, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0);
-		createEAttribute(languageExpressionEClass, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 1);
-		createEReference(languageExpressionEClass, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2);
+		createEAttribute(languageExpressionEClass, 8);
+		createEAttribute(languageExpressionEClass, 9);
+		createEReference(languageExpressionEClass, 10);
 
 		letExpEClass = createEClass(51);
-		createEReference(letExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEReference(letExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEOperation(letExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
-		createEOperation(letExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
-		createEOperation(letExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2);
+		createEReference(letExpEClass, 9);
+		createEReference(letExpEClass, 10);
+		createEOperation(letExpEClass, 6);
+		createEOperation(letExpEClass, 7);
+		createEOperation(letExpEClass, 8);
 
 		letVariableEClass = createEClass(52);
-		createEOperation(letVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 0);
-		createEOperation(letVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 1);
-		createEOperation(letVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 2);
+		createEOperation(letVariableEClass, 7);
+		createEOperation(letVariableEClass, 8);
+		createEOperation(letVariableEClass, 9);
 
 		libraryEClass = createEClass(53);
-		createEReference(libraryEClass, PackageImpl.PACKAGE_FEATURE_COUNT + 0);
+		createEReference(libraryEClass, 14);
 
 		literalExpEClass = createEClass(54);
 
 		loopExpEClass = createEClass(55);
-		createEReference(loopExpEClass, CallExpImpl.CALL_EXP_FEATURE_COUNT + 0);
-		createEReference(loopExpEClass, CallExpImpl.CALL_EXP_FEATURE_COUNT + 1);
-		createEReference(loopExpEClass, CallExpImpl.CALL_EXP_FEATURE_COUNT + 2);
-		createEReference(loopExpEClass, CallExpImpl.CALL_EXP_FEATURE_COUNT + 3);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 0);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 1);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 2);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 3);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 4);
-		createEOperation(loopExpEClass, CallExpImpl.CALL_EXP_OPERATION_COUNT + 5);
+		createEReference(loopExpEClass, 12);
+		createEReference(loopExpEClass, 13);
+		createEReference(loopExpEClass, 14);
+		createEReference(loopExpEClass, 15);
+		createEOperation(loopExpEClass, 9);
+		createEOperation(loopExpEClass, 10);
+		createEOperation(loopExpEClass, 11);
+		createEOperation(loopExpEClass, 12);
+		createEOperation(loopExpEClass, 13);
+		createEOperation(loopExpEClass, 14);
 
 		mapLiteralExpEClass = createEClass(56);
-		createEReference(mapLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
+		createEReference(mapLiteralExpEClass, 9);
 
 		mapLiteralPartEClass = createEClass(57);
-		createEReference(mapLiteralPartEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(mapLiteralPartEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+		createEReference(mapLiteralPartEClass, 4);
+		createEReference(mapLiteralPartEClass, 5);
 
 		mapTypeEClass = createEClass(58);
-		createEReference(mapTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0);
-		createEReference(mapTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1);
-		createEAttribute(mapTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2);
-		createEReference(mapTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3);
-		createEAttribute(mapTypeEClass, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4);
+		createEReference(mapTypeEClass, 23);
+		createEReference(mapTypeEClass, 24);
+		createEAttribute(mapTypeEClass, 25);
+		createEReference(mapTypeEClass, 26);
+		createEAttribute(mapTypeEClass, 27);
 
 		messageExpEClass = createEClass(59);
-		createEReference(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEReference(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEReference(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 2);
-		createEReference(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3);
-		createEOperation(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
-		createEOperation(messageExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
+		createEReference(messageExpEClass, 9);
+		createEReference(messageExpEClass, 10);
+		createEReference(messageExpEClass, 11);
+		createEReference(messageExpEClass, 12);
+		createEOperation(messageExpEClass, 6);
+		createEOperation(messageExpEClass, 7);
 
 		messageTypeEClass = createEClass(60);
-		createEReference(messageTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
-		createEReference(messageTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 1);
+		createEReference(messageTypeEClass, 20);
+		createEReference(messageTypeEClass, 21);
 
 		modelEClass = createEClass(61);
-		createEAttribute(modelEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0);
-		createEReference(modelEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
-		createEReference(modelEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2);
-		createEAttribute(modelEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
+		createEAttribute(modelEClass, 6);
+		createEReference(modelEClass, 7);
+		createEReference(modelEClass, 8);
+		createEAttribute(modelEClass, 9);
 
 		morePivotableEClass = createEClass(62);
 
 		nameableEClass = createEClass(63);
 
 		namedElementEClass = createEClass(64);
-		createEAttribute(namedElementEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(namedElementEClass, 4);
 
 		namespaceEClass = createEClass(65);
-		createEReference(namespaceEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(namespaceEClass, 5);
 
 		navigationCallExpEClass = createEClass(66);
-		createEReference(navigationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0);
-		createEReference(navigationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1);
+		createEReference(navigationCallExpEClass, 13);
+		createEReference(navigationCallExpEClass, 14);
 
 		nullLiteralExpEClass = createEClass(67);
 
 		numericLiteralExpEClass = createEClass(68);
 
 		oclExpressionEClass = createEClass(69);
-		createEReference(oclExpressionEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0);
-		createEOperation(oclExpressionEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(oclExpressionEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(oclExpressionEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2);
+		createEReference(oclExpressionEClass, 8);
+		createEOperation(oclExpressionEClass, 3);
+		createEOperation(oclExpressionEClass, 4);
+		createEOperation(oclExpressionEClass, 5);
 
 		operationEClass = createEClass(70);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 4);
-		createEAttribute(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 5);
-		createEAttribute(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 6);
-		createEAttribute(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 7);
-		createEAttribute(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 8);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 9);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 10);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 11);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 12);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 13);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 14);
-		createEReference(operationEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 15);
-		createEOperation(operationEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 0);
-		createEOperation(operationEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 1);
-		createEOperation(operationEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 2);
-		createEOperation(operationEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 3);
+		createEReference(operationEClass, 15);
+		createEAttribute(operationEClass, 16);
+		createEAttribute(operationEClass, 17);
+		createEAttribute(operationEClass, 18);
+		createEAttribute(operationEClass, 19);
+		createEReference(operationEClass, 20);
+		createEReference(operationEClass, 21);
+		createEReference(operationEClass, 22);
+		createEReference(operationEClass, 23);
+		createEReference(operationEClass, 24);
+		createEReference(operationEClass, 25);
+		createEReference(operationEClass, 26);
+		createEOperation(operationEClass, 6);
+		createEOperation(operationEClass, 7);
+		createEOperation(operationEClass, 8);
+		createEOperation(operationEClass, 9);
 
 		operationCallExpEClass = createEClass(71);
-		createEAttribute(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0);
-		createEReference(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1);
-		createEReference(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 2);
-		createEOperation(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 1);
-		createEOperation(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 2);
-		createEOperation(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 3);
-		createEOperation(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 4);
-		createEOperation(operationCallExpEClass, FeatureCallExpImpl.FEATURE_CALL_EXP_OPERATION_COUNT + 5);
+		createEAttribute(operationCallExpEClass, 13);
+		createEReference(operationCallExpEClass, 14);
+		createEReference(operationCallExpEClass, 15);
+		createEOperation(operationCallExpEClass, 10);
+		createEOperation(operationCallExpEClass, 11);
+		createEOperation(operationCallExpEClass, 12);
+		createEOperation(operationCallExpEClass, 13);
+		createEOperation(operationCallExpEClass, 14);
 
 		oppositePropertyCallExpEClass = createEClass(72);
-		createEReference(oppositePropertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0);
-		createEOperation(oppositePropertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 0);
-		createEOperation(oppositePropertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 1);
+		createEReference(oppositePropertyCallExpEClass, 15);
+		createEOperation(oppositePropertyCallExpEClass, 9);
+		createEOperation(oppositePropertyCallExpEClass, 10);
 
 		orderedSetTypeEClass = createEClass(73);
 
 		orphanCompletePackageEClass = createEClass(74);
 
 		packageEClass = createEClass(75);
-		createEAttribute(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
-		createEAttribute(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
-		createEReference(packageEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7);
+		createEAttribute(packageEClass, 6);
+		createEReference(packageEClass, 7);
+		createEAttribute(packageEClass, 8);
+		createEReference(packageEClass, 9);
+		createEReference(packageEClass, 10);
+		createEReference(packageEClass, 11);
+		createEReference(packageEClass, 12);
+		createEReference(packageEClass, 13);
 
 		parameterEClass = createEClass(76);
-		createEAttribute(parameterEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0);
-		createEReference(parameterEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1);
+		createEAttribute(parameterEClass, 9);
+		createEReference(parameterEClass, 10);
 
 		parameterVariableEClass = createEClass(77);
-		createEOperation(parameterVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 0);
+		createEOperation(parameterVariableEClass, 7);
 
 		pivotableEClass = createEClass(78);
 
 		precedenceEClass = createEClass(79);
-		createEAttribute(precedenceEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(precedenceEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEAttribute(precedenceEClass, 5);
+		createEAttribute(precedenceEClass, 6);
 
 		primitiveCompletePackageEClass = createEClass(80);
 
 		primitiveLiteralExpEClass = createEClass(81);
 
 		primitiveTypeEClass = createEClass(82);
-		createEReference(primitiveTypeEClass, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0);
+		createEReference(primitiveTypeEClass, 23);
 
 		profileEClass = createEClass(83);
-		createEReference(profileEClass, PackageImpl.PACKAGE_FEATURE_COUNT + 0);
+		createEReference(profileEClass, 14);
 
 		profileApplicationEClass = createEClass(84);
-		createEReference(profileApplicationEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(profileApplicationEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(profileApplicationEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(profileApplicationEClass, 4);
+		createEAttribute(profileApplicationEClass, 5);
+		createEReference(profileApplicationEClass, 6);
 
 		propertyEClass = createEClass(85);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 0);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 1);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 2);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 3);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 4);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 5);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 6);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 7);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 8);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 9);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 10);
-		createEAttribute(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 11);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 12);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 13);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 14);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 15);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 16);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 17);
-		createEReference(propertyEClass, FeatureImpl.FEATURE_FEATURE_COUNT + 18);
-		createEOperation(propertyEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 0);
-		createEOperation(propertyEClass, FeatureImpl.FEATURE_OPERATION_COUNT + 1);
+		createEReference(propertyEClass, 11);
+		createEAttribute(propertyEClass, 12);
+		createEAttribute(propertyEClass, 13);
+		createEAttribute(propertyEClass, 14);
+		createEAttribute(propertyEClass, 15);
+		createEAttribute(propertyEClass, 16);
+		createEAttribute(propertyEClass, 17);
+		createEAttribute(propertyEClass, 18);
+		createEAttribute(propertyEClass, 19);
+		createEAttribute(propertyEClass, 20);
+		createEAttribute(propertyEClass, 21);
+		createEAttribute(propertyEClass, 22);
+		createEReference(propertyEClass, 23);
+		createEReference(propertyEClass, 24);
+		createEReference(propertyEClass, 25);
+		createEReference(propertyEClass, 26);
+		createEReference(propertyEClass, 27);
+		createEReference(propertyEClass, 28);
+		createEReference(propertyEClass, 29);
+		createEOperation(propertyEClass, 6);
+		createEOperation(propertyEClass, 7);
 
 		propertyCallExpEClass = createEClass(86);
-		createEReference(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_FEATURE_COUNT + 0);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 1);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 2);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 3);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 4);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 5);
-		createEOperation(propertyCallExpEClass, NavigationCallExpImpl.NAVIGATION_CALL_EXP_OPERATION_COUNT + 6);
+		createEReference(propertyCallExpEClass, 15);
+		createEOperation(propertyCallExpEClass, 10);
+		createEOperation(propertyCallExpEClass, 11);
+		createEOperation(propertyCallExpEClass, 12);
+		createEOperation(propertyCallExpEClass, 13);
+		createEOperation(propertyCallExpEClass, 14);
+		createEOperation(propertyCallExpEClass, 15);
 
 		pseudostateEClass = createEClass(87);
-		createEAttribute(pseudostateEClass, VertexImpl.VERTEX_FEATURE_COUNT + 0);
-		createEReference(pseudostateEClass, VertexImpl.VERTEX_FEATURE_COUNT + 1);
-		createEReference(pseudostateEClass, VertexImpl.VERTEX_FEATURE_COUNT + 2);
+		createEAttribute(pseudostateEClass, 8);
+		createEReference(pseudostateEClass, 9);
+		createEReference(pseudostateEClass, 10);
 
 		realLiteralExpEClass = createEClass(88);
-		createEAttribute(realLiteralExpEClass, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(realLiteralExpEClass, 9);
 
 		referringElementEClass = createEClass(89);
 		createEOperation(referringElementEClass, 0);
 
 		regionEClass = createEClass(90);
-		createEReference(regionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0);
-		createEReference(regionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
-		createEReference(regionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2);
-		createEReference(regionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
-		createEReference(regionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
+		createEReference(regionEClass, 6);
+		createEReference(regionEClass, 7);
+		createEReference(regionEClass, 8);
+		createEReference(regionEClass, 9);
+		createEReference(regionEClass, 10);
 
 		resultVariableEClass = createEClass(91);
-		createEOperation(resultVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 0);
-		createEOperation(resultVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 1);
-		createEOperation(resultVariableEClass, VariableImpl.VARIABLE_OPERATION_COUNT + 2);
+		createEOperation(resultVariableEClass, 7);
+		createEOperation(resultVariableEClass, 8);
+		createEOperation(resultVariableEClass, 9);
 
 		selfTypeEClass = createEClass(92);
-		createEOperation(selfTypeEClass, ClassImpl.CLASS_OPERATION_COUNT + 0);
+		createEOperation(selfTypeEClass, 8);
 
 		sendSignalActionEClass = createEClass(93);
-		createEReference(sendSignalActionEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(sendSignalActionEClass, 5);
 
 		sequenceTypeEClass = createEClass(94);
 
 		setTypeEClass = createEClass(95);
 
 		shadowExpEClass = createEClass(96);
-		createEReference(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEAttribute(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 2);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 3);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 4);
-		createEOperation(shadowExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 5);
+		createEReference(shadowExpEClass, 9);
+		createEAttribute(shadowExpEClass, 10);
+		createEOperation(shadowExpEClass, 6);
+		createEOperation(shadowExpEClass, 7);
+		createEOperation(shadowExpEClass, 8);
+		createEOperation(shadowExpEClass, 9);
+		createEOperation(shadowExpEClass, 10);
+		createEOperation(shadowExpEClass, 11);
 
 		shadowPartEClass = createEClass(97);
-		createEReference(shadowPartEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(shadowPartEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 1);
-		createEOperation(shadowPartEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(shadowPartEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(shadowPartEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2);
+		createEReference(shadowPartEClass, 8);
+		createEReference(shadowPartEClass, 9);
+		createEOperation(shadowPartEClass, 3);
+		createEOperation(shadowPartEClass, 4);
+		createEOperation(shadowPartEClass, 5);
 
 		signalEClass = createEClass(98);
 
 		slotEClass = createEClass(99);
-		createEReference(slotEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(slotEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(slotEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(slotEClass, 4);
+		createEReference(slotEClass, 5);
+		createEReference(slotEClass, 6);
 
 		standardLibraryEClass = createEClass(100);
-		createEReference(standardLibraryEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+		createEReference(standardLibraryEClass, 4);
 
 		stateEClass = createEClass(101);
-		createEAttribute(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
-		createEAttribute(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
-		createEAttribute(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
-		createEAttribute(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15);
-		createEReference(stateEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16);
+		createEAttribute(stateEClass, 9);
+		createEAttribute(stateEClass, 10);
+		createEAttribute(stateEClass, 11);
+		createEAttribute(stateEClass, 12);
+		createEReference(stateEClass, 13);
+		createEReference(stateEClass, 14);
+		createEReference(stateEClass, 15);
+		createEReference(stateEClass, 16);
+		createEReference(stateEClass, 17);
+		createEReference(stateEClass, 18);
+		createEReference(stateEClass, 19);
+		createEReference(stateEClass, 20);
+		createEReference(stateEClass, 21);
+		createEReference(stateEClass, 22);
 
 		stateExpEClass = createEClass(102);
-		createEReference(stateExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEOperation(stateExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0);
+		createEReference(stateExpEClass, 9);
+		createEOperation(stateExpEClass, 6);
 
 		stateMachineEClass = createEClass(103);
-		createEReference(stateMachineEClass, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0);
-		createEReference(stateMachineEClass, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1);
-		createEReference(stateMachineEClass, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2);
-		createEReference(stateMachineEClass, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3);
+		createEReference(stateMachineEClass, 21);
+		createEReference(stateMachineEClass, 22);
+		createEReference(stateMachineEClass, 23);
+		createEReference(stateMachineEClass, 24);
 
 		stereotypeEClass = createEClass(104);
-		createEReference(stereotypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
+		createEReference(stereotypeEClass, 20);
 
 		stereotypeExtenderEClass = createEClass(105);
-		createEReference(stereotypeExtenderEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(stereotypeExtenderEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(stereotypeExtenderEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(stereotypeExtenderEClass, 4);
+		createEAttribute(stereotypeExtenderEClass, 5);
+		createEReference(stereotypeExtenderEClass, 6);
 
 		stringLiteralExpEClass = createEClass(106);
-		createEAttribute(stringLiteralExpEClass, PrimitiveLiteralExpImpl.PRIMITIVE_LITERAL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(stringLiteralExpEClass, 9);
 
 		templateBindingEClass = createEClass(107);
-		createEReference(templateBindingEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(templateBindingEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(templateBindingEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(templateBindingEClass, 4);
+		createEReference(templateBindingEClass, 5);
+		createEReference(templateBindingEClass, 6);
 
 		templateParameterEClass = createEClass(108);
-		createEReference(templateParameterEClass, TypeImpl.TYPE_FEATURE_COUNT + 0);
-		createEReference(templateParameterEClass, TypeImpl.TYPE_FEATURE_COUNT + 1);
+		createEReference(templateParameterEClass, 5);
+		createEReference(templateParameterEClass, 6);
 
 		templateParameterSubstitutionEClass = createEClass(109);
-		createEReference(templateParameterSubstitutionEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(templateParameterSubstitutionEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(templateParameterSubstitutionEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
-		createEReference(templateParameterSubstitutionEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 3);
+		createEReference(templateParameterSubstitutionEClass, 4);
+		createEReference(templateParameterSubstitutionEClass, 5);
+		createEReference(templateParameterSubstitutionEClass, 6);
+		createEReference(templateParameterSubstitutionEClass, 7);
 
 		templateSignatureEClass = createEClass(110);
-		createEReference(templateSignatureEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(templateSignatureEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
+		createEReference(templateSignatureEClass, 4);
+		createEReference(templateSignatureEClass, 5);
 
 		templateableElementEClass = createEClass(111);
-		createEReference(templateableElementEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
-		createEReference(templateableElementEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(templateableElementEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEReference(templateableElementEClass, 4);
+		createEReference(templateableElementEClass, 5);
+		createEReference(templateableElementEClass, 6);
 
 		transitionEClass = createEClass(112);
-		createEAttribute(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
-		createEReference(transitionEClass, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
+		createEAttribute(transitionEClass, 6);
+		createEReference(transitionEClass, 7);
+		createEReference(transitionEClass, 8);
+		createEReference(transitionEClass, 9);
+		createEReference(transitionEClass, 10);
+		createEReference(transitionEClass, 11);
+		createEReference(transitionEClass, 12);
 
 		triggerEClass = createEClass(113);
-		createEReference(triggerEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(triggerEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+		createEReference(triggerEClass, 5);
+		createEReference(triggerEClass, 6);
 
 		tupleLiteralExpEClass = createEClass(114);
-		createEReference(tupleLiteralExpEClass, LiteralExpImpl.LITERAL_EXP_FEATURE_COUNT + 0);
+		createEReference(tupleLiteralExpEClass, 9);
 
 		tupleLiteralPartEClass = createEClass(115);
-		createEReference(tupleLiteralPartEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0);
-		createEOperation(tupleLiteralPartEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 0);
-		createEOperation(tupleLiteralPartEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 1);
+		createEReference(tupleLiteralPartEClass, 9);
+		createEOperation(tupleLiteralPartEClass, 6);
+		createEOperation(tupleLiteralPartEClass, 7);
 
 		tupleTypeEClass = createEClass(116);
 
 		typeEClass = createEClass(117);
-		createEOperation(typeEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(typeEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(typeEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 2);
-		createEOperation(typeEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 3);
+		createEOperation(typeEClass, 2);
+		createEOperation(typeEClass, 3);
+		createEOperation(typeEClass, 4);
+		createEOperation(typeEClass, 5);
 
 		typeExpEClass = createEClass(118);
-		createEReference(typeExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
+		createEReference(typeExpEClass, 9);
 
 		typedElementEClass = createEClass(119);
-		createEAttribute(typedElementEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(typedElementEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(typedElementEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
-		createEOperation(typedElementEClass, NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0);
+		createEAttribute(typedElementEClass, 5);
+		createEAttribute(typedElementEClass, 6);
+		createEReference(typedElementEClass, 7);
+		createEOperation(typedElementEClass, 2);
 
 		unlimitedNaturalLiteralExpEClass = createEClass(120);
-		createEAttribute(unlimitedNaturalLiteralExpEClass, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0);
+		createEAttribute(unlimitedNaturalLiteralExpEClass, 9);
 
 		unspecifiedValueExpEClass = createEClass(121);
 
 		valueSpecificationEClass = createEClass(122);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 3);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 4);
-		createEOperation(valueSpecificationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 5);
+		createEOperation(valueSpecificationEClass, 3);
+		createEOperation(valueSpecificationEClass, 4);
+		createEOperation(valueSpecificationEClass, 5);
+		createEOperation(valueSpecificationEClass, 6);
+		createEOperation(valueSpecificationEClass, 7);
+		createEOperation(valueSpecificationEClass, 8);
 
 		variableEClass = createEClass(123);
-		createEAttribute(variableEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 0);
-		createEReference(variableEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 1);
-		createEReference(variableEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_FEATURE_COUNT + 2);
-		createEOperation(variableEClass, VariableDeclarationImpl.VARIABLE_DECLARATION_OPERATION_COUNT + 0);
+		createEAttribute(variableEClass, 9);
+		createEReference(variableEClass, 10);
+		createEReference(variableEClass, 11);
+		createEOperation(variableEClass, 6);
 
 		variableDeclarationEClass = createEClass(124);
-		createEReference(variableDeclarationEClass, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0);
-		createEOperation(variableDeclarationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0);
-		createEOperation(variableDeclarationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1);
-		createEOperation(variableDeclarationEClass, TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2);
+		createEReference(variableDeclarationEClass, 8);
+		createEOperation(variableDeclarationEClass, 3);
+		createEOperation(variableDeclarationEClass, 4);
+		createEOperation(variableDeclarationEClass, 5);
 
 		variableExpEClass = createEClass(125);
-		createEAttribute(variableExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0);
-		createEReference(variableExpEClass, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 1);
-		createEOperation(variableExpEClass, OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 1);
+		createEAttribute(variableExpEClass, 9);
+		createEReference(variableExpEClass, 10);
+		createEOperation(variableExpEClass, 7);
 
 		vertexEClass = createEClass(126);
-		createEReference(vertexEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
-		createEReference(vertexEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
-		createEReference(vertexEClass, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2);
+		createEReference(vertexEClass, 5);
+		createEReference(vertexEClass, 6);
+		createEReference(vertexEClass, 7);
 
 		visitableEClass = createEClass(127);
 
 		voidTypeEClass = createEClass(128);
 
 		wildcardTypeEClass = createEClass(129);
-		createEReference(wildcardTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 0);
-		createEReference(wildcardTypeEClass, ClassImpl.CLASS_FEATURE_COUNT + 1);
+		createEReference(wildcardTypeEClass, 20);
+		createEReference(wildcardTypeEClass, 21);
 
 		// Create enums
 		associativityKindEEnum = createEEnum(130);

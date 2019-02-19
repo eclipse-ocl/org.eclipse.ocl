@@ -116,7 +116,7 @@ public abstract class NavigationCallExpImpl
 	{
 		if (qualifiers == null)
 		{
-			qualifiers = new EObjectResolvingEList<OCLExpression>(OCLExpression.class, this, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1);
+			qualifiers = new EObjectResolvingEList<OCLExpression>(OCLExpression.class, this, 14);
 		}
 		return qualifiers;
 	}
@@ -135,7 +135,7 @@ public abstract class NavigationCallExpImpl
 			if (navigationSource != oldNavigationSource)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0, oldNavigationSource, navigationSource));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 13, oldNavigationSource, navigationSource));
 			}
 		}
 		return navigationSource;
@@ -160,7 +160,7 @@ public abstract class NavigationCallExpImpl
 		Property oldNavigationSource = navigationSource;
 		navigationSource = newNavigationSource;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0, oldNavigationSource, navigationSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldNavigationSource, navigationSource));
 	}
 
 	/**
@@ -199,10 +199,10 @@ public abstract class NavigationCallExpImpl
 				return getOwnedSource();
 			case 12:
 				return isIsPre();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				if (resolve) return getNavigationSource();
 				return basicGetNavigationSource();
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				return getQualifiers();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -258,10 +258,10 @@ public abstract class NavigationCallExpImpl
 			case 12:
 				setIsPre((Boolean)newValue);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				setNavigationSource((Property)newValue);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
@@ -314,10 +314,10 @@ public abstract class NavigationCallExpImpl
 			case 12:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				setNavigationSource((Property)null);
 				return;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				getQualifiers().clear();
 				return;
 		}
@@ -359,9 +359,9 @@ public abstract class NavigationCallExpImpl
 				return ownedSource != null;
 			case 12:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 0:
+			case 13:
 				return navigationSource != null;
-			case FeatureCallExpImpl.FEATURE_CALL_EXP_FEATURE_COUNT + 1:
+			case 14:
 				return qualifiers != null && !qualifiers.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

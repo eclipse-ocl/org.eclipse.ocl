@@ -98,7 +98,7 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 				return isClass();
 			case 4:
 				return isTemplateParameter();
-			case ClassImpl.CLASS_OPERATION_COUNT + 0:
+			case 8:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
 			case 6:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
@@ -156,7 +156,7 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 		{
 			switch (baseOperationID)
 			{
-				case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 3: return ClassImpl.CLASS_OPERATION_COUNT + 0;
+				case 5: return 8;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}

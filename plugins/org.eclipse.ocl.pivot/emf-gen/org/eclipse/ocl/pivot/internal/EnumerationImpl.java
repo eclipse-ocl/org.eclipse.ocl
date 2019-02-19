@@ -111,7 +111,7 @@ public class EnumerationImpl
 	{
 		if (ownedLiterals == null)
 		{
-			ownedLiterals = new EObjectContainmentWithInverseEList<EnumerationLiteral>(EnumerationLiteral.class, this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, InstanceSpecificationImpl.INSTANCE_SPECIFICATION_FEATURE_COUNT + 1);
+			ownedLiterals = new EObjectContainmentWithInverseEList<EnumerationLiteral>(EnumerationLiteral.class, this, 23, 10);
 		}
 		return ownedLiterals;
 	}
@@ -149,7 +149,7 @@ public class EnumerationImpl
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedLiterals()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -191,7 +191,7 @@ public class EnumerationImpl
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return ((InternalEList<?>)getOwnedLiterals()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -253,7 +253,7 @@ public class EnumerationImpl
 				return isIsSerializable();
 			case 22:
 				return getValue();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return getOwnedLiterals();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -347,7 +347,7 @@ public class EnumerationImpl
 			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				getOwnedLiterals().clear();
 				getOwnedLiterals().addAll((Collection<? extends EnumerationLiteral>)newValue);
 				return;
@@ -430,7 +430,7 @@ public class EnumerationImpl
 			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				getOwnedLiterals().clear();
 				return;
 		}
@@ -492,7 +492,7 @@ public class EnumerationImpl
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return ownedLiterals != null && !ownedLiterals.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

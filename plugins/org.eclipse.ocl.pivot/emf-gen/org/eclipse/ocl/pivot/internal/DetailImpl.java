@@ -96,7 +96,7 @@ public class DetailImpl
 	{
 		if (values == null)
 		{
-			values = new EDataTypeUniqueEList<String>(String.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+			values = new EDataTypeUniqueEList<String>(String.class, this, 5);
 		}
 		return values;
 	}
@@ -120,7 +120,7 @@ public class DetailImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getValues();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -155,7 +155,7 @@ public class DetailImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getValues().clear();
 				getValues().addAll((Collection<? extends String>)newValue);
 				return;
@@ -187,7 +187,7 @@ public class DetailImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getValues().clear();
 				return;
 		}
@@ -213,7 +213,7 @@ public class DetailImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return values != null && !values.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

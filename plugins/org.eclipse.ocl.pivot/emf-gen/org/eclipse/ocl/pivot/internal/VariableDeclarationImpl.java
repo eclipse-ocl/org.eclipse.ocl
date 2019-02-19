@@ -124,7 +124,7 @@ implements VariableDeclaration {
 		Type oldTypeValue = typeValue;
 		typeValue = newTypeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0, oldTypeValue, typeValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldTypeValue, typeValue));
 	}
 
 	/**
@@ -287,7 +287,7 @@ implements VariableDeclaration {
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return getTypeValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -329,7 +329,7 @@ implements VariableDeclaration {
 			case 7:
 				setType((Type)newValue);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setTypeValue((Type)newValue);
 				return;
 		}
@@ -367,7 +367,7 @@ implements VariableDeclaration {
 			case 7:
 				setType((Type)null);
 				return;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				setTypeValue((Type)null);
 				return;
 		}
@@ -400,7 +400,7 @@ implements VariableDeclaration {
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case TypedElementImpl.TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 8:
 				return typeValue != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -423,11 +423,11 @@ implements VariableDeclaration {
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 0:
+			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 1:
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case TypedElementImpl.TYPED_ELEMENT_OPERATION_COUNT + 2:
+			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

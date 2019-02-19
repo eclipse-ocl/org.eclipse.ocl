@@ -148,7 +148,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 	{
 		if (extendedStateMachines == null)
 		{
-			extendedStateMachines = new EObjectResolvingEList<StateMachine>(StateMachine.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0);
+			extendedStateMachines = new EObjectResolvingEList<StateMachine>(StateMachine.class, this, 21);
 		}
 		return extendedStateMachines;
 	}
@@ -163,7 +163,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 	{
 		if (ownedConnectionPoints == null)
 		{
-			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1, VertexImpl.VERTEX_FEATURE_COUNT + 2);
+			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, 22, 10);
 		}
 		return ownedConnectionPoints;
 	}
@@ -178,7 +178,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 	{
 		if (ownedRegions == null)
 		{
-			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4);
+			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, 23, 10);
 		}
 		return ownedRegions;
 	}
@@ -193,7 +193,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 	{
 		if (submachineStates == null)
 		{
-			submachineStates = new EObjectWithInverseResolvingEList<State>(State.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16);
+			submachineStates = new EObjectWithInverseResolvingEList<State>(State.class, this, 24, 22);
 		}
 		return submachineStates;
 	}
@@ -235,11 +235,11 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningTransition((Transition)otherEnd, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedConnectionPoints()).basicAdd(otherEnd, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedRegions()).basicAdd(otherEnd, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSubmachineStates()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -283,11 +283,11 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				return basicSetOwningPackage(null, msgs);
 			case 20:
 				return basicSetOwningTransition(null, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return ((InternalEList<?>)getOwnedConnectionPoints()).basicRemove(otherEnd, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				return ((InternalEList<?>)getOwnedRegions()).basicRemove(otherEnd, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				return ((InternalEList<?>)getSubmachineStates()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -345,13 +345,13 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				return getSuperClasses();
 			case 20:
 				return getOwningTransition();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				return getExtendedStateMachines();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return getOwnedConnectionPoints();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				return getOwnedRegions();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				return getSubmachineStates();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -443,19 +443,19 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 			case 20:
 				setOwningTransition((Transition)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				getExtendedStateMachines().clear();
 				getExtendedStateMachines().addAll((Collection<? extends StateMachine>)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				getOwnedConnectionPoints().clear();
 				getOwnedConnectionPoints().addAll((Collection<? extends Pseudostate>)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				getOwnedRegions().clear();
 				getOwnedRegions().addAll((Collection<? extends Region>)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				getSubmachineStates().clear();
 				getSubmachineStates().addAll((Collection<? extends State>)newValue);
 				return;
@@ -536,16 +536,16 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 			case 20:
 				setOwningTransition((Transition)null);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				getExtendedStateMachines().clear();
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				getOwnedConnectionPoints().clear();
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				getOwnedRegions().clear();
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				getSubmachineStates().clear();
 				return;
 		}
@@ -604,13 +604,13 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				return superClasses != null && !superClasses.isEmpty();
 			case 20:
 				return getOwningTransition() != null;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				return extendedStateMachines != null && !extendedStateMachines.isEmpty();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return ownedConnectionPoints != null && !ownedConnectionPoints.isEmpty();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 2:
+			case 23:
 				return ownedRegions != null && !ownedRegions.isEmpty();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3:
+			case 24:
 				return submachineStates != null && !submachineStates.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

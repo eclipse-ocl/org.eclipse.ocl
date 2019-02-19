@@ -91,7 +91,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	@Override
 	public State getOwningState()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (5)) return null;
 		return (State)eInternalContainer();
 	}
 
@@ -102,7 +102,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	 */
 	public NotificationChain basicSetOwningState(State newOwningState, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningState, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningState, 5, msgs);
 		return msgs;
 	}
 
@@ -114,7 +114,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	@Override
 	public void setOwningState(State newOwningState)
 	{
-		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0) && newOwningState != null))
+		if (newOwningState != eInternalContainer() || (eContainerFeatureID() != (5) && newOwningState != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningState))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -122,12 +122,12 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningState != null)
-				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9, State.class, msgs);
+				msgs = ((InternalEObject)newOwningState).eInverseAdd(this, 15, State.class, msgs);
 			msgs = basicSetOwningState(newOwningState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, newOwningState, newOwningState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwningState, newOwningState));
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	@Override
 	public Transition getOwningTransition()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (Transition)eInternalContainer();
 	}
 
@@ -149,7 +149,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	 */
 	public NotificationChain basicSetOwningTransition(Transition newOwningTransition, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, 6, msgs);
 		return msgs;
 	}
 
@@ -161,7 +161,7 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	@Override
 	public void setOwningTransition(Transition newOwningTransition)
 	{
-		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1) && newOwningTransition != null))
+		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningTransition != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningTransition))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -169,12 +169,12 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningTransition != null)
-				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, Transition.class, msgs);
+				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, 9, Transition.class, msgs);
 			msgs = basicSetOwningTransition(newOwningTransition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, newOwningTransition, newOwningTransition));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningTransition, newOwningTransition));
 	}
 
 	/**
@@ -194,11 +194,11 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningState((State)otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningTransition((Transition)otherEnd, msgs);
@@ -224,9 +224,9 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return basicSetOwningState(null, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return basicSetOwningTransition(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -242,10 +242,10 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9, State.class, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, Transition.class, msgs);
+			case 5:
+				return eInternalContainer().eInverseRemove(this, 15, State.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 9, Transition.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -270,9 +270,9 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOwningState();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningTransition();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -308,10 +308,10 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setOwningState((State)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setOwningTransition((Transition)newValue);
 				return;
 		}
@@ -343,10 +343,10 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				setOwningState((State)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				setOwningTransition((Transition)null);
 				return;
 		}
@@ -373,9 +373,9 @@ public class TriggerImpl extends NamedElementImpl implements Trigger
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOwningState() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningTransition() != null;
 		}
 		return eDynamicIsSet(featureID);

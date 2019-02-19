@@ -262,7 +262,7 @@ public class StateImpl
 	{
 		if (incomingTransitions == null)
 		{
-			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6);
+			incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, 6, 12);
 		}
 		return incomingTransitions;
 	}
@@ -277,7 +277,7 @@ public class StateImpl
 	{
 		if (outgoingTransitions == null)
 		{
-			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5);
+			outgoingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, 7, 11);
 		}
 		return outgoingTransitions;
 	}
@@ -290,7 +290,7 @@ public class StateImpl
 	@Override
 	public Region getOwningRegion()
 	{
-		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (Region)eInternalContainer();
 	}
 
@@ -301,7 +301,7 @@ public class StateImpl
 	 */
 	public NotificationChain basicSetOwningRegion(Region newOwningRegion, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, 8, msgs);
 		return msgs;
 	}
 
@@ -313,7 +313,7 @@ public class StateImpl
 	@Override
 	public void setOwningRegion(Region newOwningRegion)
 	{
-		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2) && newOwningRegion != null))
+		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (8) && newOwningRegion != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningRegion))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -321,12 +321,12 @@ public class StateImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningRegion != null)
-				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
+				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, 7, Region.class, msgs);
 			msgs = basicSetOwningRegion(newOwningRegion, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, newOwningRegion, newOwningRegion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningRegion, newOwningRegion));
 	}
 
 	/**
@@ -383,7 +383,7 @@ public class StateImpl
 	{
 		if (ownedConnectionPoints == null)
 		{
-			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7, VertexImpl.VERTEX_FEATURE_COUNT + 1);
+			ownedConnectionPoints = new EObjectContainmentWithInverseEList<Pseudostate>(Pseudostate.class, this, 13, 9);
 		}
 		return ownedConnectionPoints;
 	}
@@ -398,7 +398,7 @@ public class StateImpl
 	{
 		if (ownedConnections == null)
 		{
-			ownedConnections = new EObjectContainmentWithInverseEList<ConnectionPointReference>(ConnectionPointReference.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8, VertexImpl.VERTEX_FEATURE_COUNT + 2);
+			ownedConnections = new EObjectContainmentWithInverseEList<ConnectionPointReference>(ConnectionPointReference.class, this, 14, 10);
 		}
 		return ownedConnections;
 	}
@@ -413,7 +413,7 @@ public class StateImpl
 	{
 		if (ownedDeferrableTriggers == null)
 		{
-			ownedDeferrableTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+			ownedDeferrableTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, 15, 5);
 		}
 		return ownedDeferrableTriggers;
 	}
@@ -440,7 +440,7 @@ public class StateImpl
 		ownedDoActivity = newOwnedDoActivity;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10, oldOwnedDoActivity, newOwnedDoActivity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 16, oldOwnedDoActivity, newOwnedDoActivity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -458,14 +458,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedDoActivity != null)
-				msgs = ((InternalEObject)ownedDoActivity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10), null, msgs);
+				msgs = ((InternalEObject)ownedDoActivity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
 			if (newOwnedDoActivity != null)
-				msgs = ((InternalEObject)newOwnedDoActivity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10), null, msgs);
+				msgs = ((InternalEObject)newOwnedDoActivity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
 			msgs = basicSetOwnedDoActivity(newOwnedDoActivity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10, newOwnedDoActivity, newOwnedDoActivity));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, newOwnedDoActivity, newOwnedDoActivity));
 	}
 
 	/**
@@ -490,7 +490,7 @@ public class StateImpl
 		ownedEntry = newOwnedEntry;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11, oldOwnedEntry, newOwnedEntry);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 17, oldOwnedEntry, newOwnedEntry);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -508,14 +508,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedEntry != null)
-				msgs = ((InternalEObject)ownedEntry).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11), null, msgs);
+				msgs = ((InternalEObject)ownedEntry).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (17), null, msgs);
 			if (newOwnedEntry != null)
-				msgs = ((InternalEObject)newOwnedEntry).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11), null, msgs);
+				msgs = ((InternalEObject)newOwnedEntry).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (17), null, msgs);
 			msgs = basicSetOwnedEntry(newOwnedEntry, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11, newOwnedEntry, newOwnedEntry));
+			eNotify(new ENotificationImpl(this, Notification.SET, 17, newOwnedEntry, newOwnedEntry));
 	}
 
 	/**
@@ -540,7 +540,7 @@ public class StateImpl
 		ownedExit = newOwnedExit;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12, oldOwnedExit, newOwnedExit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 18, oldOwnedExit, newOwnedExit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -558,14 +558,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedExit != null)
-				msgs = ((InternalEObject)ownedExit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12), null, msgs);
+				msgs = ((InternalEObject)ownedExit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (18), null, msgs);
 			if (newOwnedExit != null)
-				msgs = ((InternalEObject)newOwnedExit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12), null, msgs);
+				msgs = ((InternalEObject)newOwnedExit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (18), null, msgs);
 			msgs = basicSetOwnedExit(newOwnedExit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12, newOwnedExit, newOwnedExit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 18, newOwnedExit, newOwnedExit));
 	}
 
 	/**
@@ -578,7 +578,7 @@ public class StateImpl
 	{
 		if (ownedRegions == null)
 		{
-			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3);
+			ownedRegions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, 19, 9);
 		}
 		return ownedRegions;
 	}
@@ -605,7 +605,7 @@ public class StateImpl
 		ownedStateInvariant = newOwnedStateInvariant;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, oldOwnedStateInvariant, newOwnedStateInvariant);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 20, oldOwnedStateInvariant, newOwnedStateInvariant);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -623,14 +623,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedStateInvariant != null)
-				msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, Constraint.class, msgs);
+				msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, 11, Constraint.class, msgs);
 			if (newOwnedStateInvariant != null)
-				msgs = ((InternalEObject)newOwnedStateInvariant).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 6, Constraint.class, msgs);
+				msgs = ((InternalEObject)newOwnedStateInvariant).eInverseAdd(this, 11, Constraint.class, msgs);
 			msgs = basicSetOwnedStateInvariant(newOwnedStateInvariant, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14, newOwnedStateInvariant, newOwnedStateInvariant));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, newOwnedStateInvariant, newOwnedStateInvariant));
 	}
 
 	/**
@@ -648,7 +648,7 @@ public class StateImpl
 			if (redefinedState != oldRedefinedState)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15, oldRedefinedState, redefinedState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldRedefinedState, redefinedState));
 			}
 		}
 		return redefinedState;
@@ -675,7 +675,7 @@ public class StateImpl
 		State oldRedefinedState = redefinedState;
 		redefinedState = newRedefinedState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15, oldRedefinedState, redefinedState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldRedefinedState, redefinedState));
 	}
 
 	/**
@@ -693,7 +693,7 @@ public class StateImpl
 			if (submachines != oldSubmachines)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, oldSubmachines, submachines));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 22, oldSubmachines, submachines));
 			}
 		}
 		return submachines;
@@ -720,7 +720,7 @@ public class StateImpl
 		submachines = newSubmachines;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, oldSubmachines, newSubmachines);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 22, oldSubmachines, newSubmachines);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -738,14 +738,14 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (submachines != null)
-				msgs = ((InternalEObject)submachines).eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
+				msgs = ((InternalEObject)submachines).eInverseRemove(this, 24, StateMachine.class, msgs);
 			if (newSubmachines != null)
-				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, 24, StateMachine.class, msgs);
 			msgs = basicSetSubmachines(newSubmachines, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16, newSubmachines, newSubmachines));
+			eNotify(new ENotificationImpl(this, Notification.SET, 22, newSubmachines, newSubmachines));
 	}
 
 	/**
@@ -765,29 +765,29 @@ public class StateImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedConnectionPoints()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedConnections()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedDeferrableTriggers()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedRegions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				if (ownedStateInvariant != null)
-					msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14), null, msgs);
+					msgs = ((InternalEObject)ownedStateInvariant).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (20), null, msgs);
 				return basicSetOwnedStateInvariant((Constraint)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				if (submachines != null)
-					msgs = ((InternalEObject)submachines).eInverseRemove(this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 3, StateMachine.class, msgs);
+					msgs = ((InternalEObject)submachines).eInverseRemove(this, 24, StateMachine.class, msgs);
 				return basicSetSubmachines((StateMachine)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -813,29 +813,29 @@ public class StateImpl
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return basicSetOwningRegion(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return ((InternalEList<?>)getOwnedConnectionPoints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				return ((InternalEList<?>)getOwnedConnections()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				return ((InternalEList<?>)getOwnedDeferrableTriggers()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
+			case 16:
 				return basicSetOwnedDoActivity(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
+			case 17:
 				return basicSetOwnedEntry(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
+			case 18:
 				return basicSetOwnedExit(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				return ((InternalEList<?>)getOwnedRegions()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				return basicSetOwnedStateInvariant(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				return basicSetSubmachines(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -851,8 +851,8 @@ public class StateImpl
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Region.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, 7, Region.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -879,40 +879,40 @@ public class StateImpl
 				return getName();
 			case 5:
 				return getOwnedConstraints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return getIncomingTransitions();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return getOutgoingTransitions();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getOwningRegion();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return isIsComposite();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return isIsOrthogonal();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return isIsSimple();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return isIsSubmachineState();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return getOwnedConnectionPoints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				return getOwnedConnections();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				return getOwnedDeferrableTriggers();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
+			case 16:
 				return getOwnedDoActivity();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
+			case 17:
 				return getOwnedEntry();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
+			case 18:
 				return getOwnedExit();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				return getOwnedRegions();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				return getOwnedStateInvariant();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
+			case 21:
 				if (resolve) return getRedefinedState();
 				return basicGetRedefinedState();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				if (resolve) return getSubmachines();
 				return basicGetSubmachines();
 		}
@@ -953,41 +953,41 @@ public class StateImpl
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setOwningRegion((Region)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				getOwnedConnectionPoints().clear();
 				getOwnedConnectionPoints().addAll((Collection<? extends Pseudostate>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				getOwnedConnections().clear();
 				getOwnedConnections().addAll((Collection<? extends ConnectionPointReference>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				getOwnedDeferrableTriggers().clear();
 				getOwnedDeferrableTriggers().addAll((Collection<? extends Trigger>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
+			case 16:
 				setOwnedDoActivity((Behavior)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
+			case 17:
 				setOwnedEntry((Behavior)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
+			case 18:
 				setOwnedExit((Behavior)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				getOwnedRegions().clear();
 				getOwnedRegions().addAll((Collection<? extends Region>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				setOwnedStateInvariant((Constraint)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
+			case 21:
 				setRedefinedState((State)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				setSubmachines((StateMachine)newValue);
 				return;
 		}
@@ -1022,37 +1022,37 @@ public class StateImpl
 			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setOwningRegion((Region)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				getOwnedConnectionPoints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				getOwnedConnections().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				getOwnedDeferrableTriggers().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
+			case 16:
 				setOwnedDoActivity((Behavior)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
+			case 17:
 				setOwnedEntry((Behavior)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
+			case 18:
 				setOwnedExit((Behavior)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				getOwnedRegions().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				setOwnedStateInvariant((Constraint)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
+			case 21:
 				setRedefinedState((State)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				setSubmachines((StateMachine)null);
 				return;
 		}
@@ -1081,39 +1081,39 @@ public class StateImpl
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return incomingTransitions != null && !incomingTransitions.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getOwningRegion() != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return isIsComposite() != IS_COMPOSITE_EDEFAULT;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return isIsOrthogonal() != IS_ORTHOGONAL_EDEFAULT;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return isIsSimple() != IS_SIMPLE_EDEFAULT;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return isIsSubmachineState() != IS_SUBMACHINE_STATE_EDEFAULT;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 7:
+			case 13:
 				return ownedConnectionPoints != null && !ownedConnectionPoints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 8:
+			case 14:
 				return ownedConnections != null && !ownedConnections.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 9:
+			case 15:
 				return ownedDeferrableTriggers != null && !ownedDeferrableTriggers.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 10:
+			case 16:
 				return ownedDoActivity != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 11:
+			case 17:
 				return ownedEntry != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 12:
+			case 18:
 				return ownedExit != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 13:
+			case 19:
 				return ownedRegions != null && !ownedRegions.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 14:
+			case 20:
 				return ownedStateInvariant != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 15:
+			case 21:
 				return redefinedState != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 16:
+			case 22:
 				return submachines != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -1131,9 +1131,9 @@ public class StateImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0;
-				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
-				case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2: return NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2;
+				case 6: return 5;
+				case 7: return 6;
+				case 8: return 7;
 				default: return -1;
 			}
 		}
@@ -1152,9 +1152,9 @@ public class StateImpl
 		{
 			switch (baseFeatureID)
 			{
-				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0;
-				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1;
-				case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2: return NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2;
+				case 5: return 6;
+				case 6: return 7;
+				case 7: return 8;
 				default: return -1;
 			}
 		}

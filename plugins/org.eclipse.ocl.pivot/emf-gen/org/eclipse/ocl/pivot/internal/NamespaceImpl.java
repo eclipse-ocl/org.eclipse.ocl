@@ -100,7 +100,7 @@ public abstract class NamespaceImpl
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0);
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, 5);
 		}
 		return ownedConstraints;
 	}
@@ -123,7 +123,7 @@ public abstract class NamespaceImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -149,7 +149,7 @@ public abstract class NamespaceImpl
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedConstraints();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -185,7 +185,7 @@ public abstract class NamespaceImpl
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
@@ -218,7 +218,7 @@ public abstract class NamespaceImpl
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedConstraints().clear();
 				return;
 		}
@@ -245,7 +245,7 @@ public abstract class NamespaceImpl
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

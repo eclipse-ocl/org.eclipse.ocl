@@ -150,7 +150,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 6:
 				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case VariableImpl.VARIABLE_OPERATION_COUNT + 0:
+			case 7:
 				return validateHasNoInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

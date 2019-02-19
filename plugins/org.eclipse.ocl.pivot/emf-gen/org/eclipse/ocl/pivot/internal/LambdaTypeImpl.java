@@ -142,7 +142,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			if (contextType != oldContextType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, oldContextType, contextType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldContextType, contextType));
 			}
 		}
 		return contextType;
@@ -169,7 +169,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		Type oldContextType = contextType;
 		contextType = newContextType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0, oldContextType, contextType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldContextType, contextType));
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	{
 		if (parameterType == null)
 		{
-			parameterType = new EObjectResolvingEList<Type>(Type.class, this, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1);
+			parameterType = new EObjectResolvingEList<Type>(Type.class, this, 24);
 		}
 		return parameterType;
 	}
@@ -203,7 +203,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			if (resultType != oldResultType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2, oldResultType, resultType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 25, oldResultType, resultType));
 			}
 		}
 		return resultType;
@@ -230,7 +230,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		Type oldResultType = resultType;
 		resultType = newResultType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2, oldResultType, resultType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldResultType, resultType));
 	}
 
 	/**
@@ -290,12 +290,12 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				return isIsSerializable();
 			case 22:
 				return getValue();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				if (resolve) return getContextType();
 				return basicGetContextType();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return getParameterType();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				if (resolve) return getResultType();
 				return basicGetResultType();
 		}
@@ -391,14 +391,14 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setContextType((Type)newValue);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				getParameterType().clear();
 				getParameterType().addAll((Collection<? extends Type>)newValue);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setResultType((Type)newValue);
 				return;
 		}
@@ -481,13 +481,13 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setContextType((Type)null);
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				getParameterType().clear();
 				return;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setResultType((Type)null);
 				return;
 		}
@@ -550,11 +550,11 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return contextType != null;
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return parameterType != null && !parameterType.isEmpty();
-			case DataTypeImpl.DATA_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				return resultType != null;
 		}
 		return eDynamicIsSet(featureID);

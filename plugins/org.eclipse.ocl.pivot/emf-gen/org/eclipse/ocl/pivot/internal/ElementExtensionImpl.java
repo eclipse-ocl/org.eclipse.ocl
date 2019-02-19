@@ -153,7 +153,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			if (stereotype != oldStereotype)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ClassImpl.CLASS_FEATURE_COUNT + 3, oldStereotype, stereotype));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldStereotype, stereotype));
 			}
 		}
 		return stereotype;
@@ -180,7 +180,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		Stereotype oldStereotype = stereotype;
 		stereotype = newStereotype;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 3, oldStereotype, stereotype));
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldStereotype, stereotype));
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public Element getBase()
 	{
-		if (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (20)) return null;
 		return (Element)eInternalContainer();
 	}
 
@@ -202,7 +202,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	 */
 	public NotificationChain basicSetBase(Element newBase, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newBase, ClassImpl.CLASS_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newBase, 20, msgs);
 		return msgs;
 	}
 
@@ -214,7 +214,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public void setBase(Element newBase)
 	{
-		if (newBase != eInternalContainer() || (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0) && newBase != null))
+		if (newBase != eInternalContainer() || (eContainerFeatureID() != (20) && newBase != null))
 		{
 			if (EcoreUtil.isAncestor(this, newBase))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -227,7 +227,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, newBase, newBase));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, newBase, newBase));
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		boolean oldIsApplied = (eFlags & IS_APPLIED_EFLAG) != 0;
 		if (newIsApplied) eFlags |= IS_APPLIED_EFLAG; else eFlags &= ~IS_APPLIED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 1, oldIsApplied, newIsApplied));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldIsApplied, newIsApplied));
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 2, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, 22, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetBase((Element)otherEnd, msgs);
@@ -357,7 +357,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return basicSetBase(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -374,8 +374,8 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 		switch (eContainerFeatureID())
 		{
 			case 18:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, org.eclipse.ocl.pivot.Package.class, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+				return eInternalContainer().eInverseRemove(this, 9, org.eclipse.ocl.pivot.Package.class, msgs);
+			case 20:
 				return eInternalContainer().eInverseRemove(this, 3, Element.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
@@ -431,13 +431,13 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getBase();
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return isIsApplied();
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				return isIsRequired();
-			case ClassImpl.CLASS_FEATURE_COUNT + 3:
+			case 23:
 				if (resolve) return getStereotype();
 				return basicGetStereotype();
 		}
@@ -527,16 +527,16 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setBase((Element)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setIsApplied((Boolean)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				setIsRequired((Boolean)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 3:
+			case 23:
 				setStereotype((Stereotype)newValue);
 				return;
 		}
@@ -613,16 +613,16 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setBase((Element)null);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				setIsApplied(IS_APPLIED_EDEFAULT);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 3:
+			case 23:
 				setStereotype((Stereotype)null);
 				return;
 		}
@@ -679,13 +679,13 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getBase() != null;
-			case ClassImpl.CLASS_FEATURE_COUNT + 1:
+			case 21:
 				return ((eFlags & IS_APPLIED_EFLAG) != 0) != IS_APPLIED_EDEFAULT;
-			case ClassImpl.CLASS_FEATURE_COUNT + 2:
+			case 22:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case ClassImpl.CLASS_FEATURE_COUNT + 3:
+			case 23:
 				return stereotype != null;
 		}
 		return eDynamicIsSet(featureID);

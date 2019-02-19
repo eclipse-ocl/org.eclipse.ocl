@@ -119,7 +119,7 @@ public class UnlimitedNaturalLiteralExpImpl
 		Number oldUnlimitedNaturalSymbol = unlimitedNaturalSymbol;
 		unlimitedNaturalSymbol = newUnlimitedNaturalSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0, oldUnlimitedNaturalSymbol, unlimitedNaturalSymbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldUnlimitedNaturalSymbol, unlimitedNaturalSymbol));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class UnlimitedNaturalLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getUnlimitedNaturalSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -194,7 +194,7 @@ public class UnlimitedNaturalLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setUnlimitedNaturalSymbol((Number)newValue);
 				return;
 		}
@@ -234,7 +234,7 @@ public class UnlimitedNaturalLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setUnlimitedNaturalSymbol(UNLIMITED_NATURAL_SYMBOL_EDEFAULT);
 				return;
 		}
@@ -268,7 +268,7 @@ public class UnlimitedNaturalLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return UNLIMITED_NATURAL_SYMBOL_EDEFAULT == null ? unlimitedNaturalSymbol != null : !UNLIMITED_NATURAL_SYMBOL_EDEFAULT.equals(unlimitedNaturalSymbol);
 		}
 		return eDynamicIsSet(featureID);

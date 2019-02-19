@@ -146,9 +146,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompletePackages()).basicAdd(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningCompleteEnvironment((CompleteEnvironment)otherEnd, msgs);
@@ -174,9 +174,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ((InternalEList<?>)getOwnedCompletePackages()).basicRemove(otherEnd, msgs);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return basicSetOwningCompleteEnvironment(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -192,8 +192,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, CompleteEnvironment.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 4, CompleteEnvironment.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -218,15 +218,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return getOwnedExtensions();
 			case 4:
 				return getName();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return getOrphanCompletePackage();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return getOwnedCompletePackages();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningCompleteEnvironment();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return getPartialModels();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return getPrimitiveCompletePackage();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -262,14 +262,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			case 4:
 				setName((String)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedCompletePackages().clear();
 				getOwnedCompletePackages().addAll((Collection<? extends CompletePackage>)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningCompleteEnvironment((CompleteEnvironment)newValue);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				getPartialModels().clear();
 				getPartialModels().addAll((Collection<? extends Model>)newValue);
 				return;
@@ -302,13 +302,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				getOwnedCompletePackages().clear();
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				setOwningCompleteEnvironment((CompleteEnvironment)null);
 				return;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				getPartialModels().clear();
 				return;
 		}
@@ -335,15 +335,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 5:
 				return orphanCompletePackage != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 6:
 				return ownedCompletePackages != null && !ownedCompletePackages.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 7:
 				return getOwningCompleteEnvironment() != null;
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3:
+			case 8:
 				return partialModels != null && !partialModels.isEmpty();
-			case NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4:
+			case 9:
 				return primitiveCompletePackage != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -363,7 +363,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return allOwnedElements();
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
+			case 2:
 				return getOwnedCompletePackage((String)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);
@@ -620,7 +620,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public CompleteEnvironment getOwningCompleteEnvironment()
 	{
-		if (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (CompleteEnvironment)eInternalContainer();
 	}
 
@@ -631,7 +631,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, 7, msgs);
 		return msgs;
 	}
 
@@ -643,7 +643,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
 	{
-		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2) && newOwningCompleteEnvironment != null))
+		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningCompleteEnvironment != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -651,12 +651,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningCompleteEnvironment != null)
-				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, ElementImpl.ELEMENT_FEATURE_COUNT + 0, CompleteEnvironment.class, msgs);
+				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, 4, CompleteEnvironment.class, msgs);
 			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
 	}
 
 	@Override

@@ -118,7 +118,7 @@ public class StateExpImpl
 			if (referredState != oldReferredState)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredState, referredState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 9, oldReferredState, referredState));
 			}
 		}
 		return referredState;
@@ -143,7 +143,7 @@ public class StateExpImpl
 		State oldReferredState = referredState;
 		referredState = newReferredState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0, oldReferredState, referredState));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredState, referredState));
 	}
 
 	/**
@@ -218,7 +218,7 @@ public class StateExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				if (resolve) return getReferredState();
 				return basicGetReferredState();
 		}
@@ -263,7 +263,7 @@ public class StateExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setReferredState((State)newValue);
 				return;
 		}
@@ -303,7 +303,7 @@ public class StateExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				setReferredState((State)null);
 				return;
 		}
@@ -337,7 +337,7 @@ public class StateExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 0:
+			case 9:
 				return referredState != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -366,7 +366,7 @@ public class StateExpImpl
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case OCLExpressionImpl.OCL_EXPRESSION_OPERATION_COUNT + 0:
+			case 6:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

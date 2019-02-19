@@ -124,7 +124,7 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		ownedKey = newOwnedKey;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldOwnedKey, newOwnedKey);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 4, oldOwnedKey, newOwnedKey);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -142,14 +142,14 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		{
 			NotificationChain msgs = null;
 			if (ownedKey != null)
-				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedKey).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 			if (newOwnedKey != null)
-				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 			msgs = basicSetOwnedKey(newOwnedKey, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, newOwnedKey, newOwnedKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwnedKey, newOwnedKey));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		ownedValue = newOwnedValue;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldOwnedValue, newOwnedValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedValue, newOwnedValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -192,14 +192,14 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		{
 			NotificationChain msgs = null;
 			if (ownedValue != null)
-				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newOwnedValue != null)
-				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetOwnedValue(newOwnedValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, newOwnedValue, newOwnedValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedValue, newOwnedValue));
 	}
 
 	/**
@@ -220,9 +220,9 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return basicSetOwnedKey(null, msgs);
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return basicSetOwnedValue(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -246,9 +246,9 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getOwnedKey();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getOwnedValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -281,10 +281,10 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedKey((OCLExpression)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedValue((OCLExpression)newValue);
 				return;
 		}
@@ -313,10 +313,10 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedKey((OCLExpression)null);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedValue((OCLExpression)null);
 				return;
 		}
@@ -341,9 +341,9 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return ownedKey != null;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ownedValue != null;
 		}
 		return eDynamicIsSet(featureID);

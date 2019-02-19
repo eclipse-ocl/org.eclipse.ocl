@@ -117,7 +117,7 @@ public abstract class NamedElementImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldName, name));
 	}
 
 	/**
@@ -137,7 +137,7 @@ public abstract class NamedElementImpl
 				return getOwnedComments();
 			case 3:
 				return getOwnedExtensions();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getName();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -169,7 +169,7 @@ public abstract class NamedElementImpl
 				getOwnedExtensions().clear();
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setName((String)newValue);
 				return;
 		}
@@ -197,7 +197,7 @@ public abstract class NamedElementImpl
 			case 3:
 				getOwnedExtensions().clear();
 				return;
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -221,7 +221,7 @@ public abstract class NamedElementImpl
 				return ownedComments != null && !ownedComments.isEmpty();
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return eDynamicIsSet(featureID);

@@ -141,13 +141,13 @@ implements Type {
 				return allOwnedElements();
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 0:
+			case 2:
 				return flattenedType();
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1:
+			case 3:
 				return isClass();
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 2:
+			case 4:
 				return isTemplateParameter();
-			case NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 3:
+			case 5:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

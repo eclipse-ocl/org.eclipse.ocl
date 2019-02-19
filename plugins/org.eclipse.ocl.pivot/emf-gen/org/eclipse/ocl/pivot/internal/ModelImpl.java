@@ -197,7 +197,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		Number oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, oldXmiidVersion, xmiidVersion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldXmiidVersion, xmiidVersion));
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		String oldExternalURI = externalURI;
 		externalURI = newExternalURI;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldExternalURI, externalURI));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExternalURI, externalURI));
 	}
 
 	/**
@@ -244,9 +244,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -274,13 +274,13 @@ public class ModelImpl extends NamespaceImpl implements Model
 				return getName();
 			case 5:
 				return getOwnedConstraints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return getExternalURI();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedImports();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getOwnedPackages();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -320,18 +320,18 @@ public class ModelImpl extends NamespaceImpl implements Model
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setExternalURI((String)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends Import>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				setXmiidVersion((Number)newValue);
 				return;
 		}
@@ -366,16 +366,16 @@ public class ModelImpl extends NamespaceImpl implements Model
 			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setExternalURI(EXTERNAL_URI_EDEFAULT);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				getOwnedImports().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedPackages().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				setXmiidVersion(XMIID_VERSION_EDEFAULT);
 				return;
 		}
@@ -404,13 +404,13 @@ public class ModelImpl extends NamespaceImpl implements Model
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return EXTERNAL_URI_EDEFAULT == null ? externalURI != null : !EXTERNAL_URI_EDEFAULT.equals(externalURI);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ownedImports != null && !ownedImports.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ownedPackages != null && !ownedPackages.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);
@@ -481,7 +481,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1);
+			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
 		}
 		return ownedImports;
 	}

@@ -185,7 +185,7 @@ implements CollectionType {
 		boolean oldIsNullFree = (eFlags & IS_NULL_FREE_EFLAG) != 0;
 		if (newIsNullFree) eFlags |= IS_NULL_FREE_EFLAG; else eFlags &= ~IS_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1, oldIsNullFree, newIsNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldIsNullFree, newIsNullFree));
 	}
 
 	/**
@@ -210,7 +210,7 @@ implements CollectionType {
 		Number oldLower = lower;
 		lower = newLower;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2, oldLower, lower));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldLower, lower));
 	}
 
 	/**
@@ -235,7 +235,7 @@ implements CollectionType {
 		Number oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3, oldUpper, upper));
+			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldUpper, upper));
 	}
 
 	/**
@@ -294,13 +294,13 @@ implements CollectionType {
 				return isIsSerializable();
 			case 22:
 				return getValue();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return getElementType();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return isIsNullFree();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				return getLower();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				return getUpper();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -394,16 +394,16 @@ implements CollectionType {
 			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setElementType((Type)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				setIsNullFree((Boolean)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setLower((Number)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				setUpper((Number)newValue);
 				return;
 		}
@@ -485,16 +485,16 @@ implements CollectionType {
 			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setElementType((Type)null);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				setIsNullFree(IS_NULL_FREE_EDEFAULT);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setLower(LOWER_EDEFAULT);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				setUpper(UPPER_EDEFAULT);
 				return;
 		}
@@ -556,13 +556,13 @@ implements CollectionType {
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return getElementType() != null;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return ((eFlags & IS_NULL_FREE_EFLAG) != 0) != IS_NULL_FREE_EDEFAULT;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				return LOWER_EDEFAULT == null ? lower != null : !LOWER_EDEFAULT.equals(lower);
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				return UPPER_EDEFAULT == null ? upper != null : !UPPER_EDEFAULT.equals(upper);
 		}
 		return eDynamicIsSet(featureID);

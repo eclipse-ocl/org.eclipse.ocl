@@ -135,7 +135,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0, oldBody, body));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldBody, body));
 	}
 
 	/**
@@ -157,7 +157,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public Constraint getOwningConstraint()
 	{
-		if (eContainerFeatureID() != (ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (Constraint)eInternalContainer();
 	}
 
@@ -168,7 +168,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	 */
 	public NotificationChain basicSetOwningConstraint(Constraint newOwningConstraint, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningConstraint, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningConstraint, 10, msgs);
 		return msgs;
 	}
 
@@ -180,7 +180,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public void setOwningConstraint(Constraint newOwningConstraint)
 	{
-		if (newOwningConstraint != eInternalContainer() || (eContainerFeatureID() != (ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2) && newOwningConstraint != null))
+		if (newOwningConstraint != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningConstraint != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningConstraint))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -188,12 +188,12 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningConstraint != null)
-				msgs = ((InternalEObject)newOwningConstraint).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, Constraint.class, msgs);
+				msgs = ((InternalEObject)newOwningConstraint).eInverseAdd(this, 8, Constraint.class, msgs);
 			msgs = basicSetOwningConstraint(newOwningConstraint, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2, newOwningConstraint, newOwningConstraint));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningConstraint, newOwningConstraint));
 	}
 
 	/**
@@ -213,7 +213,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningConstraint((Constraint)otherEnd, msgs);
@@ -239,7 +239,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				return basicSetOwningConstraint(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -255,8 +255,8 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	{
 		switch (eContainerFeatureID())
 		{
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 3, Constraint.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 8, Constraint.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -288,11 +288,11 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			case 7:
 				if (resolve) return getType();
 				return basicGetType();
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 8:
 				return getBody();
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 9:
 				return getLanguage();
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningConstraint();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -334,10 +334,10 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			case 7:
 				setType((Type)newValue);
 				return;
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 8:
 				setBody((String)newValue);
 				return;
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				setOwningConstraint((Constraint)newValue);
 				return;
 		}
@@ -375,10 +375,10 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			case 7:
 				setType((Type)null);
 				return;
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 8:
 				setBody(BODY_EDEFAULT);
 				return;
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				setOwningConstraint((Constraint)null);
 				return;
 		}
@@ -411,11 +411,11 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case 7:
 				return type != null;
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 0:
+			case 8:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 1:
+			case 9:
 				return LANGUAGE_EDEFAULT == null ? getLanguage() != null : !LANGUAGE_EDEFAULT.equals(getLanguage());
-			case ValueSpecificationImpl.VALUE_SPECIFICATION_FEATURE_COUNT + 2:
+			case 10:
 				return getOwningConstraint() != null;
 		}
 		return eDynamicIsSet(featureID);

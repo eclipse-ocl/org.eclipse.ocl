@@ -96,7 +96,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 	@Override
 	public Transition getOwningTransition()
 	{
-		if (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (20)) return null;
 		return (Transition)eInternalContainer();
 	}
 
@@ -107,7 +107,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 	 */
 	public NotificationChain basicSetOwningTransition(Transition newOwningTransition, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, ClassImpl.CLASS_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningTransition, 20, msgs);
 		return msgs;
 	}
 
@@ -119,7 +119,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 	@Override
 	public void setOwningTransition(Transition newOwningTransition)
 	{
-		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (ClassImpl.CLASS_FEATURE_COUNT + 0) && newOwningTransition != null))
+		if (newOwningTransition != eInternalContainer() || (eContainerFeatureID() != (20) && newOwningTransition != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningTransition))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -127,12 +127,12 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningTransition != null)
-				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Transition.class, msgs);
+				msgs = ((InternalEObject)newOwningTransition).eInverseAdd(this, 7, Transition.class, msgs);
 			msgs = basicSetOwningTransition(newOwningTransition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassImpl.CLASS_FEATURE_COUNT + 0, newOwningTransition, newOwningTransition));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, newOwningTransition, newOwningTransition));
 	}
 
 	/**
@@ -168,7 +168,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningTransition((Transition)otherEnd, msgs);
@@ -212,7 +212,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
 			case 18:
 				return basicSetOwningPackage(null, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return basicSetOwningTransition(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -229,9 +229,9 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 		switch (eContainerFeatureID())
 		{
 			case 18:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, org.eclipse.ocl.pivot.Package.class, msgs);
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, Transition.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 9, org.eclipse.ocl.pivot.Package.class, msgs);
+			case 20:
+				return eInternalContainer().eInverseRemove(this, 7, Transition.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -286,7 +286,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 				return getOwningPackage();
 			case 19:
 				return getSuperClasses();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getOwningTransition();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -375,7 +375,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setOwningTransition((Transition)newValue);
 				return;
 		}
@@ -452,7 +452,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 			case 19:
 				getSuperClasses().clear();
 				return;
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				setOwningTransition((Transition)null);
 				return;
 		}
@@ -509,7 +509,7 @@ public abstract class BehaviorImpl extends ClassImpl implements Behavior
 				return getOwningPackage() != null;
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
-			case ClassImpl.CLASS_FEATURE_COUNT + 0:
+			case 20:
 				return getOwningTransition() != null;
 		}
 		return eDynamicIsSet(featureID);

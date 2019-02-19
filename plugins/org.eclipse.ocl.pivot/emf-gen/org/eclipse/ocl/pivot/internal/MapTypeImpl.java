@@ -161,7 +161,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			if (entryClass != oldEntryClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0, oldEntryClass, entryClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldEntryClass, entryClass));
 			}
 		}
 		return entryClass;
@@ -189,7 +189,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		org.eclipse.ocl.pivot.Class oldEntryClass = entryClass;
 		entryClass = newEntryClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0, oldEntryClass, entryClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldEntryClass, entryClass));
 	}
 
 	/**
@@ -249,16 +249,16 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				return isIsSerializable();
 			case 22:
 				return getValue();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				if (resolve) return getEntryClass();
 				return basicGetEntryClass();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return getKeyType();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				return isKeysAreNullFree();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				return getValueType();
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
+			case 27:
 				return isValuesAreNullFree();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -353,19 +353,19 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 21:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				setKeyType((Type)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setKeysAreNullFree((Boolean)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				setValueType((Type)newValue);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
+			case 27:
 				setValuesAreNullFree((Boolean)newValue);
 				return;
 		}
@@ -448,19 +448,19 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 21:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				setEntryClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				setKeyType((Type)null);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				setKeysAreNullFree(KEYS_ARE_NULL_FREE_EDEFAULT);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				setValueType((Type)null);
 				return;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
+			case 27:
 				setValuesAreNullFree(VALUES_ARE_NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -523,15 +523,15 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 0:
+			case 23:
 				return entryClass != null;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 1:
+			case 24:
 				return getKeyType() != null;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2:
+			case 25:
 				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 3:
+			case 26:
 				return getValueType() != null;
-			case IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4:
+			case 27:
 				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
@@ -636,7 +636,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
 		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 2, oldKeysAreNullFree, newKeysAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldKeysAreNullFree, newKeysAreNullFree));
 	}
 
 	@Override
@@ -666,6 +666,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
 		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4, oldValuesAreNullFree, newValuesAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
 	}
 } //MapTypeImpl

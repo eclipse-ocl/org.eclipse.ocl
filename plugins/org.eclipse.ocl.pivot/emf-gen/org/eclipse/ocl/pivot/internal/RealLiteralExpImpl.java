@@ -119,7 +119,7 @@ public class RealLiteralExpImpl
 		Number oldRealSymbol = realSymbol;
 		realSymbol = newRealSymbol;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0, oldRealSymbol, realSymbol));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldRealSymbol, realSymbol));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class RealLiteralExpImpl
 				return basicGetType();
 			case 8:
 				return getTypeValue();
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getRealSymbol();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -194,7 +194,7 @@ public class RealLiteralExpImpl
 			case 8:
 				setTypeValue((Type)newValue);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setRealSymbol((Number)newValue);
 				return;
 		}
@@ -234,7 +234,7 @@ public class RealLiteralExpImpl
 			case 8:
 				setTypeValue((Type)null);
 				return;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setRealSymbol(REAL_SYMBOL_EDEFAULT);
 				return;
 		}
@@ -268,7 +268,7 @@ public class RealLiteralExpImpl
 				return type != null;
 			case 8:
 				return typeValue != null;
-			case NumericLiteralExpImpl.NUMERIC_LITERAL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return REAL_SYMBOL_EDEFAULT == null ? realSymbol != null : !REAL_SYMBOL_EDEFAULT.equals(realSymbol);
 		}
 		return eDynamicIsSet(featureID);

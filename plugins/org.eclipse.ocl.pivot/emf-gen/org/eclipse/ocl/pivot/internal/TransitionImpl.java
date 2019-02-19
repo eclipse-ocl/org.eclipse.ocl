@@ -217,7 +217,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		if (newKind == null) newKind = KIND_EDEFAULT;
 		eFlags = eFlags & ~KIND_EFLAG | newKind.ordinal() << KIND_EFLAG_OFFSET;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0, oldKind, newKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldKind, newKind));
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		ownedEffect = newOwnedEffect;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, oldOwnedEffect, newOwnedEffect);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedEffect, newOwnedEffect);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -260,14 +260,14 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		{
 			NotificationChain msgs = null;
 			if (ownedEffect != null)
-				msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, ClassImpl.CLASS_FEATURE_COUNT + 0, Behavior.class, msgs);
+				msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, 20, Behavior.class, msgs);
 			if (newOwnedEffect != null)
-				msgs = ((InternalEObject)newOwnedEffect).eInverseAdd(this, ClassImpl.CLASS_FEATURE_COUNT + 0, Behavior.class, msgs);
+				msgs = ((InternalEObject)newOwnedEffect).eInverseAdd(this, 20, Behavior.class, msgs);
 			msgs = basicSetOwnedEffect(newOwnedEffect, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1, newOwnedEffect, newOwnedEffect));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedEffect, newOwnedEffect));
 	}
 
 	/**
@@ -292,7 +292,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		ownedGuard = newOwnedGuard;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, oldOwnedGuard, newOwnedGuard);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedGuard, newOwnedGuard);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -310,14 +310,14 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		{
 			NotificationChain msgs = null;
 			if (ownedGuard != null)
-				msgs = ((InternalEObject)ownedGuard).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, Constraint.class, msgs);
+				msgs = ((InternalEObject)ownedGuard).eInverseRemove(this, 12, Constraint.class, msgs);
 			if (newOwnedGuard != null)
-				msgs = ((InternalEObject)newOwnedGuard).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 7, Constraint.class, msgs);
+				msgs = ((InternalEObject)newOwnedGuard).eInverseAdd(this, 12, Constraint.class, msgs);
 			msgs = basicSetOwnedGuard(newOwnedGuard, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, newOwnedGuard, newOwnedGuard));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedGuard, newOwnedGuard));
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	{
 		if (ownedTriggers == null)
 		{
-			ownedTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1);
+			ownedTriggers = new EObjectContainmentWithInverseEList<Trigger>(Trigger.class, this, 9, 6);
 		}
 		return ownedTriggers;
 	}
@@ -343,7 +343,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	@Override
 	public Region getOwningRegion()
 	{
-		if (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4)) return null;
+		if (eContainerFeatureID() != (10)) return null;
 		return (Region)eInternalContainer();
 	}
 
@@ -354,7 +354,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	 */
 	public NotificationChain basicSetOwningRegion(Region newOwningRegion, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningRegion, 10, msgs);
 		return msgs;
 	}
 
@@ -366,7 +366,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	@Override
 	public void setOwningRegion(Region newOwningRegion)
 	{
-		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4) && newOwningRegion != null))
+		if (newOwningRegion != eInternalContainer() || (eContainerFeatureID() != (10) && newOwningRegion != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningRegion))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -374,12 +374,12 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningRegion != null)
-				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Region.class, msgs);
+				msgs = ((InternalEObject)newOwningRegion).eInverseAdd(this, 8, Region.class, msgs);
 			msgs = basicSetOwningRegion(newOwningRegion, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4, newOwningRegion, newOwningRegion));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwningRegion, newOwningRegion));
 	}
 
 	/**
@@ -399,27 +399,27 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				if (ownedEffect != null)
-					msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1), null, msgs);
+					msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 				return basicSetOwnedEffect((Behavior)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				if (ownedGuard != null)
-					msgs = ((InternalEObject)ownedGuard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2), null, msgs);
+					msgs = ((InternalEObject)ownedGuard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 				return basicSetOwnedGuard((Constraint)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTriggers()).basicAdd(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningRegion((Region)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				if (source != null)
-					msgs = ((InternalEObject)source).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, Vertex.class, msgs);
+					msgs = ((InternalEObject)source).eInverseRemove(this, 6, Vertex.class, msgs);
 				return basicSetSource((Vertex)otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				if (target != null)
-					msgs = ((InternalEObject)target).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, Vertex.class, msgs);
+					msgs = ((InternalEObject)target).eInverseRemove(this, 5, Vertex.class, msgs);
 				return basicSetTarget((Vertex)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
@@ -440,7 +440,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 			if (source != oldSource)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5, oldSource, source));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 11, oldSource, source));
 			}
 		}
 		return source;
@@ -467,7 +467,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		source = newSource;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5, oldSource, newSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldSource, newSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -485,14 +485,14 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		{
 			NotificationChain msgs = null;
 			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, Vertex.class, msgs);
+				msgs = ((InternalEObject)source).eInverseRemove(this, 6, Vertex.class, msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1, Vertex.class, msgs);
+				msgs = ((InternalEObject)newSource).eInverseAdd(this, 6, Vertex.class, msgs);
 			msgs = basicSetSource(newSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5, newSource, newSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newSource, newSource));
 	}
 
 	/**
@@ -510,7 +510,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 			if (target != oldTarget)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, oldTarget, target));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 12, oldTarget, target));
 			}
 		}
 		return target;
@@ -537,7 +537,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		target = newTarget;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, oldTarget, newTarget);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldTarget, newTarget);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -555,14 +555,14 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		{
 			NotificationChain msgs = null;
 			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, Vertex.class, msgs);
+				msgs = ((InternalEObject)target).eInverseRemove(this, 5, Vertex.class, msgs);
 			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 0, Vertex.class, msgs);
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, 5, Vertex.class, msgs);
 			msgs = basicSetTarget(newTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6, newTarget, newTarget));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newTarget, newTarget));
 	}
 
 	/**
@@ -585,17 +585,17 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetOwnedEffect(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return basicSetOwnedGuard(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<?>)getOwnedTriggers()).basicRemove(otherEnd, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return basicSetOwningRegion(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return basicSetSource(null, msgs);
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return basicSetTarget(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -611,8 +611,8 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
-				return eInternalContainer().eInverseRemove(this, NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2, Region.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 8, Region.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -639,20 +639,20 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 				return getName();
 			case 5:
 				return getOwnedConstraints();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return getKind();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedEffect();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return getOwnedGuard();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return getOwnedTriggers();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return getOwningRegion();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				if (resolve) return getSource();
 				return basicGetSource();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				if (resolve) return getTarget();
 				return basicGetTarget();
 		}
@@ -693,26 +693,26 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setKind((TransitionKind)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedEffect((Behavior)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setOwnedGuard((Constraint)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedTriggers().clear();
 				getOwnedTriggers().addAll((Collection<? extends Trigger>)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				setOwningRegion((Region)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				setSource((Vertex)newValue);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				setTarget((Vertex)newValue);
 				return;
 		}
@@ -747,25 +747,25 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 			case 5:
 				getOwnedConstraints().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				setKind(KIND_EDEFAULT);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedEffect((Behavior)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				setOwnedGuard((Constraint)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedTriggers().clear();
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				setOwningRegion((Region)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				setSource((Vertex)null);
 				return;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				setTarget((Vertex)null);
 				return;
 		}
@@ -794,19 +794,19 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 0:
+			case 6:
 				return (eFlags & KIND_EFLAG) != KIND_EFLAG_DEFAULT;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 1:
+			case 7:
 				return ownedEffect != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 2:
+			case 8:
 				return ownedGuard != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 3:
+			case 9:
 				return ownedTriggers != null && !ownedTriggers.isEmpty();
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 4:
+			case 10:
 				return getOwningRegion() != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 5:
+			case 11:
 				return source != null;
-			case NamespaceImpl.NAMESPACE_FEATURE_COUNT + 6:
+			case 12:
 				return target != null;
 		}
 		return eDynamicIsSet(featureID);

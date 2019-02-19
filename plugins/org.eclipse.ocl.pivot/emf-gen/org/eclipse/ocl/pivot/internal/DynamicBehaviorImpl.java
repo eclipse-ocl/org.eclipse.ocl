@@ -129,7 +129,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 			if (metaType != oldMetaType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0, oldMetaType, metaType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldMetaType, metaType));
 			}
 		}
 		return metaType;
@@ -156,7 +156,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		Type oldMetaType = metaType;
 		metaType = newMetaType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0, oldMetaType, metaType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldMetaType, metaType));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	{
 		if (ownedDynamicProperties == null)
 		{
-			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1);
+			ownedDynamicProperties = new EObjectContainmentEList<DynamicProperty>(DynamicProperty.class, this, 22);
 		}
 		return ownedDynamicProperties;
 	}
@@ -213,7 +213,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 				return basicSetOwningPackage(null, msgs);
 			case 20:
 				return basicSetOwningTransition(null, msgs);
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return ((InternalEList<?>)getOwnedDynamicProperties()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -271,10 +271,10 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 				return getSuperClasses();
 			case 20:
 				return getOwningTransition();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				if (resolve) return getMetaType();
 				return basicGetMetaType();
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return getOwnedDynamicProperties();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -366,10 +366,10 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 			case 20:
 				setOwningTransition((Transition)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				setMetaType((Type)newValue);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				getOwnedDynamicProperties().clear();
 				getOwnedDynamicProperties().addAll((Collection<? extends DynamicProperty>)newValue);
 				return;
@@ -450,10 +450,10 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 			case 20:
 				setOwningTransition((Transition)null);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				setMetaType((Type)null);
 				return;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				getOwnedDynamicProperties().clear();
 				return;
 		}
@@ -512,9 +512,9 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 				return superClasses != null && !superClasses.isEmpty();
 			case 20:
 				return getOwningTransition() != null;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0:
+			case 21:
 				return metaType != null;
-			case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1:
+			case 22:
 				return ownedDynamicProperties != null && !ownedDynamicProperties.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -532,7 +532,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (derivedFeatureID)
 			{
-				case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0: return ElementImpl.ELEMENT_FEATURE_COUNT + 0;
+				case 21: return 4;
 				default: return -1;
 			}
 		}
@@ -540,7 +540,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (derivedFeatureID)
 			{
-				case BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1: return ClassImpl.CLASS_FEATURE_COUNT + 1;
+				case 22: return 21;
 				default: return -1;
 			}
 		}
@@ -559,7 +559,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (baseFeatureID)
 			{
-				case ElementImpl.ELEMENT_FEATURE_COUNT + 0: return BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 0;
+				case 4: return 21;
 				default: return -1;
 			}
 		}
@@ -567,7 +567,7 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		{
 			switch (baseFeatureID)
 			{
-				case ClassImpl.CLASS_FEATURE_COUNT + 1: return BehaviorImpl.BEHAVIOR_FEATURE_COUNT + 1;
+				case 21: return 22;
 				default: return -1;
 			}
 		}
