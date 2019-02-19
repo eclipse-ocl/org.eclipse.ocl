@@ -181,6 +181,11 @@ public abstract class OCLGenModelUtil
 		List<GenFeature> allFeatures = genClass.getAllGenFeatures();
 		int i = allFeatures.indexOf(genFeature);
 		GenClass base = genClass.getBaseGenClass();
+		for (; base != null; base = base.getBaseGenClass()) {
+			if (base.getGenPackage() != genClass.getGenPackage()) {
+				break;
+			}
+		}
 
 		if (base == null)
 		{
@@ -205,6 +210,11 @@ public abstract class OCLGenModelUtil
 		List<GenOperation> allOperations = genClass.getAllGenOperations(false);
 		int i = allOperations.indexOf(genOperation);
 		GenClass base = genClass.getBaseGenClass();
+		for (; base != null; base = base.getBaseGenClass()) {
+			if (base.getGenPackage() != genClass.getGenPackage()) {
+				break;
+			}
+		}
 
 		if (base == null)
 		{
