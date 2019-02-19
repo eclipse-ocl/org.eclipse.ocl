@@ -82,53 +82,53 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	@Override
 	protected T1 doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case OCLstdlibPackage.BAG: {
+			case 0: {
 				Bag<?> bag = (Bag<?>)theEObject;
 				T1 result = caseBag(bag);
 				if (result == null) result = caseCollection(bag);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.COLLECTION: {
+			case 1: {
 				Collection<?> collection = (Collection<?>)theEObject;
 				T1 result = caseCollection(collection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.MAP: {
+			case 2: {
 				Map<?, ?> map = (Map<?, ?>)theEObject;
 				T1 result = caseMap(map);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_ANY: {
+			case 3: {
 				Object oclAny = theEObject;
 				T1 result = caseOclAny(oclAny);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_COMPARABLE: {
+			case 4: {
 				Object oclComparable = theEObject;
 				T1 result = caseOclComparable(oclComparable);
 				if (result == null) result = caseOclAny(oclComparable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_ELEMENT: {
+			case 5: {
 				Object oclElement = theEObject;
 				T1 result = caseOclElement(oclElement);
 				if (result == null) result = caseOclAny(oclElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_ENUMERATION: {
+			case 6: {
 				Object oclEnumeration = theEObject;
 				T1 result = caseOclEnumeration(oclEnumeration);
 				if (result == null) result = caseOclAny(oclEnumeration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_INVALID: {
+			case 7: {
 				Object oclInvalid = theEObject;
 				T1 result = caseOclInvalid(oclInvalid);
 				if (result == null) result = caseOclVoid(oclInvalid);
@@ -136,35 +136,35 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_LAMBDA: {
+			case 8: {
 				Object oclLambda = theEObject;
 				T1 result = caseOclLambda(oclLambda);
 				if (result == null) result = caseOclAny(oclLambda);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_MESSAGE: {
+			case 9: {
 				Object oclMessage = theEObject;
 				T1 result = caseOclMessage(oclMessage);
 				if (result == null) result = caseOclAny(oclMessage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_SELF: {
+			case 10: {
 				Object oclSelf = theEObject;
 				T1 result = caseOclSelf(oclSelf);
 				if (result == null) result = caseOclAny(oclSelf);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_STATE: {
+			case 11: {
 				Object oclState = theEObject;
 				T1 result = caseOclState(oclState);
 				if (result == null) result = caseOclAny(oclState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_STEREOTYPE: {
+			case 12: {
 				Object oclStereotype = theEObject;
 				T1 result = caseOclStereotype(oclStereotype);
 				if (result == null) result = caseOclType(oclStereotype);
@@ -173,21 +173,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_SUMMABLE: {
+			case 13: {
 				Object oclSummable = theEObject;
 				T1 result = caseOclSummable(oclSummable);
 				if (result == null) result = caseOclAny(oclSummable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_TUPLE: {
+			case 14: {
 				Object oclTuple = theEObject;
 				T1 result = caseOclTuple(oclTuple);
 				if (result == null) result = caseOclAny(oclTuple);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_TYPE: {
+			case 15: {
 				Object oclType = theEObject;
 				T1 result = caseOclType(oclType);
 				if (result == null) result = caseOclElement(oclType);
@@ -195,21 +195,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.OCL_VOID: {
+			case 16: {
 				Object oclVoid = theEObject;
 				T1 result = caseOclVoid(oclVoid);
 				if (result == null) result = caseOclAny(oclVoid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.ORDERED_COLLECTION: {
+			case 17: {
 				Collection<?> orderedCollection = (Collection<?>)theEObject;
 				T1 result = caseOrderedCollection(orderedCollection);
 				if (result == null) result = caseCollection(orderedCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.ORDERED_SET: {
+			case 18: {
 				OrderedSet<?> orderedSet = (OrderedSet<?>)theEObject;
 				T1 result = caseOrderedSet(orderedSet);
 				if (result == null) result = caseOrderedCollection(orderedSet);
@@ -218,7 +218,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.SEQUENCE: {
+			case 19: {
 				List<?> sequence = (List<?>)theEObject;
 				T1 result = caseSequence(sequence);
 				if (result == null) result = caseOrderedCollection(sequence);
@@ -226,7 +226,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.SET: {
+			case 20: {
 				Set<?> set = (Set<?>)theEObject;
 				T1 result = caseSet(set);
 				if (result == null) result = caseUniqueCollection(set);
@@ -234,7 +234,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OCLstdlibPackage.UNIQUE_COLLECTION: {
+			case 21: {
 				Collection<?> uniqueCollection = (Collection<?>)theEObject;
 				T1 result = caseUniqueCollection(uniqueCollection);
 				if (result == null) result = caseCollection(uniqueCollection);

@@ -89,15 +89,15 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case OCLstdlibPackage.BOOLEAN:
+			case 22:
 				return createBooleanFromString(eDataType, initialValue);
-			case OCLstdlibPackage.INTEGER:
+			case 23:
 				return createIntegerFromString(eDataType, initialValue);
-			case OCLstdlibPackage.REAL:
+			case 24:
 				return createRealFromString(eDataType, initialValue);
-			case OCLstdlibPackage.STRING:
+			case 25:
 				return createStringFromString(eDataType, initialValue);
-			case OCLstdlibPackage.UNLIMITED_NATURAL:
+			case 26:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -112,15 +112,15 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case OCLstdlibPackage.BOOLEAN:
+			case 22:
 				return convertBooleanToString(eDataType, instanceValue);
-			case OCLstdlibPackage.INTEGER:
+			case 23:
 				return convertIntegerToString(eDataType, instanceValue);
-			case OCLstdlibPackage.REAL:
+			case 24:
 				return convertRealToString(eDataType, instanceValue);
-			case OCLstdlibPackage.STRING:
+			case 25:
 				return convertStringToString(eDataType, instanceValue);
-			case OCLstdlibPackage.UNLIMITED_NATURAL:
+			case 26:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

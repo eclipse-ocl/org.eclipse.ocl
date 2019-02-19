@@ -20330,6 +20330,482 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BAG"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BAG_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BAG__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BAG__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BAG__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="BOOLEAN"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="COLLECTION"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="COLLECTION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="COLLECTION__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="COLLECTION__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="COLLECTION__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="INTEGER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="MAP_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="MAP__KEY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="MAP__VALUE_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ANY"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ANY_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_COMPARABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_COMPARABLE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ELEMENT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ELEMENT_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ELEMENT__OCL_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ELEMENT__OCL_CONTENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ENUMERATION"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_ENUMERATION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_INVALID"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_INVALID_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_INVALID__OCL_BAD_PROPERTY"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_LAMBDA"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_LAMBDA_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_MESSAGE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_MESSAGE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_SELF"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_SELF_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STATE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STATE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STEREOTYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STEREOTYPE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STEREOTYPE__OCL_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_STEREOTYPE__OCL_CONTENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_SUMMABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_SUMMABLE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TUPLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TUPLE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TYPE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TYPE__OCL_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_TYPE__OCL_CONTENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_VOID"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="OCL_VOID_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_COLLECTION"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_COLLECTION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_COLLECTION__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_COLLECTION__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_COLLECTION__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_SET"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_SET_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_SET__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_SET__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="ORDERED_SET__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="REAL"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SEQUENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SEQUENCE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SEQUENCE__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SEQUENCE__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SEQUENCE__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SET"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SET_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SET__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SET__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="SET__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNIQUE_COLLECTION"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNIQUE_COLLECTION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNIQUE_COLLECTION__ELEMENT_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNIQUE_COLLECTION__LOWER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNIQUE_COLLECTION__UPPER"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
+                <message_argument value="UNLIMITED_NATURAL"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
