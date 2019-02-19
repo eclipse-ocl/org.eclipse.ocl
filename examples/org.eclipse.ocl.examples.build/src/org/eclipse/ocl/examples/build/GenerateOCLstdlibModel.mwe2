@@ -29,7 +29,7 @@ Workflow {
     bean = StandaloneSetup { resourceSet = resourceSet
     	platformUri = "../../plugins"
     }
-    bean = GenModelSetup { resourceSet = resourceSet }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
     component = GenerateOCLstdlibXtend { resourceSet = resourceSet
     	projectName = "${sourceName}"
     	modelFile = "model/OCL-2.5.oclstdlib"

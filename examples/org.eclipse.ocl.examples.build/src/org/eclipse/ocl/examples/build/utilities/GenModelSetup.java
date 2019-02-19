@@ -19,8 +19,8 @@ import org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelGeneratorAdapterF
 
 /**
  * Initializes Ecore genmodel support.
- * 
- * @deprecated use EcoreGenMOdelSetup/UMLGenModelSetup
+ *
+ * @deprecated use EcoreGenModelSetup/UMLGenModelSetup
  */
 @Deprecated
 public class GenModelSetup
@@ -37,7 +37,7 @@ public class GenModelSetup
 		}
 		return resourceSet;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 		resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
