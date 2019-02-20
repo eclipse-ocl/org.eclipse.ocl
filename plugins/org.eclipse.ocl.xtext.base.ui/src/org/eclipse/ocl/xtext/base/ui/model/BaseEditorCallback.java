@@ -12,12 +12,17 @@ package org.eclipse.ocl.xtext.base.ui.model;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.ocl.xtext.base.ui.commands.ToggleNatureCommand;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
+//import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback;
 import org.eclipse.xtext.ui.util.DontAskAgainDialogs;
 
 import com.google.inject.Inject;
@@ -37,6 +42,22 @@ public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 	@Override
 	public void afterCreatePartControl(XtextEditor editor) {
 		super.afterCreatePartControl(editor);
+		//
+		//	KIck off a ValidationJob to provide the start-up Annotations
+		//
+		IDocumentProvider documentProvider = editor.getDocumentProvider();
+		if (documentProvider instanceof BaseDocumentProvider) {
+			IDocument document = ((BaseDocumentProvider)documentProvider).getDocument(editor.getEditorInput());
+			if (document instanceof XtextDocument) {
+				Job validationJob = ((XtextDocument)document).getValidationJob();
+				if (validationJob != null) {
+					validationJob.schedule(250);
+				}
+			}
+		}
+		//
+		//	See if a nature could be activated.
+		//
 		IResource resource = editor.getResource();
 		if (resource != null) {
 			IProject project = resource.getProject();
