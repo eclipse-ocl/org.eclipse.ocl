@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
@@ -19,6 +20,11 @@ public class CompleteOCLEditor extends BaseEditor
 
 	public CompleteOCLEditor() {
 		super();
+	}
+
+	@Override
+	public @NonNull String getMarkerId() {
+		return CompleteOCLUiModule.MARKER_ID;
 	}
 
 	@Override

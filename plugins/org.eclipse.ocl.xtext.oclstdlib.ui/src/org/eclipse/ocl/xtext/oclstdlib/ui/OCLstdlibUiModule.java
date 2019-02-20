@@ -13,6 +13,7 @@
  */
 package org.eclipse.ocl.xtext.oclstdlib.ui;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.ocl.xtext.oclstdlib.ui.refactoring.OCLstdlibReferenceUpdater;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -23,8 +24,11 @@ import org.eclipse.xtext.ui.editor.model.IResourceForEditorInputFactory;
  */
 public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 {
-	public static final String EDITOR_ID = OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB;
-	
+	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.oclstdlib.ui";
+	@SuppressWarnings("null")
+	public static final @NonNull String EDITOR_ID = OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB;
+	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.oclstdlib.ui.Marker";
+
 	public OCLstdlibUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
@@ -32,12 +36,12 @@ public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 	public Class<? extends org.eclipse.xtext.validation.CompositeEValidator> bindCompositeEValidator() {
 		return org.eclipse.xtext.validation.CompositeEValidator.class;
 	}
-	
+
 //	@SuppressWarnings("restriction")
 //	public Class<? extends org.eclipse.xtext.ui.refactoring.IRenameStrategy.Provider> bindIRenameStrategy$Provider() {
 //		return OCLstdlibRenameStrategy.Provider.class;
 //	}
-	
+
 	@SuppressWarnings("restriction")
 	public Class<? extends org.eclipse.xtext.ui.refactoring.IReferenceUpdater> bindIReferenceUpdater() {
 		return OCLstdlibReferenceUpdater.class;

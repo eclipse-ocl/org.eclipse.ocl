@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 import org.eclipse.ocl.xtext.oclinecore.ui.model.OCLinEcoreDocument;
 import org.eclipse.ocl.xtext.oclinecore.ui.model.OCLinEcoreDocumentProvider;
@@ -25,8 +26,10 @@ import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
  */
 public class OCLinEcoreUiModule extends org.eclipse.ocl.xtext.oclinecore.ui.AbstractOCLinEcoreUiModule
 {
-	public static final String PLUGIN_ID = "org.eclipse.ocl.xtext.oclinecore.ui";
-	public static final String EDITOR_ID = OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE;
+	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.oclinecore.ui";
+	@SuppressWarnings("null")
+	public static final @NonNull String EDITOR_ID = OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE;
+	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.oclinecore.ui.Marker";
 
 	private static EMFPlugin.InternalHelper helper = new EMFPlugin.InternalHelper(OCLinEcoreActivator.getInstance());
 

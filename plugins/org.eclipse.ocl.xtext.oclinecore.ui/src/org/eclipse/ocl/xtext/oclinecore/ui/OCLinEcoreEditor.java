@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
@@ -19,6 +20,11 @@ public class OCLinEcoreEditor extends BaseEditor
 
 	public OCLinEcoreEditor() {
 		super();
+	}
+
+	@Override
+	public @NonNull String getMarkerId() {
+		return OCLinEcoreUiModule.MARKER_ID;
 	}
 
 	@Override

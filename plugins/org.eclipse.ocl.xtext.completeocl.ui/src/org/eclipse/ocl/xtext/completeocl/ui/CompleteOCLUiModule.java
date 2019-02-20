@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
@@ -19,8 +20,10 @@ import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
  */
 public class CompleteOCLUiModule extends AbstractCompleteOCLUiModule
 {
-	public static final String PLUGIN_ID = "org.eclipse.ocl.xtext.completeocl.ui";
-	public static final String EDITOR_ID = CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL;
+	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.completeocl.ui";
+	@SuppressWarnings("null")
+	public static final @NonNull String EDITOR_ID = CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL;
+	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.completeocl.ui.Marker";
 
 	public CompleteOCLUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

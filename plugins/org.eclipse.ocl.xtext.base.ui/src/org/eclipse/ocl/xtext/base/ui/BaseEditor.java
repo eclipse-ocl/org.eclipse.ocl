@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui;
 
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -18,6 +19,11 @@ public class BaseEditor extends XtextEditor
 {
 	public BaseEditor() {
 		super();
+	}
+
+	@SuppressWarnings("null")
+	public @NonNull String getMarkerId() {
+		return EValidator.MARKER;
 	}
 
 	/**
