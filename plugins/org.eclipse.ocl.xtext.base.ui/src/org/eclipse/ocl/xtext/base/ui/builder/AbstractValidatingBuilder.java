@@ -123,10 +123,13 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			if (kind == FULL_BUILD) {
 				buildSelector = createBuildSelector(project, BuildType.FULL, args, subMonitor);
 				delta = null;
+			} else if (kind == AUTO_BUILD){
+				delta = getDelta(getProject());
+				buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
 			} else {
 			//	delta = getDelta(getProject());
 			//	buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
-				return null; 		// FIXME BUG 544189 there is no incrdmental support.
+				return null; 		// FIXME BUG 544189 there is no incremental support.
 			}
 		//	if (BUILDER.isActive()) {
 		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked 1");
