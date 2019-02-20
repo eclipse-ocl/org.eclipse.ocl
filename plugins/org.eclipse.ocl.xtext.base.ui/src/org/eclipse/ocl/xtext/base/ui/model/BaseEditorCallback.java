@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.model;
 
+import java.util.Collections;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.jobs.Job;
@@ -17,7 +20,13 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.ocl.xtext.base.ui.BaseEditor;
+import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
+import org.eclipse.ocl.xtext.base.ui.builder.MultiValidationJob;
+import org.eclipse.ocl.xtext.base.ui.builder.ValidationEntry;
 import org.eclipse.ocl.xtext.base.ui.commands.ToggleNatureCommand;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -28,6 +37,7 @@ import org.eclipse.xtext.ui.util.DontAskAgainDialogs;
 import com.google.inject.Inject;
 
 /**
+ * The BaseEditorCallback should be registered so that it is executed as pretty mucj the last activity in XtextEditor.createPartControl().
  */
 public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 {
@@ -43,7 +53,7 @@ public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 	public void afterCreatePartControl(XtextEditor editor) {
 		super.afterCreatePartControl(editor);
 		//
-		//	KIck off a ValidationJob to provide the start-up Annotations
+		//	Kick off a ValidationJob to provide the start-up Annotations
 		//
 		IDocumentProvider documentProvider = editor.getDocumentProvider();
 		if (documentProvider instanceof BaseDocumentProvider) {
@@ -82,6 +92,28 @@ public class BaseEditorCallback extends IXtextEditorCallback.NullImpl
 				}
 				if (addNature) {
 					toggleNature.toggleNature(project);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void afterSave(XtextEditor editor) {
+		super.afterSave(editor);
+		IResource resource = editor.getResource();
+		if (resource != null) {
+			IProject project = resource.getProject();
+			if (project != null && !toggleNature.hasNature(project) && project.isAccessible() && !project.isHidden()) {
+				MultiValidationJob multiValidationJob = BaseUIActivator.getMultiValidationJob();
+				if (multiValidationJob != null) {
+					IEditorInput editorInput = editor.getEditorInput();
+					if (editorInput instanceof IFileEditorInput) {
+						IFile file = ((IFileEditorInput)editorInput).getFile();
+						if (file != null) {
+							ValidationEntry validationEntry = new ValidationEntry(file, ((BaseEditor)editor).getMarkerId());
+							multiValidationJob.addValidations(Collections.singletonList(validationEntry));
+						}
+					}
 				}
 			}
 		}
