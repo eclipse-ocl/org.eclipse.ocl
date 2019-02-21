@@ -21,12 +21,14 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
@@ -93,6 +95,11 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Create and initialize the AS ResourceSet used by metamodelManager to contain the AS forms of CS and Ecore/UML resources.
 	 */
 	@NonNull ResourceSetImpl createASResourceSet();
+
+	/**
+	 * @since 1.7
+	 */
+	@NonNull FlowAnalysis createFlowAnalysis(@NonNull OCLExpression contextExpression);
 
 	@NonNull CompleteEnvironmentInternal createCompleteEnvironment();
 

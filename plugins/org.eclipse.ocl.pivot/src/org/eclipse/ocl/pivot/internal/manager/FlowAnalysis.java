@@ -47,11 +47,11 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -701,15 +701,9 @@ public class FlowAnalysis
 		}
 	}
 
+	@Deprecated /* @deprecated Use MetamodelManagerInternalExtension2.getFlowAnalysis */
 	public static @NonNull FlowAnalysis getFlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
-		contextExpression = getControlExpression(contextExpression);
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		if (metamodelManager instanceof MetamodelManagerInternal.MetamodelManagerInternalExtension2) {
-			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(contextExpression);
-		}
-		else {
-			return new FlowAnalysis(environmentFactory, contextExpression);
-		}
+		return ((MetamodelManagerInternalExtension2)environmentFactory.getMetamodelManager()).getFlowAnalysis(contextExpression);
 	}
 
 	/**
@@ -775,7 +769,10 @@ public class FlowAnalysis
 	 */
 	private @Nullable Map<@NonNull Object, @Nullable Boolean> variable2nullOrNonNull = null;
 
-	protected FlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
+	/**
+	 * @since 1.7
+	 */
+	public FlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
 		this.environmentFactory = environmentFactory;
 		this.contextExpression = contextExpression;
 		for (EObject eObject = contextExpression, eContainer = eObject.eContainer(); eContainer instanceof OCLExpression; eObject = eContainer, eContainer = eContainer.eContainer()) {

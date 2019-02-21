@@ -1114,7 +1114,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(contextExpression);
 		if (flowAnalysis == null) {
-			flowAnalysis = new FlowAnalysis(environmentFactory, contextExpression);
+			flowAnalysis = environmentFactory.createFlowAnalysis(contextExpression);
 			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
 		}
 		return flowAnalysis;

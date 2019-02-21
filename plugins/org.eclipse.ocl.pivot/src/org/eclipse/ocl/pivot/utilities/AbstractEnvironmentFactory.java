@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -67,6 +68,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.PivotModelManager;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -322,6 +324,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager) {
 		return new BasicOCLExecutor(this, modelManager);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	@Override
+	public @NonNull FlowAnalysis createFlowAnalysis(@NonNull OCLExpression contextExpression) {
+		return new FlowAnalysis(this, contextExpression);
 	}
 
 	@Override
