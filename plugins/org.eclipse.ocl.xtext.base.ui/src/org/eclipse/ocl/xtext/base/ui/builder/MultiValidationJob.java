@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -50,7 +51,6 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -128,14 +128,20 @@ public class MultiValidationJob extends Job
 			}
 		}
 
+		public @NonNull List<@NonNull MarkerData> getMarkerDatas() {
+			return markerDatas;
+		}
+
 		public boolean isEMF() {
 			return issueMarkerType == EValidator.MARKER;
 		}
 	}
 
-	protected interface MarkerData
+	public interface MarkerData
 	{
 		@NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException;
+
+		@NonNull String getMessageText();
 	}
 
 	/**
@@ -247,6 +253,11 @@ public class MultiValidationJob extends Job
 				marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIsAttribute);
 			}
 			return marker;
+		}
+
+		@Override
+		public @NonNull String getMessageText() {
+			return String.valueOf(message);
 		}
 	}
 
@@ -360,6 +371,11 @@ public class MultiValidationJob extends Job
 			}
 			return marker;
 		}
+
+		@Override
+		public @NonNull String getMessageText() {
+			return String.valueOf(message);
+		}
 	}
 
 	/**
@@ -431,6 +447,11 @@ public class MultiValidationJob extends Job
 			}
 			return marker;
 		}
+
+		@Override
+		public @NonNull String getMessageText() {
+			return String.valueOf(message);
+		}
 	}
 
 	/**
@@ -454,6 +475,11 @@ public class MultiValidationJob extends Job
 			marker.setAttribute(IMarker.SEVERITY, severity);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			return marker;
+		}
+
+		@Override
+		public @NonNull String getMessageText() {
+			return message;
 		}
 	}
 
@@ -586,67 +612,100 @@ public class MultiValidationJob extends Job
 	}
 
 	protected void doValidate(final @NonNull ValidationEntry entry, @NonNull SubMonitor monitor) throws CoreException {
-		final @NonNull IFile file = entry.getFile();
-		IProject project = file.getProject();
-		if ((project == null) || !project.isOpen()) {
-			return;
-		}
-		//
-		//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
-		//
-		OCL ocl = OCL.newInstance(ProjectManager.CLASS_PATH);
-		Bundle bundle = Platform.getBundle(project.getName());
-		if (bundle != null) {
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-			if (bundleWiring != null) {
-				ClassLoader classLoader = bundleWiring.getClassLoader();
-				if (classLoader != null) {
-					((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
-				}
-			}
-		}
-		monitor.worked(1);			// Work Item 1 - Initialize done
-		final @NonNull String markerType = entry.getMarkerId();
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-		//		System.out.println("OCL:Validating " + uri.toString());
-		ResourceSet resourceSet = ocl.getResourceSet();
-		Resource resource = resourceSet.getResource(uri, true);
-		monitor.worked(1);			// Work Item 2 - Load done
-		AddMarkersOperation operation = new AddMarkersOperation(file, markerType);
-		if (resource != null) {
-			EcoreUtil.resolveAll(resourceSet);
-			monitor.worked(3);			// Work Item 3 - Resolve done
-			if (!checkResourceErrors(operation, resource, monitor)) {
+		Throwable throwable = null;
+		AddMarkersOperation operation = null;
+		try {
+			final @NonNull IFile file = entry.getFile();
+			IProject project = file.getProject();
+			if ((project == null) || !project.isOpen()) {
 				return;
 			}
-			if (resource instanceof CSResource) {
-				Resource asResource = ((CSResource)resource).getASResource();
-				if (!checkResourceErrors(operation, asResource, monitor)) {
-					return;
+			//
+			//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
+			//
+			OCL ocl = entry.createOCL();
+
+			Bundle bundle = Platform.getBundle(project.getName());
+			if (bundle != null) {
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+				if (bundleWiring != null) {
+					ClassLoader classLoader = bundleWiring.getClassLoader();
+					if (classLoader != null) {
+						((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
+					}
 				}
-				if (!checkValidatorDiagnostics(operation, asResource, monitor)) {
-					return;
-				}
-				// FIXME accumulate/cache dependencies
 			}
-			else {
-				if (!checkValidatorDiagnostics(operation, resource, monitor)) {
+			monitor.worked(1);			// Work Item 1 - Initialize done
+			final @NonNull String markerType = entry.getMarkerId();
+			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+			//		System.out.println("OCL:Validating " + uri.toString());
+			ResourceSet resourceSet = ocl.getResourceSet();
+			Resource resource = null;
+			try {
+				resource = resourceSet.getResource(uri, true);
+			}
+			catch (Exception e) {
+				throwable = e;
+			}
+			monitor.worked(1);			// Work Item 2 - Load done
+			operation = new AddMarkersOperation(file, markerType);
+			if (resource != null) {
+				EcoreUtil.resolveAll(resourceSet);
+				monitor.worked(3);			// Work Item 3 - Resolve done
+				if (!checkResourceErrors(operation, resource, monitor)) {
 					return;
 				}
+				if (resource instanceof CSResource) {
+					Resource asResource = ((CSResource)resource).getASResource();
+					if (!checkResourceErrors(operation, asResource, monitor)) {
+						return;
+					}
+					if (!checkValidatorDiagnostics(operation, asResource, monitor)) {
+						return;
+					}
+					// FIXME accumulate/cache dependencies
+				}
+				else {
+					if (!checkValidatorDiagnostics(operation, resource, monitor)) {
+						return;
+					}
+				}
+			} else {
+				monitor.worked(1);			// Work Item 3 - Resolve 'done'
+				operation.addMessage(EValidator.MARKER, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource for '" + uri + "'");
 			}
-		} else {
-			monitor.worked(1);			// Work Item 3 - Resolve 'done'
-			operation.addMessage(EValidator.MARKER, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource");
+			monitor.worked(1);			// Work Item 4 - Validate 'done'
+			try {
+				operation.run(monitor);
+			} catch (InvocationTargetException e) {
+				log.error("Could not create marker.", e);
+			} catch (InterruptedException e) {
+				// cancelled by user; ok
+			}
+			monitor.worked(1);			// Work Item 5 - Add Markers 'done'
 		}
-		monitor.worked(1);			// Work Item 4 - Validate 'done'
-		try {
-			operation.run(monitor);
-		} catch (InvocationTargetException e) {
-			log.error("Could not create marker.", e);
-		} catch (InterruptedException e) {
-			// cancelled by user; ok
+		catch (Throwable e) {
+			if (throwable == null) {
+				throwable = e;
+			}
+			throw e;
 		}
-		monitor.worked(1);			// Work Item 5 - Add Markers 'done'
+		finally {
+			synchronized (entry) {
+				if (throwable != null) {
+					if (throwable instanceof WrappedException) {
+						entry.setThrowable(((WrappedException)throwable).getCause());
+					}
+					else {
+						entry.setThrowable(throwable);
+					}
+				}
+				else if (operation != null) {
+					entry.setMarkerDatas(operation.getMarkerDatas());
+				}
+				entry.notifyAll();
+			}
+		}
 	}
 
 	@Override

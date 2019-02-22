@@ -134,6 +134,7 @@ extends TestCase {
 			result.addTestSuite(FileNewWizardTest.class);
 			result.addTestSuite(PluginLabelTests.class);
 			result.addTestSuite(DebuggerTests.class);
+			result.addTestSuite(OCLBuilderTests.class);
 		}
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);

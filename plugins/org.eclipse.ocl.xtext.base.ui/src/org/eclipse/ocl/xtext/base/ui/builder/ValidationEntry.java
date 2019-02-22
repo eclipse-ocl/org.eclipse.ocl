@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.builder;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.xtext.base.ui.builder.MultiValidationJob.MarkerData;
 
 /**
  * A ValidationEntry identifies an IFile to be validated and the Marker id for its problems.
@@ -27,6 +31,16 @@ public class ValidationEntry
 {
 	protected final @NonNull IFile file;
 	protected final @NonNull String markerId;
+
+	/**
+	 * The results of the validation, assigned non-null after validation completes.
+	 */
+	private @Nullable List<@NonNull MarkerData> markerDatas = null;
+
+	/**
+	 * The failure of the validation, assign non-null on failure.
+	 */
+	private @Nullable Throwable throwable = null;
 
 	public ValidationEntry(@NonNull IFile file, @NonNull String markerId) {
 		this.file = file;
@@ -52,8 +66,24 @@ public class ValidationEntry
 		return file;
 	}
 
+	public @Nullable List<@NonNull MarkerData> getMarkerDatas() {
+		return markerDatas;
+	}
+
 	public @NonNull String getMarkerId() {
 		return markerId;
+	}
+
+	public @Nullable Throwable getThrowable() {
+		return throwable;
+	}
+
+	public void setMarkerDatas(@NonNull List<@NonNull MarkerData> markerDatas) {
+		this.markerDatas = markerDatas;
+	}
+
+	public void setThrowable(Throwable throwable) {
+		this.throwable = throwable;
 	}
 
 	@Override

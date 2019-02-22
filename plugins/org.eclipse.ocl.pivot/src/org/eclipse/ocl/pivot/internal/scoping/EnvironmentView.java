@@ -79,13 +79,21 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class EnvironmentView
 {
-	private static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
+	/**
+	 * @since 1.7
+	 */
+	public static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
 	{
 		private static final long serialVersionUID = 1L;
 
 		public DiagnosticWrappedException(String message, Exception exception)
 		{
 			super(message, exception);
+		}
+
+		public DiagnosticWrappedException(Exception exception)
+		{
+			super(exception);
 		}
 
 		@Override

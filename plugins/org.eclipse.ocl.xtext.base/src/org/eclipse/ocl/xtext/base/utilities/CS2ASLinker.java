@@ -12,12 +12,12 @@ package org.eclipse.ocl.xtext.base.utilities;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -33,31 +33,14 @@ import org.eclipse.xtext.linking.lazy.LazyLinker;
  */
 public class CS2ASLinker extends LazyLinker
 {
-	public static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
+	@Deprecated /* @deprecatedc Use EnvironmentView.DiagnosticWrappedException */
+	public static class DiagnosticWrappedException extends EnvironmentView.DiagnosticWrappedException
 	{
 		private static final long serialVersionUID = 1L;
 
 		public DiagnosticWrappedException(Exception exception)
 		{
 			super(exception);
-		}
-
-		@Override
-		public String getLocation()
-		{
-			return "unknown";			// FIXME
-		}
-
-		@Override
-		public int getColumn()
-		{
-			return 0;
-		}
-
-		@Override
-		public int getLine()
-		{
-			return 0;
 		}
 	}
 
