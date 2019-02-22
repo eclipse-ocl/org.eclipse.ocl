@@ -37,9 +37,11 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EcoreTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
@@ -53,7 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
  * OCL Abstract Syntax Resources.
  */
-public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension
+public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension2
 {
 	public static void installContentHandler(int priority, @NonNull ContentHandler contentHandler) {
 		List<ContentHandler> contentHandlers = ContentHandler.Registry.INSTANCE.get(priority);
@@ -116,6 +118,11 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public @NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver saver) {
 		return new ASSaverResolveVisitor(saver);
+	}
+
+	@Override
+	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
+		return new PivotEnvironmentFactory(projectManager, null);
 	}
 
 	/**

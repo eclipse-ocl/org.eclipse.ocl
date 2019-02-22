@@ -14,6 +14,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.OCL;
 
 /**
  * A ValidationEntry identifies an IFile to be validated and the Marker id for its problems.
@@ -26,6 +31,17 @@ public class ValidationEntry
 	public ValidationEntry(@NonNull IFile file, @NonNull String markerId) {
 		this.file = file;
 		this.markerId = markerId;
+	}
+
+	public @NonNull OCL createOCL() {
+		ASResourceFactoryRegistry registry = ASResourceFactoryRegistry.INSTANCE;
+		String fileExtension = file.getFileExtension();
+		ASResourceFactory asResourceFactory = registry.getASResourceFactoryForExtension(fileExtension);
+		if (asResourceFactory instanceof ASResourceFactory.ASResourceFactoryExtension2) {
+			EnvironmentFactory environmentFactory = ((ASResourceFactory.ASResourceFactoryExtension2)asResourceFactory).createEnvironmentFactory(ProjectManager.CLASS_PATH);
+			return environmentFactory.createOCL();
+		}
+		return OCL.newInstance(ProjectManager.CLASS_PATH);
 	}
 
 	public void deleteMarkers() throws CoreException {

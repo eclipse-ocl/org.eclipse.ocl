@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
@@ -55,6 +56,14 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 		 * Create the LUSSID allocator for an asResource.
 		 */
 		@NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	interface ASResourceFactoryExtension2 extends ASResourceFactoryExtension
+	{
+		@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
 	}
 
 	/**
@@ -91,8 +100,6 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * Create a visitor to resolve orphan specializations.
 	 */
 	@NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver asSaver);
-
-	//	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@Nullable ProjectManager projectManager);
 
 	/**
 	 * Create a visitor to provide a pretty printed representation of one or more elements in the resource.

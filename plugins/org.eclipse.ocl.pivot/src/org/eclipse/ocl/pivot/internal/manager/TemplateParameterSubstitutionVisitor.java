@@ -95,19 +95,18 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				}
 			}
 		}
-
 		return TemplateParameterSubstitutions.EMPTY;
 	}
 
 	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		Resource resource = eObject.eResource();
-		if (resource instanceof ASResource) {
-			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
-		}
-		else if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
+		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
 			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, selfTypeValue);
 		}
-		else {
+		else if (resource instanceof ASResource) {				// This used to be thefirst choice; now it should never happen
+			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
+		}
+		else {													// This too should never happen
 			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
 		}
 	}
@@ -138,6 +137,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
 		this.selfTypeValue = selfTypeValue;
+		System.out.println("Create " + getClass().getName());
 	}
 
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
