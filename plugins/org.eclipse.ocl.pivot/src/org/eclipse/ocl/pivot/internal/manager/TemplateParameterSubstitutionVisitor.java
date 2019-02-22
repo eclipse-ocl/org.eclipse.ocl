@@ -137,7 +137,6 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
 		this.selfTypeValue = selfTypeValue;
-		System.out.println("Create " + getClass().getName());
 	}
 
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
