@@ -39,7 +39,6 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
-import org.eclipse.ocl.examples.xtext.tests.TestProjectManager;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -143,7 +142,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	 * the same as the bundle name. Override when this assumption is unjustified.
 	 */
 	protected @NonNull String getTestBundleName() {
-		return ClassUtil.nonNullState(TestProjectManager.class.getPackage().getName());
+		return ClassUtil.nonNullState(getClass().getPackage().getName());
 	}
 	protected @NonNull URI getTestBundleURI() {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {

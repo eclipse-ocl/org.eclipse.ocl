@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.xtext.tests;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -85,7 +87,7 @@ public class JUnitPluginFileSystem extends TestFileSystem
 		}
 	}
 
-	protected static class JUnitPluginTestFolder extends JUnitPluginTestFile implements TestFile
+	protected static class JUnitPluginTestFolder extends JUnitPluginTestFile implements TestFolder
 	{
 		protected final @NonNull IContainer container;
 
@@ -122,17 +124,35 @@ public class JUnitPluginFileSystem extends TestFileSystem
 			}
 			return new JUnitPluginTestFolder(newURI, newFolder);
 		}
+
+		@Override
+		public @NonNull IContainer getIContainer() {
+			return container;
+		}
 	}
 
 	protected static class JUnitPluginTestProject extends JUnitPluginTestFolder implements TestProject
 	{
 		//		protected @NonNull JUnitPluginFileSystem testFileSystem;
-		protected @NonNull IProject javaProject;
+		protected @NonNull IProject iProject;
 
-		public JUnitPluginTestProject(@NonNull JUnitPluginFileSystem testFileSystem, @NonNull URI platformURI, @NonNull IProject javaProject) {
-			super(platformURI, javaProject);
+		public JUnitPluginTestProject(@NonNull JUnitPluginFileSystem testFileSystem, @NonNull URI platformURI, @NonNull IProject iProject) {
+			super(platformURI, iProject);
 			//			this.testFileSystem = testFileSystem;
-			this.javaProject = javaProject;
+			this.iProject = iProject;
+		}
+
+		@Override
+		public @NonNull TestFile copyFile(@NonNull URIConverter uriConverter, @Nullable TestFolder testFolder, @NonNull URI sourceURI) throws IOException {
+			InputStream inputStream = uriConverter.createInputStream(sourceURI);
+			String lastSegment = sourceURI.lastSegment();
+			if (testFolder != null) {
+				IContainer iContainer = testFolder.getIContainer();
+				IPath projectRelativePath = iContainer.getFile(new Path(lastSegment)).getProjectRelativePath();
+				lastSegment = projectRelativePath.toString();
+			}
+			assert lastSegment != null;
+			return getOutputFile(lastSegment, inputStream);
 		}
 
 		protected @NonNull JUnitPluginTestFile createFilePath(@NonNull String testFilePath, @Nullable InputStream inputStream) {
@@ -201,7 +221,7 @@ public class JUnitPluginFileSystem extends TestFileSystem
 
 		@Override
 		public @NonNull IProject getIProject() {
-			return javaProject;
+			return iProject;
 		}
 
 		@Override

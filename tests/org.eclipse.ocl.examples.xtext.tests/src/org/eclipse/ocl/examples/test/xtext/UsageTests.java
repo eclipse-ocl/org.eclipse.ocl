@@ -453,7 +453,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -525,7 +525,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -574,7 +574,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -642,7 +642,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + ".coreM." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -692,7 +692,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
 		String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
-		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
@@ -729,7 +729,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
 			createManifestFile();
-			File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME).getFile();
+			File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 			List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 			ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 			String qualifiedPackageName1 = testProjectName + ".QUDV.QUDVPackage";

@@ -21,9 +21,12 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
 public class JUnitStandaloneFileSystem extends TestFileSystem
@@ -76,7 +79,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		}
 	}
 
-	protected static class JUnitStandaloneTestFolder extends JUnitStandaloneTestFile implements TestFile
+	protected static class JUnitStandaloneTestFolder extends JUnitStandaloneTestFile implements TestFolder
 	{
 		public JUnitStandaloneTestFolder(@NonNull URI platformURI, @NonNull File file) {
 			super(platformURI, file);
@@ -94,12 +97,28 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 			File newFolder = new File(file, name);
 			return new JUnitStandaloneTestFolder(newURI, newFolder);
 		}
+
+		@Override
+		public @NonNull IContainer getIContainer() {
+			throw new IllegalStateException();
+		}
 	}
 
 	protected static class JUnitStandaloneTestProject extends JUnitStandaloneTestFolder implements TestProject
 	{
 		public JUnitStandaloneTestProject(@NonNull URI platformURI, @NonNull File file) {
 			super(platformURI, file);
+		}
+
+		@Override
+		public @NonNull TestFile copyFile(@NonNull URIConverter uriConverter, @Nullable TestFolder testFolder, @NonNull URI sourceURI) throws IOException {
+			InputStream inputStream = uriConverter.createInputStream(sourceURI);
+			String lastSegment = sourceURI.lastSegment();
+			assert lastSegment != null;
+			if (testFolder != null) {
+				lastSegment = testFolder.getName() + "/" + lastSegment;
+			}
+			return getOutputFile(lastSegment, inputStream);
 		}
 
 		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath) {
@@ -179,10 +198,10 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		}
 
 		@Override
-		public @NonNull JUnitStandaloneTestFile getOutputFolder(@NonNull String testFilePath) {
+		public @NonNull JUnitStandaloneTestFolder getOutputFolder(@NonNull String testFilePath) {
 			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath);
 			testFolder.mkdir();
-			return testFolder;
+			return (JUnitStandaloneTestFolder)testFolder;
 		}
 	}
 
