@@ -41,16 +41,6 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 {
 	public static final @NonNull TracingOption BUILDER = new TracingOption(BaseUiPluginHelper.PLUGIN_ID, "builder");
 
-	// FIXME delete after Photon M7 (once QVTd has caught up)
-	@Deprecated
-	public static class BuildSelector extends AbstractBuildSelector
-	{
-		public BuildSelector(@NonNull String builderName, @NonNull IProject project, @NonNull BuildType buildType,
-				Map<String, String> args, @NonNull IProgressMonitor monitor) {
-			super(project, buildType, args, monitor);
-		}
-
-	}
 	/**
 	 * This is a copy of org.eclipse.jdt.internal.compiler.util.Util.isExcluded
 	 *
@@ -207,11 +197,8 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 		BaseUIActivator.cancelMultiValidationJob();
 	}
 
-	// FIXME change to abstract after Photon M7 (once QVTd has caught up)
-	protected /*abstract*/ @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
-			@Nullable Map<String, String> args, @NonNull IProgressMonitor monitor) {
-		return new BuildSelector(getBuilderName(), project, buildType, args, monitor);
-	}
+	protected abstract @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
+			@Nullable Map<String, String> args, @NonNull IProgressMonitor monitor);
 
 	protected abstract @NonNull String getBuilderName();
 
