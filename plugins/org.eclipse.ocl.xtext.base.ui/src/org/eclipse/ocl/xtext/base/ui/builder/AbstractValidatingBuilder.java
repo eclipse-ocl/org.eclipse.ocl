@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
@@ -112,15 +113,20 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			AbstractBuildSelector buildSelector;
 			IResourceDelta delta;
 			if (kind == FULL_BUILD) {
+				getProject().deleteMarkers(getMarkerId(), true, IResource.DEPTH_INFINITE);
 				buildSelector = createBuildSelector(project, BuildType.FULL, args, subMonitor);
 				delta = null;
 			} else if (kind == AUTO_BUILD){
 				delta = getDelta(getProject());
 				buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
-			} else {
-			//	delta = getDelta(getProject());
-			//	buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
+			} else if (kind == INCREMENTAL_BUILD){
+				//	delta = getDelta(getProject());
+				//	buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
 				return null; 		// FIXME BUG 544189 there is no incremental support.
+			} else {		// CLEAN_BUILD never happens
+				//	delta = getDelta(getProject());
+				//	buildSelector = createBuildSelector(project, BuildType.INCREMENTAL, args, subMonitor);
+				return null;
 			}
 		//	if (BUILDER.isActive()) {
 		//		BUILDER.println(Thread.currentThread().getName() + " " + NameUtil.debugSimpleName(subMonitor) + " worked 1");
