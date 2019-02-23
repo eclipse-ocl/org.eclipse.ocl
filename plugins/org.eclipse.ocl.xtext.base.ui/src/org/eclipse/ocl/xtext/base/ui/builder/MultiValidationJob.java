@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
@@ -96,12 +97,12 @@ public class MultiValidationJob extends Job
 
 		public void accept(@NonNull Diagnostic diagnostic, @Nullable Diagnostic parentDiagnostic) {
 			if (diagnostic.getSeverity() != Diagnostic.OK) {
-				markerDatas.add(new DiagnosticMarkerData(diagnostic, parentDiagnostic));
+				markerDatas.add(new DiagnosticMarkerData(diagnostic, issueMarkerType, parentDiagnostic));
 			}
 		}
 
 		public void accept(Resource.@NonNull Diagnostic diagnostic, int severity) {
-			markerDatas.add(new ResourceDiagnosticMarkerData(diagnostic, severity));
+			markerDatas.add(new ResourceDiagnosticMarkerData(diagnostic, issueMarkerType, severity));
 		}
 
 		@Override
@@ -119,7 +120,7 @@ public class MultiValidationJob extends Job
 			if (!resource.exists()) {
 				return;
 			}
-			resource.deleteMarkers(EValidator.MARKER, true, IResource.DEPTH_INFINITE);
+			resource.deleteMarkers(issueMarkerType, true, IResource.DEPTH_INFINITE);
 			for (@NonNull MarkerData markerData : markerDatas) {
 				if (monitor.isCanceled()) {
 					return;
@@ -150,6 +151,7 @@ public class MultiValidationJob extends Job
 	//This class is based on org.eclipse.emf.edit.ui.action.ValidateAction.EclipseResourcesUtil
 	protected static class DiagnosticMarkerData /*extends ValidateAction.EclipseResourcesUtil*/ implements MarkerData
 	{
+		protected final @NonNull String markerType;
 		protected final @NonNull Object severity;
 		protected final /*@NonNull*/ String message;
 		protected @Nullable String location = null;
@@ -157,7 +159,8 @@ public class MultiValidationJob extends Job
 		protected @Nullable String uriAttribute = null;
 		protected final @Nullable String relatedURIsAttribute;
 
-		public DiagnosticMarkerData(@NonNull Diagnostic diagnostic, @Nullable Diagnostic parentDiagnostic) {
+		public DiagnosticMarkerData(@NonNull Diagnostic diagnostic, @NonNull String markerType, @Nullable Diagnostic parentDiagnostic) {
+			this.markerType = markerType;
 			//
 			//	MarkerHelper.createMarkers
 			//
@@ -241,7 +244,7 @@ public class MultiValidationJob extends Job
 
 		@Override
 		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
-			IMarker marker = resource.createMarker(EValidator.MARKER);
+			IMarker marker = resource.createMarker(markerType);
 			marker.setAttribute(IMarker.LOCATION, location);
 			marker.setAttribute(IMarker.SEVERITY, severity);
 			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
@@ -384,6 +387,7 @@ public class MultiValidationJob extends Job
 	//This class is based on org.eclipse.emf.edit.ui.util.EditUIMarkerHelper
 	protected static class ResourceDiagnosticMarkerData implements MarkerData
 	{
+		protected final @NonNull String markerType;
 		protected final @NonNull Object severity;
 		protected final /*@NonNull*/ String message;
 		protected @Nullable String location = null;
@@ -391,7 +395,8 @@ public class MultiValidationJob extends Job
 		protected @Nullable String uriAttribute = null;
 		protected final @Nullable String relatedURIsAttribute;
 
-		public ResourceDiagnosticMarkerData(Resource.@NonNull Diagnostic diagnostic, int severity) {
+		public ResourceDiagnosticMarkerData(Resource.@NonNull Diagnostic diagnostic, @NonNull String markerType, int severity) {
+			this.markerType = markerType;
 			//
 			//	MarkerHelper.createMarkers
 			//
@@ -434,7 +439,7 @@ public class MultiValidationJob extends Job
 
 		@Override
 		public @NonNull IMarker createMarker(@NonNull IResource resource) throws CoreException {
-			IMarker marker = resource.createMarker(EValidator.MARKER);
+			IMarker marker = resource.createMarker(markerType);
 			marker.setAttribute(IMarker.LOCATION, location);
 			marker.setAttribute(IMarker.SEVERITY, severity);
 			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
@@ -672,7 +677,7 @@ public class MultiValidationJob extends Job
 				}
 			} else {
 				monitor.worked(1);			// Work Item 3 - Resolve 'done'
-				operation.addMessage(EValidator.MARKER, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource for '" + uri + "'");
+				operation.addMessage(BaseUiModule.MARKER_ID, IMarker.SEVERITY_ERROR, "Failed to create EMF Resource for '" + uri + "'");
 			}
 			monitor.worked(1);			// Work Item 4 - Validate 'done'
 			try {
