@@ -134,11 +134,12 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 			return isExcluded ? Boolean.FALSE : Boolean.TRUE;
 		}
 		else if (resource instanceof IFolder) {
-			String filePath = resource.getProjectRelativePath().toString();
-			char[] path = filePath.toCharArray();
-			boolean isExcluded = AbstractValidatingBuilder.isExcluded(path, inclusionPatterns, exclusionPatterns, true);
+			// FIXME BUG 544734 this match doesn't work for non-trivial folder paths
+		//	String filePath = resource.getProjectRelativePath().toString();
+		//	char[] path = filePath.toCharArray();
+		//	boolean isExcluded = AbstractValidatingBuilder.isExcluded(path, inclusionPatterns, exclusionPatterns, true);
 			//				System.out.println(filePath + " isExcluded " + isExcluded);
-			return isExcluded ? Boolean.FALSE : null;
+			return /*isExcluded ? Boolean.FALSE :*/ null;
 		}
 		else {
 			return null;
