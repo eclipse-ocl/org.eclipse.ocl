@@ -12,6 +12,9 @@ package org.eclipse.ocl.xtext.base.ui.builder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,9 +28,11 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
@@ -47,6 +52,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
@@ -629,16 +638,9 @@ public class MultiValidationJob extends Job
 			//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
 			//
 			OCL ocl = entry.createOCL();
-
-			Bundle bundle = Platform.getBundle(project.getName());
-			if (bundle != null) {
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-				if (bundleWiring != null) {
-					ClassLoader classLoader = bundleWiring.getClassLoader();
-					if (classLoader != null) {
-						((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
-					}
-				}
+			ClassLoader classLoader = getClassLoader(project);
+			if (classLoader != null) {
+				((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
 			}
 			monitor.worked(1);			// Work Item 1 - Initialize done
 			final @NonNull String markerType = entry.getMarkerId();
@@ -710,6 +712,51 @@ public class MultiValidationJob extends Job
 				}
 				entry.notifyAll();
 			}
+		}
+	}
+
+	/**
+	 * Return the ClassLoader for the bundle/workspace project.
+	 */
+	protected @Nullable ClassLoader getClassLoader(@NonNull IProject project) throws CoreException {
+		Bundle bundle = Platform.getBundle(project.getName());
+		if (bundle != null) {
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+			if (bundleWiring != null) {
+				return bundleWiring.getClassLoader();
+			}
+			else {
+				return null;
+			}
+		}
+		else { // from org.eclipse.jdt.internal.compiler.apt.util.EclipseFileManager.getClassLoader
+			   // and https://sdqweb.ipd.kit.edu/wiki/JDT_Tutorial:_Class_Loading_in_a_running_plugin
+
+			IJavaProject javaProject = JavaCore.create(project);
+			String[] defaultRuntimeClassPath= null;
+			try {
+				defaultRuntimeClassPath = JavaRuntime.computeDefaultRuntimeClassPath(javaProject);
+			}
+			catch (JavaModelException e) {
+				// maybe not a Java project
+			}
+			if (defaultRuntimeClassPath == null) {
+				return null;
+			}
+			List<@NonNull URL> urlList = new ArrayList<>();
+			for (@NonNull String classPathEntry : defaultRuntimeClassPath) {
+				IPath classPathEntryPath = new Path(classPathEntry);
+				java.net.URI classPathEntryURI = classPathEntryPath.toFile().toURI();
+				try {
+					urlList.add(classPathEntryURI.toURL());
+				}
+				catch (MalformedURLException e) {
+					// the url is malformed - this should not happen
+					throw new RuntimeException(e);
+				}
+			}
+			@NonNull URL[] urlArray = urlList.toArray(new @NonNull URL[urlList.size()]);
+			return new URLClassLoader(urlArray, javaProject.getClass().getClassLoader());
 		}
 	}
 
