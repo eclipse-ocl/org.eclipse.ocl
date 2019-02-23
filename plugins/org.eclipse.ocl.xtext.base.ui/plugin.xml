@@ -2,6 +2,12 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+    <extension point="org.eclipse.core.resources.markers"
+      id="Marker" name="%MF_Problem">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    
 	<extension point="org.eclipse.ui.commands">
 	  <command id="org.eclipse.ocl.xtext.base.ui.SaveASCommand"
 	    name="%MF_Save_AS_Command" description="%MF_Save_AS_Description"/>

@@ -26,6 +26,7 @@ import org.eclipse.jdt.core.compiler.CharOperation;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
+import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 
@@ -219,6 +220,10 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 	}
 
 	protected abstract Logger getLog();
+
+	protected /*abstract*/ @NonNull String getMarkerId() {		// FIXME Chn age to abxstract after 2019-03M3 once QVTd catches up
+		return BaseUiModule.MARKER_ID;
+	}
 
 	private void handleCanceled(Throwable t) {
 		BaseUIActivator.cancelMultiValidationJob();

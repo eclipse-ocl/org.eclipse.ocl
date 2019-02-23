@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractBuildSelector;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractValidatingBuilder;
@@ -82,5 +83,10 @@ public class OCLBuilder extends AbstractValidatingBuilder
 	@Override
 	protected Logger getLog() {
 		return log;
+	}
+
+	@Override
+	protected @NonNull String getMarkerId() {
+		return BaseUiModule.MARKER_ID;
 	}
 }

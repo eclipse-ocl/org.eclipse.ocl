@@ -144,7 +144,7 @@
             id="markup.check.fast"
             name="%MF_Problem"
             point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <super type="org.eclipse.ocl.xtext.base.ui.Marker"/>
         <persistent value="true"/>
     </extension>
     <extension

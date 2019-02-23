@@ -154,7 +154,7 @@
     <!-- marker definitions for org.eclipse.ocl.xtext.oclstdlib.OCLstdlib -->
     <extension point="org.eclipse.core.resources.markers"
       id="Marker" name="%MF_Problem">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <super type="org.eclipse.ocl.xtext.base.ui.Marker"/>
         <persistent value="true"/>
     </extension>
 

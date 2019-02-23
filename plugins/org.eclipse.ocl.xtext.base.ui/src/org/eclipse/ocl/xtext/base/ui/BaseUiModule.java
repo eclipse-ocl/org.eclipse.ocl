@@ -13,6 +13,7 @@
  */
 package org.eclipse.ocl.xtext.base.ui;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
@@ -20,7 +21,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class BaseUiModule extends org.eclipse.ocl.xtext.base.ui.AbstractBaseUiModule
 {
-	public static final String PLUGIN_ID = "org.eclipse.ocl.xtext.base.ui";
+	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.base.ui";
+	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.base.ui.Marker";
 
 	public BaseUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
