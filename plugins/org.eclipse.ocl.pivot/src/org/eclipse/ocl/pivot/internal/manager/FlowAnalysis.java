@@ -52,6 +52,9 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromFalseVisitor;
+import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromNullVisitor;
+import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromTrueVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -157,151 +160,6 @@ public class FlowAnalysis
 		@Override
 		public @Nullable Boolean visitOCLExpression(@NonNull OCLExpression object) {
 			return null;
-		}
-	}
-
-	protected static class DeducerFromFalse extends AbstractDeducer
-	{
-		public DeducerFromFalse(@NonNull FlowAnalysis flowAnalysis) {
-			super(flowAnalysis);
-		}
-
-		@Override
-		public @Nullable Boolean visitBooleanLiteralExp(@NonNull BooleanLiteralExp object) {
-			return !object.isBooleanSymbol();
-		}
-
-		@Override
-		public @Nullable Boolean visitOperationCallExp(@NonNull OperationCallExp object) {
-			OperationId operationId = PivotUtil.getReferredOperation(object).getOperationId();
-			if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_NOT)) {
-				context.addFalseExpression(object);
-				return Boolean.TRUE;
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR)) {
-				context.addFalseExpression(PivotUtil.getOwnedSource(object));
-				context.addFalseExpression(PivotUtil.getOwnedArgument(object, 0));
-				return Boolean.TRUE;
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_EQUALS)) {
-				OCLExpression ownedSource = PivotUtil.getOwnedSource(object);
-				OCLExpression ownedArgument = PivotUtil.getOwnedArgument(object, 0);
-				if (isAlreadyNull(ownedSource)) {
-					context.addNonNullExpression(ownedArgument);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNull(ownedArgument)) {
-					context.addNonNullExpression(ownedSource);
-					return Boolean.TRUE;
-				}
-				// if isFutureNull ...
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_NOT_EQUALS)) {
-				OCLExpression ownedSource = PivotUtil.getOwnedSource(object);
-				OCLExpression ownedArgument = PivotUtil.getOwnedArgument(object, 0);
-				if (isAlreadyNull(ownedSource)) {
-					context.addNullExpression(ownedArgument);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNull(ownedArgument)) {
-					context.addNullExpression(ownedSource);
-					return Boolean.TRUE;
-				}
-				// if isFutureNull ...
-			}
-			return super.visitOperationCallExp(object);
-		}
-	}
-
-	protected static class DeducerFromNull extends AbstractDeducer
-	{
-		protected final boolean isNull;
-
-		public DeducerFromNull(@NonNull FlowAnalysis flowAnalysis, boolean isNull) {
-			super(flowAnalysis);
-			this.isNull = isNull;
-		}
-
-		@Override
-		public @Nullable Boolean visitCallExp(@NonNull CallExp object) {
-			return context.setCallPath(object, isNull);
-		}
-
-		@Override
-		public @Nullable Boolean visitNullLiteralExp(@NonNull NullLiteralExp object) {
-			return isNull;
-		}
-
-		@Override
-		public @Nullable Boolean visitVariableExp(@NonNull VariableExp object) {
-			VariableDeclaration variable = PivotUtil.getReferredVariable(object);
-			return context.setVariable(variable, isNull);
-		}
-	}
-
-	protected static class DeducerFromTrue extends AbstractDeducer
-	{
-		public DeducerFromTrue(@NonNull FlowAnalysis flowAnalysis) {
-			super(flowAnalysis);
-		}
-
-		@Override
-		public @Nullable Boolean visitBooleanLiteralExp(@NonNull BooleanLiteralExp object) {
-			return object.isBooleanSymbol();
-		}
-
-		@Override
-		public @Nullable Boolean visitOperationCallExp(@NonNull OperationCallExp object) {
-			OperationId operationId = PivotUtil.getReferredOperation(object).getOperationId();
-			if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)) {
-				context.addTrueExpression(PivotUtil.getOwnedSource(object));
-				context.addTrueExpression(PivotUtil.getOwnedArgument(object, 0));
-				return Boolean.TRUE;
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)) {
-				context.addTrueExpression(PivotUtil.getOwnedSource(object));
-				context.addFalseExpression(PivotUtil.getOwnedArgument(object, 0));
-				return Boolean.TRUE;
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_NOT)) {
-				context.addFalseExpression(PivotUtil.getOwnedSource(object));
-				return Boolean.TRUE;
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_EQUALS)) {
-				OCLExpression ownedSource = PivotUtil.getOwnedSource(object);
-				OCLExpression ownedArgument = PivotUtil.getOwnedArgument(object, 0);
-				if (isAlreadyNull(ownedSource)) {
-					context.addNullExpression(ownedArgument);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNonNull(ownedSource)) {
-					context.addNonNullExpression(ownedArgument);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNull(ownedArgument)) {
-					context.addNullExpression(ownedSource);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNonNull(ownedArgument)) {
-					context.addNonNullExpression(ownedSource);
-					return Boolean.TRUE;
-				}
-				// if isFutureNull ...
-			}
-			else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_NOT_EQUALS)) {
-				OCLExpression ownedSource = PivotUtil.getOwnedSource(object);
-				OCLExpression ownedArgument = PivotUtil.getOwnedArgument(object, 0);
-				if (isAlreadyNull(ownedSource)) {
-					context.addNonNullExpression(ownedArgument);
-					return Boolean.TRUE;
-				}
-				else if (isAlreadyNull(ownedArgument)) {
-					context.addNonNullExpression(ownedSource);
-					return Boolean.TRUE;
-				}
-				// if isFutureNull ...
-			}
-			return super.visitOperationCallExp(object);
 		}
 	}
 
@@ -756,7 +614,7 @@ public class FlowAnalysis
 	private @Nullable AbstractDeducer deducerFromFalse = null;
 	private @Nullable AbstractDeducer deducerFromNonNull = null;
 	private @Nullable AbstractDeducer deducerFromNull = null;
-	private final @NonNull AbstractDeducer deducerFromTrue = new DeducerFromTrue(this);
+	private final @NonNull AbstractDeducer deducerFromTrue = createDeducerFromTrue();
 
 	/*
 	 *	Map from the hashCode of a CallPath for some access for which the null (true), non-null (false) state
@@ -850,7 +708,7 @@ public class FlowAnalysis
 	protected void addFalseExpression(@NonNull OCLExpression object) {
 		AbstractDeducer deducerFromFalse2 = deducerFromFalse;
 		if (deducerFromFalse2 == null) {
-			deducerFromFalse2 = deducerFromFalse = new DeducerFromFalse(this);
+			deducerFromFalse2 = deducerFromFalse = createDeducerFromFalse();
 		}
 		deducerFromFalse2.addToBeDeduced(object);
 	}
@@ -858,7 +716,7 @@ public class FlowAnalysis
 	protected void addNonNullExpression(@NonNull OCLExpression object) {
 		AbstractDeducer deducerFromNonNull2 = deducerFromNonNull;
 		if (deducerFromNonNull2 == null) {
-			deducerFromNonNull2 = deducerFromNonNull = new DeducerFromNull(this, false);
+			deducerFromNonNull2 = deducerFromNonNull = createDeducerFromNull(false);
 		}
 		deducerFromNonNull2.addToBeDeduced(object);
 	}
@@ -866,9 +724,30 @@ public class FlowAnalysis
 	protected void addNullExpression(@NonNull OCLExpression object) {
 		AbstractDeducer deducerFromNull2 = deducerFromNull;
 		if (deducerFromNull2 == null) {
-			deducerFromNull2 = deducerFromNull = new DeducerFromNull(this, true);
+			deducerFromNull2 = deducerFromNull = createDeducerFromNull(true);
 		}
 		deducerFromNull2.addToBeDeduced(object);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	protected @NonNull AbstractDeducer createDeducerFromFalse() {
+		return new PivotFlowAnalysisDeducerFromFalseVisitor(this);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	protected @NonNull AbstractDeducer createDeducerFromNull(boolean isNull) {
+		return new PivotFlowAnalysisDeducerFromNullVisitor(this, isNull);
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	protected @NonNull AbstractDeducer createDeducerFromTrue() {
+		return new PivotFlowAnalysisDeducerFromTrueVisitor(this);
 	}
 
 	protected void addTrueExpression(@NonNull OCLExpression object) {

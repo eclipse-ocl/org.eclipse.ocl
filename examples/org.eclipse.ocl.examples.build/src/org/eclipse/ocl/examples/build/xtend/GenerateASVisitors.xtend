@@ -16,8 +16,9 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker
 //import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis
 
- class GenerateASVisitors extends GenerateVisitorsXtend
+class GenerateASVisitors extends GenerateVisitorsXtend
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();
@@ -38,6 +39,9 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal
 			ePackage.generateAbstractGenericVisitor("ASSaverNormalize", typeof(Object), typeof(ASSaver));
 			ePackage.generateAbstractGenericVisitor("ASSaverResolve", typeof(Object), typeof(ASSaver));
 			ePackage.generateAbstractTemplateParameterSubstitutionVisitor("TemplateParameterSubstitution", typeof(Object), typeof(EnvironmentFactoryInternal));
+			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromFalse", typeof(Boolean), typeof(FlowAnalysis), false);
+			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromNull", typeof(Boolean), typeof(FlowAnalysis), true);
+			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromTrue", typeof(Boolean), typeof(FlowAnalysis), false);
 //			ePackage.generateAbstractGenericVisitor("Stepper", typeof(IStepper), typeof(Object));
 		}
 		/* ePackage.generateDecorableVisitorInterface("org.eclipse.ocl.pivot.util.Visitor"); */
