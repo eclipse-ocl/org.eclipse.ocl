@@ -17,4 +17,4 @@ context uml::Class
 /**
  * The first letter of a classname should be uppercase.
  */
-inv CamelCaseName: name.at(1)=name.at(1).toUpperCase()
+inv CamelCaseName: name <> null implies name.at(1) = name.at(1).toUpperCase()

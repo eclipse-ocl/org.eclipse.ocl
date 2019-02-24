@@ -28,7 +28,7 @@ context EStructuralFeature
 /**
  * Declare a helper property to determine whether an EStructuralFeature has an OCL derivation. 
  */
-def: hasDerivation : Boolean = eAnnotations->select(source.startsWith('http://www.eclipse.org/emf/2002/Ecore/OCL'))->notEmpty()
+def: hasDerivation : Boolean = eAnnotations->select(source?.startsWith('http://www.eclipse.org/emf/2002/Ecore/OCL'))->notEmpty()
 
 /**
  * If a feature has an OCL derivation, it should be transient; otherwise it is not executed.

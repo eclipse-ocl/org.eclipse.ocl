@@ -169,7 +169,7 @@ inv invariant_ofAge :
 inv invariant_CustomerCard3 :
 	self.owner.programs->size() > 0
 inv invariant_checkDates :
-	self.validFrom.isBefore(self.goodThru)
+	self.validFrom?.isBefore(self.goodThru)
 --inv invariant_CustomerCard2 :
 --	self.owner.dateOfBirth.isBefore(Date::now)
 --inv invariant_CustomerCard1 :
@@ -204,7 +204,7 @@ context Membership
 def  :
 	getCurrentLevelName() : String = self.currentLevel.name
 inv invariant_Membership1 :
-	(self.account?.points >= 0) or self.account->asSet()->isEmpty()
+	self.account <> null implies self.account.points >= 0
 inv invariant_Membership2 :
 	self.participants.cards->collect( i_CustomerCard : CustomerCard | i_CustomerCard.Membership )->includes(self)
 inv invariant_noEarnings :

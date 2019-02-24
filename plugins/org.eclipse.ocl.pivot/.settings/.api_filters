@@ -21586,6 +21586,26 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/FlowAnalysis.java" type="org.eclipse.ocl.pivot.internal.manager.FlowAnalysis">
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.FlowAnalysis.DeducerFromFalse"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.7.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.FlowAnalysis.DeducerFromNull"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.7.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.FlowAnalysis.DeducerFromTrue"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.7.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/manager/TemplateSpecialisation.java" type="org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation">
         <filter id="338792546">
             <message_arguments>

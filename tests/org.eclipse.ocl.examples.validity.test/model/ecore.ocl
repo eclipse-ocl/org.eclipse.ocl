@@ -20,14 +20,14 @@ context EClass
 	inv eclass_constraint : Tuple{
 		status: Boolean = true,
 		severity: Integer = -1,
-		message : String = 'eclass_constraint: Number of eClasses: ' + self.ePackage.oclContents()->size().toString()
+		message : String = 'eclass_constraint: Number of eClasses: ' + self.ePackage?.oclContents()?->size().toString()
 	}.status
 	
 context EAttribute
 	inv eattribute_constraint : Tuple{
 		status: Boolean = false,
 		severity: Integer = -1,
-		message : String = 'eattribute_constraint: Number of attributes: ' + self.oclContainer().oclContents()->size().toString()
+		message : String = 'eattribute_constraint: Number of attributes: ' + self.oclContainer()?.oclContents()?->size().toString()
 	}.status
 	
 endpackage
