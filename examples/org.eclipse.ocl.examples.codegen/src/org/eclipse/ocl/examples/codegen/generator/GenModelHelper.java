@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
@@ -48,6 +49,7 @@ public interface GenModelHelper
 	//	@Nullable GenClass getGenClass(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable GenClassifier getGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException;
+	@Nullable GenOperation getGenOperation(@NonNull Constraint constraint);
 	@Nullable GenOperation getGenOperation(@NonNull Operation operation);
 	@Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class type);

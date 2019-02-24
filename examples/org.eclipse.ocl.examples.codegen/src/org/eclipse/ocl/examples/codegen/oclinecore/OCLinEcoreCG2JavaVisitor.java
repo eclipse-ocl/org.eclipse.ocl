@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -23,15 +25,20 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
@@ -44,6 +51,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -242,6 +250,54 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.appendValueName(globalConstant);
 		}
 		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGEcoreOperationCallExp(
+			@NonNull CGEcoreOperationCallExp cgOperationCallExp) {
+		// TODO Auto-generated method stub
+		return super.visitCGEcoreOperationCallExp(cgOperationCallExp);
+	}
+
+	@Override
+	public @NonNull Boolean visitCGExecutorOperationCallExp(
+			@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
+		// TODO Auto-generated method stub
+		return super.visitCGExecutorOperationCallExp(cgOperationCallExp);
+	}
+
+	@Override
+	public @NonNull Boolean visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
+		if (cgOperationCallExp.getLibraryOperation() == CGStringGetSeverityOperation.INSTANCE) {
+			// OCL, OCL-CG has no support for EOperation litetals so the original validation check severity predicate used a magic String.
+			// Now we recognise the old-style call and re-implement as a check on the EOperation litetal that we can compute anyway.
+			CGConstraint cgConstraint = CGUtil.getContainingConstraint(cgOperationCallExp);
+			if (cgConstraint != null) {
+				Constraint asConstraint = CGUtil.getAST(cgConstraint);
+				CGClass cgClass = CGUtil.getContainingClass(cgConstraint);
+				if (cgClass != null) {
+					GenModelHelper genModelHelper = context.getGenModelHelper();
+					GenOperation genOperation = genModelHelper.getGenOperation(asConstraint);
+					if (genOperation != null) {
+						GenClass genClass = genOperation.getGenClass();
+						String name = genClass.getOperationID(genOperation, false);
+
+						js.appendDeclaration(cgOperationCallExp);
+						js.append(" = ");
+						js.appendClassReference(null, CGStringGetSeverityOperation.class);
+						js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
+						js.append(JavaConstants.EXECUTOR_NAME);
+						js.append(", ");
+						js.appendClassReference(null, genClass.getGenPackage().getQualifiedPackageInterfaceName());
+						js.append(".Literals.");
+						js.append(name);
+						js.append(");\n");
+						return true;
+					}
+				}
+			}
+		}
+		return super.visitCGLibraryOperationCallExp(cgOperationCallExp);
 	}
 
 	@Override

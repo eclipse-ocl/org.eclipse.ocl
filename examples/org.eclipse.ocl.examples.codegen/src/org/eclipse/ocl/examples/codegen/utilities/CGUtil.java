@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -166,6 +167,10 @@ public class CGUtil
 		cgParameter.setName(name);
 		cgParameter.setTypeId(typeId);
 		return cgParameter;
+	}
+
+	public static @NonNull Constraint getAST(@NonNull CGConstraint cgConstraint) {
+		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
 	}
 
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {

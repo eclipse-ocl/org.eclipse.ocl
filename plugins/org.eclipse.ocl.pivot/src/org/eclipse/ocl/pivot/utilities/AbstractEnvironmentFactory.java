@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -514,8 +515,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {
 		HashMap<Object, StatusCodes.Severity> map = new HashMap<Object, StatusCodes.Severity>();
-		Set<Entry<String, EnumeratedOption<Severity>>> entrySet = PivotValidationOptions.safeValidationName2severityOption.entrySet();
-		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet) {
+		Set<Entry<String, EnumeratedOption<Severity>>> entrySet1 = PivotValidationOptions.safeValidationName2severityOption.entrySet();
+		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet1) {
+			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
+			if (value != null) {
+				map.put(entry.getKey(), getValue(value));
+			}
+		}
+		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.safeValidationOperation2severityOption.entrySet();
+		for (Map.Entry<EOperation, EnumeratedOption<StatusCodes.Severity>> entry : entrySet2) {
 			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
 			if (value != null) {
 				map.put(entry.getKey(), getValue(value));
@@ -887,6 +895,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity) {
 		for (String key : PivotValidationOptions.safeValidationName2severityOption.keySet()) {
+			if (key != null) {
+				setSeverity(key, severity);
+			}
+		}
+		for (EOperation key : PivotValidationOptions.safeValidationOperation2severityOption.keySet()) {
 			if (key != null) {
 				setSeverity(key, severity);
 			}

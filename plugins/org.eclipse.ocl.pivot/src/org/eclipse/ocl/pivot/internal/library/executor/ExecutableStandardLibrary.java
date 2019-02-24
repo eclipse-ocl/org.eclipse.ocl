@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
@@ -77,13 +78,24 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 
 	/**
 	 * Configuration of validation preferences.
+	 *
+	 * The key used to be a magic String publicly exports from XXXTables polluting the API.
+	 *
+	 * Now it is the EOperation literal of the validation method.
 	 */
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
 	protected @NonNull HashMap<@Nullable Object, StatusCodes.@Nullable Severity> createValidationKey2severityMap() {
 		HashMap<@Nullable Object, StatusCodes.@Nullable Severity> map = new HashMap<>();
-		Set<Entry<String, EnumeratedOption<Severity>>> entrySet = PivotValidationOptions.safeValidationName2severityOption.entrySet();
-		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet) {
+		Set<Entry<String, EnumeratedOption<Severity>>> entrySet1 = PivotValidationOptions.safeValidationName2severityOption.entrySet();
+		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet1) {
+			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
+			if (value != null) {
+				map.put(entry.getKey(), value.getDefaultValue());
+			}
+		}
+		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.safeValidationOperation2severityOption.entrySet();
+		for (Map.Entry<EOperation, EnumeratedOption<StatusCodes.Severity>> entry : entrySet2) {
 			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
 			if (value != null) {
 				map.put(entry.getKey(), value.getDefaultValue());

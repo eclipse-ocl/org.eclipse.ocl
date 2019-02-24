@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -430,6 +431,31 @@ public class AbstractGenModelHelper implements GenModelHelper
 		}
 		return null;
 	} */
+
+	@Override
+	public @NonNull GenOperation getGenOperation(@NonNull Constraint constraint) throws GenModelException {
+	//	Operation baseOperation = operation;
+	//	for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
+	//		;
+	//	}
+		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class) constraint.eContainer();
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			String name = constraint.getName();
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				String operationName = genOperation.getEcoreOperation().getName();
+				if (name.equals(operationName)) {
+					// FIXME parameters
+					return genOperation;
+				}
+			}
+		}
+//		Operation baseOperation2 = operation;
+//		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
+//			;
+//		}
+		throw new GenModelException("No GenFeature for " + constraint);
+	}
 
 	@Override
 	public @NonNull GenOperation getGenOperation(@NonNull Operation operation) throws GenModelException {
