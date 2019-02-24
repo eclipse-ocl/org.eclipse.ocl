@@ -59,10 +59,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * The (static) FlowAnalysis of some context OCLExpression exploits the hierarchy of the encompassing AS expression to
- * identify expressions that are necessarily true/false when the context expression evaluates. For instance the if the
- * contsxt expression is at or below the elseExpression of some IfExp, then the conditionExpression of the IfExp is
- * necessarily true. Given a set of known true/false expressions reverse evaluation of certain expressions allows
- * deduction that certain variables are null/not-null. THis is then used to imprive the precision of null safety guards.
+ * identify expressions that are necessarily true/false when the context expression evaluates. For instance if the
+ * context expression is at or below the elseExpression of some IfExp, then the conditionExpression of the IfExp is
+ * necessarily true. Given a set of known true/false expressions, reverse evaluation of certain expressions allows
+ * deduction that certain variables are null/not-null. This is then used to improve the precision of null safety guards.
  *
  * e.g. in "let x : Integer = ... in x <> null implies x.toString()" we do not want to diagnose that "x.toString()" is unsafe.
  *
