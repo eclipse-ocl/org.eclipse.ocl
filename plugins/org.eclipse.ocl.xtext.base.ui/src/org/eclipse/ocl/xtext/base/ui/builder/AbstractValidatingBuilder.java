@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.compiler.CharOperation;
@@ -202,6 +203,7 @@ public abstract class AbstractValidatingBuilder extends IncrementalProjectBuilde
 			BUILDER.println(getDebugName() + " clean");
 		}
 		BaseUIActivator.cancelMultiValidationJob();
+		getProject().deleteMarkers(EValidator.MARKER, true, IResource.DEPTH_INFINITE);	// Temporary zap, see Bug 544737
 	}
 
 	protected abstract @NonNull AbstractBuildSelector createBuildSelector(@NonNull IProject project, @NonNull BuildType buildType,
