@@ -16,6 +16,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/MapType.java" type="org.eclipse.ocl.pivot.MapType">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="getEntryClass()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
+                <message_argument value="setEntryClass(Class)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/OperationCallExp.java" type="org.eclipse.ocl.pivot.OperationCallExp">
         <filter id="403804204">
             <message_arguments>
@@ -35,6 +49,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getConstraint__ValidateBooleanValued__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getMapType_EntryClass()"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
@@ -8309,12 +8329,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="MAP_TYPE__BEHAVIORAL_CLASS"/>
-            </message_arguments>
-        </filter>
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
             </message_arguments>
         </filter>
         <filter id="405864542">
@@ -17228,6 +17242,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getMapType_EntryClass()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getOperationCallExp__HasOclVoidOverload()"/>
             </message_arguments>
         </filter>
@@ -17247,6 +17266,12 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
                 <message_argument value="OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD"/>
             </message_arguments>
         </filter>
@@ -17259,6 +17284,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP_TYPE__ENTRY_CLASS"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -18699,6 +18729,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.MapTypeImpl"/>
                 <message_argument value="MAP_TYPE_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.MapTypeImpl"/>
+                <message_argument value="entryClass"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
