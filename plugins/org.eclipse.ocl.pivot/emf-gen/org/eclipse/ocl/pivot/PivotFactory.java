@@ -48,7 +48,7 @@ extends EFactory {
 	 * @return a new object of class '<em>Class</em>'.
 	 * @generated
 	 */
-	Class createClass();
+	@NonNull Class createClass();
 
 	/**
 	 * Returns a new object of class '<em>Template Binding</em>'.
@@ -111,7 +111,7 @@ extends EFactory {
 	 * @return a new object of class '<em>Package</em>'.
 	 * @generated
 	 */
-	Package createPackage();
+	@NonNull Package createPackage();
 
 	/**
 	 * Returns a new object of class '<em>Precedence</em>'.
