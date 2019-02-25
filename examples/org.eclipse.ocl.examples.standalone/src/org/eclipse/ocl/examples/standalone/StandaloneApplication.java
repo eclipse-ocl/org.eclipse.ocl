@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
  * This class executes an OCL evaluation of a model with one or several OCL
  * file(s). This class is intended to be used only in Standalone mode. The
  * result may be saved in a XMI file or exported as a HTML report.<br>
- * 
+ *
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
@@ -40,9 +40,14 @@ public class StandaloneApplication implements IApplication
 	/** The arguments Constant. */
 	private static final String ARGS_KEY = "application.args"; //$NON-NLS-1$
 
+	public static void main(String[] args) {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		standaloneApplication.execute(args);
+	}
+
 	/** The Resource Set */
 	private OCL ocl = null;
-//	private ResourceSet resourceSet = null;
+	//	private ResourceSet resourceSet = null;
 
 	private final @NonNull StandaloneCommandAnalyzer commandAnalyzer = new StandaloneCommandAnalyzer(this);
 
@@ -61,14 +66,14 @@ public class StandaloneApplication implements IApplication
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			CompleteOCLStandaloneSetup.doSetup();
 		}
-	
+
 		// Plug the OCL validation mechanism.
-//		OCLDelegateDomain.initialize(resourceSet);
+		//		OCLDelegateDomain.initialize(resourceSet);
 	}
-	
+
 	/**
 	 * This launch the application using the entered arguments.
-	 * 
+	 *
 	 * @param args
 	 *            the application arguments.
 	 * @return the application return code.
@@ -107,7 +112,7 @@ public class StandaloneApplication implements IApplication
 	public @NonNull ResourceSet getResourceSet() {
 		return getOCL().getResourceSet();
 	}
-	
+
 	/**
 	 * Loads a file and returns The loaded resource.
 	 */
@@ -116,10 +121,10 @@ public class StandaloneApplication implements IApplication
 		if (!loadedResource.isLoaded()) {
 			return null;
 		}
-	
+
 		return loadedResource;
 	}
-	
+
 	/**
 	 * Loads a file and returns The loaded resource.
 	 */
@@ -128,13 +133,13 @@ public class StandaloneApplication implements IApplication
 		if (!loadedResource.isLoaded()) {
 			return null;
 		}
-	
+
 		return loadedResource;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
 	 * IApplicationContext)
 	 */
@@ -150,7 +155,7 @@ public class StandaloneApplication implements IApplication
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.equinox.app.IApplication#stop()
 	 */
 	@Override
