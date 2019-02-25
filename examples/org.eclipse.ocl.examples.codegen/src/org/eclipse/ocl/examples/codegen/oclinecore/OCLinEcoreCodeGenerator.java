@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
@@ -363,6 +364,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull AnyType oclAnyType;
 	protected final @NonNull PrimitiveType booleanType;
 	protected final @NonNull PrimitiveType integerType;
+	protected final @NonNull PrimitiveType stringType;
 	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery = null;
 
 	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
@@ -377,8 +379,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
 		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
-		this.integerType = standardLibrary.getIntegerType();
 		this.booleanType = standardLibrary.getBooleanType();
+		this.integerType = standardLibrary.getIntegerType();
+		this.stringType = standardLibrary.getStringType();
 		//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
@@ -437,7 +440,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return globalContext;
 	}
 
-	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery, @NonNull String qualifiedConstraintName) {
+	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {
 		OCLExpression oldBody = oldQuery.getOwnedBody();
 		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
 			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added complexity
@@ -476,6 +479,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
+		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
 		Variable asContextVariable = asHelper.createParameterVariable("context", oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
@@ -488,12 +492,12 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		//	Cache the severity in a let-variable
 		//
-		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asHelper.createStringLiteralExp(qualifiedConstraintName), "getSeverity");
+		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asHelper.createVariableExp(asConstraintNameNameVariable), "getSeverity");
 		LetVariable asSeverityVariable = asHelper.createLetVariable("severity", integerType, asSeverityVariableInit.isIsRequired(), asSeverityVariableInit);
 		//
 		//	Build from the bottom, starting with logging the status.
 		//
-		OCLExpression asLogExpression = asHelper.createOperationCallExp(asHelper.createStringLiteralExp(qualifiedConstraintName), "logDiagnostic",
+		OCLExpression asLogExpression = asHelper.createOperationCallExp(asHelper.createVariableExp(asConstraintNameNameVariable), "logDiagnostic",
 			asHelper.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
 			asHelper.createVariableExp(asDiagnosticsVariable), asHelper.createVariableExp(asContextVariable),
 			asHelper.createNullLiteralExp()/*asMessageExp*/, asHelper.createVariableExp(asSeverityVariable),

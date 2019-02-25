@@ -228,5 +228,5 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 *
 	 * Returns any previous setting.
 	 */
-	StatusCodes.@Nullable Severity setSeverity(@NonNull Object validationKey, StatusCodes.Severity severity);
+	StatusCodes.@Nullable Severity setSeverity(/*@NonNull*/ Object validationKey, StatusCodes.@Nullable Severity severity);
 }

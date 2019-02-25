@@ -90,7 +90,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 						constraintName = containerName + "::" + constraintName;
 					}
 				}
-				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery, constraintName);
+				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
 				OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.getLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();

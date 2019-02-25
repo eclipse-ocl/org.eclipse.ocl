@@ -16,7 +16,6 @@ import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateUMLTest4.MyOCL;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.osgi.util.NLS;
@@ -71,7 +70,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 	@Test public void testConstruct_if() throws Exception {
 		TestOCL ocl = createOCL();
 		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IfExp_c_c_ConditionTypeIsBoolean, "if null then 1 else 2 endif");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
 		//
 		ocl.assertQueryFalse(null, "if true then false else false endif");
 		ocl.assertQueryEquals(null, 1, "if true then 1 else 2 endif");
@@ -80,7 +79,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 4.0, "if false then 3 else 4.0 endif");
 		//
 		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IfExp_c_c_ConditionTypeIsBoolean, "if null then 1 else 2 endif");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if invalid then 1 else 2 endif");
 		//

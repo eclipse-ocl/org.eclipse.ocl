@@ -25,8 +25,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
@@ -51,6 +49,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -78,6 +77,41 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	protected void appendGlobalPrefix() {
 		js.append(getGlobalContext().getTablesClassName());
 		js.append(".");
+	}
+
+	protected @Nullable Boolean doGetSeverity(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
+		// OCL, OCL-CG has no support for EOperation litetals so the original validation check severity predicate used a magic String.
+		// Now we recognise the old-style call and re-implement as a check on the EOperation litetal that we can compute anyway.
+		CGConstraint cgConstraint = CGUtil.getContainingConstraint(cgOperationCallExp);
+		if (cgConstraint != null) {
+			Constraint asConstraint = CGUtil.getAST(cgConstraint);
+			EObject eOperation = asConstraint.getESObject();
+			CGClass cgClass = CGUtil.getContainingClass(cgConstraint);
+			if (cgClass != null) {
+				org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+				GenModelHelper genModelHelper = context.getGenModelHelper();
+				GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
+				if (genClassifier instanceof GenClass) {
+					GenClass genClass = (GenClass)genClassifier;
+					for (GenOperation genOperation : genClass.getGenOperations()) {
+						if (genOperation.getEcoreOperation() == eOperation) {
+							js.appendDeclaration(cgOperationCallExp);
+							js.append(" = ");
+							js.appendClassReference(null, CGStringGetSeverityOperation.class);
+							js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
+							js.append(JavaConstants.EXECUTOR_NAME);
+							js.append(", ");
+							js.appendClassReference(null, genClassifier.getGenPackage().getQualifiedPackageInterfaceName());
+							js.append(".Literals.");
+							js.append(genClass.getOperationID(genOperation, false));
+							js.append(");\n");
+							return Boolean.TRUE;
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public @NonNull Map<String, String> generateBodies() {
@@ -172,15 +206,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		if (cgBody.isTrue() || cgBody.isFalse()) {				// FIXME Deeper bombproof analysis
 			isBombproof = true;
 		}
-		if (!isBombproof) {
-			js.append("try {\n");  								// See Bug 543178 for design rationale
-			js.pushIndentation(null);
-		}
-		GenClassifier genClassifier = genModelHelper.getGenClassifier(asType);
-		String genClassifierName = genClassifier != null ? genClassifier.getName() : null;
-		if (genClassifierName == null) {
-			genClassifierName = "";
-		}
+		String constraintNameName = JavaConstants.CONSTRAINT_NAME_NAME; //context.getGlobalContext().getConstraintNameName();
 		String constraintName = PivotUtil.getName(asConstraint);
 		EObject eContainer = asConstraint.eContainer();
 		if (eContainer instanceof NamedElement) {
@@ -188,6 +214,22 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			if (containerName != null) {
 				constraintName = containerName + "::" + constraintName;
 			}
+		}
+		if (!isBombproof) {
+			js.append("final ");
+			js.appendClassReference(true, String.class);
+			js.append(" ");
+			js.append(constraintNameName);
+			js.append(" = ");
+			js.appendString(constraintName);
+			js.append(";\n");
+			js.append("try {\n");  								// See Bug 543178 for design rationale
+			js.pushIndentation(null);
+		}
+		GenClassifier genClassifier = genModelHelper.getGenClassifier(asType);
+		String genClassifierName = genClassifier != null ? genClassifier.getName() : null;
+		if (genClassifierName == null) {
+			genClassifierName = "";
 		}
 		js.appendCommentWithOCL(null, asConstraint);
 		js.appendLocalStatements(cgBody);
@@ -207,7 +249,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.append("return ");
 			js.appendClassReference(null, ValueUtil.class);
 			js.append(".validationFailedDiagnostic(");
-			js.appendString(constraintName);
+			js.append(constraintNameName);
 			js.append(", this, diagnostics, context, e);\n");
 			js.popIndentation();
 			js.append("}\n");
@@ -253,48 +295,12 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	}
 
 	@Override
-	public @NonNull Boolean visitCGEcoreOperationCallExp(
-			@NonNull CGEcoreOperationCallExp cgOperationCallExp) {
-		// TODO Auto-generated method stub
-		return super.visitCGEcoreOperationCallExp(cgOperationCallExp);
-	}
-
-	@Override
-	public @NonNull Boolean visitCGExecutorOperationCallExp(
-			@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
-		// TODO Auto-generated method stub
-		return super.visitCGExecutorOperationCallExp(cgOperationCallExp);
-	}
-
-	@Override
 	public @NonNull Boolean visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
-		if (cgOperationCallExp.getLibraryOperation() == CGStringGetSeverityOperation.INSTANCE) {
-			// OCL, OCL-CG has no support for EOperation litetals so the original validation check severity predicate used a magic String.
-			// Now we recognise the old-style call and re-implement as a check on the EOperation litetal that we can compute anyway.
-			CGConstraint cgConstraint = CGUtil.getContainingConstraint(cgOperationCallExp);
-			if (cgConstraint != null) {
-				Constraint asConstraint = CGUtil.getAST(cgConstraint);
-				CGClass cgClass = CGUtil.getContainingClass(cgConstraint);
-				if (cgClass != null) {
-					GenModelHelper genModelHelper = context.getGenModelHelper();
-					GenOperation genOperation = genModelHelper.getGenOperation(asConstraint);
-					if (genOperation != null) {
-						GenClass genClass = genOperation.getGenClass();
-						String name = genClass.getOperationID(genOperation, false);
-
-						js.appendDeclaration(cgOperationCallExp);
-						js.append(" = ");
-						js.appendClassReference(null, CGStringGetSeverityOperation.class);
-						js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
-						js.append(JavaConstants.EXECUTOR_NAME);
-						js.append(", ");
-						js.appendClassReference(null, genClass.getGenPackage().getQualifiedPackageInterfaceName());
-						js.append(".Literals.");
-						js.append(name);
-						js.append(");\n");
-						return true;
-					}
-				}
+		LibraryOperation libraryOperation = cgOperationCallExp.getLibraryOperation();
+		if (libraryOperation == CGStringGetSeverityOperation.INSTANCE) {
+			Boolean flowContinues = doGetSeverity(cgOperationCallExp);
+			if (flowContinues != null) {
+				return flowContinues;
 			}
 		}
 		return super.visitCGLibraryOperationCallExp(cgOperationCallExp);

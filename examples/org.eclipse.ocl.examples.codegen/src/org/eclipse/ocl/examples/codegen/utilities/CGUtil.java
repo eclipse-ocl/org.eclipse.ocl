@@ -169,6 +169,10 @@ public class CGUtil
 		return cgParameter;
 	}
 
+	public static org.eclipse.ocl.pivot.@NonNull Class getAST(@NonNull CGClass cgClass) {
+		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)cgClass.getAst());
+	}
+
 	public static @NonNull Constraint getAST(@NonNull CGConstraint cgConstraint) {
 		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
 	}

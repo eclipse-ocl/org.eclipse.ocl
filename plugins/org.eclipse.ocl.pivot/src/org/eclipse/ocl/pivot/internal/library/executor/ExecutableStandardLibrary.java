@@ -15,11 +15,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
@@ -45,9 +42,7 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
-import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -86,22 +81,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
 	protected @NonNull HashMap<@Nullable Object, StatusCodes.@Nullable Severity> createValidationKey2severityMap() {
-		HashMap<@Nullable Object, StatusCodes.@Nullable Severity> map = new HashMap<>();
-		Set<Entry<String, EnumeratedOption<Severity>>> entrySet1 = PivotValidationOptions.safeValidationName2severityOption.entrySet();
-		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet1) {
-			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
-			if (value != null) {
-				map.put(entry.getKey(), value.getDefaultValue());
-			}
-		}
-		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.safeValidationOperation2severityOption.entrySet();
-		for (Map.Entry<EOperation, EnumeratedOption<StatusCodes.Severity>> entry : entrySet2) {
-			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
-			if (value != null) {
-				map.put(entry.getKey(), value.getDefaultValue());
-			}
-		}
-		return map;
+		return PivotValidationOptions.createValidationKey2severityMap();
 	}
 
 	@Override

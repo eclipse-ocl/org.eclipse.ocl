@@ -699,7 +699,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Property property = ((OCLSettingDelegate) settingDelegate).getProperty();
 		String objectLabel = LabelUtil.getLabel(property);
 		getWithException(testEObject, "attributeEvaluatingToWrongType",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, objectLabel));
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", objectLabel));
 		//			ClassUtil.bind(OCLMessages.InitOrDerConstraintConformance_ERROR_, "String", "attributeEvaluatingToWrongType", "Boolean"));
 	}
 
@@ -999,7 +999,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Operation operation = ((OCLInvocationDelegate) invocationDelegate).getOperation();
 		String objectLabel = LabelUtil.getLabel(operation);
 		invokeWithException(badClassInstance, "operationEvaluatingToWrongType",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Operation_c_c_CompatibleReturn, objectLabel));
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", objectLabel));
 		//			OCLMessages.BodyConditionConformance_ERROR_, "operationEvaluatingToWrongType", "Integer", "Boolean");
 	}
 

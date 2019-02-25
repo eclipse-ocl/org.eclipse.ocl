@@ -744,7 +744,7 @@ public class MultiValidationJob extends Job
 				return null;
 			}
 			List<@NonNull URL> urlList = new ArrayList<>();
-			for (@NonNull String classPathEntry : defaultRuntimeClassPath) {
+			for (String classPathEntry : defaultRuntimeClassPath) {
 				IPath classPathEntryPath = new Path(classPathEntry);
 				java.net.URI classPathEntryURI = classPathEntryPath.toFile().toURI();
 				try {

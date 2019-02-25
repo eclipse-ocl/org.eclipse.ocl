@@ -165,9 +165,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
 		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, "op->any(p : Package[1] | p.name.=('bob'))");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "op->any(p : Package[1] | p.name.=('bob'))");
 		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package | p.name = 'bob')",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, "p.name");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::UnsafeSourceCanNotBeNull", "p.name");
 
 		// shorter form
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p | p?.name = 'bob')");

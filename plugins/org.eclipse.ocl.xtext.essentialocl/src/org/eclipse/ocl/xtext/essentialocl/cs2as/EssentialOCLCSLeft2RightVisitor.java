@@ -1995,6 +1995,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asKey instanceof NullLiteralExp) {
 							keysAreNullFree = false;
 						}
+						@SuppressWarnings("deprecation")
 						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asKey);
 						if (!flowAnalysis.isNonNull(asKey)) {
 							keysAreNullFree = false;
@@ -2016,6 +2017,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asValue instanceof NullLiteralExp) {
 							valuesAreNullFree = false;
 						}
+						@SuppressWarnings("deprecation")
 						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asValue);
 						if (!flowAnalysis.isNonNull(asValue)) {
 							valuesAreNullFree = false;

@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -534,7 +533,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Fruit::name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Apple::name");
 		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant, "self.name");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::NonStaticSourceTypeIsConformant", "self.name");
 		//
 		ocl.assertQueryFalse(redApple, "self.color = Color::green");
 		ocl.assertQueryTrue(redApple, "self.color = Color::red");

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
@@ -85,8 +83,6 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
-import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -514,22 +510,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {
-		HashMap<Object, StatusCodes.Severity> map = new HashMap<Object, StatusCodes.Severity>();
-		Set<Entry<String, EnumeratedOption<Severity>>> entrySet1 = PivotValidationOptions.safeValidationName2severityOption.entrySet();
-		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet1) {
-			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
-			if (value != null) {
-				map.put(entry.getKey(), getValue(value));
-			}
-		}
-		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.safeValidationOperation2severityOption.entrySet();
-		for (Map.Entry<EOperation, EnumeratedOption<StatusCodes.Severity>> entry : entrySet2) {
-			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
-			if (value != null) {
-				map.put(entry.getKey(), getValue(value));
-			}
-		}
-		return map;
+		return PivotValidationOptions.createValidationKey2severityMap();
 	}
 
 	@Override
@@ -894,11 +875,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity) {
-		for (String key : PivotValidationOptions.safeValidationName2severityOption.keySet()) {
-			if (key != null) {
-				setSeverity(key, severity);
-			}
-		}
 		for (EOperation key : PivotValidationOptions.safeValidationOperation2severityOption.keySet()) {
 			if (key != null) {
 				setSeverity(key, severity);
@@ -907,7 +883,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public synchronized StatusCodes.@Nullable Severity setSeverity(@NonNull Object validationKey, StatusCodes.Severity severity) {
+	public synchronized StatusCodes.@Nullable Severity setSeverity(/*@NonNull*/ Object validationKey, StatusCodes.@Nullable Severity severity) {
 		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationKey2severity;
 		if (validationKey2severity2 == null) {
 			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();

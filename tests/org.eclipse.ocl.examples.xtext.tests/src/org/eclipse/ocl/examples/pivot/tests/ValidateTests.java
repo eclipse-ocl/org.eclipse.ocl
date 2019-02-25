@@ -38,7 +38,6 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
@@ -191,7 +190,7 @@ public class ValidateTests extends AbstractValidateTests
 		createOCLinEcoreFile("Bug418552.oclinecore", testDocument);
 		OCL ocl1 = createOCL();
 		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552", getMessages(
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, "temp::Tester::total")));
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", "temp::Tester::total")));
 		Object property = diagnostics.get(0).getData().get(0);
 		assert property != null;
 		assertEquals(PivotPackage.Literals.PROPERTY, ((EObject)property).eClass());
