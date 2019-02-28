@@ -75,6 +75,10 @@ public class OCL
 	/**
 	 * Creates a new <code>OCL</code> with a new heavyweight ProjectManager and a new
 	 * ResourceSet for loaded models.
+	 *
+	 * Beware: this makes OCL responsible for cleaning up the ResourceSet in dispose, which results
+	 * in unloading of all Resources. EMF Resource unloading can be very costly and is often totally
+	 * unnecessary. These costs can be avoided by passing a ResourceSet to OCL.
 	 */
 	public static @NonNull OCL newInstance() {
 		return OCLInternal.newInstance();
@@ -83,6 +87,10 @@ public class OCL
 	/**
 	 * Creates a new <code>OCL</code> using the specified ProjectManager and a new
 	 * ResourceSet for loaded models.
+	 *
+	 * Beware: this makes OCL responsible for cleaning up the ResourceSet in dispose, which results
+	 * in unloading of all Resources. EMF Resource unloading can be very costly and is often totally
+	 * unnecessary. These costs can be avoided by passing a ResourceSet to OCL.
 	 */
 	public static @NonNull OCL newInstance(@NonNull ProjectManager projectManager) {
 		return OCLInternal.newInstance(projectManager, null);
