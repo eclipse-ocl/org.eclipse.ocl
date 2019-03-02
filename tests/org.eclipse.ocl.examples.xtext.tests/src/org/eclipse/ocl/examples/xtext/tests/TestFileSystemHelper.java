@@ -30,12 +30,16 @@ public class TestFileSystemHelper
 
 	protected void appendNatures(@NonNull Writer s) throws IOException {}
 
-	public @Nullable File createDotClasspathFile(@NonNull File bundleFolder, @NonNull String projectName) {
+	public @Nullable File createBuildDotProperties(@NonNull File projectFolder, @NonNull String projectName) {
 		return null;
 	}
 
-	public @NonNull File createDotProjectFile(@NonNull File bundleFolder, @NonNull String projectName) {
-		File file = new File(bundleFolder, ".project");
+	public @Nullable File createDotClasspathFile(@NonNull File projectFolder, @NonNull String projectName) {
+		return null;
+	}
+
+	public @NonNull File createDotProjectFile(@NonNull File projectFolder, @NonNull String projectName) {
+		File file = new File(projectFolder, ".project");
 		Writer s;
 		try {
 			s = new FileWriter(file);
@@ -64,7 +68,7 @@ public class TestFileSystemHelper
 		return file;
 	}
 
-	public @Nullable File createManifestFile(@NonNull File bundleFolder, @NonNull String projectName) {
+	public @Nullable File createManifestFile(@NonNull File projectFolder, @NonNull String projectName) {
 		return null;
 	}
 

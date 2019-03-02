@@ -220,23 +220,24 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		JUnitStandaloneTestProject testProject = projectName2testProject.get(projectName);
 		if (testProject == null) {
 			URI newUri = URI.createPlatformResourceURI(projectName, true);
-			File newFile = new File(projectName).getAbsoluteFile();
+			File projectFolder = new File(projectName).getAbsoluteFile();
 			if (cleanProject) {
-				if (newFile.exists()) {
-					TestUtil.deleteDirectory(newFile);
+				if (projectFolder.exists()) {
+					TestUtil.deleteDirectory(projectFolder);
 				}
-				newFile.mkdirs();
-				File settingsFolder = new File(newFile, ".settings");
+				projectFolder.mkdirs();
+				File settingsFolder = new File(projectFolder, ".settings");
 				settingsFolder.mkdir();
 				File resourcesFile = new File(settingsFolder, "org.eclipse.core.resources.prefs");
 				helper.createFile(resourcesFile, getResourcesPreferenceContents());
 				File runtimeFile = new File(settingsFolder, "org.eclipse.core.runtime.prefs");
 				helper.createFile(runtimeFile, getRuntimePreferenceContents());
-				File dotProjectFile = new File(newFile, ".project");
+				File dotProjectFile = new File(projectFolder, ".project");
 				if (!dotProjectFile.exists()) {
-					helper.createDotProjectFile(newFile, projectName);
-					helper.createDotClasspathFile(newFile, projectName);
-					helper.createManifestFile(newFile, projectName);
+					helper.createDotProjectFile(projectFolder, projectName);
+					helper.createDotClasspathFile(projectFolder, projectName);
+					helper.createManifestFile(projectFolder, projectName);
+					helper.createBuildDotProperties(projectFolder, projectName);
 				}
 				/*			URI location = projectMap.getLocation(projectName);
 				if (location == null) {
@@ -247,7 +248,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 					EcorePlugin.getPlatformResourceMap().put(projectName, location);
 				} */
 			}
-			testProject = new JUnitStandaloneTestProject(newUri, newFile);
+			testProject = new JUnitStandaloneTestProject(newUri, projectFolder);
 			projectName2testProject.put(projectName, testProject);
 		}
 		return testProject;
