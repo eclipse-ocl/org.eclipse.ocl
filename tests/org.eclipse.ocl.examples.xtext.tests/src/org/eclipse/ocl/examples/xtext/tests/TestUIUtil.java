@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Willink Transformations and others.
+ * Copyright (c) 2015, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -27,15 +27,16 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.internal.ui.DebugUIPlugin;
@@ -43,6 +44,7 @@ import org.eclipse.debug.internal.ui.IInternalDebugUIConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbench;
@@ -198,26 +200,45 @@ public class TestUIUtil
 		}
 	}
 
-	public static void waitForLaunchToTerminate(@NonNull ILaunch launch) throws InterruptedException, DebugException {
+	public static @Nullable List<@NonNull IStatus> waitForLaunchToTerminate(@NonNull ILaunch launch) throws InterruptedException, DebugException {
 		while (true) {
 			for (int i = 0; i < 10; i++){
 				TestUIUtil.flushEvents();
 				Thread.sleep(100);
 			}
-			boolean allDead = true;
-			for (IDebugTarget debugTarget : launch.getDebugTargets()) {
+			boolean allTerminated = true;
+			List<@NonNull IStatus> allResults = null;
+		/*	for (IDebugTarget debugTarget : launch.getDebugTargets()) {
 				IProcess process = debugTarget.getProcess();
 				if (!process.isTerminated()) {
 					allDead = false;
 				}
 				for (IThread debugThread : debugTarget.getThreads()) {
 					if (!debugThread.isTerminated()) {
-						allDead = false;
+						allTerminated = false;
+					}
+				}
+			} */
+			for (IProcess process : launch.getProcesses()) {
+				if (!process.isTerminated()) {
+					allTerminated = false;
+				}
+				else {
+					if (allResults == null) {
+						allResults = new ArrayList<>();
+					}
+					if (process instanceof Job) {
+						IStatus result = ((Job)process).getResult();
+						assert result != null;		// isTerminated() => non-null result
+						allResults.add(result);
+					}
+					else {
+						allResults.add(new Status(process.getExitValue(), null, null));
 					}
 				}
 			}
-			if (allDead) {
-				break;
+			if (allTerminated) {
+				return allResults;
 			}
 		}
 	}
