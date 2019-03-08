@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.xtext.tests;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -274,19 +275,22 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					if (!project.exists()) {
 						project.create(null);
 					}
+					File projectFolder = new File(project.getLocation().toString());
+					File settingsFolder = new File(projectFolder, ".settings");
+					settingsFolder.mkdir();
+					FileWriter resourcesFile = new FileWriter(new File(settingsFolder, "org.eclipse.core.resources.prefs"));
+					resourcesFile.write(getResourcesPreferenceContents());
+					resourcesFile.close();
+					FileWriter runtimeFile = new FileWriter(new File(settingsFolder, "org.eclipse.core.runtime.prefs"));
+					runtimeFile.write(getRuntimePreferenceContents());
+					runtimeFile.close();
+					helper.createDotProjectFile(projectFolder, projectName);
+					helper.createDotClasspathFile(projectFolder, projectName);
+					helper.createManifestFile(projectFolder, projectName);
+					helper.createBuildDotProperties(projectFolder, projectName);
 					if (!project.isOpen()) {
 						project.open(null);
 					}
-					IFolder settingsFolder = project.getFolder(".settings");
-					settingsFolder.create(true, true, null);
-					IFile resourcesFile = settingsFolder.getFile("org.eclipse.core.resources.prefs");
-					String resourcesContents = getResourcesPreferenceContents();
-					InputStream resourcesStream = new URIConverter.ReadableInputStream(resourcesContents, "UTF-8");
-					resourcesFile.create(resourcesStream, true, null);
-					IFile runtimeFile = settingsFolder.getFile("org.eclipse.core.runtime.prefs");
-					String runtimeContents = getRuntimePreferenceContents();
-					InputStream runtimeStream = new URIConverter.ReadableInputStream(runtimeContents, "UTF-8");
-					runtimeFile.create(runtimeStream, true, null);
 					IProjectDescription projectDescription = project.getDescription();
 					if (projectDescription != null) {
 						projectDescription = helper.updateProjectDescription(projectDescription);
@@ -296,6 +300,8 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					}
 					project.refreshLocal(IResource.DEPTH_INFINITE, null);
 					TestUIUtil.flushEvents();
+				} catch (IOException e) {
+					throw new WrappedException(e);
 				} catch (CoreException e) {
 					throw new WrappedException(e);
 				}
