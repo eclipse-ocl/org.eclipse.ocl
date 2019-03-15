@@ -79,29 +79,31 @@ public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValida
 	protected boolean validateDetail(EAnnotation eAnnotation, EModelElement eModelElement, Entry<String, String> entry,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		String importURI = entry.getValue();
-		ResourceSet resourceSet = null;
-		EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eModelElement);
-		if (environmentFactory != null) {
-			resourceSet = environmentFactory.getResourceSet();
-		}
-		EPackage.Registry packageRegistry = resourceSet != null ? resourceSet.getPackageRegistry() : EPackage.Registry.INSTANCE;
-		Object registeredPackage = packageRegistry.getEPackage(importURI);
-		if (registeredPackage != null) {
-			return true;
-		}
-		URIConverter uriConverter = resourceSet != null ? resourceSet.getURIConverter() : URIConverter.INSTANCE;
-		URI uri = URI.createURI(importURI);
-		if (eModelElement != null) {
-			Resource eResource = ((EObject)eModelElement).eResource();
-			if (eResource != null) {
-				URI uri2 = eResource.getURI();
-				if ((uri2 != null) && !uri2.isRelative()) {
-					uri = uri.resolve(uri2);
+		if (importURI != null) {
+			ResourceSet resourceSet = null;
+			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eModelElement);
+			if (environmentFactory != null) {
+				resourceSet = environmentFactory.getResourceSet();
+			}
+			EPackage.Registry packageRegistry = resourceSet != null ? resourceSet.getPackageRegistry() : EPackage.Registry.INSTANCE;
+			Object registeredPackage = packageRegistry.getEPackage(importURI);
+			if (registeredPackage != null) {
+				return true;
+			}
+			URIConverter uriConverter = resourceSet != null ? resourceSet.getURIConverter() : URIConverter.INSTANCE;
+			URI uri = URI.createURI(importURI);
+			if (eModelElement != null) {
+				Resource eResource = ((EObject)eModelElement).eResource();
+				if (eResource != null) {
+					URI uri2 = eResource.getURI();
+					if ((uri2 != null) && !uri2.isRelative()) {
+						uri = uri.resolve(uri2);
+					}
 				}
 			}
-		}
-		if (uriConverter.exists(uri.trimFragment(), null)) {
-			return true;
+			if (uriConverter.exists(uri.trimFragment(), null)) {
+				return true;
+			}
 		}
 		if (diagnostics != null) {
 			diagnostics.add
