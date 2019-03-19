@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.releng.build"
       label="OCL Build Site"
-      version="6.7.0.qualifier"
+      version="6.8.0.qualifier"
       provider-name="Eclipse OCL"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
