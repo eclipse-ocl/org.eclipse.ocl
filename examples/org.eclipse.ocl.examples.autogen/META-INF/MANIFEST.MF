@@ -8,11 +8,13 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
- org.eclipse.ocl.examples.codegen;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
+ org.eclipse.ocl.examples.codegen;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
+ org.eclipse.xtext.generator;bundle-version="[2.14.0,3.0.0)",
+ org.eclipse.ocl.examples.build;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.ocl.xtext.completeocl;bundle-version="1.8.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ocl.examples.autogen,
  org.eclipse.ocl.examples.autogen.java,
- org.eclipse.ocl.examples.autogen.lookup,
- org.eclipse.ocl.examples.autogen.utilities
+ org.eclipse.ocl.examples.autogen.lookup
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Automatic-Module-Name: org.eclipse.ocl.examples.autogen

@@ -16,7 +16,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.autogen.utilities.GenPackageHelper;
+import org.eclipse.ocl.examples.build.utilities.GenPackageHelper;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 /**

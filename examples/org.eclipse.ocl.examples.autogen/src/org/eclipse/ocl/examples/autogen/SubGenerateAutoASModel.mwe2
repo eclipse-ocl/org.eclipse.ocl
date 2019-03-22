@@ -14,7 +14,7 @@ module SubGenerateAutoASModel
 
 import org.eclipse.ocl.examples.build.utilities.GenerateModel
 import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors
-import org.eclipse.ocl.examples.build.xtend.GenerateAutoLookupInfrastructureXtend 
+import org.eclipse.ocl.examples.autogen.xtend.GenerateAutoLookupInfrastructureXtend 
 import org.eclipse.emf.ecore.resource.ResourceSet
 
 /**
