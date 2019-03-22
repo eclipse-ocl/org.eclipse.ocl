@@ -22,7 +22,7 @@
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20190219190953/repository"/>
+    <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository"/>
   </location>
 </locations>
 </target>
