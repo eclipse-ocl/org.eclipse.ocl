@@ -21,9 +21,13 @@ Bundle-Localization: plugin
 Import-Package: org.apache.commons.lang,
  org.apache.log4j;version="[1.2.15,2.0.0)"
 Export-Package: org.eclipse.ocl.examples.emf.validation.validity.ui.actions,
+ org.eclipse.ocl.examples.emf.validation.validity.ui.filters,
  org.eclipse.ocl.examples.emf.validation.validity.ui.locator,
  org.eclipse.ocl.examples.emf.validation.validity.ui.markers,
+ org.eclipse.ocl.examples.emf.validation.validity.ui.messages,
  org.eclipse.ocl.examples.emf.validation.validity.ui.plugin,
- org.eclipse.ocl.examples.emf.validation.validity.ui.ripoffs,
- org.eclipse.ocl.examples.emf.validation.validity.ui.view
+ org.eclipse.ocl.examples.emf.validation.validity.ui.providers,
+ org.eclipse.ocl.examples.emf.validation.validity.ui.ripoffs;x-internal:=true,
+ org.eclipse.ocl.examples.emf.validation.validity.ui.view,
+ org.eclipse.ocl.examples.emf.validation.validity.ui.wizards
 Automatic-Module-Name: org.eclipse.ocl.examples.emf.validation.validity.ui

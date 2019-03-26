@@ -7,3 +7,4 @@ Bundle-Version: 1.8.0.qualifier
 Require-Bundle: org.eclipse.ocl.pivot
 Automatic-Module-Name: org.eclipse.ocl.examples.project.completeocltutorial
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: .;x-internal:=true

@@ -6,7 +6,13 @@ Bundle-Version: 3.10.300.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.ocl.ecore.helper.tests,
+Export-Package: company;x-internal:=true,
+ company.impl;x-internal:=true,
+ company.util;x-internal:=true,
+ noreflectioncompany;x-internal:=true,
+ noreflectioncompany.impl;x-internal:=true,
+ noreflectioncompany.util;x-internal:=true,
+ org.eclipse.ocl.ecore.helper.tests,
  org.eclipse.ocl.ecore.tests,
  org.eclipse.ocl.ecore.tests.extlibrary,
  org.eclipse.ocl.ecore.tests.extlibrary.impl,

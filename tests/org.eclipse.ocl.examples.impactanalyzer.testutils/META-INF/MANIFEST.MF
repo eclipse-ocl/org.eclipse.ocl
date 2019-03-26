@@ -15,6 +15,8 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.ocl.examples.testutils
 Export-Package: org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.model,
  org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.notifications,
+ org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.notifications.fixtures.eventtraces;x-internal:=true,
+ org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.notifications.fixtures.models;x-internal:=true,
  org.eclipse.ocl.examples.impactanalyzer.benchmark.preparation.ocl,
  org.eclipse.ocl.examples.impactanalyzer.testutils
 Automatic-Module-Name: org.eclipse.ocl.examples.impactanalyzer.testutils

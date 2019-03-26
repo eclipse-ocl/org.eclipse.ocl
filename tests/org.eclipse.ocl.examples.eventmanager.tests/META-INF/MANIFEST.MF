@@ -7,7 +7,10 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.ocl.examples.eventmanager.tests
+Export-Package: org.eclipse.ocl.examples.eventmanager.tests,
+ org.eclipse.ocl.examples.eventmanager.tests.filters;x-internal:=true,
+ org.eclipse.ocl.examples.eventmanager.tests.framework;x-internal:=true,
+ org.eclipse.ocl.examples.eventmanager.tests.util;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;resolution:=optional,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,

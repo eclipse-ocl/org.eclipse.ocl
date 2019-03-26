@@ -15,10 +15,13 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.xtext.oclstdlib.ui,
  org.eclipse.ocl.xtext.oclstdlib.ui.contentassist,
  org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.antlr,
+ org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.antlr.internal;x-internal:=true,
  org.eclipse.ocl.xtext.oclstdlib.ui.internal,
  org.eclipse.ocl.xtext.oclstdlib.ui.labeling,
+ org.eclipse.ocl.xtext.oclstdlib.ui.messages,
  org.eclipse.ocl.xtext.oclstdlib.ui.outline,
  org.eclipse.ocl.xtext.oclstdlib.ui.quickfix,
+ org.eclipse.ocl.xtext.oclstdlib.ui.refactoring,
  org.eclipse.ocl.xtext.oclstdlib.ui.wizards
 Bundle-Activator: org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator
 Automatic-Module-Name: org.eclipse.ocl.xtext.oclstdlib.ui

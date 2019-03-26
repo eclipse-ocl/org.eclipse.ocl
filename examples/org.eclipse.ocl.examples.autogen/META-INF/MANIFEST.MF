@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ocl.examples.autogen,
  org.eclipse.ocl.examples.autogen.java,
- org.eclipse.ocl.examples.autogen.lookup
+ org.eclipse.ocl.examples.autogen.lookup,
+ org.eclipse.ocl.examples.autogen.xtend
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Automatic-Module-Name: org.eclipse.ocl.examples.autogen

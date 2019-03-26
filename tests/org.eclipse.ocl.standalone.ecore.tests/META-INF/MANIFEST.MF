@@ -6,7 +6,9 @@ Bundle-Version: 6.8.0.qualifier
 Automatic-Module-Name: org.eclipse.ocl.standalone.ecore.tests
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Localization: plugin
-Export-Package: org.eclipse.ocl.standalone.ecore.tests,
- org.osgi.framework;version="1.7.0"
+Export-Package: org.eclipse.ocl.standalone.ecore.tests;x-internal:=true,
+ org.eclipse.osgi;x-internal:=true,
+ org.eclipse.osgi.util;x-internal:=true,
+ org.osgi.framework;version="1.7.0";x-internal:=true
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.ocl.ecore.tests

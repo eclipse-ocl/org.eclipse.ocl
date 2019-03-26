@@ -13,7 +13,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.xtext.markup.ui,
  org.eclipse.ocl.xtext.markup.ui.contentassist,
  org.eclipse.ocl.xtext.markup.ui.contentassist.antlr,
+ org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal;x-internal:=true,
  org.eclipse.ocl.xtext.markup.ui.hover,
+ org.eclipse.ocl.xtext.markup.ui.internal,
  org.eclipse.ocl.xtext.markup.ui.labeling,
  org.eclipse.ocl.xtext.markup.ui.outline,
  org.eclipse.ocl.xtext.markup.ui.quickfix

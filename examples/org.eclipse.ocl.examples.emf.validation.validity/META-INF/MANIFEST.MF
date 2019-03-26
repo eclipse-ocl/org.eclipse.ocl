@@ -18,6 +18,7 @@ Export-Package: org.eclipse.ocl.examples.emf.validation.validity,
  org.eclipse.ocl.examples.emf.validation.validity.locator,
  org.eclipse.ocl.examples.emf.validation.validity.manager,
  org.eclipse.ocl.examples.emf.validation.validity.messages,
+ org.eclipse.ocl.examples.emf.validation.validity.plugin,
  org.eclipse.ocl.examples.emf.validation.validity.util,
  org.eclipse.ocl.examples.emf.validation.validity.utilities
 Bundle-ActivationPolicy: lazy
