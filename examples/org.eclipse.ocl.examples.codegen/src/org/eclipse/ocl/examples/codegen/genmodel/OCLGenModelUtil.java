@@ -154,12 +154,23 @@ public abstract class OCLGenModelUtil
 		String listConstructor = genClass.getListConstructor(genFeature);
 		String f0 = genClass.getQualifiedFeatureID(genFeature);
 		String f2 = getQualifiedFeatureValue(genClass, genFeature);
-		listConstructor = listConstructor.replaceAll(f0, f2);
+		String r0 = null;
+		String r2 = null;
 		GenFeature reverseFeature = genFeature.getReverse();
 		if (reverseFeature != null) {
 			GenClass reverseGenClass = reverseFeature.getGenClass();
-			String r0 = reverseGenClass.getQualifiedFeatureID(reverseFeature);
-			String r2 = getQualifiedFeatureValue(reverseGenClass, reverseFeature);
+			r0 = reverseGenClass.getQualifiedFeatureID(reverseFeature);
+			r2 = getQualifiedFeatureValue(reverseGenClass, reverseFeature);
+		}
+		if (r0 == null) {
+			listConstructor = listConstructor.replaceAll(f0, f2);
+		}
+		else if (r0.length() > f0.length()) {
+			listConstructor = listConstructor.replaceAll(r0, r2);
+			listConstructor = listConstructor.replaceAll(f0, f2);
+		}
+		else {
+			listConstructor = listConstructor.replaceAll(f0, f2);
 			listConstructor = listConstructor.replaceAll(r0, r2);
 		}
 		return listConstructor;
