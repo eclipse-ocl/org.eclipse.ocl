@@ -131,7 +131,7 @@ public abstract class OCLGenModelUtil
 	public static String getFeatureCountValue(GenClass genClass)
 	{
 		GenClass base = genClass.getBaseGenClass();
-		if (base == null)
+		if ((base == null) || base.isInterface())
 		{
 			return Integer.toString(genClass.getFeatureCount());
 		}
@@ -168,7 +168,7 @@ public abstract class OCLGenModelUtil
 	public static String getOperationCountValue(GenClass genClass)
 	{
 		GenClass base = genClass.getBaseGenClass();
-		if (base == null)
+		if ((base == null) || base.isInterface())
 		{
 			return Integer.toString(genClass.getOperationCount());
 		}
@@ -193,7 +193,7 @@ public abstract class OCLGenModelUtil
 		}
 
 		int baseCount = base.getFeatureCount();
-		if (i < baseCount)
+		if ((i < baseCount) || base.isInterface())
 		{
 			return Integer.toString(i);
 		}
@@ -222,7 +222,7 @@ public abstract class OCLGenModelUtil
 		}
 
 		int baseCount = base.getOperationCount();
-		if (i < baseCount)
+		if ((i < baseCount) || base.isInterface())
 		{
 			return Integer.toString(i);
 		}
