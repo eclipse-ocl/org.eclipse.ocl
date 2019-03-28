@@ -283,15 +283,17 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 		private @NonNull EClass typeFilter;
 		private @Nullable «projectPrefix»LookupFilter expFilter;
 		
-		public «className»(@NonNull Executor executor, @NonNull EClass typeFilter, @NonNull String name,  @Nullable «projectPrefix»LookupFilter expFilter) {
+		public «className»(@NonNull Executor executor, /*@NonNull*/ EClass typeFilter, /*@NonNull*/ String name,  @Nullable «projectPrefix»LookupFilter expFilter) {
+			assert typeFilter != null;
+			assert name != null;
 			this.executor = executor;
 			this.name = name;
 			this.typeFilter = typeFilter;
 			this.expFilter = expFilter;
 		}
 	
-		public «className»(@NonNull Executor executor, @NonNull EClass typeFilter, @NonNull String name) {
-			this(executor,typeFilter, name, null);
+		public «className»(@NonNull Executor executor, /*@NonNull*/ EClass typeFilter, /*@NonNull*/ String name) {
+			this(executor, typeFilter, name, null);
 		}
 		
 		@Override

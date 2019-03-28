@@ -166,12 +166,10 @@ public abstract class OCLGenModelUtil
 			listConstructor = listConstructor.replaceAll(f0, f2);
 		}
 		else if (r0.length() > f0.length()) {
-			listConstructor = listConstructor.replaceAll(r0, r2);
-			listConstructor = listConstructor.replaceAll(f0, f2);
+			listConstructor = listConstructor.replaceAll(r0, r2).replaceAll(f0, f2);
 		}
 		else {
-			listConstructor = listConstructor.replaceAll(f0, f2);
-			listConstructor = listConstructor.replaceAll(r0, r2);
+			listConstructor = listConstructor.replaceAll(f0, f2).replaceAll(r0, r2);
 		}
 		return listConstructor;
 	}
