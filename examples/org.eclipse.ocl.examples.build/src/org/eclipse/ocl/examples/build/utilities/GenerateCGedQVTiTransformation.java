@@ -85,7 +85,7 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 			parametersMap.put("debug", debug);
 			//
 			LOG.info("Transforming " + oclFileURI + " to " + javaFolder + javaPackage);
-			throw new UnsupportedOperationException("Not available in Oxygen");
+			throw new UnsupportedOperationException("Not yet available from OCL; use the QVTd version");
 			//			tx.execute(ClassUtil.nonNullState(resourceSet), modelMap, parametersMap);
 			//		} catch (TransformationException e) {
 			//			issues.addError(this, e.getMessage(), null, e.getCause(), null);
