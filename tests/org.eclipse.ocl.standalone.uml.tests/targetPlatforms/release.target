@@ -7,8 +7,8 @@
     <unit id="org.eclipse.emf.mapping.ecore2xml" version="0.0.0"/>
     <unit id="org.hamcrest.core" version="0.0.0"/>
     <unit id="org.junit" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/releases/latest"/>
-    <repository location="http://download.eclipse.org/staging/2018-12"/>
+    <repository location="https://download.eclipse.org/releases/latest"/>
+    <repository location="https://download.eclipse.org/staging/2018-12"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="org.eclipse.uml2.common" version="0.0.0"/>
@@ -16,7 +16,7 @@
     <unit id="org.eclipse.uml2.uml" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.profile.standard" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.resources" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
+    <repository location="https://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>
@@ -25,7 +25,7 @@
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases"/>
+    <repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases"/>
   </location>
 </locations>
 </target>

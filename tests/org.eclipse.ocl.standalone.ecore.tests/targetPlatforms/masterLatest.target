@@ -6,8 +6,8 @@
     <unit id="org.eclipse.emf.ecore.xmi" version="0.0.0"/>
     <unit id="org.hamcrest.core" version="0.0.0"/>
     <unit id="org.junit" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/releases/latest"/>
-    <repository location="http://download.eclipse.org/staging/2018-12"/>
+    <repository location="https://download.eclipse.org/releases/latest"/>
+    <repository location="https://download.eclipse.org/staging/2018-12"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>

@@ -6,21 +6,21 @@
     <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/releases/photon"/>
+    <repository location="https://download.eclipse.org/releases/photon"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
+    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/cbi/updates/license"/>
+    <repository location="https://download.eclipse.org/cbi/updates/license"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
+    <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
   </location>
 </locations>
 </target>
