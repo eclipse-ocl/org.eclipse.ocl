@@ -154,4 +154,9 @@ public final class TracingOption implements Appendable
 		this.state = state;
 		resolved = true;
 	}
+
+	@Override
+	public String toString() {
+		return option + "=" + state;
+	}
 }
