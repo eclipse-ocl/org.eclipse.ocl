@@ -116,6 +116,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.SquareBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 
 import com.google.common.collect.Iterables;
@@ -896,12 +897,15 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 
 	@Override
 	public @Nullable ElementCS visitTypeExp(@NonNull TypeExp asTypeExp) {
-		NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
+/*		NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
 		PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
 		csNameExp.setOwnedPathName(csPathName);
 		Type asType = getNonNullType(asTypeExp.getReferredType());
 		context.refreshPathName(csPathName, asType, null);
-		return csNameExp;
+		return csNameExp; */
+		TypeLiteralExpCS csTypeLiteralExp = EssentialOCLCSFactory.eINSTANCE.createTypeLiteralExpCS();
+		csTypeLiteralExp.setOwnedType(createTypeRefCS(asTypeExp.getReferredType()));
+		return csTypeLiteralExp;
 	}
 
 	@Override
