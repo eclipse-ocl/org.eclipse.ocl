@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
@@ -444,6 +445,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		for (EObject eContainer = primaryElement.eContainer(); eContainer instanceof Element; eContainer = eContainer.eContainer()) {
 			if (eContainer instanceof Model) {
 				return;				// Skip root package
+			}
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+				return;				// Skip orphan package
 			}
 			for (EObject aScope = safeScope; aScope != null; aScope = aScope.eContainer()) {
 				if (metamodelManager.getPrimaryElement(aScope) == metamodelManager.getPrimaryElement(eContainer)) { 		// If element ancestor is scope or an ancestor
