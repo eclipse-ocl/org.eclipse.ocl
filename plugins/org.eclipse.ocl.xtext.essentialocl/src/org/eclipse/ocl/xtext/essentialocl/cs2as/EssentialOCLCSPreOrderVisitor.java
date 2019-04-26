@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -71,11 +72,11 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 					boolean isNullFree;
 					IntegerValue lowerValue;
 					UnlimitedNaturalValue upperValue;
-					MultiplicityCS csMultiplicity = csElement.getOwnedCollectionMultiplicity();
-					if (csMultiplicity != null) {
-						isNullFree = csMultiplicity.isIsNullFree();
-						lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
-						int upper = csMultiplicity.getUpper();
+					MultiplicityCS csCollectionMultiplicity = csElement.getOwnedCollectionMultiplicity();
+					if (csCollectionMultiplicity != null) {
+						isNullFree = csCollectionMultiplicity.isIsNullFree();
+						lowerValue = ValueUtil.integerValueOf(csCollectionMultiplicity.getLower());
+						int upper = csCollectionMultiplicity.getUpper();
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
@@ -84,6 +85,16 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = null;
 					}
 					type = metamodelManager.getCollectionType(name, elementType, isNullFree, lowerValue, upperValue);
+					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
+					if (csMultiplicity != null) {
+						int upper = csMultiplicity.getUpper();
+						if ((upper <= -1) || (2 <= upper)) {
+							isNullFree = csMultiplicity.isIsNullFree();
+							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
+							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+							type = metamodelManager.getCollectionType(TypeId.SET_NAME, type, isNullFree, lowerValue, upperValue);
+						}
+					}
 				}
 			}
 			if (type == null) {
