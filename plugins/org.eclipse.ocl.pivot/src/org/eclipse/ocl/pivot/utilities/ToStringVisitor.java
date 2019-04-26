@@ -1327,7 +1327,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public String visitTypeExp(@NonNull TypeExp t) {
-		appendQualifiedName(t.getReferredType());
+		safeVisit(t.getReferredType());
 		return null;
 	}
 
