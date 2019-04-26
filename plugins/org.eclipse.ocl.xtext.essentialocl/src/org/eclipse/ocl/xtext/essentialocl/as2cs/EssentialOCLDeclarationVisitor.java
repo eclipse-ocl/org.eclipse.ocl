@@ -117,6 +117,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 
 import com.google.common.collect.Iterables;
@@ -897,15 +898,21 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 
 	@Override
 	public @Nullable ElementCS visitTypeExp(@NonNull TypeExp asTypeExp) {
-/*		NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
-		PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
-		csNameExp.setOwnedPathName(csPathName);
 		Type asType = getNonNullType(asTypeExp.getReferredType());
-		context.refreshPathName(csPathName, asType, null);
-		return csNameExp; */
-		TypeLiteralExpCS csTypeLiteralExp = EssentialOCLCSFactory.eINSTANCE.createTypeLiteralExpCS();
-		csTypeLiteralExp.setOwnedType(createTypeRefCS(asTypeExp.getReferredType()));
-		return csTypeLiteralExp;
+		TypedRefCS csTypeRef = createTypeRefCS(asType);
+		if (csTypeRef instanceof TypeNameExpCS) {
+			NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
+//			PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
+//			csNameExp.setOwnedPathName(csPathName);
+//			context.refreshPathName(csPathName, asType, null);
+			csNameExp.setOwnedPathName(((TypeNameExpCS)csTypeRef).getOwnedPathName());
+			return csNameExp;
+		}
+		else {
+			TypeLiteralExpCS csTypeLiteralExp = EssentialOCLCSFactory.eINSTANCE.createTypeLiteralExpCS();
+			csTypeLiteralExp.setOwnedType(csTypeRef);
+			return csTypeLiteralExp;
+		}
 	}
 
 	@Override

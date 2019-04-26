@@ -24,10 +24,14 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
@@ -70,13 +74,30 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		csRef.setName(object.getName());
 		Type elementType = object.getElementType();
 		if (elementType != null) {
-			csRef.setOwnedType((TypedRefCS) elementType.accept(this));
+			TypedRefCS csElementType = (TypedRefCS) elementType.accept(this);
+			csRef.setOwnedType(csElementType);
 			if (elementType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)elementType).getOwningPackage();
 				if (typePackage != null) {
 					context.importNamespace(typePackage, null);
 				}
 			}
+		}
+		IntegerValue lowerValue = object.getLowerValue();
+		Number upper2 = object.getUpper();
+		UnlimitedNaturalValue upperValue = object.getUpperValue();
+		int upper = upper2 == null ? -1 : upper2 instanceof Unlimited ? -1 : upperValue.intValue();
+		if ((lowerValue != null) || (upperValue != null)) {
+			MultiplicityBoundsCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityBoundsCS();
+			csMultiplicity.setLowerBound(lowerValue.intValue());
+			csMultiplicity.setUpperBound(upper);
+			csMultiplicity.setIsNullFree(object.isIsNullFree());
+			csRef.setOwnedCollectionMultiplicity(csMultiplicity);
+		}
+		else if (!object.isIsNullFree()) {
+			MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+			csMultiplicity.setStringBounds("?");
+			csRef.setOwnedCollectionMultiplicity(csMultiplicity);
 		}
 		return csRef;
 	}
