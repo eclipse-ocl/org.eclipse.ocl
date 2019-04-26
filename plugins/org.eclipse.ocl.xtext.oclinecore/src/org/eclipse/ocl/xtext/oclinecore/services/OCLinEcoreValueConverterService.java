@@ -40,7 +40,7 @@ public class OCLinEcoreValueConverterService extends BaseValueConverterService
 		public EnumerationLiteralNameConverter(Grammar grammar) {
 			enumerationLiteralKeywords = computeEnumerationLiteralKeywords(grammar);
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			if (enumerationLiteralKeywords.contains(value)) {
@@ -73,7 +73,7 @@ public class OCLinEcoreValueConverterService extends BaseValueConverterService
 			return value.toString();
 		}
 	}
-	
+
 	protected static class PrimitiveTypeIdentifierConverter extends AbstractNullSafeConverter<String>
 	{
 		@Override
@@ -86,33 +86,10 @@ public class OCLinEcoreValueConverterService extends BaseValueConverterService
 			return value;
 		}
 	}
-	
-	protected static class UpperConverter extends AbstractNullSafeConverter<Integer>
-	{	
-		@Override
-		public Integer internalToValue(String string, INode node) {
-			if (Strings.isEmpty(string))
-				throw new ValueConverterException("Couldn't convert empty string to integer", node, null);
-			try {
-				if ("*".equals(string)) {
-					return Integer.valueOf(-1);
-				}
-				return Integer.valueOf(string);
-			} catch (NumberFormatException e) {
-				throw new ValueConverterException("Couldn't convert '"+string+"' to integer", node, e);
-			}
-		}
-		
-		@Override
-		public String internalToString(Integer value) {
-			return value >= 0 ? value.toString() : "*";
-		}
-	}
 
 	private static EnumerationLiteralNameConverter enumerationLiteralNameConverter = null;
 	private static IntegerConverter integerConverter = null;
 	private static PrimitiveTypeIdentifierConverter primitiveTypeIdentifier = null;
-	private static UpperConverter upperConverter = null;
 
 	@ValueConverter(rule = "EnumerationLiteralName")
 	public IValueConverter<String> EnumerationLiteralName() {
@@ -136,13 +113,5 @@ public class OCLinEcoreValueConverterService extends BaseValueConverterService
 			primitiveTypeIdentifier = new PrimitiveTypeIdentifierConverter();
 		}
 		return primitiveTypeIdentifier;
-	}
-	
-	@ValueConverter(rule = "UPPER")
-	public IValueConverter<Integer> UPPER() {
-		if (upperConverter == null) {
-			upperConverter = new UpperConverter();
-		}
-		return upperConverter;
 	}
 }

@@ -340,6 +340,28 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 		}
 	}
 
+	protected static class UpperConverter extends AbstractNullSafeConverter<Integer>
+	{
+		@Override
+		public Integer internalToValue(String string, INode node) {
+			if (Strings.isEmpty(string))
+				throw new ValueConverterException("Couldn't convert empty string to integer", node, null);
+			try {
+				if ("*".equals(string)) {
+					return Integer.valueOf(-1);
+				}
+				return Integer.valueOf(string);
+			} catch (NumberFormatException e) {
+				throw new ValueConverterException("Couldn't convert '"+string+"' to integer", node, e);
+			}
+		}
+
+		@Override
+		public String internalToString(Integer value) {
+			return value >= 0 ? value.toString() : "*";
+		}
+	}
+
 	public static String escapeIdentifier(String value) {
 		return "_'" + StringUtil.convertToOCLString(value) + "'";
 	}
@@ -388,6 +410,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 	private static UnquotedStringConverter unquotedStringConverter = null;
 	private UnreservedNameConverter unreservedNameConverter = null; 				// not static - grammar-dependent
 	private UnrestrictedNameConverter unrestrictedNameConverter = null; 			// not static - grammar-dependent
+	private static UpperConverter upperConverter = null;
 	private static SingleQuotedStringConverter uriConverter = null;
 
 	@ValueConverter(rule = "BinaryOperatorName")
@@ -503,5 +526,13 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			unrestrictedNameConverter = new UnrestrictedNameConverter(getGrammar());
 		}
 		return unrestrictedNameConverter;
+	}
+
+	@ValueConverter(rule = "UPPER")
+	public IValueConverter<Integer> UPPER() {
+		if (upperConverter == null) {
+			upperConverter = new UpperConverter();
+		}
+		return upperConverter;
 	}
 }
