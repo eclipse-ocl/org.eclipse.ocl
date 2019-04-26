@@ -68,6 +68,7 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
@@ -233,6 +234,44 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 		}
 		documentCS.getOwnedImports().addAll(imports);
+	}
+
+	public @NonNull MultiplicityCS createMultiplicityCS(int lower, int upper, boolean isNullFree) {
+		String stringValue = null;
+		if (lower == 0) {
+			if (upper == 1) {
+				stringValue = "?";
+			}
+			else if (upper == -1) {
+				stringValue = "*";
+			}
+			//			else if (upper == -2) {
+			//				stringValue = "0..?";
+			//			}
+		}
+		else if (lower == 1) {
+			if (upper == -1) {
+				stringValue = "+";
+			}
+		}
+		MultiplicityCS csMultiplicity;
+		if (stringValue != null) {
+			MultiplicityStringCS csMultiplicityString = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+			csMultiplicityString.setStringBounds(stringValue);
+			csMultiplicity = csMultiplicityString;
+		}
+		else {
+			MultiplicityBoundsCS csMultiplicityBounds = BaseCSFactory.eINSTANCE.createMultiplicityBoundsCS();
+			if (lower != 1) {
+				csMultiplicityBounds.setLowerBound(lower);
+			}
+			if (upper != lower) {
+				csMultiplicityBounds.setUpperBound(upper);
+			}
+			csMultiplicity = csMultiplicityBounds;
+		}
+		csMultiplicity.setIsNullFree(isNullFree);
+		return csMultiplicity;
 	}
 
 	public @Nullable BaseCSResource getCSResource() {
@@ -572,45 +611,8 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				lower = object.isIsRequired() ? 1 : 0;
 				upper = 1;
 			}
-			//			if ((lower == 0) && (upper == 1)) {
-			//				csTypeRef.setOwnedMultiplicity(null);
-			//			}
-			//			else {
-			String stringValue = null;
-			if (lower == 0) {
-				if (upper == 1) {
-					stringValue = "?";
-				}
-				else if (upper == -1) {
-					stringValue = "*";
-				}
-				//			else if (upper == -2) {
-				//				stringValue = "0..?";
-				//			}
-			}
-			else if (lower == 1) {
-				if (upper == -1) {
-					stringValue = "+";
-				}
-			}
-			if (stringValue != null) {
-				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
-				csMultiplicity.setStringBounds(stringValue);
-				csMultiplicity.setIsNullFree(isNullFree);
-				csTypeRef.setOwnedMultiplicity(csMultiplicity);
-			}
-			else {
-				MultiplicityBoundsCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityBoundsCS();
-				if (lower != 1) {
-					csMultiplicity.setLowerBound(lower);
-				}
-				if (upper != lower) {
-					csMultiplicity.setUpperBound(upper);
-				}
-				csMultiplicity.setIsNullFree(isNullFree);;
-				csTypeRef.setOwnedMultiplicity(csMultiplicity);
-			}
-			//			}
+			MultiplicityCS csMultiplicity = createMultiplicityCS(lower, upper, isNullFree);
+			csTypeRef.setOwnedMultiplicity(csMultiplicity);
 		}
 		return csElement;
 	}

@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
-import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
@@ -87,18 +87,10 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		Number upper2 = object.getUpper();
 		UnlimitedNaturalValue upperValue = object.getUpperValue();
 		int upper = upper2 == null ? -1 : upper2 instanceof Unlimited ? -1 : upperValue.intValue();
-		if ((lowerValue != null) || (upperValue != null)) {
-			MultiplicityBoundsCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityBoundsCS();
-			csMultiplicity.setLowerBound(lowerValue.intValue());
-			csMultiplicity.setUpperBound(upper);
-			csMultiplicity.setIsNullFree(object.isIsNullFree());
-			csRef.setOwnedCollectionMultiplicity(csMultiplicity);
-		}
-		else if (!object.isIsNullFree()) {
-			MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
-			csMultiplicity.setStringBounds("?");
-			csRef.setOwnedCollectionMultiplicity(csMultiplicity);
-		}
+		boolean isNullFree = object.isIsNullFree();
+		int lower = lowerValue.intValue();
+		MultiplicityCS csMultiplicity = context.createMultiplicityCS(lower, upper, isNullFree);
+		csRef.setOwnedCollectionMultiplicity(csMultiplicity);
 		return csRef;
 	}
 
