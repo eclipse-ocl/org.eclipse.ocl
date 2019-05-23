@@ -10,16 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -113,8 +110,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 				}
 			}
 		}
-		if (JavaConstants.ID_RESOLVER_NAME.equals(name)) {			// FIXME Why is this needed to support Pivot validation code generation
-			for (EObject eObject = cgValuedElement; eObject != null; eObject = eObject.eContainer()) {
+		if (JavaConstants.ID_RESOLVER_NAME.equals(name)) {
+			// This was once needed to support Pivot validation code generation
+			throw new IllegalStateException("Variable '" + name + "' must now be accessible as a getOwns() of " + cgValuedElement);
+		/*	for (EObject eObject = cgValuedElement; eObject != null; eObject = eObject.eContainer()) {
 				if (eObject instanceof CGLetExp) {
 					CGVariable cgInit = ((CGLetExp)eObject).getInit();
 					if (cgInit != null) {
@@ -124,7 +123,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 						}
 					}
 				}
-			}
+			} */
 		}
 		throw new IllegalStateException("No '" + name + "' in " + cgValuedElement);
 	}

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -18,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -55,7 +56,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;
-		if (((JavaCodeGenerator)js.getCodeGenerator()).isRequired(cgBoxExp) == Boolean.TRUE) {
+		if (js.getCodeGenerator().isRequired(cgBoxExp) == Boolean.TRUE) {
 			js.appendSuppressWarningsNull(true);
 		}
 		js.appendDeclaration(cgBoxExp);
@@ -125,6 +126,11 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 		}
 		Type thatType = ((UnboxedMapDescriptor)typeDescriptor).keyType;
 		return thatType.conformsTo(standardLibrary, keyType);
+	}
+
+	@Override
+	public boolean isAssignableTo(@NonNull Class<?> javaClass) {
+		return javaClass.isAssignableFrom(Set.class);
 	}
 
 	@Override

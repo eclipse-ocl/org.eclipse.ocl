@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
+
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,7 +30,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 public class BoxedMapDescriptor extends AbstractValueDescriptor implements BoxedDescriptor, MapDescriptor
 {
 	protected final @NonNull MapDescriptor unboxedDescriptor;
-	
+
 	public BoxedMapDescriptor(@NonNull MapTypeId elementId, @NonNull Class<?> javaClass, @NonNull MapDescriptor unboxedDescriptor) {
 		super(elementId, javaClass);
 		this.unboxedDescriptor = unboxedDescriptor;
@@ -84,14 +86,17 @@ public class BoxedMapDescriptor extends AbstractValueDescriptor implements Boxed
 	}
 
 	@Override
+	public boolean isAssignableTo(@NonNull Class<?> javaClass) {
+		return javaClass.isAssignableFrom(Set.class);
+	}
+
+	@Override
 	public void append(@NonNull JavaStream javaStream, boolean reClass) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void appendElement(@NonNull JavaStream javaStream, boolean reClass) {
 		// TODO Auto-generated method stub
-		
 	}
 }
