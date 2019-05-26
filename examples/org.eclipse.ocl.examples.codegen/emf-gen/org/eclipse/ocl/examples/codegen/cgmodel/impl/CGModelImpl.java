@@ -97,7 +97,7 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public List<CGConstant> getGlobals() {
 		if (globals == null) {
-			globals = new EObjectContainmentEList<CGConstant>(CGConstant.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+			globals = new EObjectContainmentEList<CGConstant>(CGConstant.class, this, 2);
 		}
 		return globals;
 	}
@@ -110,7 +110,7 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public List<CGPackage> getPackages() {
 		if (packages == null) {
-			packages = new EObjectContainmentEList<CGPackage>(CGPackage.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1);
+			packages = new EObjectContainmentEList<CGPackage>(CGPackage.class, this, 3);
 		}
 		return packages;
 	}
@@ -123,9 +123,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ((InternalEList<?>)getGlobals()).basicRemove(otherEnd, msgs);
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -139,9 +139,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getGlobals();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return getPackages();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,11 +156,11 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getGlobals().clear();
 				getGlobals().addAll((Collection<? extends CGConstant>)newValue);
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				getPackages().clear();
 				getPackages().addAll((Collection<? extends CGPackage>)newValue);
 				return;
@@ -176,10 +176,10 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getGlobals().clear();
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				getPackages().clear();
 				return;
 		}
@@ -194,9 +194,9 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return globals != null && !globals.isEmpty();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -17,6 +17,10 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * A representation of the model object '<em><b>CG Executor Operation Call Exp</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A CGExecutorOperationCallExp is not used.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

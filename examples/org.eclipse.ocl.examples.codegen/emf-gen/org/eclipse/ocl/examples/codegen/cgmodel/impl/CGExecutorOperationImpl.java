@@ -92,7 +92,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 		CGElementId oldUnderlyingOperationId = underlyingOperationId;
 		underlyingOperationId = newUnderlyingOperationId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingOperationId, underlyingOperationId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldUnderlyingOperationId, underlyingOperationId));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getUnderlyingOperationId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingOperationId((CGElementId)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingOperationId((CGElementId)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public class CGExecutorOperationImpl extends CGValuedElementImpl implements CGEx
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return underlyingOperationId != null;
 		}
 		return super.eIsSet(featureID);

@@ -16,10 +16,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * A representation of the model object '<em><b>CG Executor Property</b></em>'.
  * <!-- end-user-doc -->
  *
- * <!-- begin-model-doc -->
- * A CGTypeWithReflection defines a Static Single Assignment variable whose value is a DomainType.
- * <!-- end-model-doc -->
- *
  * <p>
  * The following features are supported:
  * </p>

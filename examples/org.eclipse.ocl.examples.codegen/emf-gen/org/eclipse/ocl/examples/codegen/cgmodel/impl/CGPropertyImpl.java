@@ -88,7 +88,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 */
 	@Override
 	public CGClass getContainingClass() {
-		if (eContainerFeatureID() != (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (CGClass)eInternalContainer();
 	}
 
@@ -98,7 +98,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @generated
 	 */
 	public NotificationChain basicSetContainingClass(CGClass newContainingClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newContainingClass, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 6, msgs);
 		return msgs;
 	}
 
@@ -109,19 +109,19 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 */
 	@Override
 	public void setContainingClass(CGClass newContainingClass) {
-		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0) && newContainingClass != null)) {
+		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (6) && newContainingClass != null)) {
 			if (EcoreUtil.isAncestor(this, newContainingClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newContainingClass != null)
-				msgs = ((InternalEObject)newContainingClass).eInverseAdd(this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2, CGClass.class, msgs);
+				msgs = ((InternalEObject)newContainingClass).eInverseAdd(this, 4, CGClass.class, msgs);
 			msgs = basicSetContainingClass(newContainingClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, newContainingClass, newContainingClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newContainingClass, newContainingClass));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -159,14 +159,14 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newBody, newBody));
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetContainingClass((CGClass)otherEnd, msgs);
@@ -193,9 +193,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return basicSetContainingClass(null, msgs);
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -209,8 +209,8 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
-				return eInternalContainer().eInverseRemove(this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2, CGClass.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 4, CGClass.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -223,9 +223,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getContainingClass();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -239,10 +239,10 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setContainingClass((CGClass)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setBody((CGValuedElement)newValue);
 				return;
 		}
@@ -257,10 +257,10 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setContainingClass((CGClass)null);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setBody((CGValuedElement)null);
 				return;
 		}
@@ -275,9 +275,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getContainingClass() != null;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

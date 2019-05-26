@@ -85,7 +85,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 			eOperation = (EOperation)eResolveProxy(oldEOperation);
 			if (eOperation != oldEOperation) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0, oldEOperation, eOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 11, oldEOperation, eOperation));
 			}
 		}
 		return eOperation;
@@ -110,7 +110,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 		EOperation oldEOperation = eOperation;
 		eOperation = newEOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0, oldEOperation, eOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldEOperation, eOperation));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
+			case 11:
 				if (resolve) return getEOperation();
 				return basicGetEOperation();
 		}
@@ -136,7 +136,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
+			case 11:
 				setEOperation((EOperation)newValue);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
+			case 11:
 				setEOperation((EOperation)null);
 				return;
 		}
@@ -166,7 +166,7 @@ public class CGEcoreOperationImpl extends CGOperationImpl implements CGEcoreOper
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGOperationImpl.CG_OPERATION_FEATURE_COUNT + 0:
+			case 11:
 				return eOperation != null;
 		}
 		return super.eIsSet(featureID);

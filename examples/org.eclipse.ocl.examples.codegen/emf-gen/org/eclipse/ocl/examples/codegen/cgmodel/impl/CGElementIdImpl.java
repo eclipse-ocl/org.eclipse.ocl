@@ -104,7 +104,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 		ElementId oldElementId = elementId;
 		elementId = newElementId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldElementId, elementId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldElementId, elementId));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				return getElementId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -139,7 +139,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				setElementId((ElementId)newValue);
 				return;
 		}
@@ -154,7 +154,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				setElementId(ELEMENT_ID_EDEFAULT);
 				return;
 		}
@@ -169,7 +169,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				return ELEMENT_ID_EDEFAULT == null ? elementId != null : !ELEMENT_ID_EDEFAULT.equals(elementId);
 		}
 		return super.eIsSet(featureID);

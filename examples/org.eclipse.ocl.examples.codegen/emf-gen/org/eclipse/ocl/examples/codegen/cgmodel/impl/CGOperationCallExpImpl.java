@@ -112,7 +112,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@SuppressWarnings("null")
 	public @NonNull List<CGValuedElement> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0);
+			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 9);
 		}
 		return arguments;
 	}
@@ -137,7 +137,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -158,7 +158,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -172,9 +172,9 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getArguments();
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return getReferredOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -189,11 +189,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -208,10 +208,10 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				getArguments().clear();
 				return;
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				setReferredOperation(REFERRED_OPERATION_EDEFAULT);
 				return;
 		}
@@ -226,9 +226,9 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return arguments != null && !arguments.isEmpty();
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return REFERRED_OPERATION_EDEFAULT == null ? referredOperation != null : !REFERRED_OPERATION_EDEFAULT.equals(referredOperation);
 		}
 		return super.eIsSet(featureID);

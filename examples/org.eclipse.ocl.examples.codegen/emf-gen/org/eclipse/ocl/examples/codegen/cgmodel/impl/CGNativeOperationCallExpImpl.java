@@ -123,7 +123,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldMethod, method));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldMethod, method));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldThisIsSelf = thisIsSelf;
 		thisIsSelf = newThisIsSelf;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1, oldThisIsSelf, thisIsSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldThisIsSelf, thisIsSelf));
 	}
 
 	/**
@@ -167,9 +167,9 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				return getMethod();
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
+			case 12:
 				return isThisIsSelf();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +183,10 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				setMethod((Method)newValue);
 				return;
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
+			case 12:
 				setThisIsSelf((Boolean)newValue);
 				return;
 		}
@@ -201,10 +201,10 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				setMethod(METHOD_EDEFAULT);
 				return;
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
+			case 12:
 				setThisIsSelf(THIS_IS_SELF_EDEFAULT);
 				return;
 		}
@@ -219,9 +219,9 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1:
+			case 12:
 				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

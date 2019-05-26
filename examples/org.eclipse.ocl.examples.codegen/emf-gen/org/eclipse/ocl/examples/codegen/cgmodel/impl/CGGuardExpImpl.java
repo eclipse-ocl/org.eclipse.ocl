@@ -123,7 +123,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 		String oldMessage = message;
 		message = newMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldMessage, message));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldMessage, message));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 		boolean oldSafe = safe;
 		safe = newSafe;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1, oldSafe, safe));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldSafe, safe));
 	}
 
 	/**
@@ -167,9 +167,9 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getMessage();
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return isSafe();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +183,10 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setMessage((String)newValue);
 				return;
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				setSafe((Boolean)newValue);
 				return;
 		}
@@ -201,10 +201,10 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setMessage(MESSAGE_EDEFAULT);
 				return;
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				setSafe(SAFE_EDEFAULT);
 				return;
 		}
@@ -219,9 +219,9 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1:
+			case 10:
 				return safe != SAFE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

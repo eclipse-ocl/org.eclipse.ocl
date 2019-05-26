@@ -92,7 +92,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 		CGElementId oldUnderlyingPropertyId = underlyingPropertyId;
 		underlyingPropertyId = newUnderlyingPropertyId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingPropertyId, underlyingPropertyId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldUnderlyingPropertyId, underlyingPropertyId));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getUnderlyingPropertyId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingPropertyId((CGElementId)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingPropertyId((CGElementId)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return underlyingPropertyId != null;
 		}
 		return super.eIsSet(featureID);

@@ -120,7 +120,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldName, name));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 		Element oldAst = ast;
 		ast = newAst;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0, oldAst, ast));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldAst, ast));
 	}
 
 	/**
@@ -164,9 +164,9 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0:
+			case 0:
 				return getAst();
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1:
+			case 1:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,10 +180,10 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0:
+			case 0:
 				setAst((Element)newValue);
 				return;
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1:
+			case 1:
 				setName((String)newValue);
 				return;
 		}
@@ -198,10 +198,10 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0:
+			case 0:
 				setAst(AST_EDEFAULT);
 				return;
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1:
+			case 1:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -216,9 +216,9 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 0:
+			case 0:
 				return AST_EDEFAULT == null ? ast != null : !AST_EDEFAULT.equals(ast);
-			case CGElementImpl.CG_ELEMENT_FEATURE_COUNT + 1:
+			case 1:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

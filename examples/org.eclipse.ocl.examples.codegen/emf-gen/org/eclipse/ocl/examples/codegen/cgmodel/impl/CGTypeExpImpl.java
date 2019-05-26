@@ -91,7 +91,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExecutorType, executorType));
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -116,7 +116,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -131,7 +131,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -146,7 +146,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

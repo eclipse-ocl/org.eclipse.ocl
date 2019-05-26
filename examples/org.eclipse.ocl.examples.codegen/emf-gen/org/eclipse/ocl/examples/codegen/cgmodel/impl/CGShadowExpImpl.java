@@ -102,7 +102,7 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@SuppressWarnings("null")
 	public @NonNull List<CGShadowPart> getParts() {
 		if (parts == null) {
-			parts = new EObjectContainmentWithInverseEList<CGShadowPart>(CGShadowPart.class, this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1);
+			parts = new EObjectContainmentWithInverseEList<CGShadowPart>(CGShadowPart.class, this, 6, 7);
 		}
 		return parts;
 	}
@@ -127,7 +127,7 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldExecutorType, executorType));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParts()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -153,7 +153,7 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<?>)getParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -167,9 +167,9 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getParts();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -184,11 +184,11 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				getParts().clear();
 				getParts().addAll((Collection<? extends CGShadowPart>)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -203,10 +203,10 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				getParts().clear();
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -221,9 +221,9 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return parts != null && !parts.isEmpty();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

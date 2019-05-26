@@ -92,7 +92,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 		CGValuedElement oldReferredConstant = referredConstant;
 		referredConstant = newReferredConstant;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldReferredConstant, referredConstant));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldReferredConstant, referredConstant));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getReferredConstant();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setReferredConstant((CGValuedElement)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setReferredConstant((CGValuedElement)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return referredConstant != null;
 		}
 		return super.eIsSet(featureID);

@@ -104,7 +104,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 		String oldTextValue = textValue;
 		textValue = newTextValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0, oldTextValue, textValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldTextValue, textValue));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				return getTextValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -139,7 +139,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				setTextValue((String)newValue);
 				return;
 		}
@@ -154,7 +154,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				setTextValue(TEXT_VALUE_EDEFAULT);
 				return;
 		}
@@ -169,7 +169,7 @@ public class CGTextImpl extends CGConstantImpl implements CGText {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGConstantImpl.CG_CONSTANT_FEATURE_COUNT + 0:
+			case 6:
 				return TEXT_VALUE_EDEFAULT == null ? textValue != null : !TEXT_VALUE_EDEFAULT.equals(textValue);
 		}
 		return super.eIsSet(featureID);

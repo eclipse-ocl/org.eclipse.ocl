@@ -100,7 +100,7 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public List<CGClass> getClasses() {
 		if (classes == null) {
-			classes = new EObjectContainmentWithInverseEList<CGClass>(CGClass.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0);
+			classes = new EObjectContainmentWithInverseEList<CGClass>(CGClass.class, this, 2, 2);
 		}
 		return classes;
 	}
@@ -113,7 +113,7 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public List<CGPackage> getPackages() {
 		if (packages == null) {
-			packages = new EObjectContainmentWithInverseEList<CGPackage>(CGPackage.class, this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2);
+			packages = new EObjectContainmentWithInverseEList<CGPackage>(CGPackage.class, this, 3, 4);
 		}
 		return packages;
 	}
@@ -125,7 +125,7 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	 */
 	@Override
 	public CGPackage getContainingPackage() {
-		if (eContainerFeatureID() != (CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (4)) return null;
 		return (CGPackage)eInternalContainer();
 	}
 
@@ -135,7 +135,7 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	 * @generated
 	 */
 	public NotificationChain basicSetContainingPackage(CGPackage newContainingPackage, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newContainingPackage, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newContainingPackage, 4, msgs);
 		return msgs;
 	}
 
@@ -146,19 +146,19 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	 */
 	@Override
 	public void setContainingPackage(CGPackage newContainingPackage) {
-		if (newContainingPackage != eInternalContainer() || (eContainerFeatureID() != (CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2) && newContainingPackage != null)) {
+		if (newContainingPackage != eInternalContainer() || (eContainerFeatureID() != (4) && newContainingPackage != null)) {
 			if (EcoreUtil.isAncestor(this, newContainingPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newContainingPackage != null)
-				msgs = ((InternalEObject)newContainingPackage).eInverseAdd(this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1, CGPackage.class, msgs);
+				msgs = ((InternalEObject)newContainingPackage).eInverseAdd(this, 3, CGPackage.class, msgs);
 			msgs = basicSetContainingPackage(newContainingPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2, newContainingPackage, newContainingPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newContainingPackage, newContainingPackage));
 	}
 
 	/**
@@ -170,11 +170,11 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClasses()).basicAdd(otherEnd, msgs);
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPackages()).basicAdd(otherEnd, msgs);
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetContainingPackage((CGPackage)otherEnd, msgs);
@@ -190,11 +190,11 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ((InternalEList<?>)getClasses()).basicRemove(otherEnd, msgs);
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				return basicSetContainingPackage(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -208,8 +208,8 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1, CGPackage.class, msgs);
+			case 4:
+				return eInternalContainer().eInverseRemove(this, 3, CGPackage.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -222,11 +222,11 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getClasses();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return getPackages();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				return getContainingPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -241,15 +241,15 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getClasses().clear();
 				getClasses().addAll((Collection<? extends CGClass>)newValue);
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				getPackages().clear();
 				getPackages().addAll((Collection<? extends CGPackage>)newValue);
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				setContainingPackage((CGPackage)newValue);
 				return;
 		}
@@ -264,13 +264,13 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getClasses().clear();
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				getPackages().clear();
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				setContainingPackage((CGPackage)null);
 				return;
 		}
@@ -285,11 +285,11 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return classes != null && !classes.isEmpty();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return packages != null && !packages.isEmpty();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				return getContainingPackage() != null;
 		}
 		return super.eIsSet(featureID);

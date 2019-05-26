@@ -92,7 +92,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return getEStructuralFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);

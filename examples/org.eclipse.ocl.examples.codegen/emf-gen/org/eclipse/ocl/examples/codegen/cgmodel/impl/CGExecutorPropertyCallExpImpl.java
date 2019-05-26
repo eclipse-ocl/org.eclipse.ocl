@@ -91,7 +91,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		CGExecutorProperty oldExecutorProperty = executorProperty;
 		executorProperty = newExecutorProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldExecutorProperty, executorProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldExecutorProperty, executorProperty));
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return getExecutorProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -116,7 +116,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setExecutorProperty((CGExecutorProperty)newValue);
 				return;
 		}
@@ -131,7 +131,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setExecutorProperty((CGExecutorProperty)null);
 				return;
 		}
@@ -146,7 +146,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return executorProperty != null;
 		}
 		return super.eIsSet(featureID);

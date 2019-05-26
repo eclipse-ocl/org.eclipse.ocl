@@ -96,7 +96,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldExecutorType, executorType));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -121,7 +121,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -136,7 +136,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0:
+			case 9:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

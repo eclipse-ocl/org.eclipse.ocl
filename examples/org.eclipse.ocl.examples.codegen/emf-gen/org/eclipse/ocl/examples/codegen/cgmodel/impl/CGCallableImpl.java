@@ -104,7 +104,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public @NonNull List<CGParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 0);
+			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, 6, 7);
 		}
 		return parameters;
 	}
@@ -128,7 +128,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -144,14 +144,14 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newBody, newBody));
 	}
 
 	/**
@@ -163,7 +163,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -177,9 +177,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -193,9 +193,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getParameters();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -210,11 +210,11 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setBody((CGValuedElement)newValue);
 				return;
 		}
@@ -229,10 +229,10 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				getParameters().clear();
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setBody((CGValuedElement)null);
 				return;
 		}
@@ -247,9 +247,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return parameters != null && !parameters.isEmpty();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

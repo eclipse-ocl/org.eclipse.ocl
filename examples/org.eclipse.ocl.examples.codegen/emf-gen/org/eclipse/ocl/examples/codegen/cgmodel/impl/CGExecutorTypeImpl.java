@@ -95,7 +95,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 		CGTypeId oldUnderlyingTypeId = underlyingTypeId;
 		underlyingTypeId = newUnderlyingTypeId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldUnderlyingTypeId, underlyingTypeId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldUnderlyingTypeId, underlyingTypeId));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getUnderlyingTypeId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -120,7 +120,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingTypeId((CGTypeId)newValue);
 				return;
 		}
@@ -135,7 +135,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setUnderlyingTypeId((CGTypeId)null);
 				return;
 		}
@@ -150,7 +150,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return underlyingTypeId != null;
 		}
 		return super.eIsSet(featureID);

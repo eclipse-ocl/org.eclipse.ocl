@@ -17,7 +17,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A CGTypeWithReflection defines a Static Single Assignment variable whose value is a DomainType.
+ * A CGExecutorShadowPart supports navigation of a shadow object part.
  * <!-- end-model-doc -->
  *
  *

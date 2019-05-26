@@ -136,7 +136,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldInvalidating = invalidating;
 		invalidating = newInvalidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldInvalidating, invalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldInvalidating, invalidating));
 	}
 
 	/**
@@ -159,7 +159,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldValidating = validating;
 		validating = newValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldValidating, validating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldValidating, validating));
 	}
 
 	/**
@@ -181,7 +181,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		CGValuedElement oldSource = source;
 		source = newSource;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, oldSource, newSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldSource, newSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -197,14 +197,14 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		if (newSource != source) {
 			NotificationChain msgs = null;
 			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetSource(newSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, newSource, newSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newSource, newSource));
 	}
 
 	/**
@@ -225,7 +225,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return basicSetSource(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -239,11 +239,11 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return isInvalidating();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return isValidating();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -257,13 +257,13 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setInvalidating((Boolean)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setValidating((Boolean)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				setSource((CGValuedElement)newValue);
 				return;
 		}
@@ -278,13 +278,13 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setInvalidating(INVALIDATING_EDEFAULT);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setValidating(VALIDATING_EDEFAULT);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				setSource((CGValuedElement)null);
 				return;
 		}
@@ -299,11 +299,11 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return invalidating != INVALIDATING_EDEFAULT;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return validating != VALIDATING_EDEFAULT;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return source != null;
 		}
 		return super.eIsSet(featureID);

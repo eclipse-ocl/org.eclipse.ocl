@@ -17,6 +17,11 @@ import java.lang.reflect.Method;
  * A representation of the model object '<em><b>CG Method Operation Call Exp</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.
+ * Other arguments are passed using the unboxed representation.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

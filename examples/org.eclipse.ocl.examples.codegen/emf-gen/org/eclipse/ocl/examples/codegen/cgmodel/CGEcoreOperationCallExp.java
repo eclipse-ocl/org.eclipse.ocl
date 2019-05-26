@@ -17,6 +17,10 @@ import org.eclipse.emf.ecore.EOperation;
  * A representation of the model object '<em><b>CG Ecore Operation Call Exp</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A call of an operation using the Ecore Operation calling convention; Collections are passed as EList.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

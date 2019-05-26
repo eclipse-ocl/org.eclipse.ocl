@@ -17,6 +17,11 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  * A representation of the model object '<em><b>CG Library Operation Call Exp</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A call of an operation using the derived polymorphic LibraryOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments
+ * are typed as Object, that required type cannot be determined. All arguments are therefore passed using the boxed representation.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

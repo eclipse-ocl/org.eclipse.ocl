@@ -113,7 +113,7 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 		CGTypeId oldTypeId = typeId;
 		typeId = newTypeId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0, oldTypeId, typeId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldTypeId, typeId));
 	}
 
 	/**
@@ -136,7 +136,7 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 		boolean oldRequired = required;
 		required = newRequired;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1, oldRequired, required));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldRequired, required));
 	}
 
 	/**
@@ -157,9 +157,9 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getTypeId();
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return isRequired();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -173,10 +173,10 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setTypeId((CGTypeId)newValue);
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				setRequired((Boolean)newValue);
 				return;
 		}
@@ -191,10 +191,10 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setTypeId((CGTypeId)null);
 				return;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				setRequired(REQUIRED_EDEFAULT);
 				return;
 		}
@@ -209,9 +209,9 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return typeId != null;
-			case CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return required != REQUIRED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -90,7 +90,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 		CGExecutorOperation oldExecutorOperation = executorOperation;
 		executorOperation = newExecutorOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0, oldExecutorOperation, executorOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldExecutorOperation, executorOperation));
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				return getExecutorOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +115,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				setExecutorOperation((CGExecutorOperation)newValue);
 				return;
 		}
@@ -130,7 +130,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				setExecutorOperation((CGExecutorOperation)null);
 				return;
 		}
@@ -145,7 +145,7 @@ public class CGExecutorOperationCallExpImpl extends CGOperationCallExpImpl imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0:
+			case 11:
 				return executorOperation != null;
 		}
 		return super.eIsSet(featureID);

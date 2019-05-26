@@ -112,7 +112,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public List<CGValuedElement> getDependsOn()
 	{
 		if (dependsOn == null) {
-			dependsOn = new EObjectEList<CGValuedElement>(CGValuedElement.class, this, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0);
+			dependsOn = new EObjectEList<CGValuedElement>(CGValuedElement.class, this, 4);
 		}
 		return dependsOn;
 	}
@@ -126,7 +126,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public List<CGValuedElement> getOwns()
 	{
 		if (owns == null) {
-			owns = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1);
+			owns = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 5);
 		}
 		return owns;
 	}
@@ -140,7 +140,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID) {
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return ((InternalEList<?>)getOwns()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,9 +155,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return getDependsOn();
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return getOwns();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -173,11 +173,11 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID) {
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getDependsOn().clear();
 				getDependsOn().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				getOwns().clear();
 				getOwns().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
@@ -194,10 +194,10 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void eUnset(int featureID)
 	{
 		switch (featureID) {
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				getDependsOn().clear();
 				return;
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				getOwns().clear();
 				return;
 		}
@@ -213,9 +213,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public boolean eIsSet(int featureID)
 	{
 		switch (featureID) {
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 0:
+			case 4:
 				return dependsOn != null && !dependsOn.isEmpty();
-			case CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1:
+			case 5:
 				return owns != null && !owns.isEmpty();
 		}
 		return super.eIsSet(featureID);

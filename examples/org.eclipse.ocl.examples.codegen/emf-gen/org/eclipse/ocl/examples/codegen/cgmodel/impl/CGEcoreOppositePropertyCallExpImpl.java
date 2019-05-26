@@ -97,7 +97,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return getEStructuralFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +122,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -137,7 +137,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -152,7 +152,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGOppositePropertyCallExpImpl.CG_OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT + 0:
+			case 10:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);
