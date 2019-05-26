@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
  * <p>
  * The Java class is only known by name; it is not yet loadable, since genmodel has not yet generated it.
  * <p>
- * There is no EClassifier available to perform type conformance checks since thie Java class name was provided as an instanceClassName.
+ * There is no EClassifier available to perform type conformance checks since the Java class name was provided as an instanceClassName.
  */
 public class FutureEObjectsDescriptor extends AbstractCollectionDescriptor implements EcoreDescriptor, UnboxedDescriptor
 {

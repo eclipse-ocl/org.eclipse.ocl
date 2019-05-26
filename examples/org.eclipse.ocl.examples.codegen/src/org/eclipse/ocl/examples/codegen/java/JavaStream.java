@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenOptions;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EObjectDescriptor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -128,6 +127,109 @@ public class JavaStream
 		void append();
 	}
 
+	/**
+	 * A derived TypeRepresentation appends a construct that involves a type declaration whose representation may vary
+	 * according to the prevailing calling protocol.
+	 */
+	public static interface TypeRepresentation
+	{
+		void appendClassReference(@Nullable Boolean isRequired, @Nullable CGValuedElement cgValue);
+		void appendDeclaration(@NonNull CGValuedElement cgElement);
+		void appendTypeDeclaration(@NonNull CGValuedElement cgElement);
+	}
+
+	private abstract static class AbstractTypeRepresentation implements TypeRepresentation
+	{
+		protected final @NonNull JavaStream js;
+		protected final @NonNull JavaCodeGenerator codeGenerator;
+
+		public AbstractTypeRepresentation(@NonNull JavaStream javaStream) {
+			this.js = javaStream;
+			this.codeGenerator = js.getCodeGenerator();
+		}
+
+		@Override
+		public void appendClassReference(@Nullable Boolean isRequired, @Nullable CGValuedElement cgValue) {
+			if (cgValue == null) {
+				js.append("<<null->>");
+			}
+			else if (cgValue.getNamedValue().isCaught()) {
+				js.appendClassReference(isRequired, Object.class);
+			}
+			else {
+				TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
+				if ((cgValue instanceof CGParameter) && (cgValue.eContainer() instanceof CGOperation) && (typeDescriptor instanceof EObjectDescriptor)) {		// FIXME eliminate reclassing
+					Class<?> originalJavaClass = ((EObjectDescriptor)typeDescriptor).getOriginalJavaClass();
+					js.appendClassReference(isRequired, originalJavaClass);
+				}
+				else {
+					typeDescriptor.append(js, isRequired);
+				}
+			}
+		}
+
+		@Override
+		public void appendDeclaration(@NonNull CGValuedElement cgElement) {
+			boolean isGlobal = cgElement.isGlobal();
+			if (isGlobal) {
+				js.append("public static ");
+			}
+			if (!cgElement.isSettable()) {
+				js.append("final ");
+			}
+			appendTypeDeclaration(cgElement);
+			js.append(" ");
+			String valueName = js.cg2java.getValueName(cgElement);
+			js.append(valueName);
+		}
+
+		@Override
+		public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
+			Boolean isRequired = codeGenerator.isRequired(cgElement);
+			js.appendIsCaught(cgElement.isNonInvalid(), cgElement.isCaught());
+			js.append(" ");
+			appendClassReference(isRequired, cgElement);
+		}
+
+		protected @NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgValue) {
+			return codeGenerator.getTypeDescriptor(cgValue);
+		}
+	}
+
+	private static class BoxedTypeRepresentation extends AbstractTypeRepresentation
+	{
+		public BoxedTypeRepresentation(@NonNull JavaStream javaStream) {
+			super(javaStream);
+		}
+	}
+
+	private static class EcoreTypeRepresentation extends AbstractTypeRepresentation
+	{
+		protected final @Nullable Class<?> instanceClass;
+
+		public EcoreTypeRepresentation(@NonNull JavaStream javaStream, @Nullable Class<?> instanceClass) {
+			super(javaStream);
+			this.instanceClass = instanceClass;
+		}
+
+		@Override
+		protected @NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgValue) {
+			return super.getTypeDescriptor(cgValue).getEcoreDescriptor(codeGenerator, instanceClass);
+		}
+	}
+
+	private static class UnboxedTypeRepresentation extends AbstractTypeRepresentation
+	{
+		public UnboxedTypeRepresentation(@NonNull JavaStream javaStream) {
+			super(javaStream);
+		}
+
+		@Override
+		protected @NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgValue) {
+			return super.getTypeDescriptor(cgValue).getUnboxedDescriptor(codeGenerator);
+		}
+	}
+
 	protected @NonNull JavaCodeGenerator codeGenerator;
 	protected @NonNull CG2JavaVisitor<@NonNull ?> cg2java;
 	protected @NonNull CodeGenAnalyzer analyzer;
@@ -140,6 +242,9 @@ public class JavaStream
 	private @NonNull String defaultIndentationString = "\t";
 	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
 
+	private @NonNull TypeRepresentation boxedTypeRepresentation;
+	private @NonNull TypeRepresentation unboxedTypeRepresentation;
+
 	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
 		this.codeGenerator = codeGenerator;
 		this.cg2java = cg2java;
@@ -148,6 +253,8 @@ public class JavaStream
 		CodeGenOptions options = codeGenerator.getOptions();
 		this.useNullAnnotations = options.useNullAnnotations();
 		this.suppressNullWarnings = useNullAnnotations && options.suppressNonNullWarningsForEMFCollections();
+		this.boxedTypeRepresentation = new BoxedTypeRepresentation(this);
+		this.unboxedTypeRepresentation = new UnboxedTypeRepresentation(this);
 	}
 
 	public void append(@Nullable String string) {
@@ -357,6 +464,10 @@ public class JavaStream
 	}
 
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable CGValuedElement cgValue) {
+		boxedTypeRepresentation.appendClassReference(isRequired, cgValue);
+	}
+
+	public void appendClassReference(@Nullable Boolean isRequired, @Nullable CGValuedElement cgValue, @Nullable TypeDescriptor typeDescriptor) {
 		if (cgValue == null) {
 			append("<<null->>");
 		}
@@ -364,7 +475,9 @@ public class JavaStream
 			appendClassReference(isRequired, Object.class);
 		}
 		else {
-			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
+			if (typeDescriptor == null) {
+				typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
+			}
 			if ((cgValue instanceof CGParameter) && (cgValue.eContainer() instanceof CGOperation) && (typeDescriptor instanceof EObjectDescriptor)) {		// FIXME eliminate reclassing
 				Class<?> originalJavaClass = ((EObjectDescriptor)typeDescriptor).getOriginalJavaClass();
 				appendClassReference(isRequired, originalJavaClass);
@@ -557,17 +670,7 @@ public class JavaStream
 	}
 
 	public void appendDeclaration(@NonNull CGValuedElement cgElement) {
-		boolean isGlobal = cgElement.isGlobal();
-		if (isGlobal) {
-			append("public static ");
-		}
-		if (!cgElement.isSettable()) {
-			append("final ");
-		}
-		appendTypeDeclaration(cgElement);
-		append(" ");
-		String valueName = cg2java.getValueName(cgElement);
-		append(valueName);
+		boxedTypeRepresentation.appendDeclaration(cgElement);
 	}
 
 	/**
@@ -934,10 +1037,7 @@ public class JavaStream
 	}
 
 	public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
-		Boolean isRequired = codeGenerator.isRequired(cgElement);
-		appendIsCaught(cgElement.isNonInvalid(), cgElement.isCaught());
-		append(" ");
-		appendClassReference(isRequired, cgElement);
+		boxedTypeRepresentation.appendTypeDeclaration(cgElement);;
 	}
 
 	public void appendTypeParameters(boolean useExtends, @NonNull Class<?>... typeParameters) {
@@ -1004,8 +1104,20 @@ public class JavaStream
 		}
 	}
 
-	public @NonNull CodeGenerator getCodeGenerator() {
+	public @NonNull TypeRepresentation getBoxedTypeRepresentation() {
+		return boxedTypeRepresentation;
+	}
+
+	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return codeGenerator;
+	}
+
+	public @NonNull TypeRepresentation getEcoreTypeRepresentation(@Nullable Class<?> instanceClass) {
+		return new EcoreTypeRepresentation(this, instanceClass);
+	}
+
+	public @NonNull TypeRepresentation getUnboxedTypeRepresentation() {
+		return unboxedTypeRepresentation;
 	}
 
 	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
