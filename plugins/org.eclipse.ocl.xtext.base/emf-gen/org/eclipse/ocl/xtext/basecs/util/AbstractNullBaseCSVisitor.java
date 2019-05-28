@@ -108,6 +108,11 @@ public abstract class AbstractNullBaseCSVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitImplicitOppositeCS(org.eclipse.ocl.xtext.basecs.@NonNull ImplicitOppositeCS object) {
+		return null;
+	}
+
+	@Override
 	public R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object) {
 		return null;
 	}

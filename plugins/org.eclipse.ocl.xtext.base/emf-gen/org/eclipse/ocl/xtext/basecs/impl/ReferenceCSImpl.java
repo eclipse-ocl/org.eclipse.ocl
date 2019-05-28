@@ -13,14 +13,18 @@ package org.eclipse.ocl.xtext.basecs.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ReferenceCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
@@ -34,6 +38,7 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.ReferenceCSImpl#getReferredKeys <em>Referred Keys</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.ReferenceCSImpl#getReferredOpposite <em>Referred Opposite</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.ReferenceCSImpl#getOwnedImplicitOpposites <em>Owned Implicit Opposites</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,7 +52,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	 * @generated
 	 * @ordered
 	 */
-	public static final int REFERENCE_CS_FEATURE_COUNT = StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 2;
+	public static final int REFERENCE_CS_FEATURE_COUNT = StructuralFeatureCSImpl.STRUCTURAL_FEATURE_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The cached value of the '{@link #getReferredKeys() <em>Referred Keys</em>}' reference list.
@@ -68,6 +73,16 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	 * @ordered
 	 */
 	protected Property referredOpposite;
+
+	/**
+	 * The cached value of the '{@link #getOwnedImplicitOpposites() <em>Owned Implicit Opposites</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedImplicitOpposites()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ImplicitOppositeCS> ownedImplicitOpposites;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -141,6 +156,37 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	 * @generated
 	 */
 	@Override
+	public EList<ImplicitOppositeCS> getOwnedImplicitOpposites()
+	{
+		if (ownedImplicitOpposites == null)
+		{
+			ownedImplicitOpposites = new EObjectContainmentEList<ImplicitOppositeCS>(ImplicitOppositeCS.class, this, 14);
+		}
+		return ownedImplicitOpposites;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 14:
+				return ((InternalEList<?>)getOwnedImplicitOpposites()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EList<Property> getReferredKeys()
 	{
 		if (referredKeys == null)
@@ -165,6 +211,8 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 			case 13:
 				if (resolve) return getReferredOpposite();
 				return basicGetReferredOpposite();
+			case 14:
+				return getOwnedImplicitOpposites();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,6 +235,10 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 			case 13:
 				setReferredOpposite((Property)newValue);
 				return;
+			case 14:
+				getOwnedImplicitOpposites().clear();
+				getOwnedImplicitOpposites().addAll((Collection<? extends ImplicitOppositeCS>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -207,6 +259,9 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 			case 13:
 				setReferredOpposite((Property)null);
 				return;
+			case 14:
+				getOwnedImplicitOpposites().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -225,6 +280,8 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 				return referredKeys != null && !referredKeys.isEmpty();
 			case 13:
 				return referredOpposite != null;
+			case 14:
+				return ownedImplicitOpposites != null && !ownedImplicitOpposites.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Property;
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.ReferenceCS#getReferredKeys <em>Referred Keys</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.ReferenceCS#getReferredOpposite <em>Referred Opposite</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.ReferenceCS#getOwnedImplicitOpposites <em>Owned Implicit Opposites</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getReferenceCS()
@@ -58,6 +59,22 @@ public interface ReferenceCS extends StructuralFeatureCS {
 	 * @generated
 	 */
 	void setReferredOpposite(Property value);
+
+	/**
+	 * Returns the value of the '<em><b>Owned Implicit Opposites</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Implicit Opposites</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Implicit Opposites</em>' containment reference list.
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getReferenceCS_OwnedImplicitOpposites()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ImplicitOppositeCS> getOwnedImplicitOpposites();
 
 	/**
 	 * Returns the value of the '<em><b>Referred Keys</b></em>' reference list.

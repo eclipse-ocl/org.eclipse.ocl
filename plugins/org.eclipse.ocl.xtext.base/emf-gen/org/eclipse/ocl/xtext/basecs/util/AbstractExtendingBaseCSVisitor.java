@@ -108,6 +108,11 @@ public abstract class AbstractExtendingBaseCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitImplicitOppositeCS(org.eclipse.ocl.xtext.basecs.@NonNull ImplicitOppositeCS object) {
+		return visitFeatureCS(object);
+	}
+
+	@Override
 	public R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object) {
 		return visitNamespaceCS(object);
 	}

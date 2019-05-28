@@ -73,6 +73,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationLiteralCS/value"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//FeatureCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//ImplicitOppositeCS"/>
     <genClasses ecoreClass="BaseCS.ecore#//ImportCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ImportCS/isAll"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ImportCS/ownedPathName"/>
@@ -150,6 +151,7 @@
     <genClasses image="false" ecoreClass="BaseCS.ecore#//ReferenceCS">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/referredKeys"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/referredOpposite"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/ownedImplicitOpposites"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//RootCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//RootCS/ownedImports"/>

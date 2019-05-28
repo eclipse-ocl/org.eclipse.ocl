@@ -104,6 +104,15 @@ public interface BaseCSFactory extends EFactory {
 	@NonNull EnumerationLiteralCS createEnumerationLiteralCS();
 
 	/**
+	 * Returns a new object of class '<em>Implicit Opposite CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Implicit Opposite CS</em>'.
+	 * @generated
+	 */
+	@NonNull ImplicitOppositeCS createImplicitOppositeCS();
+
+	/**
 	 * Returns a new object of class '<em>Import CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

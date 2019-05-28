@@ -55,6 +55,7 @@ public interface BaseCSVisitor<R>
 	R visitEnumerationCS(org.eclipse.ocl.xtext.basecs.@NonNull EnumerationCS object);
 	R visitEnumerationLiteralCS(org.eclipse.ocl.xtext.basecs.@NonNull EnumerationLiteralCS object);
 	R visitFeatureCS(org.eclipse.ocl.xtext.basecs.@NonNull FeatureCS object);
+	R visitImplicitOppositeCS(org.eclipse.ocl.xtext.basecs.@NonNull ImplicitOppositeCS object);
 	R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object);
 	R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object);
 	R visitModelElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ModelElementCS object);

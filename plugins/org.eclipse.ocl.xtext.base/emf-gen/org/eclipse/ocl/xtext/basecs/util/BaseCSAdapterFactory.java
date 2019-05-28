@@ -149,6 +149,11 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 				return createFeatureCSAdapter();
 			}
 			@Override
+			public Adapter caseImplicitOppositeCS(ImplicitOppositeCS object)
+			{
+				return createImplicitOppositeCSAdapter();
+			}
+			@Override
 			public Adapter caseImportCS(ImportCS object)
 			{
 				return createImportCSAdapter();
@@ -566,6 +571,21 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFeatureCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS <em>Implicit Opposite CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS
+	 * @generated
+	 */
+	public Adapter createImplicitOppositeCSAdapter()
+	{
 		return null;
 	}
 

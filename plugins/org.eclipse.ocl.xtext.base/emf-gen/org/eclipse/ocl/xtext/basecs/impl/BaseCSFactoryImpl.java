@@ -29,6 +29,7 @@ import org.eclipse.ocl.xtext.basecs.DetailCS;
 import org.eclipse.ocl.xtext.basecs.DocumentationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
@@ -110,30 +111,31 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 			case 8: return createDocumentationCS();
 			case 11: return createEnumerationCS();
 			case 12: return createEnumerationLiteralCS();
-			case 14: return createImportCS();
-			case 15: return createLambdaTypeCS();
-			case 17: return createModelElementRefCS();
-			case 18: return createMultiplicityBoundsCS();
-			case 20: return createMultiplicityStringCS();
-			case 23: return createOperationCS();
-			case 24: return createPackageCS();
-			case 26: return createParameterCS();
-			case 27: return createPathElementCS();
-			case 28: return createPathElementWithURICS();
-			case 29: return createPathNameCS();
-			case 31: return createPrimitiveTypeRefCS();
-			case 32: return createReferenceCS();
-			case 34: return createRootPackageCS();
-			case 35: return createSpecificationCS();
-			case 37: return createStructuredClassCS();
-			case 38: return createTemplateBindingCS();
-			case 40: return createTemplateParameterSubstitutionCS();
-			case 41: return createTemplateSignatureCS();
-			case 43: return createTuplePartCS();
-			case 44: return createTupleTypeCS();
-			case 46: return createTypeParameterCS();
-			case 50: return createTypedTypeRefCS();
-			case 52: return createWildcardTypeRefCS();
+			case 14: return createImplicitOppositeCS();
+			case 15: return createImportCS();
+			case 16: return createLambdaTypeCS();
+			case 18: return createModelElementRefCS();
+			case 19: return createMultiplicityBoundsCS();
+			case 21: return createMultiplicityStringCS();
+			case 24: return createOperationCS();
+			case 25: return createPackageCS();
+			case 27: return createParameterCS();
+			case 28: return createPathElementCS();
+			case 29: return createPathElementWithURICS();
+			case 30: return createPathNameCS();
+			case 32: return createPrimitiveTypeRefCS();
+			case 33: return createReferenceCS();
+			case 35: return createRootPackageCS();
+			case 36: return createSpecificationCS();
+			case 38: return createStructuredClassCS();
+			case 39: return createTemplateBindingCS();
+			case 41: return createTemplateParameterSubstitutionCS();
+			case 42: return createTemplateSignatureCS();
+			case 44: return createTuplePartCS();
+			case 45: return createTupleTypeCS();
+			case 47: return createTypeParameterCS();
+			case 51: return createTypedTypeRefCS();
+			case 53: return createWildcardTypeRefCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -149,9 +151,9 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 53:
+			case 54:
 				return createBigNumberFromString(eDataType, initialValue);
-			case 55:
+			case 56:
 				return createScopeFilterFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -168,9 +170,9 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 53:
+			case 54:
 				return convertBigNumberToString(eDataType, instanceValue);
-			case 55:
+			case 56:
 				return convertScopeFilterToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -270,6 +272,18 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		EnumerationLiteralCSImpl enumerationLiteralCS = new EnumerationLiteralCSImpl();
 		return enumerationLiteralCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull ImplicitOppositeCS createImplicitOppositeCS()
+	{
+		ImplicitOppositeCSImpl implicitOppositeCS = new ImplicitOppositeCSImpl();
+		return implicitOppositeCS;
 	}
 
 	/**

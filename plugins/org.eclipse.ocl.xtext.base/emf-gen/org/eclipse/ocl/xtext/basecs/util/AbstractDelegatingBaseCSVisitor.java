@@ -125,6 +125,11 @@ public abstract class AbstractDelegatingBaseCSVisitor<R, C, @NonNull D extends B
 	}
 
 	@Override
+	public R visitImplicitOppositeCS(org.eclipse.ocl.xtext.basecs.@NonNull ImplicitOppositeCS object) {
+		return delegate.visitImplicitOppositeCS(object);
+	}
+
+	@Override
 	public R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object) {
 		return delegate.visitImportCS(object);
 	}

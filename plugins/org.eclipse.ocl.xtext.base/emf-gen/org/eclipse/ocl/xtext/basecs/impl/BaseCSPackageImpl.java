@@ -35,6 +35,7 @@ import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
 import org.eclipse.ocl.xtext.basecs.FeatureCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -179,6 +180,13 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	private EClass featureCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass implicitOppositeCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -902,6 +910,17 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getImplicitOppositeCS()
+	{
+		return implicitOppositeCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getImportCS() {
 		return importCSEClass;
 	}
@@ -1510,6 +1529,17 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	public EReference getReferenceCS_ReferredOpposite()
 	{
 		return (EReference)referenceCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getReferenceCS_OwnedImplicitOpposites()
+	{
+		return (EReference)referenceCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2200,41 +2230,43 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 
 		featureCSEClass = createEClass(13);
 
-		importCSEClass = createEClass(14);
+		implicitOppositeCSEClass = createEClass(14);
+
+		importCSEClass = createEClass(15);
 		createEAttribute(importCSEClass, 6);
 		createEReference(importCSEClass, 7);
 		createEReference(importCSEClass, 8);
 
-		lambdaTypeCSEClass = createEClass(15);
+		lambdaTypeCSEClass = createEClass(16);
 		createEAttribute(lambdaTypeCSEClass, 5);
 		createEReference(lambdaTypeCSEClass, 6);
 		createEReference(lambdaTypeCSEClass, 7);
 		createEReference(lambdaTypeCSEClass, 8);
 
-		modelElementCSEClass = createEClass(16);
+		modelElementCSEClass = createEClass(17);
 		createEAttribute(modelElementCSEClass, 3);
 		createEReference(modelElementCSEClass, 4);
 
-		modelElementRefCSEClass = createEClass(17);
+		modelElementRefCSEClass = createEClass(18);
 		createEReference(modelElementRefCSEClass, 3);
 		createEReference(modelElementRefCSEClass, 4);
 
-		multiplicityBoundsCSEClass = createEClass(18);
+		multiplicityBoundsCSEClass = createEClass(19);
 		createEAttribute(multiplicityBoundsCSEClass, 3);
 		createEAttribute(multiplicityBoundsCSEClass, 4);
 
-		multiplicityCSEClass = createEClass(19);
+		multiplicityCSEClass = createEClass(20);
 		createEAttribute(multiplicityCSEClass, 2);
 
-		multiplicityStringCSEClass = createEClass(20);
+		multiplicityStringCSEClass = createEClass(21);
 		createEAttribute(multiplicityStringCSEClass, 3);
 
-		namedElementCSEClass = createEClass(21);
+		namedElementCSEClass = createEClass(22);
 		createEAttribute(namedElementCSEClass, 5);
 
-		namespaceCSEClass = createEClass(22);
+		namespaceCSEClass = createEClass(23);
 
-		operationCSEClass = createEClass(23);
+		operationCSEClass = createEClass(24);
 		createEReference(operationCSEClass, 10);
 		createEReference(operationCSEClass, 11);
 		createEReference(operationCSEClass, 12);
@@ -2242,55 +2274,56 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(operationCSEClass, 14);
 		createEReference(operationCSEClass, 15);
 
-		packageCSEClass = createEClass(24);
+		packageCSEClass = createEClass(25);
 		createEAttribute(packageCSEClass, 7);
 		createEAttribute(packageCSEClass, 8);
 		createEReference(packageCSEClass, 9);
 
-		packageOwnerCSEClass = createEClass(25);
+		packageOwnerCSEClass = createEClass(26);
 		createEReference(packageOwnerCSEClass, 5);
 
-		parameterCSEClass = createEClass(26);
+		parameterCSEClass = createEClass(27);
 		createEReference(parameterCSEClass, 9);
 
-		pathElementCSEClass = createEClass(27);
+		pathElementCSEClass = createEClass(28);
 		createEReference(pathElementCSEClass, 2);
 		createEReference(pathElementCSEClass, 3);
 		createEReference(pathElementCSEClass, 4);
 
-		pathElementWithURICSEClass = createEClass(28);
+		pathElementWithURICSEClass = createEClass(29);
 		createEAttribute(pathElementWithURICSEClass, 5);
 
-		pathNameCSEClass = createEClass(29);
+		pathNameCSEClass = createEClass(30);
 		createEReference(pathNameCSEClass, 2);
 		createEReference(pathNameCSEClass, 3);
 		createEReference(pathNameCSEClass, 4);
 		createEAttribute(pathNameCSEClass, 5);
 
-		pivotableElementCSEClass = createEClass(30);
+		pivotableElementCSEClass = createEClass(31);
 		createEReference(pivotableElementCSEClass, 2);
 
-		primitiveTypeRefCSEClass = createEClass(31);
+		primitiveTypeRefCSEClass = createEClass(32);
 		createEAttribute(primitiveTypeRefCSEClass, 4);
 
-		referenceCSEClass = createEClass(32);
+		referenceCSEClass = createEClass(33);
 		createEReference(referenceCSEClass, 12);
 		createEReference(referenceCSEClass, 13);
+		createEReference(referenceCSEClass, 14);
 
-		rootCSEClass = createEClass(33);
+		rootCSEClass = createEClass(34);
 		createEReference(rootCSEClass, 5);
 
-		rootPackageCSEClass = createEClass(34);
+		rootPackageCSEClass = createEClass(35);
 
-		specificationCSEClass = createEClass(35);
+		specificationCSEClass = createEClass(36);
 		createEAttribute(specificationCSEClass, 5);
 
-		structuralFeatureCSEClass = createEClass(36);
+		structuralFeatureCSEClass = createEClass(37);
 		createEAttribute(structuralFeatureCSEClass, 9);
 		createEReference(structuralFeatureCSEClass, 10);
 		createEReference(structuralFeatureCSEClass, 11);
 
-		structuredClassCSEClass = createEClass(37);
+		structuredClassCSEClass = createEClass(38);
 		createEAttribute(structuredClassCSEClass, 10);
 		createEAttribute(structuredClassCSEClass, 11);
 		createEReference(structuredClassCSEClass, 12);
@@ -2298,62 +2331,62 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(structuredClassCSEClass, 14);
 		createEReference(structuredClassCSEClass, 15);
 
-		templateBindingCSEClass = createEClass(38);
+		templateBindingCSEClass = createEClass(39);
 		createEReference(templateBindingCSEClass, 3);
 		createEReference(templateBindingCSEClass, 4);
 		createEReference(templateBindingCSEClass, 5);
 
-		templateParameterCSEClass = createEClass(39);
+		templateParameterCSEClass = createEClass(40);
 		createEReference(templateParameterCSEClass, 6);
 
-		templateParameterSubstitutionCSEClass = createEClass(40);
+		templateParameterSubstitutionCSEClass = createEClass(41);
 		createEReference(templateParameterSubstitutionCSEClass, 5);
 		createEReference(templateParameterSubstitutionCSEClass, 6);
 
-		templateSignatureCSEClass = createEClass(41);
+		templateSignatureCSEClass = createEClass(42);
 		createEReference(templateSignatureCSEClass, 5);
 		createEReference(templateSignatureCSEClass, 6);
 
-		templateableElementCSEClass = createEClass(42);
+		templateableElementCSEClass = createEClass(43);
 		createEReference(templateableElementCSEClass, 2);
 
-		tuplePartCSEClass = createEClass(43);
+		tuplePartCSEClass = createEClass(44);
 
-		tupleTypeCSEClass = createEClass(44);
+		tupleTypeCSEClass = createEClass(45);
 		createEAttribute(tupleTypeCSEClass, 4);
 		createEReference(tupleTypeCSEClass, 5);
 
-		typeCSEClass = createEClass(45);
+		typeCSEClass = createEClass(46);
 
-		typeParameterCSEClass = createEClass(46);
+		typeParameterCSEClass = createEClass(47);
 		createEReference(typeParameterCSEClass, 7);
 
-		typeRefCSEClass = createEClass(47);
+		typeRefCSEClass = createEClass(48);
 
-		typedElementCSEClass = createEClass(48);
+		typedElementCSEClass = createEClass(49);
 		createEAttribute(typedElementCSEClass, 6);
 		createEReference(typedElementCSEClass, 7);
 		createEAttribute(typedElementCSEClass, 8);
 
-		typedRefCSEClass = createEClass(49);
+		typedRefCSEClass = createEClass(50);
 		createEReference(typedRefCSEClass, 3);
 
-		typedTypeRefCSEClass = createEClass(50);
+		typedTypeRefCSEClass = createEClass(51);
 		createEAttribute(typedTypeRefCSEClass, 4);
 		createEReference(typedTypeRefCSEClass, 5);
 		createEReference(typedTypeRefCSEClass, 6);
 		createEReference(typedTypeRefCSEClass, 7);
 
-		visitableCSEClass = createEClass(51);
+		visitableCSEClass = createEClass(52);
 
-		wildcardTypeRefCSEClass = createEClass(52);
+		wildcardTypeRefCSEClass = createEClass(53);
 		createEReference(wildcardTypeRefCSEClass, 3);
 		createEReference(wildcardTypeRefCSEClass, 4);
 
 		// Create data types
-		bigNumberEDataType = createEDataType(53);
-		csiEDataType = createEDataType(54);
-		scopeFilterEDataType = createEDataType(55);
+		bigNumberEDataType = createEDataType(54);
+		csiEDataType = createEDataType(55);
+		scopeFilterEDataType = createEDataType(56);
 	}
 
 	/**
@@ -2404,6 +2437,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		enumerationCSEClass.getESuperTypes().add(this.getNamespaceCS());
 		enumerationLiteralCSEClass.getESuperTypes().add(this.getNamedElementCS());
 		featureCSEClass.getESuperTypes().add(this.getTypedElementCS());
+		implicitOppositeCSEClass.getESuperTypes().add(this.getFeatureCS());
 		importCSEClass.getESuperTypes().add(this.getNamespaceCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTypedRefCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTemplateableElementCS());
@@ -2499,6 +2533,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 
 		initEClass(featureCSEClass, FeatureCS.class, "FeatureCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+		initEClass(implicitOppositeCSEClass, ImplicitOppositeCS.class, "ImplicitOppositeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(importCSEClass, ImportCS.class, "ImportCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getImportCS_IsAll(), thePivotPackage.getBoolean(), "isAll", "false", 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getImportCS_OwnedPathName(), this.getPathNameCS(), null, "ownedPathName", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2579,6 +2615,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEClass(referenceCSEClass, ReferenceCS.class, "ReferenceCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getReferenceCS_ReferredKeys(), thePivotPackage.getProperty(), null, "referredKeys", null, 0, -1, ReferenceCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getReferenceCS_ReferredOpposite(), thePivotPackage.getProperty(), null, "referredOpposite", null, 0, 1, ReferenceCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getReferenceCS_OwnedImplicitOpposites(), this.getImplicitOppositeCS(), null, "ownedImplicitOpposites", null, 0, -1, ReferenceCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(rootCSEClass, RootCS.class, "RootCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getRootCS_OwnedImports(), this.getImportCS(), null, "ownedImports", null, 0, -1, RootCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
