@@ -212,6 +212,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
 				options.put(XMLResource.OPTION_URI_HANDLER, new URIHandlerImpl.PlatformSchemeAware());
 				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+				XMIUtil.retainLineWidth(options, outResource);
 				outResource.save(options);
 				if (validate) {
 					validate(outResource);

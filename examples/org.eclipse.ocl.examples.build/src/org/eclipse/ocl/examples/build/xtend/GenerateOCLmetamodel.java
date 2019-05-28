@@ -244,6 +244,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			XMIUtil.retainLineWidth(options, asResource);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
 				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");

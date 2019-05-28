@@ -74,7 +74,9 @@ public class OCLinEcoreDocument extends BaseDocument
 							//					ResourceSetImpl resourceSet = new ResourceSetImpl();
 							//					XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
 							//					ecoreResource.getContents().addAll(ecoreContents);
-							ecoreResource.save(writer, XMIUtil.createSaveOptions());
+							Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+							XMIUtil.retainLineWidth(saveOptions, ecoreResource);
+							ecoreResource.save(writer, saveOptions);
 							checkForErrors(ecoreResource);
 						}
 					}

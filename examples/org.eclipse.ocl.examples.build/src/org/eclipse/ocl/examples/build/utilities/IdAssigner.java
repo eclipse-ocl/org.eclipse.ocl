@@ -65,7 +65,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 	protected static final class LocalXMI2UMLResourceFactory extends XMI2UMLResourceFactoryImpl
 	{
 		public static final @NonNull LocalXMI2UMLResourceFactory INSTANCE = new LocalXMI2UMLResourceFactory();
-		
+
 		@Override
 		public Resource createResourceGen(URI uri) {
 			XMI2UMLResource result = new LocalXMI2UMLResource(uri);
@@ -114,8 +114,8 @@ public class IdAssigner extends AbstractWorkflowComponent
 		}
 	}
 
-	protected Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	protected Logger log = Logger.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 	protected Map<URI, URI> uriMapping = new HashMap<URI, URI>();
 	protected boolean alphabeticize = false;
 	protected boolean assignFlatIds = true;
@@ -133,6 +133,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 		uriMapping.put(fromURI, toURI);
 	}
 
+	@Override
 	public void checkConfiguration(Issues issues) {
 	}
 
@@ -153,7 +154,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 		s.append(name);
 		return s.toString();
 	}
-	
+
 	public @NonNull ResourceSet getResourceSet() {
 		ResourceSet resourceSet2 = resourceSet;
 		if (resourceSet2 == null) {
@@ -226,7 +227,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 				    	String uri = ((Model)eRoot).getURI();
 				    	if (EcorePackage.eNS_URI.equals(uri)) {
 				    		if (eObject instanceof org.eclipse.uml2.uml.Class) {
-				    			String className = ((org.eclipse.uml2.uml.Class)eObject).getName(); 
+				    			String className = ((org.eclipse.uml2.uml.Class)eObject).getName();
 				    			eReplacement = resourceSet.getEObject(URI.createURI(UMLResource.ECORE_METAMODEL_URI + "#" + className), true);
 				    		}
 				    	}
@@ -331,37 +332,39 @@ public class IdAssigner extends AbstractWorkflowComponent
 		for (UMLResource toResource : resourceMap.values()) {
 			log.info("Assigned Ids to '" + toResource.getURI() + "'");
 			try {
-				toResource.save(getSaveOptions());
+				Map<Object, Object> saveOptions = getSaveOptions();
+				XMIUtil.retainLineWidth(saveOptions, toResource);
+				toResource.save(saveOptions);
 			} catch (IOException e) {
 				throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 			}
 		}
 	}
 
-	protected Map<?, ?> getSaveOptions() {
+	protected Map<Object, Object> getSaveOptions() {
 		Map<Object, Object> result = XMIUtil.createSaveOptions();
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 		return result;
 	}
-	
+
 	/**
 	 * True to alphabeticize the UML packages and contents.
 	 */
 	public void setAlphabeticize(boolean alphabeticize) {
 		this.alphabeticize = alphabeticize;
 	}
-	
+
 	public void setAssignFlatIds(boolean assignFlatIds) {
 		this.assignFlatIds = assignFlatIds;
 	}
-	
+
 	/**
 	 * True to normalize the UML models by replacing references to an ecore.uml by Ecore.metamodel.uml - Bug 453771.
 	 */
 	public void setNormalizeEcore(boolean normalizeEcore) {
 		this.normalizeEcore = normalizeEcore;
 	}
-	
+
 	/**
 	 * Non-null to normalize the UML models by replacing references to a Ecore primitives by those prefixed by this URI.
 	 */
@@ -382,7 +385,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 	public void setRemoveProfileApplications(boolean removeProfileApplications) {
 		this.removeProfileApplications = removeProfileApplications;
 	}
-	
+
 	public void setResourceSet(@NonNull ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

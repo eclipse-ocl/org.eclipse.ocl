@@ -346,6 +346,19 @@ public class XMIUtil
 	}
 
 	/**
+	 * Adjust saveOptions to use the line width from xmlResource if there is one.
+	 * @since 1.8
+	 */
+	public static void retainLineWidth(Map<Object, Object> saveOptions, Resource resource) {
+	    if ((saveOptions != null) && (resource instanceof XMLResource)) {
+	    	Object lineWidth = ((XMLResource)resource).getDefaultSaveOptions().get(XMLResource.OPTION_LINE_WIDTH);
+			if (lineWidth != null) {
+				saveOptions.put(XMLResource.OPTION_LINE_WIDTH, lineWidth);
+			}
+	    }
+	}
+
+	/**
 	 * Assign the xmi:ids to the EObjects within xmlResource.
 	 *
 	 * @since 1.3

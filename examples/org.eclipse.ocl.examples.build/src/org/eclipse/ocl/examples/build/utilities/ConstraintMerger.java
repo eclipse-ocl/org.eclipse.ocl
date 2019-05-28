@@ -220,7 +220,9 @@ public class ConstraintMerger extends AbstractProjectComponent
 				Resource newEcoreResource = AS2Ecore.createResource(environmentFactory, modifiedPrimaryASResource, ecoreURI, options);
 				//				projectDescriptor.configure(ecoreResource2.getResourceSet(), StandaloneProjectMap.LoadBothStrategy.INSTANCE, null);
 				XMIUtil.assignIds(newEcoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
-				newEcoreResource.save(XMIUtil.createSaveOptions()); //getSaveOptions());
+				Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+				XMIUtil.retainLineWidth(saveOptions, newEcoreResource);
+				newEcoreResource.save(saveOptions); //getSaveOptions());
 				//				resourceSet.getResources().remove(ecoreResource2);
 			}
 			ocl.dispose();

@@ -153,8 +153,9 @@ public class GenmodelReloader extends AbstractProjectComponent
 			//			    URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 			//				ecoreResource.setURI(ecoreURI);		// change file:... to platform:...
 			//		    }
-			Map<?, ?> genModelSaveOptions = getGenModelSaveOptions();
+			Map<Object, Object> genModelSaveOptions = getGenModelSaveOptions();
 			for (Resource resource : resources) {
+				XMIUtil.retainLineWidth(genModelSaveOptions, resource);
 				resource.save(genModelSaveOptions);
 			}
 		} catch (RuntimeException e) {
@@ -199,7 +200,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 		return resources;
 	}
 
-	protected Map<?, ?> getGenModelSaveOptions() {
+	protected Map<Object, Object> getGenModelSaveOptions() {
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 		//		result.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));

@@ -50,7 +50,7 @@ public class ResourceRenamer extends AbstractProjectComponent
 		assert oldTo == null;
 	}
 
-	protected Map<?, ?> getSaveOptions() {
+	protected Map<Object, Object> getSaveOptions() {
 		Map<Object, Object> result = XMIUtil.createSaveOptions();
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 		return result;
@@ -89,7 +89,9 @@ public class ResourceRenamer extends AbstractProjectComponent
 			for (@NonNull String from : froms) {
 				Resource resource = from2resource.get(from);
 				assert resource != null;
-				resource.save(getSaveOptions());
+				Map<Object, Object> saveOptions = getSaveOptions();
+				XMIUtil.retainLineWidth(saveOptions, resource);
+				resource.save(saveOptions);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);

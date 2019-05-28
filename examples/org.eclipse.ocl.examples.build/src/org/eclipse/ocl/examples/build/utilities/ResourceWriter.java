@@ -52,7 +52,7 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 		return contentTypeIdentifier;
 	}
 
-	protected Map<?, ?> getSaveOptions() {
+	protected Map<Object, Object> getSaveOptions() {
 		Map<Object, Object> result = XMIUtil.createSaveOptions();
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 		return result;
@@ -67,6 +67,7 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 		ResourceSet resourceSet = ClassUtil.nonNullState(getResourceSet());
 		Resource inputResource = (Resource) ctx.get(getModelSlot());
 		try {
+			Map<Object, Object> saveOptions = getSaveOptions();
 			if (uri != null) {
 				URI fileURI = URI.createPlatformResourceURI(uri, true);
 				log.info("Writing '" + fileURI + "'");
@@ -90,13 +91,14 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 				if (eObject2xmiId != null) {
 					XMIUtil.setIds((XMLResource) saveResource, eObject2xmiId);
 				}
-				saveResource.save(getSaveOptions());
+				XMIUtil.retainLineWidth(saveOptions, saveResource);
+				saveResource.save(saveOptions);
 				inputResource.getContents().addAll(saveResource.getContents());
 				saveResource.unload();
 			}
 			else {
 				log.info("Writing '" + inputResource.getURI() + "'");
-				inputResource.save(getSaveOptions());
+				inputResource.save(saveOptions);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);

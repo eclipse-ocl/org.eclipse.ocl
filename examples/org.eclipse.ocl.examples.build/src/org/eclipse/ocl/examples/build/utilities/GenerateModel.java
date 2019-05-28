@@ -43,6 +43,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 //import org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage;
 
@@ -137,6 +138,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 			saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 			log.info("Saving reconciled '" + fileURI + "'");
 			usedGenPackages.removeAll(allOldUsedGenPackages);
+			XMIUtil.retainLineWidth(saveOptions, resource);
 			resource.save(saveOptions);
 			usedGenPackages.addAll(allOldUsedGenPackages);
 		} catch (IOException e) {
