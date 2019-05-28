@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="opposites" nsURI="http://opposites" nsPrefix="opp">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="From">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenTo" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="hiddenFrom"/>
+        <details key="upper" value="5"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tos" upperBound="-1" eType="#//To"
+        eOpposite="#//To/froms"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//To" eOpposite="#//To/from"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="To">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//From" eOpposite="#//From/to"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="froms" upperBound="-1"
+        eType="#//From" eOpposite="#//From/tos"/>
+  </eClassifiers>
+</ecore:EPackage>

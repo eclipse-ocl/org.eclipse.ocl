@@ -631,6 +631,12 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testSerialize_Opposites() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		doSerialize(ocl, getTestModelURI("models/ecore/Opposites.ecore"));
+		ocl.dispose();
+	}
+
 	/*
 	 * Requires support for lower bounds on generic types
 	 * and better resolution of EAnnotation.references
