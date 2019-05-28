@@ -73,7 +73,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	@Override
 	public TemplateSignatureCS getOwningSignature()
 	{
-		if (eContainerFeatureID() != (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (TemplateSignatureCS)eInternalContainer();
 	}
 
@@ -84,7 +84,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	 */
 	public NotificationChain basicSetOwningSignature(TemplateSignatureCS newOwningSignature, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningSignature, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningSignature, 6, msgs);
 		return msgs;
 	}
 
@@ -96,7 +96,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	@Override
 	public void setOwningSignature(TemplateSignatureCS newOwningSignature)
 	{
-		if (newOwningSignature != eInternalContainer() || (eContainerFeatureID() != (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0) && newOwningSignature != null))
+		if (newOwningSignature != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningSignature != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningSignature))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -104,12 +104,12 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningSignature != null)
-				msgs = ((InternalEObject)newOwningSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwningSignature).eInverseAdd(this, 5, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwningSignature(newOwningSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, newOwningSignature, newOwningSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningSignature, newOwningSignature));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningSignature((TemplateSignatureCS)otherEnd, msgs);
@@ -140,7 +140,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return basicSetOwningSignature(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -156,8 +156,8 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (eContainerFeatureID())
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
-				return eInternalContainer().eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, TemplateSignatureCS.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 5, TemplateSignatureCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -172,7 +172,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwningSignature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -188,7 +188,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwningSignature((TemplateSignatureCS)newValue);
 				return;
 		}
@@ -205,7 +205,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwningSignature((TemplateSignatureCS)null);
 				return;
 		}
@@ -222,7 +222,7 @@ public abstract class TemplateParameterCSImpl extends NamedElementCSImpl impleme
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwningSignature() != null;
 		}
 		return super.eIsSet(featureID);

@@ -100,7 +100,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public PathNameCS getOwningPathName()
 	{
-		if (eContainerFeatureID() != (ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (3)) return null;
 		return (PathNameCS)eInternalContainer();
 	}
 
@@ -111,7 +111,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	 */
 	public NotificationChain basicSetOwningPathName(PathNameCS newOwningPathName, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPathName, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPathName, 3, msgs);
 		return msgs;
 	}
 
@@ -123,7 +123,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setOwningPathName(PathNameCS newOwningPathName)
 	{
-		if (newOwningPathName != eInternalContainer() || (eContainerFeatureID() != (ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1) && newOwningPathName != null))
+		if (newOwningPathName != eInternalContainer() || (eContainerFeatureID() != (3) && newOwningPathName != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPathName))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -131,12 +131,12 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPathName != null)
-				msgs = ((InternalEObject)newOwningPathName).eInverseAdd(this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, PathNameCS.class, msgs);
+				msgs = ((InternalEObject)newOwningPathName).eInverseAdd(this, 3, PathNameCS.class, msgs);
 			msgs = basicSetOwningPathName(newOwningPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, newOwningPathName, newOwningPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, newOwningPathName, newOwningPathName));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2, oldReferredElement, referredElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldReferredElement, referredElement));
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			if (elementType != oldElementType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldElementType, elementType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldElementType, elementType));
 			}
 		}
 		return elementType;
@@ -195,7 +195,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		EClassifier oldElementType = elementType;
 		elementType = newElementType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldElementType, elementType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldElementType, elementType));
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPathName((PathNameCS)otherEnd, msgs);
@@ -226,7 +226,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return basicSetOwningPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -242,8 +242,8 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (eContainerFeatureID())
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, PathNameCS.class, msgs);
+			case 3:
+				return eInternalContainer().eInverseRemove(this, 3, PathNameCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -258,12 +258,12 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				if (resolve) return getElementType();
 				return basicGetElementType();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return getOwningPathName();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				if (resolve) return getReferredElement();
 				return basicGetReferredElement();
 		}
@@ -280,13 +280,13 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setElementType((EClassifier)newValue);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				setOwningPathName((PathNameCS)newValue);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				setReferredElement((Element)newValue);
 				return;
 		}
@@ -303,13 +303,13 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setElementType((EClassifier)null);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				setOwningPathName((PathNameCS)null);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				setReferredElement((Element)null);
 				return;
 		}
@@ -326,11 +326,11 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return elementType != null;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return getOwningPathName() != null;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				return referredElement != null;
 		}
 		return super.eIsSet(featureID);
@@ -359,7 +359,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			if (referredElement != oldReferredElement)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2, oldReferredElement, referredElement));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldReferredElement, referredElement));
 			}
 		}
 		return referredElement;

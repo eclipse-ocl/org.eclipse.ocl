@@ -130,7 +130,7 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 		String oldStereotype = stereotype;
 		stereotype = newStereotype;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2, oldStereotype, stereotype));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldStereotype, stereotype));
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -173,14 +173,14 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedSpecification, newOwnedSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 		ownedMessageSpecification = newOwnedMessageSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedMessageSpecification, newOwnedMessageSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldOwnedMessageSpecification, newOwnedMessageSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -223,14 +223,14 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 		{
 			NotificationChain msgs = null;
 			if (ownedMessageSpecification != null)
-				msgs = ((InternalEObject)ownedMessageSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedMessageSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newOwnedMessageSpecification != null)
-				msgs = ((InternalEObject)newOwnedMessageSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedMessageSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetOwnedMessageSpecification(newOwnedMessageSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedMessageSpecification, newOwnedMessageSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwnedMessageSpecification, newOwnedMessageSpecification));
 	}
 
 	/**
@@ -253,9 +253,9 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return basicSetOwnedMessageSpecification(null, msgs);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetOwnedSpecification(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -271,11 +271,11 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwnedMessageSpecification();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedSpecification();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getStereotype();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -291,13 +291,13 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwnedMessageSpecification((SpecificationCS)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedSpecification((SpecificationCS)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				setStereotype((String)newValue);
 				return;
 		}
@@ -314,13 +314,13 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwnedMessageSpecification((SpecificationCS)null);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedSpecification((SpecificationCS)null);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				setStereotype(STEREOTYPE_EDEFAULT);
 				return;
 		}
@@ -337,11 +337,11 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ownedMessageSpecification != null;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return ownedSpecification != null;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return STEREOTYPE_EDEFAULT == null ? stereotype != null : !STEREOTYPE_EDEFAULT.equals(stereotype);
 		}
 		return super.eIsSet(featureID);

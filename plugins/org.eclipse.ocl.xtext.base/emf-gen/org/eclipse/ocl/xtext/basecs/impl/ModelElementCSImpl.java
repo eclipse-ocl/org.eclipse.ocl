@@ -108,7 +108,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	{
 		if (ownedAnnotations == null)
 		{
-			ownedAnnotations = new EObjectContainmentEList<AnnotationElementCS>(AnnotationElementCS.class, this, PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1);
+			ownedAnnotations = new EObjectContainmentEList<AnnotationElementCS>(AnnotationElementCS.class, this, 4);
 		}
 		return ownedAnnotations;
 	}
@@ -133,7 +133,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 		String oldOriginalXmiId = originalXmiId;
 		originalXmiId = newOriginalXmiId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0, oldOriginalXmiId, originalXmiId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldOriginalXmiId, originalXmiId));
 	}
 
 	/**
@@ -155,7 +155,7 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 4:
 				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -170,9 +170,9 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 3:
 				return getOriginalXmiId();
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 4:
 				return getOwnedAnnotations();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -188,10 +188,10 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOriginalXmiId((String)newValue);
 				return;
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 4:
 				getOwnedAnnotations().clear();
 				getOwnedAnnotations().addAll((Collection<? extends AnnotationElementCS>)newValue);
 				return;
@@ -208,10 +208,10 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOriginalXmiId(ORIGINAL_XMI_ID_EDEFAULT);
 				return;
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 4:
 				getOwnedAnnotations().clear();
 				return;
 		}
@@ -227,9 +227,9 @@ public abstract class ModelElementCSImpl extends PivotableElementCSImpl implemen
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 3:
 				return ORIGINAL_XMI_ID_EDEFAULT == null ? originalXmiId != null : !ORIGINAL_XMI_ID_EDEFAULT.equals(originalXmiId);
-			case PivotableElementCSImpl.PIVOTABLE_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 4:
 				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
 		}
 		return super.eIsSet(featureID);

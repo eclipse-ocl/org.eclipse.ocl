@@ -93,7 +93,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		Element oldPivot = pivot;
 		pivot = newPivot;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldPivot, pivot));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPivot, pivot));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return getPivot();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +122,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setPivot((Element)newValue);
 				return;
 		}
@@ -139,7 +139,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setPivot((Element)null);
 				return;
 		}
@@ -156,7 +156,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return pivot != null;
 		}
 		return super.eIsSet(featureID);

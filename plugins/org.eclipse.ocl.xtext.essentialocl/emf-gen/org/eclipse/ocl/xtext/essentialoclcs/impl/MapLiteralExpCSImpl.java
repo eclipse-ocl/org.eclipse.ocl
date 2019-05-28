@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -111,7 +112,7 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<MapLiteralPartCS>(MapLiteralPartCS.class, this, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
+			ownedParts = new EObjectContainmentEList<MapLiteralPartCS>(MapLiteralPartCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		}
 		return ownedParts;
 	}
@@ -138,7 +139,7 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -156,14 +157,14 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -176,9 +177,9 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -194,9 +195,9 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return getOwnedParts();
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -213,11 +214,11 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends MapLiteralPartCS>)newValue);
 				return;
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedType((MapTypeCS)newValue);
 				return;
 		}
@@ -234,10 +235,10 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				getOwnedParts().clear();
 				return;
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedType((MapTypeCS)null);
 				return;
 		}
@@ -254,9 +255,9 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	{
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return ownedParts != null && !ownedParts.isEmpty();
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return ownedType != null;
 		}
 		return super.eIsSet(featureID);

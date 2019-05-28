@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
@@ -225,7 +226,7 @@ public class NameExpCSImpl
 		TypeNameExpCS oldTypeName = typeName;
 		typeName = newTypeName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1, oldTypeName, typeName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19, oldTypeName, typeName));
 	}
 
 	/**
@@ -238,7 +239,7 @@ public class NameExpCSImpl
 	{
 		if (parts == null)
 		{
-			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0);
+			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18);
 		}
 		return parts;
 	}
@@ -265,7 +266,7 @@ public class NameExpCSImpl
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20, oldValue, value));
 	}
 
 	/**
@@ -278,7 +279,7 @@ public class NameExpCSImpl
 	{
 		if (coIterators == null)
 		{
-			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3);
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21);
 		}
 		return coIterators;
 	}
@@ -305,7 +306,7 @@ public class NameExpCSImpl
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -318,7 +319,7 @@ public class NameExpCSImpl
 	{
 		if (iterators == null)
 		{
-			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4);
+			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22);
 		}
 		return iterators;
 	}
@@ -333,7 +334,7 @@ public class NameExpCSImpl
 	{
 		if (accumulators == null)
 		{
-			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6);
+			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24);
 		}
 		return accumulators;
 	}
@@ -360,7 +361,7 @@ public class NameExpCSImpl
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -385,7 +386,7 @@ public class NameExpCSImpl
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -410,7 +411,7 @@ public class NameExpCSImpl
 		Variable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -453,25 +454,25 @@ public class NameExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				return getParts();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				return getTypeName();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				return getValue();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21:
 				return getCoIterators();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22:
 				return getIterators();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23:
 				return getReferredIteration();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24:
 				return getAccumulators();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25:
 				return getReferredOperation();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26:
 				return getReferredProperty();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -487,38 +488,38 @@ public class NameExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				getParts().clear();
 				getParts().addAll((Collection<? extends ShadowPartCS>)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				setTypeName((TypeNameExpCS)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				setValue((String)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23:
 				setReferredIteration((Iteration)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24:
 				getAccumulators().clear();
 				getAccumulators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25:
 				setReferredOperation((Operation)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26:
 				setReferredProperty((Property)newValue);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27:
 				setReferredVariable((Variable)newValue);
 				return;
 		}
@@ -534,34 +535,34 @@ public class NameExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				getParts().clear();
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				setTypeName((TypeNameExpCS)null);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				setValue(VALUE_EDEFAULT);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21:
 				getCoIterators().clear();
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22:
 				getIterators().clear();
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23:
 				setReferredIteration((Iteration)null);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24:
 				getAccumulators().clear();
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25:
 				setReferredOperation((Operation)null);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26:
 				setReferredProperty((Property)null);
 				return;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27:
 				setReferredVariable((Variable)null);
 				return;
 		}
@@ -577,25 +578,25 @@ public class NameExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				return parts != null && !parts.isEmpty();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				return typeName != null;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21:
 				return coIterators != null && !coIterators.isEmpty();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22:
 				return iterators != null && !iterators.isEmpty();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23:
 				return referredIteration != null;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24:
 				return accumulators != null && !accumulators.isEmpty();
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25:
 				return referredOperation != null;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26:
 				return referredProperty != null;
-			case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);
@@ -613,9 +614,9 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0;
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1;
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17;
 				default: return -1;
 			}
 		}
@@ -623,9 +624,9 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1;
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19;
 				default: return -1;
 			}
 		}
@@ -633,7 +634,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6: return IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20;
 				default: return -1;
 			}
 		}
@@ -641,7 +642,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17;
 				default: return -1;
 			}
 		}
@@ -649,7 +650,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8: return CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17;
 				default: return -1;
 			}
 		}
@@ -657,7 +658,7 @@ public class NameExpCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9: return AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15;
 				default: return -1;
 			}
 		}
@@ -676,9 +677,9 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 0;
-				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 1;
-				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 2;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20;
 				default: return -1;
 			}
 		}
@@ -686,9 +687,9 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 3;
-				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 4;
-				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 5;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 21;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 22;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 23;
 				default: return -1;
 			}
 		}
@@ -696,7 +697,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 6;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 24;
 				default: return -1;
 			}
 		}
@@ -704,7 +705,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 7;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 25;
 				default: return -1;
 			}
 		}
@@ -712,7 +713,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 8;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 26;
 				default: return -1;
 			}
 		}
@@ -720,7 +721,7 @@ public class NameExpCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0: return AssociationClassCallExpCSImpl.ASSOCIATION_CLASS_CALL_EXP_CS_FEATURE_COUNT + 9;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 27;
 				default: return -1;
 			}
 		}

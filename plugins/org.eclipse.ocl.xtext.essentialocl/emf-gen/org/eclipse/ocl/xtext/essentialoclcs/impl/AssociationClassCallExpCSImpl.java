@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.AssociationClassCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 
@@ -93,7 +94,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 		AssociationClass oldReferredAssociation = referredAssociation;
 		referredAssociation = newReferredAssociation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredAssociation, referredAssociation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17, oldReferredAssociation, referredAssociation));
 	}
 
 	/**
@@ -106,7 +107,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return getReferredAssociation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +123,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredAssociation((AssociationClass)newValue);
 				return;
 		}
@@ -139,7 +140,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredAssociation((AssociationClass)null);
 				return;
 		}
@@ -156,7 +157,7 @@ public abstract class AssociationClassCallExpCSImpl extends CallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return referredAssociation != null;
 		}
 		return super.eIsSet(featureID);

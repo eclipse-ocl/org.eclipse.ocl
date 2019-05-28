@@ -105,7 +105,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 		String oldExprString = exprString;
 		exprString = newExprString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldExprString, exprString));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldExprString, exprString));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getExprString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -144,7 +144,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setExprString((String)newValue);
 				return;
 		}
@@ -161,7 +161,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setExprString(EXPR_STRING_EDEFAULT);
 				return;
 		}
@@ -178,7 +178,7 @@ public class SpecificationCSImpl extends ModelElementCSImpl implements Specifica
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return EXPR_STRING_EDEFAULT == null ? exprString != null : !EXPR_STRING_EDEFAULT.equals(exprString);
 		}
 		return super.eIsSet(featureID);

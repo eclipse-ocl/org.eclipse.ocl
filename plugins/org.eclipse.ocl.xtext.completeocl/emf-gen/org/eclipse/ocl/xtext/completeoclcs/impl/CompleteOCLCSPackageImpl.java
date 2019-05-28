@@ -608,10 +608,10 @@ implements CompleteOCLCSPackage {
 
 		// Create classes and their features
 		classifierContextDeclCSEClass = createEClass(0);
-		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1);
-		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2);
-		createEReference(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3);
-		createEAttribute(classifierContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4);
+		createEReference(classifierContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
+		createEReference(classifierContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
+		createEReference(classifierContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
+		createEAttribute(classifierContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
 
 		completeOCLDocumentCSEClass = createEClass(1);
 		createEReference(completeOCLDocumentCSEClass, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1);
@@ -625,35 +625,35 @@ implements CompleteOCLCSPackage {
 		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
 
 		defOperationCSEClass = createEClass(4);
-		createEReference(defOperationCSEClass, DefCSImpl.DEF_CS_FEATURE_COUNT + 1);
+		createEReference(defOperationCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4);
 
 		defPropertyCSEClass = createEClass(5);
 
 		featureContextDeclCSEClass = createEClass(6);
-		createEReference(featureContextDeclCSEClass, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0);
+		createEReference(featureContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 
 		oclMessageArgCSEClass = createEClass(7);
 
 		operationContextDeclCSEClass = createEClass(8);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 4);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 5);
-		createEReference(operationContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 6);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7);
+		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
 		packageDeclarationCSEClass = createEClass(9);
-		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0);
-		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1);
-		createEReference(packageDeclarationCSEClass, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2);
+		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
+		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
+		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 
 		pathNameDeclCSEClass = createEClass(10);
 		createEReference(pathNameDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 
 		propertyContextDeclCSEClass = createEClass(11);
-		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 0);
-		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 1);
-		createEReference(propertyContextDeclCSEClass, FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2);
+		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
+		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
+		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
 	}
 
 	/**

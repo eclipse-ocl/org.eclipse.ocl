@@ -87,7 +87,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		if (ownedPackages == null)
 		{
-			ownedPackages = new EObjectContainmentEList<PackageCS>(PackageCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedPackages = new EObjectContainmentEList<PackageCS>(PackageCS.class, this, 5);
 		}
 		return ownedPackages;
 	}
@@ -102,7 +102,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -118,7 +118,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedPackages();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -135,7 +135,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends PackageCS>)newValue);
 				return;
@@ -153,7 +153,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedPackages().clear();
 				return;
 		}
@@ -170,7 +170,7 @@ public abstract class PackageOwnerCSImpl extends ModelElementCSImpl implements P
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ownedPackages != null && !ownedPackages.isEmpty();
 		}
 		return super.eIsSet(featureID);

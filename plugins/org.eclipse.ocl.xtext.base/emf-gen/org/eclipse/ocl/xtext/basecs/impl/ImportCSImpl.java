@@ -115,7 +115,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -133,14 +133,14 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		boolean oldIsAll = isAll;
 		isAll = newIsAll;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0, oldIsAll, isAll));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsAll, isAll));
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	{
 		switch (featureID)
 		{
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -203,11 +203,11 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
+			case 6:
 				return isIsAll();
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedPathName();
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getReferredNamespace();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -222,10 +222,10 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
+			case 6:
 				setIsAll((Boolean)newValue);
 				return;
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -241,10 +241,10 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
+			case 6:
 				setIsAll(IS_ALL_EDEFAULT);
 				return;
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -260,11 +260,11 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0:
+			case 6:
 				return isAll != IS_ALL_EDEFAULT;
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 1:
+			case 7:
 				return ownedPathName != null;
-			case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getReferredNamespace() != null;
 		}
 		return super.eIsSet(featureID);

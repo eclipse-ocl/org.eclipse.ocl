@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.impl.ContextLessElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CurlyBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -184,7 +185,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -202,14 +203,14 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -234,7 +235,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		boolean oldIsPre = isPre;
 		isPre = newIsPre;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldIsPre, isPre));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8, oldIsPre, isPre));
 	}
 
 	/**
@@ -259,7 +260,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		ownedCurlyBracketedClause = newOwnedCurlyBracketedClause;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedCurlyBracketedClause, newOwnedCurlyBracketedClause);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, oldOwnedCurlyBracketedClause, newOwnedCurlyBracketedClause);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -284,7 +285,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedCurlyBracketedClause, newOwnedCurlyBracketedClause));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, newOwnedCurlyBracketedClause, newOwnedCurlyBracketedClause));
 	}
 
 	/**
@@ -309,7 +310,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		ownedRoundBracketedClause = newOwnedRoundBracketedClause;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -334,7 +335,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
 	}
 
 	/**
@@ -347,7 +348,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		if (ownedSquareBracketedClauses == null)
 		{
-			ownedSquareBracketedClauses = new EObjectContainmentWithInverseEList<SquareBracketedClauseCS>(SquareBracketedClauseCS.class, this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
+			ownedSquareBracketedClauses = new EObjectContainmentWithInverseEList<SquareBracketedClauseCS>(SquareBracketedClauseCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedSquareBracketedClauses;
 	}
@@ -374,7 +375,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		Type oldSourceType = sourceType;
 		sourceType = newSourceType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 5, oldSourceType, sourceType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 13, oldSourceType, sourceType));
 	}
 
 	/**
@@ -399,7 +400,7 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 		Type oldSourceTypeValue = sourceTypeValue;
 		sourceTypeValue = newSourceTypeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 6, oldSourceTypeValue, sourceTypeValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 14, oldSourceTypeValue, sourceTypeValue));
 	}
 
 	/**
@@ -423,15 +424,15 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				if (ownedCurlyBracketedClause != null)
-					msgs = ((InternalEObject)ownedCurlyBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
+					msgs = ((InternalEObject)ownedCurlyBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 				return basicSetOwnedCurlyBracketedClause((CurlyBracketedClauseCS)otherEnd, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				if (ownedRoundBracketedClause != null)
-					msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 3), null, msgs);
+					msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11), null, msgs);
 				return basicSetOwnedRoundBracketedClause((RoundBracketedClauseCS)otherEnd, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSquareBracketedClauses()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -447,13 +448,13 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return basicSetOwnedCurlyBracketedClause(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return basicSetOwnedPathName(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return basicSetOwnedRoundBracketedClause(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return ((InternalEList<?>)getOwnedSquareBracketedClauses()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -469,19 +470,19 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return isIsPre();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return getOwnedCurlyBracketedClause();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return getOwnedPathName();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return getOwnedRoundBracketedClause();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return getOwnedSquareBracketedClauses();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 13:
 				return getSourceType();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 14:
 				return getSourceTypeValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -498,26 +499,26 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setIsPre((Boolean)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedCurlyBracketedClause((CurlyBracketedClauseCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				getOwnedSquareBracketedClauses().clear();
 				getOwnedSquareBracketedClauses().addAll((Collection<? extends SquareBracketedClauseCS>)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 13:
 				setSourceType((Type)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 14:
 				setSourceTypeValue((Type)newValue);
 				return;
 		}
@@ -534,25 +535,25 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setIsPre(IS_PRE_EDEFAULT);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedCurlyBracketedClause((CurlyBracketedClauseCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				setOwnedPathName((PathNameCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				getOwnedSquareBracketedClauses().clear();
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 13:
 				setSourceType((Type)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 14:
 				setSourceTypeValue((Type)null);
 				return;
 		}
@@ -569,19 +570,19 @@ public abstract class AbstractNameExpCSImpl extends ExpCSImpl implements Abstrac
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return isPre != IS_PRE_EDEFAULT;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return ownedCurlyBracketedClause != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return ownedPathName != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return ownedRoundBracketedClause != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return ownedSquareBracketedClauses != null && !ownedSquareBracketedClauses.isEmpty();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 5:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 13:
 				return sourceType != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 6:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 14:
 				return sourceTypeValue != null;
 		}
 		return super.eIsSet(featureID);

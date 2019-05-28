@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
@@ -111,7 +112,7 @@ public class InfixExpCSImpl
 		ownedLeft = newOwnedLeft;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1, oldOwnedLeft, newOwnedLeft);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12, oldOwnedLeft, newOwnedLeft);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -129,14 +130,14 @@ public class InfixExpCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedLeft != null)
-				msgs = ((InternalEObject)ownedLeft).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedLeft).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12), null, msgs);
 			if (newOwnedLeft != null)
-				msgs = ((InternalEObject)newOwnedLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12), null, msgs);
 			msgs = basicSetOwnedLeft(newOwnedLeft, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1, newOwnedLeft, newOwnedLeft));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12, newOwnedLeft, newOwnedLeft));
 	}
 
 	/**
@@ -149,7 +150,7 @@ public class InfixExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return basicSetOwnedLeft(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -164,9 +165,9 @@ public class InfixExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return getArgument();
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return getOwnedLeft();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -181,7 +182,7 @@ public class InfixExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				setOwnedLeft((ExpCS)newValue);
 				return;
 		}
@@ -197,7 +198,7 @@ public class InfixExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				setOwnedLeft((ExpCS)null);
 				return;
 		}
@@ -213,9 +214,9 @@ public class InfixExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return argument != null;
-			case OperatorExpCSImpl.OPERATOR_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return ownedLeft != null;
 		}
 		return super.eIsSet(featureID);

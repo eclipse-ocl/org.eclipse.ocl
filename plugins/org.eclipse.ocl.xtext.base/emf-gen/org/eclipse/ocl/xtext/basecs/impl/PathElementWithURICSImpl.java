@@ -105,7 +105,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 		String oldUri = uri;
 		uri = newUri;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0, oldUri, uri));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldUri, uri));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getUri();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -144,7 +144,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setUri((String)newValue);
 				return;
 		}
@@ -161,7 +161,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setUri(URI_EDEFAULT);
 				return;
 		}
@@ -178,7 +178,7 @@ public class PathElementWithURICSImpl extends PathElementCSImpl implements PathE
 	{
 		switch (featureID)
 		{
-			case PathElementCSImpl.PATH_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
 		}
 		return super.eIsSet(featureID);

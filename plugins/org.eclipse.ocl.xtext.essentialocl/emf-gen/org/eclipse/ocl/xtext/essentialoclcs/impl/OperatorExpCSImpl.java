@@ -137,7 +137,7 @@ implements OperatorExpCS {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8, oldName, name));
 	}
 
 	/**
@@ -162,7 +162,7 @@ implements OperatorExpCS {
 		ownedRight = newOwnedRight;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedRight, newOwnedRight);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, oldOwnedRight, newOwnedRight);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -180,14 +180,14 @@ implements OperatorExpCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedRight != null)
-				msgs = ((InternalEObject)ownedRight).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedRight).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			if (newOwnedRight != null)
-				msgs = ((InternalEObject)newOwnedRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			msgs = basicSetOwnedRight(newOwnedRight, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedRight, newOwnedRight));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, newOwnedRight, newOwnedRight));
 	}
 
 	/**
@@ -199,11 +199,11 @@ implements OperatorExpCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return getName();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return getOwnedRight();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -218,10 +218,10 @@ implements OperatorExpCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setName((String)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedRight((ExpCS)newValue);
 				return;
 		}
@@ -237,10 +237,10 @@ implements OperatorExpCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setName(NAME_EDEFAULT);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedRight((ExpCS)null);
 				return;
 		}
@@ -256,11 +256,11 @@ implements OperatorExpCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return ownedRight != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return source != null;
 		}
 		return super.eIsSet(featureID);
@@ -277,7 +277,7 @@ implements OperatorExpCS {
 		{
 			switch (derivedFeatureID)
 			{
-				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8: return 5;
 				default: return -1;
 			}
 		}
@@ -295,7 +295,7 @@ implements OperatorExpCS {
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 0;
+				case 5: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8;
 				default: return -1;
 			}
 		}
@@ -312,7 +312,7 @@ implements OperatorExpCS {
 	{
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return basicSetOwnedRight(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

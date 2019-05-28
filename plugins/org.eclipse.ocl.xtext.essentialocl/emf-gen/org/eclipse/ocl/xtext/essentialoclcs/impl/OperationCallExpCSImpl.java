@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.OperationCallExpCS;
 
@@ -93,7 +94,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -106,7 +107,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return getReferredOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +123,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -139,7 +140,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredOperation((Operation)null);
 				return;
 		}
@@ -156,7 +157,7 @@ public abstract class OperationCallExpCSImpl extends CallExpCSImpl implements Op
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return referredOperation != null;
 		}
 		return super.eIsSet(featureID);

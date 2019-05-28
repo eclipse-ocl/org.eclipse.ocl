@@ -136,7 +136,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		if (ownedPathElements == null)
 		{
-			ownedPathElements = new EObjectContainmentWithInverseEList<PathElementCS>(PathElementCS.class, this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1);
+			ownedPathElements = new EObjectContainmentWithInverseEList<PathElementCS>(PathElementCS.class, this, 3, 3);
 		}
 		return ownedPathElements;
 	}
@@ -151,7 +151,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return ((InternalEList<?>)getOwnedPathElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -167,14 +167,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return getContext();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return getOwnedPathElements();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				if (resolve) return getReferredElement();
 				return basicGetReferredElement();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
+			case 5:
 				return getScopeFilter();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -191,14 +191,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setContext((ElementCS)newValue);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				getOwnedPathElements().clear();
 				getOwnedPathElements().addAll((Collection<? extends PathElementCS>)newValue);
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
+			case 5:
 				setScopeFilter((ScopeFilter)newValue);
 				return;
 		}
@@ -215,13 +215,13 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				unsetContext();
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				getOwnedPathElements().clear();
 				return;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
+			case 5:
 				setScopeFilter(SCOPE_FILTER_EDEFAULT);
 				return;
 		}
@@ -238,13 +238,13 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return isSetContext();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return ownedPathElements != null && !ownedPathElements.isEmpty();
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2:
+			case 4:
 				return basicGetReferredElement() != null;
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3:
+			case 5:
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
 		}
 		return super.eIsSet(featureID);
@@ -270,7 +270,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1:
+			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPathElements()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -300,7 +300,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		boolean oldContextESet = contextESet;
 		contextESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldContext, context, !oldContextESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldContext, context, !oldContextESet));
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		context = null;
 		contextESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldContext, null, oldContextESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 2, oldContext, null, oldContextESet));
 	}
 
 	/**
@@ -352,7 +352,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		ScopeFilter oldScopeFilter = scopeFilter;
 		scopeFilter = newScopeFilter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3, oldScopeFilter, scopeFilter));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldScopeFilter, scopeFilter));
 	}
 
 	/**

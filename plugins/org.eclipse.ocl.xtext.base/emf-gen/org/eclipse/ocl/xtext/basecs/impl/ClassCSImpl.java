@@ -131,7 +131,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -148,14 +148,14 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 6, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 6, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	 */
 	@Override
 	public PackageCS getOwningPackage() {
-		if (eContainerFeatureID() != (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3)) return null;
+		if (eContainerFeatureID() != (9)) return null;
 		return (PackageCS)eInternalContainer();
 	}
 
@@ -176,7 +176,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	 */
 	public NotificationChain basicSetOwningPackage(PackageCS newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, 9, msgs);
 		return msgs;
 	}
 
@@ -188,7 +188,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	@Override
 	public void setOwningPackage(PackageCS newOwningPackage)
 	{
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3) && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (9) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -196,12 +196,12 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPackage != null)
-				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3, PackageCS.class, msgs);
+				msgs = ((InternalEObject)newOwningPackage).eInverseAdd(this, 9, PackageCS.class, msgs);
 			msgs = basicSetOwningPackage(newOwningPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -226,7 +226,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 		String oldInstanceClassName = instanceClassName;
 		instanceClassName = newInstanceClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldInstanceClassName, instanceClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldInstanceClassName, instanceClassName));
 	}
 
 	/**
@@ -239,7 +239,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	{
 		if (ownedConstraints == null)
 		{
-			ownedConstraints = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2);
+			ownedConstraints = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 8);
 		}
 		return ownedConstraints;
 	}
@@ -272,11 +272,11 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((PackageCS)otherEnd, msgs);
@@ -293,11 +293,11 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return basicSetOwnedSignature(null, msgs);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -312,8 +312,8 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
-				return eInternalContainer().eInverseRemove(this, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3, PackageCS.class, msgs);
+			case 9:
+				return eInternalContainer().eInverseRemove(this, 9, PackageCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -327,13 +327,13 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwnedSignature();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getInstanceClassName();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getOwnedConstraints();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				return getOwningPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -349,17 +349,17 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setInstanceClassName((String)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedConstraints().clear();
 				getOwnedConstraints().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				setOwningPackage((PackageCS)newValue);
 				return;
 		}
@@ -375,16 +375,16 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				getOwnedConstraints().clear();
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				setOwningPackage((PackageCS)null);
 				return;
 		}
@@ -400,13 +400,13 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ownedSignature != null;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case 9:
 				return getOwningPackage() != null;
 		}
 		return super.eIsSet(featureID);
@@ -430,7 +430,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 		{
 			switch (derivedFeatureID)
 			{
-				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case 6: return 2;
 				default: return -1;
 			}
 		}
@@ -455,7 +455,7 @@ public abstract class ClassCSImpl extends NamedElementCSImpl implements ClassCS 
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+				case 2: return 6;
 				default: return -1;
 			}
 		}

@@ -98,7 +98,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 		String oldFont = font;
 		font = newFont;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0, oldFont, font));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldFont, font));
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
+			case 3:
 				return getFont();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -133,7 +133,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
+			case 3:
 				setFont((String)newValue);
 				return;
 		}
@@ -148,7 +148,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
+			case 3:
 				setFont(FONT_EDEFAULT);
 				return;
 		}
@@ -163,7 +163,7 @@ public class FontElementImpl extends CompoundElementImpl implements FontElement 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0:
+			case 3:
 				return FONT_EDEFAULT == null ? font != null : !FONT_EDEFAULT.equals(font);
 		}
 		return super.eIsSet(featureID);

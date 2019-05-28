@@ -98,7 +98,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 3, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -116,14 +116,14 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (3), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (3), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -152,9 +152,9 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return getOwnedPathName();
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				return getReferredElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -170,7 +170,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -187,7 +187,7 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -204,9 +204,9 @@ public class ModelElementRefCSImpl extends ElementRefCSImpl implements ModelElem
 	{
 		switch (featureID)
 		{
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return ownedPathName != null;
-			case ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				return getReferredElement() != null;
 		}
 		return super.eIsSet(featureID);

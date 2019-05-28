@@ -160,7 +160,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldName, name));
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		if (ownedClasses == null)
 		{
-			ownedClasses = new EObjectContainmentWithInverseEList<ClassCS>(ClassCS.class, this, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3);
+			ownedClasses = new EObjectContainmentWithInverseEList<ClassCS>(ClassCS.class, this, 9, 9);
 		}
 		return ownedClasses;
 	}
@@ -200,7 +200,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 		String oldNsPrefix = nsPrefix;
 		nsPrefix = newNsPrefix;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1, oldNsPrefix, nsPrefix));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldNsPrefix, nsPrefix));
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 		String oldNsURI = nsURI;
 		nsURI = newNsURI;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 2, oldNsURI, nsURI));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldNsURI, nsURI));
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedClasses()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -265,7 +265,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				return ((InternalEList<?>)getOwnedClasses()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -281,13 +281,13 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getName();
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getNsPrefix();
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getNsURI();
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				return getOwnedClasses();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -304,16 +304,16 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				setName((String)newValue);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1:
+			case 7:
 				setNsPrefix((String)newValue);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 2:
+			case 8:
 				setNsURI((String)newValue);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedClasses().clear();
 				getOwnedClasses().addAll((Collection<? extends ClassCS>)newValue);
 				return;
@@ -331,16 +331,16 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				setName(NAME_EDEFAULT);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1:
+			case 7:
 				setNsPrefix(NS_PREFIX_EDEFAULT);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 2:
+			case 8:
 				setNsURI(NS_URI_EDEFAULT);
 				return;
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				getOwnedClasses().clear();
 				return;
 		}
@@ -357,13 +357,13 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 1:
+			case 7:
 				return NS_PREFIX_EDEFAULT == null ? nsPrefix != null : !NS_PREFIX_EDEFAULT.equals(nsPrefix);
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 2:
+			case 8:
 				return NS_URI_EDEFAULT == null ? nsURI != null : !NS_URI_EDEFAULT.equals(nsURI);
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 3:
+			case 9:
 				return ownedClasses != null && !ownedClasses.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -381,7 +381,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 		{
 			switch (derivedFeatureID)
 			{
-				case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case 6: return 5;
 				default: return -1;
 			}
 		}
@@ -407,7 +407,7 @@ public class PackageCSImpl extends PackageOwnerCSImpl implements PackageCS {
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0;
+				case 5: return 6;
 				default: return -1;
 			}
 		}

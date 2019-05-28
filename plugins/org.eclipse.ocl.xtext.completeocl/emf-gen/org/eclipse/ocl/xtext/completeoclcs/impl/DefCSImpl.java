@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -239,7 +240,7 @@ public abstract class DefCSImpl
 		switch (eContainerFeatureID())
 		{
 			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1, ClassifierContextDeclCS.class, msgs);
+				return eInternalContainer().eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, ClassifierContextDeclCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}

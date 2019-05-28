@@ -126,7 +126,7 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		ownedPathName = newOwnedPathName;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, oldOwnedPathName, newOwnedPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldOwnedPathName, newOwnedPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -144,14 +144,14 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		{
 			NotificationChain msgs = null;
 			if (ownedPathName != null)
-				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedPathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newOwnedPathName != null)
-				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetOwnedPathName(newOwnedPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, newOwnedPathName, newOwnedPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwnedPathName, newOwnedPathName));
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		ownedBinding = newOwnedBinding;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, oldOwnedBinding, newOwnedBinding);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedBinding, newOwnedBinding);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -194,14 +194,14 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		{
 			NotificationChain msgs = null;
 			if (ownedBinding != null)
-				msgs = ((InternalEObject)ownedBinding).eInverseRemove(this, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2, TemplateBindingCS.class, msgs);
+				msgs = ((InternalEObject)ownedBinding).eInverseRemove(this, 5, TemplateBindingCS.class, msgs);
 			if (newOwnedBinding != null)
-				msgs = ((InternalEObject)newOwnedBinding).eInverseAdd(this, ElementRefCSImpl.ELEMENT_REF_CS_FEATURE_COUNT + 2, TemplateBindingCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedBinding).eInverseAdd(this, 5, TemplateBindingCS.class, msgs);
 			msgs = basicSetOwnedBinding(newOwnedBinding, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, newOwnedBinding, newOwnedBinding));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedBinding, newOwnedBinding));
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		boolean oldIsTypeof = isTypeof;
 		isTypeof = newIsTypeof;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldIsTypeof, isTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldIsTypeof, isTypeof));
 	}
 
 	/**
@@ -249,9 +249,9 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				if (ownedBinding != null)
-					msgs = ((InternalEObject)ownedBinding).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1), null, msgs);
+					msgs = ((InternalEObject)ownedBinding).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 				return basicSetOwnedBinding((TemplateBindingCS)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -267,9 +267,9 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				return basicSetOwnedBinding(null, msgs);
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return basicSetOwnedPathName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -284,13 +284,13 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return isIsTypeof();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				return getOwnedBinding();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return getOwnedPathName();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				return getReferredType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -305,13 +305,13 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setIsTypeof((Boolean)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedBinding((TemplateBindingCS)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				setOwnedPathName((PathNameCS)newValue);
 				return;
 		}
@@ -327,13 +327,13 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				setOwnedBinding((TemplateBindingCS)null);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				setOwnedPathName((PathNameCS)null);
 				return;
 		}
@@ -349,13 +349,13 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return isTypeof != IS_TYPEOF_EDEFAULT;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				return ownedBinding != null;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return ownedPathName != null;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				return getReferredType() != null;
 		}
 		return super.eIsSet(featureID);

@@ -100,7 +100,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldValue, value));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -137,7 +137,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				setValue((String)newValue);
 				return;
 		}
@@ -153,7 +153,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -169,7 +169,7 @@ public class DocumentationCSImpl extends AnnotationElementCSImpl implements Docu
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

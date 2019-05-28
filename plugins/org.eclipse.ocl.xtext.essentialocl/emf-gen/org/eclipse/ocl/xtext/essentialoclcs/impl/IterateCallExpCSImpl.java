@@ -15,6 +15,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.IterateCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
@@ -82,7 +83,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		if (accumulators == null)
 		{
-			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0);
+			accumulators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20);
 		}
 		return accumulators;
 	}
@@ -97,7 +98,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				return getAccumulators();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +115,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				getAccumulators().clear();
 				getAccumulators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
@@ -132,7 +133,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				getAccumulators().clear();
 				return;
 		}
@@ -149,7 +150,7 @@ public abstract class IterateCallExpCSImpl extends IterationCallExpCSImpl implem
 	{
 		switch (featureID)
 		{
-			case IterationCallExpCSImpl.ITERATION_CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20:
 				return accumulators != null && !accumulators.isEmpty();
 		}
 		return super.eIsSet(featureID);

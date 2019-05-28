@@ -105,7 +105,7 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 		ownedExtends = newOwnedExtends;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0, oldOwnedExtends, newOwnedExtends);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 3, oldOwnedExtends, newOwnedExtends);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -122,14 +122,14 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 		{
 			NotificationChain msgs = null;
 			if (ownedExtends != null)
-				msgs = ((InternalEObject)ownedExtends).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)ownedExtends).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (3), null, msgs);
 			if (newOwnedExtends != null)
-				msgs = ((InternalEObject)newOwnedExtends).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0), null, msgs);
+				msgs = ((InternalEObject)newOwnedExtends).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (3), null, msgs);
 			msgs = basicSetOwnedExtends(newOwnedExtends, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0, newOwnedExtends, newOwnedExtends));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, newOwnedExtends, newOwnedExtends));
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 		ownedSuper = newOwnedSuper;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1, oldOwnedSuper, newOwnedSuper);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 4, oldOwnedSuper, newOwnedSuper);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -170,14 +170,14 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 		{
 			NotificationChain msgs = null;
 			if (ownedSuper != null)
-				msgs = ((InternalEObject)ownedSuper).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedSuper).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 			if (newOwnedSuper != null)
-				msgs = ((InternalEObject)newOwnedSuper).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedSuper).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 			msgs = basicSetOwnedSuper(newOwnedSuper, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1, newOwnedSuper, newOwnedSuper));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwnedSuper, newOwnedSuper));
 	}
 
 	/**
@@ -189,9 +189,9 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return basicSetOwnedExtends(null, msgs);
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				return basicSetOwnedSuper(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -206,9 +206,9 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return getOwnedExtends();
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				return getOwnedSuper();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -223,10 +223,10 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOwnedExtends((TypedRefCS)newValue);
 				return;
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				setOwnedSuper((TypedRefCS)newValue);
 				return;
 		}
@@ -242,10 +242,10 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				setOwnedExtends((TypedRefCS)null);
 				return;
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				setOwnedSuper((TypedRefCS)null);
 				return;
 		}
@@ -261,9 +261,9 @@ public class WildcardTypeRefCSImpl extends TypeRefCSImpl implements WildcardType
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 0:
+			case 3:
 				return ownedExtends != null;
-			case TypeRefCSImpl.TYPE_REF_CS_FEATURE_COUNT + 1:
+			case 4:
 				return ownedSuper != null;
 		}
 		return super.eIsSet(featureID);

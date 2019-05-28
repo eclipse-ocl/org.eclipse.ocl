@@ -108,7 +108,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	 */
 	@Override
 	public StructuredClassCS getOwningClass() {
-		if (eContainerFeatureID() != (FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (11)) return null;
 		return (StructuredClassCS)eInternalContainer();
 	}
 
@@ -119,7 +119,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	 */
 	public NotificationChain basicSetOwningClass(StructuredClassCS newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 11, msgs);
 		return msgs;
 	}
 
@@ -130,7 +130,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	 */
 	@Override
 	public void setOwningClass(StructuredClassCS newOwningClass) {
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (11) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -138,12 +138,12 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4, StructuredClassCS.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 14, StructuredClassCS.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -168,7 +168,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 		String oldDefault = default_;
 		default_ = newDefault;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0, oldDefault, default_));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldDefault, default_));
 	}
 
 	/**
@@ -181,7 +181,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	{
 		if (ownedDefaultExpressions == null)
 		{
-			ownedDefaultExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1);
+			ownedDefaultExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, 10);
 		}
 		return ownedDefaultExpressions;
 	}
@@ -205,7 +205,7 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((StructuredClassCS)otherEnd, msgs);
@@ -222,9 +222,9 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return ((InternalEList<?>)getOwnedDefaultExpressions()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return basicSetOwningClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -239,8 +239,8 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
-				return eInternalContainer().eInverseRemove(this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 4, StructuredClassCS.class, msgs);
+			case 11:
+				return eInternalContainer().eInverseRemove(this, 14, StructuredClassCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -254,11 +254,11 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				return getDefault();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedDefaultExpressions();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return getOwningClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -274,14 +274,14 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				setDefault((String)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedDefaultExpressions().clear();
 				getOwnedDefaultExpressions().addAll((Collection<? extends SpecificationCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				setOwningClass((StructuredClassCS)newValue);
 				return;
 		}
@@ -297,13 +297,13 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				setDefault(DEFAULT_EDEFAULT);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedDefaultExpressions().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				setOwningClass((StructuredClassCS)null);
 				return;
 		}
@@ -319,11 +319,11 @@ public abstract class StructuralFeatureCSImpl extends FeatureCSImpl implements S
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				return DEFAULT_EDEFAULT == null ? default_ != null : !DEFAULT_EDEFAULT.equals(default_);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return ownedDefaultExpressions != null && !ownedDefaultExpressions.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return getOwningClass() != null;
 		}
 		return super.eIsSet(featureID);

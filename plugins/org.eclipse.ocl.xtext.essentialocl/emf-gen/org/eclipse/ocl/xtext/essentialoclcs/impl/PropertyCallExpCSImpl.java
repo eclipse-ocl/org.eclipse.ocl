@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.PropertyCallExpCS;
 
@@ -93,7 +94,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -106,7 +107,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return getReferredProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +123,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -139,7 +140,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -156,7 +157,7 @@ public abstract class PropertyCallExpCSImpl extends CallExpCSImpl implements Pro
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return referredProperty != null;
 		}
 		return super.eIsSet(featureID);

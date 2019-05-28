@@ -99,7 +99,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldName, name));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -138,7 +138,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setName((String)newValue);
 				return;
 		}
@@ -155,7 +155,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -172,7 +172,7 @@ public abstract class NamedElementCSImpl extends ModelElementCSImpl implements N
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
-import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.NamespaceCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -270,7 +269,7 @@ public class CompleteOCLDocumentCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0: return 5;
 				default: return -1;
 			}
 		}
@@ -289,7 +288,7 @@ public class CompleteOCLDocumentCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0;
+				case 5: return NamespaceCSImpl.NAMESPACE_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

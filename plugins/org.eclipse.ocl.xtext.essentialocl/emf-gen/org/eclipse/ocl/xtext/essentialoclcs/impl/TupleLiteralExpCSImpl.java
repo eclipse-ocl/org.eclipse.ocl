@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
@@ -88,7 +89,7 @@ public class TupleLiteralExpCSImpl
 	public EList<TupleLiteralPartCS> getOwnedParts() {
 		if (ownedParts == null)
 		{
-			ownedParts = new EObjectContainmentEList<TupleLiteralPartCS>(TupleLiteralPartCS.class, this, LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0);
+			ownedParts = new EObjectContainmentEList<TupleLiteralPartCS>(TupleLiteralPartCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		}
 		return ownedParts;
 	}
@@ -103,7 +104,7 @@ public class TupleLiteralExpCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -118,7 +119,7 @@ public class TupleLiteralExpCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return getOwnedParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -134,7 +135,7 @@ public class TupleLiteralExpCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends TupleLiteralPartCS>)newValue);
 				return;
@@ -151,7 +152,7 @@ public class TupleLiteralExpCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				getOwnedParts().clear();
 				return;
 		}
@@ -167,7 +168,7 @@ public class TupleLiteralExpCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case LiteralExpCSImpl.LITERAL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.CallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
@@ -109,7 +110,7 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 		ExpCS oldSource = source;
 		source = newSource;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1, oldSource, source));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16, oldSource, source));
 	}
 
 	/**
@@ -122,7 +123,7 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		if (arguments == null)
 		{
-			arguments = new EObjectEList<ExpCS>(ExpCS.class, this, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
+			arguments = new EObjectEList<ExpCS>(ExpCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15);
 		}
 		return arguments;
 	}
@@ -137,9 +138,9 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return getArguments();
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,11 +157,11 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends ExpCS>)newValue);
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				setSource((ExpCS)newValue);
 				return;
 		}
@@ -177,10 +178,10 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				getArguments().clear();
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				setSource((ExpCS)null);
 				return;
 		}
@@ -197,9 +198,9 @@ public abstract class CallExpCSImpl extends AbstractNameExpCSImpl implements Cal
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return arguments != null && !arguments.isEmpty();
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				return source != null;
 		}
 		return super.eIsSet(featureID);

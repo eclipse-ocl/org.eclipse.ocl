@@ -100,7 +100,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldName, name));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -139,7 +139,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setName((String)newValue);
 				return;
 		}
@@ -156,7 +156,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -173,7 +173,7 @@ public class PrimitiveTypeRefCSImpl extends TypedRefCSImpl implements PrimitiveT
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -131,7 +132,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 		TypeNameExpCS oldTypeName = typeName;
 		typeName = newTypeName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1, oldTypeName, typeName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16, oldTypeName, typeName));
 	}
 
 	/**
@@ -144,7 +145,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		if (parts == null)
 		{
-			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0);
+			parts = new EObjectEList<ShadowPartCS>(ShadowPartCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15);
 		}
 		return parts;
 	}
@@ -171,7 +172,7 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17, oldValue, value));
 	}
 
 	/**
@@ -194,11 +195,11 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return getParts();
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				return getTypeName();
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -215,14 +216,14 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				getParts().clear();
 				getParts().addAll((Collection<? extends ShadowPartCS>)newValue);
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				setTypeName((TypeNameExpCS)newValue);
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setValue((String)newValue);
 				return;
 		}
@@ -239,13 +240,13 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				getParts().clear();
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				setTypeName((TypeNameExpCS)null);
 				return;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -262,11 +263,11 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return parts != null && !parts.isEmpty();
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16:
 				return typeName != null;
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

@@ -101,7 +101,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		boolean oldIsNullFree = isNullFree;
 		isNullFree = newIsNullFree;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldIsNullFree, isNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldIsNullFree, isNullFree));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return isIsNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -166,7 +166,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setIsNullFree((Boolean)newValue);
 				return;
 		}
@@ -183,7 +183,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setIsNullFree(IS_NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -200,7 +200,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return isNullFree != IS_NULL_FREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

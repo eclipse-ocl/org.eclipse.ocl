@@ -123,7 +123,7 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 		boolean oldIsPrimitive = isPrimitive;
 		isPrimitive = newIsPrimitive;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0, oldIsPrimitive, isPrimitive));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldIsPrimitive, isPrimitive));
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 		boolean oldIsSerializable = isSerializable;
 		isSerializable = newIsSerializable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1, oldIsSerializable, isSerializable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldIsSerializable, isSerializable));
 	}
 
 	/**
@@ -171,9 +171,9 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
+			case 10:
 				return isIsPrimitive();
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
+			case 11:
 				return isIsSerializable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -189,10 +189,10 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
+			case 10:
 				setIsPrimitive((Boolean)newValue);
 				return;
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
+			case 11:
 				setIsSerializable((Boolean)newValue);
 				return;
 		}
@@ -209,10 +209,10 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
+			case 10:
 				setIsPrimitive(IS_PRIMITIVE_EDEFAULT);
 				return;
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
+			case 11:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 		}
@@ -229,9 +229,9 @@ public class DataTypeCSImpl extends ClassCSImpl implements DataTypeCS
 	{
 		switch (featureID)
 		{
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 0:
+			case 10:
 				return isPrimitive != IS_PRIMITIVE_EDEFAULT;
-			case ClassCSImpl.CLASS_CS_FEATURE_COUNT + 1:
+			case 11:
 				return isSerializable != IS_SERIALIZABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

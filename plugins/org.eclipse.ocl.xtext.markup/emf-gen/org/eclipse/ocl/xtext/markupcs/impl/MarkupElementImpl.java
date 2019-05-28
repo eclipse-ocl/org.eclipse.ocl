@@ -120,7 +120,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, CompoundElement.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, 2, CompoundElement.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -189,7 +189,7 @@ public class MarkupElementImpl extends MinimalEObjectImpl.Container implements M
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case 0:
-				return eInternalContainer().eInverseRemove(this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, CompoundElement.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 2, CompoundElement.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}

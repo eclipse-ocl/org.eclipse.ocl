@@ -84,7 +84,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public EList<TypedRefCS> getOwnedExtends() {
 		if (ownedExtends == null)
 		{
-			ownedExtends = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0);
+			ownedExtends = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, 7);
 		}
 		return ownedExtends;
 	}
@@ -98,7 +98,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
+			case 7:
 				return ((InternalEList<?>)getOwnedExtends()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -113,7 +113,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
+			case 7:
 				return getOwnedExtends();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +129,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
+			case 7:
 				getOwnedExtends().clear();
 				getOwnedExtends().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
@@ -146,7 +146,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
+			case 7:
 				getOwnedExtends().clear();
 				return;
 		}
@@ -162,7 +162,7 @@ public class TypeParameterCSImpl extends TemplateParameterCSImpl implements Type
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case TemplateParameterCSImpl.TEMPLATE_PARAMETER_CS_FEATURE_COUNT + 0:
+			case 7:
 				return ownedExtends != null && !ownedExtends.isEmpty();
 		}
 		return super.eIsSet(featureID);

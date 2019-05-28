@@ -86,7 +86,7 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	 */
 	@Override
 	public TemplateableElementCS getOwningElement() {
-		if (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (TemplateableElementCS)eInternalContainer();
 	}
 
@@ -97,7 +97,7 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	 */
 	public NotificationChain basicSetOwningElement(TemplateableElementCS newOwningElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningElement, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningElement, 6, msgs);
 		return msgs;
 	}
 
@@ -108,7 +108,7 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	 */
 	@Override
 	public void setOwningElement(TemplateableElementCS newOwningElement) {
-		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1) && newOwningElement != null))
+		if (newOwningElement != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningElement != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -116,12 +116,12 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, TemplateableElementCS.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 2, TemplateableElementCS.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, newOwningElement, newOwningElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningElement, newOwningElement));
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public EList<TemplateParameterCS> getOwnedParameters() {
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<TemplateParameterCS>(TemplateParameterCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedParameters = new EObjectContainmentWithInverseEList<TemplateParameterCS>(TemplateParameterCS.class, this, 5, 6);
 		}
 		return ownedParameters;
 	}
@@ -148,9 +148,9 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningElement((TemplateableElementCS)otherEnd, msgs);
@@ -167,9 +167,9 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				return basicSetOwningElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -184,8 +184,8 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
-				return eInternalContainer().eInverseRemove(this, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, TemplateableElementCS.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 2, TemplateableElementCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -199,9 +199,9 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedParameters();
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -217,11 +217,11 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends TemplateParameterCS>)newValue);
 				return;
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				setOwningElement((TemplateableElementCS)newValue);
 				return;
 		}
@@ -237,10 +237,10 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedParameters().clear();
 				return;
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				setOwningElement((TemplateableElementCS)null);
 				return;
 		}
@@ -256,9 +256,9 @@ public class TemplateSignatureCSImpl extends ModelElementCSImpl implements Templ
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 6:
 				return getOwningElement() != null;
 		}
 		return super.eIsSet(featureID);

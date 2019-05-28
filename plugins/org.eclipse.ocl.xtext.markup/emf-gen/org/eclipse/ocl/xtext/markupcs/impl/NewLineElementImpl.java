@@ -98,7 +98,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 		String oldText = text;
 		text = newText;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldText, text));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldText, text));
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getText();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -133,7 +133,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setText((String)newValue);
 				return;
 		}
@@ -148,7 +148,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setText(TEXT_EDEFAULT);
 				return;
 		}
@@ -163,7 +163,7 @@ public class NewLineElementImpl extends MarkupElementImpl implements NewLineElem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
 		}
 		return super.eIsSet(featureID);

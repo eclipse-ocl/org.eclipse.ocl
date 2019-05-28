@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
-import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
@@ -262,7 +261,7 @@ public class ContextCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return 5;
 				default: return -1;
 			}
 		}
@@ -280,7 +279,7 @@ public class ContextCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+				case 5: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

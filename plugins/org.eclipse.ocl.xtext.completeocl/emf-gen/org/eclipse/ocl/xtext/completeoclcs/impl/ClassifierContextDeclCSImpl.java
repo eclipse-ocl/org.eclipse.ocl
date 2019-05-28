@@ -28,7 +28,6 @@ import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
-import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -158,7 +157,7 @@ public class ClassifierContextDeclCSImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -176,14 +175,14 @@ public class ClassifierContextDeclCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 6, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 6, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -206,7 +205,7 @@ public class ClassifierContextDeclCSImpl
 		String oldSelfName = selfName;
 		selfName = newSelfName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4, oldSelfName, selfName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5, oldSelfName, selfName));
 	}
 
 	/**
@@ -218,15 +217,15 @@ public class ClassifierContextDeclCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedSignature();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwnedDefinitions();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getOwnedInvariants();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getReferredClass();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return getSelfName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -242,18 +241,18 @@ public class ClassifierContextDeclCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				getOwnedDefinitions().clear();
 				getOwnedDefinitions().addAll((Collection<? extends DefCS>)newValue);
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				setSelfName((String)newValue);
 				return;
 		}
@@ -269,16 +268,16 @@ public class ClassifierContextDeclCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				getOwnedDefinitions().clear();
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				getOwnedInvariants().clear();
 				return;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				setSelfName(SELF_NAME_EDEFAULT);
 				return;
 		}
@@ -294,15 +293,15 @@ public class ClassifierContextDeclCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedSignature != null;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ownedDefinitions != null && !ownedDefinitions.isEmpty();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getReferredClass() != null;
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5:
 				return SELF_NAME_EDEFAULT == null ? selfName != null : !SELF_NAME_EDEFAULT.equals(selfName);
 		}
 		return super.eIsSet(featureID);
@@ -320,7 +319,7 @@ public class ClassifierContextDeclCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1: return 2;
 				default: return -1;
 			}
 		}
@@ -339,7 +338,7 @@ public class ClassifierContextDeclCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0;
+				case 2: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
 				default: return -1;
 			}
 		}
@@ -380,7 +379,7 @@ public class ClassifierContextDeclCSImpl
 	public EList<ConstraintCS> getOwnedInvariants() {
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2);
+			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 		}
 		return ownedInvariants;
 	}
@@ -394,7 +393,7 @@ public class ClassifierContextDeclCSImpl
 	public EList<DefCS> getOwnedDefinitions() {
 		if (ownedDefinitions == null)
 		{
-			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
+			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
 		}
 		return ownedDefinitions;
 	}
@@ -420,11 +419,11 @@ public class ClassifierContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedDefinitions()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -440,11 +439,11 @@ public class ClassifierContextDeclCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return basicSetOwnedSignature(null, msgs);
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedDefinitions()).basicRemove(otherEnd, msgs);
-			case ContextDeclCSImpl.CONTEXT_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

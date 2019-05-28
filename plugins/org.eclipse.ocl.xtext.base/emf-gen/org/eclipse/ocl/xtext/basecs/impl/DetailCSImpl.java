@@ -81,7 +81,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	{
 		if (values == null)
 		{
-			values = new EDataTypeUniqueEList<String>(String.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
+			values = new EDataTypeUniqueEList<String>(String.class, this, 6);
 		}
 		return values;
 	}
@@ -105,7 +105,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getValues();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -121,7 +121,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				getValues().clear();
 				getValues().addAll((Collection<? extends String>)newValue);
 				return;
@@ -138,7 +138,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				getValues().clear();
 				return;
 		}
@@ -154,7 +154,7 @@ public class DetailCSImpl extends NamedElementCSImpl implements DetailCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return values != null && !values.isEmpty();
 		}
 		return super.eIsSet(featureID);

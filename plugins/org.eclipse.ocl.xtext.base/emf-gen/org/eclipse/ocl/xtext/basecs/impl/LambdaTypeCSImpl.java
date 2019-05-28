@@ -159,7 +159,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 4, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -177,14 +177,14 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 6, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 6, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldName, name));
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		ownedContextType = newOwnedContextType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, oldOwnedContextType, newOwnedContextType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldOwnedContextType, newOwnedContextType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -252,14 +252,14 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		{
 			NotificationChain msgs = null;
 			if (ownedContextType != null)
-				msgs = ((InternalEObject)ownedContextType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedContextType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newOwnedContextType != null)
-				msgs = ((InternalEObject)newOwnedContextType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedContextType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetOwnedContextType(newOwnedContextType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2, newOwnedContextType, newOwnedContextType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwnedContextType, newOwnedContextType));
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		if (ownedParameterTypes == null)
 		{
-			ownedParameterTypes = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3);
+			ownedParameterTypes = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, 7);
 		}
 		return ownedParameterTypes;
 	}
@@ -299,7 +299,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		ownedResultType = newOwnedResultType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4, oldOwnedResultType, newOwnedResultType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedResultType, newOwnedResultType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -317,14 +317,14 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		{
 			NotificationChain msgs = null;
 			if (ownedResultType != null)
-				msgs = ((InternalEObject)ownedResultType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4), null, msgs);
+				msgs = ((InternalEObject)ownedResultType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedResultType != null)
-				msgs = ((InternalEObject)newOwnedResultType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4), null, msgs);
+				msgs = ((InternalEObject)newOwnedResultType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedResultType(newOwnedResultType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4, newOwnedResultType, newOwnedResultType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedResultType, newOwnedResultType));
 	}
 
 	/**
@@ -347,9 +347,9 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -365,13 +365,13 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return basicSetOwnedSignature(null, msgs);
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return basicSetOwnedContextType(null, msgs);
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				return ((InternalEList<?>)getOwnedParameterTypes()).basicRemove(otherEnd, msgs);
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4:
+			case 8:
 				return basicSetOwnedResultType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -387,15 +387,15 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return getOwnedSignature();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				return getName();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return getOwnedContextType();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				return getOwnedParameterTypes();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4:
+			case 8:
 				return getOwnedResultType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -412,20 +412,20 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				setName((String)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				setOwnedContextType((TypedRefCS)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				getOwnedParameterTypes().clear();
 				getOwnedParameterTypes().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4:
+			case 8:
 				setOwnedResultType((TypedRefCS)newValue);
 				return;
 		}
@@ -442,19 +442,19 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				setName(NAME_EDEFAULT);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				setOwnedContextType((TypedRefCS)null);
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				getOwnedParameterTypes().clear();
 				return;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4:
+			case 8:
 				setOwnedResultType((TypedRefCS)null);
 				return;
 		}
@@ -471,15 +471,15 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 	{
 		switch (featureID)
 		{
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0:
+			case 4:
 				return ownedSignature != null;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1:
+			case 5:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2:
+			case 6:
 				return ownedContextType != null;
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3:
+			case 7:
 				return ownedParameterTypes != null && !ownedParameterTypes.isEmpty();
-			case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 4:
+			case 8:
 				return ownedResultType != null;
 		}
 		return super.eIsSet(featureID);
@@ -497,7 +497,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		{
 			switch (derivedFeatureID)
 			{
-				case TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case 4: return 2;
 				default: return -1;
 			}
 		}
@@ -516,7 +516,7 @@ public class LambdaTypeCSImpl extends TypedRefCSImpl implements LambdaTypeCS
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0;
+				case 2: return 4;
 				default: return -1;
 			}
 		}

@@ -77,7 +77,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public EList<String> getText() {
 		if (text == null) {
-			text = new EDataTypeEList<String>(String.class, this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+			text = new EDataTypeEList<String>(String.class, this, 2);
 		}
 		return text;
 	}
@@ -100,7 +100,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getText();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +115,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getText().clear();
 				getText().addAll((Collection<? extends String>)newValue);
 				return;
@@ -131,7 +131,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getText().clear();
 				return;
 		}
@@ -146,7 +146,7 @@ public class TextElementImpl extends MarkupElementImpl implements TextElement {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return text != null && !text.isEmpty();
 		}
 		return super.eIsSet(featureID);

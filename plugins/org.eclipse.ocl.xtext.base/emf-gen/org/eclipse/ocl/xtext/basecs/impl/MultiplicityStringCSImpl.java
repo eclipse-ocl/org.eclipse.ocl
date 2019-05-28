@@ -105,7 +105,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 		String oldStringBounds = stringBounds;
 		stringBounds = newStringBounds;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0, oldStringBounds, stringBounds));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldStringBounds, stringBounds));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
+			case 3:
 				return getStringBounds();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -144,7 +144,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
+			case 3:
 				setStringBounds((String)newValue);
 				return;
 		}
@@ -161,7 +161,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
+			case 3:
 				setStringBounds(STRING_BOUNDS_EDEFAULT);
 				return;
 		}
@@ -178,7 +178,7 @@ public class MultiplicityStringCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case MultiplicityCSImpl.MULTIPLICITY_CS_FEATURE_COUNT + 0:
+			case 3:
 				return STRING_BOUNDS_EDEFAULT == null ? stringBounds != null : !STRING_BOUNDS_EDEFAULT.equals(stringBounds);
 		}
 		return super.eIsSet(featureID);

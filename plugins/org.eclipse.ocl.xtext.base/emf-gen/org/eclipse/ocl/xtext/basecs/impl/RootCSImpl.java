@@ -86,7 +86,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, 5);
 		}
 		return ownedImports;
 	}
@@ -101,7 +101,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -117,7 +117,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return getOwnedImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -134,7 +134,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends ImportCS>)newValue);
 				return;
@@ -152,7 +152,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				getOwnedImports().clear();
 				return;
 		}
@@ -169,7 +169,7 @@ public abstract class RootCSImpl extends ModelElementCSImpl implements RootCS
 	{
 		switch (featureID)
 		{
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 5:
 				return ownedImports != null && !ownedImports.isEmpty();
 		}
 		return super.eIsSet(featureID);

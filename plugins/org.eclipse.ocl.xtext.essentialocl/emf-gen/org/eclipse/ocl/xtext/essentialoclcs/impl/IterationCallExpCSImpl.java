@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
@@ -109,7 +110,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		if (coIterators == null)
 		{
-			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0);
+			coIterators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17);
 		}
 		return coIterators;
 	}
@@ -136,7 +137,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -149,7 +150,7 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		if (iterators == null)
 		{
-			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1);
+			iterators = new EObjectEList<VariableCS>(VariableCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18);
 		}
 		return iterators;
 	}
@@ -164,11 +165,11 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return getCoIterators();
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				return getIterators();
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				return getReferredIteration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -185,15 +186,15 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends VariableCS>)newValue);
 				return;
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				setReferredIteration((Iteration)newValue);
 				return;
 		}
@@ -210,13 +211,13 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				getCoIterators().clear();
 				return;
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				getIterators().clear();
 				return;
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				setReferredIteration((Iteration)null);
 				return;
 		}
@@ -233,11 +234,11 @@ public abstract class IterationCallExpCSImpl extends CallExpCSImpl implements It
 	{
 		switch (featureID)
 		{
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17:
 				return coIterators != null && !coIterators.isEmpty();
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18:
 				return iterators != null && !iterators.isEmpty();
-			case CallExpCSImpl.CALL_EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19:
 				return referredIteration != null;
 		}
 		return super.eIsSet(featureID);

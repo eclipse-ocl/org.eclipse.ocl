@@ -556,31 +556,31 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 
 		// Create classes and their features
 		bulletElementEClass = createEClass(0);
-		createEAttribute(bulletElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(bulletElementEClass, 3);
 
 		compoundElementEClass = createEClass(1);
-		createEReference(compoundElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(compoundElementEClass, 2);
 
 		figureElementEClass = createEClass(2);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6);
-		createEAttribute(figureElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7);
+		createEAttribute(figureElementEClass, 2);
+		createEAttribute(figureElementEClass, 3);
+		createEAttribute(figureElementEClass, 4);
+		createEAttribute(figureElementEClass, 5);
+		createEAttribute(figureElementEClass, 6);
+		createEAttribute(figureElementEClass, 7);
+		createEAttribute(figureElementEClass, 8);
+		createEAttribute(figureElementEClass, 9);
 
 		figureRefElementEClass = createEClass(3);
-		createEReference(figureRefElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+		createEReference(figureRefElementEClass, 2);
 
 		fontElementEClass = createEClass(4);
-		createEAttribute(fontElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(fontElementEClass, 3);
 
 		footnoteElementEClass = createEClass(5);
 
 		headingElementEClass = createEClass(6);
-		createEAttribute(headingElementEClass, CompoundElementImpl.COMPOUND_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(headingElementEClass, 3);
 
 		markupEClass = createEClass(7);
 
@@ -589,7 +589,7 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 		createEAttribute(markupElementEClass, 1);
 
 		newLineElementEClass = createEClass(9);
-		createEAttribute(newLineElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(newLineElementEClass, 2);
 
 		nullElementEClass = createEClass(10);
 
@@ -600,7 +600,7 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 		oclTextElementEClass = createEClass(13);
 
 		textElementEClass = createEClass(14);
-		createEAttribute(textElementEClass, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0);
+		createEAttribute(textElementEClass, 2);
 	}
 
 	/**

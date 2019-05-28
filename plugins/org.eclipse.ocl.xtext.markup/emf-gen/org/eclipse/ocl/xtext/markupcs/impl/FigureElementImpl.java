@@ -231,7 +231,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldSrc = src;
 		src = newSrc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1, oldSrc, src));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldSrc, src));
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldAlt = alt;
 		alt = newAlt;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2, oldAlt, alt));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldAlt, alt));
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldDef = def;
 		def = newDef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3, oldDef, def));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldDef, def));
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldRequiredWidth = requiredWidth;
 		requiredWidth = newRequiredWidth;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4, oldRequiredWidth, requiredWidth));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldRequiredWidth, requiredWidth));
 	}
 
 	/**
@@ -323,7 +323,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 		String oldRequiredHeight = requiredHeight;
 		requiredHeight = newRequiredHeight;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5, oldRequiredHeight, requiredHeight));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldRequiredHeight, requiredHeight));
 	}
 
 	/**
@@ -364,21 +364,21 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getId();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return getSrc();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				return getAlt();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
+			case 5:
 				return getDef();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
+			case 6:
 				return getRequiredWidth();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
+			case 7:
 				return getRequiredHeight();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6:
+			case 8:
 				return getActualWidth();
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7:
+			case 9:
 				return getActualHeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -392,19 +392,19 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				setSrc((String)newValue);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				setAlt((String)newValue);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
+			case 5:
 				setDef((String)newValue);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
+			case 6:
 				setRequiredWidth((String)newValue);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
+			case 7:
 				setRequiredHeight((String)newValue);
 				return;
 		}
@@ -419,19 +419,19 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				setSrc(SRC_EDEFAULT);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				setAlt(ALT_EDEFAULT);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
+			case 5:
 				setDef(DEF_EDEFAULT);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
+			case 6:
 				setRequiredWidth(REQUIRED_WIDTH_EDEFAULT);
 				return;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
+			case 7:
 				setRequiredHeight(REQUIRED_HEIGHT_EDEFAULT);
 				return;
 		}
@@ -446,21 +446,21 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getId() != ID_EDEFAULT;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 1:
+			case 3:
 				return SRC_EDEFAULT == null ? src != null : !SRC_EDEFAULT.equals(src);
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 2:
+			case 4:
 				return ALT_EDEFAULT == null ? alt != null : !ALT_EDEFAULT.equals(alt);
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 3:
+			case 5:
 				return DEF_EDEFAULT == null ? def != null : !DEF_EDEFAULT.equals(def);
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 4:
+			case 6:
 				return REQUIRED_WIDTH_EDEFAULT == null ? requiredWidth != null : !REQUIRED_WIDTH_EDEFAULT.equals(requiredWidth);
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 5:
+			case 7:
 				return REQUIRED_HEIGHT_EDEFAULT == null ? requiredHeight != null : !REQUIRED_HEIGHT_EDEFAULT.equals(requiredHeight);
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 6:
+			case 8:
 				return getActualWidth() != ACTUAL_WIDTH_EDEFAULT;
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 7:
+			case 9:
 				return getActualHeight() != ACTUAL_HEIGHT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -91,7 +91,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		if (ownedImports == null)
 		{
-			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0);
+			ownedImports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, 6);
 		}
 		return ownedImports;
 	}
@@ -106,7 +106,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -122,7 +122,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwnedImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -139,7 +139,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				getOwnedImports().clear();
 				getOwnedImports().addAll((Collection<? extends ImportCS>)newValue);
 				return;
@@ -157,7 +157,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				getOwnedImports().clear();
 				return;
 		}
@@ -174,7 +174,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 	{
 		switch (featureID)
 		{
-			case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ownedImports != null && !ownedImports.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -192,7 +192,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 		{
 			switch (derivedFeatureID)
 			{
-				case PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case 6: return 5;
 				default: return -1;
 			}
 		}
@@ -211,7 +211,7 @@ public class RootPackageCSImpl extends PackageOwnerCSImpl implements RootPackage
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return PackageOwnerCSImpl.PACKAGE_OWNER_CS_FEATURE_COUNT + 0;
+				case 5: return 6;
 				default: return -1;
 			}
 		}

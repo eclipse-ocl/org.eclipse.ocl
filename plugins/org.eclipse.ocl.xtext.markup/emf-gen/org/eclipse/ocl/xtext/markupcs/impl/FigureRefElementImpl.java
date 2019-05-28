@@ -81,7 +81,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 			ref = (FigureElement)eResolveProxy(oldRef);
 			if (ref != oldRef) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldRef, ref));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldRef, ref));
 			}
 		}
 		return ref;
@@ -106,7 +106,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 		FigureElement oldRef = ref;
 		ref = newRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, oldRef, ref));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldRef, ref));
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				if (resolve) return getRef();
 				return basicGetRef();
 		}
@@ -132,7 +132,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setRef((FigureElement)newValue);
 				return;
 		}
@@ -147,7 +147,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				setRef((FigureElement)null);
 				return;
 		}
@@ -162,7 +162,7 @@ public class FigureRefElementImpl extends MarkupElementImpl implements FigureRef
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ref != null;
 		}
 		return super.eIsSet(featureID);

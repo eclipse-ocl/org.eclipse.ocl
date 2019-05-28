@@ -81,7 +81,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public EList<MarkupElement> getElements() {
 		if (elements == null) {
-			elements = new EObjectContainmentWithInverseEList<MarkupElement>(MarkupElement.class, this, MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0, 0);
+			elements = new EObjectContainmentWithInverseEList<MarkupElement>(MarkupElement.class, this, 2, 0);
 		}
 		return elements;
 	}
@@ -95,7 +95,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getElements()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -109,7 +109,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -123,7 +123,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return getElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -138,7 +138,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getElements().clear();
 				getElements().addAll((Collection<? extends MarkupElement>)newValue);
 				return;
@@ -154,7 +154,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				getElements().clear();
 				return;
 		}
@@ -169,7 +169,7 @@ public class CompoundElementImpl extends MarkupElementImpl implements CompoundEl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MarkupElementImpl.MARKUP_ELEMENT_FEATURE_COUNT + 0:
+			case 2:
 				return elements != null && !elements.isEmpty();
 		}
 		return super.eIsSet(featureID);

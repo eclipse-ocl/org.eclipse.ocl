@@ -98,7 +98,7 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	{
 		if (ownedContents == null)
 		{
-			ownedContents = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedContents = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, 7);
 		}
 		return ownedContents;
 	}
@@ -113,7 +113,7 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	{
 		if (ownedReferences == null)
 		{
-			ownedReferences = new EObjectContainmentEList<ModelElementRefCS>(ModelElementRefCS.class, this, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1);
+			ownedReferences = new EObjectContainmentEList<ModelElementRefCS>(ModelElementRefCS.class, this, 8);
 		}
 		return ownedReferences;
 	}
@@ -127,9 +127,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				return ((InternalEList<?>)getOwnedContents()).basicRemove(otherEnd, msgs);
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 8:
 				return ((InternalEList<?>)getOwnedReferences()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -144,9 +144,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				return getOwnedContents();
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 8:
 				return getOwnedReferences();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -162,11 +162,11 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				getOwnedContents().clear();
 				getOwnedContents().addAll((Collection<? extends ModelElementCS>)newValue);
 				return;
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 8:
 				getOwnedReferences().clear();
 				getOwnedReferences().addAll((Collection<? extends ModelElementRefCS>)newValue);
 				return;
@@ -183,10 +183,10 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				getOwnedContents().clear();
 				return;
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 8:
 				getOwnedReferences().clear();
 				return;
 		}
@@ -202,9 +202,9 @@ public class AnnotationCSImpl extends AnnotationElementCSImpl implements Annotat
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 7:
 				return ownedContents != null && !ownedContents.isEmpty();
-			case AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 8:
 				return ownedReferences != null && !ownedReferences.isEmpty();
 		}
 		return super.eIsSet(featureID);

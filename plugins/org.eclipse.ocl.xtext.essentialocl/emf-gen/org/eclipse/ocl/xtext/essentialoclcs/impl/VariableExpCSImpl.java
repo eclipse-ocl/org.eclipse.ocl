@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableExpCS;
 
@@ -93,7 +94,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 		Variable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -106,7 +107,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +123,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				setReferredVariable((Variable)newValue);
 				return;
 		}
@@ -139,7 +140,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				setReferredVariable((Variable)null);
 				return;
 		}
@@ -156,7 +157,7 @@ public abstract class VariableExpCSImpl extends AbstractNameExpCSImpl implements
 	{
 		switch (featureID)
 		{
-			case AbstractNameExpCSImpl.ABSTRACT_NAME_EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);

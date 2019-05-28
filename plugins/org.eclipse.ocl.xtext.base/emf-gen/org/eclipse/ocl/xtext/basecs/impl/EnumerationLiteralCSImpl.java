@@ -123,7 +123,7 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 		String oldLiteral = literal;
 		literal = newLiteral;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldLiteral, literal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldLiteral, literal));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 		int oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldValue, value));
 	}
 
 	/**
@@ -168,9 +168,9 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getLiteral();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -185,10 +185,10 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setLiteral((String)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setValue((Integer)newValue);
 				return;
 		}
@@ -204,10 +204,10 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setLiteral(LITERAL_EDEFAULT);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -223,9 +223,9 @@ public class EnumerationLiteralCSImpl extends NamedElementCSImpl implements Enum
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return LITERAL_EDEFAULT == null ? literal != null : !LITERAL_EDEFAULT.equals(literal);
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return value != VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -83,7 +83,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	{
 		if (ownedDetails == null)
 		{
-			ownedDetails = new EObjectContainmentEList<DetailCS>(DetailCS.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedDetails = new EObjectContainmentEList<DetailCS>(DetailCS.class, this, 6);
 		}
 		return ownedDetails;
 	}
@@ -97,7 +97,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ((InternalEList<?>)getOwnedDetails()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -112,7 +112,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return getOwnedDetails();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -128,7 +128,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				getOwnedDetails().clear();
 				getOwnedDetails().addAll((Collection<? extends DetailCS>)newValue);
 				return;
@@ -145,7 +145,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				getOwnedDetails().clear();
 				return;
 		}
@@ -161,7 +161,7 @@ public abstract class AnnotationElementCSImpl extends NamedElementCSImpl impleme
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return ownedDetails != null && !ownedDetails.isEmpty();
 		}
 		return super.eIsSet(featureID);

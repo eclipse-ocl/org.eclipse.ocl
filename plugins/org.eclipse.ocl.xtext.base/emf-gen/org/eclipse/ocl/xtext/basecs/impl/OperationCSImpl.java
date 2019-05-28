@@ -164,7 +164,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -181,14 +181,14 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		{
 			NotificationChain msgs = null;
 			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 6, TemplateSignatureCS.class, msgs);
 			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 6, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 */
 	@Override
 	public StructuredClassCS getOwningClass() {
-		if (eContainerFeatureID() != (FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6)) return null;
+		if (eContainerFeatureID() != (15)) return null;
 		return (StructuredClassCS)eInternalContainer();
 	}
 
@@ -208,7 +208,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 * @generated
 	 */
 	public NotificationChain basicSetOwningClass(StructuredClassCS newOwningClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 15, msgs);
 		return msgs;
 	}
 
@@ -219,7 +219,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 */
 	@Override
 	public void setOwningClass(StructuredClassCS newOwningClass) {
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (15) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -227,12 +227,12 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3, StructuredClassCS.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 13, StructuredClassCS.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<ParameterCS>(ParameterCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0);
+			ownedParameters = new EObjectContainmentWithInverseEList<ParameterCS>(ParameterCS.class, this, 12, 9);
 		}
 		return ownedParameters;
 	}
@@ -260,7 +260,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedExceptions == null)
 		{
-			ownedExceptions = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2);
+			ownedExceptions = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, 11);
 		}
 		return ownedExceptions;
 	}
@@ -275,7 +275,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5);
+			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 14);
 		}
 		return ownedPreconditions;
 	}
@@ -290,7 +290,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4);
+			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 13);
 		}
 		return ownedPostconditions;
 	}
@@ -305,7 +305,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedBodyExpressions == null)
 		{
-			ownedBodyExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1);
+			ownedBodyExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, 10);
 		}
 		return ownedBodyExpressions;
 	}
@@ -329,13 +329,13 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((StructuredClassCS)otherEnd, msgs);
@@ -352,19 +352,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				return basicSetOwnedSignature(null, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return ((InternalEList<?>)getOwnedBodyExpressions()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return ((InternalEList<?>)getOwnedExceptions()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4:
+			case 13:
 				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5:
+			case 14:
 				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				return basicSetOwningClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -379,8 +379,8 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
-				return eInternalContainer().eInverseRemove(this, ClassCSImpl.CLASS_CS_FEATURE_COUNT + 3, StructuredClassCS.class, msgs);
+			case 15:
+				return eInternalContainer().eInverseRemove(this, 13, StructuredClassCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -394,19 +394,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				return getOwnedSignature();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return getOwnedBodyExpressions();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return getOwnedExceptions();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				return getOwnedParameters();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4:
+			case 13:
 				return getOwnedPostconditions();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5:
+			case 14:
 				return getOwnedPreconditions();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				return getOwningClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -422,30 +422,30 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedBodyExpressions().clear();
 				getOwnedBodyExpressions().addAll((Collection<? extends SpecificationCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				getOwnedExceptions().clear();
 				getOwnedExceptions().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4:
+			case 13:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5:
+			case 14:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				setOwningClass((StructuredClassCS)newValue);
 				return;
 		}
@@ -461,25 +461,25 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				getOwnedBodyExpressions().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				getOwnedExceptions().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				getOwnedParameters().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4:
+			case 13:
 				getOwnedPostconditions().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5:
+			case 14:
 				getOwnedPreconditions().clear();
 				return;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				setOwningClass((StructuredClassCS)null);
 				return;
 		}
@@ -495,19 +495,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0:
+			case 9:
 				return ownedSignature != null;
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 1:
+			case 10:
 				return ownedBodyExpressions != null && !ownedBodyExpressions.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 2:
+			case 11:
 				return ownedExceptions != null && !ownedExceptions.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 3:
+			case 12:
 				return ownedParameters != null && !ownedParameters.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 4:
+			case 13:
 				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 5:
+			case 14:
 				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
-			case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 6:
+			case 15:
 				return getOwningClass() != null;
 		}
 		return super.eIsSet(featureID);
@@ -524,7 +524,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		{
 			switch (derivedFeatureID)
 			{
-				case FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case 9: return 2;
 				default: return -1;
 			}
 		}
@@ -542,7 +542,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return FeatureCSImpl.FEATURE_CS_FEATURE_COUNT + 0;
+				case 2: return 9;
 				default: return -1;
 			}
 		}

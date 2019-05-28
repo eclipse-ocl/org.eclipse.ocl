@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 import org.eclipse.ocl.xtext.completeoclcs.ContextDeclCS;
@@ -102,7 +103,7 @@ public class PackageDeclarationCSImpl
 	public EList<ContextDeclCS> getOwnedContexts() {
 		if (ownedContexts == null)
 		{
-			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0);
+			ownedContexts = new EObjectContainmentEList<ContextDeclCS>(ContextDeclCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedContexts;
 	}
@@ -117,7 +118,7 @@ public class PackageDeclarationCSImpl
 	{
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1);
+			ownedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 		}
 		return ownedInvariants;
 	}
@@ -132,9 +133,9 @@ public class PackageDeclarationCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ((InternalEList<?>)getOwnedContexts()).basicRemove(otherEnd, msgs);
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -149,11 +150,11 @@ public class PackageDeclarationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedContexts();
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwnedInvariants();
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getReferredPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -169,11 +170,11 @@ public class PackageDeclarationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedContexts().clear();
 				getOwnedContexts().addAll((Collection<? extends ContextDeclCS>)newValue);
 				return;
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
@@ -190,10 +191,10 @@ public class PackageDeclarationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				getOwnedContexts().clear();
 				return;
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				getOwnedInvariants().clear();
 				return;
 		}
@@ -209,11 +210,11 @@ public class PackageDeclarationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedContexts != null && !ownedContexts.isEmpty();
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ownedInvariants != null && !ownedInvariants.isEmpty();
-			case PathNameDeclCSImpl.PATH_NAME_DECL_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getReferredPackage() != null;
 		}
 		return super.eIsSet(featureID);

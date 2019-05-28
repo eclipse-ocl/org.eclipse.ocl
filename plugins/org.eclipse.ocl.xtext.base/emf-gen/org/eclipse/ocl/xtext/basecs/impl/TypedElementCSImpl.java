@@ -132,7 +132,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -150,14 +150,14 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		if (qualifiers == null)
 		{
-			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2);
+			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, 8);
 		}
 		return qualifiers;
 	}
@@ -197,7 +197,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		boolean oldIsOptional = isOptional;
 		isOptional = newIsOptional;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0, oldIsOptional, isOptional));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsOptional, isOptional));
 	}
 
 	/**
@@ -220,7 +220,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -236,11 +236,11 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return isIsOptional();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedType();
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return getQualifiers();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -257,13 +257,13 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setIsOptional((Boolean)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedType((TypedRefCS)newValue);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends String>)newValue);
 				return;
@@ -281,13 +281,13 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				setIsOptional(IS_OPTIONAL_EDEFAULT);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedType((TypedRefCS)null);
 				return;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				getQualifiers().clear();
 				return;
 		}
@@ -304,11 +304,11 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0:
+			case 6:
 				return isOptional != IS_OPTIONAL_EDEFAULT;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case 7:
 				return ownedType != null;
-			case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case 8:
 				return qualifiers != null && !qualifiers.isEmpty();
 		}
 		return super.eIsSet(featureID);

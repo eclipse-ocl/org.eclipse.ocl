@@ -146,7 +146,7 @@ public class LetVariableCSImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 0, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8, oldName, name));
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class LetVariableCSImpl
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -189,14 +189,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class LetVariableCSImpl
 		ownedInitExpression = newOwnedInitExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, oldOwnedInitExpression, newOwnedInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, oldOwnedInitExpression, newOwnedInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -239,14 +239,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedInitExpression != null)
-				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedInitExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			if (newOwnedInitExpression != null)
-				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9), null, msgs);
 			msgs = basicSetOwnedInitExpression(newOwnedInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 1, newOwnedInitExpression, newOwnedInitExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9, newOwnedInitExpression, newOwnedInitExpression));
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public LetExpCS getOwningLetExpression() {
-		if (eContainerFeatureID() != (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4)) return null;
+		if (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12)) return null;
 		return (LetExpCS)eInternalContainer();
 	}
 
@@ -267,7 +267,7 @@ public class LetVariableCSImpl
 	 */
 	public NotificationChain basicSetOwningLetExpression(LetExpCS newOwningLetExpression, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningLetExpression, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningLetExpression, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12, msgs);
 		return msgs;
 	}
 
@@ -278,7 +278,7 @@ public class LetVariableCSImpl
 	 */
 	@Override
 	public void setOwningLetExpression(LetExpCS newOwningLetExpression) {
-		if (newOwningLetExpression != eInternalContainer() || (eContainerFeatureID() != (ExpCSImpl.EXP_CS_FEATURE_COUNT + 4) && newOwningLetExpression != null))
+		if (newOwningLetExpression != eInternalContainer() || (eContainerFeatureID() != (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12) && newOwningLetExpression != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningLetExpression))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -286,12 +286,12 @@ public class LetVariableCSImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningLetExpression != null)
-				msgs = ((InternalEObject)newOwningLetExpression).eInverseAdd(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, LetExpCS.class, msgs);
+				msgs = ((InternalEObject)newOwningLetExpression).eInverseAdd(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, LetExpCS.class, msgs);
 			msgs = basicSetOwningLetExpression(newOwningLetExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 4, newOwningLetExpression, newOwningLetExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12, newOwningLetExpression, newOwningLetExpression));
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class LetVariableCSImpl
 		ownedRoundBracketedClause = newOwnedRoundBracketedClause;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11, oldOwnedRoundBracketedClause, newOwnedRoundBracketedClause);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -334,14 +334,14 @@ public class LetVariableCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedRoundBracketedClause != null)
-				msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)ownedRoundBracketedClause).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11), null, msgs);
 			if (newOwnedRoundBracketedClause != null)
-				msgs = ((InternalEObject)newOwnedRoundBracketedClause).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ExpCSImpl.EXP_CS_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)newOwnedRoundBracketedClause).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11), null, msgs);
 			msgs = basicSetOwnedRoundBracketedClause(newOwnedRoundBracketedClause, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExpCSImpl.EXP_CS_FEATURE_COUNT + 3, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11, newOwnedRoundBracketedClause, newOwnedRoundBracketedClause));
 	}
 
 	/**
@@ -354,7 +354,7 @@ public class LetVariableCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningLetExpression((LetExpCS)otherEnd, msgs);
@@ -372,13 +372,13 @@ public class LetVariableCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return basicSetOwnedInitExpression(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return basicSetOwnedType(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return basicSetOwnedRoundBracketedClause(null, msgs);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return basicSetOwningLetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -394,8 +394,8 @@ public class LetVariableCSImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
-				return eInternalContainer().eInverseRemove(this, ExpCSImpl.EXP_CS_FEATURE_COUNT + 2, LetExpCS.class, msgs);
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
+				return eInternalContainer().eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10, LetExpCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -409,15 +409,15 @@ public class LetVariableCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return getName();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return getOwnedInitExpression();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return getOwnedType();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return getOwnedRoundBracketedClause();
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return getOwningLetExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -432,19 +432,19 @@ public class LetVariableCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setName((String)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedInitExpression((ExpCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				setOwnedType((TypedRefCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)newValue);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				setOwningLetExpression((LetExpCS)newValue);
 				return;
 		}
@@ -460,19 +460,19 @@ public class LetVariableCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				setName(NAME_EDEFAULT);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				setOwnedInitExpression((ExpCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				setOwnedType((TypedRefCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				setOwnedRoundBracketedClause((RoundBracketedClauseCS)null);
 				return;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				setOwningLetExpression((LetExpCS)null);
 				return;
 		}
@@ -488,15 +488,15 @@ public class LetVariableCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9:
 				return ownedInitExpression != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10:
 				return ownedType != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 3:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11:
 				return ownedRoundBracketedClause != null;
-			case ExpCSImpl.EXP_CS_FEATURE_COUNT + 4:
+			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12:
 				return getOwningLetExpression() != null;
 		}
 		return super.eIsSet(featureID);
@@ -513,7 +513,7 @@ public class LetVariableCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8: return 5;
 				default: return -1;
 			}
 		}
@@ -521,8 +521,8 @@ public class LetVariableCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 1: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
-				case ExpCSImpl.EXP_CS_FEATURE_COUNT + 2: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0;
+				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10: return NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1;
 				default: return -1;
 			}
 		}
@@ -540,7 +540,7 @@ public class LetVariableCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 0;
+				case 5: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8;
 				default: return -1;
 			}
 		}
@@ -548,8 +548,8 @@ public class LetVariableCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 1;
-				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1: return ExpCSImpl.EXP_CS_FEATURE_COUNT + 2;
+				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9;
+				case NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1: return ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10;
 				default: return -1;
 			}
 		}
