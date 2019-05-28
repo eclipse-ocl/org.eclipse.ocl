@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2011, 2019 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -55,16 +55,7 @@ public class MarkupGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOclTextKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
 
 		//MarkupKeyword:
-		//	'b'
-		//	| 'e'
-		//	| 'bullet'
-		//	| 'figure'
-		//	| 'figureRef'
-		//	| 'footnote'
-		//	| 'heading'
-		//	| 'oclCode'
-		//	| 'oclEval'
-		//	| 'oclText';
+		//	'b' | 'e' | 'bullet' | 'figure' | 'figureRef' | 'footnote' | 'heading' | 'oclCode' | 'oclEval' | 'oclText';
 		@Override public ParserRule getRule() { return rule; }
 
 		//'b' | 'e' | 'bullet' | 'figure' | 'figureRef' | 'footnote' | 'heading' | 'oclCode' | 'oclEval' | 'oclText'
@@ -118,18 +109,9 @@ public class MarkupGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextElementParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
 
 		//MarkupElement:
-		//	FontElement
-		//	| NewLineElement
-		//	| BulletElement
-		//	| FigureElement
-		//	| FigureRefElement
-		//	| FootnoteElement
-		//	| HeadingElement
-		//	| NullElement
-		//	| OCLCodeElement
-		//	| OCLEvalElement
-		//	| OCLTextElement
-		//	| TextElement // Last to give everything else a try first
+		//	FontElement | NewLineElement | BulletElement | FigureElement | FigureRefElement | FootnoteElement | HeadingElement |
+		//	NullElement | OCLCodeElement | OCLEvalElement | OCLTextElement | TextElement
+		//	// Last to give everything else a try first
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -871,16 +853,7 @@ public class MarkupGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MarkupKeyword:
-	//	'b'
-	//	| 'e'
-	//	| 'bullet'
-	//	| 'figure'
-	//	| 'figureRef'
-	//	| 'footnote'
-	//	| 'heading'
-	//	| 'oclCode'
-	//	| 'oclEval'
-	//	| 'oclText';
+	//	'b' | 'e' | 'bullet' | 'figure' | 'figureRef' | 'footnote' | 'heading' | 'oclCode' | 'oclEval' | 'oclText';
 	public MarkupKeywordElements getMarkupKeywordAccess() {
 		return pMarkupKeyword;
 	}
@@ -890,18 +863,9 @@ public class MarkupGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MarkupElement:
-	//	FontElement
-	//	| NewLineElement
-	//	| BulletElement
-	//	| FigureElement
-	//	| FigureRefElement
-	//	| FootnoteElement
-	//	| HeadingElement
-	//	| NullElement
-	//	| OCLCodeElement
-	//	| OCLEvalElement
-	//	| OCLTextElement
-	//	| TextElement // Last to give everything else a try first
+	//	FontElement | NewLineElement | BulletElement | FigureElement | FigureRefElement | FootnoteElement | HeadingElement |
+	//	NullElement | OCLCodeElement | OCLEvalElement | OCLTextElement | TextElement
+	//	// Last to give everything else a try first
 	//;
 	public MarkupElementElements getMarkupElementAccess() {
 		return pMarkupElement;

@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2018 Willink Transformations and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v20.html
- *
- * Contributors:
- *     E.D.Willink - initial API and implementation
- *******************************************************************************/
 package org.eclipse.ocl.xtext.base.parser.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import.
@@ -1128,60 +1118,63 @@ public class InternalBaseLexer extends Lexer {
         "\2\uffff\1\2\1\uffff\1\5\1\6\1\7\1\10\1\uffff\1\12\2\uffff\1\15\1\16\4\uffff\1\22\1\24\1\uffff\1\27\1\30\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\uffff\1\22\1\14\1\15\1\16\1\17\1\20\1\21\1\25\1\23\1\24\1\26\1\27\5\uffff\1\13";
     static final String DFA11_specialS =
         "\1\1\15\uffff\1\2\1\0\44\uffff}>";
-    static final String[] DFA11_transitionS = {
-            "\11\26\2\25\2\26\1\25\22\26\1\25\1\26\1\16\3\26\1\13\1\17\1\14\1\15\1\5\1\6\1\11\1\24\1\1\1\20\12\23\1\10\4\26\1\7\1\26\32\22\1\2\1\26\1\4\1\26\1\21\1\26\4\22\1\12\25\22\1\26\1\3\uff83\26",
-            "\1\27",
-            "",
-            "\1\32\15\uffff\1\31",
-            "",
-            "",
-            "",
-            "",
-            "\1\37",
-            "",
-            "\1\41",
-            "\1\43",
-            "",
-            "",
-            "\0\46",
-            "\0\47",
-            "\1\50\2\uffff\1\51",
-            "\1\52",
-            "",
-            "",
-            "\1\54",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\56",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\57",
-            "\1\60",
-            "\1\61",
-            "\1\62",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            ""
-    };
+    static final String[] DFA11_transitionS = DFA11_transitionS_.DFA11_transitionS;
+    private static final class DFA11_transitionS_ {
+        static final String[] DFA11_transitionS = {
+                "\11\26\2\25\2\26\1\25\22\26\1\25\1\26\1\16\3\26\1\13\1\17\1\14\1\15\1\5\1\6\1\11\1\24\1\1\1\20\12\23\1\10\4\26\1\7\1\26\32\22\1\2\1\26\1\4\1\26\1\21\1\26\4\22\1\12\25\22\1\26\1\3\uff83\26",
+                "\1\27",
+                "",
+                "\1\32\15\uffff\1\31",
+                "",
+                "",
+                "",
+                "",
+                "\1\37",
+                "",
+                "\1\41",
+                "\1\43",
+                "",
+                "",
+                "\0\46",
+                "\0\47",
+                "\1\50\2\uffff\1\51",
+                "\1\52",
+                "",
+                "",
+                "\1\54",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "\1\56",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "\1\57",
+                "\1\60",
+                "\1\61",
+                "\1\62",
+                "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+                ""
+        };
+    }
 
     static final short[] DFA11_eot = DFA.unpackEncodedString(DFA11_eotS);
     static final short[] DFA11_eof = DFA.unpackEncodedString(DFA11_eofS);
