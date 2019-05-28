@@ -10,16 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
@@ -37,6 +40,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.RootPackageCS;
@@ -73,32 +77,35 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull URI inputURI) throws Exception {
+		return doSerialize(ocl, inputURI, ModelComparator.INSTANCE);
+	}
+	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull URI inputURI, @Nullable ModelComparator modelComparator) throws Exception {
 		String lastSegment = inputURI.trimFileExtension().lastSegment();
 		assert lastSegment != null;
-		return doSerialize(ocl, inputURI, lastSegment, inputURI, null, true, NO_MESSAGES, NO_MESSAGES);
+		return doSerialize(ocl, inputURI, lastSegment, inputURI, null, modelComparator, NO_MESSAGES, NO_MESSAGES);
 	}
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile) throws Exception {
-		return doSerialize(ocl, inputFile, true);
+		return doSerialize(ocl, inputFile, ModelComparator.INSTANCE);
 	}
-	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile, boolean doCompare) throws Exception {
-		return doSerialize(ocl, inputFile, doCompare, NO_MESSAGES);
+	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile, @Nullable ModelComparator modelComparator) throws Exception {
+		return doSerialize(ocl, inputFile, modelComparator, NO_MESSAGES);
 	}
-	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile, boolean doCompare, @NonNull String @NonNull [] asValidationMessages) throws Exception {
+	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull TestFile inputFile, @Nullable ModelComparator modelComparator, @NonNull String @NonNull [] asValidationMessages) throws Exception {
 		URI inputURI = inputFile.getFileURI();
 		String stem = ClassUtil.nonNullState(inputURI.trimFileExtension().lastSegment());
 		URI referenceURI = inputURI;
-		return doSerialize(ocl, inputURI, stem, referenceURI, null, doCompare, asValidationMessages, asValidationMessages);
+		return doSerialize(ocl, inputURI, stem, referenceURI, null, modelComparator, asValidationMessages, asValidationMessages);
 	}
 
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull String stem, @NonNull URI referenceURI, @Nullable Map<Object, Object> options,
-			boolean doCompare, @NonNull String @NonNull [] asValidationMessages, @NonNull String @NonNull [] asValidationMessages2) throws Exception {
+			@Nullable ModelComparator modelComparator, @NonNull String @NonNull [] asValidationMessages, @NonNull String @NonNull [] asValidationMessages2) throws Exception {
 		String stem2 = inputURI.trimFileExtension().lastSegment();
 		assert stem.equals(stem2);
-		return doSerialize(ocl, inputURI, referenceURI, options, doCompare, asValidationMessages, asValidationMessages2);
+		return doSerialize(ocl, inputURI, referenceURI, options, modelComparator, asValidationMessages, asValidationMessages2);
 	}
 
 	public XtextResource doSerialize(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull URI referenceURI, @Nullable Map<Object, Object> options,
-			boolean doCompare, @NonNull String @NonNull [] asValidationMessages, @NonNull String @NonNull [] asValidationMessages2) throws Exception {
+			@Nullable ModelComparator modelComparator, @NonNull String @NonNull [] asValidationMessages, @NonNull String @NonNull [] asValidationMessages2) throws Exception {
 		ResourceSetInitializer resourceSetInitializer = options != null ? (ResourceSetInitializer)options.get(ResourceSetInitializer.class) : null;
 		ResourceSet resourceSet = new ResourceSetImpl();
 		getProjectMap().initializeResourceSet(resourceSet);
@@ -171,14 +178,25 @@ public class SerializeTests extends XtextTestCase
 			//
 			//		TestUtil.TestUtil.assertSameModel(asResource, pivotResource2);
 			Resource referenceResource = loadEcore(referenceURI);
-			if (doCompare) {	// Workaround for Bug 354621
-				TestUtil.assertSameModel(referenceResource, ecoreResource2);
+			if (modelComparator != null) {	// Workaround for Bug 354621
+				modelComparator.assertSameModel(referenceResource, ecoreResource2);
 			}
 			return xtextResource1;
 		}
 		finally {
 			ocl2.dispose();
 			ocl2 = null;
+		}
+	}
+
+
+	public static class ModelComparator
+	{
+		public static final @NonNull ModelComparator INSTANCE = new ModelComparator();
+		public static final @Nullable ModelComparator NONE = null;
+
+		protected void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
+			TestUtil.assertSameModel(expectedResource, actualResource);
 		}
 	}
 
@@ -280,7 +298,7 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug354336() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, getTestModelURI("models/ecore/Bug354336.ecore"), getTestModelURI("models/ecore/Bug354336.ecore"), null, false, NO_MESSAGES, NO_MESSAGES);		// FIXME Model check suppressed because of Bug 354621
+		doSerialize(ocl, getTestModelURI("models/ecore/Bug354336.ecore"), getTestModelURI("models/ecore/Bug354336.ecore"), null, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME Model check suppressed because of Bug 354621
 		ocl.dispose();
 	}
 
@@ -292,7 +310,7 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug376488() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, getTestModelURI("models/ecore/Bug376488.ecore"), getTestModelURI("models/ecore/Bug376488.ecore"), null, true, SUPPRESS_VALIDATION, SUPPRESS_VALIDATION);		// FIXME
+		doSerialize(ocl, getTestModelURI("models/ecore/Bug376488.ecore"), getTestModelURI("models/ecore/Bug376488.ecore"), null, ModelComparator.INSTANCE, SUPPRESS_VALIDATION, SUPPRESS_VALIDATION);		// FIXME
 		ocl.dispose();
 	}
 
@@ -388,7 +406,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
 		TestFile ecoreFile = createOCLinEcoreFile("Bug404493.ecore", testFile);
-		doSerialize(ocl, ecoreFile, false);
+		doSerialize(ocl, ecoreFile, ModelComparator.NONE);
 		ocl.dispose();
 	}
 
@@ -465,7 +483,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
 		TestFile ecoreFile = createOCLinEcoreFile("Bug463877.ecore", testFile);
-		doSerialize(ocl, ecoreFile, false, SUPPRESS_VALIDATION); //getMessages(
+		doSerialize(ocl, ecoreFile, ModelComparator.NONE, SUPPRESS_VALIDATION); //getMessages(
 		//			"The 'Feature::NameIsNotNull' constraint is violated for 'my::Node::null'",
 		//			"The 'Feature::TypeIsNotNull' constraint is violated for 'my::Node::null'"
 		//				));
@@ -551,7 +569,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>";
 		TestFile ecoreFile = createOCLinEcoreFile("Bug516301.ecore", testFile);
-		doSerialize(ocl, ecoreFile, false);
+		doSerialize(ocl, ecoreFile, ModelComparator.NONE);
 		ocl.dispose();
 	}
 
@@ -565,13 +583,13 @@ public class SerializeTests extends XtextTestCase
 		//		DocumentAttribution.WORK.setState(true);
 		//		CS2ASConversion.CONTINUATION.setState(true);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doSerialize(ocl, getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), null, true, NO_MESSAGES, NO_MESSAGES);
+		doSerialize(ocl, getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), null, ModelComparator.INSTANCE, NO_MESSAGES, NO_MESSAGES);
 		ocl.dispose();
 	}
 
 	public void testSerialize_ConstraintMessages() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, getTestModelURI("models/ecore/ConstraintMessages.ecore"), getTestModelURI("models/ecore/ConstraintMessages.reference.ecore"), null, true, NO_MESSAGES, NO_MESSAGES);
+		doSerialize(ocl, getTestModelURI("models/ecore/ConstraintMessages.ecore"), getTestModelURI("models/ecore/ConstraintMessages.reference.ecore"), null, ModelComparator.INSTANCE, NO_MESSAGES, NO_MESSAGES);
 		ocl.dispose();
 	}
 
@@ -648,7 +666,7 @@ public class SerializeTests extends XtextTestCase
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.base/model/BaseCS.ecore", true);
 		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
-		doSerialize(ocl, uri, stem, uri, null, false, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
+		doSerialize(ocl, uri, stem, uri, null, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 		ocl.dispose();
 	}
 
@@ -657,7 +675,7 @@ public class SerializeTests extends XtextTestCase
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore", true);
 		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
 		Map<Object, Object> options = createLoadedEcoreOptions();
-		doSerialize(ocl, uri, stem, uri, options, false, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
+		doSerialize(ocl, uri, stem, uri, options, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 	}
 
 	public void testSerialize_OCLinEcoreCST() throws Exception {
@@ -665,7 +683,7 @@ public class SerializeTests extends XtextTestCase
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.ecore", true);
 		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
 		Map<Object, Object> options = createLoadedEcoreOptions();
-		doSerialize(ocl, uri, stem, uri, options, false, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
+		doSerialize(ocl, uri, stem, uri, options, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 		//		doSerialize(ocl, "OCLinEcoreCST");
 		ocl.dispose();
 	}
@@ -682,19 +700,28 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	/* This was originally commented out because of BUG 377626 which the BUG 547704 duplicate fixed, but
-	// QVT.ecore uses computed xmi:id's which the serialization does not reproduce so still commented out.
 	public void testSerialize_QVT() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerialize(ocl, getTestModelURI("models/ecore/QVT.ecore"));
+		doSerialize(ocl, getTestModelURI("models/ecore/QVT.ecore"), new ModelComparator()
+		{
+			// Reset the expectedResource xmi:ids since serialization does not recompute algorithmic xmi:ids.
+			@Override
+			protected void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
+				XMLResourceImpl xmlResourceImpl = (XMLResourceImpl)expectedResource;
+				for (EObject eObject : new TreeIterable(expectedResource)) {
+					xmlResourceImpl.setID(eObject, null);
+				}
+				super.assertSameModel(expectedResource, actualResource);
+			}
+		});
 		ocl.dispose();
-	} */
+	}
 
 	public void testSerialize_RoyalAndLoyal_ecore() throws Exception {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// org.eclipse.ocl.examples.project.royalandloyal is not a plugin.
 			OCL ocl = OCL.newInstance(getProjectMap());
 			@NonNull URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
-			doSerialize(ocl, inputURI, "RoyalAndLoyal", inputURI, null, true, NO_MESSAGES, NO_MESSAGES);
+			doSerialize(ocl, inputURI, "RoyalAndLoyal", inputURI, null, ModelComparator.INSTANCE, NO_MESSAGES, NO_MESSAGES);
 			ocl.dispose();
 		}
 	}
@@ -711,7 +738,7 @@ public class SerializeTests extends XtextTestCase
 		//				"	The ''LetVariable::CompatibleTypeForInitializer'' constraint is violated for ''firstLetter : String[?] = invalid.oclBadOperation()''");
 		//		String message4 = StringUtil.bind("Parsing error ''org.eclipse.ocl.pivot.utilities.SemanticException: The ''states::State'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
 		//				"1: Unresolved Operation ''OclInvalid::substring(1, 1)'''' for ''states::State'' ''NameIsLeadingUpperCase''");
-		doSerialize(ocl, getTestModelURI("models/ecore/States.ecore"), getTestModelURI("models/ecore/States.ecore"), options, false, NO_MESSAGES/*getMessages(message1, message2)*/, NO_MESSAGES/*getMessages(message4)*/);
+		doSerialize(ocl, getTestModelURI("models/ecore/States.ecore"), getTestModelURI("models/ecore/States.ecore"), options, ModelComparator.NONE, NO_MESSAGES/*getMessages(message1, message2)*/, NO_MESSAGES/*getMessages(message4)*/);
 		//			new String[] {StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1")});
 		ocl.dispose();
 	}
