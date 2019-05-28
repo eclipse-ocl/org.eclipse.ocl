@@ -682,9 +682,12 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	/* BUG 377626
+	/* This was originally commented out because of BUG 377626 which the BUG 547704 duplicate fixed, but
+	// QVT.ecore uses computed xmi:id's which the serialization does not reproduce so still commented out.
 	public void testSerialize_QVT() throws Exception {
-		doSerialize(ocl, "QVT");
+		OCL ocl = OCL.newInstance(getProjectMap());
+		doSerialize(ocl, getTestModelURI("models/ecore/QVT.ecore"));
+		ocl.dispose();
 	} */
 
 	public void testSerialize_RoyalAndLoyal_ecore() throws Exception {

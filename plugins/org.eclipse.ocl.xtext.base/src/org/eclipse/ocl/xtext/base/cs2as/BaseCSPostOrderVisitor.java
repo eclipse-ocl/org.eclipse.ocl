@@ -28,9 +28,14 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -38,11 +43,13 @@ import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.DetailCS;
 import org.eclipse.ocl.xtext.basecs.DocumentationCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
@@ -296,8 +303,51 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 			helper.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
 			//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
 			//			assert continuation == null;
-			if (pivotOpposite == null) {
-				metamodelManager.installPropertyDeclaration(pivotElement);
+			List<ImplicitOppositeCS> csOwnedImplicitOpposites = csReference.getOwnedImplicitOpposites();
+			if (pivotOpposite != null) {
+				if ((csOwnedImplicitOpposites != null) && !csOwnedImplicitOpposites.isEmpty()) {
+					context.addWarning(csReference, "Implicit opposites ignored");
+				}
+			}
+			else {
+				if ((csOwnedImplicitOpposites != null) && !csOwnedImplicitOpposites.isEmpty()) {
+					if (csOwnedImplicitOpposites.size() > 1) {
+						context.addWarning(csReference, "Extra implict opposites ignored");
+					}
+					ImplicitOppositeCS csOwnedImplicitOpposite = csOwnedImplicitOpposites.get(0);
+					String oppositeName = csOwnedImplicitOpposite.getName();
+					if (oppositeName != null) {
+						List<String> qualifiers = csOwnedImplicitOpposite.getQualifiers();
+						assert qualifiers !=null;
+						boolean isOrdered = ElementUtil.getQualifier(qualifiers, "ordered", "!ordered", PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED);		// The Ecore idiom
+						boolean isUnique = ElementUtil.getQualifier(qualifiers, "unique", "!unique", PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE);
+						Integer lowerValue = null; //ValueUtil.ZERO_VALUE;
+						Integer upperValue = null; //ValueUtil.UNLIMITED_ONE_VALUE;
+						TypedRefCS csType = csOwnedImplicitOpposite.getOwnedType();
+						if (csType != null) {
+							MultiplicityCS csMultiplicity = csType.getOwnedMultiplicity();
+							if (csMultiplicity != null) {
+								lowerValue = csMultiplicity.getLower();
+								upperValue = csMultiplicity.getUpper();
+							}
+						}
+						IntegerValue lower = lowerValue != null ? ValueUtil.integerValueOf(lowerValue) :  PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
+						if (lower.isInvalid()) {
+						//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_LOWER_KEY + " " + lower);
+							lower = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
+						}
+						UnlimitedNaturalValue upper = upperValue != null ? ValueUtil.unlimitedNaturalValueOf(upperValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
+						if (upper.isInvalid()) {
+						//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
+							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
+						}
+						metamodelManager.createImplicitOppositeProperty(pivotElement, oppositeName,
+							isOrdered, isUnique, lower, upper);
+					}
+				}
+				else {
+					metamodelManager.installPropertyDeclaration(pivotElement);
+				}
 			}
 		}
 		return continuation;

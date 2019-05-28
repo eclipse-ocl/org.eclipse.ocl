@@ -53,6 +53,7 @@ import org.eclipse.ocl.xtext.basecs.DetailCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
@@ -282,12 +283,20 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 			context.refreshQualifiers(qualifiers, "composes", object.isIsComposite());
 			context.refreshQualifiers(qualifiers, "resolve", "!resolve", object.isIsResolveProxies() ? null : Boolean.FALSE);
 			Property opposite = object.getOpposite();
-			if (opposite != null) {
-				if (!opposite.isIsImplicit()) {
-					csReference.setReferredOpposite(opposite);
-				}
-				else {
-					// FIXME BUG 377626
+			if (opposite == null) {
+				csReference.setReferredOpposite(null);
+				csReference.getOwnedImplicitOpposites().clear();
+			}
+			else if (!opposite.isIsImplicit()) {
+				csReference.setReferredOpposite(opposite);
+				csReference.getOwnedImplicitOpposites().clear();
+			}
+			else {
+				csReference.setReferredOpposite(null);
+				Map<@NonNull String, @NonNull String> requiredDetails = context.getMetamodelManager().createOppositeEAnnotationDetails(opposite);
+				if (requiredDetails != null) {
+					ImplicitOppositeCS csOpposite = context.refreshTypedElement(ImplicitOppositeCS.class, BaseCSPackage.Literals.IMPLICIT_OPPOSITE_CS, opposite);
+					csReference.getOwnedImplicitOpposites().add(csOpposite);
 				}
 			}
 			context.refreshList(csReference.getReferredKeys(), object.getKeys());

@@ -9,11 +9,50 @@
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
         <details key="body" value="hiddenFrom"/>
         <details key="upper" value="5"/>
+        <details key="unique" value="false"/>
+        <details key="ordered" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tos" upperBound="-1" eType="#//To"
         eOpposite="#//To/froms"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//To" eOpposite="#//To/from"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToOne" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="hiddenFromOne"/>
+        <details key="lower" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToOptional" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="hiddenFromOptional"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToImplicit" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="From"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToSome" unique="false"
+        lowerBound="1" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="hiddenFromSome"/>
+        <details key="lower" value="1"/>
+        <details key="upper" value="-1"/>
+        <details key="unique" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToMany" unique="false"
+        lowerBound="1" eType="#//To">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="hiddenFromMany"/>
+        <details key="upper" value="-1"/>
+        <details key="ordered" value="true"/>
+        <details key="unique" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hiddenToImplicitComposed"
+        eType="#//To" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="To">
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//From" eOpposite="#//From/to"/>

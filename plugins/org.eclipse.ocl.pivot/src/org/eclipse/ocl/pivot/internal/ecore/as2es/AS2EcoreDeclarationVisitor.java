@@ -80,11 +80,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -288,82 +285,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	protected @Nullable EAnnotation createOppositeEAnnotation(@NonNull Property property) {
-		String lower = null;
-		String ordered = null;
-		String unique = null;
-		String upper = null;
-		IntegerValue lowerValue;
-		UnlimitedNaturalValue upperValue;
-		Type propertyType = property.getType();
-		Type type;
-		if (propertyType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)propertyType;
-			type = collectionType.getElementType();
-			lowerValue = collectionType.getLowerValue();
-			upperValue = collectionType.getUpperValue();
-			if (collectionType.isOrdered() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED) {
-				ordered = Boolean.toString(collectionType.isOrdered());
-			}
-			if (collectionType.isUnique() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE) {
-				unique = Boolean.toString(collectionType.isUnique());
-			}
-		}
-		else {
-			type = propertyType;
-			lowerValue = property.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
-			upperValue = ValueUtil.UNLIMITED_ONE_VALUE;
-		}
-		if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
-			lower = lowerValue.toString();
-		}
-		if (!(property.getOpposite().isIsComposite() ? ValueUtil.UNLIMITED_ONE_VALUE : PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE).equals(upperValue)) {
-			upper = upperValue.toString();
-		}
-		String name = property.getName();
-		//
-		//	If there is an exact match for the no-EAnnotation DEFAULT values, then no EAnnotation is required.
-		//
-		if (name.equals(type.getName()) && (lower == null) && (ordered == null) && (unique == null) && (upper == null)) {
+		Map<@NonNull String, @NonNull String> requiredDetails = context.getMetamodelManager().createOppositeEAnnotationDetails(property);
+		if (requiredDetails == null) {
 			return null;
-		}
-		//
-		//	Otherwise the with-EAnnotation ANNOTATED values are the reference.
-		//
-		lower = null;
-		ordered = null;
-		unique = null;
-		upper = null;
-		if (propertyType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)propertyType;
-			if (collectionType.isOrdered() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED) {
-				ordered = Boolean.toString(collectionType.isOrdered());
-			}
-			if (collectionType.isUnique() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE) {
-				unique = Boolean.toString(collectionType.isUnique());
-			}
-		}
-		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
-			lower = lowerValue.toString();
-		}
-		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE.equals(upperValue)) {
-			upper = upperValue.toString();
 		}
 		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		eAnnotation.setSource(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
 		EMap<String, String> details = eAnnotation.getDetails();
-		details.put(EMOFExtendedMetaData.EMOF_COMMENT_BODY, name);
-		if (lower != null) {
-			details.put("lower", lower);
-		}
-		if (ordered != null) {
-			details.put("ordered", ordered);
-		}
-		if (unique != null) {
-			details.put("unique", unique);
-		}
-		if (upper != null) {
-			details.put("upper", upper);
-		}
+		details.putAll(requiredDetails);
 		return eAnnotation;
 	}
 

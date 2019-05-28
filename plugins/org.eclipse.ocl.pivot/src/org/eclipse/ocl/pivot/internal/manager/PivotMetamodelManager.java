@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -129,7 +130,9 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -508,6 +511,44 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return asIf;
 	}
 
+	/**
+	 * @since 1.8
+	 */
+	public void createImplicitOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
+		org.eclipse.ocl.pivot.Class localType = asProperty.getOwningClass();
+		if (localType == null) {
+			asProperty.setOpposite(null);
+			return;
+//			localType = standardLibrary.getOclInvalidType();
+		}
+		Model thisModel = PivotUtil.getContainingModel(localType);
+		assert thisModel != null;
+		org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)asProperty.getType();	// FIXME cast
+		while (remoteType instanceof CollectionType) {
+			remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
+		}
+		if (remoteType == null) {
+			asProperty.setOpposite(null);
+			return;
+		}
+		org.eclipse.ocl.pivot.Class thisRemoteType = getEquivalentClass(thisModel, remoteType);
+		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
+		oppositeProperty.setName(oppositeName);
+		oppositeProperty.setIsImplicit(true);
+		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
+			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
+			oppositeProperty.setIsRequired(true);
+		}
+		else {
+			oppositeProperty.setType(localType);
+			oppositeProperty.setIsRequired(lower.equals(ValueUtil.ONE_VALUE));
+		}
+		thisRemoteType.getOwnedProperties().add(oppositeProperty);
+		oppositeProperty.setOpposite(asProperty);
+		asProperty.setOpposite(oppositeProperty);
+	}
+
 	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {		// FIXME move to PivotHelper
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
 		asInteger.setIntegerSymbol(integerSymbol);
@@ -530,6 +571,89 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		asNull.setType(standardLibrary.getOclVoidType());
 		asNull.setIsRequired(false);
 		return asNull;
+	}
+
+	/**
+	 * @since 1.8
+	 */
+	public @Nullable Map<@NonNull String, @NonNull String> createOppositeEAnnotationDetails(@NonNull Property property) {
+		String lower = null;
+		String ordered = null;
+		String unique = null;
+		String upper = null;
+		IntegerValue lowerValue;
+		UnlimitedNaturalValue upperValue;
+		Type propertyType = property.getType();
+		Type type;
+		if (propertyType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)propertyType;
+			type = collectionType.getElementType();
+			lowerValue = collectionType.getLowerValue();
+			upperValue = collectionType.getUpperValue();
+			if (collectionType.isOrdered() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED) {
+				ordered = Boolean.toString(collectionType.isOrdered());
+			}
+			if (collectionType.isUnique() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE) {
+				unique = Boolean.toString(collectionType.isUnique());
+			}
+		}
+		else {
+			type = propertyType;
+			lowerValue = property.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
+			upperValue = ValueUtil.UNLIMITED_ONE_VALUE;
+		}
+		if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
+			lower = lowerValue.toString();
+		}
+		if (!(property.getOpposite().isIsComposite() ? ValueUtil.UNLIMITED_ONE_VALUE : PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE).equals(upperValue)) {
+			upper = upperValue.toString();
+		}
+		String name = property.getName();
+		//
+		//	If there is an exact match for the no-EAnnotation DEFAULT values, then no EAnnotation is required.
+		//
+		if (name.equals(type.getName()) && (lower == null) && (ordered == null) && (unique == null) && (upper == null)) {
+			return null;
+		}
+		//
+		//	Otherwise the with-EAnnotation ANNOTATED values are the reference.
+		//
+		lower = null;
+		ordered = null;
+		unique = null;
+		upper = null;
+		if (propertyType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)propertyType;
+			if (collectionType.isOrdered() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED) {
+				ordered = Boolean.toString(collectionType.isOrdered());
+			}
+			if (collectionType.isUnique() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE) {
+				unique = Boolean.toString(collectionType.isUnique());
+			}
+		}
+		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
+			lower = lowerValue.toString();
+		}
+		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE.equals(upperValue)) {
+			upper = upperValue.toString();
+		}
+		HashMap<@NonNull String, @NonNull String> requiredDetails = new HashMap<>();
+		String bodyName = EMOFExtendedMetaData.EMOF_COMMENT_BODY;
+		assert bodyName != null;
+		requiredDetails.put(bodyName, name);
+		if (lower != null) {
+			requiredDetails.put("lower", lower);
+		}
+		if (ordered != null) {
+			requiredDetails.put("ordered", ordered);
+		}
+		if (unique != null) {
+			requiredDetails.put("unique", unique);
+		}
+		if (upper != null) {
+			requiredDetails.put("upper", upper);
+		}
+		return requiredDetails;
 	}
 
 	public @NonNull Orphanage createOrphanage() {

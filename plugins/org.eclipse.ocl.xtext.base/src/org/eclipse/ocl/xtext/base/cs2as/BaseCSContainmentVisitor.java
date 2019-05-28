@@ -63,6 +63,7 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
@@ -380,6 +381,11 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		pivotElement.setLiteral(csElement.getLiteral());
 		pivotElement.setValue(BigInteger.valueOf(csElement.getValue()));
 		return null;
+	}
+
+	@Override
+	public Continuation<?> visitImplicitOppositeCS(@NonNull ImplicitOppositeCS object) {
+		return null;		// Handled by the parent ReferenceCS
 	}
 
 	@Override

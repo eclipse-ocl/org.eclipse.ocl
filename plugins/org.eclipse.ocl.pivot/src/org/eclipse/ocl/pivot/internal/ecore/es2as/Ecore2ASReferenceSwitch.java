@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -214,6 +213,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EReference eOpposite = eObject.getEOpposite();
 		if (eOpposite != null) {
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
+			asProperty.setOpposite(oppositeProperty);
 		}
 		else {
 			EAnnotation oppositeRole = eObject.getEAnnotation(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0);
@@ -221,12 +221,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				EMap<String, String> details = oppositeRole.getDetails();
 				String oppositeName = details.get(PROPERTY_OPPOSITE_ROLE_NAME_KEY);
 				if (oppositeName != null) {
-					oppositeProperty = PivotFactory.eINSTANCE.createProperty();
-					oppositeProperty.setName(oppositeName);
-					oppositeProperty.setIsImplicit(true);
-					org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)asProperty.getType();	// FIXME cast
-					org.eclipse.ocl.pivot.Class localType = asProperty.getOwningClass();
-					oppositeProperty.setType(localType);
 					String uniqueValue = details.get(PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY);
 					String orderedValue = details.get(PROPERTY_OPPOSITE_ROLE_ORDERED_KEY);
 					String lowerValue = details.get(PROPERTY_OPPOSITE_ROLE_LOWER_KEY);
@@ -245,19 +239,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 						upper = unlimitedOne;
 					}
-					if (localType == null) {
-						localType = standardLibrary.getOclInvalidType();
-					}
-					if (upper != one) {
-						oppositeProperty.setType(metamodelManager.getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
-						oppositeProperty.setIsRequired(true);
-					}
-					else {
-						oppositeProperty.setType(localType);
-						oppositeProperty.setIsRequired(lower == one);
-					}
-					remoteType.getOwnedProperties().add(oppositeProperty);
-					oppositeProperty.setOpposite(asProperty);
+					metamodelManager.createImplicitOppositeProperty(asProperty, oppositeName, isOrdered, isUnique, lower, upper);
 				}
 			}
 			else {
@@ -266,55 +248,31 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					EMap<String, String> details = oppositeRole.getDetails();
 					String oppositeName = details.get(EMOFExtendedMetaData.EMOF_COMMENT_BODY);
 					if (oppositeName != null) {
-						EObject eContainer = asProperty.eContainer();
-						if (eContainer instanceof Type) {
-							Type localType = (Type)eContainer;
-							org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)asProperty.getType();	// FIXME cast
-							while (remoteType instanceof CollectionType) {
-								remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
-							}
-							if (remoteType != null) {
-								oppositeProperty = PivotFactory.eINSTANCE.createProperty();
-								oppositeProperty.setName(oppositeName);
-								oppositeProperty.setIsImplicit(true);
-								Model thisModel = PivotUtil.getContainingModel(localType);
-								assert thisModel != null;
-								org.eclipse.ocl.pivot.Class thisRemoteType = metamodelManager.getEquivalentClass(thisModel, remoteType);
-								//
-								String lowerValue = details.get("lower");
-								IntegerValue lower = lowerValue != null ? ValueUtil.integerValueOf(lowerValue) :  PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
-								if (lower.isInvalid()) {
-									logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_LOWER_KEY + " " + lower);
-									lower = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
-								}
-								String upperValue = details.get("upper");
-								UnlimitedNaturalValue upper = upperValue != null ? ValueUtil.unlimitedNaturalValueOf(upperValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
-								if (upper.isInvalid()) {
-									logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
-									upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
-								}
-								if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
-									String uniqueValue = details.get("unique");
-									boolean isUnique = uniqueValue != null ? Boolean.valueOf(uniqueValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE;
-									String orderedValue = details.get("ordered");
-									boolean isOrdered = orderedValue != null ? Boolean.valueOf(orderedValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED;
-									oppositeProperty.setType(metamodelManager.getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
-									oppositeProperty.setIsRequired(true);
-								}
-								else {
-									oppositeProperty.setType(localType);
-									oppositeProperty.setIsRequired(lower.equals(ValueUtil.ONE_VALUE));
-								}
-								thisRemoteType.getOwnedProperties().add(oppositeProperty);
-								oppositeProperty.setOpposite(asProperty);
-							}
+					//	EObject eContainer = asProperty.eContainer();
+					//	if (eContainer instanceof Type) {
+						String uniqueValue = details.get("unique");
+						String orderedValue = details.get("ordered");
+						String lowerValue = details.get("lower");
+						String upperValue = details.get("upper");
+						boolean isOrdered = orderedValue != null ? Boolean.valueOf(orderedValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED;
+						boolean isUnique = uniqueValue != null ? Boolean.valueOf(uniqueValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE;
+						IntegerValue lower = lowerValue != null ? ValueUtil.integerValueOf(lowerValue) :  PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
+						if (lower.isInvalid()) {
+							logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_LOWER_KEY + " " + lower);
+							lower = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
 						}
+						UnlimitedNaturalValue upper = upperValue != null ? ValueUtil.unlimitedNaturalValueOf(upperValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
+						if (upper.isInvalid()) {
+							logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
+							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
+						}
+						metamodelManager.createImplicitOppositeProperty(asProperty, oppositeName, isOrdered, isUnique, lower, upper);
 					}
 				}
+				else {
+					asProperty.setOpposite(null);
+				}
 			}
-		}
-		if (oppositeProperty != null) {
-			asProperty.setOpposite(oppositeProperty);
 		}
 		//		else if (eObject.eContainer() instanceof EClass) {		// Skip annotation references
 		//			metamodelManager.installPropertyDeclaration(pivotElement);
