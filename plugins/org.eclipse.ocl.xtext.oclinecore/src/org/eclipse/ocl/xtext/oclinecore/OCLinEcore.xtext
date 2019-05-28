@@ -221,6 +221,15 @@ ParameterCS returns base::ParameterCS:
 	('{' ownedAnnotations+=AnnotationElementCS* '}')?
 ;
 
+ImplicitOppositeCS returns base::ImplicitOppositeCS:
+	'opposite' name=UnrestrictedName
+	':' ownedType=TypedMultiplicityRefCS
+	('{'((qualifiers+='ordered' | qualifiers+='!ordered' |
+		  qualifiers+='unique' | qualifiers+='!unique'
+		) ','? )+
+	'}')?
+;
+
 ReferenceCS returns base::ReferenceCS:
 	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
 	'property' name=UnrestrictedName
@@ -241,7 +250,9 @@ ReferenceCS returns base::ReferenceCS:
 	(	('{' (ownedAnnotations+=AnnotationElementCS
 			| ('key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';')
 	        | ('initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';') 
-	        | ('derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';') )* '}')
+	        | ('derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')
+	        | (ownedImplicitOpposites+=ImplicitOppositeCS ';')
+	        )* '}')
 	|	';'
 	)
 ;
@@ -305,6 +316,7 @@ UnrestrictedName returns ecore::EString:
 |	'documentation'
 |	'invariant'
 |	'literal'
+|	'opposite'
 |	'serializable'
 |	'sysml'
 ;
