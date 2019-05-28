@@ -22,6 +22,7 @@ import org.eclipse.ocl.xtext.basecs.DetailCS;
 import org.eclipse.ocl.xtext.basecs.DocumentationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
+import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
@@ -127,6 +128,9 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 				return;
 			case BaseCSPackage.ENUMERATION_LITERAL_CS:
 				sequence_EnumerationLiteralCS(context, (EnumerationLiteralCS) semanticObject);
+				return;
+			case BaseCSPackage.IMPLICIT_OPPOSITE_CS:
+				sequence_ImplicitOppositeCS(context, (ImplicitOppositeCS) semanticObject);
 				return;
 			case BaseCSPackage.IMPORT_CS:
 				sequence_ImportCS(context, (ImportCS) semanticObject);
@@ -653,6 +657,22 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 	/**
 	 * Contexts:
+	 *     ImplicitOppositeCS returns ImplicitOppositeCS
+	 *
+	 * Constraint:
+	 *     (
+	 *         name=UnrestrictedName
+	 *         ownedType=TypedMultiplicityRefCS
+	 *         (qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')*
+	 *     )
+	 */
+	protected void sequence_ImplicitOppositeCS(ISerializationContext context, ImplicitOppositeCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+
+
+	/**
+	 * Contexts:
 	 *     ImportCS returns ImportCS
 	 *
 	 * Constraint:
@@ -723,10 +743,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='derived'?
+	 *         qualifiers+='!derived'?
 	 *         (
 	 *             (
-	 *                 qualifiers+='!derived' |
+	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
@@ -734,7 +754,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='derived'?
+	 *             qualifiers+='!derived'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -833,7 +853,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='unsettable'?
+	 *         qualifiers+='!volatile'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
@@ -850,14 +870,19 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique' |
+	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
-	 *                 qualifiers+='volatile' |
-	 *                 qualifiers+='!volatile'
+	 *                 qualifiers+='volatile'
 	 *             )?
-	 *             qualifiers+='unsettable'?
+	 *             qualifiers+='!volatile'?
 	 *         )*
 	 *         (
-	 *             (ownedAnnotations+=AnnotationElementCS | ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)?
+	 *             (
+	 *                 ownedAnnotations+=AnnotationElementCS |
+	 *                 ownedDefaultExpressions+=SpecificationCS |
+	 *                 ownedDefaultExpressions+=SpecificationCS |
+	 *                 ownedImplicitOpposites+=ImplicitOppositeCS
+	 *             )?
 	 *             (referredKeys+=[Property|UnrestrictedName] referredKeys+=[Property|UnrestrictedName]*)?
 	 *         )+
 	 *     )

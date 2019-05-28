@@ -226,6 +226,8 @@ public class OCLinEcoreFormatter extends AbstractEssentialOCLFormatter {
 			c.setSpace(" ").after(a.getColonKeyword_7_0_1_3_2());
 			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_3_4());
 			c.setIndentation(a.getColonKeyword_7_0_1_3_2(), a.getSemicolonKeyword_7_0_1_3_4());
+			//
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_4_1());
 		}
 		{
 			StructuredClassCSElements a = f.getStructuredClassCSAccess();

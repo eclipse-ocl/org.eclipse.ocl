@@ -3362,6 +3362,146 @@ ruleParameterCS returns [EObject current=null]
 
 
 
+// Entry rule entryRuleImplicitOppositeCS
+entryRuleImplicitOppositeCS returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getImplicitOppositeCSRule()); }
+	 iv_ruleImplicitOppositeCS=ruleImplicitOppositeCS
+	 { $current=$iv_ruleImplicitOppositeCS.current; }
+	 EOF
+;
+
+// Rule ImplicitOppositeCS
+ruleImplicitOppositeCS returns [EObject current=null]
+    @init { enterRule();
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='opposite'
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getImplicitOppositeCSAccess().getOppositeKeyword_0());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getImplicitOppositeCSAccess().getNameUnrestrictedNameParserRuleCall_1_0());
+	    }
+		lv_name_1_0=ruleUnrestrictedName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		set(
+       			$current,
+       			"name",
+        		lv_name_1_0,
+        		"org.eclipse.ocl.xtext.oclinecore.OCLinEcore.UnrestrictedName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_2=':'
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getImplicitOppositeCSAccess().getColonKeyword_2());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getImplicitOppositeCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_3_0());
+	    }
+		lv_ownedType_3_0=ruleTypedMultiplicityRefCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedType",
+        		lv_ownedType_3_0,
+        		"org.eclipse.ocl.xtext.oclinecore.OCLinEcore.TypedMultiplicityRefCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_4='{'
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getImplicitOppositeCSAccess().getLeftCurlyBracketKeyword_4_0());
+    }
+(((
+(
+		lv_qualifiers_5_0=	'ordered'
+    {
+        newLeafNode(lv_qualifiers_5_0, grammarAccess.getImplicitOppositeCSAccess().getQualifiersOrderedKeyword_4_1_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		addWithLastConsumed($current, "qualifiers", lv_qualifiers_5_0, "ordered");
+	    }
+
+)
+)
+    |(
+(
+		lv_qualifiers_6_0=	'!ordered'
+    {
+        newLeafNode(lv_qualifiers_6_0, grammarAccess.getImplicitOppositeCSAccess().getQualifiersOrderedKeyword_4_1_0_1_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		addWithLastConsumed($current, "qualifiers", lv_qualifiers_6_0, "!ordered");
+	    }
+
+)
+)
+    |(
+(
+		lv_qualifiers_7_0=	'unique'
+    {
+        newLeafNode(lv_qualifiers_7_0, grammarAccess.getImplicitOppositeCSAccess().getQualifiersUniqueKeyword_4_1_0_2_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		addWithLastConsumed($current, "qualifiers", lv_qualifiers_7_0, "unique");
+	    }
+
+)
+)
+    |(
+(
+		lv_qualifiers_8_0=	'!unique'
+    {
+        newLeafNode(lv_qualifiers_8_0, grammarAccess.getImplicitOppositeCSAccess().getQualifiersUniqueKeyword_4_1_0_3_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getImplicitOppositeCSRule());
+	        }
+       		addWithLastConsumed($current, "qualifiers", lv_qualifiers_8_0, "!unique");
+	    }
+
+)
+))(	otherlv_9=','
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getImplicitOppositeCSAccess().getCommaKeyword_4_1_1());
+    }
+)?)+	otherlv_10='}'
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getImplicitOppositeCSAccess().getRightCurlyBracketKeyword_4_2());
+    }
+)?)
+;
+
+
+
+
+
 // Entry rule entryRuleReferenceCS
 entryRuleReferenceCS returns [EObject current=null]
 	:
@@ -3979,14 +4119,37 @@ ruleUnrestrictedName
     {
     	newLeafNode(otherlv_49, grammarAccess.getReferenceCSAccess().getSemicolonKeyword_7_0_1_3_4());
     }
-))*	otherlv_50='}'
+)
+    |((
+(
+		{
+	        newCompositeNode(grammarAccess.getReferenceCSAccess().getOwnedImplicitOppositesImplicitOppositeCSParserRuleCall_7_0_1_4_0_0());
+	    }
+		lv_ownedImplicitOpposites_50_0=ruleImplicitOppositeCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getReferenceCSRule());
+	        }
+       		add(
+       			$current,
+       			"ownedImplicitOpposites",
+        		lv_ownedImplicitOpposites_50_0,
+        		"org.eclipse.ocl.xtext.oclinecore.OCLinEcore.ImplicitOppositeCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_51=';'
     {
-    	newLeafNode(otherlv_50, grammarAccess.getReferenceCSAccess().getRightCurlyBracketKeyword_7_0_2());
+    	newLeafNode(otherlv_51, grammarAccess.getReferenceCSAccess().getSemicolonKeyword_7_0_1_4_1());
+    }
+))*	otherlv_52='}'
+    {
+    	newLeafNode(otherlv_52, grammarAccess.getReferenceCSAccess().getRightCurlyBracketKeyword_7_0_2());
     }
 )
-    |	otherlv_51=';'
+    |	otherlv_53=';'
     {
-    	newLeafNode(otherlv_51, grammarAccess.getReferenceCSAccess().getSemicolonKeyword_7_1());
+    	newLeafNode(otherlv_53, grammarAccess.getReferenceCSAccess().getSemicolonKeyword_7_1());
     }
 ))
 ;
@@ -4803,17 +4966,24 @@ ruleUnrestrictedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
     }
 
     |
+	kw='opposite'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getUnrestrictedNameAccess().getOppositeKeyword_5());
+    }
+
+    |
 	kw='serializable'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getUnrestrictedNameAccess().getSerializableKeyword_5());
+        newLeafNode(kw, grammarAccess.getUnrestrictedNameAccess().getSerializableKeyword_6());
     }
 
     |
 	kw='sysml'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getUnrestrictedNameAccess().getSysmlKeyword_6());
+        newLeafNode(kw, grammarAccess.getUnrestrictedNameAccess().getSysmlKeyword_7());
     }
 )
     ;
