@@ -41,6 +41,7 @@ RestrictedKeywords:
 |	'left'
 |	'library'
 |	'operation'
+|	'opposite'
 |	'package'
 |	'post'
 |	'pre'
@@ -187,6 +188,10 @@ LibOperationCS returns LibOperationCS:
 	)
 ;
 
+LibOppositeCS returns LibOppositeCS:
+	'opposite' name=Name ':' ownedType=TypedMultiplicityRefCS
+;
+
 LibPackageCS returns LibPackageCS:
     'library' name=Name
 	(':' nsPrefix=Identifier '=' nsURI=URI)?
@@ -214,6 +219,7 @@ ParameterCS returns base::ParameterCS:
 LibPropertyCS returns LibPropertyCS:
 	(isStatic?='static')? 'property' name=Name
 	':' ownedType=TypedMultiplicityRefCS
+	ownedOpposite=LibOppositeCS?
 	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
 	(	('{' (ownedAnnotations+=AnnotationElementCS)* '}')
 	|	';'
