@@ -87,6 +87,15 @@ public interface OCLstdlibCSFactory
 	LibOperationCS createLibOperationCS();
 
 	/**
+	 * Returns a new object of class '<em>Lib Opposite CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Lib Opposite CS</em>'.
+	 * @generated
+	 */
+	LibOppositeCS createLibOppositeCS();
+
+	/**
 	 * Returns a new object of class '<em>Lib Package CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

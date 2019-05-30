@@ -115,6 +115,16 @@ public interface OCLstdlibCSPackage
 	int LIB_OPERATION_CS = 6;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOppositeCSImpl <em>Lib Opposite CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOppositeCSImpl
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibOppositeCS()
+	 * @generated
+	 */
+	int LIB_OPPOSITE_CS = 7;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPropertyCSImpl <em>Lib Property CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,7 +132,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibPropertyCS()
 	 * @generated
 	 */
-	int LIB_PROPERTY_CS = 8;
+	int LIB_PROPERTY_CS = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaImplementationCSImpl <em>Java Implementation CS</em>}' class.
@@ -162,7 +172,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibPackageCS()
 	 * @generated
 	 */
-	int LIB_PACKAGE_CS = 7;
+	int LIB_PACKAGE_CS = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibRootPackageCSImpl <em>Lib Root Package CS</em>}' class.
@@ -172,7 +182,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibRootPackageCS()
 	 * @generated
 	 */
-	int LIB_ROOT_PACKAGE_CS = 9;
+	int LIB_ROOT_PACKAGE_CS = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.MetaclassNameCSImpl <em>Metaclass Name CS</em>}' class.
@@ -182,7 +192,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getMetaclassNameCS()
 	 * @generated
 	 */
-	int METACLASS_NAME_CS = 10;
+	int METACLASS_NAME_CS = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.PrecedenceCSImpl <em>Precedence CS</em>}' class.
@@ -192,7 +202,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getPrecedenceCS()
 	 * @generated
 	 */
-	int PRECEDENCE_CS = 11;
+	int PRECEDENCE_CS = 12;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS <em>Java Class CS</em>}'.
@@ -321,6 +331,16 @@ public interface OCLstdlibCSPackage
 	EReference getLibOperationCS_Precedence();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS <em>Lib Opposite CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lib Opposite CS</em>'.
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS
+	 * @generated
+	 */
+	EClass getLibOppositeCS();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsInvalidating <em>Is Invalidating</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -394,6 +414,17 @@ public interface OCLstdlibCSPackage
 	 * @generated
 	 */
 	EAttribute getLibPropertyCS_IsStatic();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS#getOwnedOpposite <em>Owned Opposite</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Opposite</em>'.
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS#getOwnedOpposite()
+	 * @see #getLibPropertyCS()
+	 * @generated
+	 */
+	EReference getLibPropertyCS_OwnedOpposite();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibRootPackageCS <em>Lib Root Package CS</em>}'.
@@ -600,6 +631,16 @@ public interface OCLstdlibCSPackage
 		EReference LIB_OPERATION_CS__PRECEDENCE = eINSTANCE.getLibOperationCS_Precedence();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOppositeCSImpl <em>Lib Opposite CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOppositeCSImpl
+		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibOppositeCS()
+		 * @generated
+		 */
+		EClass LIB_OPPOSITE_CS = eINSTANCE.getLibOppositeCS();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Invalidating</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -658,6 +699,14 @@ public interface OCLstdlibCSPackage
 		 * @generated
 		 */
 		EAttribute LIB_PROPERTY_CS__IS_STATIC = eINSTANCE.getLibPropertyCS_IsStatic();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Opposite</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIB_PROPERTY_CS__OWNED_OPPOSITE = eINSTANCE.getLibPropertyCS_OwnedOpposite();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibRootPackageCSImpl <em>Lib Root Package CS</em>}' class.

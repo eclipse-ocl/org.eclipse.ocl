@@ -80,6 +80,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibRootPackageCS;
@@ -494,6 +495,9 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 			case OCLstdlibCSPackage.LIB_OPERATION_CS:
 				sequence_LibOperationCS(context, (LibOperationCS) semanticObject);
 				return;
+			case OCLstdlibCSPackage.LIB_OPPOSITE_CS:
+				sequence_LibOppositeCS(context, (LibOppositeCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_PACKAGE_CS:
 				sequence_LibPackageCS(context, (LibPackageCS) semanticObject);
 				return;
@@ -761,6 +765,27 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 	/**
 	 * Contexts:
+	 *     LibOppositeCS returns LibOppositeCS
+	 *
+	 * Constraint:
+	 *     (name=Name ownedType=TypedMultiplicityRefCS)
+	 */
+	protected void sequence_LibOppositeCS(ISerializationContext context, LibOppositeCS semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME));
+			if (transientValues.isValueTransient(semanticObject, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLibOppositeCSAccess().getNameNameParserRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getLibOppositeCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_3_0(), semanticObject.getOwnedType());
+		feeder.finish();
+	}
+
+
+	/**
+	 * Contexts:
 	 *     LibPackageCS returns LibPackageCS
 	 *
 	 * Constraint:
@@ -814,6 +839,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         isStatic?='static'?
 	 *         name=Name
 	 *         ownedType=TypedMultiplicityRefCS
+	 *         ownedOpposite=LibOppositeCS?
 	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         ownedAnnotations+=AnnotationElementCS*
 	 *     )

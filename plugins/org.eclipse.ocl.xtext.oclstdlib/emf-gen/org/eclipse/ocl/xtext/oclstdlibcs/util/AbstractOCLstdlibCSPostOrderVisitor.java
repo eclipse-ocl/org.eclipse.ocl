@@ -77,6 +77,11 @@ public abstract class AbstractOCLstdlibCSPostOrderVisitor
 	}
 
 	@Override
+	public @Nullable Continuation<?> visitLibOppositeCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibOppositeCS csElement) {
+		return visitFeatureCS(csElement);
+	}
+
+	@Override
 	public @Nullable Continuation<?> visitLibPackageCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibPackageCS csElement) {
 		return visitPackageCS(csElement);
 	}

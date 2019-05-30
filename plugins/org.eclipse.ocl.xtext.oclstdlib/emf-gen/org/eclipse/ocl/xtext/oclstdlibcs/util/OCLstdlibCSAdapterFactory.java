@@ -134,6 +134,11 @@ public class OCLstdlibCSAdapterFactory
 				return createLibOperationCSAdapter();
 			}
 			@Override
+			public Adapter caseLibOppositeCS(LibOppositeCS object)
+			{
+				return createLibOppositeCSAdapter();
+			}
+			@Override
 			public Adapter caseLibPackageCS(LibPackageCS object)
 			{
 				return createLibPackageCSAdapter();
@@ -356,6 +361,21 @@ public class OCLstdlibCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createLibOperationCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS <em>Lib Opposite CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS
+	 * @generated
+	 */
+	public Adapter createLibOppositeCSAdapter()
+	{
 		return null;
 	}
 

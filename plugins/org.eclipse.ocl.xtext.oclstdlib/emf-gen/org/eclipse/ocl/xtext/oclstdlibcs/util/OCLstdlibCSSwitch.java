@@ -194,6 +194,19 @@ public class OCLstdlibCSSwitch<@Nullable T>
 			}
 			case 7:
 			{
+				LibOppositeCS libOppositeCS = (LibOppositeCS)theEObject;
+				T result = caseLibOppositeCS(libOppositeCS);
+				if (result == null) result = caseFeatureCS(libOppositeCS);
+				if (result == null) result = caseTypedElementCS(libOppositeCS);
+				if (result == null) result = caseNamedElementCS(libOppositeCS);
+				if (result == null) result = caseModelElementCS(libOppositeCS);
+				if (result == null) result = casePivotableElementCS(libOppositeCS);
+				if (result == null) result = caseElementCS(libOppositeCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 8:
+			{
 				LibPackageCS libPackageCS = (LibPackageCS)theEObject;
 				T result = caseLibPackageCS(libPackageCS);
 				if (result == null) result = casePackageCS(libPackageCS);
@@ -206,7 +219,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 8:
+			case 9:
 			{
 				LibPropertyCS libPropertyCS = (LibPropertyCS)theEObject;
 				T result = caseLibPropertyCS(libPropertyCS);
@@ -222,7 +235,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 9:
+			case 10:
 			{
 				LibRootPackageCS libRootPackageCS = (LibRootPackageCS)theEObject;
 				T result = caseLibRootPackageCS(libRootPackageCS);
@@ -235,7 +248,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 10:
+			case 11:
 			{
 				MetaclassNameCS metaclassNameCS = (MetaclassNameCS)theEObject;
 				T result = caseMetaclassNameCS(metaclassNameCS);
@@ -243,7 +256,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 11:
+			case 12:
 			{
 				PrecedenceCS precedenceCS = (PrecedenceCS)theEObject;
 				T result = casePrecedenceCS(precedenceCS);
@@ -347,6 +360,22 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseLibOperationCS(LibOperationCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Lib Opposite CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Lib Opposite CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLibOppositeCS(LibOppositeCS object)
+	{
 		return null;
 	}
 

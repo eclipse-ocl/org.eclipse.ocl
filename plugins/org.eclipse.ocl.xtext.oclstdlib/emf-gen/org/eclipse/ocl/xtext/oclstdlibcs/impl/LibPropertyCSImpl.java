@@ -12,6 +12,7 @@
 package org.eclipse.ocl.xtext.oclstdlibcs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -21,6 +22,7 @@ import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
@@ -35,6 +37,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPropertyCSImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPropertyCSImpl#isIsStatic <em>Is Static</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPropertyCSImpl#getOwnedOpposite <em>Owned Opposite</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,7 +53,7 @@ public class LibPropertyCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LIB_PROPERTY_CS_FEATURE_COUNT = AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2;
+	public static final int LIB_PROPERTY_CS_FEATURE_COUNT = AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
@@ -81,6 +84,16 @@ public class LibPropertyCSImpl
 	 * @ordered
 	 */
 	protected boolean isStatic = IS_STATIC_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getOwnedOpposite() <em>Owned Opposite</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedOpposite()
+	 * @generated
+	 * @ordered
+	 */
+	protected LibOppositeCS ownedOpposite;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +187,72 @@ public class LibPropertyCSImpl
 	 * @generated
 	 */
 	@Override
+	public LibOppositeCS getOwnedOpposite()
+	{
+		return ownedOpposite;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedOpposite(LibOppositeCS newOwnedOpposite, NotificationChain msgs)
+	{
+		LibOppositeCS oldOwnedOpposite = ownedOpposite;
+		ownedOpposite = newOwnedOpposite;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2, oldOwnedOpposite, newOwnedOpposite);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedOpposite(LibOppositeCS newOwnedOpposite)
+	{
+		if (newOwnedOpposite != ownedOpposite)
+		{
+			NotificationChain msgs = null;
+			if (ownedOpposite != null)
+				msgs = ((InternalEObject)ownedOpposite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2), null, msgs);
+			if (newOwnedOpposite != null)
+				msgs = ((InternalEObject)newOwnedOpposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2), null, msgs);
+			msgs = basicSetOwnedOpposite(newOwnedOpposite, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2, newOwnedOpposite, newOwnedOpposite));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2:
+				return basicSetOwnedOpposite(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
@@ -182,6 +261,8 @@ public class LibPropertyCSImpl
 				return basicGetImplementation();
 			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				return isIsStatic();
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2:
+				return getOwnedOpposite();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -200,6 +281,9 @@ public class LibPropertyCSImpl
 				return;
 			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				setIsStatic((Boolean)newValue);
+				return;
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2:
+				setOwnedOpposite((LibOppositeCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -220,6 +304,9 @@ public class LibPropertyCSImpl
 			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2:
+				setOwnedOpposite((LibOppositeCS)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -237,6 +324,8 @@ public class LibPropertyCSImpl
 				return implementation != null;
 			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1:
 				return isStatic != IS_STATIC_EDEFAULT;
+			case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2:
+				return ownedOpposite != null;
 		}
 		return super.eIsSet(featureID);
 	}

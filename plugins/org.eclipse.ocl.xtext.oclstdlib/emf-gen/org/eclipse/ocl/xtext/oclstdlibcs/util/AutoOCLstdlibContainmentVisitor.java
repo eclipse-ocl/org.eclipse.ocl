@@ -23,24 +23,24 @@ import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibRootPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
 
 public class AutoOCLstdlibContainmentVisitor
 	extends EssentialOCLCSContainmentVisitor
 	implements OCLstdlibCSVisitor<Continuation<?>>
 {
-    
+
     protected final @NonNull CS2AS converter;
     protected final @NonNull IdResolver idResolver;
-    
+
     /**
      * Initializes me with an initial value for my result.
-     * 
+     *
      * @param context my initial result value
      */
     public AutoOCLstdlibContainmentVisitor(@NonNull CS2ASConversion context) {
@@ -48,62 +48,67 @@ public class AutoOCLstdlibContainmentVisitor
         this.converter = context.getConverter();
         this.idResolver = converter.getEnvironmentFactory().getIdResolver();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitJavaClassCS(@NonNull JavaClassCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitJavaImplementationCS(@NonNull JavaImplementationCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibClassCS(@NonNull LibClassCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibCoercionCS(@NonNull LibCoercionCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibConstraintCS(@NonNull LibConstraintCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibIterationCS(@NonNull LibIterationCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibOperationCS(@NonNull LibOperationCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
+    @Override
+	public @Nullable Continuation<?> visitLibOppositeCS(@NonNull LibOppositeCS self) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
 	public @Nullable Continuation<?> visitLibPackageCS(@NonNull LibPackageCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitLibRootPackageCS(@NonNull LibRootPackageCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitMetaclassNameCS(@NonNull MetaclassNameCS self) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
 	public @Nullable Continuation<?> visitPrecedenceCS(@NonNull PrecedenceCS self) {
         throw new UnsupportedOperationException();

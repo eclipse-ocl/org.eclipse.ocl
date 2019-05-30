@@ -77,6 +77,11 @@ public abstract class AbstractOCLstdlibCSLeft2RightVisitor
 	}
 
 	@Override
+	public @Nullable Element visitLibOppositeCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibOppositeCS csElement) {
+		return visitFeatureCS(csElement);
+	}
+
+	@Override
 	public @Nullable Element visitLibPackageCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibPackageCS csElement) {
 		return visitPackageCS(csElement);
 	}

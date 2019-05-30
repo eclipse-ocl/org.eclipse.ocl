@@ -69,6 +69,11 @@ public abstract class AbstractDelegatingOCLstdlibCSVisitor<R, C, @NonNull D exte
 	}
 
 	@Override
+	public R visitLibOppositeCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibOppositeCS object) {
+		return delegate.visitLibOppositeCS(object);
+	}
+
+	@Override
 	public R visitLibPackageCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibPackageCS object) {
 		return delegate.visitLibPackageCS(object);
 	}

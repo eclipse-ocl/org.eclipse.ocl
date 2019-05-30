@@ -191,9 +191,9 @@ public class OCLstdlibFormatter extends AbstractEssentialOCLFormatter {
 		}
 		{
 			LibPropertyCSElements a = f.getLibPropertyCSAccess();
-			c.setLinewrap().before(a.getEqualsSignGreaterThanSignKeyword_5_0());
-			setBraces(c, a.getLeftCurlyBracketKeyword_6_0_0(), a.getRightCurlyBracketKeyword_6_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_1());
+			c.setLinewrap().before(a.getEqualsSignGreaterThanSignKeyword_6_0());
+			setBraces(c, a.getLeftCurlyBracketKeyword_7_0_0(), a.getRightCurlyBracketKeyword_7_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_1());
 		}
 		{
 			TypedTypeRefCSElements a = f.getTypedTypeRefCSAccess();

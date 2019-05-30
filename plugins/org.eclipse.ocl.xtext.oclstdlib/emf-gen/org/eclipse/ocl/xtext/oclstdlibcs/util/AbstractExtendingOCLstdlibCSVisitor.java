@@ -73,6 +73,11 @@ public abstract class AbstractExtendingOCLstdlibCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitLibOppositeCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibOppositeCS object) {
+		return visitFeatureCS(object);
+	}
+
+	@Override
 	public R visitLibPackageCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibPackageCS object) {
 		return visitPackageCS(object);
 	}
