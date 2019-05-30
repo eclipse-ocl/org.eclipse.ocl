@@ -141,20 +141,21 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			ASSaver saver = new ASSaver(asResource);
 			saver.localizeSpecializations();
 			String fileName = folder + "/" + javaClassName + ".java";
-			log.info("Generating '" + fileName + "'");
+		//	log.info("Generating '" + fileName + "'");
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel((Model)pivotModel, excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();
 			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("oclstdlib", "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
-			log.info("Loading '" + saveURI + "'");
+		//	log.info("Loading '" + saveURI + "'");
 			log.info("Saving '" + saveURI + "'");
 			asResource.setURI(saveURI);
 			Map<String, Object> options = new HashMap<String, Object>();
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			asResource.setSaveable(true);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
 				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");

@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 public class OCLAdapter extends EnvironmentFactoryAdapter implements AdapterFactory, IDisposable
 {
 	public static @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @NonNull Notifier notifier) {
-		OCLInternal ocl = OCLInternal.newInstance(projectManager, null);
+		OCLInternal ocl = OCLInternal.newInstance(projectManager, null);		// FIXME Two StandaloneProjectMap intances
 		OCLAdapter adapter = new OCLAdapter(ocl, notifier);
 		notifier.eAdapters().add(adapter);
 		return adapter.getEnvironmentFactory();

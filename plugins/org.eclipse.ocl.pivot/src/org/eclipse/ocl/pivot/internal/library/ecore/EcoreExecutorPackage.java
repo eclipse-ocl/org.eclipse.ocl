@@ -40,7 +40,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		this.ePackage = ePackage;
 	}
 
-	public EcoreExecutorPackage(@NonNull EPackage ePackage, @NonNull PackageId packageId) {
+	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
 		this.ePackage = ePackage;
 	}

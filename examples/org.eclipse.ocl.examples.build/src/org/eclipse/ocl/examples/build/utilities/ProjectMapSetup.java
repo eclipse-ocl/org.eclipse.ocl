@@ -11,21 +11,23 @@
 package org.eclipse.ocl.examples.build.utilities;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 
 /**
  * Initializes Eclipse standalone support.
  */
 public class ProjectMapSetup
 {
-	private static ProjectMap projectMap;
+	private static StandaloneProjectMap projectMap;
 	private Logger log = Logger.getLogger(getClass());
 
 	public ProjectMapSetup() {
 		if (projectMap == null) {
 			log.info("Creating project map.");
-			projectMap = new ProjectMap(false);
+			projectMap = EMFPlugin.IS_ECLIPSE_RUNNING ? new ProjectMap(false) : new StandaloneProjectMap(false);
 			projectMap.initializeResourceSet(null);
 		}
 		else {
@@ -39,6 +41,7 @@ public class ProjectMapSetup
 	public void setResourceSet(ResourceSet resourceSet) {
 		log.info("Applying project map");
 		resourceSet.eAdapters().add(projectMap);
-		ProjectMap.initializeURIResourceMap(resourceSet);
+	//	ProjectMap.initializeURIResourceMap(resourceSet);
+		projectMap.initializeResourceSet(resourceSet);
 	}
 }
