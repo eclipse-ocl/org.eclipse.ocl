@@ -715,7 +715,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ELSEIF (type instanceof MapType)»
 				superClasses = «typeName».getSuperClasses();
 				superClasses.add(_OclAny);
-			«ELSEIF !(type instanceof AnyType)»
+			«ELSEIF (type instanceof AnyType)»
+			«ELSEIF "OclElement".equals(type.getName())»
+			«ELSE»
 				superClasses = «typeName».getSuperClasses();
 				superClasses.add(_OclElement);
 			«ENDIF»
