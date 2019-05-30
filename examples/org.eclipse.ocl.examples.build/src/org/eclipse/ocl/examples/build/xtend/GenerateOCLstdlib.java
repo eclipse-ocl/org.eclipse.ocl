@@ -65,6 +65,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	protected String ecoreFile;
 	protected String libraryName;
 	protected String libraryNsPrefix;
+	protected boolean isASLibrary = true;
 	protected boolean useOCLstdlib = false;
 	protected @NonNull List<@NonNull String> excludedEClassifierNames = new ArrayList<>();
 
@@ -277,9 +278,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				//			if (eAnnotation != null) {
 				//				ePackage.getEAnnotations().remove(eAnnotation);
 				//			}
-				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
-				ePackage.getEAnnotations().add(eAnnotation);
+				if (isASLibrary) {
+					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+					ePackage.getEAnnotations().add(eAnnotation);
+				}
 				log.info("Saving '" + ecoreURI + "'");
 				eResource.save(null);
 			}
@@ -316,6 +319,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	 */
 	public void setEcoreFile(String ecoreFile) {
 		this.ecoreFile = ecoreFile;
+	}
+
+	/**
+	 * Set true if this is to be an AS Library.
+	 */
+	public void setIsASLibrary(boolean isASLibrary) {
+		this.isASLibrary = isASLibrary;
 	}
 
 	/**
