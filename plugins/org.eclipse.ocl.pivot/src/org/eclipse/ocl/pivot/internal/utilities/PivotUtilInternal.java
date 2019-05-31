@@ -830,6 +830,7 @@ public class PivotUtilInternal //extends PivotUtil
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
 			}
 		}
+		boolean hasDuplicates = false;
 		int newMax = newElements.size();
 		for (int i = 0; i < newMax; i++) {					// Invariant: lists are equal up to index i
 			T newElement = newElements.get(i);
@@ -851,15 +852,17 @@ public class PivotUtilInternal //extends PivotUtil
 					oldElements.add(i, newElement);
 				}
 				else {
-					oldElements.add(newElement);
+					if (!oldElements.add(newElement)) {
+						hasDuplicates = true;
+					}
 				}
 			}
-			assert newElements.get(i) == oldElements.get(i);
+			assert hasDuplicates || (newElements.get(i) == oldElements.get(i));
 		}
 		for (int k = oldElements.size(); k > newMax; ) {
 			oldElements.remove(--k);
 		}
-		assert newElements.size() == oldElements.size();
+		assert hasDuplicates || (newElements.size() == oldElements.size());
 	}
 
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
