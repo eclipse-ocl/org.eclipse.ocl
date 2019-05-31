@@ -44,6 +44,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibRootPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
@@ -128,6 +129,11 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 			pivotElement.setIsValidating(csElement.isIsValidating());
 		}
 		return cont;
+	}
+
+	@Override
+	public @Nullable Continuation<?> visitLibOppositeCS(@NonNull LibOppositeCS csElement) {
+		return null;
 	}
 
 	@Override
