@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -51,6 +52,7 @@ public class RegistryTests extends TestCase
 	}
 
 	public void testCompleteOCLRegistry_Access() {
+	//	StandaloneProjectMap.addTrace(EcorePackage.eNS_URI, ~0);
 		//		GlobalRegistries.GlobalStateMemento copyOfGlobalState1 = null;
 		GlobalRegistries2.GlobalStateMemento copyOfGlobalState2 = null;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -64,7 +66,9 @@ public class RegistryTests extends TestCase
 		try {
 			EcorePlugin.ExtensionProcessor.process(null);
 			ResourceSet resourceSet = new ResourceSetImpl();
-			new ProjectMap(false).initializeResourceSet(resourceSet);
+			ProjectMap projectMap = new ProjectMap(false);
+			projectMap.initializeResourceSet(resourceSet);
+			projectMap.configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 			resourceSet.getResource(URI.createPlatformPluginURI("/org.eclipse.emf.ecore/model/Ecore.ecore", true), true);
 			CompleteOCLRegistry registry = CompleteOCLRegistry.INSTANCE;
 			Set<URI> registeredResourceURIs = registry.getResourceURIs(resourceSet);

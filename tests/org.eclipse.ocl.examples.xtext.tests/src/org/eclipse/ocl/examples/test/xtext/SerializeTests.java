@@ -31,7 +31,6 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -63,14 +62,7 @@ public class SerializeTests extends XtextTestCase
 		{
 			@Override
 			public void initializeResourceSet(@NonNull ResourceSet resourceSet) {
-				StandaloneProjectMap.IProjectDescriptor projectDescriptor = getProjectMap().getProjectDescriptor("org.eclipse.emf.ecore");
-				if (projectDescriptor != null) {
-					@NonNull URI ecoreURI = URI.createURI(EcorePackage.eNS_URI);
-					StandaloneProjectMap.IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(ecoreURI);
-					if (packageDescriptor != null) {
-						packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
-					}
-				}
+				getProjectMap().configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 			}
 		});
 		return options;

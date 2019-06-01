@@ -502,6 +502,15 @@ public interface ProjectManager extends Adapter
 
 	void configure(@NonNull ResourceSet resourceSet, @NonNull IResourceLoadStrategy instance, @Nullable IConflictHandler instance2);
 
+	/**
+	 * Configure the use of nsURI within resourceSet to use the first loaded package. This is almost always
+	 * needed for Ecore.ecore since Ecore.ecore referemces its ownm nsURI. It may also be needed for
+	 * nsURIs whose genmodels are in use since they too must use non nsURI access.
+	 *
+	 * @since 1.8
+	 */
+	default void configureLoadFirst(@NonNull ResourceSet resourceSet, /*@NonNull*/ String nsURI) {}
+
 	IPackageDescriptor getPackageDescriptor(@NonNull URI ecoreURI);
 
 	/**

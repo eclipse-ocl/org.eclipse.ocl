@@ -746,9 +746,7 @@ public class RoundTripTests extends XtextTestCase
 		//		String stem = uri.trimFileExtension().lastSegment();
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectMap().getProjectDescriptor("org.eclipse.emf.ecore"));
-		StandaloneProjectMap.IPackageDescriptor packageDescriptor = ClassUtil.nonNullState(projectDescriptor.getPackageDescriptor(URI.createURI(EcorePackage.eNS_URI)));
-		packageDescriptor.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
+		getProjectMap().configureLoadFirst(environmentFactory.getResourceSet(), EcorePackage.eNS_URI);
 		doRoundTripFromEcore(environmentFactory, uri, uri, null); //null);				// FIXME Compare is not quite right
 		ocl.dispose();
 	}

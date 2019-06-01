@@ -54,14 +54,12 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
-import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -109,11 +107,7 @@ public class TestOCL extends OCLInternal
 		// Ecore.core is referenced from Ecore.genmodel that is used by the CG to coordinate Ecore objects with their Java classes
 		// therefore suppress diagnostics about confusing usage.
 		//
-		URI ecoreURI = URI.createURI(EcorePackage.eNS_URI);
-		IPackageDescriptor packageDescriptor = projectManager.getPackageDescriptor(ecoreURI);
-		if (packageDescriptor != null) {
-			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, null);
-		}
+		projectManager.configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 	}
 
 	public void addSupertype(org.eclipse.ocl.pivot.@NonNull Class aClass, org.eclipse.ocl.pivot.@NonNull Class superClass) {

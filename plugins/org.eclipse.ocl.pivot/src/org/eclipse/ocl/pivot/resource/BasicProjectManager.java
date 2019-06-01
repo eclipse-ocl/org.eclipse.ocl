@@ -59,6 +59,15 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 	}
 
 	@Override
+	public void configureLoadFirst(@NonNull ResourceSet resourceSet, /*@NonNull*/ String nsURI) {
+		URI ecoreURI = URI.createURI(nsURI);
+		IPackageDescriptor packageDescriptor = getPackageDescriptor(ecoreURI);
+		if (packageDescriptor != null) {
+			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, null);
+		}
+	}
+
+	@Override
 	public IPackageDescriptor getPackageDescriptor(@NonNull URI ecoreURI) {
 		return null;
 	}

@@ -255,9 +255,13 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	protected static class EPackageDescriptor implements EPackage.Descriptor
 	{
+		private static int instanceCounter = 0;
+
+		private int instanceCount = 0;
 		protected final @NonNull IPackageLoadStatus packageLoadStatus;	// The PackageLoadStatus of the required package.
 
 		protected EPackageDescriptor(@NonNull IPackageLoadStatus packageLoadStatus, EPackage.@NonNull Registry packageRegistry) {
+			this.instanceCount = ++instanceCounter;
 			this.packageLoadStatus = packageLoadStatus;
 			URI uri = getURI();
 			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
@@ -265,7 +269,7 @@ public class StandaloneProjectMap implements ProjectManager
 				Integer mask = tracedURI2traces2.get(uri.toString());
 				if (mask != null) {
 					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
-					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor for '" + uri + "'");
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
 			packageRegistry.put(uri.toString(), this);
@@ -311,7 +315,7 @@ public class StandaloneProjectMap implements ProjectManager
 				Integer mask = tracedURI2traces2.get(uri.toString());
 				if (mask != null) {
 					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
-					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackage from EPackageDescriptor for '" + uri + "'");
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackage from EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
 			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
@@ -340,7 +344,7 @@ public class StandaloneProjectMap implements ProjectManager
 				Integer mask = tracedURI2traces2.get(uri.toString());
 				if (mask != null) {
 					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
-					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": uninstall EPackageDescriptor for '" + uri + "'");
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": uninstall EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
 			if (PROJECT_MAP_INSTALL.isActive()) {
@@ -2558,6 +2562,15 @@ public class StandaloneProjectMap implements ProjectManager
 			for (@NonNull IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
 				projectDescriptor.configure(resourceSet, resourceLoadStrategy, conflictHandler);
 			}
+		}
+	}
+
+	@Override
+	public void configureLoadFirst(@NonNull ResourceSet resourceSet, /*@NonNull*/ String nsURI) {
+		URI ecoreURI = URI.createURI(nsURI);
+		IPackageDescriptor packageDescriptor = getPackageDescriptor(ecoreURI);
+		if (packageDescriptor != null) {
+			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, null);
 		}
 	}
 

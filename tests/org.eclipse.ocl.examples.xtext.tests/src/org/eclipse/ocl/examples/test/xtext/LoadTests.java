@@ -886,9 +886,7 @@ public class LoadTests extends XtextTestCase
 		OCL ocl = OCL.newInstance(projectMap);
 		ResourceSet resourceSet = ocl.getResourceSet();
 		projectMap.initializeResourceSet(resourceSet);
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor("org.eclipse.emf.ecore");
-		StandaloneProjectMap.IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(URI.createURI(EcorePackage.eNS_URI));
-		packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
+		projectMap.configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.base/model/BaseCS.ecore", true);
 		try {
 			doLoadEcore(ocl, resourceSet, uri);
