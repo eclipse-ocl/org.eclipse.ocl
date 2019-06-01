@@ -259,17 +259,35 @@ public class StandaloneProjectMap implements ProjectManager
 
 		protected EPackageDescriptor(@NonNull IPackageLoadStatus packageLoadStatus, EPackage.@NonNull Registry packageRegistry) {
 			this.packageLoadStatus = packageLoadStatus;
-			packageRegistry.put(getURI().toString(), this);
+			URI uri = getURI();
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				Integer mask = tracedURI2traces2.get(uri.toString());
+				if (mask != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor for '" + uri + "'");
+				}
+			}
+			packageRegistry.put(uri.toString(), this);
 			if (PROJECT_MAP_INSTALL.isActive()) {
 				PROJECT_MAP_INSTALL.println(toString());
 			}
 		}
 
 		public @Nullable EPackage basicGetEPackage() {
+			URI uri = getURI();
+		//	Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+		//	if (tracedURI2traces2 != null) {
+		//		Integer mask = tracedURI2traces2.get(uri.toString());
+		//		if (mask != null) {
+		//			StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+		//			System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": basicGetEPackage for " + uri);
+		//		}
+		//	}
 			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
 			IResourceLoadStrategy resourceLoadStrategy = resourceLoadStatus.getResourceLoadStrategy();
 			if (PROJECT_MAP_GET.isActive()) {
-				PROJECT_MAP_GET.println("BasicGet " + getURI() + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceLoadStatus.getPackageRegistry()));
+				PROJECT_MAP_GET.println("BasicGet " + uri + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceLoadStatus.getPackageRegistry()));
 			}
 			return resourceLoadStrategy.basicGetEPackage(packageLoadStatus);
 		}
@@ -287,10 +305,19 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @Nullable EPackage getEPackage() {
+			URI uri = getURI();
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				Integer mask = tracedURI2traces2.get(uri.toString());
+				if (mask != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackage from EPackageDescriptor for '" + uri + "'");
+				}
+			}
 			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
 			IResourceLoadStrategy resourceLoadStrategy = resourceLoadStatus.getResourceLoadStrategy();
 			if (PROJECT_MAP_GET.isActive()) {
-				PROJECT_MAP_GET.println("Get " + getURI() + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceLoadStatus.getPackageRegistry()));
+				PROJECT_MAP_GET.println("Get " + uri + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceLoadStatus.getPackageRegistry()));
 			}
 			return resourceLoadStrategy.getEPackage(packageLoadStatus);
 		}
@@ -307,10 +334,19 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		public void uninstall(EPackage.@NonNull Registry packageRegistry) {
+			URI uri = getURI();
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				Integer mask = tracedURI2traces2.get(uri.toString());
+				if (mask != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": uninstall EPackageDescriptor for '" + uri + "'");
+				}
+			}
 			if (PROJECT_MAP_INSTALL.isActive()) {
 				PROJECT_MAP_INSTALL.println("" + toString());
 			}
-			packageRegistry.put(getURI().toString(), null);
+			packageRegistry.put(uri.toString(), null);
 		}
 	}
 
@@ -374,6 +410,15 @@ public class StandaloneProjectMap implements ProjectManager
 
 		protected @Nullable EPackage returnEPackage(@NonNull IPackageLoadStatus packageLoadStatus, @Nullable EPackage ePackage) {
 			if (ePackage != null) {
+			//	Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			//	if (tracedURI2traces2 != null) {
+			//		URI uri = EcoreUtil.getURI(ePackage);
+			//		Integer mask = tracedURI2traces2.get(uri.toString());
+			//		if (mask != null) {
+			//			StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+			//			System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": returnEPackage for '" + uri + "'");
+			//		}
+			//	}
 				if (PROJECT_MAP_RESOLVE.isActive()) {
 					URI uri = EcoreUtil.getURI(ePackage);
 					PROJECT_MAP_RESOLVE.println("EPackage.Registry[" + packageLoadStatus.getPackageDescriptor().getNsURI() + "] => " + uri);
@@ -948,8 +993,15 @@ public class StandaloneProjectMap implements ProjectManager
 					IPackageLoadStatus packageLoadStatus = getPackageLoadStatus(packageDescriptor);
 					if (packageLoadStatus != null) {
 						packageLoadStatus.setModel(ePackage);
+					//	Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+					//	if (tracedURI2traces2 != null) {
+					//		Integer mask = tracedURI2traces2.get(nsURI);
+					//		if (mask != null) {
+					//			System.out.println(projectMap.getClass().getSimpleName() + "-" +  ((StandaloneProjectMap)projectMap).instanceCount + ": returnEPackage for " + uri);
+					//		}
+					//	}
 						if (PROJECT_MAP_RESOLVE.isActive()) {
-							PROJECT_MAP_RESOLVE.println(ePackage.getNsURI() + " => " + ePackage.eResource().getURI() + " : " + NameUtil.debugSimpleName(ePackage));
+							PROJECT_MAP_RESOLVE.println(nsURI + " => " + ePackage.eResource().getURI() + " : " + NameUtil.debugSimpleName(ePackage));
 						}
 					}
 				}
@@ -1014,6 +1066,17 @@ public class StandaloneProjectMap implements ProjectManager
 		public void setResource(@NonNull Resource resource) {
 			assert eModel == null;
 			eModel = resource;
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				StandaloneProjectMap projectMap = (StandaloneProjectMap) getResourceDescriptor().getProjectDescriptor().getProjectManager();
+				for (@NonNull URI uri : nsURI2packageLoadStatus.keySet()) {
+					String nsURI = uri.toString();
+					Integer mask = tracedURI2traces2.get(nsURI);
+					if (mask != null) {
+						System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": setResource '" + nsURI + "' => '" + resource.getURI() + "'");
+					}
+				}
+			}
 			if (!resource.isLoaded() && !generativeLoadInProgress) {
 				try {
 					InputStream inputStream = resource.getResourceSet().getURIConverter().createInputStream(resource.getURI());
@@ -1280,10 +1343,23 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			} else {
 				Object object = EPackage.Registry.INSTANCE.get(packageDescriptor.getNsURI().toString());
+				EPackage ePackage = null;
 				if (object instanceof EPackage) {
-					return  (EPackage) object;
+					ePackage = (EPackage) object;
 				} else if (object instanceof EPackage.Descriptor) {
-					return  ((EPackage.Descriptor) object).getEPackage();
+					ePackage = ((EPackage.Descriptor) object).getEPackage();
+				}
+				if (ePackage != null) {
+					String nsURI = ePackage.getNsURI();
+					Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+					if (tracedURI2traces2 != null) {
+						Integer mask = tracedURI2traces2.get(nsURI);
+						if (mask != null) {
+							StandaloneProjectMap projectMap = (StandaloneProjectMap) getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+							System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackageInstance for " + nsURI);
+						}
+					}
+					return ePackage;
 				}
 			}
 			return null;
@@ -1332,6 +1408,15 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void setEPackage(@NonNull EPackage ePackage) {
 			assert this.ePackage == null;
+			String nsURI = ePackage.getNsURI();
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				Integer mask = tracedURI2traces2.get(nsURI);
+				if (mask != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": setEPackage for " + nsURI);
+				}
+			}
 			if (firstEPackage == null) {
 				firstEPackage = ePackage;
 			}
@@ -1341,6 +1426,15 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void setModel(@NonNull EPackage ePackage) {
 			assert this.eModel == null;
+		//	String nsURI = ePackage.getNsURI();
+		//	Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+		//	if (tracedURI2traces2 != null) {
+		//		Integer mask = tracedURI2traces2.get(nsURI);
+		//		if (mask != null) {
+		//			StandaloneProjectMap projectMap = (StandaloneProjectMap) getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+		//			System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": setModel for " + nsURI);
+		//		}
+		//	}
 			if (firstEPackage == null) {
 				firstEPackage = ePackage;
 			}
@@ -1440,6 +1534,17 @@ public class StandaloneProjectMap implements ProjectManager
 				IResourceLoadStrategy resourceLoadStrategy = resourceLoadStatus.getResourceLoadStrategy();
 				if (PROJECT_MAP_GET.isActive()) {
 					PROJECT_MAP_GET.println("Add " + resource.getURI() + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceSet.getPackageRegistry()));
+				}
+				Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+				if (tracedURI2traces2 != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) getProjectDescriptor().getProjectManager();
+					for (@NonNull URI uri : ((AbstractResourceLoadStatus)resourceLoadStatus).nsURI2packageLoadStatus.keySet()) {
+						String nsURI = uri.toString();
+						Integer mask = tracedURI2traces2.get(nsURI);
+						if (mask != null) {
+							System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": addedDynamicResource '" + resource.getURI() + "' containing '" + nsURI + "'");
+						}
+					}
 				}
 				resourceLoadStrategy.addedDynamicResource(resourceLoadStatus, resource);
 			}
@@ -2344,7 +2449,52 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * Leak debugging aid. Set non-null to diagnose MetamodelManager construction and finalization.
 	 */
-	public static WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps = null;
+	public static @Nullable WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps = null;
+
+	/**
+	 * Debugging aid. Bit mask of activities to be traced per nsURI.
+	 */
+	private static @Nullable Map<@NonNull String, @NonNull Integer> tracedURI2traces = null;
+
+	/**
+	 * @since 1.8
+	 */
+	public static synchronized void addTrace(/*@NonNull*/ String nsURI, int bitMask) {
+		if (nsURI != null) {
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 == null) {
+				tracedURI2traces = tracedURI2traces2 = new HashMap<>();
+			}
+			Integer oldMask = tracedURI2traces2.get(nsURI);
+			if (oldMask != null) {
+				bitMask |= oldMask;
+			}
+			tracedURI2traces2.put(nsURI, bitMask);
+		}
+	}
+
+	/**
+	 * @since 1.8
+	 */
+	public static synchronized void removeTrace(/*@NonNull*/ String nsURI) {
+		if (nsURI != null) {
+		Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+		if (tracedURI2traces2 != null) {
+			tracedURI2traces2.remove(nsURI);
+			if (tracedURI2traces2.isEmpty()) {
+				tracedURI2traces = null;
+			}
+		}
+		}
+	}
+
+	private static int instanceCounter = 0;
+
+	/**
+	 * Unique identification amongst all ProjectMap
+	 *
+	 */
+	private final int instanceCount;
 
 	/**
 	 * Whether this is the Global Project Manager
@@ -2375,6 +2525,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 	public StandaloneProjectMap(boolean isGlobal) {
 		super();
+		this.instanceCount = ++instanceCounter;
 		this.isGlobal = isGlobal;
 		if (liveStandaloneProjectMaps != null) {
 			liveStandaloneProjectMaps.put(this, null);
@@ -2416,10 +2567,11 @@ public class StandaloneProjectMap implements ProjectManager
 
 	@Override
 	protected void finalize() throws Throwable {
-		if (liveStandaloneProjectMaps != null) {
+		WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps2 = liveStandaloneProjectMaps;
+		if (liveStandaloneProjectMaps2 != null) {
 			PivotUtilInternal.debugPrintln("Finalize " + getClass().getSimpleName()
 				+ "@" + Integer.toHexString(System.identityHashCode(this)));
-			List<@NonNull StandaloneProjectMap> keySet = new ArrayList<>(liveStandaloneProjectMaps.keySet());
+			List<@NonNull StandaloneProjectMap> keySet = new ArrayList<>(liveStandaloneProjectMaps2.keySet());
 			if (!keySet.isEmpty()) {
 				StringBuilder s = new StringBuilder();
 				s.append(" live");
