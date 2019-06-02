@@ -100,4 +100,4 @@ public interface ShadowExpCS extends AbstractNameExpCS
 	 */
 	void setValue(String value);
 
-} // ConstructorExpCS
+} // ShadowExpCS

@@ -571,7 +571,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//		SquareBracketedClauseCS csSquareBracketedClause = csSquareBracketedClauses.get(0);
 		//		CS2AS.setElementType(pathName, PivotPackage.Literals.ASSOCIATION_CLASS, csNameExp, null);
 		//			Element element = pathName.getElement();
-		//			return resolveConstructorExp((Type)element, csNameExp);
+		//			return resolveShadowExp((Type)element, csNameExp);
 		return null;
 	}
 
@@ -1457,10 +1457,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
 		if (csRoundBracketedClause != null) {
 			// FIXME (TemplateTypeArgument)
-			return context.addBadExpressionError(csNameExp, "ConstructorExp must have no round-brackets-clause");
+			return context.addBadExpressionError(csNameExp, "ShadowExp must have no round-brackets-clause");
 		}
 		if (csNameExp.getOwnedSquareBracketedClauses().size() != 0) {
-			return context.addBadExpressionError(csNameExp, "ConstructorExp must have no square-brackets-clause");
+			return context.addBadExpressionError(csNameExp, "ShadowExp must have no square-brackets-clause");
 		}
 		Type asType = context.lookupType(csNameExp, pathName);
 		@NonNull ShadowExp pivotElement = context.refreshModelElement(ShadowExp.class, PivotPackage.Literals.SHADOW_EXP, csNameExp);

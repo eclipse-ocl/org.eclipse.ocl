@@ -119,4 +119,4 @@ public interface ShadowExp extends OCLExpression
 
 	@Override
 	org.eclipse.ocl.pivot.Class getType();
-} // ConstructorExp
+} // ShadowExp

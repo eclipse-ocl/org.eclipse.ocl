@@ -1103,4 +1103,4 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public org.eclipse.ocl.pivot.Class getType() {
 		return (org.eclipse.ocl.pivot.Class)super.getType();
 	}
-} //ConstructorExpImpl
+} //ShadowExpImpl

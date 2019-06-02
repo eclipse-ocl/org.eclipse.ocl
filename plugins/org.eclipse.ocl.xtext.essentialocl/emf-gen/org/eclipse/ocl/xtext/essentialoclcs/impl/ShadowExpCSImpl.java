@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
+import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
-import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 
 /**
@@ -273,4 +273,4 @@ public abstract class ShadowExpCSImpl extends AbstractNameExpCSImpl implements S
 		return super.eIsSet(featureID);
 	}
 
-} //ConstructorExpCSImpl
+} //ShadowExpCSImpl
