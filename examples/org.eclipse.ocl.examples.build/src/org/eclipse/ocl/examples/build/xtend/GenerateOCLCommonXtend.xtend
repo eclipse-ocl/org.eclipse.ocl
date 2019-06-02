@@ -611,6 +611,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF property.isVolatile»
 						property.setIsVolatile(true);
 					«ENDIF»
+					«IF property.defaultValueString !== null»
+						property.setDefaultValueString("«property.defaultValueString»");
+					«ENDIF»
 					«IF property.opposite !== null»
 						property.setOpposite(«property.opposite.getSymbolName()»);
 					«ENDIF»
