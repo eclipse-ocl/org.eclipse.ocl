@@ -310,20 +310,21 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public @Nullable EPackage getEPackage() {
 			URI uri = getURI();
-			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
-			if (tracedURI2traces2 != null) {
-				Integer mask = tracedURI2traces2.get(uri.toString());
-				if (mask != null) {
-					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
-					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackage from EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
-				}
-			}
 			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
 			IResourceLoadStrategy resourceLoadStrategy = resourceLoadStatus.getResourceLoadStrategy();
 			if (PROJECT_MAP_GET.isActive()) {
 				PROJECT_MAP_GET.println("Get " + uri + " with " + resourceLoadStrategy + " in " + NameUtil.debugSimpleName(resourceLoadStatus.getPackageRegistry()));
 			}
-			return resourceLoadStrategy.getEPackage(packageLoadStatus);
+			EPackage ePackage = resourceLoadStrategy.getEPackage(packageLoadStatus);
+			Map<@NonNull String, @NonNull Integer> tracedURI2traces2 = tracedURI2traces;
+			if (tracedURI2traces2 != null) {
+				Integer mask = tracedURI2traces2.get(uri.toString());
+				if (mask != null) {
+					StandaloneProjectMap projectMap = (StandaloneProjectMap) packageLoadStatus.getPackageDescriptor().getResourceDescriptor().getProjectDescriptor().getProjectManager();
+					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": getEPackage from EPackageDescriptor-" + instanceCount + " for '" + uri + "' => " + NameUtil.debugFullName(ePackage));
+				}
+			}
+			return ePackage;
 		}
 
 		public @NonNull URI getURI() {
