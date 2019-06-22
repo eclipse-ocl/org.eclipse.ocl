@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.osgi.util.NLS;
@@ -102,13 +103,16 @@ public class SaveASHandler extends AbstractHandler
 				@Override
 				public Object exec(@Nullable XtextResource resource) throws Exception {
 					if (resource instanceof BaseCSResource) {
-						Resource asResource = ((BaseCSResource)resource).getASResource();
+						ASResource asResource = ((BaseCSResource)resource).getASResource();
 						URI oldURI = asResource.getURI();
+						boolean wasSaveable = asResource.isSaveable();
 						try {
 							asResource.setURI(newURI);
+							asResource.setSaveable(true);
 							asResource.save(null);
 						} finally {
 							asResource.setURI(oldURI);
+							asResource.setSaveable(wasSaveable);
 						}
 					}
 					return null;
