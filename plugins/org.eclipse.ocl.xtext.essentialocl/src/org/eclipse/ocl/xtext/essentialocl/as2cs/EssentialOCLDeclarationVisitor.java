@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
@@ -861,6 +862,13 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	@Override
 	public @Nullable ElementCS visitTypeExp(@NonNull TypeExp asTypeExp) {
 		Type asType = getNonNullType(asTypeExp.getReferredType());
+		if (asType instanceof TemplateParameter) {
+			NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
+			PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
+			csNameExp.setOwnedPathName(csPathName);
+			context.refreshPathName(csPathName, asType, null);
+			return csNameExp;
+		}
 		TypedRefCS csTypeRef = createTypeRefCS(asType);
 		if (csTypeRef instanceof TypeNameExpCS) {
 			NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();

@@ -1509,7 +1509,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
-		helper.setType(expression, standardLibrary.getClassType(), true, type);
+		Type asType = null;
+		if (type instanceof TemplateParameter) {
+			asType = metamodelManager.getOclType("TemplateParameter");
+		}
+		else {
+			asType = standardLibrary.getClassType();
+		}
+		helper.setType(expression, asType, true, type);
 		expression.setReferredType(type);
 		expression.setName(type.getName());
 		return expression;
