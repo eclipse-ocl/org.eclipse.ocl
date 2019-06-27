@@ -261,6 +261,10 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGString">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGString/stringValue"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGTemplateParameterExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGTemplateParameterExp/templateableElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGTemplateParameterExp/index"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGText">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGText/textValue"/>
     </genClasses>
