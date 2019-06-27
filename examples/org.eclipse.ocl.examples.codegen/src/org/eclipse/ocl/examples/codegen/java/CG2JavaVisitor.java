@@ -87,6 +87,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -2795,6 +2796,16 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" = ");
 		js.appendString(ClassUtil.nonNullState(object.getStringValue()));
 		js.append(";\n");
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGTemplateParameterExp(@NonNull CGTemplateParameterExp cgTemplateParameterExp) {
+		CGValuedElement cgType = getExpression(cgTemplateParameterExp.getTemplateableElement());
+		js.appendDeclaration(cgTemplateParameterExp);
+		js.append(" = ");
+		js.appendReferenceTo(cgType);
+		js.append(".getOwnedSignature().getOwnedParameters().get(" + cgTemplateParameterExp.getIndex() + ");\n");
 		return true;
 	}
 

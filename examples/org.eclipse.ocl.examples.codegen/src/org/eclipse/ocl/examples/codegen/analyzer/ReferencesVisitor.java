@@ -34,12 +34,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypeExp;
 
 /**
  * The ReferencesVisitor compute a list of objects referenced by (but not contained by or containing) the visited object
@@ -49,7 +51,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull List<@Nullable Object>, @Nullable Object>
 {
 	public static final @NonNull ReferencesVisitor INSTANCE = new ReferencesVisitor(null);
-	
+
 	protected ReferencesVisitor(@Nullable Object context) {
 		super(context);
 	}
@@ -186,8 +188,13 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	}
 
 	@Override
+	public @NonNull List<@Nullable Object> visitCGTemplateParameterExp(@NonNull CGTemplateParameterExp cgTemplateParameterExp) {
+		return append(super.visitCGTemplateParameterExp(cgTemplateParameterExp), ((TypeExp)cgTemplateParameterExp.getAst()).getReferredType().getTypeId());
+	}
+
+	@Override
 	public @NonNull List<@Nullable Object> visitCGTypeExp(@NonNull CGTypeExp cgElement) {
-		return append(super.visitCGTypeExp(cgElement), cgElement.getASTypeId());
+		return append(super.visitCGTypeExp(cgElement), ((TypeExp)cgElement.getAst()).getReferredType().getTypeId());
 	}
 
 	@Override

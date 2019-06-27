@@ -85,6 +85,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
@@ -138,6 +139,9 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
@@ -1743,19 +1747,46 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGTypeExp visitTypeExp(@NonNull TypeExp pTypeExp) {
-		//		Type referredType = pTypeExp.getReferredType();
-		CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
+	public @Nullable CGValuedElement visitTypeExp(@NonNull TypeExp pTypeExp) {
+		Type referredType = PivotUtil.getReferredType(pTypeExp);
+		if (!(referredType instanceof TemplateParameter)) {
+			CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
+			//		setPivot(cgTypeExp, pTypeExp);
+			cgTypeExp.setAst(pTypeExp);
+			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
+			cgTypeExp.setExecutorType(cgExecutorType);
+			cgTypeExp.getOwns().add(cgExecutorType);
+			//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
+			TypeId asTypeId = pTypeExp.getTypeId();
+			cgTypeExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
+			cgTypeExp.setName(cgExecutorType.getName());
+			return cgTypeExp;
+		}
+		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
+		TemplateSignature templateSignature = PivotUtil.getOwningSignature(referredTemplateParameter);
+		TemplateableElement asTemplateableElement = PivotUtil.getOwningElement(templateSignature);
+		CGValuedElement cgTemplateableElement;
+		if (asTemplateableElement instanceof Type) {
+			cgTemplateableElement = context.createExecutorType((Type)asTemplateableElement);
+		}
+		else if (asTemplateableElement instanceof Operation) {
+			cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);
+		}
+		else {
+			codeGenerator.addProblem(new UnsupportedOperationException("visitTypeExp for non-Type Templateparameter"));
+			return null;
+		}
+		int index = templateSignature.getOwnedParameters().indexOf(referredTemplateParameter);
+		CGTemplateParameterExp cgTemplateParameterExp = CGModelFactory.eINSTANCE.createCGTemplateParameterExp();
+		cgTemplateParameterExp.setIndex(index);
 		//		setPivot(cgTypeExp, pTypeExp);
-		cgTypeExp.setAst(pTypeExp);
-		CGExecutorType cgExecutorType = context.createExecutorType(ClassUtil.nonNullState(pTypeExp.getReferredType()));
-		cgTypeExp.setExecutorType(cgExecutorType);
-		cgTypeExp.getOwns().add(cgExecutorType);
+		cgTemplateParameterExp.setAst(pTypeExp);
+		cgTemplateParameterExp.setTemplateableElement(cgTemplateableElement);
+		cgTemplateParameterExp.getOwns().add(cgTemplateableElement);
 		//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
 		TypeId asTypeId = pTypeExp.getTypeId();
-		cgTypeExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
-		cgTypeExp.setName(cgExecutorType.getName());
-		return cgTypeExp;
+		cgTemplateParameterExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
+		return cgTemplateParameterExp;
 	}
 
 	@Override

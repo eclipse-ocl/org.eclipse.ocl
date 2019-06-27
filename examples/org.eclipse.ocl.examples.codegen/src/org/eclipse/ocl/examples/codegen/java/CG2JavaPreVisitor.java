@@ -48,6 +48,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -517,25 +518,6 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	@Override
-	public @Nullable Object visitCGTypeExp(@NonNull CGTypeExp cgTypeExp) {
-		TypeId asTypeId = cgTypeExp.getASTypeId();
-		if (asTypeId != null) {
-			addOwnedTypeId(cgTypeExp, asTypeId);
-		}
-		CGExecutorType cgType = cgTypeExp.getExecutorType();
-		if (cgType != null) {
-			cgType.accept(this);
-		}
-		//		CGExecutorType cgType = cgTypeExp.getExecutorType();
-		//		String name = cgType.getValueName();
-		//		if (name == null) {
-		//			name = localContext.getNameManagerContext().getSymbolName(cgType);
-		//			cgType.setValueName(name);
-		//		}
-		return super.visitCGTypeExp(cgTypeExp);
-	}
-
-	@Override
 	public @Nullable Object visitCGShadowExp(@NonNull CGShadowExp cgShadowExp) {
 		CGExecutorType cgType = cgShadowExp.getExecutorType();
 		if (cgType != null) {
@@ -556,6 +538,44 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
 		//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
 		return super.visitCGShadowPart(cgShadowPart);
+	}
+
+	@Override
+	public @Nullable Object visitCGTemplateParameterExp(@NonNull CGTemplateParameterExp cgTemplateParameterExp) {
+		TypeId asTypeId = cgTemplateParameterExp.getASTypeId();
+		if (asTypeId != null) {
+			addOwnedTypeId(cgTemplateParameterExp, asTypeId);
+		}
+		CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
+		if (cgTemplateableElement != null) {
+			cgTemplateableElement.accept(this);
+		}
+		//		CGExecutorType cgType = cgTypeExp.getExecutorType();
+		//		String name = cgType.getValueName();
+		//		if (name == null) {
+		//			name = localContext.getNameManagerContext().getSymbolName(cgType);
+		//			cgType.setValueName(name);
+		//		}
+		return super.visitCGTemplateParameterExp(cgTemplateParameterExp);
+	}
+
+	@Override
+	public @Nullable Object visitCGTypeExp(@NonNull CGTypeExp cgTypeExp) {
+		TypeId asTypeId = cgTypeExp.getASTypeId();
+		if (asTypeId != null) {
+			addOwnedTypeId(cgTypeExp, asTypeId);
+		}
+		CGExecutorType cgType = cgTypeExp.getExecutorType();
+		if (cgType != null) {
+			cgType.accept(this);
+		}
+		//		CGExecutorType cgType = cgTypeExp.getExecutorType();
+		//		String name = cgType.getValueName();
+		//		if (name == null) {
+		//			name = localContext.getNameManagerContext().getSymbolName(cgType);
+		//			cgType.setValueName(name);
+		//		}
+		return super.visitCGTypeExp(cgTypeExp);
 	}
 
 	@Override

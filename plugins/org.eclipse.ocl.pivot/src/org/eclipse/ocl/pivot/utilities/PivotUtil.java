@@ -1587,6 +1587,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.9
+	 */
+	public static @NonNull TemplateableElement getOwningElement(@NonNull TemplateSignature templateSignature) {
+		return ClassUtil.nonNullState(templateSignature.getOwningElement());
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Enumeration getOwningEnumeration(@NonNull EnumerationLiteral enumerationLiteral) {
@@ -1598,6 +1605,13 @@ public class PivotUtil
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package getOwningPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nonNullState(asClass.getOwningPackage());
+	}
+
+	/**
+	 * @since 1.9
+	 */
+	public static @NonNull TemplateSignature getOwningSignature(@NonNull TemplateParameter asTemplateParameter) {
+		return ClassUtil.nonNullState(asTemplateParameter.getOwningSignature());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {

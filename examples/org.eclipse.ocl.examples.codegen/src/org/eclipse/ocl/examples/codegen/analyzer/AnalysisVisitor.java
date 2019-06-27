@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -387,6 +388,21 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			context.setConstant(cgShadowExp, cgInvalidValue);
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGTemplateParameterExp(@NonNull CGTemplateParameterExp cgTemplateParameterExp) {
+		TypeExp pTypeExp = (TypeExp) cgTemplateParameterExp.getAst();
+		Type referredType = pTypeExp.getReferredType();
+		if (referredType != null) {
+			LocalContext localContext = context.getCodeGenerator().getGlobalContext().getLocalContext(cgTemplateParameterExp);
+			if (localContext != null) {
+				CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
+				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
+				cgTemplateParameterExp.getDependsOn().add(cgTemplateableElement);
+			}
+		}
+		return super.visitCGTemplateParameterExp(cgTemplateParameterExp);
 	}
 
 	@Override
