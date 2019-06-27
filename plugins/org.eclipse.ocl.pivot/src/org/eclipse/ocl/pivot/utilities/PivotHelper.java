@@ -62,6 +62,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -453,7 +454,7 @@ public class PivotHelper
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
 		asTypeExp.setName(type.getName());
-		asTypeExp.setType(standardLibrary.getClassType());
+		asTypeExp.setType(type instanceof TemplateParameter ? metamodelManager.getOclType("TemplateParameter") : standardLibrary.getClassType());
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;
 	}
