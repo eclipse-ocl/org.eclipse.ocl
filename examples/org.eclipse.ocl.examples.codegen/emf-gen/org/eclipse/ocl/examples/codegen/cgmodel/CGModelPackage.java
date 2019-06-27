@@ -1864,6 +1864,38 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGString_StringValue();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp <em>CG Template Parameter Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Template Parameter Exp</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp
+	 * @generated
+	 */
+	EClass getCGTemplateParameterExp();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp#getTemplateableElement <em>Templateable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Templateable Element</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp#getTemplateableElement()
+	 * @see #getCGTemplateParameterExp()
+	 * @generated
+	 */
+	EReference getCGTemplateParameterExp_TemplateableElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp#getIndex()
+	 * @see #getCGTemplateParameterExp()
+	 * @generated
+	 */
+	EAttribute getCGTemplateParameterExp_Index();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText <em>CG Text</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3825,6 +3857,32 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_STRING__STRING_VALUE = eINSTANCE.getCGString_StringValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTemplateParameterExpImpl <em>CG Template Parameter Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTemplateParameterExpImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTemplateParameterExp()
+		 * @generated
+		 */
+		EClass CG_TEMPLATE_PARAMETER_EXP = eINSTANCE.getCGTemplateParameterExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Templateable Element</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_TEMPLATE_PARAMETER_EXP__TEMPLATEABLE_ELEMENT = eINSTANCE.getCGTemplateParameterExp_TemplateableElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_TEMPLATE_PARAMETER_EXP__INDEX = eINSTANCE.getCGTemplateParameterExp_Index();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTextImpl <em>CG Text</em>}' class.

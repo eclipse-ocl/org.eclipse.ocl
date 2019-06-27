@@ -608,6 +608,15 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGString createCGString();
 
 	/**
+	 * Returns a new object of class '<em>CG Template Parameter Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Template Parameter Exp</em>'.
+	 * @generated
+	 */
+	@NonNull CGTemplateParameterExp createCGTemplateParameterExp();
+
+	/**
 	 * Returns a new object of class '<em>CG Text</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

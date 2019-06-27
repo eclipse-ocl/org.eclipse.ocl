@@ -121,6 +121,7 @@ public interface CGModelVisitor<R>
 	R visitCGShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGShadowExp object);
 	R visitCGShadowPart(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGShadowPart object);
 	R visitCGString(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGString object);
+	R visitCGTemplateParameterExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGTemplateParameterExp object);
 	R visitCGText(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGText object);
 	R visitCGThrowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGThrowExp object);
 	R visitCGTupleExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGTupleExp object);

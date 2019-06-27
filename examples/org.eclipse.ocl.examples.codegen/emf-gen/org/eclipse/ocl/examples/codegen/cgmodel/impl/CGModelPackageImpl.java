@@ -99,6 +99,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -678,6 +679,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	private EClass cgStringEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass cgTemplateParameterExpEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2646,6 +2654,36 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getCGTemplateParameterExp() {
+		return cgTemplateParameterExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCGTemplateParameterExp_TemplateableElement() {
+		return (EReference)cgTemplateParameterExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGTemplateParameterExp_Index() {
+		return (EAttribute)cgTemplateParameterExpEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGText() {
 		return cgTextEClass;
 	}
@@ -3336,63 +3374,67 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgStringEClass = createEClass(77);
 		createEAttribute(cgStringEClass, 6);
 
-		cgTextEClass = createEClass(78);
+		cgTemplateParameterExpEClass = createEClass(78);
+		createEReference(cgTemplateParameterExpEClass, 6);
+		createEAttribute(cgTemplateParameterExpEClass, 7);
+
+		cgTextEClass = createEClass(79);
 		createEAttribute(cgTextEClass, 6);
 
-		cgThrowExpEClass = createEClass(79);
+		cgThrowExpEClass = createEClass(80);
 
-		cgTupleExpEClass = createEClass(80);
+		cgTupleExpEClass = createEClass(81);
 		createEReference(cgTupleExpEClass, 6);
 
-		cgTuplePartEClass = createEClass(81);
+		cgTuplePartEClass = createEClass(82);
 		createEReference(cgTuplePartEClass, 6);
 		createEReference(cgTuplePartEClass, 7);
 
-		cgTuplePartCallExpEClass = createEClass(82);
+		cgTuplePartCallExpEClass = createEClass(83);
 		createEAttribute(cgTuplePartCallExpEClass, 10);
 
-		cgTypeIdEClass = createEClass(83);
+		cgTypeIdEClass = createEClass(84);
 
-		cgTypeExpEClass = createEClass(84);
+		cgTypeExpEClass = createEClass(85);
 		createEReference(cgTypeExpEClass, 6);
 
-		cgTypedElementEClass = createEClass(85);
+		cgTypedElementEClass = createEClass(86);
 		createEReference(cgTypedElementEClass, 2);
 		createEAttribute(cgTypedElementEClass, 3);
 
-		cgUnboxExpEClass = createEClass(86);
+		cgUnboxExpEClass = createEClass(87);
 
-		cgUnlimitedEClass = createEClass(87);
+		cgUnlimitedEClass = createEClass(88);
 
-		cgValuedElementEClass = createEClass(88);
+		cgValuedElementEClass = createEClass(89);
 		createEReference(cgValuedElementEClass, 4);
 		createEReference(cgValuedElementEClass, 5);
 
-		cgVariableEClass = createEClass(89);
+		cgVariableEClass = createEClass(90);
 		createEReference(cgVariableEClass, 6);
 
-		cgVariableExpEClass = createEClass(90);
+		cgVariableExpEClass = createEClass(91);
 		createEReference(cgVariableExpEClass, 6);
 
-		nameableEClass = createEClass(91);
+		nameableEClass = createEClass(92);
 
 		// Create data types
-		elementEDataType = createEDataType(92);
-		elementIdEDataType = createEDataType(93);
-		enumerationLiteralIdEDataType = createEDataType(94);
-		iterationEDataType = createEDataType(95);
-		fieldEDataType = createEDataType(96);
-		libraryIterationEDataType = createEDataType(97);
-		libraryOperationEDataType = createEDataType(98);
-		libraryPropertyEDataType = createEDataType(99);
-		methodEDataType = createEDataType(100);
-		numberEDataType = createEDataType(101);
-		objectEDataType = createEDataType(102);
-		operationEDataType = createEDataType(103);
-		propertyEDataType = createEDataType(104);
-		tuplePartIdEDataType = createEDataType(105);
-		typeEDataType = createEDataType(106);
-		typeIdEDataType = createEDataType(107);
+		elementEDataType = createEDataType(93);
+		elementIdEDataType = createEDataType(94);
+		enumerationLiteralIdEDataType = createEDataType(95);
+		iterationEDataType = createEDataType(96);
+		fieldEDataType = createEDataType(97);
+		libraryIterationEDataType = createEDataType(98);
+		libraryOperationEDataType = createEDataType(99);
+		libraryPropertyEDataType = createEDataType(100);
+		methodEDataType = createEDataType(101);
+		numberEDataType = createEDataType(102);
+		objectEDataType = createEDataType(103);
+		operationEDataType = createEDataType(104);
+		propertyEDataType = createEDataType(105);
+		tuplePartIdEDataType = createEDataType(106);
+		typeEDataType = createEDataType(107);
+		typeIdEDataType = createEDataType(108);
 	}
 
 	/**
@@ -3500,6 +3542,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgShadowExpEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgShadowPartEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgStringEClass.getESuperTypes().add(this.getCGConstant());
+		cgTemplateParameterExpEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgTextEClass.getESuperTypes().add(this.getCGConstant());
 		cgThrowExpEClass.getESuperTypes().add(this.getCGCallExp());
 		cgTupleExpEClass.getESuperTypes().add(this.getCGValuedElement());
@@ -3761,6 +3804,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgStringEClass, CGString.class, "CGString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGString_StringValue(), ecorePackage.getEString(), "stringValue", null, 1, 1, CGString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(cgTemplateParameterExpEClass, CGTemplateParameterExp.class, "CGTemplateParameterExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCGTemplateParameterExp_TemplateableElement(), this.getCGValuedElement(), null, "templateableElement", null, 1, 1, CGTemplateParameterExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGTemplateParameterExp_Index(), ecorePackage.getEInt(), "index", null, 1, 1, CGTemplateParameterExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgTextEClass, CGText.class, "CGText", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGText_TextValue(), ecorePackage.getEString(), "textValue", null, 1, 1, CGText.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
