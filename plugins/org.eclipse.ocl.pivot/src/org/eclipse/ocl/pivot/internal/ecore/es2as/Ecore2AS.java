@@ -538,6 +538,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void initializeEcore2ASMap() {
+		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, standardLibrary.getBooleanType());
 		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, standardLibrary.getBooleanType());
 		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, standardLibrary.getIntegerType());
 		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, standardLibrary.getRealType());
