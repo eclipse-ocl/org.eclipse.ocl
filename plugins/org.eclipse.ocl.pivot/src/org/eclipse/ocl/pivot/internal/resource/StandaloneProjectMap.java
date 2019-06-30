@@ -2125,7 +2125,7 @@ public class StandaloneProjectMap implements ProjectManager
 		 * Map from local Model URI to lazy EPackageDescriptor. e.g. from "model/Ecore.ecore".
 		 */
 		private @Nullable Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor = null;
-		private @Nullable Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2packageDescriptor = null;
+		private @Nullable Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2resourceDescriptor = null;
 
 		/**
 		 * @since 1.4
@@ -2147,17 +2147,17 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
-			Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2packageDescriptor2 = genModelURI2packageDescriptor;
-			if (genModelURI2packageDescriptor2 == null) {
-				genModelURI2packageDescriptor = genModelURI2packageDescriptor2 = new HashMap<>();
+			Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2resourceDescriptor2 = genModelURI2resourceDescriptor;
+			if (genModelURI2resourceDescriptor2 == null) {
+				genModelURI2resourceDescriptor = genModelURI2resourceDescriptor2 = new HashMap<>();
 			}
-			genModelURI2packageDescriptor2.put(resourceDescriptor.getGenModelURI(), resourceDescriptor);
+			genModelURI2resourceDescriptor2.put(resourceDescriptor.getGenModelURI(), resourceDescriptor);
 		}
 
 		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-			if (genModelURI2packageDescriptor != null) {
-				for (IResourceDescriptor resourceDescriptor : genModelURI2packageDescriptor.values()) {
+			if (genModelURI2resourceDescriptor != null) {
+				for (IResourceDescriptor resourceDescriptor : genModelURI2resourceDescriptor.values()) {
 					try {
 						resourceDescriptor.configure(resourceSet, resourceLoadStrategy, conflictHandler);
 					}
@@ -2215,7 +2215,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @Nullable Collection<@NonNull IResourceDescriptor> getResourceDescriptors() {
-			return genModelURI2packageDescriptor != null ? genModelURI2packageDescriptor.values() : null;
+			return genModelURI2resourceDescriptor != null ? genModelURI2resourceDescriptor.values() : null;
 		}
 
 		@Override
