@@ -275,11 +275,10 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				@NonNull URI deresolvedGenModelURI = genModelURI.deresolve(projectDescriptor.getLocationURI(), true, true, true);
 				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
 				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
-				GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
 				InputStream inputStream = null;
 				try {
 					inputStream = uriConverter.createInputStream(genModelURI);
-					saxParser.parse(inputStream, genModelReader);
+					((AbstractResourceDescriptor)resourceDescriptor).analyzeGenModel(saxParser, inputStream);
 				} catch (Exception e) {
 					logException("Failed to parse '" + genModelURI + "'", e);
 				} finally {

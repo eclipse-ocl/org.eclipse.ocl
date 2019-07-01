@@ -340,7 +340,7 @@ public interface ProjectManager extends Adapter
 		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
 		 * genModelURI, and a map of the package namespace URI to package descriptor.
 		 */
-		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
+		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris);
 
 		/**
 		 * Unload the package registry to force a reload.

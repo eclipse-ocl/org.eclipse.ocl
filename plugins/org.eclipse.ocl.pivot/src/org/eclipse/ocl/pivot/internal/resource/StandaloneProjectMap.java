@@ -1548,8 +1548,7 @@ public class StandaloneProjectMap implements ProjectManager
 						inputStream = new FileInputStream(absoluteGenModelURI.isFile() ? absoluteGenModelURI.toFileString() : absoluteGenModelURI.toString());
 					}
 					if (inputStream != null) {
-						GenModelReader genModelReader = new GenModelReader(this);
-						saxParser.parse(inputStream, genModelReader);
+						analyzeGenModel(saxParser, inputStream);
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to parse '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
@@ -1599,6 +1598,18 @@ public class StandaloneProjectMap implements ProjectManager
 						resourceLoadStatus.getResourceLoadStrategy().addedGeneratedPackage(packageLoadStatus, ePackage);
 					}
 				}
+			}
+		}
+
+		protected void analyzeGenModel(@NonNull SAXParser saxParser, @NonNull InputStream inputStream) throws SAXException, IOException {
+			GenModelReader genModelReader = new GenModelReader();
+			saxParser.parse(inputStream, genModelReader);
+			List<@NonNull String> ecorePackages = genModelReader.getEcorePackages();
+			try {
+				setEcoreModel(ecorePackages);
+			}
+			catch (Exception e) {
+				logger.warn("Failed to read " + getGenModelURI(), e);
 			}
 		}
 
@@ -1696,7 +1707,11 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
+		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris) {
+			@NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor = new HashMap<>();
+			for (@NonNull IPackageDescriptor packageDescriptor : getPackageDescriptors()) {
+				nsURI2packageDescriptor.put(String.valueOf(packageDescriptor.getNsURI()), packageDescriptor);
+			}
 			int size = genModelRelativeEcorePackageUris.size();
 			if (size > 0) {
 				@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
@@ -1915,6 +1930,8 @@ public class StandaloneProjectMap implements ProjectManager
 	 * org.eclipse.emf.ecore.generated_package extension point in a plugin.xml
 	 * file and activating the GenModelReader to process the
 	 * ecorePackage locations.
+	 *
+	 * After SAX parsing, getGenModelURI2nsURI2className() can be used to return the relative GenModel URI, the nsURIs and the Java package classes.
 	 */
 	protected static class PluginReader extends DefaultHandler
 	{
@@ -1936,11 +1953,6 @@ public class StandaloneProjectMap implements ProjectManager
 
 		public PluginReader(@Nullable JarFile jarFile) {
 			this.jarFile = jarFile;
-		}
-
-		@Override
-		public void endDocument() throws SAXException {
-			super.endDocument();
 		}
 
 		@Override
@@ -2003,6 +2015,8 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * GenModelReader provides the SAX callbacks to support reading
 	 * the genPackages element in a genmodel file.
+	 *
+	 * After SAX parsing, getEcorePackages() can be used to return the unresolved Ecore Package proxy URIs.
 	 */
 	protected static class GenModelReader extends DefaultHandler
 	{
@@ -2013,10 +2027,6 @@ public class StandaloneProjectMap implements ProjectManager
 		public static final @NonNull String ecorePackageAttribute = "ecorePackage";
 		public static final @NonNull String hrefAttribute = "href";
 
-		protected final @NonNull IResourceDescriptor resourceDescriptor;
-		protected final @NonNull IProjectDescriptor projectDescriptor;
-		protected final @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor = new HashMap<>();
-		protected final @NonNull URI relativeGenModelURI;
 		protected final @NonNull List<@NonNull String> ecorePackages = new ArrayList<>();
 
 		private @NonNull Stack<String> elements = new Stack<>();
@@ -2027,33 +2037,13 @@ public class StandaloneProjectMap implements ProjectManager
 		 */
 		public static void initStatics() {}
 
-		public GenModelReader(@NonNull IResourceDescriptor resourceDescriptor) {
-			this.resourceDescriptor = resourceDescriptor;
-			this.projectDescriptor = resourceDescriptor.getProjectDescriptor();
-			this.relativeGenModelURI = resourceDescriptor.getGenModelURI();
-			for (@NonNull IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
-				add(packageDescriptor);
-			}
-		}
-
-		private void add(@NonNull IPackageDescriptor packageDescriptor) {
-			nsURI2packageDescriptor.put(String.valueOf(packageDescriptor.getNsURI()), packageDescriptor);
-		}
-
-		@Override
-		public void endDocument() throws SAXException {
-			super.endDocument();
-			try {
-				resourceDescriptor.setEcoreModel(ecorePackages, nsURI2packageDescriptor);
-			}
-			catch (Exception e) {
-				logger.warn("Failed to read " + relativeGenModelURI, e);
-			}
-		}
-
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			elements.pop();
+		}
+
+		public @NonNull List<@NonNull String> getEcorePackages() {
+			return ecorePackages;
 		}
 
 		@Override
