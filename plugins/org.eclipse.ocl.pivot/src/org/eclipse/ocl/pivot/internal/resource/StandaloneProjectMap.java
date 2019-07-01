@@ -1485,7 +1485,7 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The project-relative URI of the GenModel for the EPackage (e.g. model/Ecore.genmodel).
 		 */
-		protected final @NonNull URI genModelURI;
+		protected final @NonNull URI relativeGenModelURI;
 
 		/**
 		 * The filespace URI of the EPackage (e.g. file:/C:/Eclipse/plugins/org.eclipse.emf.ecore/model/Ecore.ecore).
@@ -1514,15 +1514,15 @@ public class StandaloneProjectMap implements ProjectManager
 		 */
 		private final @NonNull WeakHashMap<@Nullable ResourceSet, @NonNull IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<>();
 
-		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
+		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI relativeGenModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
-			this.genModelURI = genModelURI;
+			this.relativeGenModelURI = relativeGenModelURI;
 			for (@NonNull URI nsURI : nsURI2className.keySet()) {
 				String className = nsURI2className.get(nsURI);
 				IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(nsURI);
 				if (packageDescriptor == null) {
 					if (PROJECT_MAP_ADD_GENERATED_PACKAGE.isActive()) {
-						PROJECT_MAP_ADD_GENERATED_PACKAGE.println(nsURI + " : " + genModelURI + " : " + className);
+						PROJECT_MAP_ADD_GENERATED_PACKAGE.println(nsURI + " : " + relativeGenModelURI + " : " + className);
 					}
 					packageDescriptor = new PackageDescriptor(this, nsURI, className);
 					projectDescriptor.addPackageDescriptor(packageDescriptor);
@@ -1530,6 +1530,38 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			}
 			projectDescriptor.addResourceDescriptor(this);
+		}
+
+		@Override
+		public void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
+				@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
+				URI locationURI = projectDescriptor.getLocationURI();
+				InputStream inputStream = null;
+				try {
+					if (jarFile != null) {
+						ZipEntry entry = jarFile.getEntry(relativeGenModelURI.toString());
+						if (entry != null) {
+							inputStream = jarFile.getInputStream(entry);
+						}
+					} else {
+						URI absoluteGenModelURI = relativeGenModelURI.resolve(locationURI);
+						inputStream = new FileInputStream(absoluteGenModelURI.isFile() ? absoluteGenModelURI.toFileString() : absoluteGenModelURI.toString());
+					}
+					if (inputStream != null) {
+						GenModelReader genModelReader = new GenModelReader(this);
+						saxParser.parse(inputStream, genModelReader);
+					}
+				} catch (Exception e) {
+					System.err.println("Failed to parse '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+					//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
+				} finally {
+					try {
+						if (inputStream != null) {
+							inputStream.close();
+						}
+					} catch (IOException e) {
+					}
+				}
 		}
 
 		@Override
@@ -1605,7 +1637,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @NonNull URI getGenModelURI() {
-			return genModelURI;
+			return relativeGenModelURI;
 		}
 
 		@Override
@@ -1636,7 +1668,7 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public @NonNull URI getProjectRelativeEcorePackageURI(@NonNull URI genModelRelativeEcorePackageURI) {
 			URI projectLocationURI = projectDescriptor.getLocationURI();
-			URI absoluteGenModelURI = genModelURI.resolve(projectLocationURI);
+			URI absoluteGenModelURI = relativeGenModelURI.resolve(projectLocationURI);
 			URI absolutePackageURI = genModelRelativeEcorePackageURI.resolve(absoluteGenModelURI);
 			@NonNull URI projectRelativeEcorePackageURI = absolutePackageURI.deresolve(projectLocationURI, true, true, true);
 			return projectRelativeEcorePackageURI;
@@ -1671,7 +1703,7 @@ public class StandaloneProjectMap implements ProjectManager
 				URI firstGenModelRelativeEcorePackageURI = URI.createURI(firstGenModelRelativeEcorePackageUri);
 				@NonNull URI genModelRelativeEcoreModelURI = firstGenModelRelativeEcorePackageURI.trimFragment();
 				URI projectLocationURI = projectDescriptor.getLocationURI();
-				URI absoluteGenModelURI = genModelURI.resolve(projectLocationURI);
+				URI absoluteGenModelURI = relativeGenModelURI.resolve(projectLocationURI);
 				URI absolutePackageURI = genModelRelativeEcoreModelURI.resolve(absoluteGenModelURI);
 				URI relativePackageURI = absolutePackageURI.deresolve(projectLocationURI, true, true, true);
 				@NonNull URI relativeEcoreModelURI = relativePackageURI.trimFragment();
@@ -1815,7 +1847,7 @@ public class StandaloneProjectMap implements ProjectManager
 			//			s.append(" => ");
 			//			s.append(className);
 			//			s.append(", ");
-			s.append(genModelURI);
+			s.append(relativeGenModelURI);
 			//			if (ecorePackageURI != null) {
 			//				s.append(", ");
 			//				s.append(ecorePackageURI);
@@ -1869,7 +1901,7 @@ public class StandaloneProjectMap implements ProjectManager
 			s.append("} => ");
 			//			s.append(className);
 			//			s.append(", ");
-			s.append(genModelURI);
+			s.append(relativeGenModelURI);
 			//			if (ecorePackageURI != null) {
 			//				s.append(", ");
 			//				s.append(ecorePackageURI);
@@ -2493,45 +2525,13 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
-	protected void addGenModel(@NonNull IProjectDescriptor projectDescriptor, @NonNull String genModel, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
-			@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
-			IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
-			URI locationURI = projectDescriptor.getLocationURI();
-			InputStream inputStream = null;
-			try {
-				if (jarFile != null) {
-					ZipEntry entry = jarFile.getEntry(genModel);
-					if (entry != null) {
-						inputStream = jarFile.getInputStream(entry);
-					}
-				} else {
-					URI relativeGenModelURI = resourceDescriptor.getGenModelURI();
-					URI genModelURI = relativeGenModelURI.resolve(locationURI);
-					inputStream = new FileInputStream(genModelURI.isFile() ? genModelURI.toFileString() : genModelURI.toString());
-				}
-				if (inputStream != null) {
-					GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-					saxParser.parse(inputStream, genModelReader);
-				}
-			} catch (Exception e) {
-				System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
-				//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
-			} finally {
-				try {
-					if (inputStream != null) {
-						inputStream.close();
-					}
-				} catch (IOException e) {
-				}
-			}
-	}
-
 	protected void addGenModels(@NonNull IProjectDescriptor projectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className,
 			@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
 		for (@NonNull String genModel : genModelURI2nsURI2className.keySet()) {
 			Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className.get(genModel);
 			assert nsURI2className != null;
-			addGenModel(projectDescriptor, genModel, nsURI2className, saxParser, jarFile);
+			IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
+			resourceDescriptor.addGenModel(nsURI2className, saxParser, jarFile);
 		}
 	}
 

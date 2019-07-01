@@ -16,6 +16,9 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarFile;
+
+import javax.xml.parsers.SAXParser;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
@@ -277,6 +280,9 @@ public interface ProjectManager extends Adapter
 	 */
 	public static interface IResourceDescriptor
 	{
+		void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
+				@NonNull SAXParser saxParser, @Nullable JarFile jarFile);
+
 		void addedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource);
 
 		void addedGeneratedPackage(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage);
