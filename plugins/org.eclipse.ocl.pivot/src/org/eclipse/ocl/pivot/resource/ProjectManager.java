@@ -340,6 +340,7 @@ public interface ProjectManager extends Adapter
 		 * Unload the package registry to force a reload.
 		 */
 		void unload(@NonNull ResourceSet resourceSet);
+
 	}
 
 	/**

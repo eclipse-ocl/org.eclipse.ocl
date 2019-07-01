@@ -1896,37 +1896,19 @@ public class StandaloneProjectMap implements ProjectManager
 		public static final @NonNull String genModelAttribute = "genModel";
 
 		protected final JarFile jarFile;
-		protected final IProjectDescriptor projectDescriptor;
 		private int pluginCount = 0;
 		private int extensionCount = 0;
 		private boolean inPoint = false;
 		private int packageCount = 0;
-		private @NonNull Map<@NonNull String, @NonNull GenModelReader> genModelReaders = new HashMap<>();
 		private @Nullable Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = null;
 
-		private PluginReader(@Nullable IProjectDescriptor projectDescriptor) {
-			this.jarFile = null;
-			this.projectDescriptor = projectDescriptor;
-		}
-
-		public PluginReader(@NonNull JarFile jarFile, @NonNull IProjectDescriptor projectDescriptor) {
+		public PluginReader(@Nullable JarFile jarFile) {
 			this.jarFile = jarFile;
-			this.projectDescriptor = projectDescriptor;
 		}
 
 		@Override
 		public void endDocument() throws SAXException {
 			super.endDocument();
-			Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
-			if (genModelURI2nsURI2className2 != null) {
-				for (@NonNull String genModel : genModelURI2nsURI2className2.keySet()) {
-					Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
-					assert nsURI2className != null;
-					IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
-					GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-					genModelReaders.put(genModel, genModelReader);
-				}
-			}
 		}
 
 		@Override
@@ -1948,36 +1930,8 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 
-		public void scanContents(SAXParser saxParser) {
-			for (@NonNull String genModel : genModelReaders.keySet()) {
-				GenModelReader genModelReader = genModelReaders.get(genModel);
-				URI locationURI = projectDescriptor.getLocationURI();
-				URI genModelURI = URI.createURI(genModel).resolve(locationURI);
-				InputStream inputStream = null;
-				try {
-					if (jarFile != null) {
-						ZipEntry entry = jarFile.getEntry(genModel);
-						if (entry != null) {
-							inputStream = jarFile.getInputStream(entry);
-						}
-					} else {
-						inputStream = new FileInputStream(genModelURI.isFile() ? genModelURI.toFileString() : genModelURI.toString());
-					}
-					if (inputStream != null) {
-						saxParser.parse(inputStream, genModelReader);
-					}
-				} catch (Exception e) {
-					System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
-					//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
-				} finally {
-					try {
-						if (inputStream != null) {
-							inputStream.close();
-						}
-					} catch (IOException e) {
-					}
-				}
-			}
+		public @Nullable Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> getGenModelURI2nsURI2className() {
+			return genModelURI2nsURI2className;
 		}
 
 		@Override
@@ -2030,7 +1984,7 @@ public class StandaloneProjectMap implements ProjectManager
 		protected final @NonNull IResourceDescriptor resourceDescriptor;
 		protected final @NonNull IProjectDescriptor projectDescriptor;
 		protected final @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor = new HashMap<>();
-		protected final @NonNull URI genModelURI;
+		protected final @NonNull URI relativeGenModelURI;
 		protected final @NonNull List<@NonNull String> ecorePackages = new ArrayList<>();
 
 		private @NonNull Stack<String> elements = new Stack<>();
@@ -2044,7 +1998,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public GenModelReader(@NonNull IResourceDescriptor resourceDescriptor) {
 			this.resourceDescriptor = resourceDescriptor;
 			this.projectDescriptor = resourceDescriptor.getProjectDescriptor();
-			this.genModelURI = resourceDescriptor.getGenModelURI();
+			this.relativeGenModelURI = resourceDescriptor.getGenModelURI();
 			for (@NonNull IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
 				add(packageDescriptor);
 			}
@@ -2061,7 +2015,7 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceDescriptor.setEcoreModel(ecorePackages, nsURI2packageDescriptor);
 			}
 			catch (Exception e) {
-				logger.warn("Failed to read " + genModelURI, e);
+				logger.warn("Failed to read " + relativeGenModelURI, e);
 			}
 		}
 
@@ -2539,6 +2493,48 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	protected void addGenModel(@NonNull IProjectDescriptor projectDescriptor, @NonNull String genModel, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
+			@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
+			IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
+			URI locationURI = projectDescriptor.getLocationURI();
+			InputStream inputStream = null;
+			try {
+				if (jarFile != null) {
+					ZipEntry entry = jarFile.getEntry(genModel);
+					if (entry != null) {
+						inputStream = jarFile.getInputStream(entry);
+					}
+				} else {
+					URI relativeGenModelURI = resourceDescriptor.getGenModelURI();
+					URI genModelURI = relativeGenModelURI.resolve(locationURI);
+					inputStream = new FileInputStream(genModelURI.isFile() ? genModelURI.toFileString() : genModelURI.toString());
+				}
+				if (inputStream != null) {
+					GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
+					saxParser.parse(inputStream, genModelReader);
+				}
+			} catch (Exception e) {
+				System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+				//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
+			} finally {
+				try {
+					if (inputStream != null) {
+						inputStream.close();
+					}
+				} catch (IOException e) {
+				}
+			}
+	}
+
+	protected void addGenModels(@NonNull IProjectDescriptor projectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className,
+			@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
+		for (@NonNull String genModel : genModelURI2nsURI2className.keySet()) {
+			Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className.get(genModel);
+			assert nsURI2className != null;
+			addGenModel(projectDescriptor, genModel, nsURI2className, saxParser, jarFile);
+		}
+	}
+
 	/**
 	 * Call-back to add a resourceDescriptor.
 	 */
@@ -2950,9 +2946,12 @@ public class StandaloneProjectMap implements ProjectManager
 				if (entry != null) {
 					InputStream inputStream = jarFile.getInputStream(entry);
 					try {
-						PluginReader pluginReader = new PluginReader(jarFile, projectDescriptor);
+						PluginReader pluginReader = new PluginReader(jarFile);
 						saxParser.parse(inputStream, pluginReader);
-						pluginReader.scanContents(saxParser);
+						Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = pluginReader.getGenModelURI2nsURI2className();
+						if (genModelURI2nsURI2className != null) {
+							addGenModels(projectDescriptor, genModelURI2nsURI2className, saxParser, jarFile);
+						}
 					} finally {
 						inputStream.close();
 					}
@@ -3028,9 +3027,12 @@ public class StandaloneProjectMap implements ProjectManager
 							if (projectDescriptor != null) {
 								File plugIn = new File(f, "plugin.xml");
 								if (plugIn.exists()) {
-									PluginReader pluginReader = new PluginReader(projectDescriptor);
+									PluginReader pluginReader = new PluginReader(null);
 									saxParser.parse(plugIn, pluginReader);
-									pluginReader.scanContents(saxParser);
+									Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = pluginReader.getGenModelURI2nsURI2className();
+									if (genModelURI2nsURI2className != null) {
+										addGenModels(projectDescriptor, genModelURI2nsURI2className, saxParser, null);
+									}
 								}
 							}
 							break;
