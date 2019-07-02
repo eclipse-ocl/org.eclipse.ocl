@@ -280,8 +280,7 @@ public interface ProjectManager extends Adapter
 	 */
 	public static interface IResourceDescriptor
 	{
-		void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
-				@NonNull SAXParser saxParser, @Nullable JarFile jarFile);
+		void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className, @NonNull SAXParser saxParser, @Nullable JarFile jarFile);
 
 		void addedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource);
 

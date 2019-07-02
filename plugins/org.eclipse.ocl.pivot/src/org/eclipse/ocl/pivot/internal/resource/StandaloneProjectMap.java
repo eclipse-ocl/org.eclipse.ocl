@@ -1533,8 +1533,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className,
-				@NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
+		public void addGenModel(@NonNull Map<@NonNull URI, @NonNull String> nsURI2className, @NonNull SAXParser saxParser, @Nullable JarFile jarFile) {
 				URI locationURI = projectDescriptor.getLocationURI();
 				InputStream inputStream = null;
 				try {
@@ -1708,10 +1707,6 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris) {
-			@NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor = new HashMap<>();
-			for (@NonNull IPackageDescriptor packageDescriptor : getPackageDescriptors()) {
-				nsURI2packageDescriptor.put(String.valueOf(packageDescriptor.getNsURI()), packageDescriptor);
-			}
 			int size = genModelRelativeEcorePackageUris.size();
 			if (size > 0) {
 				@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
@@ -1727,7 +1722,7 @@ public class StandaloneProjectMap implements ProjectManager
 				platformResourceURI = relativeEcoreModelURI.resolve(resourceURI);
 				platformPluginURI = relativeEcoreModelURI.resolve(pluginURI);
 				locationURI = relativeEcoreModelURI.resolve(projectLocationURI);
-				projectDescriptor.getProjectManager().addResourceDescriptor(this);
+			//	projectDescriptor.getProjectManager().addResourceDescriptor(this);
 			}
 			hasEcoreModel = true;
 		}
@@ -2148,12 +2143,15 @@ public class StandaloneProjectMap implements ProjectManager
 		public @NonNull IResourceDescriptor createResourceDescriptor(@NonNull String genModel, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			URI absoluteGenModelURI = URI.createURI(genModel).resolve(locationURI);
 			@NonNull URI projectGenModelURI = absoluteGenModelURI.deresolve(locationURI, true, true, true);
+			IResourceDescriptor resourceDescriptor = new SinglePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
 			if (nsURI2className.size() <= 1) {
-				return new SinglePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
+				resourceDescriptor = new SinglePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
 			}
 			else {
-				return new MultiplePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
+				resourceDescriptor = new MultiplePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
 			}
+			getProjectManager().addResourceDescriptor(resourceDescriptor);
+			return resourceDescriptor;
 		}
 
 		@Override
@@ -2565,6 +2563,15 @@ public class StandaloneProjectMap implements ProjectManager
 		return new ProjectDescriptor(this, projectName, locationURI);
 	}
 
+	protected @Nullable SAXParser createSAXParser() {
+		try {
+			return SAXParserFactory.newInstance().newSAXParser();
+		} catch (Exception e) {
+			logException("Failed to  create SAXParser", e);
+			return null;
+		}
+	}
+
 	@Override
 	protected void finalize() throws Throwable {
 		WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps2 = liveStandaloneProjectMaps;
@@ -2672,15 +2679,9 @@ public class StandaloneProjectMap implements ProjectManager
 		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
 			project2descriptor = project2descriptor2 = new HashMap<>();
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			try {
-				SAXParser saxParser = factory.newSAXParser();
-				if (saxParser != null) {
-					scanClassPath(project2descriptor2, saxParser);
-				}
-			} catch (Exception e) {
-				logException("Failed to  create SAXParser", e);
-				return null;
+			SAXParser saxParser = createSAXParser();
+			if (saxParser != null) {
+				scanClassPath(project2descriptor2, saxParser);
 			}
 		}
 		return project2descriptor2;
