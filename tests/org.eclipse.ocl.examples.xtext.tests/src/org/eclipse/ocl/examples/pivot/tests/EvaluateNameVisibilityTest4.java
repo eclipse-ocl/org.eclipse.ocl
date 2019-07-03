@@ -552,7 +552,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		//
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "Tree.allInstances()");
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "fruit::Tree.allInstances()");
-		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "fruit::Tree.allInstances()");
+		EObject orphanFruit = fruitEFactory.create(apple);	// FIXME Bug 548225 comment 4 null has no metamodel and so gives UOE
+		ocl.assertQueryEquals(orphanFruit, ocl.getEmptySetValue(), "fruit::Tree.allInstances()");
 		//
 		metamodelManager.addGlobalNamespace("zz", fruitPackage);
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "zz::Tree.allInstances()");
