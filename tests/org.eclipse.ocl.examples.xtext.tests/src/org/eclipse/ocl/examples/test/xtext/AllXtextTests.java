@@ -45,8 +45,8 @@ import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
+import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -100,7 +100,7 @@ extends TestCase {
 		result.addTestSuite(LeakTests.class);
 		result.addTestSuite(UMLValidateTest.class);
 		ResourceSet resourceSet = new ResourceSetImpl();
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 		LoadTests.getProjectMap().initializeResourceSet(resourceSet);
 		if (resourceSet.getURIConverter().exists(URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/", true), null)) {
 			result.addTestSuite(UML25LoadTests.class);

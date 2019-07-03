@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.resource.UML22UMLResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.util.UMLUtil;
@@ -193,7 +194,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	 */
 	public static String initialize(@NonNull ResourceSet resourceSet) {
 		UMLStandaloneSetup.init();
-		UMLResourcesUtil.init(resourceSet);
+		initializeUML(resourceSet);
 		final String resourcesPluginId = "org.eclipse.uml2.uml.resources"; //$NON-NLS-1$
 		String resourcesLocation = null;
 		StandaloneProjectMap projectMap = StandaloneProjectMap.getAdapter(resourceSet);
@@ -213,9 +214,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 		uriMap.put(URI.createURI(UMLResource.LIBRARIES_PATHMAP), URI.createURI(resourcesLocation + "/libraries/")); //$NON-NLS-1$
 		return null;
 	}
+
 	public static String initialize(@NonNull StandaloneProjectMap projectMap) {
 		UMLStandaloneSetup.init();
-		UMLResourcesUtil.init(null);
 		final String resourcesPluginId = "org.eclipse.uml2.uml.resources"; //$NON-NLS-1$
 		String resourcesLocation = null;
 		URI locationURI = projectMap.getLocation(resourcesPluginId);
@@ -233,6 +234,33 @@ public abstract class UML2AS extends AbstractExternal2AS
 		uriMap.put(URI.createURI(UMLResource.METAMODELS_PATHMAP), URI.createURI(resourcesLocation + "/metamodels/")); //$NON-NLS-1$
 		uriMap.put(URI.createURI(UMLResource.LIBRARIES_PATHMAP), URI.createURI(resourcesLocation + "/libraries/")); //$NON-NLS-1$
 		return null;
+	}
+
+	/**
+	 * Initialize global registries with required UML registrations unless already initialized.
+	 */
+	public static void initializeUMLglobals() {
+		if (!Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().containsKey(UMLResource.UML_CONTENT_TYPE_IDENTIFIER)) {		// Avoid repeated global initialization
+			UMLResourcesUtil.initGlobalRegistries();
+		}
+	}
+
+	/**
+	 * Initialize resourceSet with required UML registrations unless already initialized.
+	 */
+	public static void initializeUMLlocals(@NonNull ResourceSet resourceSet) {
+		if (!resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().containsKey(UML22UMLResource.UML2_CONTENT_TYPE_IDENTIFIER)) {		// Avoid repeated local initialization
+			UMLUtil.init(resourceSet);
+		}
+	}
+
+	/**
+	 * Initialize resourceSet with required UML registrations and if necessary initialize
+	 * global registries as well.
+	 */
+	public static void initializeUML(@NonNull ResourceSet resourceSet) {
+		initializeUMLglobals();
+		initializeUMLlocals(resourceSet);
 	}
 
 	public static boolean isUML(@NonNull Resource resource) {

@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
+import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 
 /**
  * Initializes UML support.
@@ -29,15 +29,17 @@ public class UMLStandaloneSetup extends StandaloneSetup
 
 	@Override
 	public void setResourceSet(ResourceSet resourceSet) {
+		assert resourceSet != null;
 		super.setResourceSet(resourceSet);
 		log.info("Registering UML Resources");
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 	}
 
 	@Override
 	public void setResourceSetImpl(ResourceSetImpl resourceSet) {
+		assert resourceSet != null;
 		super.setResourceSetImpl(resourceSet);
 		log.info("Registering UML Resources");
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 	}
 }

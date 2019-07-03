@@ -32,13 +32,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
+import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.util.UMLUtil;
 
 /**
@@ -147,7 +147,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 		//		UML2AS.CONVERT_RESOURCE.setState(true);
 		UMLStandaloneSetup.init();
 		ResourceSet resourceSet = new ResourceSetImpl();
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 		URI testModelURI = getTestModelURI("models/uml/Bug459276.uml");
 		EClass package1 = UMLPackage.Literals.PACKAGE;
 		Package umlModel = UML2Util.load(resourceSet, testModelURI, package1);

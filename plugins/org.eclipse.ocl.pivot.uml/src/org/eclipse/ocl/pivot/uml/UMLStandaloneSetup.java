@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.uml.internal.resource.UMLASResourceFactory;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.uml2.uml.UMLPlugin;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 /**
  * Initialization support for UML Pivot models without equinox extension registry
@@ -94,7 +93,7 @@ public class UMLStandaloneSetup //implements ISetup
 			PivotStandaloneSetup.init();
 			UMLASResourceFactory.getInstance();
 			UML2AS.initialize();
-			UMLResourcesUtil.init(null);
+			UML2AS.initializeUMLglobals();
 			EPackage.Registry.INSTANCE.put(OCLforUMLPackage.eNS_URI, OCLforUMLPackage.eINSTANCE);
 			URI ocl4umlProfileURI = URI.createURI(OCL4UML_PROFILE_URI);
 			UMLPlugin.getEPackageNsURIToProfileLocationMap().put(OCLforUMLPackage.eNS_URI, ocl4umlProfileURI);

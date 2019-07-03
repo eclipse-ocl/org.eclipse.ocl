@@ -56,7 +56,6 @@ import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -202,7 +201,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			assertNull(UML2AS.initialize(resourceSet));
 		}
 		else {
-			UMLResourcesUtil.init(resourceSet);
+			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/PapyrusTestFile.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
@@ -253,7 +252,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			assertNull(UML2AS.initialize(resourceSet));
 		}
 		else {
-			UMLResourcesUtil.init(resourceSet);
+			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug404882.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
@@ -289,7 +288,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			assertNull(UML2AS.initialize(resourceSet));
 		}
 		else {
-			UMLResourcesUtil.init(resourceSet);
+			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug423905.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
@@ -462,7 +461,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			assertNull(UML2AS.initialize(resourceSet));
 		}
 		else {
-			UMLResourcesUtil.init(resourceSet);
+			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug446007.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));

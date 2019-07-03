@@ -26,26 +26,28 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 /**
  * Reads a specified <tt>uri</tt> into a designated <tt>modelSlot</tt>.
  */
 public class XMI2UMLResourceReader extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
-	protected String uri;	
-	protected String nsURI;	
+	private Logger log = Logger.getLogger(getClass());
+	private ResourceSet resourceSet = null;
+	protected String uri;
+	protected String nsURI;
 
-	public ResourceSet getResourceSet() {
-		if (resourceSet == null) {
-			resourceSet = new ResourceSetImpl();
+	public @NonNull ResourceSet getResourceSet() {
+		ResourceSet resourceSet2 = resourceSet;
+		if (resourceSet2 == null) {
+			resourceSet = resourceSet2 = new ResourceSetImpl();
 		}
-		return resourceSet;
+		return resourceSet2;
 	}
 
 	public String getUri() {
@@ -63,7 +65,7 @@ public class XMI2UMLResourceReader extends WorkflowComponentWithModelSlot
 		log.info("Reading '" + fileURI + "'");
 		try {
 			ResourceSet resourceSet = getResourceSet();
-			UMLResourcesUtil.init(resourceSet);
+			UML2AS.initializeUML(resourceSet);
 			Resource resource = resourceSet.createResource(fileURI, XMI2UMLResource.UML_CONTENT_TYPE_IDENTIFIER);
 			resource.load(null);
 			new ProjectMap(false).initializeResourceSet(resourceSet);
@@ -97,7 +99,7 @@ public class XMI2UMLResourceReader extends WorkflowComponentWithModelSlot
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		}
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

@@ -80,7 +80,6 @@ import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 import junit.framework.TestCase;
@@ -340,7 +339,7 @@ public class LoadTests extends XtextTestCase
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 		getProjectMap().initializeResourceSet(resourceSet);
 		//		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
 		if (!resourceSet.getURIConverter().exists(inputURI, null)) {

@@ -44,7 +44,6 @@ import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
-import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 public final class UMLASResourceFactory extends AbstractASResourceFactory
 {
@@ -73,7 +72,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public void configure(@NonNull ResourceSet resourceSet) {
 		super.configure(resourceSet);
-		UMLResourcesUtil.init(resourceSet);
+		UML2AS.initializeUML(resourceSet);
 	}
 
 	@Override
