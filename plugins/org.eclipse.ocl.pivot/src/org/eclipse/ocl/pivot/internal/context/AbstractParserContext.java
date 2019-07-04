@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -92,7 +91,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
 		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
 		try {
-			ResourceSetImpl resourceSet = new ResourceSetImpl();
+			ResourceSet resourceSet = environmentFactory.getResourceSet();
 			Resource resource = resourceSet.createResource(uri);
 			if (resource == null) {
 				throw new ParserException("Failed to load '" + uri + "'" + getDoSetupMessage());
