@@ -74,7 +74,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	@Override
 	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csElement) {
 		EClass eClass = null;
-		MetaclassNameCS metaType = OCLstdlibCS2AS.lookUpMetaTypeName(csElement, OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME);
+		MetaclassNameCS metaType = ((OCLstdlibCS2AS)context.getConverter()).lookUpMetaTypeName(csElement, OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME);
 		if ((metaType != null) && !metaType.eIsProxy()) {
 			String metaTypeName = metaType.getName();
 			eClass = (EClass) NameUtil.getENamedElement(PivotPackage.eINSTANCE.getEClassifiers(), metaTypeName);
@@ -152,6 +152,11 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 			context.installRootElement((BaseCSResource) eResource, pivotElement);		// Ensure containment viable for imported library type references
 			importPackages(csElement);			// FIXME This has to be after refreshPackage which is irregular and prevents local realization of ImportCS etc
 		}
+		return null;
+	}
+
+	@Override /* FIXME Bug 548500 workaround */
+	public @Nullable Continuation<?> visitMetaclassNameCS(@NonNull MetaclassNameCS csElement) {
 		return null;
 	}
 

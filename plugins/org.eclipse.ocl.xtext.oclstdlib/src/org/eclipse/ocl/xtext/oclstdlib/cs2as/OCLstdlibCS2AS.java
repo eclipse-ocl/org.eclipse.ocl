@@ -40,15 +40,25 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class OCLstdlibCS2AS extends EssentialOCLCS2AS
-{	
-	private static @Nullable Map<String, MetaclassNameCS> metaTypeNames = null;
+{
+	private @Nullable Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames = null;
 
-	public static @Nullable MetaclassNameCS lookUpMetaTypeName(@NonNull EObject csElement, /*@NonNull*/ EStructuralFeature eFeature) {
+	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
+	@Override
+	public void installRootContents(@NonNull BaseCSResource csResource) {
+		super.installRootContents(csResource);
+		Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames2 = metaTypeNames;
+		if (metaTypeNames2 != null) {
+			csResource.getContents().addAll(metaTypeNames2.values());
+		}
+	}
+
+	public @Nullable MetaclassNameCS lookUpMetaTypeName(@NonNull EObject csElement, /*@NonNull*/ EStructuralFeature eFeature) {
 		Map<String, MetaclassNameCS> metaTypeNames2 = metaTypeNames;
 		if (metaTypeNames2 == null) {
 			Resource metaTypeResource = new ResourceImpl(URI.createURI("internal_list;;//of_meta-type_names"));
 			List<EObject> metaTypes = metaTypeResource.getContents();
-			metaTypeNames2 = metaTypeNames = new HashMap<String, MetaclassNameCS>();
+			metaTypeNames2 = metaTypeNames = new HashMap<>();
 			for (EClassifier eClassifier : PivotPackage.eINSTANCE.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					if (PivotPackage.Literals.CLASS.isSuperTypeOf((EClass) eClassifier)) {
@@ -74,7 +84,7 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 	public OCLstdlibCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}
-	
+
 	public OCLstdlibCS2AS(@NonNull OCLstdlibCS2AS cs2as) {
 		super(cs2as);
 	}

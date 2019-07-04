@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.oclstdlib.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Precedence;
@@ -23,6 +24,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.util.AbstractOCLstdlibCSPreOrderVisitor;
 
@@ -85,6 +87,11 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 			}
 		}
 		return super.visitLibPropertyCS(csProperty);
+	}
+
+	@Override /* FIXME Bug 548500 workaround */
+	public @Nullable Continuation<?> visitMetaclassNameCS(@NonNull MetaclassNameCS csElement) {
+		return null;
 	}
 
 	@Override

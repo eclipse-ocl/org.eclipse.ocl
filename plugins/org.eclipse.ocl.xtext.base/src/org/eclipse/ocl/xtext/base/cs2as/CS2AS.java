@@ -528,6 +528,9 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		}
 	}
 
+	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
+	public void installRootContents(@NonNull BaseCSResource csResource2) {}
+
 	/**
 	 * Return true if csTYpeRef referes to a type that cannot be null, e.g. T[1],
 	 * or false if it refers to a type that may be null, e.g. T[?],

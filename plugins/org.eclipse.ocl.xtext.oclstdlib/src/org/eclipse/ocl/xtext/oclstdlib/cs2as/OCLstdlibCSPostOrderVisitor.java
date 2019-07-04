@@ -24,6 +24,7 @@ import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.util.AbstractOCLstdlibCSPostOrderVisitor;
 
@@ -39,8 +40,7 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 	}
 
 	@Override
-	public @Nullable
-	Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS csElement) {
+	public @Nullable Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS csElement) {
 		Continuation<?> continuation = super.visitLibPropertyCS(csElement);
 		Property pivotElement = PivotUtil.getPivot(Property.class, csElement);
 		if (pivotElement != null) {
@@ -82,8 +82,13 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 		return continuation;
 	}
 
+	@Override /* FIXME Bug 548500 workaround */
+	public @Nullable Continuation<?> visitMetaclassNameCS(@NonNull MetaclassNameCS csElement) {
+		return null;
+	}
+
 	@Override
-	public Continuation<?> visitPrecedenceCS(@NonNull PrecedenceCS csPrecedence) {
+	public @Nullable Continuation<?> visitPrecedenceCS(@NonNull PrecedenceCS csPrecedence) {
 		return null;
 	}
 }
