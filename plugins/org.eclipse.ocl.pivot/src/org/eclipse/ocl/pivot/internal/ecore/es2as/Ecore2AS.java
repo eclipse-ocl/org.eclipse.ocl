@@ -914,6 +914,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void update(@NonNull Resource asResource, @NonNull Collection<EObject> ecoreContents) {
+		allConverters.clear();
 		newCreateMap = new HashMap<>();
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
