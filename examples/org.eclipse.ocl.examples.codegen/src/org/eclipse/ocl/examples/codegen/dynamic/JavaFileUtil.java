@@ -57,6 +57,7 @@ import org.osgi.framework.Bundle;
 public abstract class JavaFileUtil
 {
 	public static final @NonNull TracingOption CLASS_PATH = new TracingOption(CodeGenConstants.PLUGIN_ID, "classPath");
+	public static final @NonNull TracingOption COMPILES = new TracingOption(CodeGenConstants.PLUGIN_ID, "compiles");
 
 	/**
 	 * When running maven/tycho tests locally a bin folder may leave helpful content hiding what will fail
@@ -133,7 +134,36 @@ public abstract class JavaFileUtil
 				compilationOptions.add("-cp");
 				compilationOptions.add(classpath.getClasspath());
 			}
-
+			if (COMPILES.isActive()) {
+				StringBuilder s = new StringBuilder();
+				s.append("java");
+				boolean isCP = false;
+				for (String compilationOption : compilationOptions) {
+					if (compilationOption.startsWith("-")) {
+						s.append("\n\t");
+					}
+					if (isCP) {
+						boolean isFirst = true;
+						for (String entry : compilationOption.split(System.getProperty("path.separator"))) {
+							if (!isFirst) {
+								s.append("\n\t\t");
+							}
+							s.append(entry);
+							isFirst = false;
+						}
+					}
+					else {
+						s.append(compilationOption);
+					}
+					s.append(" ");
+					isCP = "-cp".equals(compilationOption);
+				}
+				for (JavaFileObject compilationUnit : compilationUnits) {
+					s.append("\n\t");
+					s.append(compilationUnit.toUri().toString());
+				}
+				COMPILES.println(s.toString());
+			}
 			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
 			CompilationTask compilerTask = compiler2.getTask(null, stdFileManager2, diagnostics, compilationOptions, null, compilationUnits);
 			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));

@@ -15,3 +15,5 @@ org.eclipse.ocl.examples.codegen/cse/rewrite=false
 
 # Turn on tracing of the classpath synthesis 
 org.eclipse.ocl.examples.codegen/classPath=false
+# Turn on tracing of the explicit compilations 
+org.eclipse.ocl.examples.codegen/compiles=false
