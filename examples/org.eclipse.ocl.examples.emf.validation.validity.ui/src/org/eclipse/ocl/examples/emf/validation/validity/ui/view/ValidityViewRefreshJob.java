@@ -47,6 +47,7 @@ public class ValidityViewRefreshJob extends Job
 			this.grayedConstrainingNodes = grayedConstrainingNodes != null ? grayedConstrainingNodes.toArray(new @NonNull AbstractNode[grayedConstrainingNodes.size()]) : null;
 		}
 
+		@Override
 		public void run() {
 //			long start = System.currentTimeMillis();
 //			System.out.format(Thread.currentThread().getName() + " %3.3f Redraw start\n", (System.currentTimeMillis() - start) * 0.001);
@@ -70,9 +71,9 @@ public class ValidityViewRefreshJob extends Job
 					validatableNodesViewer.setGrayedElements(grayedValidatableNodes);
 				}
 //				System.out.format(Thread.currentThread().getName() + " %3.3f Redraw done\n", (System.currentTimeMillis() - start) * 0.001);
-			
-			
-			
+
+
+
 //			System.out.println(Thread.currentThread().getName() + " - DisplayRefresh.start");
 //			try {
 //				// For large models intelligent selective update is costly so just do a full refresh
@@ -118,7 +119,7 @@ public class ValidityViewRefreshJob extends Job
 		this.validatableNodesViewer = validatableNodesViewer;
 		this.constrainingNodesViewer = constrainingNodesViewer;
 	}
-	
+
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 //		System.out.println(Thread.currentThread().getName() + " - RefreshJob.start");
@@ -142,11 +143,11 @@ public class ValidityViewRefreshJob extends Job
 		synchronized (refreshQueue) {
 			refreshQueue.clear();
 		}
-		
+
 		List<@NonNull AbstractNode> grayedValidatableNodes = new ArrayList<@NonNull AbstractNode>();
 		List<@NonNull AbstractNode> grayedConstrainingNodes = new ArrayList<@NonNull AbstractNode>();
 		model.refreshModel(grayedValidatableNodes, grayedConstrainingNodes);
-		
+
 		displayRefresh = new DisplayRefresh(monitor, grayedValidatableNodes, grayedConstrainingNodes);
 		Tree tree = validatableNodesViewer.getTree();
 		if (!tree.isDisposed()) {
