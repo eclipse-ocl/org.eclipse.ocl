@@ -53,9 +53,10 @@ public class AS2ID
 		as2id.assignErrors();
 	}
 
-	public static void assignIds(@NonNull Iterable</*@NonNull*/ Resource> resources, @Nullable Map<@NonNull Object, @Nullable Object> options) {
+	public static void assignIds(@NonNull List</*@NonNull*/ Resource> resources, @Nullable Map<@NonNull Object, @Nullable Object> options) {
 		AS2ID as2id = new AS2ID(options);
-		for (Resource resource : resources) {
+		for (int i = 0; i < resources.size(); i++) {		// Proxy resolution may add new resources
+			Resource resource = resources.get(i);
 			if (resource instanceof ASResource) {
 				as2id.assignLUSSIDs((ASResource) resource);
 			}
