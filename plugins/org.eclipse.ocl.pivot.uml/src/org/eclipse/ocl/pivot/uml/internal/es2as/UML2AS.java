@@ -238,6 +238,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	/**
 	 * Initialize global registries with required UML registrations unless already initialized.
+	 *
+	 * @since 1.9
 	 */
 	public static void initializeUMLglobals() {
 		if (!Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().containsKey(UMLResource.UML_CONTENT_TYPE_IDENTIFIER)) {		// Avoid repeated global initialization
@@ -247,6 +249,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	/**
 	 * Initialize resourceSet with required UML registrations unless already initialized.
+	 *
+	 * @since 1.9
 	 */
 	public static void initializeUMLlocals(@NonNull ResourceSet resourceSet) {
 		if (!resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().containsKey(UML22UMLResource.UML2_CONTENT_TYPE_IDENTIFIER)) {		// Avoid repeated local initialization
@@ -257,6 +261,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	/**
 	 * Initialize resourceSet with required UML registrations and if necessary initialize
 	 * global registries as well.
+	 *
+	 * @since 1.9
 	 */
 	public static void initializeUML(@NonNull ResourceSet resourceSet) {
 		initializeUMLglobals();
