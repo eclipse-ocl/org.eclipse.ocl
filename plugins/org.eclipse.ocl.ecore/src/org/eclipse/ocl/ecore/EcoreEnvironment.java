@@ -657,12 +657,13 @@ implements EnvironmentWithHiddenOpposites {
 			for (Object o : newRegistry) {
 				s.append("\t" + o.toString());
 			}
-			s.append("See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
+			s.append("\nSee https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
 			return s.toString();
 		}
 		catch (RuntimeException e) {
 			StringBuilder s = new StringBuilder();
-			s.append("See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
+			s.append(e.toString());
+			s.append("\nSee https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
 			return s.toString();
 		}
 	}
