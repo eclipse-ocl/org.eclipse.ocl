@@ -15,9 +15,12 @@ package org.eclipse.ocl.ecore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -617,6 +620,54 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	/**
+	 * Checks that the given registry is free from unstable entries that might cause a RuntimeException.
+	 *
+	 * Developers may invoke this routine to check the registry passed to EcoreEnvironment or EcoreEnvironmentFactory constructors.
+	 *
+	 * See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for the rationale of this method.
+	 *
+	 * @param registry the EPackage.Registry to check
+	 *
+	 * @return a message detailing problems found, or null if all ok.
+	 *
+	 * @since 3.14
+	 */
+	@SuppressWarnings("nls")
+	static public String checkRegistry(EPackage.Registry registry) {
+		Set<Object> oldRegistry = new HashSet<Object>(registry.values());
+		try {
+			for (Object next : oldRegistry) {
+				if (next instanceof EPackage.Descriptor) {
+					next = ((EPackage.Descriptor)next).getEPackage();
+				}
+				if (next instanceof EPackage) {
+					@SuppressWarnings("unused")
+					EPackage ePackage = (EPackage) next;
+				}
+			}
+			return null;
+		}
+		catch (ConcurrentModificationException e) {
+			Set<Object> newRegistry = new HashSet<Object>(registry.values());
+			newRegistry.removeAll(oldRegistry);
+			StringBuilder s = new StringBuilder();
+			s.append(e.toString());
+			s.append("The following registry entries were not properly registered\n");
+			s.append("Please raise Bugzillas against the entry providers.\n");
+			for (Object o : newRegistry) {
+				s.append("\t" + o.toString());
+			}
+			s.append("See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
+			return s.toString();
+		}
+		catch (RuntimeException e) {
+			StringBuilder s = new StringBuilder();
+			s.append("See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14 for more details.\n");
+			return s.toString();
+		}
+	}
+
+	/**
 	 * Looks in the EMF registry for a package with the specified qualified
 	 * package name. Uses the global package registry.
 	 *
@@ -647,28 +698,53 @@ implements EnvironmentWithHiddenOpposites {
 		}
 
 		String name = packageNames.get(0);
-		for (Object next : registry.values()) {
-			if (next instanceof EPackage.Descriptor) {
-				next = ((EPackage.Descriptor)next).getEPackage();
-			}
-			if (next instanceof EPackage) {
-				EPackage ePackage = (EPackage) next;
+		try {
+			for (Object next : registry.values()) {
+				if (next instanceof EPackage.Descriptor) {
+					next = ((EPackage.Descriptor)next).getEPackage();
+				}
+				if (next instanceof EPackage) {
+					EPackage ePackage = (EPackage) next;
 
-				// only consider root-level packages when searching by name
-				if ((ePackage.getESuperPackage() == null)
-						&& EcoreForeignMethods.isNamed(name, ePackage)) {
+					// only consider root-level packages when searching by name
+					if ((ePackage.getESuperPackage() == null)
+							&& EcoreForeignMethods.isNamed(name, ePackage)) {
 
-					EPackage tentativeResult = findNestedPackage(
-						packageNames.subList(1, packageNames.size()),
-						ePackage);
+						EPackage tentativeResult = findNestedPackage(
+							packageNames.subList(1, packageNames.size()),
+							ePackage);
 
-					if (tentativeResult != null) {
-						return tentativeResult;
+						if (tentativeResult != null) {
+							return tentativeResult;
+						}
 					}
 				}
 			}
 		}
+		catch (ConcurrentModificationException e) {				// See Bug 544165
+			System.err.println(e.toString() + "\nThe EPackage registry is unstable.\nUse org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry to diagnose the offending contribution."); //$NON-NLS-1$
+			for (Object next : new ArrayList<Object>(registry.values())) {
+				if (next instanceof EPackage.Descriptor) {
+					next = ((EPackage.Descriptor)next).getEPackage();
+				}
+				if (next instanceof EPackage) {
+					EPackage ePackage = (EPackage) next;
 
+					// only consider root-level packages when searching by name
+					if ((ePackage.getESuperPackage() == null)
+							&& EcoreForeignMethods.isNamed(name, ePackage)) {
+
+						EPackage tentativeResult = findNestedPackage(
+							packageNames.subList(1, packageNames.size()),
+							ePackage);
+
+						if (tentativeResult != null) {
+							return tentativeResult;
+						}
+					}
+				}
+			}
+		}
 		return findPackageByNSPrefix(packageNames, registry);
 	}
 
@@ -748,15 +824,27 @@ implements EnvironmentWithHiddenOpposites {
 
 		String nsPrefix = stringBuffer.toString();
 
-		for (Object next : registry.values()) {
-			if (next instanceof EPackage) {
-				EPackage ePackage = (EPackage) next;
-				if (nsPrefix.equals(ePackage.getNsPrefix())) {
-					return ePackage;
+		try {
+			for (Object next : registry.values()) {
+				if (next instanceof EPackage) {
+					EPackage ePackage = (EPackage) next;
+					if (nsPrefix.equals(ePackage.getNsPrefix())) {
+						return ePackage;
+					}
 				}
 			}
 		}
-
+		catch (ConcurrentModificationException e) {				// See Bug 544165
+			System.err.println(e.toString() + "\nThe EPackage registry is unstable.\nUse org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry to diagnose the offending contribution."); //$NON-NLS-1$
+			for (Object next : new ArrayList<Object>(registry.values())) {
+				if (next instanceof EPackage) {
+					EPackage ePackage = (EPackage) next;
+					if (nsPrefix.equals(ePackage.getNsPrefix())) {
+						return ePackage;
+					}
+				}
+			}
+		}
 		return null;
 	}
 

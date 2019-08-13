@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.internal.UMLReflectionImpl;
@@ -100,7 +102,9 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	}
 
 	public OCL createOCL(ResourceSet resourceSet) {
-		return OCL.newInstance(new EcoreEnvironmentFactoryWithHiddenOpposites(resourceSet.getPackageRegistry()));
+		Registry packageRegistry = resourceSet.getPackageRegistry();
+		EcoreEnvironment.checkRegistry(packageRegistry);			// Not needed; just providing code coverage
+		return OCL.newInstance(new EcoreEnvironmentFactoryWithHiddenOpposites(packageRegistry));
 	}
 
 	public EAttribute createOwnedAttribute(EClass aClass, String name, EClassifier type) {
