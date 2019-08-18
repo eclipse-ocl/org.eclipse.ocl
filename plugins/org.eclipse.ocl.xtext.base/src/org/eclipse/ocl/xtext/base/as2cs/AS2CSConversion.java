@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS.Factory;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -165,7 +166,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 			if (importURI == null) {
 				URI fullURI = EcoreUtil.getURI(eObject != null ? eObject : importedNamespace);
-				URI deresolvedURI = fullURI.deresolve(csURI, true, true, false);
+				URI deresolvedURI = URIUtil.deresolve(fullURI, csURI, true, true, false);
 				importURI = deresolvedURI.toString();
 			}
 			for (@NonNull String alias : aliases) {

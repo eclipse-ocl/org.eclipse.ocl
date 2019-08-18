@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
 /**
@@ -578,7 +579,7 @@ public class PrettyPrinter
 							if (uri != null) {
 								URI baseURI = options.getBaseURI();
 								if (baseURI != null) {
-									uri = uri.deresolve(baseURI);
+									uri = URIUtil.deresolve(uri, baseURI);
 								}
 								append("_'" + uri.toString() + "'");
 							}

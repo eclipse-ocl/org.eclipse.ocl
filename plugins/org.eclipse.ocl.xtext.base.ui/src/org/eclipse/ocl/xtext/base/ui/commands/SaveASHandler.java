@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.osgi.util.NLS;
@@ -78,7 +79,7 @@ public class SaveASHandler extends AbstractHandler
 		IFile srcFile = ((IFileEditorInput)editorInput).getFile();
 		IProject srcProject = srcFile.getProject();
         URI projectURI = URI.createPlatformResourceURI(srcProject.getFullPath().toString() + "/", true);
-        URI outURI = asURI.deresolve(projectURI);
+        URI outURI = URIUtil.deresolve(asURI, projectURI);
         IPath outPath = new Path(outURI.toString());
 		IFile outFile = srcProject.getFile(outPath);
 		Shell shell = editor.getEditorSite().getShell();

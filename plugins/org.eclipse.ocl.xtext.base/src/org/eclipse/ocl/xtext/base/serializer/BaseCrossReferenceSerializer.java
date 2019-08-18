@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -56,7 +57,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 		protected final IScope scope;
 		protected final @Nullable Acceptor errors;
 		private @Nullable List<ISerializationDiagnostic> recordedErrors = null;
-		
+
 		public AcceptorHelper(EObject semanticObject, CrossReference crossref, EObject target, IScope scope, @Nullable Acceptor errors) {
 			this.semanticObject = semanticObject;
 			this.crossref = crossref;
@@ -64,14 +65,14 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			this.scope = scope;
 			this.errors = errors;
 		}
-		
+
 		public @Nullable String convert(String unconverted, String ruleName) {
 			try {
 				return valueConverter.toString(unconverted, ruleName);
 			} catch (ValueConverterException e) {
 				record(unconverted, e);
 				return null;
-			}			
+			}
 		}
 
 		protected @Nullable String convert(List<String> segments, String ruleName) {
@@ -115,8 +116,8 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			}
 		}
 	}
-	
-	
+
+
 	@Inject
 	private LinkingHelper linkingHelper;
 
@@ -149,7 +150,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			for (IEObjectDescription desc : elements) {
 				URI uri = URI.createURI(desc.getName().toString());
 				URI baseURI = semanticObject.eResource().getURI();
-				URI deresolvedURI = uri.deresolve(baseURI, true, true, false);
+				URI deresolvedURI = URIUtil.deresolve(uri, baseURI);
 				String unconverted = deresolvedURI.toString();
 				String converted = helper.convert(unconverted, ruleName);
 				if (converted != null) {
@@ -182,7 +183,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 							String alias = adapter.getAlias(namedElement, null);
 							if (alias != null) {
 								name = alias;
-							}	
+							}
 						}
 					}
 					String converted = helper.convert(name, ruleName);
@@ -200,7 +201,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 						uri = EcoreUtil.getURI(element);
 					}
 					URI baseURI = semanticObject.eResource().getURI();
-					URI deresolvedURI = uri.deresolve(baseURI, true, true, false);
+					URI deresolvedURI = URIUtil.deresolve(uri, baseURI);
 					String unconverted = deresolvedURI.toString();
 					String converted = helper.convert(unconverted, ruleName);
 					if (converted != null) {

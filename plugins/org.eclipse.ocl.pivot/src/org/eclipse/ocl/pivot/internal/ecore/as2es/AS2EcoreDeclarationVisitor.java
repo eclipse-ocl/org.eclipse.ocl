@@ -80,6 +80,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
@@ -611,7 +612,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						if (uri == null) {
 							uri = EcoreUtil.getURI(eTarget);
 						}
-						URI uri2 = uri.deresolve(ecoreURI, true, true, true);
+						URI uri2 = URIUtil.deresolve(uri, ecoreURI, true, true, true);
 						value = uri2.toString();
 					}
 					else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {

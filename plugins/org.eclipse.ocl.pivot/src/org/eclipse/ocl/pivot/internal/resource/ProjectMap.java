@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 
 /**
  * ProjectMap extends {@link ProjectManager} to support polymorphic access in either plugin or standalone environments
@@ -272,7 +273,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				IProjectDescriptor projectDescriptor = getProjectDescriptorInternal(genModelURI);
 				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
 				assert nsURI2className != null;
-				@NonNull URI deresolvedGenModelURI = genModelURI.deresolve(projectDescriptor.getLocationURI(), true, true, true);
+				@NonNull URI deresolvedGenModelURI = URIUtil.deresolve(genModelURI, projectDescriptor.getLocationURI(), true, true, true);
 				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
 				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
 				GenModelReader genModelReader = new GenModelReader(resourceDescriptor);

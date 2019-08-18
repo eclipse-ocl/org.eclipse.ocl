@@ -29,17 +29,18 @@ import org.eclipse.debug.core.sourcelookup.containers.ProjectSourceContainer;
 import org.eclipse.debug.core.sourcelookup.containers.WorkspaceSourceContainer;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 
 public abstract class VMSourcePathComputer implements ISourcePathComputer
 {
 //	private static final String JAVA_SRC_COMPUTER_ID = "org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"; //$NON-NLS-1$
-	
+
     public static IFile getIFile(String fileUnderWorkspace) {
 		IPath location = new Path(fileUnderWorkspace);
 		IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(location);
 		return ifile;
 	}
-    
+
     public static IFile getWorkspaceFile(String name) {
         try {
             IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(name));
@@ -49,7 +50,7 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
             return null;
         }
     }
-    
+
     public static IFile getWorkspaceFile(URI uri) {
 		String uriPath;
 		if (uri.isFile()) {
@@ -62,7 +63,7 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
 			uriPath = uri.toString();
 		}
 		IFile ifile = getWorkspaceFile(uriPath);
-		
+
 		if (ifile == null || !ifile.exists()) {
 			if (uri.isFile()) {
 				IFile wsfile = getIFile(uriPath);
@@ -73,15 +74,17 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
 		}
 		return ifile;
     }
-	
+
 //	private final ISourcePathComputer fJavaSourcePathComputer;
-	
+
 	public VMSourcePathComputer() {
 //		fJavaSourcePathComputer = DebugPlugin.getDefault().getLaunchManager().getSourcePathComputer(JAVA_SRC_COMPUTER_ID);
 	}
-	
+
+	@Override
 	public abstract @NonNull String getId();
-	
+
+	@Override
 	public @NonNull ISourceContainer @NonNull [] computeSourceContainers(ILaunchConfiguration configuration, IProgressMonitor monitor) throws CoreException {
 		assert configuration != null;
 		URI moduleURI = getModuleFile(configuration);
@@ -95,7 +98,7 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
 				public Object[] findSourceElements(String name) throws CoreException {
 					URI nameURI = URI.createFileURI(name);
 					URI directoryURI = URI.createFileURI(getDirectory().toString() + "/");
-					URI relativeURI = nameURI.deresolve(directoryURI);
+					URI relativeURI = URIUtil.deresolve(nameURI, directoryURI);
 					return super.findSourceElements(relativeURI.toString());
 				}
 
@@ -105,7 +108,7 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
 					// TODO Auto-generated method stub
 					return super.findSourceElements(name, containers);
 				}
-				
+
 			};
 		}
 		else {
@@ -118,7 +121,7 @@ public abstract class VMSourcePathComputer implements ISourcePathComputer
 			}
 		}
 	    List<ISourceContainer> result = new ArrayList<ISourceContainer>();
-		result.add(sourceContainer);		
+		result.add(sourceContainer);
 //		result.addAll(Arrays.asList(fJavaSourcePathComputer.computeSourceContainers(configuration, monitor)));
 		@SuppressWarnings("null")@NonNull ISourceContainer @NonNull [] array = result.toArray(new ISourceContainer[result.size()]);
 		return array;

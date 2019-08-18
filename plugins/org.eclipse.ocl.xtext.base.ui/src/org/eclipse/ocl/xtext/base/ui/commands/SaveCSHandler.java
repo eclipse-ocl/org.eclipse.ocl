@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
@@ -77,7 +78,7 @@ public class SaveCSHandler extends AbstractHandler
 		IFile srcFile = ((IFileEditorInput)editorInput).getFile();
 		IProject srcProject = srcFile.getProject();
         URI projectURI = URI.createPlatformResourceURI(srcProject.getFullPath().toString() + "/", true);
-        URI outURI = csURI.deresolve(projectURI);
+        URI outURI = URIUtil.deresolve(csURI, projectURI);
         IPath outPath = new Path(outURI.toString());
 		IFile outFile = srcProject.getFile(outPath);
 		Shell shell = editor.getEditorSite().getShell();

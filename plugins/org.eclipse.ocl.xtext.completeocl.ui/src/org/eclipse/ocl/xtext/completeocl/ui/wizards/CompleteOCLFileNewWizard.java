@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizard;
@@ -60,22 +61,23 @@ public class CompleteOCLFileNewWizard extends AbstractFileNewWizard
 		String firstTypeName = null;
 		String firstPropertyName = null;
 		StringBuilder s = new StringBuilder();
-		Set<URI> uris = new HashSet<URI>(dialog.getURIs());
+		@SuppressWarnings("null")
+		Set<@NonNull URI> uris = new HashSet<>(dialog.getURIs());
 		if (uris.size() > 0) {
-			List<URI> sortedURIs = new ArrayList<URI>(uris);
-			Collections.sort(sortedURIs, new Comparator<URI>()
+			List<@NonNull URI> sortedURIs = new ArrayList<>(uris);
+			Collections.sort(sortedURIs, new Comparator<@NonNull URI>()
 			{
 				@Override
-				public int compare(URI o1, URI o2) {
+				public int compare(@NonNull URI o1, @NonNull URI o2) {
 					return o1.toString().compareTo(o2.toString());
 				}
 			});
 			ResourceSet resourceSet = new ResourceSetImpl();
-			for (URI uri : sortedURIs) {
+			for (@NonNull URI uri : sortedURIs) {
 				try {
 					Resource resource = resourceSet.getResource(uri, true);
 					URI newURI = URI.createPlatformResourceURI(newFile.getFullPath().toString(), true);
-					URI deresolvedURI = uri.deresolve(newURI);
+					URI deresolvedURI = URIUtil.deresolve(uri, newURI);
 					s.append("import '" + ValueUtil.oclToString(deresolvedURI) + "'\n");
 					if (firstPropertyName == null) {
 						for (EObject eObject : resource.getContents()) {

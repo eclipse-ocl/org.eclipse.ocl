@@ -27,6 +27,31 @@ public class URIUtil
 	public static final URI PLATFORM_RESOURCE = URI.createPlatformResourceURI("/", false);
 
 	/**
+	 * Return fullURI deresolved wrt baseURI. Tnis just invokes fullURI.deresolve(baseURI) except
+	 * that platform:/x/y/... URIs are preserved as is unless both x and y aare shared. This avoids
+	 * references that migrate between projects in ways that tooling may not have initialized.
+	 */
+	public static @NonNull URI deresolve(@NonNull URI fullURI, URI baseURI) {
+	    return deresolve(fullURI, baseURI, true, false, true);
+	}
+	public static @NonNull URI deresolve(@NonNull URI fullURI, @Nullable URI baseURI, boolean preserveRootParents, boolean anyRelPath, boolean shorterRelPath) {
+		if (baseURI == null) {
+			return fullURI;
+		}
+		if (fullURI.isPlatform() && baseURI.isPlatform()) {
+			String[] segments1 = fullURI.segments();
+			String[] segments2 = baseURI.segments();
+			if ((segments1.length < 2) || (segments2.length < 2)) {
+				return fullURI;
+			}
+			if (!segments1[0].equals(segments2[0]) || !segments1[1].equals(segments2[1])) {
+				return fullURI;
+			}
+		}
+		return fullURI.deresolve(baseURI, preserveRootParents, anyRelPath, shorterRelPath);
+	}
+
+	/**
 	 * Convert uri to a form whereby it can be resolved relocatably within Eclipse.
 	 */
 	public static @NonNull URI getAbsoluteOrPlatformURI(@NonNull URI uri) {

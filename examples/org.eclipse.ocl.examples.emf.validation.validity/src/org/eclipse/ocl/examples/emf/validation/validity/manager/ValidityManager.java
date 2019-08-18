@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 
 public class ValidityManager
 {
@@ -195,7 +196,7 @@ public class ValidityManager
 					else {
 						Resource firstResource = resourceSet.getResources().get(0);
 						URI firstURI = firstResource.getURI();
-						URI resolvedURI = uri.deresolve(firstURI);
+						URI resolvedURI = URIUtil.deresolve(uri, firstURI);
 						if (resolvedURI.segmentCount() <= 0) {
 							s.append(" in " + uri.lastSegment());
 						}

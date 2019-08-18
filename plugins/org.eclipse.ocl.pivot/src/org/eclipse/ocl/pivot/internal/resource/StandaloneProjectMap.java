@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -1638,7 +1639,7 @@ public class StandaloneProjectMap implements ProjectManager
 			URI projectLocationURI = projectDescriptor.getLocationURI();
 			URI absoluteGenModelURI = genModelURI.resolve(projectLocationURI);
 			URI absolutePackageURI = genModelRelativeEcorePackageURI.resolve(absoluteGenModelURI);
-			@NonNull URI projectRelativeEcorePackageURI = absolutePackageURI.deresolve(projectLocationURI, true, true, true);
+			@NonNull URI projectRelativeEcorePackageURI = URIUtil.deresolve(absolutePackageURI, projectLocationURI, true, true, true);
 			return projectRelativeEcorePackageURI;
 		}
 
@@ -1673,7 +1674,7 @@ public class StandaloneProjectMap implements ProjectManager
 				URI projectLocationURI = projectDescriptor.getLocationURI();
 				URI absoluteGenModelURI = genModelURI.resolve(projectLocationURI);
 				URI absolutePackageURI = genModelRelativeEcoreModelURI.resolve(absoluteGenModelURI);
-				URI relativePackageURI = absolutePackageURI.deresolve(projectLocationURI, true, true, true);
+				URI relativePackageURI = URIUtil.deresolve(absolutePackageURI, projectLocationURI, true, true, true);
 				@NonNull URI relativeEcoreModelURI = relativePackageURI.trimFragment();
 				URI resourceURI = projectDescriptor.getPlatformResourceURI();
 				URI pluginURI = projectDescriptor.getPlatformPluginURI();
@@ -2171,7 +2172,7 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public @NonNull IResourceDescriptor createResourceDescriptor(@NonNull String genModel, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			URI absoluteGenModelURI = URI.createURI(genModel).resolve(locationURI);
-			@NonNull URI projectGenModelURI = absoluteGenModelURI.deresolve(locationURI, true, true, true);
+			@NonNull URI projectGenModelURI = URIUtil.deresolve(absoluteGenModelURI, locationURI, true, true, true);
 			if (nsURI2className.size() <= 1) {
 				return new SinglePackageResourceDescriptor(this, projectGenModelURI, nsURI2className);
 			}
