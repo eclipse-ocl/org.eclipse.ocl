@@ -270,7 +270,12 @@ public class MapLiteralExpCSImpl extends LiteralExpCSImpl implements MapLiteralE
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitMapLiteralExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitMapLiteralExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //MapLiteralExpCSImpl

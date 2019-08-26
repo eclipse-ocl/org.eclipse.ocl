@@ -184,7 +184,12 @@ public class PropertyContextDeclCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitPropertyContextDeclCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitPropertyContextDeclCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

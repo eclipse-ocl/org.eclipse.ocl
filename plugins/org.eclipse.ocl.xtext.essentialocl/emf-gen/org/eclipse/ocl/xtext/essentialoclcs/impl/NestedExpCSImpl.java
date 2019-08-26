@@ -210,6 +210,11 @@ public class NestedExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNestedExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNestedExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //NestedExpCSImpl

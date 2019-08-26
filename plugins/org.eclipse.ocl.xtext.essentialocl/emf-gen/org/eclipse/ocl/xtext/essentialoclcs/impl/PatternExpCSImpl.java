@@ -283,7 +283,12 @@ public class PatternExpCSImpl extends ExpCSImpl implements PatternExpCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitPatternExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitPatternExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //PatternExpCSImpl

@@ -229,7 +229,12 @@ public class InfixExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitInfixExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitInfixExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 	
 	private boolean hasArgument = false;

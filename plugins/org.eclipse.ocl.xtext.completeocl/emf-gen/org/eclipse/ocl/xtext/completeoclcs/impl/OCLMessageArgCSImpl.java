@@ -64,6 +64,11 @@ public class OCLMessageArgCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitOCLMessageArgCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitOCLMessageArgCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //OclMessageArgCSImpl

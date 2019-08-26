@@ -227,7 +227,12 @@ public class PackageDeclarationCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitPackageDeclarationCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitPackageDeclarationCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

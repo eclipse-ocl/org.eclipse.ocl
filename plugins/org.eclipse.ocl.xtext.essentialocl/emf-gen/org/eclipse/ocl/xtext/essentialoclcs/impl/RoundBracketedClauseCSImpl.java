@@ -288,7 +288,12 @@ public class RoundBracketedClauseCSImpl extends ContextLessElementCSImpl impleme
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitRoundBracketedClauseCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitRoundBracketedClauseCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //RoundBracketedClauseCSImpl

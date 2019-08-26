@@ -271,7 +271,12 @@ public class TypeNameExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTypeNameExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTypeNameExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

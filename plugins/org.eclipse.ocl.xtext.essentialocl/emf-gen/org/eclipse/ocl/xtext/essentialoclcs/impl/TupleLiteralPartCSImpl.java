@@ -63,6 +63,11 @@ public class TupleLiteralPartCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTupleLiteralPartCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTupleLiteralPartCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //TupleLiteralPartCSImpl

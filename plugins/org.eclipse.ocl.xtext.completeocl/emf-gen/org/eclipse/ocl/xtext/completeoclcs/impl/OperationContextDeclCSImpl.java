@@ -518,7 +518,12 @@ public class OperationContextDeclCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitOperationContextDeclCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitOperationContextDeclCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

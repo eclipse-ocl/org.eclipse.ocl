@@ -63,6 +63,11 @@ public class NullLiteralExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNullLiteralExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNullLiteralExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //NullLiteralExpCSImpl

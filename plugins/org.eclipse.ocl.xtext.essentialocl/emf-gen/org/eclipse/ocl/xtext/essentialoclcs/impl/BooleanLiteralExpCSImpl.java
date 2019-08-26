@@ -187,6 +187,11 @@ public class BooleanLiteralExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitBooleanLiteralExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitBooleanLiteralExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //BooleanLiteralExpCSImpl

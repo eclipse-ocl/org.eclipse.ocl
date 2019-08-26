@@ -644,7 +644,12 @@ public class NavigatingArgCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNavigatingArgCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitNavigatingArgCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

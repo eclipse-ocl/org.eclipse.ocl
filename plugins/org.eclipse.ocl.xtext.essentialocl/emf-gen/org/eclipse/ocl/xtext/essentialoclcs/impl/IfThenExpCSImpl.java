@@ -290,7 +290,12 @@ public class IfThenExpCSImpl extends ExpCSImpl implements IfThenExpCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitIfThenExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitIfThenExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //IfThenExpCSImpl

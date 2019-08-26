@@ -63,6 +63,11 @@ public class DefPropertyCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitDefPropertyCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitDefPropertyCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //DefPropertyCSImpl

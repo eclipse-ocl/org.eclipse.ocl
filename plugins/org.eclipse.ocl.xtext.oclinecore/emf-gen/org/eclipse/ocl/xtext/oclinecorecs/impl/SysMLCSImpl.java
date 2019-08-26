@@ -195,6 +195,11 @@ public class SysMLCSImpl extends AnnotationElementCSImpl implements SysMLCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLinEcoreCSVisitor<?>)visitor).visitSysMLCS(this);
+		try {
+			return (R) ((OCLinEcoreCSVisitor<?>)visitor).visitSysMLCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //SysMLCSImpl

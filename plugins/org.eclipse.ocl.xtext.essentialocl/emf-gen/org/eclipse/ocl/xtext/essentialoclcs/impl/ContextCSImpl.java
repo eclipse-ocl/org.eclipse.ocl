@@ -293,6 +293,11 @@ public class ContextCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitContextCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitContextCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //ContextCSImpl

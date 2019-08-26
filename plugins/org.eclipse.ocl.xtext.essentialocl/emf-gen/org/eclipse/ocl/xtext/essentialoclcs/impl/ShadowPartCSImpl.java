@@ -375,7 +375,12 @@ public class ShadowPartCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitShadowPartCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitShadowPartCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

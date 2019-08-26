@@ -563,7 +563,12 @@ public class LetVariableCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitLetVariableCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitLetVariableCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 	
 	@SuppressWarnings("cast")

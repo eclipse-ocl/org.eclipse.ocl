@@ -64,6 +64,11 @@ public class LibRootPackageCSImpl extends RootPackageCSImpl implements LibRootPa
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibRootPackageCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibRootPackageCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //LibRootPackageCSImpl

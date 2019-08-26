@@ -296,7 +296,12 @@ public class MapLiteralPartCSImpl extends ModelElementCSImpl implements MapLiter
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitMapLiteralPartCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitMapLiteralPartCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //MapLiteralPartCSImpl

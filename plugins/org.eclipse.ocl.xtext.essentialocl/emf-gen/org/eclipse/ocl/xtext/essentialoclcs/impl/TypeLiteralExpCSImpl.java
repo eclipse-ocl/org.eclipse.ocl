@@ -283,6 +283,11 @@ public class TypeLiteralExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTypeLiteralExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitTypeLiteralExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //TypeLiteralExpCSImpl

@@ -177,7 +177,12 @@ public class PrecedenceCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitPrecedenceCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitPrecedenceCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

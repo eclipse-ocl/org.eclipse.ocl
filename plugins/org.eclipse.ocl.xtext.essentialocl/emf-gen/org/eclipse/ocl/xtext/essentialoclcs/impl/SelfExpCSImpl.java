@@ -187,6 +187,11 @@ public class SelfExpCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitSelfExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitSelfExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //VariableExpCSImpl

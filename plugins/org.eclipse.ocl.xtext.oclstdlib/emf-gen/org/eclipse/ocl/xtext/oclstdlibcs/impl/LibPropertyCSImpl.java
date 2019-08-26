@@ -373,7 +373,12 @@ public class LibPropertyCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibPropertyCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibPropertyCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

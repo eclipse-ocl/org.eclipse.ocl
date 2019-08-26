@@ -463,7 +463,12 @@ public class LibOperationCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibOperationCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibOperationCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

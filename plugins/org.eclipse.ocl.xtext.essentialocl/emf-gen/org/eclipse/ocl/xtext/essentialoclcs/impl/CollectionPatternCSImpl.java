@@ -403,7 +403,12 @@ public class CollectionPatternCSImpl extends TypedRefCSImpl implements Collectio
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitCollectionPatternCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitCollectionPatternCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //CollectionPatternCSImpl

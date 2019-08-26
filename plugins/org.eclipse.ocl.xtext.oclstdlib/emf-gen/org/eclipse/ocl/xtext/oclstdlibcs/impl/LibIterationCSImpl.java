@@ -442,7 +442,12 @@ public class LibIterationCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibIterationCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibIterationCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

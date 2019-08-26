@@ -352,7 +352,12 @@ public class ClassifierContextDeclCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((CompleteOCLCSVisitor<?>)visitor).visitClassifierContextDeclCS(this);
+		try {
+			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitClassifierContextDeclCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**

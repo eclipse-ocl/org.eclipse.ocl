@@ -231,7 +231,12 @@ implements ExpCS {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitExpCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitExpCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	protected @Nullable ExpCS localLeft = null;

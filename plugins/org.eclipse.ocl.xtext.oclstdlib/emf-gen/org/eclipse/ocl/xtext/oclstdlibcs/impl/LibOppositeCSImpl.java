@@ -70,7 +70,12 @@ public class LibOppositeCSImpl extends FeatureCSImpl implements LibOppositeCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibOppositeCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibOppositeCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 } //LibOppositeCSImpl

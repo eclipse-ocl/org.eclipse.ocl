@@ -286,6 +286,11 @@ public class CollectionLiteralPartCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((EssentialOCLCSVisitor<?>)visitor).visitCollectionLiteralPartCS(this);
+		try {
+			return (R) ((EssentialOCLCSVisitor<?>)visitor).visitCollectionLiteralPartCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 } //CollectionLiteralPartCSImpl

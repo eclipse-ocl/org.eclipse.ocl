@@ -177,7 +177,12 @@ public class MetaclassNameCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return (R) ((OCLstdlibCSVisitor<?>)visitor).visitMetaclassNameCS(this);
+		try {
+			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitMetaclassNameCS(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
 	}
 
 	/**
