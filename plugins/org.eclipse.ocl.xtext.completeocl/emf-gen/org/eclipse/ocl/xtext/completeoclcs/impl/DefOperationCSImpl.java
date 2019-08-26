@@ -312,10 +312,10 @@ public class DefOperationCSImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		try {
+		if (visitor instanceof CompleteOCLCSVisitor) {
 			return (R) ((CompleteOCLCSVisitor<?>)visitor).visitDefOperationCS(this);
 		}
-		catch (ClassCastException e) {
+		else {
 			return super.accept(visitor);
 		}
 	}

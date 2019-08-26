@@ -185,10 +185,10 @@ public class LibPackageCSImpl extends PackageCSImpl implements LibPackageCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		try {
+		if (visitor instanceof OCLstdlibCSVisitor) {
 			return (R) ((OCLstdlibCSVisitor<?>)visitor).visitLibPackageCS(this);
 		}
-		catch (ClassCastException e) {
+		else {
 			return super.accept(visitor);
 		}
 	}
