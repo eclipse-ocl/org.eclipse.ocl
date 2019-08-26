@@ -36,7 +36,12 @@
     <%}%>
 	public <R> R accept(<%=OCLGenModelUtil.atNonNull(genModel)%><%=genModel.getImportedName(rootVisitorClassName)%><R> visitor) {
       <%if (isDerivedVisitor) {%>
-		return (R) ((<%=genModel.getImportedName(derivedVisitorClassName)%><?>)visitor).visit<%=genClass.getInterfaceName()%>(this);
+		try {
+			return (R) ((<%=genModel.getImportedName(derivedVisitorClassName)%><?>)visitor).visit<%=genClass.getInterfaceName()%>(this);
+		}
+		catch (ClassCastException e) {
+			return super.accept(visitor);
+		}
       <%} else {%>
 		return visitor.visit<%=genClass.getInterfaceName()%>(this);
       <%}%>

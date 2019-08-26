@@ -727,12 +727,13 @@ public class Class
   protected final String TEXT_707 = NL + "\t/**" + NL + "\t * {@inheritDoc}" + NL + "\t * @generated" + NL + "\t */";
   protected final String TEXT_708 = NL + "\tpublic <R> R accept(";
   protected final String TEXT_709 = "<R> visitor) {";
-  protected final String TEXT_710 = NL + "\t\treturn (R) ((";
+  protected final String TEXT_710 = NL + "\t\ttry {" + NL + "\t\t\treturn (R) ((";
   protected final String TEXT_711 = "<?>)visitor).visit";
-  protected final String TEXT_712 = "(this);";
+  protected final String TEXT_712 = "(this);" + NL + "\t\t}" + NL + "\t\tcatch (ClassCastException e) {" + NL + "\t\t\treturn super.accept(visitor);" + NL + "\t\t}";
   protected final String TEXT_713 = NL + "\t\treturn visitor.visit";
-  protected final String TEXT_714 = NL + "\t}";
-  protected final String TEXT_715 = NL + "} //";
+  protected final String TEXT_714 = "(this);";
+  protected final String TEXT_715 = NL + "\t}";
+  protected final String TEXT_716 = NL + "} //";
 
   public String generate(Object argument)
   {
@@ -5514,9 +5515,9 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
     } else {
     stringBuffer.append(TEXT_713);
     stringBuffer.append(genClass.getInterfaceName());
-    stringBuffer.append(TEXT_712);
-    }
     stringBuffer.append(TEXT_714);
+    }
+    stringBuffer.append(TEXT_715);
     }
     }
     }
@@ -5536,7 +5537,7 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
     if (isImplementation) {
     stringBuffer.append(ModelSpec.generate(genClass, true));
     }
-    stringBuffer.append(TEXT_715);
+    stringBuffer.append(TEXT_716);
     stringBuffer.append(isInterface ? " " + genClass.getInterfaceName() : genClass.getClassName());
     // TODO fix the space above
     genModel.emitSortedImports();
