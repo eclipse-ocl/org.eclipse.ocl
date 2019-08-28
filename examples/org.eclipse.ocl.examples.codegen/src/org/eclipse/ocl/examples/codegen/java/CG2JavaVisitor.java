@@ -907,6 +907,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return localContext.getNameManagerContext().getSymbolName(anObject, nameHints);
 	}
 
+	@Deprecated /* @deprecated this is QVTi specific */
 	protected @NonNull String getThisName(@NonNull CGElement cgElement) {
 		for (EObject eObject = cgElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof CGClass) {

@@ -997,6 +997,7 @@ public class JavaStream
 		return true;
 	}
 
+	@Deprecated /* @deprecated this is QVTi specific */
 	public void appendThis(@NonNull String className) {
 		String currentClassName = classNameStack.peek();
 		if (!className.equals(currentClassName)) {
@@ -1093,7 +1094,7 @@ public class JavaStream
 		//			cgValue.accept(cg2java);
 		//		}
 		else if ("this".equals(cgElement.toString())) {		// FIXME use a CGThisVariable that is inlined
-			appendThis(cg2java.getThisName(cgElement));
+			appendThis(cg2java.getThisName(cgElement));		// FIXME Move to QVTiCG
 		}
 		else {
 			if (cgElement.isGlobal()) {
