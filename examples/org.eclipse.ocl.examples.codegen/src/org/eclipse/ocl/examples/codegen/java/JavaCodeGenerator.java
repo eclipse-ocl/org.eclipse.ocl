@@ -256,6 +256,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaImportNameManager();
 	}
 
+	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor<@NonNull ?> cg2JavaVisitor) {
+		return new JavaStream(this, cg2JavaVisitor);
+	}
+
 	@Override
 	protected @NonNull NameManager createNameManager() {
 		return new NameManager();

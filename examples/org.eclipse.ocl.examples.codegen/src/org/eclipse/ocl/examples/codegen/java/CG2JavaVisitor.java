@@ -203,7 +203,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		this.analyzer = context.getAnalyzer();
 		this.id2JavaInterfaceVisitor = createId2JavaClassVisitor();
 		this.environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
-		this.js = new JavaStream(codeGenerator, this);
+		this.js = codeGenerator.createJavaStream(this);
 	}
 
 	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
