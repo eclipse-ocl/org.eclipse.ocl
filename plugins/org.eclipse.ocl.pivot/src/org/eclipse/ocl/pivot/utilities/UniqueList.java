@@ -104,6 +104,7 @@ public class UniqueList<T> extends ArrayList<T>
 
 	@Override
 	public void clear() {
+		super.clear();
 		set = null;
 	}
 
