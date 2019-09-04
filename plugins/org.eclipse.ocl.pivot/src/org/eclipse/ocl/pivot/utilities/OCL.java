@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
@@ -241,8 +242,7 @@ public class OCL
 	 *             if the constraint expression is not boolean-valued
 	 */
 	public boolean check(Object context, @NonNull ExpressionInOCL specification) {
-		StandardLibrary stdlib = getStandardLibrary();
-		if (specification.getOwnedBody().getType() != stdlib.getBooleanType()) {
+		if (specification.getOwnedBody().getTypeId() != TypeId.BOOLEAN) {
 			throw new IllegalArgumentException("constraint is not boolean"); //$NON-NLS-1$
 		}
 		try {
