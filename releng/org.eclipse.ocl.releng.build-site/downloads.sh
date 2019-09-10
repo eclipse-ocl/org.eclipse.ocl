@@ -1,6 +1,6 @@
 #!/bin/bash -xv
 #*******************************************************************************
-# Copyright (c) 2018 Willink Transformations and others.
+# Copyright (c) 2018, 2019 Willink Transformations and others.
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v2.0
 # which accompanies this distribution, and is available at
@@ -12,13 +12,13 @@
 #
 #	Promote the PUBLISH__URL to the downloads 'page'.
 #
-#	PUBLISH__URL			The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
-#	PUBLISH__VERSION		Unqualified version e.g. 6.5.0
-#	PUBLISH__BUILD_T		Build type N/I/S, blank suppresses promotion
-#	PUBLISH__QUALIFIER		Version qualifier e.g. v20171020-1234
-#	PUBLISH__ALIAS			Non blank to use alias as part of final name
-#	PUBLISH__JAVADOC		The optional Javadoc zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/OCL-javadoc.zip
-#	PUBLISH__PDFDOC			The optional PDF doc to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/ocl.pdf
+#	-u PUBLISH__URL			The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
+#	-v PUBLISH__VERSION		Unqualified version e.g. 6.5.0
+#	-t PUBLISH__BUILD_T		Build type N/I/S/R, blank suppresses promotion
+#	-q PUBLISH__QUALIFIER		Version qualifier e.g. v20171020-1234
+#	-a PUBLISH__ALIAS			Non blank to use alias as part of final name
+#	-j PUBLISH__JAVADOC		The optional Javadoc zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/OCL-javadoc.zip
+#	-p PUBLISH__PDFDOC			The optional PDF doc to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/ocl.pdf
 #
 dropsFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/"
 javadocFolder="/home/data/httpd/download.eclipse.org/ocl/javadoc/"
@@ -27,6 +27,20 @@ group="modeling.mdt.ocl"
 zipPrefix="mdt-ocl-Update-"
 localZip="newJavadoc.zip"
 pdfName="ocl.pdf"
+
+while getopts u:v:t:q:a:j:p: option
+do
+case "${option}"
+in
+u) PUBLISH__URL=${OPTARG};;
+v) PUBLISH__VERSION=${OPTARG};;
+t) PUBLISH__BUILD_T=${OPTARG};;
+q) PUBLISH__QUALIFIER=${OPTARG};;
+a) PUBLISH__ALIAS=${OPTARG};;
+j) PUBLISH__JAVADOC=${OPTARG};;
+p) PUBLISH__PDFDOC=${OPTARG};;
+esac
+done
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then

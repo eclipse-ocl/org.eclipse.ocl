@@ -10,6 +10,9 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
   <groupId>org.eclipse.ocl</groupId>
   <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
   <version>6.9.0-SNAPSHOT</version>
@@ -64,7 +67,7 @@
     <maven-resources-version>2.6</maven-resources-version>
     <maven-site-version>3.4</maven-site-version>
     <maven-surefire-version>2.17</maven-surefire-version>
-    <tycho-version>1.3.0</tycho-version>
+    <tycho-version>1.4.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -182,11 +185,11 @@
               <ws>win32</ws>
               <arch>x86_64</arch>
             </environment>
-            <environment>
+            <!--environment>
               <os>linux</os>
               <ws>gtk</ws>
               <arch>x86</arch>
-            </environment>
+            </environment-->
             <environment>
               <os>linux</os>
               <ws>gtk</ws>
@@ -238,22 +241,6 @@
             <goals>
               <goal>source-feature</goal>
             </goals>
-            <configuration>
-              <excludes>
-              <!-- The following source features are manually included by some 
-              coordination features. We prevent to look for a "source of sources" -->
-                <feature id="org.eclipse.ocl.all.source"/>
-                <feature id="org.eclipse.ocl.all.sdk.source"/>
-                <feature id="org.eclipse.ocl.doc.source"/>
-                <feature id="org.eclipse.ocl.edit.source"/>
-                <feature id="org.eclipse.ocl.examples.classic.source"/>
-                <feature id="org.eclipse.ocl.examples.unified.source"/>
-                <feature id="org.eclipse.ocl.examples.source"/>
-                <feature id="org.eclipse.ocl.ui.source"/>
-                <feature id="org.eclipse.ocl.unified.core.source"/>
-                <feature id="org.eclipse.ocl.unified.ui.source"/>
-              </excludes>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -471,9 +458,9 @@
           <version>2.10.3</version>
           <configuration>
             <sourceFileIncludes>
-              <sourceFileInclude>org/eclipse/m2m/qvt/oml/**/*.java</sourceFileInclude>
+              <sourceFileInclude>org/eclipse/ocl/**/*.java</sourceFileInclude>
             </sourceFileIncludes>
-            <doctitle>QVTo Interim API</doctitle>
+            <doctitle>OCL Interim API</doctitle>
           </configuration>
         </plugin-->
       </plugins>
@@ -522,7 +509,6 @@
         <buildType>S</buildType>
         <targetPlatform>targetPlatforms/stable</targetPlatform>
       </properties>
-    
       <!--properties>
         <cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
         <!- - jdt.core and jdt.compiler.apt should "match", come from same build, and be signed
@@ -530,6 +516,30 @@
         <cbi-jdt-version>3.14.0.v20170830-0152</cbi-jdt-version>
         <cbi-jdt-apt-version>1.3.0.v20170502-0408</cbi-jdt-apt-version>
       </properties-->
+    </profile>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType>R</buildType>
+        <targetPlatform>targetPlatforms/stable</targetPlatform>
+      </properties>
+       <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-p2-repository-plugin</artifactId>
+            <configuration>
+              <extraArtifactRepositoryProperties>
+                <p2.statsURI>http://download.eclipse.org/stats/modeling/mdt/ocl/updates/releases/${unqualifiedVersion}</p2.statsURI>
+                <p2.mirrorsURL>http://www.eclipse.org/downloads/download.php?file=/modeling/mdt/ocl/updates/releases/${unqualifiedVersion}&amp;format=xml</p2.mirrorsURL>
+              </extraArtifactRepositoryProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <profile>
       <id>oxygen</id>

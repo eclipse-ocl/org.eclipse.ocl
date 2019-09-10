@@ -1,6 +1,6 @@
 #!/bin/bash -xv
 #*******************************************************************************
-# Copyright (c) 2018 Willink Transformations and others.
+# Copyright (c) 2018, 2019 Willink Transformations and others.
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v2.0
 # which accompanies this distribution, and is available at
@@ -12,17 +12,28 @@
 #
 #    Promote the PUBLISH__URL to an updates repository.
 #
-#    PUBLISH__URL            The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
-#    PUBLISH__VERSION        Unqualified version e.g. 6.5.0
-#    PUBLISH__BUILD_T        Build type N/I/S, blank suppresses promotion
-#    PUBLISH__QUALIFIER      Version qualifier e.g. v20171020-1234
+#    -u PUBLISH__URL            The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
+#    -v PUBLISH__VERSION        Unqualified version e.g. 6.5.0
+#    -t PUBLISH__BUILD_T        Build type N/I/S/R, blank suppresses promotion
+#    -q PUBLISH__QUALIFIER      Version qualifier e.g. v20171020-1234
 #
 updatesFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/"
 group="modeling.mdt.ocl"
 localZip="ocl.zip"
 projectRepoName="OCL"
 manageComposite="/shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml"
-externalUpdatesFolder="http://download.eclipse.org/modeling/mdt/ocl/updates/"
+externalUpdatesFolder="https://download.eclipse.org/modeling/mdt/ocl/updates/"
+
+while getopts u:v:t:q: option
+do
+case "${option}"
+in
+u) PUBLISH__URL=${OPTARG};;
+v) PUBLISH__VERSION=${OPTARG};;
+t) PUBLISH__BUILD_T=${OPTARG};;
+q) PUBLISH__QUALIFIER=${OPTARG};;
+esac
+done
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
@@ -32,20 +43,25 @@ then
   then
     buildFolder="${updatesFolder}nightly"
     buildRepoName="Nightly"
-    externalFolder="${externalUpdatesFolder}nightly/${PUBLISH__VERSION}"
+    latestRelativeReference="../${PUBLISH__VERSION}"
   elif [ "${PUBLISH__BUILD_T}" = "I" ]
   then
     buildFolder="${updatesFolder}interim"
     buildRepoName="Interim"
-    externalFolder="${externalUpdatesFolder}interim/${PUBLISH__VERSION}"
+    latestRelativeReference="../${PUBLISH__VERSION}"
   elif [ "${PUBLISH__BUILD_T}" = "S" ]
   then
     buildFolder="${updatesFolder}milestones"
     buildRepoName="Milestones"
-    externalFolder="${externalUpdatesFolder}milestones/${PUBLISH__VERSION}/${tQualifier}"
+    latestRelativeReference="../${PUBLISH__VERSION}/${tQualifier}"
+  elif [ "${PUBLISH__BUILD_T}" = "R" ]
+  then
+    buildFolder="${updatesFolder}releases"
+    buildRepoName="Releases"
+    latestRelativeReference="../${PUBLISH__VERSION}"
   else
     buildFolder="${updatesFolder}other"
-    externalFolder="${externalUpdatesFolder}other/${PUBLISH__VERSION}"
+    latestRelativeReference="../${PUBLISH__VERSION}"
     buildRepoName="Other"
   fi
 
@@ -98,12 +114,21 @@ then
         chmod -R g+w ${tQualifier}
         ${manageComposite} add -Dchild.repository=${tQualifier} -Dcomposite.name="${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
       popd
+    elif [ "${PUBLISH__BUILD_T}" = "R" ]
+    then
+      curl -s -k ${PUBLISH__URL} > ${localZip}
+      unzip -ou ${localZip} -d new${PUBLISH__VERSION}
+      chgrp -R ${group} new${PUBLISH__VERSION}
+      chmod -R g+w new${PUBLISH__VERSION}
+      mv ${PUBLISH__VERSION} old${PUBLISH__VERSION}
+      mv new${PUBLISH__VERSION} ${PUBLISH__VERSION}
+      rm -rf old${PUBLISH__VERSION} ${localZip}
 
     fi
 
     mkdir ${buildFolder}/newlatest
     pushd ${buildFolder}/newlatest
-      ${manageComposite} add -Dchild.repository=${externalFolder} -Dcomposite.name="${projectRepoName} Latest ${PUBLISH__VERSION} ${buildRepoName} Repository"
+      ${manageComposite} add -Dchild.repository=${latestRelativeReference} -Dcomposite.name="${projectRepoName} Latest ${PUBLISH__VERSION} ${buildRepoName} Repository"
     popd
     if [ -d "latest" ]
     then
