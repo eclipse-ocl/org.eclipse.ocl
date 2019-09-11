@@ -199,9 +199,9 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 
 		@Override
 		public @NonNull JUnitStandaloneTestFolder getOutputFolder(@NonNull String testFilePath) {
-			JUnitStandaloneTestFile testFolder = createFilePath(testFilePath);
+			JUnitStandaloneTestFolder testFolder = createFolderPath(testFilePath);
 			testFolder.mkdir();
-			return (JUnitStandaloneTestFolder)testFolder;
+			return testFolder;
 		}
 	}
 
