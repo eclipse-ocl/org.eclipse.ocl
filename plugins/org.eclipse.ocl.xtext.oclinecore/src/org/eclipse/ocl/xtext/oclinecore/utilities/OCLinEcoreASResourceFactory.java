@@ -22,8 +22,8 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.NotXMLContentHandlerImpl;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.RootPackageCS;
 

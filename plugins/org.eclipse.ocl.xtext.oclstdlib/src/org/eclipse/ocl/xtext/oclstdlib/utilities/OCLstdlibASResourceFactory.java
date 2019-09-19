@@ -17,8 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.NotXMLContentHandlerImpl;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl;
 
 public final class OCLstdlibASResourceFactory extends AbstractASResourceFactory
 {

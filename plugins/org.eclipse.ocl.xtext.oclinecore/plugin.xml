@@ -8,7 +8,7 @@
 		base-type="org.eclipse.core.runtime.text"
 		file-extensions="oclinecore"
         default-charset="UTF-8">
-         <describer class="org.eclipse.ocl.xtext.base.utilities.NotXMLContentHandlerImpl$Describer"/>
+         <describer class="org.eclipse.ocl.pivot.resource.NotXMLContentHandlerImpl$Describer"/>
       </content-type>
   </extension>
 
