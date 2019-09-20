@@ -24,8 +24,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -252,9 +255,63 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		projectManager.configure(externalResourceSet, packageLoadStrategy, conflictHandler);
 	}
 
+	/**
+	 * ContentTypeFirstResourceFactoryRegistry is the same as ResourceSetImpl$2 except that
+	 * any contentType match in this or the global registry wins.
+	 *
+	 * @since 1.10
+	 */
+	protected class ContentTypeFirstResourceFactoryRegistry extends ResourceFactoryRegistryImpl
+	{
+		private final ResourceSetImpl asResourceSet;
+
+		protected ContentTypeFirstResourceFactoryRegistry(ResourceSetImpl asResourceSet) {
+			this.asResourceSet = asResourceSet;
+		}
+
+		@Override
+		protected Resource.Factory delegatedGetFactory(URI uri, String contentTypeIdentifier) {
+			return convert(getFactory(uri, Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap(),
+				Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap(), Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap(),
+				contentTypeIdentifier, false));
+		}
+
+		@Override
+		protected Object getFactory(URI uri, Map<String, Object> protocolToFactoryMap, Map<String, Object> extensionToFactoryMap,
+				Map<String, Object> contentTypeIdentifierToFactoryMap, String contentTypeIdentifier, boolean delegate) {
+			if (contentTypeIdentifierToFactoryMap != null) {
+				Object factory = contentTypeIdentifierToFactoryMap.get(contentTypeIdentifier);
+				if (factory != null) {
+					return factory;
+				}
+			}
+			if (delegate) {
+				Object factory = Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().get(contentTypeIdentifier);
+				if (factory != null) {
+					return factory;
+				}
+			}
+			return super.getFactory(uri, protocolToFactoryMap, extensionToFactoryMap,
+				contentTypeIdentifierToFactoryMap, contentTypeIdentifier, delegate);
+		}
+
+		@Override
+		protected URIConverter getURIConverter() {
+			return asResourceSet.getURIConverter();
+		}
+
+		@Override
+		protected Map<?, ?> getContentDescriptionOptions() {
+			Map<Object, Object> contentDescriptionOptions = new HashMap<>(asResourceSet.getLoadOptions());
+			contentDescriptionOptions.put(ContentHandler.OPTION_REQUESTED_PROPERTIES, CONTENT_TYPE_REQUESTED_PROPERTIES);
+			return contentDescriptionOptions;
+		}
+	}
+
 	@Override
 	public @NonNull ResourceSetImpl createASResourceSet() {
 		ResourceSetImpl asResourceSet = new ResourceSetImpl();
+		asResourceSet.setResourceFactoryRegistry(new ContentTypeFirstResourceFactoryRegistry(asResourceSet));
 		StandaloneProjectMap.initializeURIResourceMap(asResourceSet);
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet);
 		EPackage.Registry packageRegistry = asResourceSet.getPackageRegistry();
