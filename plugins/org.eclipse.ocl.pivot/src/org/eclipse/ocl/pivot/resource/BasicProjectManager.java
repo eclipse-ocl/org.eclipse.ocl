@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.resource;
 
+import java.util.List;
+
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -82,6 +84,12 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
+		if (resourceSet != null) {
+			List<Adapter> eAdapters = resourceSet.eAdapters();
+			if (!eAdapters.contains(this)) {
+				eAdapters.add(this);
+			}
+		}
 	}
 
 	@Override

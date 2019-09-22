@@ -103,7 +103,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
 	protected final boolean externalResourceSetWasNull;
-	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager;
+	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	private final @NonNull StandardLibraryInternal standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
@@ -159,7 +159,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Create(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(externalResourceSet));
 		}
 		adapt(externalResourceSet);
-		this.metamodelManager = null;
+//		this.metamodelManager = null;
 		this.completeEnvironment = createCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
@@ -259,7 +259,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet);
 		EPackage.Registry packageRegistry = asResourceSet.getPackageRegistry();
 		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
-		asResourceSet.eAdapters().add(projectManager); // FIXME redundant - part of initializeResourceSet
+//		asResourceSet.eAdapters().add(projectManager); // FIXME redundant - part of initializeResourceSet
 		projectManager.initializeResourceSet(asResourceSet);
 		return asResourceSet;
 	}
