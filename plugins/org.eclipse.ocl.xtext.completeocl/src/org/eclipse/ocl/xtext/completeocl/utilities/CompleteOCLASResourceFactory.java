@@ -50,7 +50,7 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public CompleteOCLASResourceFactory() {
-		super(ASResource.COMPLETE_OCL_CONTENT_TYPE);
+		super(ASResource.COMPLETE_OCL_CONTENT_TYPE, null, null);
 	}
 
 	@SuppressWarnings("deprecation")

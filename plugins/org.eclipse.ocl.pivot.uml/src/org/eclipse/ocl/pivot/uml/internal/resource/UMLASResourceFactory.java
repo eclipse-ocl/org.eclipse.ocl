@@ -66,7 +66,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public UMLASResourceFactory() {
-		super(ASResource.UML_CONTENT_TYPE);
+		super(ASResource.UML_CONTENT_TYPE, null, null);
 	}
 
 	@Override

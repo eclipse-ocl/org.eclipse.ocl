@@ -48,7 +48,7 @@ public class EssentialOCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public EssentialOCLASResourceFactory() {
-		super(ASResource.ESSENTIALOCL_CONTENT_TYPE);
+		super(ASResource.ESSENTIALOCL_CONTENT_TYPE, null, null);
 	}
 
 	@Override

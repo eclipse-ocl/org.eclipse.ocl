@@ -48,7 +48,7 @@ public final class OCLstdlibASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public OCLstdlibASResourceFactory() {
-		super(ASResource.OCLSTDLIB_CONTENT_TYPE);
+		super(ASResource.OCLSTDLIB_CONTENT_TYPE, null, null);
 	}
 
 	@Override

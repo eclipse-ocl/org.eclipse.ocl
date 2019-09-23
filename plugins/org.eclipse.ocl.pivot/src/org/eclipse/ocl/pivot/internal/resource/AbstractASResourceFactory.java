@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.prettyprint.EssentialOCLPrettyPrintVisitor
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
+import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.EcoreTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
@@ -43,6 +45,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
+import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
@@ -57,6 +60,204 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
  */
 public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension2
 {
+	/**
+	 * A DelegatingASResourceFactory may be installed in the local ResourceFactoryRegistry to enable a miss
+	 * on an AS URI to be redirected to the CS URI re-using the CS ResourceSet.
+	 *
+	 * @since 1.10
+	 */
+	protected static final class DelegatingASResourceFactory implements ASResourceFactory.ASResourceFactoryExtension2
+	{
+		private final @NonNull AbstractASResourceFactory abstractASResourceFactory;
+		private final @NonNull ResourceSet csResourceSet;
+		private final @NonNull String csFileExtension;
+
+		protected DelegatingASResourceFactory(@NonNull AbstractASResourceFactory abstractASResourceFactory, @NonNull ResourceSet csResourceSet, @NonNull String csFileExtension) {
+			this.abstractASResourceFactory = abstractASResourceFactory;
+			this.csResourceSet = csResourceSet;
+			this.csFileExtension = csFileExtension;
+		}
+
+		@Override
+		public @Nullable ASResourceFactory basicGetASResourceFactory() {
+			throw new UnsupportedOperationException();
+		//	return abstractASResourceFactory;
+		}
+
+		@Override
+		public void configure(@NonNull ResourceSet resourceSet) {
+			abstractASResourceFactory.configure(null, resourceSet);
+		}
+
+		@Override
+		public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+			abstractASResourceFactory.configure(asResourceSet, csResourceSet);
+		}
+
+		@Override
+		public @NonNull AS2MonikerVisitor createAS2MonikerVisitor(@NonNull AS2Moniker as2moniker) {
+			return abstractASResourceFactory.createAS2MonikerVisitor(as2moniker);
+		}
+
+		@Override
+		public @NonNull AS2XMIidVisitor createAS2XMIidVisitor(@NonNull AS2XMIid as2id) {
+			return abstractASResourceFactory.createAS2XMIidVisitor(as2id);
+		}
+
+		@Override
+		public @NonNull ASSaverLocateVisitor createASSaverLocateVisitor(@NonNull ASSaver saver) {
+			return abstractASResourceFactory.createASSaverLocateVisitor(saver);
+		}
+
+		@Override
+		public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver saver) {
+			return abstractASResourceFactory.createASSaverNormalizeVisitor(saver);
+		}
+
+		@Override
+		public @NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver saver) {
+			return abstractASResourceFactory.createASSaverResolveVisitor(saver);
+		}
+
+		@Override
+		public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
+			return abstractASResourceFactory.createEnvironmentFactory(projectManager);
+		}
+
+		@Override
+		public @NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
+			return abstractASResourceFactory.createLUSSIDs(asResource, options);
+		}
+
+		@Override
+		public @NonNull PrettyPrintVisitor createPrettyPrintVisitor(@NonNull PrettyPrinter prettyPrinter) {
+			return abstractASResourceFactory.createPrettyPrintVisitor(prettyPrinter);
+		}
+
+		@Override
+		public Resource createResource(URI uri) {
+			if (uri.isPlatform() || uri.isFile() || uri.isArchive()) { // not http:
+				URIConverter uriConverter = csResourceSet.getURIConverter();
+				//
+				//	If *.xxxas exists use it.
+				//
+				if (!uriConverter.exists(uri, null)) {	// NB this expects a (Standalone)PlatformURIHandlerImpl to be installed
+					URI csURI = uri.trimFileExtension().appendFileExtension(csFileExtension);
+					//
+					//	If *.xxx exists use it.
+					//
+					if (uriConverter.exists(csURI, null)) {	// NB this expects a (Standalone)PlatformURIHandlerImpl to be installed
+						CSResource csResource = (CSResource) csResourceSet.createResource(csURI);
+						ASResource asResource = csResource.getASResource();
+						abstractASResourceFactory.configureResource(asResource);
+						return asResource;
+					}
+				}
+			}
+			return abstractASResourceFactory.createResource(uri);
+		}
+
+		@Override
+		public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(
+				@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+			return abstractASResourceFactory.createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
+		}
+
+		@Override
+		public @NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s) {
+			return abstractASResourceFactory.createToStringVisitor(s);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException();		// Not forbidden but really not as intended
+		//	return abstractASResourceFactory.equals(obj);
+		}
+
+		@Override
+		public @NonNull ASResourceFactory getASResourceFactory() {
+			return abstractASResourceFactory;
+		}
+
+		@Override
+		public <T extends Element> @Nullable T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory,
+				@NonNull Class<T> requiredClass, @NonNull EObject eObject) throws ParserException {
+			return abstractASResourceFactory.getASElement(environmentFactory, requiredClass, eObject);
+		}
+
+		@Override
+		public @NonNull ASResourceFactory getContribution() {
+			return abstractASResourceFactory.getContribution();
+		}
+
+		@Override
+		public @NonNull String getContentType() {
+			return abstractASResourceFactory.getContentType();
+		}
+
+		@Override
+		public @Nullable EOperation getEOperation(@NonNull ASResource asResource, @NonNull EObject eObject) {
+			return abstractASResourceFactory.getEOperation(asResource, eObject);
+		}
+
+		@Override
+		public @Nullable EReference getEReference(@NonNull ASResource asResource, @NonNull EObject eObject) {
+			return abstractASResourceFactory.getEReference(asResource, eObject);
+		}
+
+		@Override
+		public @Nullable String getMetamodelNsURI(@NonNull EPackage ePackage) {
+			return abstractASResourceFactory.getMetamodelNsURI(ePackage);
+		}
+
+		@Override
+		public @Nullable URI getPackageURI(@NonNull EObject eObject) {
+			return abstractASResourceFactory.getPackageURI(eObject);
+		}
+
+		@Override
+		public @Nullable Integer getPriority() {
+			return abstractASResourceFactory.getPriority();
+		}
+
+		@Override
+		public @Nullable String getResourceClassName() {
+			return abstractASResourceFactory.getResourceClassName();
+		}
+
+		@Override
+		public @NonNull Technology getTechnology() {
+			return abstractASResourceFactory.getTechnology();
+		}
+
+		@Override
+		public int hashCode() {
+			throw new UnsupportedOperationException();		// Not forbidden but really not as intended
+		//	return abstractASResourceFactory.hashCode();
+		}
+
+		@Override
+		public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory,
+				@NonNull Resource resource, @Nullable URI uri) throws ParserException {
+			return abstractASResourceFactory.importFromResource(environmentFactory, resource, uri);
+		}
+
+		@Override
+		public void initializeEValidatorRegistry(org.eclipse.emf.ecore.EValidator.@NonNull Registry eValidatorRegistry) {
+			abstractASResourceFactory.initializeEValidatorRegistry(eValidatorRegistry);
+		}
+
+		@Override
+		public boolean isCompatibleResource(@NonNull Resource newResource, @NonNull Resource oldResource) {
+			return abstractASResourceFactory.isCompatibleResource(newResource, oldResource);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return abstractASResourceFactory.toString();
+		}
+	}
+
 	public static void installContentHandler(int priority, @NonNull ContentHandler contentHandler) {
 		List<ContentHandler> contentHandlers = ContentHandler.Registry.INSTANCE.get(priority);
 		if (contentHandlers == null) {
@@ -69,9 +270,21 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	protected final @NonNull String contentType;
+	private final @Nullable String asFileExtension;
+	private final @Nullable String csFileExtension;
 
+	@Deprecated /* @deprecated use null asFileExtension argument */
 	protected AbstractASResourceFactory(@NonNull String contentType) {
+		this(contentType, null, null);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected AbstractASResourceFactory(@NonNull String contentType, @Nullable String asFileExtension, @Nullable String csFileExtension) {
 		this.contentType = contentType;
+		this.asFileExtension = asFileExtension;
+		this.csFileExtension = csFileExtension;
 	}
 
 	@Override
@@ -83,12 +296,22 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public void configure(@NonNull ResourceSet resourceSet) {
 		Resource.Factory.Registry resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
 		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+		if (asFileExtension != null) {
+			resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
+			resourceFactoryRegistry.getExtensionToFactoryMap().put(asFileExtension, this);
+		}
 	}
 
 	@Override
 	public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		if (asResourceSet != null) {
-			configure(asResourceSet);
+//			configure(asResourceSet);
+			Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
+			resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+			if ((asFileExtension != null) && (csFileExtension != null)) {
+				DelegatingASResourceFactory contextualResourceFactory = new DelegatingASResourceFactory(this, csResourceSet, csFileExtension);
+				resourceFactoryRegistry.getExtensionToFactoryMap().put(asFileExtension, contextualResourceFactory);
+			}
 		}
 		configure(csResourceSet);
 	}

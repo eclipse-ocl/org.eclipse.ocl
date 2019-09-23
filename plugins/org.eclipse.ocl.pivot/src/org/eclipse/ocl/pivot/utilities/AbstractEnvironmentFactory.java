@@ -282,16 +282,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		@Override
 		protected Object getFactory(URI uri, Map<String, Object> protocolToFactoryMap, Map<String, Object> extensionToFactoryMap,
 				Map<String, Object> contentTypeIdentifierToFactoryMap, String contentTypeIdentifier, boolean delegate) {
-			if (contentTypeIdentifierToFactoryMap != null) {
-				Object factory = contentTypeIdentifierToFactoryMap.get(contentTypeIdentifier);
-				if (factory != null) {
-					return factory;
+			if (contentTypeIdentifier !=  null) {
+				if (contentTypeIdentifierToFactoryMap != null) {
+					Object factory = contentTypeIdentifierToFactoryMap.get(contentTypeIdentifier);
+					if (factory != null) {
+						return factory;
+					}
 				}
-			}
-			if (delegate) {
-				Object factory = Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().get(contentTypeIdentifier);
-				if (factory != null) {
-					return factory;
+				if (delegate) {
+					Object factory = Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().get(contentTypeIdentifier);
+					if (factory != null) {
+						return factory;
+					}
 				}
 			}
 			return super.getFactory(uri, protocolToFactoryMap, extensionToFactoryMap,
