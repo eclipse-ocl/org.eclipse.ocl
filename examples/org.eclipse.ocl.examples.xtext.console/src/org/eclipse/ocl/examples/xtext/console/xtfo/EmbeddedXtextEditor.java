@@ -24,6 +24,7 @@ import java.util.Map;
 import org.eclipse.core.expressions.Expression;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -62,6 +63,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
@@ -201,9 +203,9 @@ public class EmbeddedXtextEditor
 
 		injector.injectMembers(this);
 		ocl = OCLInternal.newInstance();
-		ResourceSet csResourceSet = getResourceSet();
-		if (csResourceSet != null) {
-			ocl.getEnvironmentFactory().adapt(csResourceSet);
+		ResourceSet xtextResourceSet = getResourceSet();
+		if (xtextResourceSet != null) {
+			ocl.getEnvironmentFactory().adapt(xtextResourceSet);
 		}
 		createEditor(fControl);
 	}
@@ -686,12 +688,12 @@ public class EmbeddedXtextEditor
 	protected XtextResource createResource() {
 		String dummyFileName = fGrammarAccess.getGrammar().getName() + "." + fFileExtension; //$NON-NLS-1$
 		URI dummyURI = URI.createURI(dummyFileName);
-		ResourceSet resourceSet = getResourceSet();
+		ResourceSet xtextResourceSet = getResourceSet();
 //		XtextResource result = (XtextResource) resourceSet.createResource(
 //				URI.createURI(fGrammarAccess.getGrammar().getName() + "." + fFileExtension));
 		XtextResource result = fXtextResourceProvider.get();
 		result.setURI(dummyURI);
-		resourceSet.getResources().add(result);
+		xtextResourceSet.getResources().add(result);
 		return result;
 	}
 
@@ -723,24 +725,29 @@ public class EmbeddedXtextEditor
 	public synchronized void setContext(@Nullable ResourceSet esResourceSet) {
 		if (esResourceSet != this.contextResourceSet) {
 			ProjectManager projectManager = ocl.getProjectManager();
-			ResourceSet csResourceSet = getResourceSet();
+			ResourceSet xtextResourceSet = getResourceSet();
 			//
 			//	Eliminate old OCL facade/handle
 			//
-			ocl.dispose();
-			if (csResourceSet != null) {
-				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
+			if (xtextResourceSet != null) {
+				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(xtextResourceSet);
 				if (environmentFactoryAdapter != null) {
-					csResourceSet.eAdapters().remove(environmentFactoryAdapter);
+					xtextResourceSet.eAdapters().remove(environmentFactoryAdapter);
+				}
+				for (Resource resource : xtextResourceSet.getResources()) {
+					if (resource instanceof BaseCSResource) {
+						((BaseCSResource)resource).setParserContext(null);
+					}
 				}
 			}
+			ocl.dispose();
 			//
 			//	Create new OCL facade/handle
 			//
 			ocl = OCLInternal.newInstance(projectManager, esResourceSet);
-			if (csResourceSet != null) {
+			if (xtextResourceSet != null) {
 				EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-				environmentFactory.adapt(csResourceSet);
+				environmentFactory.adapt(xtextResourceSet);
 			}
 			contextResourceSet = esResourceSet;
 		}
