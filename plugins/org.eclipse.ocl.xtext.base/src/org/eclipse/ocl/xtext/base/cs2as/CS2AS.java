@@ -411,7 +411,8 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
 		this.parserContext = csResource.getParserContext();
-		// assert this.parserContext != null;		// FIXME only non-null for API compatibility
+		assert parserContext != null;
+		assert parserContext.getEnvironmentFactory() == environmentFactory;
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {
@@ -421,6 +422,8 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		//		csi2asMapping.add(this);
 		this.parserContext = aConverter.parserContext;
+		assert parserContext != null;
+		assert parserContext.getEnvironmentFactory() == environmentFactory;
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {

@@ -105,6 +105,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
+	private final @NonNull ResourceSet asResourceSet;
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
@@ -146,23 +147,25 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
 		this.projectManager = projectManager;
+		this.asResourceSet = createASResourceSet();
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, asResourceSet);
 		}
 		else {
 			this.externalResourceSetWasNull = true;
 			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
 			projectManager.initializeResourceSet(externalResourceSet);
-			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
-			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(externalResourceSet);
+			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
+			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet, externalResourceSet);
 		}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Create(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(externalResourceSet));
 		}
 		adapt(externalResourceSet);
-//		this.metamodelManager = null;
 		this.completeEnvironment = createCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
@@ -313,10 +316,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ResourceSetImpl asResourceSet = new ResourceSetImpl();
 		asResourceSet.setResourceFactoryRegistry(new ContentTypeFirstResourceFactoryRegistry(asResourceSet));
 		StandaloneProjectMap.initializeURIResourceMap(asResourceSet);
-		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet);
 		EPackage.Registry packageRegistry = asResourceSet.getPackageRegistry();
 		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
-//		asResourceSet.eAdapters().add(projectManager); // FIXME redundant - part of initializeResourceSet
 		projectManager.initializeResourceSet(asResourceSet);
 		return asResourceSet;
 	}
@@ -401,7 +402,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull PivotMetamodelManager createMetamodelManager() {
 		assert metamodelManager == null;
-		metamodelManager = new PivotMetamodelManager(this, createASResourceSet());
+		metamodelManager = new PivotMetamodelManager(this, asResourceSet);
 		assert metamodelManager != null;
 		return metamodelManager;
 	}
@@ -703,6 +704,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public @NonNull ResourceSet getASResourceSet() {
+		return asResourceSet;
 	}
 
 	/**

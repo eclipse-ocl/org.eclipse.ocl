@@ -117,9 +117,8 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
-	public void configure(@NonNull ResourceSet resourceSet) {
-		super.configure(resourceSet);
-		Resource.Factory.Registry resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
+	public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
 		resourceFactoryRegistry.getExtensionToFactoryMap().put(ASResource.FILE_EXTENSION, this);
 	}
 

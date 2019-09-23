@@ -69,9 +69,23 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Configure the MetamodelManager's external ResourceSet. Implementations may install
 	 * any required extension or content to factory mappings in the resource factory registry.
-	 * @param resourceSet
 	 */
+	@Deprecated /* @deprecated Use two argument version */
 	void configure(@NonNull ResourceSet resourceSet);
+
+	/**
+	 * Configure the MetamodelManager's internal asResourceSet and external csResourceSet.
+	 * Implementations may install any required extension or content to factory mappings in the
+	 * resource factory registry.
+	 *
+	 * @since 1.10
+	 */
+	default void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		if (asResourceSet != null) {
+			configure(asResourceSet);
+		}
+		configure(csResourceSet);
+	}
 
 	/**
 	 * Create a visitor to compute a structural descriptor for an element.

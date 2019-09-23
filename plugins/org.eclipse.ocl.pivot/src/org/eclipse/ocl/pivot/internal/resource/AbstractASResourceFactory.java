@@ -85,6 +85,14 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
 	}
 
+	@Override
+	public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		if (asResourceSet != null) {
+			configure(asResourceSet);
+		}
+		configure(csResourceSet);
+	}
+
 	protected void configureResource(@NonNull ASResource asResource) {
 		asResource.setEncoding(ASResource.DEFAULT_ENCODING);
 		Map<Object, Object> defaultSaveOptions = asResource.getDefaultSaveOptions();

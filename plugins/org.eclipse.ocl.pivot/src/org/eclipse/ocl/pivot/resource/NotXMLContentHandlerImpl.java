@@ -24,6 +24,8 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * A NotXMLContentHandlerImpl may be used to register non-XML extensions such as Xtext DSL extensions as non-XML
  * thereby inhibiting the unnecessary and failing analysis as XML to determine a content description.
+ *
+ * @since 1.10
  */
 public class NotXMLContentHandlerImpl extends ContentHandlerImpl
 {

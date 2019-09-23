@@ -53,7 +53,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		 */
 		void environmentFactoryDisposed(@NonNull EnvironmentFactory environmentFactory);
 	}
-	
+
 	protected class UnloadResourceAdapter extends AdapterImpl implements Listener
 	{
 		@Override
@@ -63,7 +63,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 				target2.eAdapters().remove(this);
 			}
 		}
-		
+
 		@Override
 		public void unsetTarget(Notifier oldTarget) {
 			assert oldTarget instanceof Resource;
@@ -103,7 +103,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		ConcurrentMap<URI, Resource> weakMap = new MapMaker().weakValues().makeMap();
 		resourceSet.setURIResourceMap(weakMap);	// Must use weak values to allow garbage collection of stale models
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
-		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
+		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, resourceSet);
 		return resourceSet;
 	}
 
@@ -113,7 +113,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 	public static void disposeInstance() {
 		GlobalEnvironmentFactory instance = INSTANCE;
 		if (instance != null) {
-//			PivotUtilInternal.debugPrintln("Dispose Global " + NameUtil.debugSimpleName(INSTANCE));	
+//			PivotUtilInternal.debugPrintln("Dispose Global " + NameUtil.debugSimpleName(INSTANCE));
 			instance.dispose();
 		}
 	}
@@ -127,10 +127,10 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		GlobalEnvironmentFactory instance = INSTANCE;
 		if (instance == null) {
 			INSTANCE = instance = new GlobalEnvironmentFactory();
-//			PivotUtilInternal.debugPrintln("Create Global " + NameUtil.debugSimpleName(INSTANCE));	
+//			PivotUtilInternal.debugPrintln("Create Global " + NameUtil.debugSimpleName(INSTANCE));
 		}
 //		else {
-//			PivotUtilInternal.debugPrintln("Re-use Global " + NameUtil.debugSimpleName(INSTANCE));	
+//			PivotUtilInternal.debugPrintln("Re-use Global " + NameUtil.debugSimpleName(INSTANCE));
 //		}
 		return instance;
 	}

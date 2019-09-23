@@ -23,13 +23,13 @@ public class UML25GenModelSetup extends UMLGenModelSetup
 	public UML25GenModelSetup() {
 		BaseLinkingService.DEBUG_RETRY.setState(true);
 	}
-	
+
 	@Override
 	public void setResourceSet(ResourceSet resourceSet) {
 		EssentialOCLStandaloneSetup.doSetup();
 		super.setResourceSet(resourceSet);
 		if (resourceSet != null) {
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, resourceSet);
 		}
 	}
 }

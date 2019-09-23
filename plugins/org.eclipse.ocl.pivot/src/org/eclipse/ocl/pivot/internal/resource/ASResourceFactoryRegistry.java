@@ -96,14 +96,22 @@ public class ASResourceFactoryRegistry
 		return oldASResourceFactory1;
 	}
 
-	public synchronized void configureResourceSet(@NonNull ResourceSet resourceSet) {
+	@Deprecated /* @deprecated Use two argument version */
+	public void configureResourceSet(@NonNull ResourceSet resourceSet) {
+		configureResourceSet(null, resourceSet);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public synchronized void configureResourceSet(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		for (ASResourceFactoryContribution asResourceFactoryContribution : contentType2resourceFactory.values()) {
 			ASResourceFactory asResourceFactory = asResourceFactoryContribution.basicGetASResourceFactory();
 			if (asResourceFactory != null) {
-				asResourceFactory.configure(resourceSet);
+				asResourceFactory.configure(asResourceSet, csResourceSet);
 			}
 			else if (asResourceFactoryContribution.getPriority() != null) {
-				asResourceFactoryContribution.getASResourceFactory().configure(resourceSet);
+				asResourceFactoryContribution.getASResourceFactory().configure(asResourceSet, csResourceSet);
 			}
 		}
 	}
