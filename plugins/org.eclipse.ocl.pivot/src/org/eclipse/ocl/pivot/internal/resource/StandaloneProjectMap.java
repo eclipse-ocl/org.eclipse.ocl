@@ -1340,8 +1340,9 @@ public class StandaloneProjectMap implements ProjectManager
 					Class<?> javaClass = Thread.currentThread().getContextClassLoader().loadClass(className);
 					Field field = javaClass.getField("eINSTANCE");
 					return (EPackage) field.get(null);
-				} catch (ClassNotFoundException e) {
-					throw new WrappedException(e);
+				} catch (ClassNotFoundException e) {		// quite possibly a broken plugin.xml
+				//	throw new WrappedException(e);
+					return null;
 				} catch (IllegalAccessException e) {
 					throw new WrappedException(e);
 				} catch (NoSuchFieldException e) {
@@ -1353,7 +1354,11 @@ public class StandaloneProjectMap implements ProjectManager
 				if (object instanceof EPackage) {
 					ePackage = (EPackage) object;
 				} else if (object instanceof EPackage.Descriptor) {
-					ePackage = ((EPackage.Descriptor) object).getEPackage();
+					try {
+						ePackage = ((EPackage.Descriptor) object).getEPackage();
+					} catch (WrappedException e) {			// quite possibly a broken plugin.xml
+						return null;
+					}
 				}
 				if (ePackage != null) {
 					String nsURI = ePackage.getNsURI();
