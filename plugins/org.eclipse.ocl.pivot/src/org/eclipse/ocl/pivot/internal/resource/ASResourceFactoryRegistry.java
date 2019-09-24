@@ -37,43 +37,43 @@ import com.google.common.collect.Iterables;
  */
 public class ASResourceFactoryRegistry
 {
-	public static final class ContributionFunction implements Function<ASResourceFactoryContribution, ASResourceFactory>
+	public static final class ContributionFunction implements Function<@NonNull ASResourceFactoryContribution, @NonNull ASResourceFactory>
 	{
 		public static final @NonNull ContributionFunction INSTANCE = new ContributionFunction();
 
 		@Override
-		public ASResourceFactory apply(ASResourceFactoryContribution asResourceFactoryContribution) {
+		public @NonNull ASResourceFactory apply(@NonNull ASResourceFactoryContribution asResourceFactoryContribution) {
 			return asResourceFactoryContribution.getASResourceFactory();
 		}
 	}
 
-	public static final class ExternalResourcePredicate implements Predicate<ASResourceFactoryContribution>
+	public static final class ExternalResourcePredicate implements Predicate<@NonNull ASResourceFactoryContribution>
 	{
 		public static final @NonNull ExternalResourcePredicate INSTANCE = new ExternalResourcePredicate();
 
 		@Override
-		public boolean apply(ASResourceFactoryContribution asResourceFactoryContribution) {
+		public boolean apply(@NonNull ASResourceFactoryContribution asResourceFactoryContribution) {
 			return asResourceFactoryContribution.getPriority() != null;
 		}
 	}
 
-	public static final class LoadedResourcePredicate implements Predicate<ASResourceFactoryContribution>
+	public static final class LoadedResourcePredicate implements Predicate<@NonNull ASResourceFactoryContribution>
 	{
 		public static final @NonNull LoadedResourcePredicate INSTANCE = new LoadedResourcePredicate();
 
 		@Override
-		public boolean apply(ASResourceFactoryContribution asResourceFactoryContribution) {
+		public boolean apply(@NonNull ASResourceFactoryContribution asResourceFactoryContribution) {
 			return (asResourceFactoryContribution.getPriority() != null) || (asResourceFactoryContribution.basicGetASResourceFactory() != null);
 		}
 	}
 
 	public static final @NonNull ASResourceFactoryRegistry INSTANCE = new ASResourceFactoryRegistry();
 
-	protected final @NonNull Map<String, ASResourceFactoryContribution> contentType2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
-	protected final @NonNull Map<String, ASResourceFactoryContribution> extension2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
-	protected final @NonNull Map<String, ASResourceFactoryContribution> resourceClassName2resourceFactory = new HashMap<String, ASResourceFactoryContribution>();
+	protected final @NonNull Map<@NonNull String, @NonNull ASResourceFactoryContribution> contentType2resourceFactory = new HashMap<>();
+	protected final @NonNull Map<@NonNull String, @NonNull ASResourceFactoryContribution> extension2resourceFactory = new HashMap<>();
+	protected final @NonNull Map<@NonNull String, @NonNull ASResourceFactoryContribution> resourceClassName2resourceFactory = new HashMap<>();
 
-	public synchronized Object addASResourceFactory(@Nullable String contentType, @Nullable String oclasExtension, @Nullable String resourceClassName, @NonNull ASResourceFactoryContribution asResourceFactory) {
+	public synchronized Object addASResourceFactory(@Nullable String contentType, @Nullable String nonASextension, @Nullable String resourceClassName, @NonNull ASResourceFactoryContribution asResourceFactory) {
 		ASResourceFactoryContribution oldASResourceFactory1 = null;
 		if (contentType != null) {
 			oldASResourceFactory1 = contentType2resourceFactory.put(contentType, asResourceFactory);
@@ -81,8 +81,8 @@ public class ASResourceFactoryRegistry
 			|| (oldASResourceFactory1.basicGetASResourceFactory() == asResourceFactory)
 			|| (oldASResourceFactory1.basicGetASResourceFactory() == null);
 		}
-		if (oclasExtension != null) {
-			ASResourceFactoryContribution oldASResourceFactory2 = extension2resourceFactory.put(oclasExtension, asResourceFactory);
+		if (nonASextension != null) {
+			ASResourceFactoryContribution oldASResourceFactory2 = extension2resourceFactory.put(nonASextension, asResourceFactory);
 			assert (oldASResourceFactory2 == null) || (oldASResourceFactory2 == asResourceFactory)
 			|| (oldASResourceFactory2.basicGetASResourceFactory() == asResourceFactory)
 			|| (oldASResourceFactory2.basicGetASResourceFactory() == null);
@@ -160,6 +160,7 @@ public class ASResourceFactoryRegistry
 		synchronized(this) {
 			Class<? extends Resource> resourceClass = resource.getClass();
 			String resourceClassName = resourceClass.getName();
+			assert resourceClassName != null;
 			ASResourceFactoryContribution asResourceFactoryContribution = resourceClassName2resourceFactory.get(resourceClassName);
 			if (asResourceFactoryContribution != null) {
 				return asResourceFactoryContribution.getASResourceFactory();
@@ -167,6 +168,7 @@ public class ASResourceFactoryRegistry
 			for (Class<?> aClass = resourceClass; aClass != null; aClass = aClass.getSuperclass()) {
 				{
 					String aClassName = aClass.getName();
+					assert aClassName != null;
 					asResourceFactoryContribution = resourceClassName2resourceFactory.get(aClassName);
 					if (asResourceFactoryContribution != null) {
 						ASResourceFactory asResourceFactory = asResourceFactoryContribution.getASResourceFactory();
@@ -176,6 +178,7 @@ public class ASResourceFactoryRegistry
 				}
 				for (Class<?> anInterface : aClass.getInterfaces()) {
 					String anInterfaceName = anInterface.getName();
+					assert anInterfaceName != null;
 					asResourceFactoryContribution = resourceClassName2resourceFactory.get(anInterfaceName);
 					if (asResourceFactoryContribution != null) {
 						ASResourceFactory asResourceFactory = asResourceFactoryContribution.getASResourceFactory();
@@ -190,16 +193,16 @@ public class ASResourceFactoryRegistry
 		}
 	}
 
-	public @Nullable ASResourceFactory getASResourceFactoryForExtension(@Nullable String extension) {
-		ASResourceFactoryContribution asResourceFactoryContribution = extension2resourceFactory.get(extension);
+	public @Nullable ASResourceFactory getASResourceFactoryForExtension(@Nullable String nonASextension) {
+		ASResourceFactoryContribution asResourceFactoryContribution = extension2resourceFactory.get(nonASextension);
 		return asResourceFactoryContribution != null ? asResourceFactoryContribution.getASResourceFactory() : null;
 	}
 
-	public Iterable<ASResourceFactory> getExternalResourceFactories() {
+	public Iterable<@NonNull ASResourceFactory> getExternalResourceFactories() {
 		return Iterables.transform(Iterables.filter(contentType2resourceFactory.values(), ExternalResourcePredicate.INSTANCE), ContributionFunction.INSTANCE);
 	}
 
-	public Iterable<ASResourceFactory> getLoadedResourceFactories() {
+	public Iterable<@NonNull ASResourceFactory> getLoadedResourceFactories() {
 		return Iterables.transform(Iterables.filter(contentType2resourceFactory.values(), LoadedResourcePredicate.INSTANCE), ContributionFunction.INSTANCE);
 	}
 
@@ -222,12 +225,12 @@ public class ASResourceFactoryRegistry
 		return bestASResourceFactory.getTechnology();
 	}
 
-	public synchronized void remove(@Nullable String contentType, @Nullable String extension, @Nullable String resourceClassName) {
+	public synchronized void remove(@Nullable String contentType, @Nullable String nonASextension, @Nullable String resourceClassName) {
 		if (contentType != null) {
 			contentType2resourceFactory.remove(contentType);
 		}
-		if (extension != null) {
-			extension2resourceFactory.remove(extension);
+		if (nonASextension != null) {
+			extension2resourceFactory.remove(nonASextension);
 		}
 		if (resourceClassName != null) {
 			resourceClassName2resourceFactory.remove(resourceClassName);			// FIXME derived usages

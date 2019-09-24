@@ -134,11 +134,6 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 			return standardLibraryContribution.getResource();
 		}
 		//		assert !"http".equals(uri.scheme());
-		URI nonASuri = uri.trimFileExtension();
-		String nonASuriString = nonASuri.toString();
-		assert nonASuriString != null;
-		String xxxasExtension = nonASuri.fileExtension();
-		ASResourceFactory asResourceFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(xxxasExtension);
 		//		String fileExtension = uri.fileExtension();
 		//		if (fileExtension == null) {			// Must be an Ecore Package registration
 		//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
@@ -152,6 +147,11 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 				return super.createResource(uri);
 			}
 		}
+		URI nonASuri = uri.trimFileExtension();
+	//	String nonASuriString = nonASuri.toString();
+	//	assert nonASuriString != null;
+		String nonASextension = nonASuri.fileExtension();
+		ASResourceFactory asResourceFactory = nonASextension != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(nonASextension) : null;
 		//
 		//	Otherwise create a *.xxxas by converting the trimmed resource to XXX AS.
 		//
