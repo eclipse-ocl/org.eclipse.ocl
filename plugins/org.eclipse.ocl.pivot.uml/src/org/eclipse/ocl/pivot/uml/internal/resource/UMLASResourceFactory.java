@@ -70,8 +70,8 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
-	public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
-		super.configure(asResourceSet, csResourceSet);
+	public void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		super.configureResourceSets(asResourceSet, csResourceSet);
 		if (asResourceSet != null) {
 			UML2AS.initializeUML(asResourceSet);
 		}

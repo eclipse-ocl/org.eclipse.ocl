@@ -80,7 +80,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 *
 	 * @since 1.10
 	 */
-	default void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+	default void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		if (asResourceSet != null) {
 			configure(asResourceSet);
 		}

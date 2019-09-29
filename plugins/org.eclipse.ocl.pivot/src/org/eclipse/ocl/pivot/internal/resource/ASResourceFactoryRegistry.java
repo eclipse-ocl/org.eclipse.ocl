@@ -108,10 +108,10 @@ public class ASResourceFactoryRegistry
 		for (ASResourceFactoryContribution asResourceFactoryContribution : contentType2resourceFactory.values()) {
 			ASResourceFactory asResourceFactory = asResourceFactoryContribution.basicGetASResourceFactory();
 			if (asResourceFactory != null) {
-				asResourceFactory.configure(asResourceSet, csResourceSet);
+				asResourceFactory.configureResourceSets(asResourceSet, csResourceSet);
 			}
 			else if (asResourceFactoryContribution.getPriority() != null) {
-				asResourceFactoryContribution.getASResourceFactory().configure(asResourceSet, csResourceSet);
+				asResourceFactoryContribution.getASResourceFactory().configureResourceSets(asResourceSet, csResourceSet);
 			}
 		}
 	}

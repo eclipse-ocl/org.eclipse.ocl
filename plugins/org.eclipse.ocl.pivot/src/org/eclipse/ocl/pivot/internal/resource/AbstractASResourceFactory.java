@@ -99,16 +99,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		}
 	}
 
-	@Override
-	public void configure(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
-		if (asResourceSet != null) {
-//			configure(asResourceSet);
-			Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
-			resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
-		}
-		configure(csResourceSet);
-	}
-
 	protected void configureResource(@NonNull ASResource asResource) {
 		asResource.setEncoding(ASResource.DEFAULT_ENCODING);
 		Map<Object, Object> defaultSaveOptions = asResource.getDefaultSaveOptions();
@@ -116,6 +106,16 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		defaultSaveOptions.put(XMLResource.OPTION_URI_HANDLER, new URIHandlerImpl.PlatformSchemeAware());
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
+	}
+
+	@Override
+	public void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		if (asResourceSet != null) {
+//			configure(asResourceSet);
+			Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
+			resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+		}
+		configure(csResourceSet);
 	}
 
 	@Override
