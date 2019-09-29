@@ -1490,7 +1490,7 @@ public class LoadTests extends XtextTestCase
 		//	Load the *.oclas in a relatively standard EMF ResourceSet and check that the xmi:ids are consistent
 		//
 		ResourceSet resourceSet = new ResourceSetImpl();
-		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, resourceSet);
+		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, resourceSet);
 		ASResource reloadedAsResource = (ASResource)resourceSet.getResource(asURI, true);
 		int newIdCount = 0;
 		for (TreeIterator<EObject> tit = reloadedAsResource.getAllContents(); tit.hasNext(); ) {

@@ -29,7 +29,7 @@ public class UML25GenModelSetup extends UMLGenModelSetup
 		EssentialOCLStandaloneSetup.doSetup();
 		super.setResourceSet(resourceSet);
 		if (resourceSet != null) {
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, resourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, resourceSet);
 		}
 	}
 }

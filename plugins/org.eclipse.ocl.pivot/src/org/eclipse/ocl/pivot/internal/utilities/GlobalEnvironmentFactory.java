@@ -103,7 +103,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		ConcurrentMap<URI, Resource> weakMap = new MapMaker().weakValues().makeMap();
 		resourceSet.setURIResourceMap(weakMap);	// Must use weak values to allow garbage collection of stale models
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
-		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, resourceSet);
+		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, resourceSet);
 		return resourceSet;
 	}
 

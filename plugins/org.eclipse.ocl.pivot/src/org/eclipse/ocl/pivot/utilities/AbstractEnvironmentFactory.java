@@ -151,7 +151,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(null, asResourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
 		}
 		else {
 			this.externalResourceSetWasNull = true;
@@ -160,7 +160,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
 			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
 			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(asResourceSet, externalResourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Create(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(externalResourceSet));

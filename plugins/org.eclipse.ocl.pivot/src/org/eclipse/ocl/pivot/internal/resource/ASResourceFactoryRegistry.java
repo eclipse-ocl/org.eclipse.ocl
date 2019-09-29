@@ -98,13 +98,13 @@ public class ASResourceFactoryRegistry
 
 	@Deprecated /* @deprecated Use two argument version */
 	public void configureResourceSet(@NonNull ResourceSet resourceSet) {
-		configureResourceSet(null, resourceSet);
+		configureResourceSets(null, resourceSet);
 	}
 
 	/**
 	 * @since 1.10
 	 */
-	public synchronized void configureResourceSet(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+	public synchronized void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		for (ASResourceFactoryContribution asResourceFactoryContribution : contentType2resourceFactory.values()) {
 			ASResourceFactory asResourceFactory = asResourceFactoryContribution.basicGetASResourceFactory();
 			if (asResourceFactory != null) {
