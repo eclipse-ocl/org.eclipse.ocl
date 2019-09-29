@@ -388,9 +388,9 @@ public class OCLstdlibTests extends XtextTestCase
 
 	/**
 	 * Checks that the OCL 2.5 AS model is the same as the pre-compiled
-	 * Java implementation.
+	 * Java implementation accessed as a platform:/resource.
 	 */
-	public void testPivot_AS() throws Exception {
+	public void testPivot_AS_resource() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		//
 		//	Load OCL stdlib as an AS file.
@@ -399,6 +399,31 @@ public class OCLstdlibTests extends XtextTestCase
 		//		getProjectMap().initializeResourceSet(resourceSet);
 		//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
 		URI pivotURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
+		//
+		//	Load OCLmetamodel as pre-code-generated Java.
+		//
+		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		Library asLibrary = (Library) standardLibrary.getPackage();
+		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
+		Resource javaResource = oclMetamodel.eResource();
+		@SuppressWarnings("unused")
+		Resource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), pivotURI, javaResource, false);		// FIXME Contents are far from identical
+		ocl.dispose();
+	}
+
+	/**
+	 * Checks that the OCL 2.5 AS model is the same as the pre-compiled
+	 * Java implementation accessed as a platform:/plugin.
+	 */
+	public void testPivot_AS_bundle() throws Exception {
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		//
+		//	Load OCL stdlib as an AS file.
+		//
+		//		ResourceSet resourceSet = new ResourceSetImpl();
+		//		getProjectMap().initializeResourceSet(resourceSet);
+		//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
+		URI pivotURI = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//

@@ -2820,10 +2820,10 @@ public class StandaloneProjectMap implements ProjectManager
 		if (resourceSet != null) {
 			URIConverter uriConverter = resourceSet.getURIConverter();
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-				StandalonePlatformURIHandlerImpl.install(uriConverter, this);
+				StandalonePlatformURIHandlerImpl.install(uriConverter, this);		// Standalone needs to use the project map
 			}
 			else {
-				//				PlatformPluginURIHandlerImpl.install(uriConverter);
+				//	PlatformPluginURIHandlerImpl.install(uriConverter);				// OSGI can use the workspace / bundles
 			}
 			List<Adapter> eAdapters = resourceSet.eAdapters();
 			if (!eAdapters.contains(this)) {

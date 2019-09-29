@@ -184,6 +184,7 @@ public class PlatformURIHandlerImpl extends URIHandlerImpl
 
 	/**
 	 * Return a non-null platform:/resource URI if the there is a corresponding workspace project.
+	 * If null, the caller should try getFileURI to resolve in a corresponding bundle.
 	 */
 	protected @Nullable URI getResourceURI(@NonNull URI uri) {
 		IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
