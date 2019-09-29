@@ -98,7 +98,7 @@ public class TestOCL extends OCLInternal
 		else {
 			this.testName = testName;
 		}
-		projectManager.initializeResourceSet(resourceSet);
+//		projectManager.initializeResourceSet(resourceSet);		// FIXME redundant ?
 		EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
 		packageRegistry.put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 		packageRegistry.put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
