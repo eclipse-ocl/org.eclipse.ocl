@@ -13,18 +13,13 @@ package org.eclipse.ocl.pivot.internal.resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.library.RegisteredContribution;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -34,7 +29,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
  */
 public class OCLASResourceFactory extends AbstractASResourceFactory
 {
-
 	/**
 	 * @since 1.5
 	 */
@@ -64,27 +58,19 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 		}
 	}
 
-	private static @Nullable OCLASResourceFactory INSTANCE = null;
+	private static @Nullable OCLASResourceFactory CONTENT_TYPE_INSTANCE = null;
 	/**
 	 * @since 1.5
 	 */
 	public static @NonNull ASRegistry<@NonNull StandardLibraryContribution> REGISTRY = new ASRegistry<@NonNull StandardLibraryContribution>();
 
 	public static synchronized @NonNull OCLASResourceFactory getInstance() {
-		if (INSTANCE == null) {
-			Map<String, Object> extensionToFactoryMap = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap();
-			Object object = extensionToFactoryMap.get(ASResource.FILE_EXTENSION);
-			if (object instanceof Resource.Factory.Descriptor) {
-				INSTANCE = (OCLASResourceFactory) ((Resource.Factory.Descriptor)object).createFactory();	// Create the registered singleton
-			}
-			else {
-				INSTANCE = new OCLASResourceFactory();														// Create our own singleton
-			}
-			assert INSTANCE != null;
-			INSTANCE.install(null,  null);
+		if (CONTENT_TYPE_INSTANCE == null) {
+			CONTENT_TYPE_INSTANCE = getInstances(PivotPackage.eCONTENT_TYPE, ASResource.FILE_EXTENSION, null,
+				OCLASResourceFactory.class);
 		}
-		assert INSTANCE != null;
-		return INSTANCE;
+		assert CONTENT_TYPE_INSTANCE != null;
+		return CONTENT_TYPE_INSTANCE;
 	}
 
 	private static final @NonNull ContentHandler PIVOT_CONTENT_HANDLER = new RootXMLContentHandlerImpl(
@@ -96,31 +82,10 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	/**
-	 * The private URIConverter avoids installing the (Standalone)PlatformURIHandlerImpl in a global URIConverter.
-	 *
-	 * This functionality might be resolveable via the URIMap if the ResourceFactory had access to the caller's
-	 * ResourceSet and so the caller's URIMap.
-	 */
-	private @NonNull URIConverter uriConverter = new ExtensibleURIConverterImpl();
-
-	/**
 	 * Creates an instance of the resource factory.
 	 */
 	public OCLASResourceFactory() {
-		super(ASResource.CONTENT_TYPE, null); //ASResource.FILE_EXTENSION);
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			StandalonePlatformURIHandlerImpl.install(uriConverter, null);
-		}
-		else {
-			PlatformURIHandlerImpl.install(uriConverter);
-		}
-	}
-
-	@Override
-	public void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
-		super.configureResourceSets(asResourceSet, csResourceSet);
-		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
-		resourceFactoryRegistry.getExtensionToFactoryMap().put(ASResource.FILE_EXTENSION, this);
+		super(ASResource.CONTENT_TYPE, ASResource.FILE_EXTENSION);
 	}
 
 	@Override
@@ -133,33 +98,7 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 		if (standardLibraryContribution != null) {
 			return standardLibraryContribution.getResource();
 		}
-		//		assert !"http".equals(uri.scheme());
-		//		String fileExtension = uri.fileExtension();
-		//		if (fileExtension == null) {			// Must be an Ecore Package registration
-		//			return EcoreASResourceFactory.INSTANCE.createResource(uri);
-		//		}
-		//		if (/*(asResourceFactory == null) &&*/ !"http".equals(uri.scheme())) { //|| !nonASuri.isFile()) {					// If it's not a known double extension
-		if (uri.isPlatform() || uri.isFile() || uri.isArchive()) { // not http:
-			//
-			//	If *.xxxas exists use it.
-			//
-			if (uriConverter.exists(uri, null)) {	// NB this expects a (Standalone)PlatformURIHandlerImpl to be installed
-				return super.createResource(uri);
-			}
-		}
-		URI nonASuri = uri.trimFileExtension();
-	//	String nonASuriString = nonASuri.toString();
-	//	assert nonASuriString != null;
-		String nonASextension = nonASuri.fileExtension();
-		ASResourceFactory asResourceFactory = nonASextension != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(nonASextension) : null;
-		//
-		//	Otherwise create a *.xxxas by converting the trimmed resource to XXX AS.
-		//
-		if (asResourceFactory == null) {			// Must be an Ecore Package registration possibly with a confusing 'extension'
-			asResourceFactory = EcoreASResourceFactory.getInstance();
-		}
-		assert !(asResourceFactory instanceof OCLASResourceFactory);
-		return asResourceFactory.createResource(uri);
+		return super.createResource(uri);
 	}
 
 	@Override

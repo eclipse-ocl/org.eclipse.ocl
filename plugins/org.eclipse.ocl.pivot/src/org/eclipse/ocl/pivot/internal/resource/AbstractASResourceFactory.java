@@ -53,10 +53,60 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 
 /**
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
- * OCL Abstract Syntax Resources.
+ * Pivot Abstract Syntax Resources via the standard EMF contentType/fileExtension Resource creation APIs.
  */
 public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension2
 {
+	/**
+	 * @since 1.10
+	 */
+	@SuppressWarnings("unchecked")
+	protected static <T extends AbstractASResourceFactory> @NonNull T getInstances(@NonNull String contentType, @NonNull String asFileExtension, @Nullable String csFileExtension, @NonNull Class<? extends T> resourceFactoryClass) {
+		@Nullable T newInstance = null;
+		T contentTypeInstance;
+		Map<String, Object> contentTypeToFactoryMap = Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap();
+		Object object1 = contentTypeToFactoryMap.get(contentType);
+		if (object1 instanceof Resource.Factory.Descriptor) {
+			contentTypeInstance = (T)((Resource.Factory.Descriptor)object1).createFactory();	// Create the registered singleton
+		}
+		else if (object1 != null) {
+			contentTypeInstance = (T)object1;													// Reuse as our own singleton
+		}
+		else  {
+			try {
+				newInstance = contentTypeInstance = resourceFactoryClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}													// Create our own singleton
+			contentTypeToFactoryMap.put(contentType, contentTypeInstance);
+		}
+		T extensionInstance;
+		Map<String, Object> extensionToFactoryMap = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap();
+		Object object2 = extensionToFactoryMap.get(asFileExtension);
+		if (object2 instanceof Resource.Factory.Descriptor) {
+			extensionInstance = (T)((Resource.Factory.Descriptor)object2).createFactory();	// Create the registered singleton
+		}
+		else if (object2 != null) {
+			extensionInstance = (T)object2;													// Reuse as our own singleton
+		}
+		else if (newInstance != null) {
+			extensionInstance = newInstance;													// Reuse as our own singleton
+		}
+		else  {
+			try {
+				newInstance = extensionInstance = resourceFactoryClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}													// Create our own singleton
+			extensionToFactoryMap.put(asFileExtension, extensionInstance);
+		}
+		assert contentTypeInstance != null;
+		contentTypeInstance.install(csFileExtension, null);
+//		ASResourceFactoryRegistry.INSTANCE.addASResourceFactory(contentType, csFileExtension, null, contentTypeInstance);
+		assert contentTypeInstance != null;
+		return contentTypeInstance;
+	}
+
 	public static void installContentHandler(int priority, @NonNull ContentHandler contentHandler) {
 		List<ContentHandler> contentHandlers = ContentHandler.Registry.INSTANCE.get(priority);
 		if (contentHandlers == null) {
@@ -68,19 +118,32 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		}
 	}
 
-	protected final @NonNull String contentType;
-	private final @Nullable String asFileExtension;
+	/**
+	 * The EMF ResourceFactoryRegistry ContentTypeToFactoryMap key at which this ASResourceFactory is stored.
+	 */
+	protected final @NonNull String contentType;		// FIXME refactor to asContentType
 
-	@Deprecated /* @deprecated use null asFileExtension argument */
-	protected AbstractASResourceFactory(@NonNull String contentType) {
-		this(contentType, null);
+	/**
+	 * The EMF ResourceFactoryRegistry ExtensionToFactoryMap key at which this ASResourceFactory is stored.
+	 * A null key suppresses ExtensionToFactoryMap registrations for the many ASResourceFactory instances that
+	 * share the *.oclas extension.
+	 *
+	 * FIXME can the many *.oclas ASRefesourceFatories be folded into one exploiting CSawareASResourceFactory ?
+	 *
+	 * @since 1.10
+	 */
+	private final @Nullable String asFileExtension;		// FIXME refactor to protected, @NonNull.
+
+	@Deprecated /* @deprecated (no longer used) provide null asFileExtension argument */
+	protected AbstractASResourceFactory(@NonNull String asContentType) {
+		this(asContentType, null);
 	}
 
 	/**
 	 * @since 1.10
 	 */
-	protected AbstractASResourceFactory(@NonNull String contentType, @Nullable String asFileExtension) {
-		this.contentType = contentType;
+	protected AbstractASResourceFactory(@NonNull String asContentType, @Nullable String asFileExtension) {
+		this.contentType = asContentType;
 		this.asFileExtension = asFileExtension;
 	}
 
@@ -93,10 +156,29 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public void configure(@NonNull ResourceSet resourceSet) {
 		Resource.Factory.Registry resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
 		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected void configureASResourceSet(@NonNull ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
+		Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
+		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
 		if (asFileExtension != null) {
-			resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
-			resourceFactoryRegistry.getExtensionToFactoryMap().put(asFileExtension, this);
+			ASResourceFactory extensionASResourceFactory = createResourceSetAwareASResourceFactory(csResourceSet);
+			if (extensionASResourceFactory == null) {
+				extensionASResourceFactory = this;
+			}
+			resourceFactoryRegistry.getExtensionToFactoryMap().put(asFileExtension, extensionASResourceFactory);
 		}
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected void configureCSResourceSet(@NonNull ResourceSet csResourceSet) {
+		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
+		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
 	}
 
 	protected void configureResource(@NonNull ASResource asResource) {
@@ -114,11 +196,9 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		if (asResourceSet != null) {
-//			configure(asResourceSet);
-			Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
-			resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+			configureASResourceSet(asResourceSet, csResourceSet);
 		}
-		configure(csResourceSet);
+		configureCSResourceSet(csResourceSet);
 	}
 
 	@Override
@@ -165,6 +245,13 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		return new EssentialOCLPrettyPrintVisitor(prettyPrinter);
 	}
 
+	/**
+	 * @since 1.10
+	 */
+	protected @Nullable ASResourceFactory createResourceSetAwareASResourceFactory(@NonNull ResourceSet csResourceSet) {
+		return this;
+	}
+
 	@Override
 	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		return new TemplateParameterSubstitutionVisitor((EnvironmentFactoryInternal) environmentFactory, selfType, selfTypeValue);
@@ -200,6 +287,13 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected @Nullable String getASfileExtension() {
+		return asFileExtension;
 	}
 
 	@Override
@@ -274,6 +368,11 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public void initializeEValidatorRegistry(EValidator.@NonNull Registry eValidatorRegistry) {}
 
+	/**
+	 * Install this ASResourceFactory within the ASResourceFactoryRegistry.INSTANCE wrt contentType,
+	 * nonASextension and resourceClassName. The resourceClassName complexity is solely for the benefit
+	 * of UML which may not be loaded so we cannot use UML classes. See Bug 526813.
+	 */
 	protected void install(@Nullable String nonASextension, @Nullable String resourceClassName) {
 		ASResourceFactoryRegistry.INSTANCE.addASResourceFactory(contentType, nonASextension, resourceClassName, this);
 	}
@@ -285,6 +384,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	@Override
 	public @NonNull String toString() {
-		return contentType;
+		return "«basic» " + contentType;
 	}
 }

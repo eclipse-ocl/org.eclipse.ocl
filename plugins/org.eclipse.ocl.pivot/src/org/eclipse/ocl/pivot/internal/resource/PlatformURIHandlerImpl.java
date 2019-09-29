@@ -39,7 +39,10 @@ import org.osgi.framework.Bundle;
  * delegates to the equivalent file alternatively it delegates to the standard URI handling for a JAR.
  *
  * @since 1.4
+ *
+ * @deprecated No longer required now that a ResourceSetAwareASResourceFactory can provide a ResourceSet
  */
+@Deprecated
 public class PlatformURIHandlerImpl extends URIHandlerImpl
 {
 	private static final @NonNull PlatformURIHandlerImpl INSTANCE = new PlatformURIHandlerImpl();
