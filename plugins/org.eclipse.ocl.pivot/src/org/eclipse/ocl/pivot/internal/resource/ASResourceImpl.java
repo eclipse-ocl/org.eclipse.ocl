@@ -15,12 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -161,6 +163,26 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	public @Nullable LUSSIDs basicGetLUSSIDs() {
 		return lussids;
+	}
+
+	/**
+	 * Overridden to ensure that the ResourceFactoryRegistry ExtensionToFactoryMap entries for AS file extensions
+	 * have ASResourceFactory instnaces that are able to fall back from AS extension to CS extension using the
+	 * resourceSet as the AS ResourceSet for OCL parsing.
+	 */
+	@Override
+	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+		NotificationChain notificationChain = super.basicSetResourceSet(resourceSet, notifications);
+		if (resourceSet != null) {
+			String fileExtension = getURI().fileExtension();
+			if (fileExtension != null) {
+				Object resourceFactory = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().get(fileExtension);
+				if (resourceFactory == null) {
+					ASResourceFactoryRegistry.INSTANCE.configureResourceFactoryRegistry(resourceSet);
+				}
+			}
+		}
+		return notificationChain;
 	}
 
 	@Override
