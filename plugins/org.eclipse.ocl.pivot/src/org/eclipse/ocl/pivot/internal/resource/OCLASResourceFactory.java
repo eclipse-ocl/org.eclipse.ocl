@@ -16,10 +16,12 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.library.RegisteredContribution;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -27,7 +29,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 /**
  * The <b>Resource Factory</b> for the pivot and extended pivot abstract syntax.
  */
-public class OCLASResourceFactory extends AbstractASResourceFactory
+public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 {
 	/**
 	 * @since 1.5
@@ -58,7 +60,54 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 		}
 	}
 
+	/**
+	 * The ResourceSetAware variant of the ASResourceFactory provides the local extension registration that
+	 * creates the required resource unless an existing as or cs resource is available tobe opened
+	 * re-using the parsing infrastructure for an earlier resource in the CSResourceSet.
+	 *
+	 * @since 1.10
+	 */
+	public static class ResourceSetAware extends OCLASResourceFactory
+	{
+		public ResourceSetAware(@NonNull ResourceSet csResourceSet) {
+			super(csResourceSet);
+		}
+
+		@Override
+		public Resource createResource(URI uri) {
+			assert uri != null;
+			//
+			//	If it's a *.oclas suffixed standard library or metamodel, return the registered AS resource.
+			//
+			StandardLibraryContribution standardLibraryContribution = REGISTRY.get(uri);
+			if (standardLibraryContribution != null) {
+				return standardLibraryContribution.getResource();
+			}
+			if (uri.isPlatform() || uri.isFile() || uri.isArchive()) { // not http:
+				//
+				//	If *.xxxas exists use it.
+				//
+				assert resourceSet != null;
+				if (resourceSet.getURIConverter().exists(uri, null)) {	// NB this expects a (Standalone)PlatformURIHandlerImpl to be installed
+					return super.createResource(uri);
+				}
+			}
+			URI nonASuri = uri.trimFileExtension();
+			String nonASextension = nonASuri.fileExtension();
+			ASResourceFactory asResourceFactory = nonASextension != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(nonASextension) : null;
+			//
+			//	Otherwise create a *.xxxas by converting the trimmed resource to XXX AS.
+			//
+			if (asResourceFactory == null) {			// Must be an Ecore Package registration possibly with a confusing 'extension'
+				asResourceFactory = EcoreASResourceFactory.getInstance();
+			}
+			assert !(asResourceFactory instanceof OCLASResourceFactory);
+			return asResourceFactory.createResource(uri);
+		}
+	}
+
 	private static @Nullable OCLASResourceFactory CONTENT_TYPE_INSTANCE = null;
+	
 	/**
 	 * @since 1.5
 	 */
@@ -85,7 +134,14 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	 * Creates an instance of the resource factory.
 	 */
 	public OCLASResourceFactory() {
-		super(ASResource.CONTENT_TYPE, ASResource.FILE_EXTENSION);
+		this(null);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected OCLASResourceFactory(@Nullable ResourceSet resourceSet) {
+		super(ASResource.CONTENT_TYPE, ASResource.FILE_EXTENSION, resourceSet);
 	}
 
 	@Override
@@ -102,7 +158,17 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
+	protected @Nullable ASResourceFactory createResourceSetAwareASResourceFactory(@NonNull ResourceSet csResourceSet) {
+		return new ResourceSetAware(csResourceSet);
+	}
+
+	@Override
 	public @NonNull ASResourceFactory getASResourceFactory() {
 		return getInstance();
+	}
+
+	@Override
+	protected @NonNull URI getCSuri(@NonNull URI uri) {
+		return uri.trimFileExtension();
 	}
 }
