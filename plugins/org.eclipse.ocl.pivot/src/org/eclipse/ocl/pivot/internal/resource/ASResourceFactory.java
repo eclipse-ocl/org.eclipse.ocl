@@ -74,6 +74,11 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	void configure(@NonNull ResourceSet resourceSet);
 
 	/**
+	 * @since 1.10
+	 */
+	default void configureResourceFactoryRegistry(@NonNull ResourceSet resourceSet) {}
+
+	/**
 	 * Configure the MetamodelManager's internal asResourceSet and external csResourceSet.
 	 * Implementations may install any required extension or content to factory mappings in the
 	 * resource factory registry.

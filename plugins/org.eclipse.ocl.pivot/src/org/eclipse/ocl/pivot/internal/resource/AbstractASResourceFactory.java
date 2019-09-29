@@ -109,6 +109,9 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
+	public void configureResourceFactoryRegistry(@NonNull ResourceSet resourceSet) {}
+
+	@Override
 	public void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		if (asResourceSet != null) {
 //			configure(asResourceSet);

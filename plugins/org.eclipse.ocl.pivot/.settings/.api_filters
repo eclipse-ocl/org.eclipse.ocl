@@ -108,6 +108,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
+                <message_argument value="configureResourceFactoryRegistry(ResourceSet)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="configureResourceSets(ResourceSet, ResourceSet)"/>
             </message_arguments>
         </filter>
