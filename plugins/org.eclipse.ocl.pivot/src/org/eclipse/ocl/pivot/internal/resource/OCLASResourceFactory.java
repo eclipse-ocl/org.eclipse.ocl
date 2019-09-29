@@ -107,7 +107,7 @@ public class OCLASResourceFactory extends AbstractASResourceFactory
 	 * Creates an instance of the resource factory.
 	 */
 	public OCLASResourceFactory() {
-		super(ASResource.CONTENT_TYPE, null, null); //ASResource.FILE_EXTENSION);
+		super(ASResource.CONTENT_TYPE, null); //ASResource.FILE_EXTENSION);
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			StandalonePlatformURIHandlerImpl.install(uriConverter, null);
 		}

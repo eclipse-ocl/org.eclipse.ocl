@@ -151,7 +151,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		public static @NonNull TransientASResourceFactory INSTANCE = new TransientASResourceFactory();
 
 		public TransientASResourceFactory() {
-			super("transient", null, null);
+			super("transient", null);
 		}
 
 		@Override

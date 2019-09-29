@@ -48,7 +48,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public EcoreASResourceFactory() {
-		super(ASResource.ECORE_CONTENT_TYPE, null, null);
+		super(ASResource.ECORE_CONTENT_TYPE, null);
 	}
 
 	@Override

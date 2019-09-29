@@ -55,7 +55,7 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 	}
 
 	public OCLinEcoreASResourceFactory() {
-		super(ASResource.OCLINECORE_CONTENT_TYPE, null, null);
+		super(ASResource.OCLINECORE_CONTENT_TYPE, null);
 	}
 
 	@Override
