@@ -117,6 +117,19 @@ public class ASResourceFactoryRegistry
 	}
 
 	/**
+	 *
+	 * @since 1.10
+	 */
+	public void configureResourceFactoryRegistry(@NonNull ResourceSet resourceSet) {
+		for (ASResourceFactoryContribution asResourceFactoryContribution : contentType2resourceFactory.values()) {
+			ASResourceFactory asResourceFactory = asResourceFactoryContribution.basicGetASResourceFactory();
+			if (asResourceFactory != null) {
+				asResourceFactory.configureResourceFactoryRegistry(resourceSet);
+			}
+		}
+	}
+
+	/**
 	 * Create a new EnvironmentFactory appropriate to the resources in ResourceSet.
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
@@ -126,7 +139,20 @@ public class ASResourceFactoryRegistry
 				return environmentFactoryAdapter.getEnvironmentFactory();
 			}
 		}
-		return new PivotEnvironmentFactory(projectManager, externalResourceSet);
+		return new PivotEnvironmentFactory(projectManager, externalResourceSet, null);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
+		if (csResourceSet != null) {
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
+			if (environmentFactoryAdapter != null) {
+				return environmentFactoryAdapter.getEnvironmentFactory();
+			}
+		}
+		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
 	}
 
 	public @Nullable ASResourceFactoryContribution get(@NonNull String contentType) {
@@ -156,6 +182,7 @@ public class ASResourceFactoryRegistry
 		}
 		//
 		//	This complexity is solely for the benefit of UML which may not be loaded so we cannot use UML classes.
+		//	See Bug 526813.
 		//
 		synchronized(this) {
 			Class<? extends Resource> resourceClass = resource.getClass();

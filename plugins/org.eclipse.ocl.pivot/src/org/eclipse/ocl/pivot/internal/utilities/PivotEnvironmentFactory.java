@@ -34,15 +34,23 @@ public class PivotEnvironmentFactory extends AbstractEnvironmentFactory
 {
 	private @Nullable IProject project = null;		// Eclipse project for project-specific preferences
 	private /*@NonNull*/ IScopeContext @Nullable [] scopeContexts = null;		// FIXME BUG 485092
-	
+
 	/**
 	 * Initializes me with an optional <code>StandaloneProjectMap</code> of accessible resources and
 	 * an optional <code>ModelManager</code> for loaded instances.
 	 */
+	@Deprecated /* @deprecated supply null asResourceSet argument */
 	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		super(projectManager, externalResourceSet);
+		this(projectManager, externalResourceSet, null);
 	}
-	
+
+	/**
+	 * @since 1.10
+	 */
+	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
+		super(projectManager, csResourceSet, asResourceSet);
+	}
+
 	@Override
 	public <@Nullable T> T getValue(@NonNull Option<T> option) {
 		@SuppressWarnings("unchecked") T result = (T) getOptions().get(option);
@@ -66,7 +74,7 @@ public class PivotEnvironmentFactory extends AbstractEnvironmentFactory
 			if (result != null) {
 				return result;
 			}
-		}		
+		}
 		return option.getDefaultValue();
 	}
 

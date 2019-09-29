@@ -136,16 +136,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	/**
-	 * @param projectManager
-	 */
+	@Deprecated /* @deprecated supply null asResourceSet argument */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+		this(projectManager, externalResourceSet, null);
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet, @Nullable ResourceSet asResourceSet) {
 		CONSTRUCTION_COUNT++;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
 		this.projectManager = projectManager;
-		this.asResourceSet = createASResourceSet();
+		if (asResourceSet == null) {
+			asResourceSet = createASResourceSet();
+		}
+		this.asResourceSet = asResourceSet;
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;

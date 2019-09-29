@@ -150,7 +150,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 	private @Nullable List<Listener> listeners = null;
 
     private GlobalEnvironmentFactory() {
-		super(ProjectManager.CLASS_PATH, createGlobalResourceSet());
+		super(ProjectManager.CLASS_PATH, createGlobalResourceSet(), null);
 //		System.out.println("GlobalEnvironmentFactory()");
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			getProjectManager().initializeResourceSet(null);
