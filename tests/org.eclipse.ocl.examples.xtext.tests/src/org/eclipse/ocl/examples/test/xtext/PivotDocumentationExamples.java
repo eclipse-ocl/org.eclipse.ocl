@@ -208,6 +208,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	 * in org.eclipse.ocl.doc/doc/6320-pivot-parsing-documents.textile
 	 */
 	public void test_parsingDocumentsExample() throws IOException, ParserException {
+		OCL ocl1 = OCL.newInstance(OCL.CLASS_PATH);
 		//-------------------------------------------------------------------------
 		//	The OCL Input
 		//-------------------------------------------------------------------------
@@ -285,6 +286,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		assertEquals(Diagnostic.ERROR, diagnostics.getSeverity());
 		assertEquals(4, diagnostics.getChildren().size());		// 2 ObjectEValiador missing authors, 2 CompleteOCLEObjectValidator non-unique titles
 		ocl.dispose();
+		ocl1.dispose();
 	}
 
 	public class MyDiagnostician extends Diagnostician
