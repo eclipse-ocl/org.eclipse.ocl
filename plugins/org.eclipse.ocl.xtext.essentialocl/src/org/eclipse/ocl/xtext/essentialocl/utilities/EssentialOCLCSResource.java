@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -272,11 +273,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
 			return new TransientASResource(asResourceSet, asURI);
 		}
-		ASResource asResource = (ASResource) asResourceSet.getResource(asURI, false);
-		if (asResource != null) {
-			return asResource;
-		}
-		@SuppressWarnings("null")@NonNull Resource asResource2 = asResourceSet.createResource(asURI, getASContentType());
+		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
 		if (asResource2 instanceof ASResource) {
 			((ASResource)asResource2).setSaveable(false);
 		}
