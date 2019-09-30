@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.*;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -87,6 +86,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -109,6 +109,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -1314,10 +1315,17 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public Number createNumberFromString(EDataType eDataType, String initialValue) {
-		return (Number)super.createFromString(eDataType, initialValue);
+	public Number createNumberFromString(EDataType eDataType, String aValue) {
+		try {
+			assert aValue != null;
+			return StringUtil.createNumberFromString(aValue);
+		}
+		catch (NumberFormatException e) {
+			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
+		}
+		return (Number)super.createFromString(eDataType, aValue);
 	}
 
 	/**
