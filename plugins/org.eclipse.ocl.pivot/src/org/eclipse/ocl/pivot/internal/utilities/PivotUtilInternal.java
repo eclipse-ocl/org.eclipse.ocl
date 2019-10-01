@@ -71,14 +71,20 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -263,17 +269,29 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@NonNull Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(resource);
-		if (environmentFactory == null) {
-			ResourceSet resourceSet = resource.getResourceSet();
-			if (resourceSet != null) {
-				environmentFactory = OCLAdapter.createEnvironmentFactory(resourceSet);
+		if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
+			ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
+			if (metamodelManager != null) {								// The metamodelManager may be missing if a *.oclas is opened by EMF
+				return metamodelManager.getEnvironmentFactory();
 			}
-			else {
-				environmentFactory = OCLAdapter.createEnvironmentFactory(resource);
+			ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
+			if (projectManager == null) {
+				projectManager = OCL.CLASS_PATH;
 			}
+			return ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, resourceSet);
 		}
-		return environmentFactory;
+		else if (resource instanceof CSResource) {						// CSResource has an EnvironmentFactoryAdapter adapting its ResourceSet
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(resource);
+			if (environmentFactory != null) {							// The environmentFactory may be missing for an Xtext ResourceSet
+				return environmentFactory;
+			}
+			ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+			return OCLAdapter.createEnvironmentFactory(resourceSet);
+		}
+		else {															// other (e.g. ecore/genmodel)  must have an EnvironmentFactoryAdapter adapting its ResourceSet
+			return ClassUtil.nonNullState(PivotUtilInternal.findEnvironmentFactory(resource));
+		}
 	}
 
 	/** @deprecated use getExecutor() */
