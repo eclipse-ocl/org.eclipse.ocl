@@ -20,9 +20,9 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -35,14 +35,14 @@ import com.google.common.collect.UnmodifiableIterator;
 /**
  * An Iterator over the types of implicit source types or variables (most nested first).
  */
-public abstract class AbstractImplicitSourceNamedElementIterator<T extends NamedElement> extends UnmodifiableIterator<T>
+public abstract class AbstractImplicitSourceNamedElementIterator<T> extends UnmodifiableIterator<T>
 {
 	protected static final boolean CONTINUE = false;
 	protected static final boolean DONE = true;
-	
+
 	private @Nullable ElementCS cursor;
 	protected @Nullable T next;
-	
+
 	protected AbstractImplicitSourceNamedElementIterator(@NonNull ElementCS csElement) {
 		this.cursor = csElement;
 		this.next = null;
@@ -57,7 +57,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T extends Named
 		if (csParent instanceof ContextCS) {
 			ExpressionInOCL asContext = PivotUtil.getPivot(ExpressionInOCL.class, (ContextCS)csParent);
 			if (asContext != null) {
-				Variable asVariable = asContext.getOwnedContext();
+				VariableDeclaration asVariable = asContext.getOwnedContext();
 				if (asVariable != null) {
 					setNext(asVariable);
 				}
@@ -69,7 +69,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T extends Named
 			if (asConstraint != null) {
 				LanguageExpression asContext = asConstraint.getOwnedSpecification();
 				if (asContext instanceof ExpressionInOCL) {
-					Variable asVariable = ((ExpressionInOCL)asContext).getOwnedContext();
+					VariableDeclaration asVariable = ((ExpressionInOCL)asContext).getOwnedContext();
 					if (asVariable != null) {
 						setNext(asVariable);
 					}
@@ -80,7 +80,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T extends Named
 		else if (csParent instanceof ExpSpecificationCS) {
 			Element element = ((ExpSpecificationCS)csParent).getPivot();
 			if (element instanceof ExpressionInOCL) {
-				Variable asVariable = ((ExpressionInOCL)element).getOwnedContext();
+				VariableDeclaration asVariable = ((ExpressionInOCL)element).getOwnedContext();
 				if (asVariable != null) {
 					setNext(asVariable);
 				}
@@ -133,5 +133,5 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T extends Named
 	/**
 	 * Assign the iterable element when iterating at asVariable.
 	 */
-	protected abstract void setNext(@NonNull Variable asVariable);
+	protected abstract void setNext(@NonNull VariableDeclaration asVariable);
 }

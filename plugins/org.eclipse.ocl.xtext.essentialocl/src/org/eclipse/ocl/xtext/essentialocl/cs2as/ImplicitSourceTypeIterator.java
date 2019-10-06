@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.essentialocl.cs2as;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 
 /**
@@ -32,7 +32,7 @@ public class ImplicitSourceTypeIterator extends AbstractImplicitSourceNamedEleme
 	}
 
 	@Override
-	protected void setNext(@NonNull Variable asVariable) {
+	protected void setNext(@NonNull VariableDeclaration asVariable) {
 		next = asVariable.getType();
 		nextValue = asVariable.getTypeValue();
 	}

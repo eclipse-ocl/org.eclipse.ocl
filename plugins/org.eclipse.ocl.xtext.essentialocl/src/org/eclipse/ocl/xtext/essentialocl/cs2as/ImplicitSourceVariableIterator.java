@@ -11,20 +11,20 @@
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 
 /**
  * An Iterator over the implicit source variables (most nested first).
  */
-public class ImplicitSourceVariableIterator extends AbstractImplicitSourceNamedElementIterator<Variable>
+public class ImplicitSourceVariableIterator extends AbstractImplicitSourceNamedElementIterator<VariableDeclaration>
 {
 	public ImplicitSourceVariableIterator(@NonNull ElementCS csElement) {
 		super(csElement);
 	}
 
 	@Override
-	protected void setNext(@NonNull Variable asVariable) {
+	protected void setNext(@NonNull VariableDeclaration asVariable) {
 		next = asVariable;
 	}
 }

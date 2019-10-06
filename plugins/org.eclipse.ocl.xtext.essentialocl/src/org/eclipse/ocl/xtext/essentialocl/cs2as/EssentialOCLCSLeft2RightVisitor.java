@@ -366,7 +366,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @Nullable VariableDeclaration getImplicitSource(@NonNull ModelElementCS csExp, @NonNull Type requiredType) {
 		@Nullable VariableDeclaration lastVariable = null;
 		for (ImplicitSourceVariableIterator it = createImplicitSourceVariableIterator(csExp); it.hasNext(); )  {
-			@NonNull Variable variable = it.next();
+			@NonNull VariableDeclaration variable = it.next();
 			lastVariable = variable;
 			Type type = variable.getType();
 			if ((type != null) && type.conformsTo(standardLibrary, requiredType)) {
