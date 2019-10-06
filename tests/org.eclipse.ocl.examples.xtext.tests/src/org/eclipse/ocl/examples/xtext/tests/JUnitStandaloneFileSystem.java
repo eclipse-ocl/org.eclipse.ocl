@@ -24,7 +24,9 @@ import java.util.Map;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -119,6 +121,29 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 				lastSegment = testFolder.getName() + "/" + lastSegment;
 			}
 			return getOutputFile(lastSegment, inputStream);
+		}
+
+		@Override
+		public @NonNull TestFile copyFiles(@NonNull ProjectManager projectManager, @Nullable TestFolder testFolder, @NonNull URI sourceFolderURI, @NonNull String @NonNull ... fileNames) throws IOException {
+			ResourceSet resourceSet = new ResourceSetImpl();
+			projectManager.initializeResourceSet(resourceSet);
+			URIConverter uriConverter = resourceSet.getURIConverter();
+			JUnitStandaloneTestFile firstOutputFile = null;
+			for (@NonNull String fileName : fileNames) {
+				URI sourceURI = sourceFolderURI.appendSegment(fileName);
+				InputStream inputStream = uriConverter.createInputStream(sourceURI);
+				String lastSegment = sourceURI.lastSegment();
+				assert lastSegment != null;
+				if (testFolder != null) {
+					lastSegment = testFolder.getName() + "/" + lastSegment;
+				}
+				JUnitStandaloneTestFile outputFile = getOutputFile(lastSegment, inputStream);
+				if (firstOutputFile == null) {
+					firstOutputFile = outputFile;
+				}
+			}
+			assert firstOutputFile != null;
+			return firstOutputFile;
 		}
 
 		protected @NonNull JUnitStandaloneTestFile createFilePath(@NonNull String testFilePath) {

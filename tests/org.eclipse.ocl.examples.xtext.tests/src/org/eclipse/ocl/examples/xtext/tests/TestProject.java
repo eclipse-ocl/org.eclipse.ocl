@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 public interface TestProject extends TestFolder
 {
 	@NonNull TestFile copyFile(@NonNull URIConverter uriConverter, @Nullable TestFolder testFolder, @NonNull URI sourceURI) throws IOException;
+	@NonNull TestFile copyFiles(@NonNull ProjectManager projectManager, @Nullable TestFolder testFolder, @NonNull URI sourceFolderURI, @NonNull String @NonNull ... fileNames) throws IOException;
 
 	@NonNull ProjectManager createTestProjectManager();
 

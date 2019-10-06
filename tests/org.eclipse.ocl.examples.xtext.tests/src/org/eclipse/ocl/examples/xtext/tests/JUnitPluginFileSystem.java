@@ -31,7 +31,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -154,6 +156,31 @@ public class JUnitPluginFileSystem extends TestFileSystem
 			}
 			assert lastSegment != null;
 			return getOutputFile(lastSegment, inputStream);
+		}
+
+		@Override
+		public @NonNull TestFile copyFiles(@NonNull ProjectManager projectManager, @Nullable TestFolder testFolder, @NonNull URI sourceFolderURI, @NonNull String @NonNull ... fileNames) throws IOException {
+			ResourceSet resourceSet = new ResourceSetImpl();
+			projectManager.initializeResourceSet(resourceSet);
+			URIConverter uriConverter = resourceSet.getURIConverter();
+			JUnitPluginTestFile firstOutputFile = null;
+			for (@NonNull String fileName : fileNames) {
+				URI sourceURI = sourceFolderURI.appendSegment(fileName);
+				InputStream inputStream = uriConverter.createInputStream(sourceURI);
+				String lastSegment = sourceURI.lastSegment();
+				if (testFolder != null) {
+					IContainer iContainer = testFolder.getIContainer();
+					IPath projectRelativePath = iContainer.getFile(new Path(lastSegment)).getProjectRelativePath();
+					lastSegment = projectRelativePath.toString();
+				}
+				assert lastSegment != null;
+				JUnitPluginTestFile outputFile = getOutputFile(lastSegment, inputStream);
+				if (firstOutputFile == null) {
+					firstOutputFile = outputFile;
+				}
+			}
+			assert firstOutputFile != null;
+			return firstOutputFile;
 		}
 
 		protected @NonNull JUnitPluginTestFile createFilePath(@NonNull String testFilePath, @Nullable InputStream inputStream) {
