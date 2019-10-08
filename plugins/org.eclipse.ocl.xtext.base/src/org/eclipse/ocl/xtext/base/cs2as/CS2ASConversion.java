@@ -734,7 +734,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		converter.installPivotReference(csElement, newPivotElement, eReference);
 	}
 
-	public void installPivotUsage(@NonNull ModelElementCS csElement, @NonNull Element newPivotElement) {
+	public void installPivotUsage(@NonNull PivotableElementCS csElement, @NonNull Element newPivotElement) {
 		converter.installPivotUsage(csElement, newPivotElement);
 	}
 

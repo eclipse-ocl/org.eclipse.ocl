@@ -61,6 +61,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
@@ -522,7 +523,7 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 	 * are associated with a single pivot element. In this case one of the CS elements is the defining CS element and the
 	 * others are users.
 	 */
-	public void installPivotUsage(@NonNull ModelElementCS csElement, @NonNull Element newPivotElement) {
+	public void installPivotUsage(@NonNull PivotableElementCS csElement, @NonNull Element newPivotElement) {
 		//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$
 		EObject oldPivotElement = csElement.getPivot();
 		if (oldPivotElement != newPivotElement) {
