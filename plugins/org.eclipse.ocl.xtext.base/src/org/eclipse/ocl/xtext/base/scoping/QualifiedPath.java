@@ -40,11 +40,11 @@ public class QualifiedPath extends QualifiedName
 
 	private final List<PathElement> pathElements;
 	private final boolean isAbsolute;
-	
+
 	public QualifiedPath(List<PathElement> pathElements) {
 		this(pathElements, true);
 	}
-	
+
 	protected QualifiedPath(List<PathElement> pathElements, boolean isAbsolute) {
 		super(getSegments(pathElements));
 		this.pathElements = pathElements;
@@ -96,7 +96,7 @@ public class QualifiedPath extends QualifiedName
 		}
 		return super.equals(obj);
 	}
-	
+
 	/**
 	 * Return the segments of this path, deresolving the first segment of an absolute path to use the
 	 * aliases of the resource of csObject.

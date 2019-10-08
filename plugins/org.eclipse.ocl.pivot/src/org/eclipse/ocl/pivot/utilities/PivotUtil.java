@@ -270,7 +270,7 @@ public class PivotUtil
 	 * if expressionInOCL has no contextVariable and has a StringLiteralExp bodyExpression.
 	 */
 	public static void checkExpression(@NonNull ExpressionInOCL expressionInOCL) {
-		Variable contextVariable = expressionInOCL.getOwnedContext();
+		VariableDeclaration contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable == null) {
 			OCLExpression bodyExpression = expressionInOCL.getOwnedBody();
 			if (bodyExpression instanceof StringLiteralExp) {
@@ -416,7 +416,7 @@ public class PivotUtil
 		return pivotEnumerationLiteral;
 	}
 
-	public static @NonNull ExpressionInOCL createExpressionInOCL(@Nullable Variable asContextVariable, @NonNull OCLExpression asExpression, /*@NonNUll*/ Variable... asParameterVariables) {
+	public static @NonNull ExpressionInOCL createExpressionInOCL(@Nullable Variable asContextVariable, @NonNull OCLExpression asExpression, /*@NonNull*/ Variable... asParameterVariables) {
 		ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 		asExpressionInOCL.setOwnedContext(asContextVariable);
 		if (asParameterVariables != null) {

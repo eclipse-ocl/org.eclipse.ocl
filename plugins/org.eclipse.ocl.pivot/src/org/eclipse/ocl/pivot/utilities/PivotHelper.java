@@ -382,12 +382,22 @@ public class PivotHelper
 		return asParameter;
 	}
 
+	@Deprecated /* supply a representedParameter */
 	public @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
 		asVariable.setName(name);
 		asVariable.setType(asType);
 		asVariable.setIsRequired(isRequired);
 		return asVariable;
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public @NonNull ParameterVariable createParameterVariable(@NonNull Parameter asParameter) {
+		ParameterVariable asParameterVariable = createParameterVariable(asParameter.getName(), asParameter.getType(), asParameter.isIsRequired());
+		asParameterVariable.setRepresentedParameter(asParameter);
+		return asParameterVariable;
 	}
 
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
