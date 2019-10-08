@@ -37,6 +37,9 @@ public class ModelAttribution extends AbstractAttribution
 					String importName = anImport.getName();
 					if (importName != null) {
 						environmentView.addElement(importName, namespace);
+						if (!importName.equals(namespace.getName())) {
+							environmentView.addNamedElement(namespace);
+						}
 					}
 					else if (namespace instanceof Model) {
 						environmentView.addAllPackages((Model)namespace);
