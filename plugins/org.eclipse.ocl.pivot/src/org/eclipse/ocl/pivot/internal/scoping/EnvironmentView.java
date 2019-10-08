@@ -402,6 +402,28 @@ public class EnvironmentView
 		}
 	}
 
+	/**
+	 * @since 1.10
+	 */
+	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull CompletePackage parentCompletePackage) {
+		if (accepts(PivotPackage.Literals.PACKAGE)) {
+			String name2 = name;
+			if (name2 != null) {
+				CompletePackage completePackage = parentCompletePackage.getOwnedCompletePackage(name2);
+				if (completePackage != null) {
+					addElement(name2, completePackage);
+				}
+			}
+			else {
+				for (CompletePackage completePackage : parentCompletePackage.getOwnedCompletePackages()) {
+					if (completePackage != null) {
+						addNamedElement(completePackage);
+					}
+				}
+			}
+		}
+	}
+
 	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.PACKAGE)) {
 			CompletePackage parentCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(pkge);
@@ -538,6 +560,37 @@ public class EnvironmentView
 							addNamedElement(templateParameter);
 						}
 					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public void addAllTypes(@NonNull CompletePackage completePackage) {
+		if (accepts(PivotPackage.Literals.CLASS)) {
+			String name2 = name;
+			if (name2 != null) {
+				org.eclipse.ocl.pivot.Class type = completePackage.getMemberType(name2);
+				if (type != null) {
+					addNamedElement(type);
+				}
+				else {
+					completePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+					type = completePackage.getMemberType(name2);
+					if (type != null) {
+						addNamedElement(type);
+					}
+				}
+			}
+			else {
+				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
+					addNamedElement(completeClass.getPrimaryClass());
+				}
+				PrimitiveCompletePackage primitiveCompletePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+				for (CompleteClass completeClass : primitiveCompletePackage.getOwnedCompleteClasses()) {
+					addNamedElement(completeClass.getPrimaryClass());
 				}
 			}
 		}

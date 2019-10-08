@@ -13,8 +13,10 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -45,6 +47,7 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -1184,6 +1187,33 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.10
+	 */
+	public static @NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> getImportedPackageClosure(@NonNull CompleteModel completeModel, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		Set<org.eclipse.ocl.pivot.@NonNull Package> importedPackageClosure = new HashSet<>();
+		getImportedPackageClosure(completeModel, importedPackageClosure, asPackage);
+		return importedPackageClosure;
+	}
+
+	private static void getImportedPackageClosure(@NonNull CompleteModel completeModel, @NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> importedPackageClosure, org.eclipse.ocl.pivot.@NonNull Package targetPackage) {
+		if (importedPackageClosure.add(targetPackage)) {
+			CompletePackage completePackage = completeModel.getCompletePackage(targetPackage);
+			for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(completePackage)) {
+				for (org.eclipse.ocl.pivot.@NonNull Package importedPackage : PivotUtil.getImportedPackages(partialPackage)) {
+					getImportedPackageClosure(completeModel, importedPackageClosure, importedPackage);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getImportedPackages(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getImportedPackages());
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
@@ -1635,6 +1665,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses(@NonNull CompleteClass completeClass) {
 		return ClassUtil.nullFree(completeClass.getPartialClasses());
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(@NonNull CompletePackage completePackage) {
+		return ClassUtil.nullFree(completePackage.getPartialPackages());
 	}
 
 	public static @Nullable <T extends Element> T getPivot(@NonNull Class<T> pivotClass, @Nullable Pivotable pivotableElement) {
