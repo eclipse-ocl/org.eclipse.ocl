@@ -28,9 +28,15 @@ public class PivotableElementCSAttribution extends AbstractAttribution
 	@Override
 	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		Element pivot = PivotUtil.getPivot(Element.class, (PivotableElementCS)target);
-		if ((pivot != null) && (pivot.eResource() != null) && !(pivot instanceof InvalidType)) {
-			environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());
+		if ((pivot == null) || (pivot.eResource() == null)  || (pivot instanceof InvalidType)) {
+			return scopeView.getParent();
 		}
-		return scopeView.getParent();
+		environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());
+		// Uncomment to debug Bug 551826, should always return null if a pivot search was attempted but failed
+//		if (!environmentView.hasFinalResult()) {
+//			environmentView.computeLookups(pivot, null);
+//			return scopeView.getParent();
+//		}
+		return null;
 	}
 }
