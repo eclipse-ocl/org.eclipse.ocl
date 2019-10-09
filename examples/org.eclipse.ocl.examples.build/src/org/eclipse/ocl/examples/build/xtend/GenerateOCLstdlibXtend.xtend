@@ -92,6 +92,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.emf.ecore.resource.ResourceSet;
 			import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 			import org.eclipse.jdt.annotation.NonNull;
+			import org.eclipse.jdt.annotation.Nullable;
 			import org.eclipse.ocl.pivot.*;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.Package;
@@ -143,6 +144,17 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *	The URI of the AS representation of this Standard Library.
 				 */
 				public static final @NonNull URI STDLIB_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+			
+				/**
+				 * Return the default «uri» standard Library Resource
+				 * if it jas been created, or null if not.
+				 *  This static definition auto-generated from «sourceFile»
+				 *  is used as the default when no overriding copy is registered.
+				 * It cannot be unloaded or rather unloading has no effect.
+				 */
+				public static @Nullable «javaClassName» basicGetDefault() {
+					return INSTANCE;
+				}
 			
 				/**
 				 * Return the default «uri» standard Library Resource.

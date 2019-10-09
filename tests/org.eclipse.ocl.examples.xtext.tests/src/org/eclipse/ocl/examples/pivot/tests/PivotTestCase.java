@@ -778,13 +778,16 @@ public class PivotTestCase extends TestCase
 		 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
 		 * and which might be resolved using the wrong strategy in another test.
 		 */
-		for (TreeIterator<EObject> tit = OCLstdlib.getDefault().getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof PivotObjectImpl) {
-				PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-				EObject eTarget = asObject.getESObject();
-				if ((eTarget != null) && eTarget.eIsProxy()) {
-					asObject.setESObject(null);
+		OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
+		if (oclstdlib != null) {
+			for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof PivotObjectImpl) {
+					PivotObjectImpl asObject = (PivotObjectImpl)eObject;
+					EObject eTarget = asObject.getESObject();
+					if ((eTarget != null) && eTarget.eIsProxy()) {
+						asObject.setESObject(null);
+					}
 				}
 			}
 		}
