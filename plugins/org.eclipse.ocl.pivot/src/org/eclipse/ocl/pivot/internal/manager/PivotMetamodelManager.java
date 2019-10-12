@@ -2054,7 +2054,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Load the Standard Library for a given uri. If the uri corresponds to a registered library, that library
 	 * is installed, otherwise the already loaded asLibraries are examined and the first library with a matching
 	 * URI is used. Return the resource of the library, and merges all types of all libraries into the overall
-	 * stnadard library.
+	 * standard library.
 	 */
 	public @Nullable Resource loadDefaultLibrary(@Nullable String uri) {
 		if (uri == null) {

@@ -731,13 +731,13 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Names_ecore() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoad(ocl, getTestModelURI("models/ecore/Names.ecore"));
 		ocl.dispose();
 	}
 
 	public void testLoad_Names_oclinecore() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Names.oclinecore"));
 		ocl.dispose();
 	}

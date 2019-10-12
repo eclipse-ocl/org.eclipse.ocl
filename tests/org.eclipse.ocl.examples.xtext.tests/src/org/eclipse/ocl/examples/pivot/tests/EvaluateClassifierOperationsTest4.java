@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,7 +97,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 
 	@Override
 	@Before public void setUp() throws Exception {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		super.setUp();
 	}
 

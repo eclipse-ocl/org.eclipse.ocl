@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
@@ -575,7 +574,7 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_umlValidation_Bug458394() throws IOException {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		resetRegistries();
 		//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		//		if (EcorePlugin.IS_ECLIPSE_RUNNING) {

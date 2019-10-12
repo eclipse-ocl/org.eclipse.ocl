@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -319,7 +318,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Paste_473249() throws Exception {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		UMLStandaloneSetup.init();
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//		OCLDelegateDomain.initialize(null);

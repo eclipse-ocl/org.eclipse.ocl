@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.build.utilities;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 
 /**
@@ -21,7 +20,7 @@ import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 public class UML25GenModelSetup extends UMLGenModelSetup
 {
 	public UML25GenModelSetup() {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 	}
 
 	@Override

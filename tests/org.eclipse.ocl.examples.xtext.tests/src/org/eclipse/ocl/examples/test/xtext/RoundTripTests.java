@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -856,7 +855,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testTuplesRoundTrip_509533a() throws IOException, InterruptedException {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		String testFileContents =
 				"package bug509533 : bug509533 = 'http://www.example.org/bug509533'\n" +
 						"{\n" +

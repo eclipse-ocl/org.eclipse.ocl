@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.as2cs.OCLinEcoreAS2CS;
 import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
@@ -355,7 +354,7 @@ public class PivotTests extends XtextTestCase
 
 	public void testPivot_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		getTestFileURI("oclstdlib.oclas", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclas"));
 		URI testFileURI = getTestFileURI("oclstdlib.oclstdlib", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		doPivotTestOCLstdlib(ocl, testFileURI);

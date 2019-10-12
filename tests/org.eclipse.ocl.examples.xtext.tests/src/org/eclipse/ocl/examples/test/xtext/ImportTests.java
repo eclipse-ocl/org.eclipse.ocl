@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.Value;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 
 /**
  * Tests that load a model and verify that there are no unresolved proxies as a result.
@@ -188,7 +187,7 @@ public class ImportTests extends XtextTestCase
 	}
 
 	public void testImport_CompleteOCL_custom_OCLstdlib_eval() throws Exception {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		TestOCL ocl = createOCL();
 		String customLibrary =
 				"library lib : lib = 'http://custom.oclstdlib' {\n" +

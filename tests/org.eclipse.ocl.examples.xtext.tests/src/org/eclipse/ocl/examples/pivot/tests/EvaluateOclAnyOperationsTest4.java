@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -284,7 +283,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	}
 
 	@Test public void testNotEqual() {
-		BaseLinkingService.DEBUG_RETRY.setState(true);
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
 		MyOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Boolean <> Boolean");
 		ocl.assertQueryTrue(null, "Boolean <> Integer");
