@@ -83,8 +83,8 @@ public class TestUtil
 	public static void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
 		List<Normalizer> expectedNormalizations = normalize(expectedResource);
 		List<Normalizer> actualNormalizations = normalize(actualResource);
-		String expected = EmfFormatter.listToStr(expectedResource.getContents()).replaceAll(" : ", ": ");		// Workround BUG 552035
-		String actual = EmfFormatter.listToStr(actualResource.getContents()).replaceAll(" : ", ": ");
+		String expected = EmfFormatter.listToStr(expectedResource.getContents())/*.replaceAll(" : ", ": ")*/;		// Workround BUG 552035
+		String actual = EmfFormatter.listToStr(actualResource.getContents())/*.replaceAll(" : ", ": ")*/;
 		TestCase.assertEquals(expected, actual);
 		for (Normalizer normalizer : expectedNormalizations) {
 			normalizer.denormalize();
