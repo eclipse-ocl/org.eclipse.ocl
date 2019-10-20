@@ -39,6 +39,7 @@ import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -215,6 +216,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 				XMIUtil.retainLineWidth(options, outResource);
 				outResource.save(options);
 				if (validate) {
+					OCLInternal.adapt(resourceSet);
 					validate(outResource);
 				}
 			} catch (IOException e) {
