@@ -588,6 +588,9 @@
               <execution>
                 <id>sign</id>
                 <phase>package</phase>
+                <configuration>
+                  <retryLimit>10</retryLimit>
+                </configuration>
                 <goals>
                   <goal>sign</goal>
                 </goals>
