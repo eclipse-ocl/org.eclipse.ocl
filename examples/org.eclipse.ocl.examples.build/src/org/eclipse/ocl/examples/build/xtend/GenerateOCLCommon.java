@@ -300,6 +300,18 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
 	}
 
+	protected String declarePackageImport(@NonNull Package elem) {
+		//		String generatedClassName = getGeneratedClassName(elem);
+		//		if (generatedClassName != null) {
+		//			return null;//"import " + generatedClassName + ";";
+		//		}
+		String ecoreQualifiedPackageInterfaceName = nameQueries.getEcoreQualifiedPackageInterfaceName(elem);
+		if (ecoreQualifiedPackageInterfaceName != null) {
+			return "import " + ecoreQualifiedPackageInterfaceName + ";";
+		}
+		return null;
+	}
+
 	protected org.eclipse.ocl.pivot.Package findPackage(Iterable<org.eclipse.ocl.pivot.Package> packages) {
 		for (org.eclipse.ocl.pivot.Package pkg : packages) {
 			if (!"$$".equals(pkg.getName())) {
@@ -591,18 +603,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			addExternalReference(standardLibrary.getOclAnyType(), root);
 			addExternalReference(standardLibrary.getOclElementType(), root);
 		}
-	}
-
-	protected String declarePackageImport(@NonNull Package elem) {
-		//		String generatedClassName = getGeneratedClassName(elem);
-		//		if (generatedClassName != null) {
-		//			return null;//"import " + generatedClassName + ";";
-		//		}
-		String ecoreQualifiedPackageInterfaceName = nameQueries.getEcoreQualifiedPackageInterfaceName(elem);
-		if (ecoreQualifiedPackageInterfaceName != null) {
-			return "import " + ecoreQualifiedPackageInterfaceName + ";";
-		}
-		return null;
 	}
 
 	protected @Nullable String getGeneratedClassName(EObject eObject) {

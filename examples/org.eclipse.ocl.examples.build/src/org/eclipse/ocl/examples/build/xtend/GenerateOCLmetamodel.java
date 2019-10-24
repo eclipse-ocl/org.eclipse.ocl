@@ -217,6 +217,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getIntegerType(), asRoot2);
 			addExternalReference(standardLibrary.getOclAnyType(), asRoot2);
 			addExternalReference(standardLibrary.getOclElementType(), asRoot2);
+			addExternalReference(standardLibrary.getOclEnumerationType(), asRoot2);
 			addExternalReference(standardLibrary.getRealType(), asRoot2);
 			addExternalReference(standardLibrary.getStringType(), asRoot2);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asRoot2);

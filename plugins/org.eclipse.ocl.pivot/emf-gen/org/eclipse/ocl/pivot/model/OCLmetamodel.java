@@ -258,6 +258,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull PrimitiveType _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
 		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
 		private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
 		private final @NonNull PrimitiveType _Real = getPrimitiveType(_ocl, "Real");
@@ -415,29 +416,29 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _WildcardType = createClass(PivotPackage.Literals.WILDCARD_TYPE);
 
 		private final @NonNull Enumeration _AssociativityKind = createEnumeration(PivotPackage.Literals.ASSOCIATIVITY_KIND);
-		private final @NonNull EnumerationLiteral el__AssociativityKind_left = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral(AssociativityKind.LEFT_VALUE));
-		private final @NonNull EnumerationLiteral el__AssociativityKind_right = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral(AssociativityKind.RIGHT_VALUE));
+		private final @NonNull EnumerationLiteral el__AssociativityKind_left = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("left"));
+		private final @NonNull EnumerationLiteral el__AssociativityKind_right = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("right"));
 		private final @NonNull Enumeration _CollectionKind = createEnumeration(PivotPackage.Literals.COLLECTION_KIND);
-		private final @NonNull EnumerationLiteral el__CollectionKind_Collection = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral(CollectionKind.COLLECTION_VALUE));
-		private final @NonNull EnumerationLiteral el__CollectionKind_Set = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral(CollectionKind.SET_VALUE));
-		private final @NonNull EnumerationLiteral el__CollectionKind_OrderedSet = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral(CollectionKind.ORDERED_SET_VALUE));
-		private final @NonNull EnumerationLiteral el__CollectionKind_Bag = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral(CollectionKind.BAG_VALUE));
-		private final @NonNull EnumerationLiteral el__CollectionKind_Sequence = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral(CollectionKind.SEQUENCE_VALUE));
+		private final @NonNull EnumerationLiteral el__CollectionKind_Collection = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Collection"));
+		private final @NonNull EnumerationLiteral el__CollectionKind_Set = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Set"));
+		private final @NonNull EnumerationLiteral el__CollectionKind_OrderedSet = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("OrderedSet"));
+		private final @NonNull EnumerationLiteral el__CollectionKind_Bag = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Bag"));
+		private final @NonNull EnumerationLiteral el__CollectionKind_Sequence = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Sequence"));
 		private final @NonNull Enumeration _PseudostateKind = createEnumeration(PivotPackage.Literals.PSEUDOSTATE_KIND);
-		private final @NonNull EnumerationLiteral el__PseudostateKind_initial = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.INITIAL_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_deepHistory = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.DEEP_HISTORY_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_shallowHistory = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.SHALLOW_HISTORY_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_join = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.JOIN_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_fork = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.FORK_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_junction = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.JUNCTION_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_choice = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.CHOICE_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_entryPoint = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.ENTRY_POINT_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_exitPoint = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.EXIT_POINT_VALUE));
-		private final @NonNull EnumerationLiteral el__PseudostateKind_terminate = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral(PseudostateKind.TERMINATE_VALUE));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_initial = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("initial"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_deepHistory = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("deepHistory"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_shallowHistory = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("shallowHistory"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_join = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("join"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_fork = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("fork"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_junction = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("junction"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_choice = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("choice"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_entryPoint = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("entryPoint"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_exitPoint = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("exitPoint"));
+		private final @NonNull EnumerationLiteral el__PseudostateKind_terminate = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("terminate"));
 		private final @NonNull Enumeration _TransitionKind = createEnumeration(PivotPackage.Literals.TRANSITION_KIND);
-		private final @NonNull EnumerationLiteral el__TransitionKind_internal = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.INTERNAL_VALUE));
-		private final @NonNull EnumerationLiteral el__TransitionKind_local = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.LOCAL_VALUE));
-		private final @NonNull EnumerationLiteral el__TransitionKind_external = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.EXTERNAL_VALUE));
+		private final @NonNull EnumerationLiteral el__TransitionKind_internal = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("internal"));
+		private final @NonNull EnumerationLiteral el__TransitionKind_local = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("local"));
+		private final @NonNull EnumerationLiteral el__TransitionKind_external = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("external"));
 
 		private final @NonNull BagType _Bag_Annotation = createBagType(_Bag);
 		private final @NonNull BagType _Bag_AssociationClassCallExp = createBagType(_Bag);
@@ -1117,7 +1118,7 @@ public class OCLmetamodel extends ASResourceImpl
 			enumerationLiterals = type.getOwnedLiterals();
 			enumerationLiterals.add(el__AssociativityKind_left);
 			enumerationLiterals.add(el__AssociativityKind_right);
-			type.getSuperClasses().add(_Enumeration);
+			type.getSuperClasses().add(_OclEnumeration);
 			ownedClasses.add(type = _CollectionKind);
 			enumerationLiterals = type.getOwnedLiterals();
 			enumerationLiterals.add(el__CollectionKind_Collection);
@@ -1125,7 +1126,7 @@ public class OCLmetamodel extends ASResourceImpl
 			enumerationLiterals.add(el__CollectionKind_OrderedSet);
 			enumerationLiterals.add(el__CollectionKind_Bag);
 			enumerationLiterals.add(el__CollectionKind_Sequence);
-			type.getSuperClasses().add(_Enumeration);
+			type.getSuperClasses().add(_OclEnumeration);
 			ownedClasses.add(type = _PseudostateKind);
 			enumerationLiterals = type.getOwnedLiterals();
 			enumerationLiterals.add(el__PseudostateKind_initial);
@@ -1138,13 +1139,13 @@ public class OCLmetamodel extends ASResourceImpl
 			enumerationLiterals.add(el__PseudostateKind_entryPoint);
 			enumerationLiterals.add(el__PseudostateKind_exitPoint);
 			enumerationLiterals.add(el__PseudostateKind_terminate);
-			type.getSuperClasses().add(_Enumeration);
+			type.getSuperClasses().add(_OclEnumeration);
 			ownedClasses.add(type = _TransitionKind);
 			enumerationLiterals = type.getOwnedLiterals();
 			enumerationLiterals.add(el__TransitionKind_internal);
 			enumerationLiterals.add(el__TransitionKind_local);
 			enumerationLiterals.add(el__TransitionKind_external);
-			type.getSuperClasses().add(_Enumeration);
+			type.getSuperClasses().add(_OclEnumeration);
 		}
 
 		private void installCollectionTypes() {

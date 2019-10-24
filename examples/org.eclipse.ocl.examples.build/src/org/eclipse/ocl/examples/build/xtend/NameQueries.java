@@ -94,7 +94,7 @@ public class NameQueries
 		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			return /*genPackage.getInterfacePackageName() +*/ genPackage.getPackageInterfaceName() + ".Literals." + CodeGenUtil.upperName(enumeration.getName())
-			+ ".getEEnumLiteral(" + enumeration.getName() + "." + CodeGenUtil.upperName(enumerationLiteral.getName()) + "_VALUE)";
+			+ ".getEEnumLiteral(\"" + enumerationLiteral.getName() + "\")";
 		}
 		return enumeration.getName() + "." + CodeGenUtil.upperName(enumerationLiteral.getName());
 	}

@@ -271,7 +271,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«FOR enumerationLiteral : enumeration.ownedLiterals»
 							enumerationLiterals.add(«enumerationLiteral.getSymbolName()»);
 						«ENDFOR»
-						type.getSuperClasses().add(_Enumeration);
+						type.getSuperClasses().add(_OclEnumeration);
 					«ENDFOR»
 				«ENDFOR»
 			}
