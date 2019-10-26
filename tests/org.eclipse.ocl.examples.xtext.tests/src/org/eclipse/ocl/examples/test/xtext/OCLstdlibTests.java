@@ -215,12 +215,12 @@ public class OCLstdlibTests extends XtextTestCase
 						"    type Class conformsTo OclAny {}\n"+
 						"    type Boolean : PrimitiveType conformsTo OclAny {}\n"+
 						"    type Collection(T) : CollectionType conformsTo OclAny {}\n"+
-						"    type Enumeration conformsTo OclAny {}\n"+
 						"    type Integer : PrimitiveType conformsTo Real {}\n"+
 						"    type OclComparable conformsTo OclAny {\n"+
 						"        operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';\n"+
 						"    }\n"+
 						"    type OclElement conformsTo OclAny {}\n"+
+						"    type OclEnumeration conformsTo OclAny {}\n"+
 						"    type OclInvalid : InvalidType {}\n"+
 						"    type OclSelf : SelfType conformsTo OclAny {}\n"+
 						"    type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"+

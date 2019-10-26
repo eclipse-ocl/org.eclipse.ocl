@@ -407,7 +407,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Bag_selectByKind_TT_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T);
-		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_collect_V2 = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
@@ -435,7 +434,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Collection_selectByType_TT_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T);
-		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_collect_V2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_includesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
@@ -562,7 +560,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Enumeration);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
+			superClasses.add(_OclEnumeration);
 			ownedClasses.add(type = _EnumerationLiteral);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
@@ -704,9 +702,6 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Collection_T_1);
-			ownedClasses.add(type = _Bag_Enumeration);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_Enumeration);
 			ownedClasses.add(type = _Bag_Map_collect_V2);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Map_collect_V2);
@@ -798,9 +793,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_EnumerationLiteral);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type = _Collection_Enumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Map_collect_V2);
@@ -1534,7 +1526,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_size = createOperation("size", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_sum = createOperation("sum", tp_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionSumOperation", org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_union = createOperation("union", _Bag_Collection_T_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
-		private final @NonNull Operation op_Enumeration_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation", org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Map__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map_at = createOperation("at", tp_Map_V, "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
@@ -2017,10 +2008,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_union);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("c", _Collection_Collection_T, true));
-
-			ownedOperations = _Enumeration.getOwnedOperations();
-			ownedOperations.add(operation = op_Enumeration_allInstances);
-			operation.setIsStatic(true);
 
 			ownedOperations = _Map_Map_K_Map_V.getOwnedOperations();
 			ownedOperations.add(operation = op_Map__lt__gt_);
@@ -2843,8 +2830,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", tp_Collection_T);
 		private final @NonNull Property pr_Collection_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_Collection_upper = createProperty("upper", _Integer);
-		private final @NonNull Property pr_Enumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
-		private final @NonNull Property pr_EnumerationLiteral_Enumeration_allLiterals = createProperty("Enumeration", _Bag_Enumeration);
 		private final @NonNull Property pr_EnumerationLiteral_OclEnumeration_allLiterals = createProperty("OclEnumeration", _Bag_OclEnumeration);
 		private final @NonNull Property pr_Map_keyType = createProperty("keyType", tp_Map_K);
 		private final @NonNull Property pr_Map_valueType = createProperty("valueType", tp_Map_V);
@@ -2877,19 +2862,7 @@ public class OCLstdlib extends ASResourceImpl
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 
-			ownedProperties = _Enumeration.getOwnedProperties();
-			ownedProperties.add(property = pr_Enumeration_allLiterals);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setOpposite(pr_EnumerationLiteral_Enumeration_allLiterals);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty");
-			property.setImplementation(org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty.INSTANCE);
-
 			ownedProperties = _EnumerationLiteral.getOwnedProperties();
-			ownedProperties.add(property = pr_EnumerationLiteral_Enumeration_allLiterals);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Enumeration_allLiterals);
 			ownedProperties.add(property = pr_EnumerationLiteral_OclEnumeration_allLiterals);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -2958,7 +2931,6 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Bag_selectByKind_TT_NullFree, tp_Bag_selectByKind_TT);
 			addBinding(_Bag_Bag_selectByType_TT_NullFree, tp_Bag_selectByType_TT);
 			addBinding(_Bag_Collection_T_NullFree, tp_Collection_T);
-			addBinding(_Bag_Enumeration, _Enumeration);
 			addBinding(_Bag_Map_V_NullFree, tp_Map_V);
 			addBinding(_Bag_Map_collect_V2, tp_Map_collect_V2);
 			addBinding(_Bag_OclElement, _OclElement);
@@ -2982,7 +2954,6 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_Collection_product_T2_NullFree, tp_Collection_product_T2);
 			addBinding(_Collection_Collection_selectByKind_TT_NullFree, tp_Collection_selectByKind_TT);
 			addBinding(_Collection_Collection_selectByType_TT_NullFree, tp_Collection_selectByType_TT);
-			addBinding(_Collection_Enumeration, _Enumeration);
 			addBinding(_Collection_EnumerationLiteral, _EnumerationLiteral);
 			addBinding(_Collection_Integer, _Integer);
 			addBinding(_Collection_Map_K, tp_Map_K);
@@ -3337,8 +3308,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Collection_union, "The bag consisting of all elements in oclText[self] and all elements in c.");
 			installComment(pr_Collection_upper, "Evaluates to the upper bound on the number of collection elements.");
 			installComment(_Enumeration, "@Deprecated: Use OclEnumeration\nThe Enumeration type is the type of an OrderedSet of EnumerationLiteral.");
-			installComment(op_Enumeration_allInstances, "Return a set of all enumeration values of oclText[self].");
-			installComment(pr_Enumeration_allLiterals, "Evaluates to the literals of the enumeration.");
 			installComment(_EnumerationLiteral, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
 			installComment(op_Map__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Map__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");

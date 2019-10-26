@@ -785,21 +785,13 @@
         <ownedParameters xmi:id="qs59R" name="T"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xmi:id="28WYD" name="Enumeration" superClasses="#jbMkR">
+    <ownedClasses xmi:id="28WYD" name="Enumeration" superClasses="#+8+by">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="@Deprecated: Use OclEnumeration&#xA;The Enumeration type is the type of an OrderedSet of EnumerationLiteral.&#xA;"/>
-      <ownedOperations xmi:id="wJUrA" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation"
-          isStatic="true" name="allInstances" type="#UQF4+">
-        <ownedComments body="Return a set of all enumeration values of oclText[self]."/>
-      </ownedOperations>
-      <ownedProperties xmi:id="bVY,D" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty"
-          isStatic="true" name="allLiterals" type="#rET9a">
-        <ownedComments body="Evaluates to the literals of the enumeration.&#xA;"/>
-      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="Xml8E" name="EnumerationLiteral" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -808,7 +800,6 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="The standard type EnumerationLiteral represents a named constant value of an Enumeration.&#xA;"/>
-      <ownedProperties xmi:id="9qMPm" isImplicit="true" name="Enumeration" opposite="#bVY,D" type="#ATAYr"/>
       <ownedProperties xmi:id="Fr0SV" isImplicit="true" name="OclEnumeration" opposite="#DVi0w" type="#IeoaH"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="tYtCd" coercions="#RRcEo" name="Integer" superClasses="#Nr4QF">
@@ -2400,11 +2391,6 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="ATAYr" name="Bag" superClasses="#WuoZ6">
-      <ownedBindings>
-        <ownedSubstitutions actual="#28WYD" formal="#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" name="Bag" superClasses="#LVlMV">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#k2OA6"/>
@@ -2473,11 +2459,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PdAyF" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#Xml8E" formal="#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="WuoZ6" name="Collection" superClasses="#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#28WYD" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1d1Sm" name="Collection" superClasses="#jbMkR">

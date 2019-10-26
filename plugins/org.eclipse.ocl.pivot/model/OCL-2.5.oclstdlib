@@ -588,16 +588,8 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
  @Deprecated: Use OclEnumeration
  The Enumeration type is the type of an OrderedSet of EnumerationLiteral.
  **/
-type Enumeration conformsTo OclAny {
+type Enumeration conformsTo OclEnumeration {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
-	/**
-	Return a set of all enumeration values of oclText[self].
-	*/
-	static operation allInstances() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation';
-	/**
-	Evaluates to the literals of the enumeration.
-	**/
-	static property allLiterals : OrderedSet(EnumerationLiteral) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty';
 }
 
 /**

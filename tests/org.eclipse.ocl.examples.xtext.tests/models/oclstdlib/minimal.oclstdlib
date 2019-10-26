@@ -4,7 +4,6 @@ library lib : lib = 'http://minimal.oclstdlib'
 	type Boolean : PrimitiveType conformsTo OclAny {}
 	type Class conformsTo OclAny {}	
 	type Collection(T) : CollectionType conformsTo OclAny {}
-	type Enumeration conformsTo OclAny {}
 	type Integer : PrimitiveType conformsTo Real {}
 	type Map(K,V) : MapType conformsTo OclAny {}
 	type Metaclass(T) : Metaclass conformsTo OclAny {}
