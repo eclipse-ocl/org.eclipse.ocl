@@ -150,14 +150,18 @@ public class FileNewWizardTest extends TestCase
 		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
 	}
 
-	protected @NonNull TestFileSystem getTestFileSystem() {
+	protected final @NonNull TestFileSystem getTestFileSystem() {
+		return getTestFileSystem("");
+	}
+
+	protected @NonNull TestFileSystem getTestFileSystem(@NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		TestFileSystem testFileSystem2 = testFileSystem;
 		if (testFileSystem2 == null) {
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 				File testBundleFile = new File(".project");
 				assert !testBundleFile.exists() : "Default working directory should be the workspace rather than a project: " + testBundleFile.getAbsolutePath();
 			}
-			testFileSystem = testFileSystem2 = TestFileSystem.create(getTestFileSystemHelper());
+			testFileSystem = testFileSystem2 = TestFileSystem.create(getTestFileSystemHelper(), pathFromCurrentWorkingDirectoryToFileSystem);
 		}
 		return testFileSystem2;
 	}
@@ -181,11 +185,15 @@ public class FileNewWizardTest extends TestCase
 		return methodName != null ? methodName : "<unnamed>";
 	}
 
-	protected @NonNull TestProject getTestProject() {
+	protected final @NonNull TestProject getTestProject() {
+		return getTestProject("");
+	}
+
+	protected @NonNull TestProject getTestProject(@NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		TestProject testProject2 = testProject;
 		if (testProject2 == null) {
 			String testProjectName = "_OCL_" + getClass().getSimpleName() + "__" + getTestName();
-			testProject = testProject2 = getTestFileSystem().getTestProject(testProjectName, true);
+			testProject = testProject2 = getTestFileSystem(pathFromCurrentWorkingDirectoryToFileSystem).getTestProject(testProjectName, true);
 		}
 		return testProject2;
 	}

@@ -278,15 +278,15 @@ public class JUnitPluginFileSystem extends TestFileSystem
 		}
 	}
 
-	public static @NonNull JUnitPluginFileSystem create(@NonNull TestFileSystemHelper helper) {
+	public static @NonNull JUnitPluginFileSystem create(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		TestUIUtil.closeIntro();
-		return new JUnitPluginFileSystem(helper);
+		return new JUnitPluginFileSystem(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 	}
 
 	protected final @NonNull Map<@NonNull String, @NonNull JUnitPluginTestProject> projectName2testProject = new HashMap<>();
 
-	public JUnitPluginFileSystem(@NonNull TestFileSystemHelper helper) {
-		super(helper);
+	public JUnitPluginFileSystem(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
+		super(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 	}
 
 	@Override

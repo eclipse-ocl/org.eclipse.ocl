@@ -198,13 +198,17 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	}
 
 	protected @NonNull TestFileSystem getTestFileSystem() {
+		return getTestFileSystem("");
+	}
+
+	protected @NonNull TestFileSystem getTestFileSystem(@NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		TestFileSystem testFileSystem2 = testFileSystem;
 		if (testFileSystem2 == null) {
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 				File testBundleFile = new File(".project");
 				assert !testBundleFile.exists() : "Default working directory should be the workspace rather than a project: " + testBundleFile.getAbsolutePath();
 			}
-			testFileSystem = testFileSystem2 = TestFileSystem.create(getTestFileSystemHelper());
+			testFileSystem = testFileSystem2 = TestFileSystem.create(getTestFileSystemHelper(), pathFromCurrentWorkingDirectoryToFileSystem);
 		}
 		return testFileSystem2;
 	}

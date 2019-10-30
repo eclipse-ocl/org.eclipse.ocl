@@ -20,19 +20,21 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public abstract class TestFileSystem
 {
-	public static @NonNull TestFileSystem create(@NonNull TestFileSystemHelper helper) {
+	public static @NonNull TestFileSystem create(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			return JUnitStandaloneFileSystem.create(helper);
+			return JUnitStandaloneFileSystem.create(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 		}
 		else{
-			return JUnitPluginFileSystem.create(helper);
+			return JUnitPluginFileSystem.create(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 		}
 	}
 
 	protected final @NonNull TestFileSystemHelper helper;
+	protected final @NonNull String pathFromCurrentWorkingDirectoryToFileSystem;
 
-	protected TestFileSystem(@NonNull TestFileSystemHelper helper) {
+	protected TestFileSystem(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		this.helper = helper;
+		this.pathFromCurrentWorkingDirectoryToFileSystem = pathFromCurrentWorkingDirectoryToFileSystem;
 	}
 
 	protected @NonNull String getResourcesPreferenceContents() {

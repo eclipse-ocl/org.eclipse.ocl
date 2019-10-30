@@ -230,14 +230,14 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		}
 	}
 
-	public static @NonNull JUnitStandaloneFileSystem create(@NonNull TestFileSystemHelper helper) {
-		return new JUnitStandaloneFileSystem(helper);
+	public static @NonNull JUnitStandaloneFileSystem create(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
+		return new JUnitStandaloneFileSystem(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 	}
 
 	protected final @NonNull Map<@NonNull String, @NonNull JUnitStandaloneTestProject> projectName2testProject = new HashMap<>();
 
-	public JUnitStandaloneFileSystem(@NonNull TestFileSystemHelper helper) {
-		super(helper);
+	public JUnitStandaloneFileSystem(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
+		super(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 		JUnitStandaloneTestProject testProject = projectName2testProject.get(projectName);
 		if (testProject == null) {
 			URI newUri = URI.createPlatformResourceURI(projectName, true);
-			File projectFolder = new File(projectName).getAbsoluteFile();
+			File projectFolder = new File(pathFromCurrentWorkingDirectoryToFileSystem + projectName).getAbsoluteFile();
 			if (cleanProject) {
 				if (projectFolder.exists()) {
 					TestUtil.deleteDirectory(projectFolder);

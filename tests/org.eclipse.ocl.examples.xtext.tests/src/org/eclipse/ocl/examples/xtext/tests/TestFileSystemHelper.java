@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A TestFileSystemHelper provides call-backs to assist in building a test file system.
- * test harnesses.
  */
 public class TestFileSystemHelper
 {
