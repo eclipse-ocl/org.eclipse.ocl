@@ -40,7 +40,7 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 	}
 
 	@Override
-	public @Nullable Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS csElement) {
+	public @Nullable Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS csElement) {	// FIXME share BaseCSPostOrderVisitor.visitReferenceCS
 		Continuation<?> continuation = super.visitLibPropertyCS(csElement);
 		Property pivotElement = PivotUtil.getPivot(Property.class, csElement);
 		if (pivotElement != null) {

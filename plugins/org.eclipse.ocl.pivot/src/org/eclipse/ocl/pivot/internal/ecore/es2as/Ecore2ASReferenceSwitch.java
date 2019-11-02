@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -35,7 +34,6 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -54,6 +52,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -74,16 +73,16 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 {
-	private static final Logger logger = Logger.getLogger(Ecore2ASReferenceSwitch.class);
-
-	/**
-	 * The key that identifies opposite role names in an annotation
-	 */
-	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = "Property.oppositeRoleName"; //$NON-NLS-1$
-	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
-	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
-	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
-	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
+	@Deprecated /* @deprected moved to PropertyDetails */
+	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY;
+	@Deprecated /* @deprected moved to PropertyDetails */
+	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY;
+	@Deprecated /* @deprected moved to PropertyDetails */
+	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_ORDERED_KEY;
+	@Deprecated /* @deprected moved to PropertyDetails */
+	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_LOWER_KEY;
+	@Deprecated /* @deprected moved to PropertyDetails */
+	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UPPER_KEY;
 
 	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
@@ -202,76 +201,28 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEReference(EReference eObject) {
+	public Object caseEReference(EReference eReference) {
 		//		Property pivotElement = converter.getCreated(Property.class, eObject);
-		Property asProperty = caseEStructuralFeature(eObject);
+		Property asProperty = caseEStructuralFeature(eReference);
 		if (asProperty == oclInvalidProperty) {
 			return this;
 		}
-		doSwitchAll(Property.class, ClassUtil.<Property>nullFree(asProperty.getKeys()), eObject.getEKeys());
+		doSwitchAll(Property.class, ClassUtil.<Property>nullFree(asProperty.getKeys()), eReference.getEKeys());
 		Property oppositeProperty = null;
-		EReference eOpposite = eObject.getEOpposite();
+		EReference eOpposite = eReference.getEOpposite();
 		if (eOpposite != null) {
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
 		else {
-			EAnnotation oppositeRole = eObject.getEAnnotation(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0);
-			if (oppositeRole != null) {
-				EMap<String, String> details = oppositeRole.getDetails();
-				String oppositeName = details.get(PROPERTY_OPPOSITE_ROLE_NAME_KEY);
-				if (oppositeName != null) {
-					String uniqueValue = details.get(PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY);
-					String orderedValue = details.get(PROPERTY_OPPOSITE_ROLE_ORDERED_KEY);
-					String lowerValue = details.get(PROPERTY_OPPOSITE_ROLE_LOWER_KEY);
-					String upperValue = details.get(PROPERTY_OPPOSITE_ROLE_UPPER_KEY);
-					boolean isOrdered = orderedValue != null ? Boolean.valueOf(orderedValue) : false;
-					boolean isUnique = uniqueValue != null ? Boolean.valueOf(uniqueValue) : true;
-					IntegerValue one = ValueUtil.ONE_VALUE;
-					IntegerValue lower = lowerValue != null ? ValueUtil.integerValueOf(lowerValue) : one;
-					if (lower.isInvalid()) {
-						logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_LOWER_KEY + " " + lower);
-						lower = one;
-					}
-					UnlimitedNaturalValue unlimitedOne = ValueUtil.UNLIMITED_ONE_VALUE;
-					UnlimitedNaturalValue upper = upperValue != null ? ValueUtil.unlimitedNaturalValueOf(upperValue) : unlimitedOne;
-					if (upper.isInvalid()) {
-						logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
-						upper = unlimitedOne;
-					}
-					metamodelManager.createImplicitOppositeProperty(asProperty, oppositeName, isOrdered, isUnique, lower, upper);
-				}
+			OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromEReference(eReference);
+			if (oppositePropertyDetails != null) {
+				metamodelManager.createImplicitOppositeProperty(asProperty, oppositePropertyDetails.getName(),
+					oppositePropertyDetails.isOrdered(), oppositePropertyDetails.isUnique(),
+					oppositePropertyDetails.getLower(), oppositePropertyDetails.getUpper());
 			}
 			else {
-				oppositeRole = eObject.getEAnnotation(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
-				if (oppositeRole != null) {
-					EMap<String, String> details = oppositeRole.getDetails();
-					String oppositeName = details.get(EMOFExtendedMetaData.EMOF_COMMENT_BODY);
-					if (oppositeName != null) {
-					//	EObject eContainer = asProperty.eContainer();
-					//	if (eContainer instanceof Type) {
-						String uniqueValue = details.get("unique");
-						String orderedValue = details.get("ordered");
-						String lowerValue = details.get("lower");
-						String upperValue = details.get("upper");
-						boolean isOrdered = orderedValue != null ? Boolean.valueOf(orderedValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED;
-						boolean isUnique = uniqueValue != null ? Boolean.valueOf(uniqueValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE;
-						IntegerValue lower = lowerValue != null ? ValueUtil.integerValueOf(lowerValue) :  PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
-						if (lower.isInvalid()) {
-							logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_LOWER_KEY + " " + lower);
-							lower = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE;
-						}
-						UnlimitedNaturalValue upper = upperValue != null ? ValueUtil.unlimitedNaturalValueOf(upperValue) : PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
-						if (upper.isInvalid()) {
-							logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
-							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
-						}
-						metamodelManager.createImplicitOppositeProperty(asProperty, oppositeName, isOrdered, isUnique, lower, upper);
-					}
-				}
-				else {
-					asProperty.setOpposite(null);
-				}
+				asProperty.setOpposite(null);
 			}
 		}
 		//		else if (eObject.eContainer() instanceof EClass) {		// Skip annotation references

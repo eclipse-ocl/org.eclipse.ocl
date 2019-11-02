@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -293,8 +294,8 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 			}
 			else {
 				csReference.setReferredOpposite(null);
-				Map<@NonNull String, @NonNull String> requiredDetails = context.getMetamodelManager().createOppositeEAnnotationDetails(opposite);
-				if (requiredDetails != null) {
+				OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromProperty(opposite);
+				if (oppositePropertyDetails != null) {
 					ImplicitOppositeCS csOpposite = context.refreshTypedElement(ImplicitOppositeCS.class, BaseCSPackage.Literals.IMPLICIT_OPPOSITE_CS, opposite);
 					csReference.getOwnedImplicitOpposites().add(csOpposite);
 				}

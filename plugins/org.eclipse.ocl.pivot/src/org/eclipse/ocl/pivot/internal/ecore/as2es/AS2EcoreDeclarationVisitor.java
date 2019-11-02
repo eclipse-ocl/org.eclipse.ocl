@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -286,14 +287,15 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	protected @Nullable EAnnotation createOppositeEAnnotation(@NonNull Property property) {
-		Map<@NonNull String, @NonNull String> requiredDetails = context.getMetamodelManager().createOppositeEAnnotationDetails(property);
-		if (requiredDetails == null) {
+		OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromProperty(property);
+		if (oppositePropertyDetails == null) {
 			return null;
 		}
 		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		eAnnotation.setSource(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
 		EMap<String, String> details = eAnnotation.getDetails();
-		details.putAll(requiredDetails);
+		assert details != null;
+		oppositePropertyDetails.addToDetails(details);
 		return eAnnotation;
 	}
 

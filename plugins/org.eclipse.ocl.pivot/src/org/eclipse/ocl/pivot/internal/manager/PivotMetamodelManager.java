@@ -38,7 +38,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -111,6 +110,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
+import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -576,84 +576,17 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.8
 	 */
+	@Deprecated /* @deprected use PropertyDetails.createOppositeEAnnotationDetails */
 	public @Nullable Map<@NonNull String, @NonNull String> createOppositeEAnnotationDetails(@NonNull Property property) {
-		String lower = null;
-		String ordered = null;
-		String unique = null;
-		String upper = null;
-		IntegerValue lowerValue;
-		UnlimitedNaturalValue upperValue;
-		Type propertyType = property.getType();
-		Type type;
-		if (propertyType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)propertyType;
-			type = collectionType.getElementType();
-			lowerValue = collectionType.getLowerValue();
-			upperValue = collectionType.getUpperValue();
-			if (collectionType.isOrdered() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED) {
-				ordered = Boolean.toString(collectionType.isOrdered());
-			}
-			if (collectionType.isUnique() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE) {
-				unique = Boolean.toString(collectionType.isUnique());
-			}
+		OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromProperty(property);
+		if (oppositePropertyDetails != null) {
+			Map<@NonNull String, @NonNull String> details = new HashMap<>();
+			oppositePropertyDetails.addDetails(details);
+			return details;
 		}
 		else {
-			type = propertyType;
-			lowerValue = property.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
-			upperValue = ValueUtil.UNLIMITED_ONE_VALUE;
-		}
-		if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
-			lower = lowerValue.toString();
-		}
-		if (!(property.getOpposite().isIsComposite() ? ValueUtil.UNLIMITED_ONE_VALUE : PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE).equals(upperValue)) {
-			upper = upperValue.toString();
-		}
-		String name = property.getName();
-		//
-		//	If there is an exact match for the no-EAnnotation DEFAULT values, then no EAnnotation is required.
-		//
-		if (name.equals(type.getName()) && (lower == null) && (ordered == null) && (unique == null) && (upper == null)) {
 			return null;
 		}
-		//
-		//	Otherwise the with-EAnnotation ANNOTATED values are the reference.
-		//
-		lower = null;
-		ordered = null;
-		unique = null;
-		upper = null;
-		if (propertyType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)propertyType;
-			if (collectionType.isOrdered() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_ORDERED) {
-				ordered = Boolean.toString(collectionType.isOrdered());
-			}
-			if (collectionType.isUnique() != PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE) {
-				unique = Boolean.toString(collectionType.isUnique());
-			}
-		}
-		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
-			lower = lowerValue.toString();
-		}
-		if (!PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE.equals(upperValue)) {
-			upper = upperValue.toString();
-		}
-		HashMap<@NonNull String, @NonNull String> requiredDetails = new HashMap<>();
-		String bodyName = EMOFExtendedMetaData.EMOF_COMMENT_BODY;
-		assert bodyName != null;
-		requiredDetails.put(bodyName, name);
-		if (lower != null) {
-			requiredDetails.put("lower", lower);
-		}
-		if (ordered != null) {
-			requiredDetails.put("ordered", ordered);
-		}
-		if (unique != null) {
-			requiredDetails.put("unique", unique);
-		}
-		if (upper != null) {
-			requiredDetails.put("upper", upper);
-		}
-		return requiredDetails;
 	}
 
 	public @NonNull Orphanage createOrphanage() {
