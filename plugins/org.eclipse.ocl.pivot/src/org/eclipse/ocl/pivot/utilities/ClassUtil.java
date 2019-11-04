@@ -289,6 +289,13 @@ public class ClassUtil
 	public static <T> @NonNull EList<@NonNull T> nullFree(@Nullable EList<T> nullFreeList) {
 		return nullFreeList != null ? nullFreeList : (EList<T>) ECollections.EMPTY_ELIST;
 	}
+	/**
+	 * @since 1.10
+	 */
+	@SuppressWarnings({"null", "unchecked"})
+	public static <T> @NonNull Iterable<@NonNull T> nullFree(@Nullable Iterable<T> nullFreeList) {
+		return nullFreeList != null ? nullFreeList : (Iterable<T>) ECollections.EMPTY_ELIST;
+	}
 
 	/**
 	 * Safely determines the relative order of <code>object</code> and
