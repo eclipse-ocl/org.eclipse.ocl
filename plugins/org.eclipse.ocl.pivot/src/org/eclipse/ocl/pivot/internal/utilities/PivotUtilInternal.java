@@ -817,6 +817,9 @@ public class PivotUtilInternal //extends PivotUtil
 			return false;
 		}
 		int iMax = value.length();
+		if (iMax <= 0) {
+			return false;
+		}
 		for (int i = 0; i < iMax; i++) {
 			char c = value.charAt(i);
 			if (('A' <= c) && (c <= 'Z')) {
