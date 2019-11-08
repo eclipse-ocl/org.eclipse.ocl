@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -510,6 +511,13 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedIteratorsList(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public static @NonNull List<@NonNull Parameter> getOwnedIteratorsList(@NonNull Iteration iteration) {
+		return ClassUtil.nullFree(iteration.getOwnedIterators());
 	}
 
 	/**

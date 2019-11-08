@@ -29,6 +29,8 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EnumLiteralExp;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
@@ -160,6 +162,17 @@ public class PivotHelper
 		Comment asComment = PivotFactory.eINSTANCE.createComment();
 		asComment.setBody(comment);
 		return asComment;
+	}
+
+	/**
+	 * @since 1.10
+	 */
+	public @NonNull EnumLiteralExp createEnumLiteralExp(@NonNull EnumerationLiteral value) {
+		EnumLiteralExp asEnumLiteralExp = PivotFactory.eINSTANCE.createEnumLiteralExp();
+		asEnumLiteralExp.setReferredLiteral(value);
+		asEnumLiteralExp.setType(value.getOwningEnumeration());
+		asEnumLiteralExp.setIsRequired(true);
+		return asEnumLiteralExp;
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {

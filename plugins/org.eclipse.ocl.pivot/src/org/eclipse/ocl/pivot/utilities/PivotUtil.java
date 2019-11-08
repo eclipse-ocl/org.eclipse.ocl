@@ -1768,6 +1768,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.10
+	 */
+	public static @NonNull Property getReferredProperty(@NonNull ShadowPart shadowPart) {
+		return ClassUtil.nonNullState(shadowPart.getReferredProperty());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Type getReferredType(@NonNull TypeExp typeExp) {
