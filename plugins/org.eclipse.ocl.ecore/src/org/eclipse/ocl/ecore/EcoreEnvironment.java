@@ -701,48 +701,58 @@ implements EnvironmentWithHiddenOpposites {
 		String name = packageNames.get(0);
 		try {
 			for (Object next : registry.values()) {
-				if (next instanceof EPackage.Descriptor) {
-					next = ((EPackage.Descriptor)next).getEPackage();
-				}
-				if (next instanceof EPackage) {
-					EPackage ePackage = (EPackage) next;
+				try {
+					if (next instanceof EPackage.Descriptor) {
+						next = ((EPackage.Descriptor)next).getEPackage();
+					}
+					if (next instanceof EPackage) {
+						EPackage ePackage = (EPackage) next;
 
-					// only consider root-level packages when searching by name
-					if ((ePackage.getESuperPackage() == null)
-							&& EcoreForeignMethods.isNamed(name, ePackage)) {
+						// only consider root-level packages when searching by name
+						if ((ePackage.getESuperPackage() == null)
+								&& EcoreForeignMethods.isNamed(name, ePackage)) {
 
-						EPackage tentativeResult = findNestedPackage(
-							packageNames.subList(1, packageNames.size()),
-							ePackage);
+							EPackage tentativeResult = findNestedPackage(
+								packageNames.subList(1, packageNames.size()),
+								ePackage);
 
-						if (tentativeResult != null) {
-							return tentativeResult;
+							if (tentativeResult != null) {
+								return tentativeResult;
+							}
 						}
 					}
+				}
+				catch (Throwable t) {							// See bug 552870
+					System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
 				}
 			}
 		}
 		catch (ConcurrentModificationException e) {				// See Bug 544165
-			System.err.println(e.toString() + "\nThe EPackage registry is unstable.\nUse org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry to diagnose the offending contribution."); //$NON-NLS-1$
+			System.err.println("OCL: unstable global EPackage registry.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + e.toString()); //$NON-NLS-1$
 			for (Object next : new ArrayList<Object>(registry.values())) {
-				if (next instanceof EPackage.Descriptor) {
-					next = ((EPackage.Descriptor)next).getEPackage();
-				}
-				if (next instanceof EPackage) {
-					EPackage ePackage = (EPackage) next;
+				try {
+					if (next instanceof EPackage.Descriptor) {
+						next = ((EPackage.Descriptor)next).getEPackage();
+					}
+					if (next instanceof EPackage) {
+						EPackage ePackage = (EPackage) next;
 
-					// only consider root-level packages when searching by name
-					if ((ePackage.getESuperPackage() == null)
-							&& EcoreForeignMethods.isNamed(name, ePackage)) {
+						// only consider root-level packages when searching by name
+						if ((ePackage.getESuperPackage() == null)
+								&& EcoreForeignMethods.isNamed(name, ePackage)) {
 
-						EPackage tentativeResult = findNestedPackage(
-							packageNames.subList(1, packageNames.size()),
-							ePackage);
+							EPackage tentativeResult = findNestedPackage(
+								packageNames.subList(1, packageNames.size()),
+								ePackage);
 
-						if (tentativeResult != null) {
-							return tentativeResult;
+							if (tentativeResult != null) {
+								return tentativeResult;
+							}
 						}
 					}
+				}
+				catch (Throwable t) {
+					System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
 				}
 			}
 		}
