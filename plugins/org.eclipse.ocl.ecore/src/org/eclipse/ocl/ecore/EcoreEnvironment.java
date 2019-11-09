@@ -93,6 +93,7 @@ implements EnvironmentWithHiddenOpposites {
 	private static final Map<List<String>, EPackage> OCL_PACKAGES =
 			new java.util.HashMap<List<String>, EPackage>();
 
+	private static boolean findPackageHasReportedProblems = false;
 
 	static {
 		List<String> names = new java.util.ArrayList<String>();
@@ -697,7 +698,7 @@ implements EnvironmentWithHiddenOpposites {
 		if (OCL_PACKAGES.containsKey(packageNames)) {
 			return OCL_PACKAGES.get(packageNames);
 		}
-
+		boolean reportProblems = !findPackageHasReportedProblems;
 		String name = packageNames.get(0);
 		try {
 			for (Object next : registry.values()) {
@@ -723,7 +724,10 @@ implements EnvironmentWithHiddenOpposites {
 					}
 				}
 				catch (Throwable t) {							// See bug 552870
-					System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
+					if (reportProblems) {
+						findPackageHasReportedProblems = true;
+						System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
+					}
 				}
 			}
 		}
@@ -752,7 +756,10 @@ implements EnvironmentWithHiddenOpposites {
 					}
 				}
 				catch (Throwable t) {
-					System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
+					if (reportProblems) {
+						findPackageHasReportedProblems = true;
+						System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
+					}
 				}
 			}
 		}
