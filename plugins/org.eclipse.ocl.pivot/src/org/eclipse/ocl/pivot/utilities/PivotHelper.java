@@ -244,12 +244,10 @@ public class PivotHelper
 	}
 
 	public @NonNull LetExp createLetExp(@NonNull Variable asVariable, @NonNull OCLExpression asInExpression) {
-		Type commonType = metamodelManager.getCommonType(ClassUtil.nonNullState(asVariable.getType()), TemplateParameterSubstitutions.EMPTY,
-			ClassUtil.nonNullState(asInExpression.getType()), TemplateParameterSubstitutions.EMPTY);
 		LetExp asLetExp = PivotFactory.eINSTANCE.createLetExp();
 		asLetExp.setOwnedVariable(asVariable);
 		asLetExp.setOwnedIn(asInExpression);;
-		asLetExp.setType(commonType);
+		asLetExp.setType(asInExpression.getType());
 		asLetExp.setIsRequired(asInExpression.isIsRequired());
 		asLetExp.setOwnedVariable(asVariable);
 		return asLetExp;
