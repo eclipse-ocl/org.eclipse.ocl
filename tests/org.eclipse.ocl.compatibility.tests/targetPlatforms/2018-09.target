@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Oxygen Build Target Platform" sequenceNumber="16">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL 2018-09 Build Target Platform" sequenceNumber="16">
 <locations>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
