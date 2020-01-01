@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
@@ -393,6 +394,13 @@ public class PivotHelper
 		return asParameter;
 	}
 
+	/**
+	 * @since 1.11
+	 */
+	public @NonNull Parameter createParameter(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		return PivotUtil.createParameter(name, asType, isRequired);
+	}
+
 	@Deprecated /* supply a representedParameter */
 	public @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
@@ -406,9 +414,19 @@ public class PivotHelper
 	 * @since 1.10
 	 */
 	public @NonNull ParameterVariable createParameterVariable(@NonNull Parameter asParameter) {
-		ParameterVariable asParameterVariable = createParameterVariable(asParameter.getName(), asParameter.getType(), asParameter.isIsRequired());
+		ParameterVariable asParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		asParameterVariable.setName(asParameter.getName());
+		asParameterVariable.setType(asParameter.getType());
+		asParameterVariable.setIsRequired(asParameter.isIsRequired());
 		asParameterVariable.setRepresentedParameter(asParameter);
 		return asParameterVariable;
+	}
+
+	/**
+	 * @since 1.11
+	 */
+	public @NonNull PropertyCallExp createPropertyCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
+		return PivotUtil.createPropertyCallExp(asSource, asProperty);
 	}
 
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
