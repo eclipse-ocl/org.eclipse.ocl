@@ -65,10 +65,10 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 */
 	protected @Nullable Monitor monitor = null;
 
-	/** @deprecated Use getExecutor().getEvaluationEnvirinment() */
+	/** @deprecated Use getExecutor().getEvaluationEnvironment() */
 	@Deprecated
 	protected final @NonNull EvaluationEnvironment evaluationEnvironment;
-	/** @deprecated Use environmentFactory.getEvaluationEnvirinment() */
+	/** @deprecated Use environmentFactory.getEvaluationEnvironment() */
 	@Deprecated
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	/** @deprecated Use getExecutor().getModelManager() */
