@@ -244,7 +244,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(getESObject(asProperty));
 		String getAccessor;
 		if (eStructuralFeature == OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER) {
-			getAccessor = "eContainer";
+			getAccessor = JavaConstants.E_CONTAINER_NAME;
 		}
 		else {
 			getAccessor = genModelHelper.getGetAccessor(eStructuralFeature);

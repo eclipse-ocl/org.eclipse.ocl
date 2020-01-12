@@ -37,6 +37,7 @@ public class JavaConstants
 	};
 
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
+	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 	public static final @NonNull String E_NAME = "e";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
