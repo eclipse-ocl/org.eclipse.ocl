@@ -25,12 +25,14 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.ocl.examples.debug.vm.ui.actions.DebugVMImages;
 import org.eclipse.ocl.examples.debug.vm.ui.messages.DebugVMUIMessages;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -221,7 +223,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	 * @return the active workbench window
 	 */
 	public static IWorkbenchWindow getActiveWorkbenchWindow() {
-		return getDefault().getWorkbench().getActiveWorkbenchWindow();
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 	}
 
 	/**
@@ -325,7 +327,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	}
 
 	private ImageDescriptor imageDescriptor(String imagePath) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, "icons/" + imagePath); //$NON-NLS-1$
+		return ResourceLocator.imageDescriptorFromBundle(PLUGIN_ID, "icons/" + imagePath).orElse(null); //$NON-NLS-1$
 	}
 
 	/*    private final ImageDescriptor overlayImage(String overImagePath, Image base, int quadrant) {

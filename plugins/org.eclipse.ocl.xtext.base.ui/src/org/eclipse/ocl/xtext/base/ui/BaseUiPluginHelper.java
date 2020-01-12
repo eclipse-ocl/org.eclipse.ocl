@@ -17,16 +17,16 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.ocl.xtext.base.ui.internal.BaseActivator;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.ocl.xtext.base.ui"; //$NON-NLS-1$
 
-	public static final BaseUiPluginHelper INSTANCE = new BaseUiPluginHelper(BaseActivator.getInstance()); 
-	
+	public static final BaseUiPluginHelper INSTANCE = new BaseUiPluginHelper(BaseActivator.getInstance());
+
 	private BaseUiPluginHelper(Plugin plugin) {
 		super(plugin);
 	}
@@ -34,27 +34,27 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 	public Status createErrorStatus(Exception e) {
 		return new Status(Status.ERROR, getSymbolicName(), e.getMessage(), e);
 	}
-	
+
 	/**
 	 * Returns an image descriptor for the image file at the given plug-in
 	 * relative path
-	 * 
+	 *
 	 * @param path
 	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
+		return ResourceLocator.imageDescriptorFromBundle(PLUGIN_ID, path).orElse(null);
 	}
-	
+
 	/**
 	 * Logs the given message and throwable to the platform log.
-	 * 
+	 *
 	 * If you have a status object in hand call log(String, IStatus) instead.
-	 * 
+	 *
 	 * This convenience method is for internal use by the IDE Workbench only and
 	 * must not be called outside the IDE Workbench.
-	 * 
+	 *
 	 * @param message
 	 *            A high level UI message describing when the problem happened.
 	 * @param t
@@ -67,10 +67,10 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 
 	/**
 	 * Logs the given message and status to the platform log.
-	 * 
+	 *
 	 * This convenience method is for internal use by the IDE Workbench only and
 	 * must not be called outside the IDE Workbench.
-	 * 
+	 *
 	 * @param message
 	 *            A high level UI message describing when the problem happened.
 	 *            May be <code>null</code>.
@@ -91,10 +91,10 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 	 * Logs the given throwable to the platform log, indicating the class and
 	 * method from where it is being logged (this is not necessarily where it
 	 * occurred).
-	 * 
+	 *
 	 * This convenience method is for internal use by the IDE Workbench only and
 	 * must not be called outside the IDE Workbench.
-	 * 
+	 *
 	 * @param clazz
 	 *            The calling class.
 	 * @param methodName
@@ -117,7 +117,7 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 
 	/**
 	 * Logs a message with given level into the Eclipse log file
-	 * 
+	 *
 	 * @param message
 	 *            the message to log
 	 * @param severity

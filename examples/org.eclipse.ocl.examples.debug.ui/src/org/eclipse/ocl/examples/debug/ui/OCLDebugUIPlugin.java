@@ -26,6 +26,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -43,7 +44,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 	private static final Logger logger = Logger.getLogger(OCLDebugUIPlugin.class);
 
 	protected ImageRegistry imageDescriptorRegistry;
-	
+
 	/**
 	 * The constructor
 	 */
@@ -54,6 +55,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
@@ -63,6 +65,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		if (imageDescriptorRegistry != null) {
@@ -81,11 +84,11 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	
+
 	public Image createImage(String path) {
-		
+
 		Image image = getImageRegistry().get(path);
-		
+
 		if (image == null) {
 			try {
 				ImageDescriptor imageDescriptor = getImageDescriptor(path);
@@ -96,14 +99,14 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 			}
 			catch(Exception e) { logger.error("Failed to createImage '" + path + "'", e); }
 		}
-		
+
 		return image;
 	}
-	
+
 	public ImageDescriptor getImageDescriptor(String path) {
-		
+
 		ImageDescriptor imageDescriptor = getImageDescriptorRegistry().getDescriptor(path);
-		
+
 		if (imageDescriptor == null) {
 			URL url = FileLocator.find(getBundle(), new Path(path), Collections.<String, String>emptyMap());
 			if (url != null) {
@@ -111,33 +114,33 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 				if (imageDescriptor != null) getImageDescriptorRegistry().put(path, imageDescriptor);
 			}
 		}
-		
+
 		return imageDescriptor;
 	}
-	
+
 	protected ImageRegistry getImageDescriptorRegistry() {
 		if (imageDescriptorRegistry == null) {
 			imageDescriptorRegistry = createImageRegistry();
 		}
 		return imageDescriptorRegistry;
 	}
-	
+
 	public static BasicDiagnostic createDiagnostic(String message) {
 		return new BasicDiagnostic(Diagnostic.OK, PLUGIN_ID, 0, message, null);
 	}
-	
+
 	public static Diagnostic createErrorDiagnostic(String message, Throwable throwable) {
 		Object[] data = (throwable == null) ? null : new Object [] { throwable };
 		return new BasicDiagnostic(Diagnostic.ERROR,  PLUGIN_ID, 0, message, data);
 	}
-	
+
 	public static Diagnostic createWarnDiagnostic(String message) {
 		return new BasicDiagnostic(Diagnostic.ERROR,  PLUGIN_ID, 0, message, null);
-	}	
+	}
 
 	/**
 	 * Indicates that the given diagnostic is neither error or canceled.
-	 * 
+	 *
 	 * @param diagnostic
 	 *            the diagnostic to test
 	 * @return <code>true</code> in case of success, <code>false</code>
@@ -147,7 +150,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 		int severity = diagnostic.getSeverity();
 		return severity != Diagnostic.ERROR && severity != Diagnostic.CANCEL;
 	}
-	
+
 	public static void log(int severity, int code, String message, Throwable throwable) {
 		//
 		// Status ctor requires a non-null message
@@ -194,7 +197,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 		if(debugPlugin != null) {
 			debugPlugin.getLog().log(status);
     	}
-    } 
+    }
 
     public static void log(Throwable e) {
         log(new Status(IStatus.ERROR, PLUGIN_ID, "Exception caught", e)); //$NON-NLS-1$
@@ -210,16 +213,16 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the active workbench window
-	 * 
+	 *
 	 * @return the active workbench window
 	 */
 	public static IWorkbenchWindow getActiveWorkbenchWindow() {
-		return getDefault().getWorkbench().getActiveWorkbenchWindow();
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 	}
 
 	/**
 	 * Returns the active workbench shell or <code>null</code> if none
-	 * 
+	 *
 	 * @return the active workbench shell or <code>null</code> if none
 	 */
 	public static Shell getActiveWorkbenchShell() {
