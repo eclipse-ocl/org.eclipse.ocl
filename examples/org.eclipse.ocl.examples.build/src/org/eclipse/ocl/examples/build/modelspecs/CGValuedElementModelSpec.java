@@ -148,7 +148,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isBoxed()/isUnboxed()
+	 * The algorithm options for getEcoreClassifier()/isBoxed()/isEcore()/isUnboxed()
 	 */
 	public interface Box {
 		@Nullable String generateGetEcoreClassifier(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -544,7 +544,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isCaught()
+	 * The algorithm options for isCaught()/setCaught()
 	 */
 	public static interface Ct {
 		@Nullable String generateIsCaught(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -718,7 +718,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isEqualTo()/isEquivalentTo()/isNotEqualTo()
+	 * The algorithm options for isEquivalentTo()/isEquivalentToInternal()
 	 */
 	public static interface Eq {
 		@Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -1135,7 +1135,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for getInvaliValue(),isInvalid()/isNonInvalid()/setNonInvalid()
+	 * The algorithm options for getInvaliValue()/isInvalid()/isNonInvalid()/setNonInvalid()/setNonInvalidValue()
 	 */
 	public interface Inv {
 		@Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -1635,7 +1635,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isNonNull()/isNull()/isUndeclaredNonNull()/setNonNull()
+	 * The algorithm options for isAssertedNonNull()/isNonNull()/isNull()/isUndeclaredNonNull()/setNonNull1()/setNonNull2()/setNonNull3()
 	 */
 	public interface Nul {
 		@NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -1923,7 +1923,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isSettable()
+	 * The algorithm options for isRange()
 	 */
 	public static interface Rng {
 		public static MethodSpec isRange = new MyMethodSpec(CGCollectionPart.class, "boolean isRange()", null,
@@ -1940,7 +1940,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isSettable()
+	 * The algorithm options for isSettable()/setSettable()
 	 */
 	public static interface Set {
 		@Nullable String generateIsSettable(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -2063,7 +2063,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for getNamedValue()/getTypedValue()/getValueName()
+	 * The algorithm options for getNamedValue()/getReferredValue()/getSourceValue()/getTypedValue()/getValueName()
 	 */
 	public interface Val {
 		@Nullable String generateGetNamedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
