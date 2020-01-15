@@ -58,13 +58,13 @@ public class EcoreEnvironmentFactory
 		EPackage, EClassifier, EOperation, EStructuralFeature,
 		EEnumLiteral, EParameter,
 		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
-	
+
 	/**
      * A convenient shared instance of the environment factory, that creates
      * environments using the global package registry.
 	 */
     public static EcoreEnvironmentFactory INSTANCE = new EcoreEnvironmentFactory();
-	
+
 	private final EPackage.Registry registry;
 
 	private OppositeEndFinder oppositeEndFinder = null;
@@ -80,7 +80,7 @@ public class EcoreEnvironmentFactory
 	/**
 	 * Initializes me with an <code>EPackage.Registry</code> that the
 	 * environments I create will use to look up packages.
-	 * 
+	 *
 	 * @param reg
 	 *            my package registry (must not be <code>null</code>). Package
 	 *            descriptors that are not yet resolved will not be resolved for
@@ -100,31 +100,31 @@ public class EcoreEnvironmentFactory
 		super();
 		this.registry = reg;
 	}
-	
+
     // implements the inherited specification
     public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
 	createEnvironment() {
 		EcoreEnvironment result = new EcoreEnvironment(this, null);
 		return result;
 	}
-	
+
     // implements the inherited specification
     public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
 	loadEnvironment(Resource resource) {
 		EcoreEnvironment result = new EcoreEnvironment(this, resource);
 		return result;
 	}
-	
+
     /**
      * Obtains the package registry used by environment that I create to look
      * up packages.
-     * 
+     *
      * @return my package registry
      */
 	public final EPackage.Registry getEPackageRegistry() {
 		return registry;
 	}
-	
+
     // implements the inherited specification
 	@Override
 	protected EPackage lookupPackage(List<String> pathname) {
@@ -136,10 +136,10 @@ public class EcoreEnvironmentFactory
 	protected EClassifier getClassifier(Object context) {
         return oclType(context);
 	}
-    
+
     static EClassifier oclType(Object object) {
         EClassifier result = null;
-        
+
         if (object instanceof EObject) {
             result = ((EObject) object).eClass();
         } else {
@@ -150,13 +150,13 @@ public class EcoreEnvironmentFactory
                     break;
                 }
             }
-            
+
             if (result == null) {
                 // it's just some weirdo object that we don't understand
                 result = OCLStandardLibraryImpl.INSTANCE.getOclAny();
             }
         }
-        
+
         return result;
     }
 
@@ -167,7 +167,7 @@ public class EcoreEnvironmentFactory
 			throw new IllegalArgumentException(
 				"Parent environment must be an Ecore environment: " + parent); //$NON-NLS-1$
 		}
-		
+
 		EcoreEnvironment result = new EcoreEnvironment(parent);
 		return result;
 	}
@@ -207,6 +207,7 @@ public class EcoreEnvironmentFactory
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public OCLFactoryWithHistory createOCLFactoryWithHistory(
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		return new OCLFactoryWithHistory(env.getOCLFactory());
@@ -233,9 +234,9 @@ public class EcoreEnvironmentFactory
 	/**
 	 * Returns a <code>null</code> opposite end finder. This means that by default no hidden opposites
 	 * will be found and no CPU cycles will be used even for looking them up.<p>
-	 * 
+	 *
 	 * Subclasses can redefine this accordingly. See, e.g., {@link EcoreEnvironmentFactoryWithHiddenOpposites}.
-	 * 
+	 *
 	 * @since 3.1
 	 */
     protected OppositeEndFinder createOppositeEndFinder(EPackage.Registry registry) {
@@ -255,6 +256,7 @@ public class EcoreEnvironmentFactory
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEvaluationVisitor(
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv,

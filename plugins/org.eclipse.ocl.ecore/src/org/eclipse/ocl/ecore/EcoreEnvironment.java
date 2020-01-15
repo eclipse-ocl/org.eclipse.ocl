@@ -698,25 +698,27 @@ implements EnvironmentWithHiddenOpposites {
 		if (OCL_PACKAGES.containsKey(packageNames)) {
 			return OCL_PACKAGES.get(packageNames);
 		}
+		//
+		//	First pass, just traverse the registry to find a match, optionally reporting bad entries.
+		//
+		Set<String> searchedPackages = null;
 		boolean reportProblems = !findPackageHasReportedProblems;
 		String name = packageNames.get(0);
 		try {
-			for (Object next : registry.values()) {
+			for (Map.Entry<String,Object> entry : registry.entrySet()) {
 				try {
+					Object next = entry.getValue();
 					if (next instanceof EPackage.Descriptor) {
 						next = ((EPackage.Descriptor)next).getEPackage();
 					}
 					if (next instanceof EPackage) {
 						EPackage ePackage = (EPackage) next;
-
 						// only consider root-level packages when searching by name
 						if ((ePackage.getESuperPackage() == null)
 								&& EcoreForeignMethods.isNamed(name, ePackage)) {
-
 							EPackage tentativeResult = findNestedPackage(
 								packageNames.subList(1, packageNames.size()),
 								ePackage);
-
 							if (tentativeResult != null) {
 								return tentativeResult;
 							}
@@ -725,41 +727,59 @@ implements EnvironmentWithHiddenOpposites {
 				}
 				catch (Throwable t) {							// See bug 552870
 					if (reportProblems) {
+						if (searchedPackages == null) {
+							searchedPackages = new HashSet<String>();
+						}
+						searchedPackages.add(entry.getKey());	// Cache errors in first pass to avoid repeated errors in second pass
 						findPackageHasReportedProblems = true;
 						System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
 					}
 				}
 			}
 		}
-		catch (ConcurrentModificationException e) {				// See Bug 544165
-			System.err.println("OCL: unstable global EPackage registry.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + e.toString()); //$NON-NLS-1$
-			for (Object next : new ArrayList<Object>(registry.values())) {
+		//
+		//	Further passes after a CME, re-traverse the registry to find a match, optionally reporting bad entries
+		//	Repeating until a cache of all visited keys is the same size as the registry.
+		//
+		catch (ConcurrentModificationException cme1) {				// See Bug 544165
+			System.err.println("OCL: unstable global EPackage registry.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + cme1.toString()); //$NON-NLS-1$
+			if (searchedPackages == null) {
+				searchedPackages = new HashSet<String>();
+			}
+			while (registry.size() > searchedPackages.size()) {
 				try {
-					if (next instanceof EPackage.Descriptor) {
-						next = ((EPackage.Descriptor)next).getEPackage();
-					}
-					if (next instanceof EPackage) {
-						EPackage ePackage = (EPackage) next;
-
-						// only consider root-level packages when searching by name
-						if ((ePackage.getESuperPackage() == null)
-								&& EcoreForeignMethods.isNamed(name, ePackage)) {
-
-							EPackage tentativeResult = findNestedPackage(
-								packageNames.subList(1, packageNames.size()),
-								ePackage);
-
-							if (tentativeResult != null) {
-								return tentativeResult;
+					for (Map.Entry<String,Object> entry : registry.entrySet()) {
+						if (searchedPackages.add(entry.getKey())) {
+							try {
+								Object next = entry.getValue();
+								if (next instanceof EPackage.Descriptor) {
+									next = ((EPackage.Descriptor)next).getEPackage();
+								}
+								if (next instanceof EPackage) {
+									EPackage ePackage = (EPackage) next;
+									// only consider root-level packages when searching by name
+									if ((ePackage.getESuperPackage() == null)
+											&& EcoreForeignMethods.isNamed(name, ePackage)) {
+										EPackage tentativeResult = findNestedPackage(
+											packageNames.subList(1, packageNames.size()),
+											ePackage);
+										if (tentativeResult != null) {
+											return tentativeResult;
+										}
+									}
+								}
+							}
+							catch (Throwable t) {
+								if (reportProblems) {
+									findPackageHasReportedProblems = true;
+									System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
+								}
 							}
 						}
 					}
 				}
-				catch (Throwable t) {
-					if (reportProblems) {
-						findPackageHasReportedProblems = true;
-						System.err.println("OCL: erroneous global EPackage registry entry.\n" + t.toString()); //$NON-NLS-1$
-					}
+				catch (ConcurrentModificationException cme2) {				// See Bug 544165
+					// go round again - eventually searchedPackages.size() == registry.size()
 				}
 			}
 		}
