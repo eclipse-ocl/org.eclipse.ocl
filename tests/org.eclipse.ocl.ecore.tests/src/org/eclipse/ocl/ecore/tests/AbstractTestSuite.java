@@ -45,6 +45,7 @@ import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.internal.OCLFactoryImpl;
+import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.tests.GenericFruitTestSuite;
 import org.eclipse.ocl.utilities.OCLFactory;
 
@@ -67,6 +68,7 @@ public abstract class AbstractTestSuite
 			EPackage.Registry globalEPackageRegistry = EPackage.Registry.INSTANCE;
 			List<String> keys1 = new ArrayList<String>(globalEPackageRegistry.keySet());
 			Collections.sort(keys1);
+			OCLStandardLibraryImpl.stdlibPackage.getName();
 			List<String> newArrayList = new ArrayList<String>();
 			newArrayList.add("xyzzy");
 			EPackage ePackage = EcoreEnvironment.findPackage(newArrayList, globalEPackageRegistry);
