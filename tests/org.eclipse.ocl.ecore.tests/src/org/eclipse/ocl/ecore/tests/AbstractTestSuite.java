@@ -17,8 +17,13 @@ package org.eclipse.ocl.ecore.tests;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -53,27 +58,51 @@ public abstract class AbstractTestSuite
 	extends GenericFruitTestSuite<EObject, EPackage, EClassifier, EClassifier, EClass, EDataType, EClassifier, EEnum, EOperation, EParameter, EStructuralFeature,
 	EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint> {
 
+	/**
+	 * Ideally the following would be just another test, but we need to check that the plugin registrations
+	 * populating the global EPackage.Registry are complete; no addutional registrations appear after a scan.
+	 */
+	static {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			EPackage.Registry globalEPackageRegistry = EPackage.Registry.INSTANCE;
+			List<String> keys1 = new ArrayList<String>(globalEPackageRegistry.keySet());
+			Collections.sort(keys1);
+			List<String> newArrayList = new ArrayList<String>();
+			newArrayList.add("xyzzy");
+			EPackage ePackage = EcoreEnvironment.findPackage(newArrayList, globalEPackageRegistry);
+			assertNull(ePackage);
+			newArrayList.set(0, "ecore");
+			ePackage = EcoreEnvironment.findPackage(newArrayList, globalEPackageRegistry);
+			assertEquals(ePackage, EcorePackage.eINSTANCE);
+			List<String> keys2 = new ArrayList<String>(globalEPackageRegistry.keySet());
+			Collections.sort(keys2);
+			Set<String> diff = new HashSet<String>(keys2);
+			diff.removeAll(keys1);
+			assertTrue("Unexpected global EPackage.Registry registrations " + diff, diff.isEmpty());
+		}
+	}
+
 	protected static final org.eclipse.ocl.ecore.EcorePackage ocltypes =
         org.eclipse.ocl.ecore.EcorePackage.eINSTANCE;
 	protected static final EcorePackage ecore = EcorePackage.eINSTANCE;
-	
+
 	protected EFactory fruitFactory;
-	
+
 	protected EClass fruit;
 	protected EOperation fruit_ripen;
 	protected EOperation fruit_preferredColor;
 	protected EOperation fruit_newFruit;
 	protected EOperation fruit_setColor;
 	protected EAttribute fruit_color;
-	
+
 	protected EClass apple;
 	protected EAttribute apple_label;
 	protected EReference apple_stem;
 	protected EOperation apple_labelOper;
 	protected EOperation apple_newApple;
-	
+
 	protected EClass stem;
-	
+
 	protected EEnum color;
 	protected EEnumLiteral color_black;
 	protected EEnumLiteral color_red;
@@ -82,7 +111,7 @@ public abstract class AbstractTestSuite
 	protected EEnumLiteral color_orange;
 	protected EEnumLiteral color_brown;
 	protected EEnumLiteral color_pink;
-	
+
 	protected EClass util;
 	protected EReference util_orderedSet;
 	protected EReference util_set;
@@ -92,17 +121,17 @@ public abstract class AbstractTestSuite
 	protected EOperation util_processSet;
 	protected EOperation util_processBag;
 	protected EOperation util_processSequence;
-	
+
 	protected EClass tree;
 	protected EAttribute tree_name;
 	protected EReference tree_fruits;
 	protected EReference tree_fruitsDroppedUnder;
-	
+
 	protected final OCLFactory oclFactory = OCLFactoryImpl.INSTANCE;
 
 	/**
 	 * Adds parser-style independent tests to the test suite.
-	 * 
+	 *
 	 * @param result the suite
 	 */
 	public static void suite(CheckedTestSuite result) {
@@ -153,16 +182,16 @@ public abstract class AbstractTestSuite
 		result.createTestSuite(NamesTest.class, "Name Overload/Override Tests");
 		result.createTestSuite(DocumentationExamples.class, "Documentation Examples");
 	}
-	
+
 	/**
 	 * Adds backtracking tests to the test suite.
-	 * 
+	 *
 	 * @param result the suite
 	 */
 	public static void suiteBacktracking(CheckedTestSuite result) {
 		result.createTestSuite(ParserBacktrackingTest.class, "Parser Backtracking Tests");
 	}
-	
+
 	//
 	// Framework methods
 	//
@@ -189,37 +218,37 @@ public abstract class AbstractTestSuite
 			throws IllegalAccessException, InvocationTargetException {
 		method.invoke(this);
 	}
-	
+
 	@Override
 	protected void initFruitPackage() {
 		URI uri = getTestModelURI("/model/OCLTest.ecore");
 		Resource res = resourceSet.getResource(uri, true);
-		
+
 		fruitPackage = (EPackage) res.getContents().get(0);
 		resourceSet.getPackageRegistry().put(fruitPackage.getNsURI(), fruitPackage);
-		
+
 		fruitFactory = fruitPackage.getEFactoryInstance();
-		
+
 		fruit = (EClass) fruitPackage.getEClassifier("Fruit");
 		fruit_ripen = fruit.getEOperations().get(0);
 		fruit_preferredColor = fruit.getEOperations().get(1);
 		fruit_newFruit = fruit.getEOperations().get(2);
 		fruit_setColor = fruit.getEOperations().get(3);
 		fruit_color = (EAttribute) fruit.getEStructuralFeature("color");
-		
+
 		apple = (EClass) fruitPackage.getEClassifier("Apple");
 		apple_label = (EAttribute) apple.getEStructuralFeature("label");
 		apple_stem = (EReference) apple.getEStructuralFeature("stem");
 		apple_labelOper = apple.getEOperations().get(0);
 		apple_newApple = apple.getEOperations().get(1);
-		
+
 		stem = (EClass) fruitPackage.getEClassifier("Stem");
-		
+
 		tree = (EClass) fruitPackage.getEClassifier("Tree");
 		tree_name = (EAttribute) tree.getEStructuralFeature("name");
 		tree_fruits = (EReference) tree.getEStructuralFeature("fruits");
 		tree_fruitsDroppedUnder = (EReference) tree.getEStructuralFeature("fruitsDroppedUnder");
-		
+
 		color = (EEnum) fruitPackage.getEClassifier("Color");
 		color_black = color.getEEnumLiteral("black");
 		color_red = color.getEEnumLiteral("red");
@@ -228,7 +257,7 @@ public abstract class AbstractTestSuite
 		color_orange = color.getEEnumLiteral("orange");
 		color_brown = color.getEEnumLiteral("brown");
 		color_pink = color.getEEnumLiteral("pink");
-		
+
 		util = (EClass) fruitPackage.getEClassifier("FruitUtil");
 		util_orderedSet = (EReference) util.getEStructuralFeature("orderedSet");
 		util_set = (EReference) util.getEStructuralFeature("set");
@@ -239,7 +268,7 @@ public abstract class AbstractTestSuite
 		util_processBag = util.getEOperations().get(2);
 		util_processSequence = util.getEOperations().get(3);
 		res.setTrackingModification(true);
-		
+
 		assertSame(
 			fruitPackage,
 			resourceSet.getPackageRegistry().getEPackage(fruitPackage.getNsURI()));
