@@ -74,6 +74,12 @@
      </fileTypes>
   </extension>
 
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore" 
+       class = "org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl$OCLstdlibPackageImpl" /> 
+  </extension>
+
   <extension point = "org.eclipse.emf.ecore.validation_delegate">
     <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL/LPG"
        class = "org.eclipse.ocl.ecore.delegate.OCLValidationDelegateFactory$Global" />

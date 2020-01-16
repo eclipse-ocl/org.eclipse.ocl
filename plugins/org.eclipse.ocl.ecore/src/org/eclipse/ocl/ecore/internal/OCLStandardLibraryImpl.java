@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -52,12 +53,12 @@ import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
  * Implementation of the {@link OCLStandardLibrary} for the Ecore environment.
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassifier> {
     private static final String NS_URI = EcoreEnvironment.OCL_STANDARD_LIBRARY_NS_URI;
-    
+
 	private static EClassifier OCL_ANY;
 	private static EClassifier OCL_ELEMENT;
 	private static EClassifier OCL_BOOLEAN;
@@ -70,39 +71,54 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
 	private static EClassifier OCL_TYPE;
 
 	private static EClassifier OCL_INVALID;
-	
+
 	private static EClassifier OCL_T;
 	private static EClassifier OCL_T2;
-	
+
 	private static EClassifier OCL_SET;
 	private static EClassifier OCL_ORDERED_SET;
 	private static EClassifier OCL_BAG;
 	private static EClassifier OCL_SEQUENCE;
 	private static EClassifier OCL_COLLECTION;
-	
+
 	private static EClassifier STATE;
 	private static EClassifier OCL_EXPRESSION;
-    
+
     // this must be initialized ahead of stdlibPackage, which depends on it
     /** The shared instance of the OCL Standard Library for the UML environment. */
     public static final OCLStandardLibraryImpl INSTANCE = new OCLStandardLibraryImpl();
 
+    /**
+     * The EPackage.Descrtiptor for this 'fake' EPackage is registered as the OCL standard library EPackage in the global
+     * EPackage.Registry. When the descriptor is resolved the normal OCLStandardLibraryImpl.init() is executed to determine
+     * whether a built-in or read EPackage is used as the standard library (and assigned to the 'fake' EPackage eINSTANCE.
+     *
+     * This fixes Bug 559203 by ensuring that there is a true registration.
+     */
+	public static class OCLstdlibPackageImpl extends EPackageImpl {
+
+		public static final EPackage eINSTANCE = OCLStandardLibraryImpl.init();
+
+		private OCLstdlibPackageImpl() {}
+	}
+
     /** The package containing the OCL Standard Library classifiers. */
-	public static EPackage stdlibPackage = init();
-    
+	public static EPackage stdlibPackage = OCLstdlibPackageImpl.eINSTANCE;
+
     /** The singleton instance of the <tt>OclInvalid</tt> standard library type. */
 //    public static final EObject INVALID = stdlibPackage.getEFactoryInstance().create(
 //        (EClass) stdlibPackage.getEClassifier("OclInvalid_Class")); //$NON-NLS-1$
     public static final EObject INVALID = new EObjectImpl()
     {
-    	public String toString() { return "invalid"; } //$NON-NLS-1$
+    	@Override
+		public String toString() { return "invalid"; } //$NON-NLS-1$
     };
-    
+
     // not instantiable by clients
 	private OCLStandardLibraryImpl() {
 		super();
 	}
-	
+
 	public EClassifier getBoolean() {
 		return OCL_BOOLEAN;
 	}
@@ -114,7 +130,7 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
     public EClassifier getUnlimitedNatural() {
         return OCL_UNLIMITED_NATURAL;
     }
-    
+
 	public EClassifier getOclInvalid() {
 		return OCL_INVALID;
 	}
@@ -146,7 +162,7 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
 	public EClassifier getOclMessage() {
 		return OCL_MESSAGE;
 	}
-	
+
 	public EClassifier getOclType() {
 		return OCL_TYPE;
 	}
@@ -154,44 +170,44 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
 	public EClassifier getOclVoid() {
 		return OCL_VOID;
 	}
-	
+
 	public EClassifier getT() {
 		return OCL_T;
 	}
-	
+
 	public EClassifier getT2() {
 		return OCL_T2;
 	}
-	
+
 	public EClassifier getSet() {
 		return OCL_SET;
 	}
-	
+
 	public EClassifier getOrderedSet() {
 		return OCL_ORDERED_SET;
 	}
-	
+
 	public EClassifier getBag() {
 		return OCL_BAG;
 	}
-	
+
 	public EClassifier getSequence() {
 		return OCL_SEQUENCE;
 	}
-	
+
 	public EClassifier getCollection() {
 		return OCL_COLLECTION;
 	}
-	
+
 	public EClassifier getOclExpression() {
 		return OCL_EXPRESSION;
 	}
-	
+
     private static EPackage init() {
         if (stdlibPackage != null) {
             return stdlibPackage;
         }
-        
+
 		URI oclStandardLibraryNsURI = URI.createURI(NS_URI);
 		URI libraryURI = URIConverter.URI_MAP.get(oclStandardLibraryNsURI);
 		if (libraryURI == null) {
@@ -209,17 +225,17 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
         // Note that when running standalone, a registration in the global registry is not certain.
         OCL.initialize(rset);
         Resource res = null;
-        
+
         try {
             Resource load = rset.getResource(oclStandardLibraryNsURI, true);
-            
+
             // transfer the loaded resource contents to a new resource that
-            //    decodes URI fragments when resolving objects 
+            //    decodes URI fragments when resolving objects
             res = OCLEcorePlugin.getEcoreResourceFactory().createResource(oclStandardLibraryNsURI);
             res.getContents().addAll(load.getContents());
-            
+
             stdlibPackage = (EPackage) res.getContents().get(0);
-            
+
             OCL_ANY = stdlibPackage.getEClassifier(AnyType.SINGLETON_NAME);
             OCL_ELEMENT = stdlibPackage.getEClassifier(ElementType.SINGLETON_NAME);
             OCL_BOOLEAN = stdlibPackage.getEClassifier(PrimitiveType.BOOLEAN_NAME);
@@ -231,14 +247,14 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
             OCL_MESSAGE = stdlibPackage.getEClassifier(MessageType.SINGLETON_NAME);
 
             OCL_INVALID = stdlibPackage.getEClassifier(InvalidType.SINGLETON_NAME);
-            
+
             OCL_T = stdlibPackage.getEClassifier("T"); //$NON-NLS-1$
             OCL_T2 = stdlibPackage.getEClassifier("T2"); //$NON-NLS-1$
-            
+
             OCL_TYPE = (EClassifier) EcoreUtil.getObjectByType(
                     stdlibPackage.getEClassifiers(),
                     EcorePackage.Literals.TYPE_TYPE);
-            
+
             OCL_SET = (EClassifier) EcoreUtil.getObjectByType(
                 stdlibPackage.getEClassifiers(),
                 EcorePackage.Literals.SET_TYPE);
@@ -251,15 +267,15 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
             OCL_SEQUENCE = (EClassifier) EcoreUtil.getObjectByType(
                 stdlibPackage.getEClassifiers(),
                 EcorePackage.Literals.SEQUENCE_TYPE);
-            
+
             // don't use EcoreUtil because the other collection types would match
             OCL_COLLECTION = stdlibPackage.getEClassifier("Collection(T)"); //$NON-NLS-1$
-            
+
             STATE = stdlibPackage.getEClassifier("State"); //$NON-NLS-1$
             OCL_EXPRESSION = stdlibPackage.getEClassifier("OclExpression"); //$NON-NLS-1$
-            
+
             EPackage.Registry.INSTANCE.put(stdlibPackage.getNsURI(), stdlibPackage);
-            
+
             return stdlibPackage;
         } catch (Exception e) {
             // unusual case: the library file isn't there, fallback to
@@ -272,32 +288,32 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
             }
         }
     }
-    
+
     // this method is used to build the standard library when not loading it
     //   from file
 	private static EPackage build() {
 		if (stdlibPackage != null) {
 			return stdlibPackage;
 		}
-		
+
         Environment<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> old = Environment.Registry.INSTANCE.getEnvironmentFor(
             EcorePackage.Literals.ANY_TYPE);
-        
+
 		stdlibPackage = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEPackage();
 		stdlibPackage.setName("oclstdlib"); //$NON-NLS-1$
 		stdlibPackage.setNsPrefix("oclstdlib"); //$NON-NLS-1$
 		stdlibPackage.setNsURI(NS_URI);
-		
+
 		Resource.Factory factory = OCLEcorePlugin.getEcoreResourceFactory();
         Resource res = factory.createResource(URI.createURI(stdlibPackage.getNsURI()));
 		res.getContents().add(stdlibPackage);
-		
+
         Environment.Registry.INSTANCE.deregisterEnvironment(old);
         EcoreEnvironment env =
             (EcoreEnvironment) EcoreEnvironmentFactory.INSTANCE.loadEnvironment(
                 res);
         Environment.Registry.INSTANCE.registerEnvironment(env);
-        
+
         OCL_ANY = EcoreFactory.eINSTANCE.createAnyType();
         OCL_ELEMENT = EcoreFactory.eINSTANCE.createElementType();
         OCL_BOOLEAN = EcoreFactory.eINSTANCE.createPrimitiveType();
@@ -314,30 +330,30 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
         OCL_MESSAGE = EcoreFactory.eINSTANCE.createMessageType();
 
         OCL_INVALID = EcoreFactory.eINSTANCE.createInvalidType();
-        
+
         OCL_T = EcoreFactory.eINSTANCE.createAnyType();
         OCL_T.setName("T"); //$NON-NLS-1$
         OCL_T2 = EcoreFactory.eINSTANCE.createAnyType();
         OCL_T2.setName("T2"); //$NON-NLS-1$
-        
+
         OCL_TYPE = (EClassifier) OCLFactoryImpl.INSTANCE.createTypeType(OCL_T);
         OCL_SET = (EClassifier) OCLFactoryImpl.INSTANCE.createSetType(OCL_T);
         OCL_ORDERED_SET = (EClassifier) OCLFactoryImpl.INSTANCE.createOrderedSetType(OCL_T);
         OCL_BAG = (EClassifier) OCLFactoryImpl.INSTANCE.createBagType(OCL_T);
         OCL_SEQUENCE = (EClassifier) OCLFactoryImpl.INSTANCE.createSequenceType(OCL_T);
         OCL_COLLECTION = (EClassifier) OCLFactoryImpl.INSTANCE.createCollectionType(OCL_T);
-        
+
         STATE = EcoreFactory.eINSTANCE.createElementType();
         STATE.setName("State"); //$NON-NLS-1$
         OCL_EXPRESSION = EcoreFactory.eINSTANCE.createElementType();
 		OCL_EXPRESSION.setName("OclExpression"); //$NON-NLS-1$
-		
+
 		OCL_BOOLEAN.setInstanceClass(Boolean.class);
 		OCL_STRING.setInstanceClass(String.class);
 		OCL_INTEGER.setInstanceClass(Integer.class);
 		OCL_UNLIMITED_NATURAL.setInstanceClass(Integer.class);
 		OCL_REAL.setInstanceClass(Double.class);
-		
+
 		register(OCL_ANY).getEOperations().addAll(
             OCLStandardLibraryUtil.createAnyTypeOperations(env));
 		register(OCL_VOID).getEOperations().addAll(
@@ -361,125 +377,125 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
 		register(OCL_ELEMENT);
 		register(STATE);
         register(OCL_EXPRESSION);
-		
+
         List<EOperation> operations;
         List<EOperation> iterators;
-        
+
 		operations = register(OCL_COLLECTION).getEOperations();
         operations.addAll(OCLStandardLibraryUtil.createCollectionOperations(env));
         iterators = OCLStandardLibraryUtil.createCollectionIterators(env);
         stereotypeAsIterator(iterators);
         operations.addAll(iterators);
-        
+
         operations = register(OCL_SET).getEOperations();
         operations.addAll(OCLStandardLibraryUtil.createSetOperations(env));
         iterators = OCLStandardLibraryUtil.createSetIterators(env);
         stereotypeAsIterator(iterators);
         operations.addAll(iterators);
-        
+
         operations = register(OCL_ORDERED_SET).getEOperations();
         operations.addAll(OCLStandardLibraryUtil.createOrderedSetOperations(env));
         iterators = OCLStandardLibraryUtil.createOrderedSetIterators(env);
         stereotypeAsIterator(iterators);
         operations.addAll(iterators);
-        
+
         operations = register(OCL_BAG).getEOperations();
         operations.addAll(OCLStandardLibraryUtil.createBagOperations(env));
         iterators = OCLStandardLibraryUtil.createBagIterators(env);
         stereotypeAsIterator(iterators);
         operations.addAll(iterators);
-        
+
         operations = register(OCL_SEQUENCE).getEOperations();
         operations.addAll(OCLStandardLibraryUtil.createSequenceOperations(env));
         iterators = OCLStandardLibraryUtil.createSequenceIterators(env);
         stereotypeAsIterator(iterators);
         operations.addAll(iterators);
-		
+
 		register(OCL_T);  // operations already defined by OclAny
 		register(OCL_T2);  // operations already defined by OclAny
-		
+
 		EPackage.Registry.INSTANCE.put(stdlibPackage.getNsURI(), stdlibPackage);
-		
+
         Environment.Registry.INSTANCE.registerEnvironment(old);
-        
+
 		return stdlibPackage;
 	}
-	
+
 	private static EClass register(EClassifier stdType) {
         EClass result = (stdType instanceof EClass)? (EClass) stdType : null;
-        
+
 		// add the type to the standard library package
 		stdlibPackage.getEClassifiers().add(stdType);
-		
+
 		if ((stdType instanceof PredefinedType<?>) && !(stdType instanceof EClass)) {
 			// an EClass would store its own operations; this cannot.
 			//    Create a shadow class to store the operations
 			result = createShadowClass(stdType);
-            
+
 			stdlibPackage.getEClassifiers().add(result);
 		}
-        
+
         return result;
 	}
-	
+
 	public static EClassifier getOwner(EOperation operation) {
 		EClass ownerClass = operation.getEContainingClass();
 		EClassifier result = ownerClass;
-		
+
 		if (ownerClass != null) {
 			EClassifier shadowed = getRealClassifier(ownerClass);
-			
+
 			if (shadowed != null) {
 				result = shadowed;
 			}
 		}
-		
+
 		return result;
 	}
-    
+
     public static EClassifier getOwner(EStructuralFeature property) {
         EClass ownerClass = property.getEContainingClass();
         EClassifier result = ownerClass;
-        
+
         if (ownerClass != null) {
             EClassifier shadowed = getRealClassifier(ownerClass);
-            
+
             if (shadowed != null) {
                 result = shadowed;
             }
         }
-        
+
         return result;
     }
-	
+
 	/**
 	 * Creates the shadow class to contain features that an Ecore classifier
 	 * cannot contain for itself.
-	 * 
+	 *
 	 * @param classifier an Ecore classifier
-	 * 
+	 *
 	 * @return the class containing its features
 	 */
 	public static EClass createShadowClass(EClassifier classifier) {
 		// the features may have invalid characters in their names
 		EClass result = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEClass();
 		result.setName(classifier.getName() + "_Class"); //$NON-NLS-1$
-		
+
 		EAnnotation ann = org.eclipse.emf.ecore.EcoreFactory.eINSTANCE.createEAnnotation();
 		ann.setSource(Environment.OCL_NAMESPACE_URI);
 		ann.getReferences().add(classifier);
 		result.getEAnnotations().add(ann);
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Finds the shadow class to contain features defined for the
 	 * specified OCL <code>type</code>, if it already exists.
-	 * 
+	 *
 	 * @param classifier an Ecore classifier
 	 * @param pkg the package in which to look for the shadow class
-	 * 
+	 *
 	 * @return the class containing its features, or <code>null</code> if not
 	 *    found
 	 */
@@ -487,7 +503,7 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
 		for (EClassifier next : pkg.getEClassifiers()) {
             if (next instanceof EClass) {
     			EClass eclass = (EClass) next;
-    			
+
     			EAnnotation ann = eclass.getEAnnotation(
                     Environment.OCL_NAMESPACE_URI);
     			if ((ann != null) && ann.getReferences().contains(classifier)) {
@@ -495,33 +511,33 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
     			}
             }
 		}
-		
+
 		return null;
 	}
-	
+
 	public static EClassifier getRealClassifier(EClass shadowClass) {
 		EClassifier result = null;
-		
+
 		EAnnotation ann = shadowClass.getEAnnotation(
             Environment.OCL_NAMESPACE_URI);
 		if ((ann != null) && !ann.getReferences().isEmpty()) {
 			result = (EClassifier) ann.getReferences().get(0);
 		}
-		
+
 		return result;
 	}
-    
+
     /**
      * Obtains the existing operations of the specified type, stored in it
      * or in a shadow class.  <b>Note</b> that this method returns
      * <code>null</code>, not an empty list, if none are found.
-     * 
+     *
      * @param type an OCL pre-defined type
      * @return its existing operations, or <code>null</code> if none are found
      */
     public static EList<EOperation> getExistingOperations(EClassifier type) {
         EList<EOperation> result = null;
-        
+
         if (type instanceof EClass) {
             result = ((EClass) type).getEOperations();
         } else {
@@ -533,14 +549,14 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
                 }
             }
         }
-        
+
         return (result == null)? ECollections.<EOperation>emptyEList() : result;
     }
-    
+
     /**
      * Marks the specified operations as being collection iterators (as distinct
      * from ordinary operations).
-     * 
+     *
      * @param operations operations to designate as iterators
      */
     public static void stereotypeAsIterator(Collection<EOperation> operations) {
@@ -551,16 +567,16 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
             oper.getEAnnotations().add(ann);
         }
     }
-    
+
     /**
      * Selects from the specified operations those that are collection iterators.
-     * 
+     *
      * @param operations operations
      * @return the subset that are stereotyped as iterators
      */
     public static EList<EOperation> selectIterators(Collection<EOperation> operations) {
         EList<EOperation> result = new BasicEList.FastCompare<EOperation>();
-        
+
         for (EOperation oper : operations) {
             EAnnotation ann = oper.getEAnnotation(Environment.OCL_NAMESPACE_URI);
             if ((ann != null) && "iterator".equals(ann.getDetails().get( //$NON-NLS-1$
@@ -568,7 +584,7 @@ public final class OCLStandardLibraryImpl implements OCLStandardLibrary<EClassif
                 result.add(oper);
             }
         }
-        
+
         return result;
     }
 }
