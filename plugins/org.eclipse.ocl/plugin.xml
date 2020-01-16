@@ -25,6 +25,13 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
+       uri = "http://www.eclipse.org/ocl/1.1.0/OCL" 
+       class = "org.eclipse.ocl.expressions.impl.ExpressionsPackageImpl$OCLPackageImpl"
+       genModel = "model/OCL.genmodel" /> 
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
        uri = "http://www.eclipse.org/ocl/1.1.0/OCL/Expressions" 
        class = "org.eclipse.ocl.expressions.ExpressionsPackage"
        genModel = "model/OCL.genmodel" /> 

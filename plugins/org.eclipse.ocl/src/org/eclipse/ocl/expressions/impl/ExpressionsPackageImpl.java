@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
@@ -330,31 +330,41 @@ public class ExpressionsPackageImpl
 	private EEnum collectionKindEEnum = null;
 
 	/**
-	 * Root package of the OCL Ecore model, which we have to "fake out"
-	 * because EMF will not generate it.
+	 * Root package of the OCL Ecore model, which we have to "fake out" because EMF will not generate it.
+	 *
+	 * - not actually true. EMF will generate the root package if it has a DummyClass.
+	 *
+	 * But the legacy is that we have true nested EPackages each with their own EResource and a faked root
+	 * that nests but does not contain its nested EPackages. Consequently serialized URIs use the nested rather than
+	 * root Resource.
+	 *
+	 * The Bug 559209 fix exposes OCLPackageImpl and its eINSTANCE as public API so that a regular EPackage.Registry
+	 * extension point registers the root EPackage in a timely fashion.
+	 *
+	 * @since 3.11
 	 */
-	public static final EPackage OCL_ROOT_PACKAGE;
+	public static class OCLPackageImpl extends EPackageImpl {
 
-	static {
-		class OCLPackageImpl
-				extends EPackageImpl {
+		public static final OCLPackageImpl eINSTANCE = new OCLPackageImpl();
 
-			@Override
-			protected Resource createResource(String uri) {
-				return super.createResource(uri);
-			}
+		private OCLPackageImpl() {
+			setName("ocl"); //$NON-NLS-1$
+			setNsPrefix("ocl"); //$NON-NLS-1$
+			setNsURI(Environment.OCL_NAMESPACE_URI);
+			createResource(getNsURI());
+			EPackage.Registry.INSTANCE.put(getNsURI(), this);
 		}
 
-		OCLPackageImpl oclPackage = new OCLPackageImpl();
-		oclPackage.setName("ocl"); //$NON-NLS-1$
-		oclPackage.setNsPrefix("ocl"); //$NON-NLS-1$
-		oclPackage.setNsURI(Environment.OCL_NAMESPACE_URI);
-		oclPackage.createResource(oclPackage.getNsURI());
-
-		OCL_ROOT_PACKAGE = oclPackage;
-		EPackage.Registry.INSTANCE.put(OCL_ROOT_PACKAGE.getNsURI(),
-			OCL_ROOT_PACKAGE);
+		@Override
+		protected Resource createResource(String uri) {
+			return super.createResource(uri);
+		}
 	}
+
+	/**
+	 * The legacy reference to the root EPackage.
+	 */
+	public static final EPackage OCL_ROOT_PACKAGE = OCLPackageImpl.eINSTANCE;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
