@@ -341,7 +341,7 @@ public class ExpressionsPackageImpl
 	 * The Bug 559209 fix exposes OCLPackageImpl and its eINSTANCE as public API so that a regular EPackage.Registry
 	 * extension point registers the root EPackage in a timely fashion.
 	 *
-	 * @since 3.11
+	 * @since 3.15
 	 */
 	public static class OCLPackageImpl extends EPackageImpl {
 
