@@ -704,8 +704,10 @@ implements EnvironmentWithHiddenOpposites {
 		Set<String> searchedPackages = null;
 		boolean reportProblems = !findPackageHasReportedProblems;
 		String name = packageNames.get(0);
+		String key = ""; //$NON-NLS-1$
 		try {
 			for (Map.Entry<String,Object> entry : registry.entrySet()) {
+				key = entry.getKey();							// Cache the current key in case we need to report a CME
 				try {
 					Object next = entry.getValue();
 					if (next instanceof EPackage.Descriptor) {
@@ -742,14 +744,15 @@ implements EnvironmentWithHiddenOpposites {
 		//	Repeating until a cache of all visited keys is the same size as the registry.
 		//
 		catch (ConcurrentModificationException cme1) {				// See Bug 544165
-			System.err.println("OCL: unstable global EPackage registry.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + cme1.toString()); //$NON-NLS-1$
+			System.err.println("OCL: unstable global EPackage registry for '" + key + "'.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + cme1.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 			if (searchedPackages == null) {
 				searchedPackages = new HashSet<String>();
 			}
 			while (registry.size() > searchedPackages.size()) {
 				try {
 					for (Map.Entry<String,Object> entry : registry.entrySet()) {
-						if (searchedPackages.add(entry.getKey())) {
+						key = entry.getKey();
+						if (searchedPackages.add(key)) {
 							try {
 								Object next = entry.getValue();
 								if (next instanceof EPackage.Descriptor) {
@@ -779,6 +782,7 @@ implements EnvironmentWithHiddenOpposites {
 					}
 				}
 				catch (ConcurrentModificationException cme2) {				// See Bug 544165
+					System.err.println("OCL: unstable global EPackage registry for '" + key + "'.\n  (See https://bugs.eclipse.org/bugs/show_bug.cgi?id=544165#c14)\n  Use org.eclipse.ocl.ecore.EcoreEnvironment.checkRegistry() to diagnose the offending contribution.\n" + cme2.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 					// go round again - eventually searchedPackages.size() == registry.size()
 				}
 			}
