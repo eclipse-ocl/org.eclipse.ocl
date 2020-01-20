@@ -25,7 +25,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.ocl.examples.debug.vm.ui.actions.DebugVMImages;
 import org.eclipse.ocl.examples.debug.vm.ui.messages.DebugVMUIMessages;
 import org.eclipse.swt.graphics.Image;
@@ -327,7 +326,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	}
 
 	private ImageDescriptor imageDescriptor(String imagePath) {
-		return ResourceLocator.imageDescriptorFromBundle(PLUGIN_ID, "icons/" + imagePath).orElse(null); //$NON-NLS-1$
+		return imageDescriptorFromPlugin(PLUGIN_ID, "icons/" + imagePath); //$NON-NLS-1$
 	}
 
 	/*    private final ImageDescriptor overlayImage(String overImagePath, Image base, int quadrant) {

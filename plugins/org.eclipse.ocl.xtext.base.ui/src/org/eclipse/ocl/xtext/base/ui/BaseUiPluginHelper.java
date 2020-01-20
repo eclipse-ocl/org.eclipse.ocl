@@ -17,8 +17,8 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.ocl.xtext.base.ui.internal.BaseActivator;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 {
@@ -44,7 +44,7 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return ResourceLocator.imageDescriptorFromBundle(PLUGIN_ID, path).orElse(null);
+		return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class BaseUiPluginHelper extends EMFPlugin.InternalHelper
 		BaseActivator defaultPlugin = BaseActivator.getInstance();
 		if (message != null) {
 			defaultPlugin.getLog().log(
-					new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, message, null));
+				new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, message, null));
 		}
 
 		defaultPlugin.getLog().log(status);
