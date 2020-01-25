@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -78,6 +77,8 @@ import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.Issue;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A MultiValidationJob maintains a queue of workspaceRelativeFileNames in need of validation.
@@ -527,7 +528,7 @@ public class MultiValidationJob extends Job
 		}
 	}
 
-	private static final Logger log = Logger.getLogger(MultiValidationJob.class);
+	private static final Logger log = LoggerFactory.getLogger(MultiValidationJob.class);
 	private static final @NonNull IDiagnosticConverter converter = new PivotDiagnosticConverter();
 
 	private final @NonNull ValidationQueue validationQueue = new ValidationQueue();

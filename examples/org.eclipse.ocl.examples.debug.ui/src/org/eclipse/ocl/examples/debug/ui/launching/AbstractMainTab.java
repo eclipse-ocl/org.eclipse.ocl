@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.debug.ui.launching;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -32,18 +31,20 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractMainTab extends AbstractLaunchConfigurationTab
 {
-	private static final Logger logger = Logger.getLogger(AbstractMainTab.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractMainTab.class);
 
 	protected @Nullable OCLInternal ocl;		// FIXME Add a dispose() when not visible for a long time
-	
+
 	/**
 	 * Internal flag to suppress redundant recursive updates while initializing controls.
 	 */
 	protected boolean initializing = false;
-	
+
 	@Override
 	public void dispose() {
 		OCL ocl2 = ocl;
@@ -62,6 +63,7 @@ public abstract class AbstractMainTab extends AbstractLaunchConfigurationTab
 		return ocl2.getEnvironmentFactory();
 	}
 
+	@Override
 	public @NonNull String getName() {
 		return "Main";
 	}
@@ -96,6 +98,7 @@ public abstract class AbstractMainTab extends AbstractLaunchConfigurationTab
 		}
 	}
 
+	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		if (workbench != null) {

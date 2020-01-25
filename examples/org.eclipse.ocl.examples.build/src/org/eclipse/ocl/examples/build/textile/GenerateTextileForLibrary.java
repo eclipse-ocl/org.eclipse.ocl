@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -15,7 +15,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -36,11 +35,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());	
-	protected ResourceSet resourceSet = null;	
+	protected Logger log = LoggerFactory.getLogger(getClass());
+	protected ResourceSet resourceSet = null;
 	protected String textileFolder;
 	protected String textileFileName;
 	protected String projectName;
@@ -50,7 +51,7 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 
 	protected GenerateTextileForLibrary() {
 		OCLstdlibStandaloneSetup.doSetup();
-	}	
+	}
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -80,7 +81,7 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 		}
 		return null;
 	}
-	
+
 	protected Iterable<Precedence> getPrecedences(@NonNull Model asModel) {
 		List<Precedence> precedences = new ArrayList<Precedence>();
 		for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
@@ -97,7 +98,7 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 		}
 		return resourceSet;
 	}
-	
+
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		String rootPath = StandaloneSetup.getPlatformRootPath();
@@ -146,9 +147,9 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	/**
-	 * An optional ResourceSet that MWE components may share to reduce model loading. 
+	 * An optional ResourceSet that MWE components may share to reduce model loading.
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;

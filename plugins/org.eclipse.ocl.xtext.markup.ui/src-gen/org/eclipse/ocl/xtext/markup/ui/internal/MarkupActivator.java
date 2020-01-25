@@ -13,11 +13,12 @@ package org.eclipse.ocl.xtext.markup.ui.internal;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Guice;
@@ -32,7 +33,7 @@ public class MarkupActivator extends AbstractUIPlugin {
 
 	public static final String ORG_ECLIPSE_OCL_XTEXT_MARKUP_MARKUP = "org.eclipse.ocl.xtext.markup.Markup";
 
-	private static final Logger logger = Logger.getLogger(MarkupActivator.class);
+	private static final Logger logger = LoggerFactory.getLogger(MarkupActivator.class);
 
 	private static MarkupActivator INSTANCE;
 

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
@@ -42,8 +41,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.AbstractEssentialOCLCSPostOrder
 
 public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOrderVisitor
 {
-	static final Logger logger = Logger.getLogger(EssentialOCLCSPostOrderVisitor.class);
-
 	public class ConstraintCSCompletion extends SingleContinuation<ConstraintCS>
 	{
 		public ConstraintCSCompletion(@NonNull CS2ASConversion context, @NonNull ConstraintCS csElement) {

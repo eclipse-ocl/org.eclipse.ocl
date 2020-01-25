@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  */
@@ -23,7 +24,7 @@ public class OCLProjectHelper {
 	public static final @NonNull String NATURE_ID = "org.eclipse.ocl.pivot.ui.oclnature"; //$NON-NLS-1$
 	public static final @NonNull String BUILDER_ID = "org.eclipse.ocl.pivot.ui.oclbuilder"; //$NON-NLS-1$
 
-	private static final Logger log = Logger.getLogger(OCLProjectHelper.class);
+	private static final Logger log = LoggerFactory.getLogger(OCLProjectHelper.class);
 
 	public static boolean hasNature(IProject project) {
 		try {

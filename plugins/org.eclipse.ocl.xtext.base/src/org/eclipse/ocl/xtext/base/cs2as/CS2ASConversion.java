@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -109,12 +108,14 @@ import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Iterables;
 
 public class CS2ASConversion extends AbstractBase2ASConversion
 {
-	private static final Logger logger = Logger.getLogger(CS2ASConversion.class);
+	private static final Logger logger = LoggerFactory.getLogger(CS2ASConversion.class);
 	public static final @NonNull TracingOption CONTINUATION = new TracingOption("org.eclipse.ocl.xtext.base", "continuation");  //$NON-NLS-1$//$NON-NLS-2$
 
 	public static class CacheKey<T>

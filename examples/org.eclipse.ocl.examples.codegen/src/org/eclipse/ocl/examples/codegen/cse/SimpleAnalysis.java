@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -12,16 +12,17 @@ package org.eclipse.ocl.examples.codegen.cse;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimpleAnalysis extends AbstractAnalysis
-{	
-	static final Logger logger = Logger.getLogger(SimpleAnalysis.class);
+{
+	static final Logger logger = LoggerFactory.getLogger(SimpleAnalysis.class);
 
 	public static final @NonNull SimpleAnalysis @NonNull [] EMPTY_LIST = new @NonNull SimpleAnalysis @NonNull [] {};
 
@@ -32,7 +33,7 @@ public class SimpleAnalysis extends AbstractAnalysis
 	protected final @NonNull SimpleAnalysis @NonNull [] children;
 	private @Nullable SimpleAnalysis parent = null;
 	private @Nullable CommonAnalysis commonAnalysis = null;
-	
+
 	public SimpleAnalysis(@NonNull GlobalPlace globalPlace, @NonNull CGValuedElement cgElement, int depth, int structuralHashCode, @NonNull SimpleAnalysis @NonNull [] children) {
 		this.globalPlace = globalPlace;
 		this.cgElement = cgElement;
@@ -92,7 +93,7 @@ public class SimpleAnalysis extends AbstractAnalysis
 	public int getDepth() {
 		return depth;
 	}
-	
+
 	public @NonNull CGValuedElement getElement() {
 		return cgElement;
 	}
@@ -110,7 +111,7 @@ public class SimpleAnalysis extends AbstractAnalysis
 	public @Nullable SimpleAnalysis getParent() {
 		return parent;
 	}
-	
+
 	@Override
 	public @NonNull CGValuedElement getPrimaryElement() {
 		if (commonAnalysis != null) {
@@ -125,7 +126,7 @@ public class SimpleAnalysis extends AbstractAnalysis
 	public int getStructuralHashCode() {
 		return structuralHashCode;
 	}
-	
+
 	@Override
 	public boolean isStructurallyEqualTo(@NonNull AbstractAnalysis thatAnalysis) {
 		return thatAnalysis.isStructurallyEqualTo(this);

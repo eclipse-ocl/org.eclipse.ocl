@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,6 +31,8 @@ import org.eclipse.emf.mwe.utils.Mapping;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Splits the composite 'in' Ecore file into a distinct URI per selected EPackage.
@@ -42,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
  */
 public class CSSplitter extends AbstractWorkflowComponent
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null;
 	protected URI in;
 	private Map<String, URI> includes = new HashMap<String, URI>();

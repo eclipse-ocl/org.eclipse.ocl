@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -53,6 +52,8 @@ import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ScopeViews support access to some or all of the elements in a scope.
@@ -62,7 +63,7 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
  */
 public class BaseScopeView extends AbstractScope implements IScopeView
 {
-	private static final Logger logger = Logger.getLogger(BaseScopeView.class);
+	private static final Logger logger = LoggerFactory.getLogger(BaseScopeView.class);
 
 	/**
 	 * The <code>NULLSCOPEVIEW</code> to be returned by the most outer scope

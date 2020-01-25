@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.xtend;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenJDKLevel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -34,12 +33,14 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Objects;
 
 public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflowComponent
 {
-	private static Logger log = Logger.getLogger(GenerateVisitorsWorkflowComponent.class);
+	private static Logger log = LoggerFactory.getLogger(GenerateVisitorsWorkflowComponent.class);
 	private final static @NonNull String EMPTY_STRING = "";
 
 	protected static boolean isDefined(final String string) {

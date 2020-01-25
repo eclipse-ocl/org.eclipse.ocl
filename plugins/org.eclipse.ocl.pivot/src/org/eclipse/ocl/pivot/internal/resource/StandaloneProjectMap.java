@@ -36,7 +36,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -66,6 +65,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -218,7 +221,10 @@ public class StandaloneProjectMap implements ProjectManager
 {
 	private static final String PLUGIN_ID = PivotPlugin.PLUGIN_ID;
 
-	private static final Logger logger = Logger.getLogger(StandaloneProjectMap.class);
+	private static String nn = ILoggerFactory.class.getName();
+	private static String n2 = LoggerFactoryBinder.class.getName();
+
+	private static final Logger logger = LoggerFactory.getLogger(StandaloneProjectMap.class);
 	private static @Nullable Set<@NonNull String> alreadyLogged = null;
 
 	public static final @NonNull TracingOption PROJECT_MAP_ADD_EPACKAGE = new TracingOption(PLUGIN_ID, "projectMap/addEPackage");
@@ -2168,7 +2174,7 @@ public class StandaloneProjectMap implements ProjectManager
 						resourceDescriptor.configure(resourceSet, resourceLoadStrategy, conflictHandler);
 					}
 					catch (Exception e) {
-						logger.error(e);
+						logger.error(e.toString());
 					}
 				}
 			}

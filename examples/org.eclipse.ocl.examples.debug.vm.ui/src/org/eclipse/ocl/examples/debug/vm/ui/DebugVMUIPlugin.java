@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.debug.vm.ui;
 import java.net.URL;
 import java.util.Collections;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -34,6 +33,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -46,7 +47,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static DebugVMUIPlugin plugin;
 
-	private static final Logger logger = Logger.getLogger(DebugVMUIPlugin.class);
+	private static final Logger logger = LoggerFactory.getLogger(DebugVMUIPlugin.class);
 
 	protected ImageRegistry imageDescriptorRegistry;
 

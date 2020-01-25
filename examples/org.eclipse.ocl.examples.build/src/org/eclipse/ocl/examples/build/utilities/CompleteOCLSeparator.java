@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -27,13 +26,15 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts a UML resource to its Pivot form.
  */
 public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
@@ -48,7 +49,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 
 	/**
 	 * Sets the name of the OCL slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */
@@ -62,7 +63,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 
 	/**
 	 * Sets the name of the OCL slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.genmodel.GenJDKLevel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -44,12 +43,14 @@ import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Performs a Generate Model on the designated <tt>genmodel</tt> genModel.
  */
 public class GenerateModel extends AbstractWorkflowComponent {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null; // Optional ResourceSet to re-use
 	protected String genModel; 				// URI of the genmodel
 	protected boolean showProgress = false; // Set true to show genmodel new tasks

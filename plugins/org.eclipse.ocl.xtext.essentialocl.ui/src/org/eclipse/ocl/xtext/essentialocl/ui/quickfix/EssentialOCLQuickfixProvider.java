@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.ui.quickfix;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -21,10 +20,12 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
 import org.eclipse.xtext.ui.editor.quickfix.ReplaceModification;
 import org.eclipse.xtext.validation.Issue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EssentialOCLQuickfixProvider extends BaseQuickfixProvider
 {
-	private static final Logger logger = Logger.getLogger(EssentialOCLQuickfixProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(EssentialOCLQuickfixProvider.class);
 
 	protected class EssentialOCLQuickfixProcessor extends QuickfixProcessor
 	{

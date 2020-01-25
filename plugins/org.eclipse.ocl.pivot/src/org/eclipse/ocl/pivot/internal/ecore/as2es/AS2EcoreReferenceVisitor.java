@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -59,6 +58,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
@@ -73,7 +74,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(AS2EcoreReferenceVisitor.class);
 
 	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
 	/**

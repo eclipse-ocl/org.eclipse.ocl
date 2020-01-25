@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.emf.validation.validity.ui.actions;
 
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -48,15 +47,17 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ShowElementInEditorAction extends Action
 {
-	private static final Logger logger = Logger.getLogger(ShowElementInEditorAction.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShowElementInEditorAction.class);
 
 	/**
 	 * Returns the {@link IFile} in which the provided {@link Resource} can be
 	 * found, if any.
-	 * 
+	 *
 	 * @param resource
 	 *            the {@link Resource} for which we search the enclosing file
 	 * @return the corresponding {@link IFile} or <code>null</code> if one of the following occurs:
@@ -67,13 +68,13 @@ public final class ShowElementInEditorAction extends Action
 	 *         <li>the project supposed to contain the resource does not actually exist</li>
 	 *         <li>the project containing the resource is closed</li>
 	 *         </ul>
-	 * 
+	 *
 	 */
 	private static @Nullable IFile findFile(Resource resource) {
 		if (resource == null || resource.getURI() == null || !resource.getURI().isPlatform()) {
 			return null;
 		}
-		
+
 		IPath resourcePath = new Path(resource.getURI().toPlatformString(true));
 		IFile iFile = ResourcesPlugin.getWorkspace().getRoot().getFile(resourcePath);
 
@@ -85,9 +86,9 @@ public final class ShowElementInEditorAction extends Action
 	}
 
 	private final @NonNull IDEValidityManager validityManager;
-	
+
 	private final @NonNull ISelectionProvider selectionProvider;
-	
+
 	public ShowElementInEditorAction(@NonNull IDEValidityManager validityManager, @NonNull ISelectionProvider selectionProvider) {
 		super(ValidityUIMessages.ValidityView_Action_ShowInEditor_Title);
 		this.validityManager = validityManager;
@@ -96,7 +97,7 @@ public final class ShowElementInEditorAction extends Action
 		URL image = (URL) ValidityUIPlugin.INSTANCE.getImage(ValidityUIMessages.ValidityView_Action_ShowInEditor_ImageLocation);
 		setImageDescriptor(ImageDescriptor.createFromURL(image));
 	}
-	
+
 	private @Nullable IMarker findGoToMarker(ValidityModel model, AbstractNode node) {
 		IMarker goToMarker = null;
 		if (node instanceof ResultConstrainingNode) {
@@ -118,7 +119,7 @@ public final class ShowElementInEditorAction extends Action
 		}
 		return goToMarker;
 	}
-	
+
 	private @Nullable IWorkbenchPage getActivePage() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		if (workbench != null) {
@@ -129,16 +130,16 @@ public final class ShowElementInEditorAction extends Action
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the GoToConstrainingNodeMarker of a LeafConstrainingNode.
-	 * 
+	 *
 	 * @param leafConstrainingNode
 	 *            the selected leafConstrainingNode
 	 * @return the GoToConstrainingNodeMarker of a LeafConstrainingNode.
 	 */
 	public GoToConstrainingNodeMarker getLeafConstrainingNodeMarker(@NonNull LeafConstrainingNode leafConstrainingNode){
-		Resource resource = leafConstrainingNode.getConstraintResource();		
+		Resource resource = leafConstrainingNode.getConstraintResource();
 		if (resource != null) {
 			IFile file = findFile(resource);
 			if (file != null) {
@@ -150,7 +151,7 @@ public final class ShowElementInEditorAction extends Action
 
 	/**
 	 * Return the GoToValidatableNodeMarker of a ValidatableNode.
-	 * 
+	 *
 	 * @param validatableNode
 	 *            the selected ValidatableNode
 	 * @return the GoToValidatableNodeMarker of a ValidatableNode.
@@ -178,7 +179,7 @@ public final class ShowElementInEditorAction extends Action
 			if (!(selectedObject instanceof AbstractNode) || activePage == null || model == null) {
 				return;
 			}
-			
+
 			IMarker goToMarker = findGoToMarker(model, (AbstractNode) selectedObject);
 			if (goToMarker != null) {
 				try {

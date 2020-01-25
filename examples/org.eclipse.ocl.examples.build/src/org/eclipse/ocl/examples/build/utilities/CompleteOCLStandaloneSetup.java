@@ -10,14 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializes Complete OCL parsing support.
  */
 public class CompleteOCLStandaloneSetup
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	public CompleteOCLStandaloneSetup() {
 		log.info("Registering CompleteOCLStandaloneSetup");

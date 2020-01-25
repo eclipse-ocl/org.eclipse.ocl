@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -31,13 +30,15 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reads a specified <tt>uri</tt> into a designated <tt>modelSlot</tt>.
  */
 public class XMI2UMLResourceReader extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null;
 	protected String uri;
 	protected String nsURI;

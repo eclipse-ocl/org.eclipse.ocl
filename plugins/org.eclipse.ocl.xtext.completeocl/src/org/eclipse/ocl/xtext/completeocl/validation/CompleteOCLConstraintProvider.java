@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -24,6 +23,8 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.validation.LoadableConstraintProvider;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A CompleteOCLConstraintParser supports registration and lazy resolution of
@@ -81,7 +82,7 @@ The actual constraints are lazily loaded by the first validation run that uses t
  */
 public class CompleteOCLConstraintProvider extends LoadableConstraintProvider
 {
-	private static final Logger logger = Logger.getLogger(CompleteOCLConstraintProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompleteOCLConstraintProvider.class);
 
 	public CompleteOCLConstraintProvider() {
 		System.out.println("new CompleteOCLConstraintProvider");

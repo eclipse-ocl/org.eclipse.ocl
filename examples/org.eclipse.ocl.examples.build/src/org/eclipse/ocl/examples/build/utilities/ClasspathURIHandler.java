@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -23,9 +22,11 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.resource.ClassloaderClasspathUriResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * ClasspathURIHandler may be installed by code such as 
+ * ClasspathURIHandler may be installed by code such as
  * <p>
  * 	resourceSet.getURIConverter().getURIHandlers().add(0, new ClasspathURIHandler());
  * <p>
@@ -33,8 +34,8 @@ import org.eclipse.xtext.resource.ClassloaderClasspathUriResolver;
  */
 public class ClasspathURIHandler extends URIHandlerImpl
 {
-	private Logger log = Logger.getLogger(getClass());	
-	
+	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private final @NonNull ClassloaderClasspathUriResolver resolver = new ClassloaderClasspathUriResolver();
 
 	@Override
@@ -52,7 +53,7 @@ public class ClasspathURIHandler extends URIHandlerImpl
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Install support in an MWE2 script.
 	 * @param resourceSet

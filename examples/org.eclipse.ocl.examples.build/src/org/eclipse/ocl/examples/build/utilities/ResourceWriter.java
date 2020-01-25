@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,13 +29,15 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Writes a designated <tt>modelSlot</tt> to a specified <tt>uri</tt>.
  */
 public class ResourceWriter extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null;
 	private String uri;
 	private String contentTypeIdentifier = null;

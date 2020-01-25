@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,13 +36,15 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ImplementationManager encapsulates the knowledge about known feature implementations.
  */
 public class ImplementationManager
 {
-	private static final Logger logger = Logger.getLogger(ImplementationManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(ImplementationManager.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull Technology technology;

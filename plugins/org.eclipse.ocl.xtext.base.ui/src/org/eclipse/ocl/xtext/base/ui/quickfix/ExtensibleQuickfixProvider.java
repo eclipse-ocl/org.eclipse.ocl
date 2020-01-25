@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -44,9 +43,10 @@ import org.eclipse.xtext.ui.editor.quickfix.IssueResolution;
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
 import org.eclipse.xtext.ui.editor.quickfix.Messages;
 import org.eclipse.xtext.ui.editor.quickfix.ReplaceModification;
-import org.eclipse.xtext.util.StopWatch;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.validation.Issue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -145,8 +145,31 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(ExtensibleQuickfixProvider.class);
-	
+	/**
+	 * StopWatch differs from org.eclipse.xtext.util.StopWatch only through use of the
+	 * caller's org.slf4j.Logger
+	 */
+	private class StopWatch
+	{
+		private long start = System.currentTimeMillis();
+
+		public long reset() {
+			long now = System.currentTimeMillis();
+			try {
+				return now - start;
+			} finally {
+				start = now;
+			}
+		}
+
+		public void resetAndLog(String label) {
+			if (logger.isInfoEnabled())
+				logger.info(label + ": " + reset() + "ms");
+		}
+	}
+
+	private static final Logger logger = LoggerFactory.getLogger(ExtensibleQuickfixProvider.class);
+
 	@Inject
 	private ISimilarityMatcher similarityMatcher;
 
@@ -158,16 +181,16 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 
 	@Inject
 	private IScopeProvider scopeProvider;
-	
+
 	@Inject
 	protected IQualifiedNameConverter qualifiedNameConverter;
-	
+
 	@Inject
 	protected IValueConverterService valueConverter;
-	
+
 	@Inject
 	private ICaseInsensitivityHelper caseInsensitivityHelper;
-	
+
 	private CrossReference findCrossReference(EObject context, INode node) {
 		if (node == null || (node.hasDirectSemanticElement() && context.equals(node.getSemanticElement())))
 			return null;
@@ -197,7 +220,7 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 			Issue issue, IssueResolutionAcceptor issueResolutionAcceptor) {
 		return new QuickfixProcessor(xtextDocument, issue, issueResolutionAcceptor);
 	}
-	
+
 	protected Iterable<IEObjectDescription> queryScope(IScope scope) {
 		return scope.getAllElements();
 	}
@@ -225,7 +248,7 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 
 	@Override
 	public List<IssueResolution> getResolutions(Issue issue) {
-		StopWatch stopWatch = new StopWatch(logger);
+		StopWatch stopWatch = new StopWatch();
 		try {
 			if (Diagnostic.LINKING_DIAGNOSTIC.equals(issue.getCode())) {
 				List<IssueResolution> result = new ArrayList<IssueResolution>();
@@ -235,9 +258,9 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 			} else
 				return super.getResolutions(issue);
 		} finally {
-			stopWatch.resetAndLog("#getResolutions");			
+			stopWatch.resetAndLog("#getResolutions");
 		}
-		
+
 	}
 
 	@Override

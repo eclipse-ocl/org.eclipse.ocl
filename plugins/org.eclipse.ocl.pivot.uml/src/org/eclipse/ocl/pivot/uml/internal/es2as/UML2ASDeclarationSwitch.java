@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -83,11 +82,13 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.util.UMLSwitch;
 import org.eclipse.uml2.uml.util.UMLUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 {
 	@SuppressWarnings("null")
-	private static final @NonNull Logger logger = Logger.getLogger(UML2ASDeclarationSwitch.class);
+	private static final @NonNull Logger logger = LoggerFactory.getLogger(UML2ASDeclarationSwitch.class);
 
 	protected final @NonNull Ecore2ASDeclarationSwitch ecoreSwitch;
 	protected final @NonNull UML2AS converter;

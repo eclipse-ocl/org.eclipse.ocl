@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
@@ -33,6 +32,8 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Changes the NsURI in an Ecore <tt>modelSlot</tt> by
@@ -41,9 +42,9 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class SetNsURI extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
-	private String nsURI = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
+	private String nsURI = null;
 
 	public @NonNull ResourceSet getResourceSet() {
 		ResourceSet resourceSet2 = resourceSet;
@@ -70,6 +71,7 @@ public class SetNsURI extends WorkflowComponentWithModelSlot
 		List<T> newList = new ArrayList<T>(list);
 		Collections.sort(newList, new Comparator<T>()
 		{
+			@Override
 			public int compare(T o1, T o2) {
 				EClass e1 = o1.eClass();
 				EClass e2 = o2.eClass();
@@ -107,11 +109,11 @@ public class SetNsURI extends WorkflowComponentWithModelSlot
 		list.clear();
 		list.addAll(newList);
 	}
-	
+
 	public void setNsURI(@NonNull String nsURI) {
 		this.nsURI = nsURI;
 	}
-	
+
 	public void setResourceSet(@NonNull ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

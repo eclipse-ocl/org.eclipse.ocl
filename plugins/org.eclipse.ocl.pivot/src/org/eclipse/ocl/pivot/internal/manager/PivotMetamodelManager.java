@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.notify.Adapter;
@@ -135,6 +134,8 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Iterables;
 
@@ -203,7 +204,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(PivotMetamodelManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(PivotMetamodelManager.class);
 
 	/**
 	 * @since 1.3

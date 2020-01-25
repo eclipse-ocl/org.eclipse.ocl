@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -28,6 +27,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * OppositePropertyDetails is a utility class gathering together and eventually unifying the disparate code processing
@@ -43,7 +44,7 @@ public class OppositePropertyDetails
 	public static final @NonNull String UNIQUE_KEY = "unique";
 	public static final @NonNull String UPPER_KEY = "upper";
 
-	private static final Logger logger = Logger.getLogger(OppositePropertyDetails.class);
+	private static final Logger logger = LoggerFactory.getLogger(OppositePropertyDetails.class);
 
 	/**
 	 * The key that identifies opposite role names in an annotation

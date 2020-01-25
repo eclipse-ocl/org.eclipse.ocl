@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -62,6 +61,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AS2Ecore extends AbstractConversion
 {
@@ -136,7 +137,7 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
-	public static final Logger logger = Logger.getLogger(AS2Ecore.class);
+	public static final Logger logger = LoggerFactory.getLogger(AS2Ecore.class);
 
 	/**
 	 * True to add comments to the invariant context and diagnostics parameters.

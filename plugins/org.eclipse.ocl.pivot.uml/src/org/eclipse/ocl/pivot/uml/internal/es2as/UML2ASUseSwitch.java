@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -58,10 +57,12 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 //import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.util.UMLSwitch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UML2ASUseSwitch extends UMLSwitch<Object>
 {
-	private static final Logger logger = Logger.getLogger(UML2ASUseSwitch.class);
+	private static final Logger logger = LoggerFactory.getLogger(UML2ASUseSwitch.class);
 
 	protected final @NonNull UML2AS converter;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;

@@ -11,14 +11,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.debug.vm.ui.actions;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ocl.examples.debug.vm.ui.DebugVMUIPlugin;
 import org.eclipse.swt.graphics.Image;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DebugVMImages
 {
-	private static final Logger logger = Logger.getLogger(DebugVMImages.class);
+	private static final Logger logger = LoggerFactory.getLogger(DebugVMImages.class);
 
 	public static final String CONDITIONAL_BPNT_ENABLED = "conditionalBreakpointEnabled"; //$NON-NLS-1$
 
@@ -33,14 +34,14 @@ public class DebugVMImages
 	public static final String INTERM_PROPERTY = "intermediateProperty"; //$NON-NLS-1$
 
 	public static final String THIS_VARIABLE = "thisVariable"; //$NON-NLS-1$
-	
+
 	public static final String PREDEFINED_VARIABLE = "predefinedVariable"; //$NON-NLS-1$
 
 	public static final String LOCAL_VARIABLE = "localVariable"; //$NON-NLS-1$
-	
+
 	public static final String COLLECTION_ELEMENT = "collectionElement"; //$NON-NLS-1$
 	public static final String EXPRESSION_IN_OCL = "ExpressionInOCL"; //$NON-NLS-1$
-	
+
 	private static ImageRegistry fgImageRegistry = DebugVMUIPlugin.getDefault().getImageRegistry();
 
 	protected DebugVMImages() {

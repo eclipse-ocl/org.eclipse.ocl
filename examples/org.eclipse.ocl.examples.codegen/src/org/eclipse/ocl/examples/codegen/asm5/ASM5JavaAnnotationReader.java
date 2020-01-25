@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.objectweb.asm.AnnotationVisitor;
@@ -33,6 +32,8 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.TypePath;
 import org.objectweb.asm.TypeReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JavaAnnotationReader supports determination of the declared @NonNull, @Nullable return annotation of a method.
@@ -41,7 +42,7 @@ import org.objectweb.asm.TypeReference;
  */
 public class ASM5JavaAnnotationReader
 {
-	private static final Logger logger = Logger.getLogger(ASM5JavaAnnotationReader.class);
+	private static final Logger logger = LoggerFactory.getLogger(ASM5JavaAnnotationReader.class);
 
 	private final @NonNull Map<@NonNull String, Map<@NonNull Integer, @Nullable Boolean>> desc2typerefValue2state = new HashMap<@NonNull String, Map<@NonNull Integer, @Nullable Boolean>>();
 	private final @NonNull Set<String> readClasses = new HashSet<String>();

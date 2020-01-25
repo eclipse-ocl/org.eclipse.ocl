@@ -16,7 +16,6 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -90,10 +89,12 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PivotUtilInternal //extends PivotUtil
 {
-	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
+	private static final Logger logger = LoggerFactory.getLogger(PivotUtilInternal.class);
 	public static boolean noDebug = true;
 	private static long startTime = System.currentTimeMillis();
 

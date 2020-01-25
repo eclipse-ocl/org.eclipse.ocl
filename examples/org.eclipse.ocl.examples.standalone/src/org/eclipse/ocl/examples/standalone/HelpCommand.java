@@ -17,10 +17,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The HelpCommand provides interactive help.
@@ -51,7 +52,7 @@ public class HelpCommand extends StandaloneCommand
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(HelpCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(HelpCommand.class);
 
 	public HelpCommand(@NonNull StandaloneApplication standaloneApplication) {
 		super(standaloneApplication, "help", StandaloneMessages.HelpCommand_Help);

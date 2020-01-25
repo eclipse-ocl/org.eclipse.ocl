@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
@@ -31,13 +30,15 @@ import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.ui.messages.OCLinEcoreUIMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wizard allowing the user to create a new OCLinEcore file.
  */
 public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 {
-	private static final Logger logger = Logger.getLogger(EcoreWithOCLFileNewWizard.class);
+	private static final Logger logger = LoggerFactory.getLogger(EcoreWithOCLFileNewWizard.class);
 
 	@Override
 	protected @NonNull EcoreWithOCLFileDialog createDialog(@NonNull AbstractFileNewWizardPage wizardPage, @Nullable IResource initialSelection) {

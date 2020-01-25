@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.as2cs;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -45,8 +44,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 
 public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 {
-	public static final Logger logger = Logger.getLogger(EssentialOCLReferenceVisitor.class);
-
 	protected final @Nullable Namespace scope;
 
 	public EssentialOCLReferenceVisitor(@NonNull AS2CSConversion context, @Nullable Namespace scope) {

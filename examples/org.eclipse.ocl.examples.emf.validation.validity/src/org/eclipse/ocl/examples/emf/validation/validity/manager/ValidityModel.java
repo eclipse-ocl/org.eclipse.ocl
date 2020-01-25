@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
@@ -55,10 +54,12 @@ import org.eclipse.ocl.examples.emf.validation.validity.utilities.SeveritiesVisi
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ValidityModel
 {
-	private static final Logger logger = Logger.getLogger(ValidityManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(ValidityManager.class);
 
 	public static final int WORK_FOR_CLEAN_UP = 50;
 	public static final int WORK_FOR_CREATE_MODEL = 50;

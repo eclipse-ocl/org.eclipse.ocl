@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -19,14 +18,16 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ocl.pivot.uml.internal.utilities.UMLXMIID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Writes a designated <tt>modelSlot</tt> to a specified <tt>uri</tt>.
  */
 public class UMLIDAssigner extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 
 	public ResourceSet getResourceSet() {
 		if (resourceSet == null) {
@@ -42,7 +43,7 @@ public class UMLIDAssigner extends WorkflowComponentWithModelSlot
 		UMLXMIID umlXMIid = new UMLXMIID(resource);
 		umlXMIid.assign();
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

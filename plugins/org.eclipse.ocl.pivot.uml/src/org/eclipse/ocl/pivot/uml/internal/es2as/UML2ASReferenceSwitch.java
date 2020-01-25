@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,6 +41,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.uml2.uml.util.UMLSwitch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //
 //	Originally everything was in the Reference pass but the Stereotype resolution preceded it and got steadily more complicated
@@ -49,7 +50,7 @@ import org.eclipse.uml2.uml.util.UMLSwitch;
 //
 public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 {
-	private static final Logger logger = Logger.getLogger(UML2ASReferenceSwitch.class);
+	private static final Logger logger = LoggerFactory.getLogger(UML2ASReferenceSwitch.class);
 
 	protected final @NonNull UML2AS converter;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;

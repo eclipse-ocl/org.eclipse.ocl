@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -72,6 +71,8 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <!-- begin-user-doc -->
@@ -357,7 +358,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitStandardLibrary(this);
 	}
-	private static final Logger logger = Logger.getLogger(StandardLibraryInternal.class);
+	private static final Logger logger = LoggerFactory.getLogger(StandardLibraryInternal.class);
 
 	/**
 	 * The URI used by default for the OCL Standard Library. NB. This

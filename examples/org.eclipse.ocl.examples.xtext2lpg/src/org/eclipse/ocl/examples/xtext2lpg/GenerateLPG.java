@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.xtext2lpg;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -27,6 +26,8 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.Syntax;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.XBNFPackage;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.xtext.XtextStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generates the javaFolder/'javaPackageName'/visitorClassName.java file providing
@@ -34,13 +35,14 @@ import org.eclipse.xtext.XtextStandaloneSetup;
  */
 public abstract class GenerateLPG extends AbstractWorkflowComponent
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 	protected String javaFolder;
 	protected String javaPackageName;
 	protected String in;
 	protected String syntaxName;
 
+	@Override
 	public void checkConfiguration(Issues issues) {
 		if (javaPackageName == null) {
 			issues.addError(this, "javaPackageName not specified.");
@@ -49,7 +51,7 @@ public abstract class GenerateLPG extends AbstractWorkflowComponent
 			issues.addError(this, "in not specified.");
 		}
 	}
-	
+
 	protected abstract @NonNull String generateLPGKWLexer(@NonNull Syntax syntax);
 	protected abstract @NonNull String generateLPGLexer(@NonNull Syntax syntax);
 	protected abstract @NonNull String generateLPGParser(@NonNull Syntax syntax);
@@ -108,7 +110,7 @@ public abstract class GenerateLPG extends AbstractWorkflowComponent
 	public void setJavaPackageName(String javaPackageName) {
 		this.javaPackageName = javaPackageName;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

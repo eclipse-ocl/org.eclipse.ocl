@@ -15,7 +15,7 @@ package org.eclipse.ocl.common.ui;
  */
 public class OCLCommonUI implements CommonUIConstants
 {
-/*	private static final Logger log = Logger.getLogger(OCLCommonUI.class);
+/*	private static final Logger log = LoggerFactory.getLogger(OCLCommonUI.class);
 
 	public static boolean hasNature(IProject project) {
 		try {

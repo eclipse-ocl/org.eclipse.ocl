@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -65,6 +64,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * BaseCSorASDocumentProvider orchestrates the load and saving of optional XMI content
@@ -106,7 +107,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		}
 	}
 
-	private static final Logger log = Logger.getLogger(BaseCSorASDocumentProvider.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseCSorASDocumentProvider.class);
 
 	public static final String PERSIST_AS_PIVOT = "pivot";
 	public static final String PERSIST_AS_TEXT = "text";

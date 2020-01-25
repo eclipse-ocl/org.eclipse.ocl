@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.ui.builder;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -24,6 +23,8 @@ import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractBuildSelector;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractValidatingBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builder for OCL contributions. Currently this involves identifying OCL files subject to
@@ -57,7 +58,7 @@ public class OCLBuilder extends AbstractValidatingBuilder
 		}
 	}
 
-	private static final Logger log = Logger.getLogger(OCLBuilder.class);
+	private static final Logger log = LoggerFactory.getLogger(OCLBuilder.class);
 	public static final String BUILDER_ID = OCLProjectHelper.BUILDER_ID;
 
 	public static void deleteMarkers(@NonNull IProject project, Map<String, String> arguments) throws CoreException {

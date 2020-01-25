@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializes Eclipse standalone support.
@@ -22,7 +23,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 public class ProjectMapSetup
 {
 	private static StandaloneProjectMap projectMap;
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	public ProjectMapSetup() {
 		if (projectMap == null) {

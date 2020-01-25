@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -38,6 +37,8 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.ecore.delegate.InvocationBehavior;
 import org.eclipse.ocl.ecore.delegate.SettingBehavior;
 import org.eclipse.ocl.ecore.delegate.ValidationBehavior;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Alphabeticizes a designated <tt>modelSlot</tt> so that primitive types
@@ -46,7 +47,7 @@ import org.eclipse.ocl.ecore.delegate.ValidationBehavior;
  */
 public class OCLDelegateActivator extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {

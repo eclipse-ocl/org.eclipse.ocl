@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -21,14 +20,16 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.uml2.uml.Comment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Workaround Bug 424568 by correcting \r\n in Comments.
  */
 public class CommentNormalizer extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 
 	public ResourceSet getResourceSet() {
 		if (resourceSet == null) {
@@ -55,7 +56,7 @@ public class CommentNormalizer extends WorkflowComponentWithModelSlot
     		}
     	}
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

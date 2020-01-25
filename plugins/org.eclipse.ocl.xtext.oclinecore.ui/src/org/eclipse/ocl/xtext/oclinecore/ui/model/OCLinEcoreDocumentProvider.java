@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -62,6 +61,8 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * OCLinEcoreDocumentProvider orchestrates the load and saving of optional XMI content
@@ -69,7 +70,7 @@ import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSynt
  */
 public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 {		// FIXME share more code with BaseCSorASDocumentProvider
-	private static final Logger log = Logger.getLogger(OCLinEcoreDocumentProvider.class);
+	private static final Logger log = LoggerFactory.getLogger(OCLinEcoreDocumentProvider.class);
 
 	public static final String PERSIST_AS_ECORE = "as-ecore";
 	public static final String PERSIST_IN_ECORE = "in-ecore";

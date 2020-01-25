@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -18,6 +17,8 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Zaps the "Type" class to be non-abstract.
@@ -32,8 +33,8 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 @Deprecated  // No longer in use
 public class NonAbstractTypeZapper extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 
 	public ResourceSet getResourceSet() {
 		if (resourceSet == null) {
@@ -52,7 +53,7 @@ public class NonAbstractTypeZapper extends WorkflowComponentWithModelSlot
 		org.eclipse.uml2.uml.Class dataTypeClass = (org.eclipse.uml2.uml.Class)umlPackage.getOwnedType("DataType");
 		dataTypeClass.setIsAbstract(false);
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.uml.internal.as2es;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Class;
@@ -32,14 +31,16 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.uml2.uml.MultiplicityElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AS2UMLReferenceVisitor
 	extends AbstractExtendingVisitor<EObject, AS2UML>
 {
-	private static final Logger logger = Logger.getLogger(AS2UMLReferenceVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(AS2UMLReferenceVisitor.class);
 
 //	protected final AS2EcoreTypeRefVisitor typeRefVisitor;
-	
+
 	public AS2UMLReferenceVisitor(@NonNull AS2UML context) {
 		super(context);
 //		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
@@ -246,7 +247,7 @@ public class AS2UMLReferenceVisitor
 			return null;
 		}
 	}
-	
+
 /*	@Override
 	public Object caseEAnnotation(EAnnotation eAnnotation) {
 		AnnotationCS csAnnotation = (AnnotationCS) deferMap.get(eAnnotation);
@@ -309,5 +310,5 @@ public class AS2UMLReferenceVisitor
 		} */
 //		return null;
 //	}
-	
+
 }

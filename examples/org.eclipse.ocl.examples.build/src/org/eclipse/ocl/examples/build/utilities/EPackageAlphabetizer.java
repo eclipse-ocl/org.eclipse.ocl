@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -32,6 +31,8 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Alphabeticizes a designated <tt>modelSlot</tt> so that primitive types
@@ -74,7 +75,7 @@ public class EPackageAlphabetizer extends WorkflowComponentWithModelSlot
 		}
 	}
 
-	private Logger log = Logger.getLogger(getClass());	
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {

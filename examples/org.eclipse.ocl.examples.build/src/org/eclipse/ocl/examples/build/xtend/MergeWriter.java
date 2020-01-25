@@ -15,8 +15,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MergeWriter accumulates contributions to an output file which is written when closed.
@@ -39,12 +40,12 @@ public class MergeWriter
 			return copyright.trim().replaceAll(NL_REGEX, "\n");
 		}
 	}
-	
-	protected Logger log = Logger.getLogger(getClass());
-	
+
+	protected Logger log = LoggerFactory.getLogger(getClass());
+
 	private @NonNull StringBuilder s = new StringBuilder();
 	private @NonNull String fileName;
-	
+
 	public MergeWriter(@NonNull String fileName) throws IOException {
 		this.fileName = fileName;
 		log.info("Generating '" + fileName + "'");

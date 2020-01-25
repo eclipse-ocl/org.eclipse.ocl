@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.outline;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -19,22 +18,24 @@ import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.actions.OutlineWithEditorLinker;
 import org.eclipse.xtext.util.ITextRegion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * BaseOutlineWithEditorLinker is they key class for mapping a text location to an outline node and
  * so to an AS/CS element.
  * <p>
- * The reverse CS/AS element to text location mapping is in BaseLocationInFileProvider. 
+ * The reverse CS/AS element to text location mapping is in BaseLocationInFileProvider.
  */
 public class BaseOutlineWithEditorLinker extends OutlineWithEditorLinker
 {
 	public static final @NonNull TracingOption LOCATE = new TracingOption(
 		BaseUiPluginHelper.PLUGIN_ID, "outline/locate"); //$NON-NLS-1$
 
-	private static final Logger logger = Logger.getLogger(BaseOutlineWithEditorLinker.class);
+	private static final Logger logger = LoggerFactory.getLogger(BaseOutlineWithEditorLinker.class);
 
 	private int depth = 0;
-	
+
 	@Override
 	protected IOutlineNode findBestNode(IOutlineNode input, ITextRegion selectedTextRegion) {
 		int savedDepth = depth++;

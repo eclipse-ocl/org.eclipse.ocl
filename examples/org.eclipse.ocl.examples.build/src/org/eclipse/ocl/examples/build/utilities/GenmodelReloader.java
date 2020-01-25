@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -40,13 +39,15 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reloads the designated <tt>genModel</tt>.
  */
 public class GenmodelReloader extends AbstractProjectComponent
 {
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 	//	protected String modelImporter = UMLImporter.class.getName();
 	protected String genModel;							// URI of the genmodel
 	protected String ecoreFile = null;					// Explicit file URI of the Ecore
@@ -108,7 +109,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 
 			Diagnostic diagnostic = modelImporterInstance.computeEPackages(monitor);
 			if (diagnostic.getSeverity() != Diagnostic.OK) {
-				log.info(diagnostic);
+				log.info(diagnostic.toString());
 			}
 			modelImporterInstance.adjustEPackages(monitor);
 			if (ecoreFile != null) {

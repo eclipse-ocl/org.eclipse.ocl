@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -53,6 +52,8 @@ import org.eclipse.uml2.uml.internal.resource.XMI2UMLResourceFactoryImpl;
 import org.eclipse.uml2.uml.internal.resource.XMI2UMLResourceImpl;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -114,7 +115,7 @@ public class IdAssigner extends AbstractWorkflowComponent
 		}
 	}
 
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null;
 	protected Map<URI, URI> uriMapping = new HashMap<URI, URI>();
 	protected boolean alphabeticize = false;

@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +24,8 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Alphabeticizes a designated <tt>modelSlot</tt> so that primitive types
@@ -34,7 +35,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 public class UML25Fixes extends WorkflowComponentWithModelSlot
 {
 
-	private Logger log = Logger.getLogger(getClass());	
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {

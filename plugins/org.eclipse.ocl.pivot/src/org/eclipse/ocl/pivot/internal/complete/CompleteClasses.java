@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -45,10 +44,12 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
 {
-	private static final Logger logger = Logger.getLogger(CompleteClasses.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompleteClasses.class);
 
 	public static final @NonNull TracingOption COMPLETE_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "completeClasses");
 	//	static { COMPLETE_CLASSES.setState(true); }

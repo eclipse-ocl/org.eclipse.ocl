@@ -35,7 +35,8 @@ Require-Bundle: org.junit;visibility:=reexport,
  org.eclipse.ocl.examples.project.completeocltutorial;resolution:=optional,
  org.eclipse.ocl.examples.debug.ui,
  org.eclipse.ocl.examples.debug.vm.ui,
- org.eclipse.emf.mwe.core
+ org.eclipse.emf.mwe.core,
+ org.slf4j.api
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %providerName
@@ -79,3 +80,4 @@ Import-Package: com.google.common.collect,
  org.eclipse.xtext.xbase.lib,
  org.objectweb.asm
 Automatic-Module-Name: org.eclipse.ocl.examples.xtext.tests
+Comment: Require-Capability: org.slf4j.impl.log4j12

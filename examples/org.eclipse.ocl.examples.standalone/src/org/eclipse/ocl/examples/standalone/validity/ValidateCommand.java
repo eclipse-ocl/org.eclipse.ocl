@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -46,13 +45,15 @@ import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator.ValidationAdapter;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The ValidateCommand provides model validation.
  */
 public class ValidateCommand extends StandaloneCommand
 {
-	private static final Logger logger = Logger.getLogger(ValidateCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(ValidateCommand.class);
 
 	protected static final class ExporterComparator implements Comparator<IValidityExporterDescriptor>
 	{

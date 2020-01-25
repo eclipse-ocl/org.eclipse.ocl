@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -32,6 +31,8 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Alphabeticizes a designated <tt>modelSlot</tt> so that primitive types
@@ -66,10 +67,10 @@ public class PruneSuperClasses extends WorkflowComponentWithModelSlot
 			assert (i1 !=null) && (i2 != null);
 			return i1 - i2;
 		}
-		
+
 	}
-	
-	private Logger log = Logger.getLogger(getClass());
+
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private List<String> orderedNames = new ArrayList<String>();
 
 	@Override

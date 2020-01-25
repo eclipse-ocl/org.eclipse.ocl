@@ -10,16 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.xtext.XtextStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializes Xtext support.
  */
 public class XtextStandaloneSetupBean extends XtextStandaloneSetup
 {
-	private static final Logger logger = Logger.getLogger(XtextStandaloneSetupBean.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(XtextStandaloneSetupBean.class);
+
 	public XtextStandaloneSetupBean() {
 		logger.info("Configuring 'xtext'");
 		doSetup();

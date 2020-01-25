@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.uml.internal.validation;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +32,8 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.uml.Stereotype;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A LoadableConstraintDescriptor realizes both an IConstraintDescriptor and IModelConstraint
@@ -89,7 +90,7 @@ public abstract class LoadableConstraintDescriptor<T> extends AbstractConstraint
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(LoadableConstraintDescriptor.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoadableConstraintDescriptor.class);
 
 	private final @NonNull Constraint constraint;
 	protected final @NonNull T targetType;

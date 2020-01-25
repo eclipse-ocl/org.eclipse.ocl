@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -104,6 +103,8 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.values.Unlimited;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts an OCL expression to a string for debugging. This is not intended to
@@ -121,7 +122,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	public static boolean SHOW_ALL_MULTIPLICITIES = false;
 
-	private static final Logger logger = Logger.getLogger(ToStringVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(ToStringVisitor.class);
 
 	public static interface Factory {
 		@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s);

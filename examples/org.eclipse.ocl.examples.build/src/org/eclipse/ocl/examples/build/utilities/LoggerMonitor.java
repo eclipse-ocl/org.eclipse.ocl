@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.eclipse.emf.common.util.BasicMonitor;
 
 /**

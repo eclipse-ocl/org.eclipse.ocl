@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -26,47 +25,49 @@ import org.eclipse.ocl.examples.debug.vm.utils.CompiledUnit;
 import org.eclipse.ocl.examples.debug.vm.utils.IModuleSourceInfo;
 import org.eclipse.ocl.examples.debug.vm.utils.LineNumberProvider;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UnitManager
 {
-	private static final Logger logger = Logger.getLogger(UnitManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(UnitManager.class);
 
 	public static void collectAllImports(CompiledUnit mainUnit,
 			HashSet<CompiledUnit> allUnits) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private final @NonNull CompiledUnit fMainUnit;
 	private Map<URI, UnitEntry> fUri2UnitMap;
-	
+
 	UnitManager(@NonNull CompiledUnit mainUnit) {
 		fMainUnit = mainUnit;
 		try {
 			fUri2UnitMap = createURI2UnitMap(mainUnit);
 		} catch (IOException e) {
-			fUri2UnitMap = Collections.emptyMap();			
-			logger.error(e);
+			fUri2UnitMap = Collections.emptyMap();
+			logger.error(e.toString());
 		}
-	}	
-	
+	}
+
 	public @NonNull CompiledUnit getMainUnit() {
 		return fMainUnit;
 	}
-	
+
 	public @Nullable CompiledUnit getCompiledModule(@NonNull URI unitURI) {
 		UnitEntry numberProvider = fUri2UnitMap.get(unitURI);
 		if(numberProvider != null) {
 			return numberProvider.getCompiledModule();
 		}
-		
+
 		return null;
 	}
-	
+
 	public @Nullable LineNumberProvider getLineNumberProvider(@NonNull URI unitURI) {
 		return fUri2UnitMap.get(unitURI);
 	}
-	
+
     public @Nullable CompiledUnit findUnitForModule(@NonNull NamedElement module) {
     	return findCompiledModuleRec(fMainUnit, module);
     }
@@ -75,7 +76,7 @@ public class UnitManager
     	if (rootModule.getModules().contains(module)) {
     		return rootModule;
     	}
-    	
+
     	for (CompiledUnit impModule : rootModule.getCompiledImports()) {
     		if (impModule != null) {
     			CompiledUnit findModule = findCompiledModuleRec(impModule, module);
@@ -85,14 +86,14 @@ public class UnitManager
     		}
     	}
     	return null;
-    }	
-	
+    }
+
 	private @NonNull Map<URI, UnitEntry> createURI2UnitMap(@NonNull CompiledUnit mainUnit) throws IOException {
 		HashSet<CompiledUnit> allUnits = new HashSet<CompiledUnit>();
 		allUnits.add(mainUnit);
 		collectAllImports(mainUnit, allUnits);
 		Map<URI, UnitEntry> file2Unit = new HashMap<URI, UnitEntry>();
-		
+
 		for (CompiledUnit nextUnit : allUnits) {
 			if (nextUnit != null) {
 				for (NamedElement module : nextUnit.getModules()) {
@@ -106,34 +107,37 @@ public class UnitManager
 				}
 			}
 		}
-		
+
 		return file2Unit;
 	}
-	    
+
     private static class UnitEntry implements LineNumberProvider {
-    	
-        private final @NonNull CompiledUnit fModule;  
-        private final @NonNull LineNumberProvider fProvider;    	
+
+        private final @NonNull CompiledUnit fModule;
+        private final @NonNull LineNumberProvider fProvider;
 
         public UnitEntry(@NonNull CompiledUnit unit, @NonNull LineNumberProvider lineNumberProvider) {
             fModule = unit;
     		fProvider = lineNumberProvider;
         }
-        
+
         public @NonNull CompiledUnit getCompiledModule() {
             return fModule;
         }
-        
-        public int getLineEnd(int lineNumber) {
+
+        @Override
+		public int getLineEnd(int lineNumber) {
             return fProvider.getLineEnd(lineNumber);
         }
 
-        public int getLineCount() {
+        @Override
+		public int getLineCount() {
             return fProvider.getLineCount();
         }
 
-        public int getLineNumber(int offset) {
+        @Override
+		public int getLineNumber(int offset) {
             return fProvider.getLineNumber(offset);
-        } 
-    }    
+        }
+    }
 }

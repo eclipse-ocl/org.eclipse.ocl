@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -85,6 +84,8 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.Triple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EssentialOCLCSResource extends LazyLinkingResource implements BaseCSResource
 {
@@ -186,7 +187,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	//	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
 	//	private static final String MISSING_EOF_AT = "missing EOF at ";
 
-	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
+	private static final Logger logger = LoggerFactory.getLogger(EssentialOCLCSResource.class);
 
 	private @Nullable ParserContext parserContext = null;
 	private @Nullable ProjectManager projectMap = null;

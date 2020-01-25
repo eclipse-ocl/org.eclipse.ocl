@@ -10,16 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.xtend;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());	
-	protected ResourceSet resourceSet = null;	
+	protected Logger log = LoggerFactory.getLogger(getClass());
+	protected ResourceSet resourceSet = null;
 	protected String uri;
 	protected String javaClassName;
 	protected String javaFolder;
@@ -31,7 +32,7 @@ public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflo
 
 	protected GenerateMetamodelWorkflowComponent() {
 		OCLstdlibStandaloneSetup.doSetup();
-	}	
+	}
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -82,14 +83,14 @@ public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflo
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	/**
-	 * An optional ResourceSet that MWE components may share to reduce model loading. 
+	 * An optional ResourceSet that MWE components may share to reduce model loading.
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}
-	
+
 	/**
 	 * The nsURI for use in the generated metamodel. (e.g. "http://www.eclipse.org/ocl/2015/Pivot").
 	 */

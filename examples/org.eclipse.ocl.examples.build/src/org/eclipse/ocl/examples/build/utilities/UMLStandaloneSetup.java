@@ -10,18 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializes UML support.
  */
 public class UMLStandaloneSetup extends StandaloneSetup
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	public UMLStandaloneSetup() {
 		org.eclipse.ocl.pivot.uml.UMLStandaloneSetup.init();

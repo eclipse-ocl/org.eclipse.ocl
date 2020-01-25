@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -105,10 +104,12 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.util.AbstractEssentialOCLCSContainmentVisitor;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSContainmentVisitor
 {
-	private static final Logger logger = Logger.getLogger(EssentialOCLCSContainmentVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(EssentialOCLCSContainmentVisitor.class);
 
 	public EssentialOCLCSContainmentVisitor(@NonNull CS2ASConversion context) {
 		super(context);

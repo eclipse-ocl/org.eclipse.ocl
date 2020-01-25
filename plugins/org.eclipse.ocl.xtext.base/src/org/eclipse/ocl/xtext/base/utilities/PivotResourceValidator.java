@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -35,6 +34,8 @@ import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.Issue;
 import org.eclipse.xtext.validation.ResourceValidatorImpl;
 import org.eclipse.xtext.validation.impl.ConcreteSyntaxEValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
@@ -74,7 +75,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 	}
 
-	private static final Logger log = Logger.getLogger(PivotResourceValidator.class);
+	private static final Logger log = LoggerFactory.getLogger(PivotResourceValidator.class);
 	public static final String HAS_SYNTAX_ERRORS = "has_syntax_errors";
 
 	protected ValidationDiagnostic createDefaultDiagnostic(Diagnostician diagnostician, EObject pivotObject) {

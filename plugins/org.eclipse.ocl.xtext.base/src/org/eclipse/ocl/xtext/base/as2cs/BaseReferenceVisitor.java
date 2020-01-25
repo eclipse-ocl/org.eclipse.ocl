@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.as2cs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -35,10 +34,12 @@ import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS2CSConversion>
 {
-	public static final Logger logger = Logger.getLogger(BaseReferenceVisitor.class);
+	public static final Logger logger = LoggerFactory.getLogger(BaseReferenceVisitor.class);
 
 	public BaseReferenceVisitor(@NonNull AS2CSConversion context) {
 		super(context);		// NB this class is stateless since separate instances exist per CS package

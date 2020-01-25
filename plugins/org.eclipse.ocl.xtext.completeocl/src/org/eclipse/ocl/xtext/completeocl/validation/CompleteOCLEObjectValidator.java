@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
@@ -35,6 +34,8 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
@@ -45,7 +46,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 {
-	private static final Logger logger = Logger.getLogger(CompleteOCLEObjectValidator.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompleteOCLEObjectValidator.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EPackage ePackage;

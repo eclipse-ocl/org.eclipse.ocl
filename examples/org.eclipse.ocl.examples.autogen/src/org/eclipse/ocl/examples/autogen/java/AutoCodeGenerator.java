@@ -60,7 +60,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AutoCodeGenerator extends JavaCodeGenerator
 {
-	//	private static final Logger logger = Logger.getLogger(AutoCodeGenerator.class);
+	//	private static final Logger logger = LoggerFactory.getLogger(AutoCodeGenerator.class);
 
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;

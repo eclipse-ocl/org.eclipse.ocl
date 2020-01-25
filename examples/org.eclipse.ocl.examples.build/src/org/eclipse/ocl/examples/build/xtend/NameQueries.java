@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.xtend;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,6 +26,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * NameQueries manges the mapping from a model element to its unique symbol name.
@@ -37,7 +38,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class NameQueries
 {
-	public static final Logger logger = Logger.getLogger(NameQueries.class);
+	public static final Logger logger = LoggerFactory.getLogger(NameQueries.class);
 
 	public static @NonNull String rawEncodeName(@NonNull String name, @NonNull Integer arity) {
 		return AbstractGenModelHelper.rawEncodeName(name, arity);

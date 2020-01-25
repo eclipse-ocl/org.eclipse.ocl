@@ -19,7 +19,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Import-Package: org.apache.commons.lang,
- org.apache.log4j;version="[1.2.15,2.0.0)"
+ org.slf4j;version="[1.7.2,2.0.0)"
 Export-Package: org.eclipse.ocl.examples.emf.validation.validity.ui.actions,
  org.eclipse.ocl.examples.emf.validation.validity.ui.filters,
  org.eclipse.ocl.examples.emf.validation.validity.ui.locator,

@@ -20,7 +20,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -42,6 +41,8 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Normalizes an Ecore <tt>modelSlot</tt> by
@@ -50,8 +51,8 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class EcoreNormalizer extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 
 	public @NonNull ResourceSet getResourceSet() {
 		ResourceSet resourceSet2 = resourceSet;
@@ -148,6 +149,7 @@ public class EcoreNormalizer extends WorkflowComponentWithModelSlot
 		List<T> newList = new ArrayList<T>(list);
 		Collections.sort(newList, new Comparator<@NonNull T>()
 		{
+			@Override
 			public int compare(@NonNull T o1, @NonNull T o2) {
 				EClass e1 = o1.eClass();
 				EClass e2 = o2.eClass();
@@ -185,7 +187,7 @@ public class EcoreNormalizer extends WorkflowComponentWithModelSlot
 		list.clear();
 		list.addAll(newList);
 	}
-	
+
 	public void setResourceSet(@NonNull ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

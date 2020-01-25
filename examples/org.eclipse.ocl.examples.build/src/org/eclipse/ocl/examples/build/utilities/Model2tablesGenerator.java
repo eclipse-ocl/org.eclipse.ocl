@@ -15,7 +15,6 @@ import java.io.FileWriter;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -34,6 +33,8 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generates the javaFolder/'javaPackageName'Tables.java file defining
@@ -41,7 +42,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class Model2tablesGenerator extends AbstractWorkflowComponent
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private ResourceSet resourceSet = null;
 	private boolean genOCLstdlib = false;
 	protected String genModelFile;

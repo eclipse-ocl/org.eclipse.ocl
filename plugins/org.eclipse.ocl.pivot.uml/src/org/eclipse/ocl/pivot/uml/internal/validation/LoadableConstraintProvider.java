@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -42,6 +41,8 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.uml.Stereotype;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * LoadableConstraintProvider supports loading of algorithmically derived
@@ -69,7 +70,7 @@ import org.eclipse.uml2.uml.Stereotype;
 @SuppressWarnings("restriction")
 public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 {
-	private static final Logger logger = Logger.getLogger(LoadableConstraintProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoadableConstraintProvider.class);
 
 	private static OCL ocl = null;		// FIXME use CG'd constraints to allow this to be weak
 
@@ -162,7 +163,7 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 			cfg = ((IConfigurationElement)cfg).getParent();
 		}
 		if (!(cfg instanceof IExtension)) {
-			logger.error("The ConstraintDescriptor for '" + config.getName() + "' has no IExtension parent", null);
+			logger.error("The ConstraintDescriptor for '" + config.getName() + "' has no IExtension parent");
 			return;
 		}
 		String namespaceIdentifier = ((IExtension)cfg).getNamespaceIdentifier();

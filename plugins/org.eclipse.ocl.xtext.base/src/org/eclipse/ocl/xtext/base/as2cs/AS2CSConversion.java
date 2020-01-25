@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -83,10 +82,12 @@ import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AS2CSConversion extends AbstractConversion implements PivotConstantsInternal
 {
-	private static final Logger logger = Logger.getLogger(AS2CSConversion.class);
+	private static final Logger logger = LoggerFactory.getLogger(AS2CSConversion.class);
 
 	protected final @NonNull AS2CS converter;
 	protected final @NonNull BaseDeclarationVisitor defaultDeclarationVisitor;

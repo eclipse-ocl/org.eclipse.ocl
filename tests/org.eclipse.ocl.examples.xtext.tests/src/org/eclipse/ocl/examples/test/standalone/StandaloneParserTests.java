@@ -28,11 +28,18 @@ import org.eclipse.ocl.examples.standalone.StandaloneCommandAnalyzer;
 import org.eclipse.ocl.examples.standalone.validity.ValidateCommand;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.junit.Test;
+//import org.slf4j.impl.Log4jLoggerFactory;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
 
 import com.google.common.collect.Lists;
 
 public class StandaloneParserTests extends StandaloneTestCase
 {
+//	private String nn = Log4jLoggerFactory.class.getNme();
+	private String nn = ILoggerFactory.class.getName();
+	private String n2 = LoggerFactoryBinder.class.getName();
+
 	private StandaloneCommandAnalyzer commandAnalyzer = new StandaloneCommandAnalyzer(new StandaloneApplication());
 
 	protected static void assertCommandInvalid(@NonNull StandaloneCommand command, @NonNull Map<CommandToken, List<String>> token2strings) {

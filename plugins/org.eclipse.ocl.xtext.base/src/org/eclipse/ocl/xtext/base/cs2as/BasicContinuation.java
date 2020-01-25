@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -23,6 +22,8 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A BasicContinuation defines a conversion activity that needs to be performed once
@@ -35,7 +36,7 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 {
 	private static final @NonNull Dependency @NonNull [] EMPTY_DEPENDENCIES = new @NonNull Dependency[0];
 
-	static final Logger logger = Logger.getLogger(BasicContinuation.class);
+	static final Logger logger = LoggerFactory.getLogger(BasicContinuation.class);
 
 	protected static @NonNull Dependency @NonNull [] createDependencies(@Nullable PivotableElementCS csElement) {
 		return csElement != null ? new @NonNull PivotDependency[]{new PivotDependency(csElement)} : EMPTY_DEPENDENCIES;

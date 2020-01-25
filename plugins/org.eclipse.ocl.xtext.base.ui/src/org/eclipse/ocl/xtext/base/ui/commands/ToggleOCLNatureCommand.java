@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.ui.commands;
 
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -28,12 +27,14 @@ import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.ui.utilities.BaseUIUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  */
 public class ToggleOCLNatureCommand extends AbstractHandler implements ToggleNatureCommand {
 
-	private static final Logger log = Logger.getLogger(ToggleOCLNatureCommand.class);
+	private static final Logger log = LoggerFactory.getLogger(ToggleOCLNatureCommand.class);
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {

@@ -14,7 +14,6 @@ package org.eclipse.ocl.pivot.uml;
 import java.net.URL;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -39,6 +38,8 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.uml.internal.resource.UMLASResourceFactory;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.uml2.uml.UMLPlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initialization support for UML Pivot models without equinox extension registry
@@ -49,7 +50,7 @@ public class UMLStandaloneSetup //implements ISetup
 	public static final @NonNull String OCL4UML_PROFILE_URI = PROFILES_PATHMAP + "OCLforUML.profile.uml#_0"; //$NON-NLS-1$
 
 	private static boolean initialized = false;
-	private static final Logger logger = Logger.getLogger(UMLStandaloneSetup.class);
+	private static final Logger logger = LoggerFactory.getLogger(UMLStandaloneSetup.class);
 
 	/**
 	 * Verify that initialization has occurred, generation a warning log message if not and initializing anyway.

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -57,6 +56,8 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
@@ -65,7 +66,7 @@ import com.google.common.collect.Sets;
  */
 public class ConstraintMerger extends AbstractProjectComponent
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	protected @NonNull List<@NonNull String> ecoreURIs = new ArrayList<>();
 	protected String libraryURI = null;
 	protected @NonNull List<@NonNull String> oclURIs = new ArrayList<>();

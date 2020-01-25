@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -50,10 +49,12 @@ import org.eclipse.xtext.ReferencedMetamodel;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.resource.impl.BinaryGrammarResourceFactoryImpl;
 import org.eclipse.xtext.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GenerateGrammar extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 	protected ResourceSet resourceSet = null;
 	protected String languageName;
 	protected String javaFolder;

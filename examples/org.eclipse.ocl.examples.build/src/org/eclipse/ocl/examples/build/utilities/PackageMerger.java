@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.mwe.core.WorkflowContext;
@@ -21,13 +20,15 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.uml2.uml.util.UMLUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Performs a UML package merge on the top level package of a designated <tt>modelSlot</tt>.
  */
 public class PackageMerger extends WorkflowComponentWithModelSlot
-{	
-	private Logger log = Logger.getLogger(getClass());	
+{
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {

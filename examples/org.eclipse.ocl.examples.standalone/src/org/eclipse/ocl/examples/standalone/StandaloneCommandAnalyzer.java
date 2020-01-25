@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
@@ -14,22 +14,23 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.validity.ValidateCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class executes an OCL evaluation of a model with one or several OCL
  * file(s). This class is intended to be used only in Standalone mode. The
  * result may be saved in a XMI file or exported as a HTML report.<br>
- * 
+ *
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class StandaloneCommandAnalyzer
 {
-	private static final Logger logger = Logger.getLogger(StandaloneCommandAnalyzer.class);
+	private static final Logger logger = LoggerFactory.getLogger(StandaloneCommandAnalyzer.class);
 
 	private final @NonNull Map<String, StandaloneCommand> commands = new HashMap<String, StandaloneCommand>();
 
@@ -45,10 +46,10 @@ public class StandaloneCommandAnalyzer
 	public @NonNull Collection<StandaloneCommand> getCommands() {
 		return commands.values();
 	}
-	
+
 	/**
 	 * This launch the application using the entered arguments.
-	 * 
+	 *
 	 * @param args
 	 *            the application arguments.
 	 * @return the application return code.

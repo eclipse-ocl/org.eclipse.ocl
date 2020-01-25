@@ -4,23 +4,24 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.latex;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GenerateLaTeX extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());	
-	protected ResourceSet resourceSet = null;	
+	protected Logger log = LoggerFactory.getLogger(getClass());
+	protected ResourceSet resourceSet = null;
 	protected String latexFolder;
 	protected String latexFileName;
 	protected String projectName;
@@ -30,7 +31,7 @@ public abstract class GenerateLaTeX extends AbstractWorkflowComponent
 
 	protected GenerateLaTeX() {
 		OCLstdlibStandaloneSetup.doSetup();
-	}	
+	}
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -96,9 +97,9 @@ public abstract class GenerateLaTeX extends AbstractWorkflowComponent
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	/**
-	 * An optional ResourceSet that MWE components may share to reduce model loading. 
+	 * An optional ResourceSet that MWE components may share to reduce model loading.
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;

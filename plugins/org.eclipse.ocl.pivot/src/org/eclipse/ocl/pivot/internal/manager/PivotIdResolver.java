@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -38,10 +37,12 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PivotIdResolver extends AbstractIdResolver
 {
-	private static final Logger logger = Logger.getLogger(PivotIdResolver.class);
+	private static final Logger logger = LoggerFactory.getLogger(PivotIdResolver.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;

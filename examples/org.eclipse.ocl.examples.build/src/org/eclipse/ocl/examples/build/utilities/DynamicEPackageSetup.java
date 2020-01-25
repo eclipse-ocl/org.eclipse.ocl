@@ -13,11 +13,12 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializes Eclipse standalone support for dynamic packages.
@@ -25,8 +26,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public class DynamicEPackageSetup
 {
 	private ResourceSet resourceSet;
-	private Logger log = Logger.getLogger(getClass());
-	
+	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private List<String> dynamicEPackage = new ArrayList<String>();
 
 	public void addDynamicEPackage(String ePackageURI) {
@@ -36,7 +37,7 @@ public class DynamicEPackageSetup
 		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
 		log.info("Registering " + ePackage.getNsURI());
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

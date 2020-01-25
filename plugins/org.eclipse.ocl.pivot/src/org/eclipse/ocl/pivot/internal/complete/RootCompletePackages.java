@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.complete;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -19,10 +18,12 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RootCompletePackages extends AbstractCompletePackages
 {
-	private static final Logger logger = Logger.getLogger(RootCompletePackages.class);
+	private static final Logger logger = LoggerFactory.getLogger(RootCompletePackages.class);
 
 	private static final long serialVersionUID = 1L;
 

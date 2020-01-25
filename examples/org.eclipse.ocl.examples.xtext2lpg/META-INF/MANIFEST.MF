@@ -24,5 +24,5 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
  org.eclipse.ocl.examples.codegen;visibility:=reexport,
  org.eclipse.xtext.xbase.lib;bundle-version="[2.9.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
-Import-Package: org.apache.log4j
+Import-Package: org.slf4j;version="[1.7.2,2.0.0)"
 Automatic-Module-Name: org.eclipse.ocl.examples.xtext2lpg

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -23,10 +22,12 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PivotModelManager extends LazyModelManager
 {
-	private static final Logger logger = Logger.getLogger(PivotModelManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(PivotModelManager.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	private boolean generatedErrorMessage = false;

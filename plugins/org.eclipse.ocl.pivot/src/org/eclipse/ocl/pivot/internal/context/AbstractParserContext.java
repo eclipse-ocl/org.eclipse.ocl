@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -51,6 +50,8 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * AbstractParserContext provides the default implementation of the ParserContext API that all clients
@@ -58,7 +59,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
 {
-	private static final Logger logger = Logger.getLogger(AbstractParserContext.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractParserContext.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;

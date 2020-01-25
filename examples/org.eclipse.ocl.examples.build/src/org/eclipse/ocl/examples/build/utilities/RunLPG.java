@@ -13,21 +13,22 @@ package org.eclipse.ocl.examples.build.utilities;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RunLPG extends AbstractWorkflowComponent
 {
-	private static final Logger logger = Logger.getLogger(RunLPG.class);
-	
-	private String in = null;	
-	private String lpgExe = null;	
-	private String lpgIncs = null;	
-	private String lpgOpts = "";	
+	private static final Logger logger = LoggerFactory.getLogger(RunLPG.class);
+
+	private String in = null;
+	private String lpgExe = null;
+	private String lpgIncs = null;
+	private String lpgOpts = "";
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -47,9 +48,9 @@ public class RunLPG extends AbstractWorkflowComponent
 	}
 
 	/**
-	 * Clients may override to do any configuration 
+	 * Clients may override to do any configuration
 	 * properties initialization
-	 * 
+	 *
 	 * @return creates a context to be used by the transformation
 	 */
 	protected void initializeConfigurationProperties(ExecutionContextImpl context) {
@@ -68,19 +69,19 @@ public class RunLPG extends AbstractWorkflowComponent
 			return;
 		}
 	}
-	
+
 	public void setIn(String fileName) {
 		this.in = fileName;
 	}
-	
+
 	public void setLpgExe(String lpgExe) {
 		this.lpgExe = lpgExe;
 	}
-	
+
 	public void setLpgIncs(String lpgIncs) {
 		this.lpgIncs = lpgIncs;
 	}
-	
+
 	public void setLpgOpts(String lpgOpts) {
 		this.lpgOpts = lpgOpts;
 	}

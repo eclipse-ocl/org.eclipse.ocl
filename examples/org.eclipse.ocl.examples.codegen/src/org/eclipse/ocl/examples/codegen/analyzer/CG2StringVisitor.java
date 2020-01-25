@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EClassifier;
@@ -92,6 +91,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts an OCL expression to a string for debugging. This is not intended to
@@ -99,7 +100,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable String, @Nullable Object>
 {
-	private static final Logger logger = Logger.getLogger(CG2StringVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(CG2StringVisitor.class);
 
 	public static interface Factory extends Adapter {
 		@NonNull CG2StringVisitor createToStringVisitor();

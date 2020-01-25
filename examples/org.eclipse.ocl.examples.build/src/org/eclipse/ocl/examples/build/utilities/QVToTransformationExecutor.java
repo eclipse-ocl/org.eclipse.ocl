@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -44,10 +43,12 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QVToTransformationExecutor extends AbstractWorkflowComponent
 {
-	private static final Logger logger = Logger.getLogger(QVToTransformationExecutor.class);
+	private static final Logger logger = LoggerFactory.getLogger(QVToTransformationExecutor.class);
 
 	private ResourceSet resourceSet = null;
 	private String uri = null;

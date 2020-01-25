@@ -15,7 +15,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -37,10 +36,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GenerateTextileForModel extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 	protected ResourceSet resourceSet = null;
 	protected String textileFolder;
 	protected String textileFileName;

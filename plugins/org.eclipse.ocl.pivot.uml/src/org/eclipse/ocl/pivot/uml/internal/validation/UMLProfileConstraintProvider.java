@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.uml.internal.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,6 +27,8 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.uml.resource.UMLResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * UMLProfileConstraintProvider supports loading of constraints from a UML Profile.
@@ -50,7 +51,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
  */
 public class UMLProfileConstraintProvider extends LoadableConstraintProvider
 {
-	private static final Logger logger = Logger.getLogger(UMLProfileConstraintProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(UMLProfileConstraintProvider.class);
 
 	@Override
 	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<@NonNull Category> categories) {

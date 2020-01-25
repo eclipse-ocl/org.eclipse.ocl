@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
@@ -61,6 +60,8 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An EnvironmentView provides a selective view of the environment visible at
@@ -261,7 +262,7 @@ public class EnvironmentView
 	@SuppressWarnings("serial")
 	private static final class MyList extends ArrayList<Object> {}
 
-	private static final Logger logger = Logger.getLogger(EnvironmentView.class);
+	private static final Logger logger = LoggerFactory.getLogger(EnvironmentView.class);
 
 	private static @NonNull LinkedHashMap<@NonNull Class<?>, @NonNull List<@NonNull Comparator<@NonNull Object>>> disambiguatorMap =	// FIXME narrow API to Disambiguator
 			new LinkedHashMap<>();

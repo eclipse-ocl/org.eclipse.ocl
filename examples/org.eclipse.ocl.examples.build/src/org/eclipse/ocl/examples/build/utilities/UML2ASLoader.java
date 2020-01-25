@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.WorkflowContext;
@@ -23,13 +22,15 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts a UML resource to its Pivot form.
  */
 public class UML2ASLoader extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
@@ -53,7 +54,7 @@ public class UML2ASLoader extends WorkflowComponentWithModelSlot
 
 	/**
 	 * Sets the name of the UML slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */

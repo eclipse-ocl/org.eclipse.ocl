@@ -12,16 +12,17 @@ package org.eclipse.ocl.examples.build.utilities;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.xtext.diagnostics.ExceptionDiagnostic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourceUtils
 {
-	private static Logger log = Logger.getLogger(ResourceUtils.class);	
+	private static Logger log = LoggerFactory.getLogger(ResourceUtils.class);
 
 	/**
 	 * Checks a resource for any errors or warnings.

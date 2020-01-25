@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.build.utilities;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -25,13 +24,15 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts a UML resource to its Pivot form.
  */
 public class UMLAssociationNormalizer extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private String uri;
 
 	public String getUri() {

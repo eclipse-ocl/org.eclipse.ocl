@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-//import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -35,7 +35,7 @@ import org.eclipse.uml2.uml.Element;
  */
 public class UML2ASUtil
 {
-	//	private static final Logger logger = Logger.getLogger(UML2ASUtil.class);
+	//	private static final Logger logger = LoggerFactory.getLogger(UML2ASUtil.class);
 
 	public static @NonNull Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> computeAppliedStereotypes(@NonNull Iterable<EObject> umlStereotypeApplications) {
 		//

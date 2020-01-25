@@ -16,11 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A representation of the literals of the enumeration '<em><b>StandaloneResponse</b></em>',
@@ -28,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class StandaloneCommand
 {
-	private static final Logger logger = Logger.getLogger(StandaloneCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(StandaloneCommand.class);
 	protected static @NonNull Appendable DEFAULT_OUTPUT_STREAM = System.out;
 
 	public static @NonNull URIConverter getURIConverter() {
@@ -122,7 +123,8 @@ public abstract class StandaloneCommand
 				return i;
 			}
 			else {
-				logger.error("Missing argument for '" + name + "'");
+				String message = "Missing argument for '" + name + "'";
+				logger.error(message);
 				return -1;
 			}
 		}

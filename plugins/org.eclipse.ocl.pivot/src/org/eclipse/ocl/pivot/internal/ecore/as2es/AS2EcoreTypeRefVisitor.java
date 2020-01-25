@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.EMFPlugin;
@@ -56,10 +55,12 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
-	private static final Logger logger = Logger.getLogger(AS2EcoreTypeRefVisitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(AS2EcoreTypeRefVisitor.class);
 
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;

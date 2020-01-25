@@ -10,20 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.utilities;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Assigns simple xmi:ids to EPackages, EClassifiers, EStructuralFeatures to all Ecore elements.
  */
 public class StructuralENamedElementIdAssigner extends WorkflowComponentWithModelSlot
 {
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void checkConfiguration(Issues issues) {

@@ -47,6 +47,10 @@ import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -64,6 +68,10 @@ extends TestCase {
 	}
 
 	public static Test suite() {
+		String nn = ILoggerFactory.class.getName();
+		String n2 = LoggerFactoryBinder.class.getName();
+
+		Logger logger = LoggerFactory.getLogger(AllXtextTests.class);
 		//		if (System.getProperty("standalone") != null) {
 		// running tests stand-alone:  must set up the environment registry
 		//			Environment.Registry.INSTANCE.registerEnvironment(
