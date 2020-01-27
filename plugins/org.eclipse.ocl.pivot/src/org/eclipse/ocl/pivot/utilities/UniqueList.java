@@ -15,20 +15,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A UniqueList is an ArrayList that enforces uniqueness of its contents. For small lists the enforcement
- * is by content iteration. For large lists a HashSEt accelerates is-present testing.
+ * is by content iteration. For large lists a HashSet accelerates is-present testing.
  *
  * @since 1.8
  */
-public class UniqueList<T> extends ArrayList<T>
+public class UniqueList<E> extends ArrayList<E> implements Set<E>
 {
 	private static final long serialVersionUID = 1L;
 	private static int SMALL_TO_LARGE_THRESHOLD = 5;
 
-	private @Nullable Set<T> set = null;
+	private @Nullable Set<E> set = null;
 
     /**
      * Constructs a new empty list.
@@ -38,11 +39,11 @@ public class UniqueList<T> extends ArrayList<T>
     /**
      * Constructs a new set containing the elements in the specified collection.
      */
-    public UniqueList(Collection<? extends T> c) {
+    public UniqueList(Collection<? extends E> c) {
     	if (c.size() >= SMALL_TO_LARGE_THRESHOLD) {
         	set = new HashSet<>(c);
      	}
-       	for (T aT : c) {
+       	for (E aT : c) {
        		add(aT);
        	}
     }
@@ -57,8 +58,8 @@ public class UniqueList<T> extends ArrayList<T>
     }
 
 	@Override
-	public boolean add(T e) {
-		Set<T> set2 = set;
+	public boolean add(E e) {
+		Set<E> set2 = set;
 		if (set2 == null) {
 			if (size() < SMALL_TO_LARGE_THRESHOLD) {
 				if (contains(e)) {
@@ -77,14 +78,14 @@ public class UniqueList<T> extends ArrayList<T>
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends T> c) {
-		Set<T> set2 = set;
+	public boolean addAll(Collection<? extends E> c) {
+		Set<E> set2 = set;
 		if ((set2 == null) && ((size() + c.size()) >= SMALL_TO_LARGE_THRESHOLD)) {
 			set = set2 = new HashSet<>(this);
 		}
 		boolean isChanged = false;
 		if (set2 == null) {
-			for (T aT : c) {
+			for (E aT : c) {
 				if (!contains(aT)) {
 					isChanged = true;
 					super.add(aT);
@@ -92,7 +93,7 @@ public class UniqueList<T> extends ArrayList<T>
 			}
 		}
 		else {
-			for (T aT : c) {
+			for (E aT : c) {
 				if (set2.add(aT)) {
 					isChanged = true;
 					super.add(aT);
@@ -147,5 +148,11 @@ public class UniqueList<T> extends ArrayList<T>
 		else {
 			return super.retainAll(c);
 		}
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public <T> T @NonNull [] toArray(T[] a) {
+		return super.toArray(a);
 	}
 }
