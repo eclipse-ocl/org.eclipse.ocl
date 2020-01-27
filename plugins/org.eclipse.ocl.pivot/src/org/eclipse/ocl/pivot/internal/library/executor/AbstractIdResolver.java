@@ -1210,6 +1210,16 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			return typeKey;
 		}
+		else if (value instanceof EnumerationLiteralId) {
+			TypeId typeKey = ((EnumerationLiteralId)value).getParentId();
+			Type type = key2type.get(typeKey);
+			if (type == null) {
+				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);
+				assert type != null;
+				key2type.put(typeKey, type);
+			}
+			return typeKey;
+		}
 		else if (value == null) {
 			TypeId typeKey = TypeId.OCL_VOID;
 			key2type.put(typeKey, standardLibrary.getOclVoidType());
