@@ -191,7 +191,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
 	**/
-	operation and2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
+	operation and2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
 	{
 		body: if self = false then false
 		      elseif b = false then false
@@ -224,7 +224,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
 	Otherwise oclText[false].
 	**/
-	operation implies2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
+	operation implies2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
 	{
 		body: if self = false then true
 		      elseif b = true then true
@@ -277,7 +277,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
 	Otherwise oclText[false]. 
 	**/
-	operation or2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
+	operation or2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
 	{
 		body: if self = true then true
 			  elseif b = true then true
@@ -313,7 +313,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if oclText[self] <> oclText[b]
 	Otherwise oclText[false].
 	**/
-	operation xor2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
+	operation xor2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
 	{
 		body: self <> b;
 	}
@@ -1083,8 +1083,13 @@ abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	*/
 	operation "<>"(object2 : OclSelf[1]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
 	operation and(b : Boolean[?]) : Boolean[?] validating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation';
+	operation and2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation implies(b : Boolean[?]) : Boolean[?] validating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation';
+	operation implies2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+	operation not2() : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation or(b : Boolean[?]) : Boolean[?] validating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation';
+	operation or2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+	operation xor2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation oclAsSet() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	operation oclAsType(TT)(type : typeof(TT)[1]) : TT => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation';
 	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
@@ -1249,10 +1254,15 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	**/
 	operation "+"(s : String[?]) : String[1] precedence=ADDITIVE => 'org.eclipse.ocl.pivot.library.string.StringConcatOperation';
 	operation and(b : Boolean[?]) : Boolean[?] precedence=AND => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation';
+	operation and2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation implies(b : Boolean[?]) : Boolean[?] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation';
+	operation implies2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation not() : Boolean[?] validating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation';
+	operation not2() : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation or(b : Boolean[?]) : Boolean[?] precedence=OR => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation';
+	operation or2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation';
+	operation xor2(b : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	operation oclAsSet() : Set(OclSelf[0..0|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
 	operation oclIsUndefined() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation';
