@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * BooleanImpliesOperation2 realises the 2-valued implies() library operation.
@@ -22,6 +28,20 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation2 INSTANCE = new BooleanImpliesOperation2();
+
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		if (sourceValue == Boolean.FALSE) {
+			return TRUE_VALUE;
+		}
+		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
+		OCLExpression argument0 = arguments.get(0);
+		assert argument0 != null;
+		Object firstArgument = executor.evaluate(argument0);
+		Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
+		Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
+		return evaluate(sourceBoolean, argBoolean);
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {

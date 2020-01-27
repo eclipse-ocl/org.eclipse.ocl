@@ -32,6 +32,11 @@ implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
 		return dispatch(getExecutor(evaluator), callExp, sourceValue);
 	}
 
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		return evaluate(executor, sourceValue);
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override

@@ -10,13 +10,22 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * AbstractOperation defines the minimal functionality of all Operation implementations. Each implemented
@@ -30,14 +39,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
  */
 public abstract class AbstractOperation extends AbstractFeature implements LibraryOperation.LibraryOperationExtension2
 {
-	/** @deprecated use Executor
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
-	}
-
 	/**
 	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a caller.
 	 *
@@ -84,6 +85,50 @@ public abstract class AbstractOperation extends AbstractFeature implements Libra
 			return basicEvaluate(executor, caller, sourceAndArgumentValues);
 		}
 	}
+	/** @deprecated use Executor
+	 * @since 1.1*/
+	@Deprecated
+	@Override
+	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		return dispatch(getExecutor(evaluator), callExp, sourceValue);
+	}
+
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		ExecutorInternalExtension castExecutor = (ExecutorInternalExtension)executor;
+		Operation apparentOperation = callExp.getReferredOperation();
+		assert apparentOperation != null;
+		//
+		//	Resolve argument values catching invalid values for validating operations.
+		//
+		List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(callExp.getOwnedArguments());
+		@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
+		int argumentIndex = 0;
+		sourceAndArgumentValues[argumentIndex++] = sourceValue;
+		if (!apparentOperation.isIsValidating()) {
+			for (@NonNull OCLExpression argument : arguments) {
+				Object argValue = castExecutor.evaluate(argument);
+				sourceAndArgumentValues[argumentIndex++] = argValue;
+			}
+		}
+		else {
+			for (@NonNull OCLExpression argument : arguments) {
+				Object argValue;
+				try {
+					argValue = castExecutor.evaluate(argument);
+					assert ValueUtil.isBoxed(argValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+				}
+				catch (EvaluationHaltedException e) {
+					throw e;
+				}
+				catch (InvalidValueException e) {
+					argValue = e;	// FIXME ?? propagate part of environment
+				}
+				sourceAndArgumentValues[argumentIndex++] = argValue;
+			}
+		}
+		return castExecutor.internalExecuteOperationCallExp(callExp, sourceAndArgumentValues);
+	}
 
 	/**
 	 * @since 1.3
@@ -92,5 +137,4 @@ public abstract class AbstractOperation extends AbstractFeature implements Libra
 	//	public boolean isCached() {
 	//		return true;
 	//	}
-
 }

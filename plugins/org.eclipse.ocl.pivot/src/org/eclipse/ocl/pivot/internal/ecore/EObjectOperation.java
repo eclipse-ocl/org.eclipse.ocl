@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -44,42 +45,6 @@ public class EObjectOperation extends AbstractOperation
 		this.operation = operation;
 		this.eFeature = eFeature;
 		this.specification = specification;
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		if (specification.getOwnedBody() == null) {
-			try {
-				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
-				environmentFactory.parseSpecification(specification);
-			} catch (ParserException e) {
-				throw new InvalidValueException(e, "parse failure", executor.getEvaluationEnvironment(), sourceValue, callExp);
-			}
-		}
-		ExpressionInOCL query = specification;
-		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
-		Object[] argumentValues = new Object[arguments.size()];
-		for (int i = 0; i < arguments.size(); i++) {
-			OCLExpression argument = arguments.get(i);
-			assert argument != null;
-			argumentValues[i] = executor.evaluate(argument);
-		}
-		EvaluationEnvironment nestedEvaluationEnvironment = ((ExecutorExtension)executor).pushEvaluationEnvironment(query, (TypedElement)callExp);
-		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(query.getOwnedContext()), sourceValue);
-		List<Variable> parameterVariables = query.getOwnedParameters();
-		int iMax = Math.min(parameterVariables.size(), argumentValues.length);
-		for (int i = 0; i < iMax; i++) {
-			nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameterVariables.get(i)), argumentValues[i]);
-		}
-		try {
-			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()));
-		}
-		finally {
-			executor.popEvaluationEnvironment();
-		}
 	}
 
 	/**
@@ -109,5 +74,18 @@ public class EObjectOperation extends AbstractOperation
 		finally {
 			executor.popEvaluationEnvironment();
 		}
+	}
+
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
+		List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(callExp.getOwnedArguments());
+		@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
+		int argumentIndex = 0;
+		sourceAndArgumentValues[argumentIndex++] = sourceValue;
+		for (@NonNull OCLExpression argument : arguments) {
+			sourceAndArgumentValues[argumentIndex++] = executor.evaluate(argument);
+		}
+		return evaluate(executor, callExp, sourceAndArgumentValues);
 	}
 }

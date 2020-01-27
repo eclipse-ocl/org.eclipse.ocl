@@ -69,6 +69,7 @@ public class ConstrainedOperation extends AbstractOperation
 	 */
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
 		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
 		@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
 		boxedSourceAndArgumentValues[0]= sourceValue;

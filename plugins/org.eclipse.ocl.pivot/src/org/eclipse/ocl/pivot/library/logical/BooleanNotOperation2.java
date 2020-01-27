@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.logical;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * BooleanNotOperation2 realises the 2-valued not() library operation.
@@ -22,6 +25,12 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull BooleanNotOperation2 INSTANCE = new BooleanNotOperation2();
+
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
+		return evaluate(sourceBoolean);
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object argument) {

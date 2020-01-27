@@ -83,6 +83,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testOCLinEcoreTutorialUsingPivotForPivot() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+//		getProjectMap().initializeResourceSet(resourceSet);
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"));
 		GlobalEnvironmentFactory.disposeInstance();
 	}
@@ -98,6 +99,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		getProjectMap().initializeResourceSet(resourceSet);
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi"));
 		GlobalEnvironmentFactory.disposeInstance();
 	}

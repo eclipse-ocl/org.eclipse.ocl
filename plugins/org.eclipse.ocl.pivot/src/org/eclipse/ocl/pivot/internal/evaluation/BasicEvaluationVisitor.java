@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
@@ -72,12 +73,16 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleMapIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleMapIterationManager;
+import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -90,6 +95,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
+import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -673,33 +679,66 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				sourceValue = ((CollectionValue)sourceValue).excluding(null);
 			}
 		}
-		//
-		//	Resolve argument values catching invalid values for validating operations.
-		//
-		List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
-		@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
-		int argumentIndex = 0;
-		sourceAndArgumentValues[argumentIndex++] = sourceValue;
-		for (@NonNull OCLExpression argument : arguments) {
-			Object argValue;
-			if (!isValidating) {
-				argValue = argument.accept(undecoratedVisitor);
-			}
-			else {
-				try {
-					argValue = argument.accept(undecoratedVisitor);
-					assert ValueUtil.isBoxed(argValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				}
-				catch (EvaluationHaltedException e) {
-					throw e;
-				}
-				catch (InvalidValueException e) {
-					argValue = e;	// FIXME ?? propagate part of environment
-				}
-			}
-			sourceAndArgumentValues[argumentIndex++] = argValue;
+		Operation actualOperation;
+		if (apparentOperation.isIsStatic()) {
+			actualOperation = apparentOperation;
 		}
-		return context.internalExecuteOperationCallExp(operationCallExp, sourceAndArgumentValues);
+		else {
+			assert source != null;
+			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOfValue(source.getType(), sourceValue);
+			List<Parameter> ownedParameters = apparentOperation.getOwnedParameters();
+			if (ownedParameters.size() == 1) {
+				Parameter onlyParameter = ownedParameters.get(0);
+				Type onlyType = onlyParameter.getType();
+				if (onlyType == standardLibrary.getOclSelfType()) {
+					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+					Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
+					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgument);
+					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+					// FIXME direct evaluate using second argument
+					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
+					LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+					try {
+						Object result = implementation.evaluate(context, operationCallExp.getTypeId(), sourceValue, onlyArgument);
+						assert !(result instanceof NullValue);
+						return result;
+					}
+					catch (InvalidValueException e) {
+						throw e;
+					}
+					catch (Exception e) {
+						// This is a backstop. Library operations should catch their own exceptions
+						//  and produce a better reason as a result.
+						throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
+					}
+					catch (AssertionError e) {
+						// This is a backstop. Library operations should catch their own exceptions
+						//  and produce a better reason as a result.
+						throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
+					}
+				}
+			}
+			actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
+		}
+		LibraryOperation.LibraryOperationExtension implementation = (LibraryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+		try {
+			Object result = implementation.dispatch(context, operationCallExp, sourceValue);
+			assert !(result instanceof NullValue);
+			return result;
+		}
+		catch (InvalidValueException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
+		}
+		catch (AssertionError e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
+		}
 	}
 
 	/**

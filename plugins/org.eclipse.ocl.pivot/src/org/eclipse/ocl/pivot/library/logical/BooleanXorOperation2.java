@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * BooleanXorOperation2 realises the 2-valued Boolean::xor() library operation.
@@ -22,6 +28,17 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 public class BooleanXorOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanXorOperation2 INSTANCE = new BooleanXorOperation2();
+
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
+		OCLExpression argument0 = arguments.get(0);
+		assert argument0 != null;
+		Object firstArgument = executor.evaluate(argument0);
+		Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
+		Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
+		return evaluate(sourceBoolean, argBoolean);
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {

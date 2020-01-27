@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * AbstractSimpleTernaryOperation defines the default implementation of a ternary operation redirecting the
@@ -36,6 +37,7 @@ public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTern
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
 		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
 		OCLExpression argument0 = arguments.get(0);
 		OCLExpression argument1 = arguments.get(1);
