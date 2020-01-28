@@ -4190,83 +4190,123 @@ rule__EssentialOCLReservedKeyword__Alternatives
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_1()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getAnd2Keyword_1()); }
+
+	'and2'
+
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getAnd2Keyword_1()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_2()); }
 
 	'else'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_1()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_2()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_2()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_3()); }
 
 	'endif'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_2()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_3()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_3()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_4()); }
 
 	'if'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_3()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_4()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_4()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_5()); }
 
 	'implies'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_4()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_5()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_5()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getImplies2Keyword_6()); }
+
+	'implies2'
+
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getImplies2Keyword_6()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_7()); }
 
 	'in'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_5()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_7()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_6()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_8()); }
 
 	'let'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_6()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_8()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_7()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_9()); }
 
 	'not'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_7()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_9()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_8()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getNot2Keyword_10()); }
+
+	'not2'
+
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getNot2Keyword_10()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_11()); }
 
 	'or'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_8()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_11()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_9()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getOr2Keyword_12()); }
+
+	'or2'
+
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getOr2Keyword_12()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_13()); }
 
 	'then'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_9()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_13()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_10()); }
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_14()); }
 
 	'xor'
 
-{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_10()); }
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_14()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLReservedKeywordAccess().getXor2Keyword_15()); }
+
+	'xor2'
+
+{ after(grammarAccess.getEssentialOCLReservedKeywordAccess().getXor2Keyword_15()); }
 )
 
 ;
@@ -4293,6 +4333,14 @@ rule__EssentialOCLUnaryOperatorName__Alternatives
 	'not'
 
 { after(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNotKeyword_1()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2()); }
+
+	'not2'
+
+{ after(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2()); }
 )
 
 ;
@@ -4394,27 +4442,59 @@ rule__EssentialOCLInfixOperatorName__Alternatives
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11()); }
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11()); }
 
-	'or'
+	'and2'
 
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11()); }
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12()); }
-
-	'xor'
-
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12()); }
-)
-
-    |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13()); }
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12()); }
 
 	'implies'
 
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13()); }
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13()); }
+
+	'implies2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14()); }
+
+	'or'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15()); }
+
+	'or2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16()); }
+
+	'xor'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17()); }
+
+	'xor2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17()); }
 )
 
 ;

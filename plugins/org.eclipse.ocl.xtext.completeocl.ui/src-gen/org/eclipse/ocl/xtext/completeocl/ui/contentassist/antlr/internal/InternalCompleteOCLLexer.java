@@ -108,10 +108,15 @@ public class InternalCompleteOCLLexer extends Lexer {
     public static final int RULE_ANY_OTHER=16;
     public static final int T__88=88;
     public static final int T__89=89;
+    public static final int T__107=107;
     public static final int T__84=84;
+    public static final int T__104=104;
     public static final int T__85=85;
+    public static final int T__103=103;
     public static final int T__86=86;
+    public static final int T__106=106;
     public static final int T__87=87;
+    public static final int T__105=105;
 
     // delegates
     // delegators
@@ -486,10 +491,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:28:7: ( '*' )
-            // InternalCompleteOCL.g:28:9: '*'
+            // InternalCompleteOCL.g:28:7: ( 'not2' )
+            // InternalCompleteOCL.g:28:9: 'not2'
             {
-            match('*');
+            match("not2");
+
 
             }
 
@@ -506,10 +512,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:29:7: ( '/' )
-            // InternalCompleteOCL.g:29:9: '/'
+            // InternalCompleteOCL.g:29:7: ( '*' )
+            // InternalCompleteOCL.g:29:9: '*'
             {
-            match('/');
+            match('*');
 
             }
 
@@ -526,10 +532,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:30:7: ( '+' )
-            // InternalCompleteOCL.g:30:9: '+'
+            // InternalCompleteOCL.g:30:7: ( '/' )
+            // InternalCompleteOCL.g:30:9: '/'
             {
-            match('+');
+            match('/');
 
             }
 
@@ -546,10 +552,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:31:7: ( '>' )
-            // InternalCompleteOCL.g:31:9: '>'
+            // InternalCompleteOCL.g:31:7: ( '+' )
+            // InternalCompleteOCL.g:31:9: '+'
             {
-            match('>');
+            match('+');
 
             }
 
@@ -566,10 +572,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:32:7: ( '<' )
-            // InternalCompleteOCL.g:32:9: '<'
+            // InternalCompleteOCL.g:32:7: ( '>' )
+            // InternalCompleteOCL.g:32:9: '>'
             {
-            match('<');
+            match('>');
 
             }
 
@@ -586,11 +592,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:33:7: ( '>=' )
-            // InternalCompleteOCL.g:33:9: '>='
+            // InternalCompleteOCL.g:33:7: ( '<' )
+            // InternalCompleteOCL.g:33:9: '<'
             {
-            match(">=");
-
+            match('<');
 
             }
 
@@ -607,10 +612,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:34:7: ( '<=' )
-            // InternalCompleteOCL.g:34:9: '<='
+            // InternalCompleteOCL.g:34:7: ( '>=' )
+            // InternalCompleteOCL.g:34:9: '>='
             {
-            match("<=");
+            match(">=");
 
 
             }
@@ -628,10 +633,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:35:7: ( '=' )
-            // InternalCompleteOCL.g:35:9: '='
+            // InternalCompleteOCL.g:35:7: ( '<=' )
+            // InternalCompleteOCL.g:35:9: '<='
             {
-            match('=');
+            match("<=");
+
 
             }
 
@@ -648,11 +654,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:36:7: ( '<>' )
-            // InternalCompleteOCL.g:36:9: '<>'
+            // InternalCompleteOCL.g:36:7: ( '=' )
+            // InternalCompleteOCL.g:36:9: '='
             {
-            match("<>");
-
+            match('=');
 
             }
 
@@ -669,10 +674,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:37:7: ( 'and' )
-            // InternalCompleteOCL.g:37:9: 'and'
+            // InternalCompleteOCL.g:37:7: ( '<>' )
+            // InternalCompleteOCL.g:37:9: '<>'
             {
-            match("and");
+            match("<>");
 
 
             }
@@ -690,10 +695,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:38:7: ( 'or' )
-            // InternalCompleteOCL.g:38:9: 'or'
+            // InternalCompleteOCL.g:38:7: ( 'and' )
+            // InternalCompleteOCL.g:38:9: 'and'
             {
-            match("or");
+            match("and");
 
 
             }
@@ -711,10 +716,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:39:7: ( 'xor' )
-            // InternalCompleteOCL.g:39:9: 'xor'
+            // InternalCompleteOCL.g:39:7: ( 'and2' )
+            // InternalCompleteOCL.g:39:9: 'and2'
             {
-            match("xor");
+            match("and2");
 
 
             }
@@ -753,10 +758,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:41:7: ( '.' )
-            // InternalCompleteOCL.g:41:9: '.'
+            // InternalCompleteOCL.g:41:7: ( 'implies2' )
+            // InternalCompleteOCL.g:41:9: 'implies2'
             {
-            match('.');
+            match("implies2");
+
 
             }
 
@@ -773,10 +779,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:42:7: ( '->' )
-            // InternalCompleteOCL.g:42:9: '->'
+            // InternalCompleteOCL.g:42:7: ( 'or' )
+            // InternalCompleteOCL.g:42:9: 'or'
             {
-            match("->");
+            match("or");
 
 
             }
@@ -794,10 +800,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:43:7: ( '?.' )
-            // InternalCompleteOCL.g:43:9: '?.'
+            // InternalCompleteOCL.g:43:7: ( 'or2' )
+            // InternalCompleteOCL.g:43:9: 'or2'
             {
-            match("?.");
+            match("or2");
 
 
             }
@@ -815,10 +821,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:44:7: ( '?->' )
-            // InternalCompleteOCL.g:44:9: '?->'
+            // InternalCompleteOCL.g:44:7: ( 'xor' )
+            // InternalCompleteOCL.g:44:9: 'xor'
             {
-            match("?->");
+            match("xor");
 
 
             }
@@ -836,10 +842,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:45:7: ( 'Map' )
-            // InternalCompleteOCL.g:45:9: 'Map'
+            // InternalCompleteOCL.g:45:7: ( 'xor2' )
+            // InternalCompleteOCL.g:45:9: 'xor2'
             {
-            match("Map");
+            match("xor2");
 
 
             }
@@ -857,11 +863,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:46:7: ( 'Tuple' )
-            // InternalCompleteOCL.g:46:9: 'Tuple'
+            // InternalCompleteOCL.g:46:7: ( '.' )
+            // InternalCompleteOCL.g:46:9: '.'
             {
-            match("Tuple");
-
+            match('.');
 
             }
 
@@ -878,10 +883,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:47:7: ( 'Set' )
-            // InternalCompleteOCL.g:47:9: 'Set'
+            // InternalCompleteOCL.g:47:7: ( '->' )
+            // InternalCompleteOCL.g:47:9: '->'
             {
-            match("Set");
+            match("->");
 
 
             }
@@ -899,10 +904,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:48:7: ( 'Bag' )
-            // InternalCompleteOCL.g:48:9: 'Bag'
+            // InternalCompleteOCL.g:48:7: ( '?.' )
+            // InternalCompleteOCL.g:48:9: '?.'
             {
-            match("Bag");
+            match("?.");
 
 
             }
@@ -920,10 +925,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:49:7: ( 'Sequence' )
-            // InternalCompleteOCL.g:49:9: 'Sequence'
+            // InternalCompleteOCL.g:49:7: ( '?->' )
+            // InternalCompleteOCL.g:49:9: '?->'
             {
-            match("Sequence");
+            match("?->");
 
 
             }
@@ -941,10 +946,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:50:7: ( 'Collection' )
-            // InternalCompleteOCL.g:50:9: 'Collection'
+            // InternalCompleteOCL.g:50:7: ( 'Map' )
+            // InternalCompleteOCL.g:50:9: 'Map'
             {
-            match("Collection");
+            match("Map");
 
 
             }
@@ -962,10 +967,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:51:7: ( 'OrderedSet' )
-            // InternalCompleteOCL.g:51:9: 'OrderedSet'
+            // InternalCompleteOCL.g:51:7: ( 'Tuple' )
+            // InternalCompleteOCL.g:51:9: 'Tuple'
             {
-            match("OrderedSet");
+            match("Tuple");
 
 
             }
@@ -983,10 +988,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:52:7: ( '|?' )
-            // InternalCompleteOCL.g:52:9: '|?'
+            // InternalCompleteOCL.g:52:7: ( 'Set' )
+            // InternalCompleteOCL.g:52:9: 'Set'
             {
-            match("|?");
+            match("Set");
 
 
             }
@@ -1004,10 +1009,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:53:7: ( '?' )
-            // InternalCompleteOCL.g:53:9: '?'
+            // InternalCompleteOCL.g:53:7: ( 'Bag' )
+            // InternalCompleteOCL.g:53:9: 'Bag'
             {
-            match('?');
+            match("Bag");
+
 
             }
 
@@ -1024,10 +1030,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__60;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:54:7: ( 'context' )
-            // InternalCompleteOCL.g:54:9: 'context'
+            // InternalCompleteOCL.g:54:7: ( 'Sequence' )
+            // InternalCompleteOCL.g:54:9: 'Sequence'
             {
-            match("context");
+            match("Sequence");
 
 
             }
@@ -1045,10 +1051,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__61;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:55:7: ( 'inv' )
-            // InternalCompleteOCL.g:55:9: 'inv'
+            // InternalCompleteOCL.g:55:7: ( 'Collection' )
+            // InternalCompleteOCL.g:55:9: 'Collection'
             {
-            match("inv");
+            match("Collection");
 
 
             }
@@ -1066,10 +1072,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:56:7: ( ':' )
-            // InternalCompleteOCL.g:56:9: ':'
+            // InternalCompleteOCL.g:56:7: ( 'OrderedSet' )
+            // InternalCompleteOCL.g:56:9: 'OrderedSet'
             {
-            match(':');
+            match("OrderedSet");
+
 
             }
 
@@ -1086,10 +1093,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:57:7: ( '(' )
-            // InternalCompleteOCL.g:57:9: '('
+            // InternalCompleteOCL.g:57:7: ( '|?' )
+            // InternalCompleteOCL.g:57:9: '|?'
             {
-            match('(');
+            match("|?");
+
 
             }
 
@@ -1106,10 +1114,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:58:7: ( ')' )
-            // InternalCompleteOCL.g:58:9: ')'
+            // InternalCompleteOCL.g:58:7: ( '?' )
+            // InternalCompleteOCL.g:58:9: '?'
             {
-            match(')');
+            match('?');
 
             }
 
@@ -1126,10 +1134,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:59:7: ( 'def' )
-            // InternalCompleteOCL.g:59:9: 'def'
+            // InternalCompleteOCL.g:59:7: ( 'context' )
+            // InternalCompleteOCL.g:59:9: 'context'
             {
-            match("def");
+            match("context");
 
 
             }
@@ -1147,10 +1155,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:60:7: ( ',' )
-            // InternalCompleteOCL.g:60:9: ','
+            // InternalCompleteOCL.g:60:7: ( 'inv' )
+            // InternalCompleteOCL.g:60:9: 'inv'
             {
-            match(',');
+            match("inv");
+
 
             }
 
@@ -1167,11 +1176,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:61:7: ( 'pre' )
-            // InternalCompleteOCL.g:61:9: 'pre'
+            // InternalCompleteOCL.g:61:7: ( ':' )
+            // InternalCompleteOCL.g:61:9: ':'
             {
-            match("pre");
-
+            match(':');
 
             }
 
@@ -1188,11 +1196,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:62:7: ( 'post' )
-            // InternalCompleteOCL.g:62:9: 'post'
+            // InternalCompleteOCL.g:62:7: ( '(' )
+            // InternalCompleteOCL.g:62:9: '('
             {
-            match("post");
-
+            match('(');
 
             }
 
@@ -1209,11 +1216,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:63:7: ( 'body' )
-            // InternalCompleteOCL.g:63:9: 'body'
+            // InternalCompleteOCL.g:63:7: ( ')' )
+            // InternalCompleteOCL.g:63:9: ')'
             {
-            match("body");
-
+            match(')');
 
             }
 
@@ -1230,10 +1236,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:64:7: ( 'package' )
-            // InternalCompleteOCL.g:64:9: 'package'
+            // InternalCompleteOCL.g:64:7: ( 'def' )
+            // InternalCompleteOCL.g:64:9: 'def'
             {
-            match("package");
+            match("def");
 
 
             }
@@ -1251,11 +1257,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:65:7: ( 'endpackage' )
-            // InternalCompleteOCL.g:65:9: 'endpackage'
+            // InternalCompleteOCL.g:65:7: ( ',' )
+            // InternalCompleteOCL.g:65:9: ','
             {
-            match("endpackage");
-
+            match(',');
 
             }
 
@@ -1272,10 +1277,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__72;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:66:7: ( 'derive' )
-            // InternalCompleteOCL.g:66:9: 'derive'
+            // InternalCompleteOCL.g:66:7: ( 'pre' )
+            // InternalCompleteOCL.g:66:9: 'pre'
             {
-            match("derive");
+            match("pre");
 
 
             }
@@ -1293,10 +1298,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:67:7: ( 'init' )
-            // InternalCompleteOCL.g:67:9: 'init'
+            // InternalCompleteOCL.g:67:7: ( 'post' )
+            // InternalCompleteOCL.g:67:9: 'post'
             {
-            match("init");
+            match("post");
 
 
             }
@@ -1314,10 +1319,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:68:7: ( '::' )
-            // InternalCompleteOCL.g:68:9: '::'
+            // InternalCompleteOCL.g:68:7: ( 'body' )
+            // InternalCompleteOCL.g:68:9: 'body'
             {
-            match("::");
+            match("body");
 
 
             }
@@ -1335,10 +1340,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:69:7: ( '{' )
-            // InternalCompleteOCL.g:69:9: '{'
+            // InternalCompleteOCL.g:69:7: ( 'package' )
+            // InternalCompleteOCL.g:69:9: 'package'
             {
-            match('{');
+            match("package");
+
 
             }
 
@@ -1355,10 +1361,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__76;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:70:7: ( '}' )
-            // InternalCompleteOCL.g:70:9: '}'
+            // InternalCompleteOCL.g:70:7: ( 'endpackage' )
+            // InternalCompleteOCL.g:70:9: 'endpackage'
             {
-            match('}');
+            match("endpackage");
+
 
             }
 
@@ -1375,10 +1382,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__77;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:71:7: ( '..' )
-            // InternalCompleteOCL.g:71:9: '..'
+            // InternalCompleteOCL.g:71:7: ( 'derive' )
+            // InternalCompleteOCL.g:71:9: 'derive'
             {
-            match("..");
+            match("derive");
 
 
             }
@@ -1396,10 +1403,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__78;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:72:7: ( '++' )
-            // InternalCompleteOCL.g:72:9: '++'
+            // InternalCompleteOCL.g:72:7: ( 'init' )
+            // InternalCompleteOCL.g:72:9: 'init'
             {
-            match("++");
+            match("init");
 
 
             }
@@ -1417,10 +1424,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__79;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:73:7: ( 'Lambda' )
-            // InternalCompleteOCL.g:73:9: 'Lambda'
+            // InternalCompleteOCL.g:73:7: ( '::' )
+            // InternalCompleteOCL.g:73:9: '::'
             {
-            match("Lambda");
+            match("::");
 
 
             }
@@ -1438,11 +1445,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__80;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:74:7: ( '<-' )
-            // InternalCompleteOCL.g:74:9: '<-'
+            // InternalCompleteOCL.g:74:7: ( '{' )
+            // InternalCompleteOCL.g:74:9: '{'
             {
-            match("<-");
-
+            match('{');
 
             }
 
@@ -1459,11 +1465,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__81;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:75:7: ( 'invalid' )
-            // InternalCompleteOCL.g:75:9: 'invalid'
+            // InternalCompleteOCL.g:75:7: ( '}' )
+            // InternalCompleteOCL.g:75:9: '}'
             {
-            match("invalid");
-
+            match('}');
 
             }
 
@@ -1480,10 +1485,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__82;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:76:7: ( 'null' )
-            // InternalCompleteOCL.g:76:9: 'null'
+            // InternalCompleteOCL.g:76:7: ( '..' )
+            // InternalCompleteOCL.g:76:9: '..'
             {
-            match("null");
+            match("..");
 
 
             }
@@ -1501,10 +1506,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__83;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:77:7: ( '[' )
-            // InternalCompleteOCL.g:77:9: '['
+            // InternalCompleteOCL.g:77:7: ( '++' )
+            // InternalCompleteOCL.g:77:9: '++'
             {
-            match('[');
+            match("++");
+
 
             }
 
@@ -1521,10 +1527,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__84;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:78:7: ( ']' )
-            // InternalCompleteOCL.g:78:9: ']'
+            // InternalCompleteOCL.g:78:7: ( 'Lambda' )
+            // InternalCompleteOCL.g:78:9: 'Lambda'
             {
-            match(']');
+            match("Lambda");
+
 
             }
 
@@ -1541,10 +1548,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__85;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:79:7: ( 'in' )
-            // InternalCompleteOCL.g:79:9: 'in'
+            // InternalCompleteOCL.g:79:7: ( '<-' )
+            // InternalCompleteOCL.g:79:9: '<-'
             {
-            match("in");
+            match("<-");
 
 
             }
@@ -1562,10 +1569,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__86;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:80:7: ( 'if' )
-            // InternalCompleteOCL.g:80:9: 'if'
+            // InternalCompleteOCL.g:80:7: ( 'invalid' )
+            // InternalCompleteOCL.g:80:9: 'invalid'
             {
-            match("if");
+            match("invalid");
 
 
             }
@@ -1583,10 +1590,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__87;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:81:7: ( 'then' )
-            // InternalCompleteOCL.g:81:9: 'then'
+            // InternalCompleteOCL.g:81:7: ( 'null' )
+            // InternalCompleteOCL.g:81:9: 'null'
             {
-            match("then");
+            match("null");
 
 
             }
@@ -1604,11 +1611,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__88;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:82:7: ( 'else' )
-            // InternalCompleteOCL.g:82:9: 'else'
+            // InternalCompleteOCL.g:82:7: ( '[' )
+            // InternalCompleteOCL.g:82:9: '['
             {
-            match("else");
-
+            match('[');
 
             }
 
@@ -1625,11 +1631,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__89;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:83:7: ( 'endif' )
-            // InternalCompleteOCL.g:83:9: 'endif'
+            // InternalCompleteOCL.g:83:7: ( ']' )
+            // InternalCompleteOCL.g:83:9: ']'
             {
-            match("endif");
-
+            match(']');
 
             }
 
@@ -1646,10 +1651,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__90;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:84:7: ( 'elseif' )
-            // InternalCompleteOCL.g:84:9: 'elseif'
+            // InternalCompleteOCL.g:84:7: ( 'in' )
+            // InternalCompleteOCL.g:84:9: 'in'
             {
-            match("elseif");
+            match("in");
 
 
             }
@@ -1667,10 +1672,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__91;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:85:7: ( 'let' )
-            // InternalCompleteOCL.g:85:9: 'let'
+            // InternalCompleteOCL.g:85:7: ( 'if' )
+            // InternalCompleteOCL.g:85:9: 'if'
             {
-            match("let");
+            match("if");
 
 
             }
@@ -1688,10 +1693,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__92;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:86:7: ( 'self' )
-            // InternalCompleteOCL.g:86:9: 'self'
+            // InternalCompleteOCL.g:86:7: ( 'then' )
+            // InternalCompleteOCL.g:86:9: 'then'
             {
-            match("self");
+            match("then");
 
 
             }
@@ -1709,10 +1714,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__93;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:87:7: ( 'extends' )
-            // InternalCompleteOCL.g:87:9: 'extends'
+            // InternalCompleteOCL.g:87:7: ( 'else' )
+            // InternalCompleteOCL.g:87:9: 'else'
             {
-            match("extends");
+            match("else");
 
 
             }
@@ -1730,10 +1735,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__94;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:88:7: ( '&&' )
-            // InternalCompleteOCL.g:88:9: '&&'
+            // InternalCompleteOCL.g:88:7: ( 'endif' )
+            // InternalCompleteOCL.g:88:9: 'endif'
             {
-            match("&&");
+            match("endif");
 
 
             }
@@ -1751,10 +1756,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:89:7: ( 'static' )
-            // InternalCompleteOCL.g:89:9: 'static'
+            // InternalCompleteOCL.g:89:7: ( 'elseif' )
+            // InternalCompleteOCL.g:89:9: 'elseif'
             {
-            match("static");
+            match("elseif");
 
 
             }
@@ -1772,10 +1777,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:90:7: ( '::*' )
-            // InternalCompleteOCL.g:90:9: '::*'
+            // InternalCompleteOCL.g:90:7: ( 'let' )
+            // InternalCompleteOCL.g:90:9: 'let'
             {
-            match("::*");
+            match("let");
 
 
             }
@@ -1793,10 +1798,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__97;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:91:7: ( 'true' )
-            // InternalCompleteOCL.g:91:9: 'true'
+            // InternalCompleteOCL.g:91:7: ( 'self' )
+            // InternalCompleteOCL.g:91:9: 'self'
             {
-            match("true");
+            match("self");
 
 
             }
@@ -1814,10 +1819,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__98;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:92:7: ( 'false' )
-            // InternalCompleteOCL.g:92:9: 'false'
+            // InternalCompleteOCL.g:92:7: ( 'extends' )
+            // InternalCompleteOCL.g:92:9: 'extends'
             {
-            match("false");
+            match("extends");
 
 
             }
@@ -1835,10 +1840,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__99;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:93:7: ( '@' )
-            // InternalCompleteOCL.g:93:9: '@'
+            // InternalCompleteOCL.g:93:7: ( '&&' )
+            // InternalCompleteOCL.g:93:9: '&&'
             {
-            match('@');
+            match("&&");
+
 
             }
 
@@ -1855,10 +1861,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__100;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:94:8: ( '|' )
-            // InternalCompleteOCL.g:94:10: '|'
+            // InternalCompleteOCL.g:94:8: ( 'static' )
+            // InternalCompleteOCL.g:94:10: 'static'
             {
-            match('|');
+            match("static");
+
 
             }
 
@@ -1875,10 +1882,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__101;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:95:8: ( ';' )
-            // InternalCompleteOCL.g:95:10: ';'
+            // InternalCompleteOCL.g:95:8: ( '::*' )
+            // InternalCompleteOCL.g:95:10: '::*'
             {
-            match(';');
+            match("::*");
+
 
             }
 
@@ -1895,10 +1903,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = T__102;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:96:8: ( '|1' )
-            // InternalCompleteOCL.g:96:10: '|1'
+            // InternalCompleteOCL.g:96:8: ( 'true' )
+            // InternalCompleteOCL.g:96:10: 'true'
             {
-            match("|1");
+            match("true");
 
 
             }
@@ -1911,13 +1919,115 @@ public class InternalCompleteOCLLexer extends Lexer {
     }
     // $ANTLR end "T__102"
 
+    // $ANTLR start "T__103"
+    public final void mT__103() throws RecognitionException {
+        try {
+            int _type = T__103;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalCompleteOCL.g:97:8: ( 'false' )
+            // InternalCompleteOCL.g:97:10: 'false'
+            {
+            match("false");
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__103"
+
+    // $ANTLR start "T__104"
+    public final void mT__104() throws RecognitionException {
+        try {
+            int _type = T__104;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalCompleteOCL.g:98:8: ( '@' )
+            // InternalCompleteOCL.g:98:10: '@'
+            {
+            match('@');
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__104"
+
+    // $ANTLR start "T__105"
+    public final void mT__105() throws RecognitionException {
+        try {
+            int _type = T__105;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalCompleteOCL.g:99:8: ( '|' )
+            // InternalCompleteOCL.g:99:10: '|'
+            {
+            match('|');
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__105"
+
+    // $ANTLR start "T__106"
+    public final void mT__106() throws RecognitionException {
+        try {
+            int _type = T__106;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalCompleteOCL.g:100:8: ( ';' )
+            // InternalCompleteOCL.g:100:10: ';'
+            {
+            match(';');
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__106"
+
+    // $ANTLR start "T__107"
+    public final void mT__107() throws RecognitionException {
+        try {
+            int _type = T__107;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalCompleteOCL.g:101:8: ( '|1' )
+            // InternalCompleteOCL.g:101:10: '|1'
+            {
+            match("|1");
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__107"
+
     // $ANTLR start "RULE_UNQUOTED_STRING"
     public final void mRULE_UNQUOTED_STRING() throws RecognitionException {
         try {
             int _type = RULE_UNQUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19277:22: ( '\\u00A3$%^\\u00A3$%^' )
-            // InternalCompleteOCL.g:19277:24: '\\u00A3$%^\\u00A3$%^'
+            // InternalCompleteOCL.g:19317:22: ( '\\u00A3$%^\\u00A3$%^' )
+            // InternalCompleteOCL.g:19317:24: '\\u00A3$%^\\u00A3$%^'
             {
             match("\u00A3$%^\u00A3$%^");
 
@@ -1935,8 +2045,8 @@ public class InternalCompleteOCLLexer extends Lexer {
     // $ANTLR start "RULE_ESCAPED_CHARACTER"
     public final void mRULE_ESCAPED_CHARACTER() throws RecognitionException {
         try {
-            // InternalCompleteOCL.g:19279:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
-            // InternalCompleteOCL.g:19279:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+            // InternalCompleteOCL.g:19319:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
+            // InternalCompleteOCL.g:19319:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
             match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1960,8 +2070,8 @@ public class InternalCompleteOCLLexer extends Lexer {
     // $ANTLR start "RULE_LETTER_CHARACTER"
     public final void mRULE_LETTER_CHARACTER() throws RecognitionException {
         try {
-            // InternalCompleteOCL.g:19281:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
-            // InternalCompleteOCL.g:19281:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // InternalCompleteOCL.g:19321:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
+            // InternalCompleteOCL.g:19321:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1986,11 +2096,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_DOUBLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19283:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalCompleteOCL.g:19283:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalCompleteOCL.g:19323:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalCompleteOCL.g:19323:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"');
-            // InternalCompleteOCL.g:19283:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalCompleteOCL.g:19323:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -2006,14 +2116,14 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19283:34: RULE_ESCAPED_CHARACTER
+            	    // InternalCompleteOCL.g:19323:34: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalCompleteOCL.g:19283:57: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalCompleteOCL.g:19323:57: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2050,11 +2160,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19285:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // InternalCompleteOCL.g:19285:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalCompleteOCL.g:19325:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalCompleteOCL.g:19325:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\'');
-            // InternalCompleteOCL.g:19285:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalCompleteOCL.g:19325:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop2:
             do {
                 int alt2=3;
@@ -2070,14 +2180,14 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19285:35: RULE_ESCAPED_CHARACTER
+            	    // InternalCompleteOCL.g:19325:35: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalCompleteOCL.g:19285:58: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalCompleteOCL.g:19325:58: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2114,12 +2224,12 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_ML_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19287:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
-            // InternalCompleteOCL.g:19287:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
+            // InternalCompleteOCL.g:19327:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
+            // InternalCompleteOCL.g:19327:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
             match("/'");
 
-            // InternalCompleteOCL.g:19287:38: ( options {greedy=false; } : . )*
+            // InternalCompleteOCL.g:19327:38: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -2144,7 +2254,7 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19287:66: .
+            	    // InternalCompleteOCL.g:19327:66: .
             	    {
             	    matchAny();
 
@@ -2174,11 +2284,11 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_SIMPLE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19289:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
-            // InternalCompleteOCL.g:19289:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalCompleteOCL.g:19329:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
+            // InternalCompleteOCL.g:19329:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
             mRULE_LETTER_CHARACTER();
-            // InternalCompleteOCL.g:19289:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // InternalCompleteOCL.g:19329:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -2227,8 +2337,8 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_ESCAPED_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19291:17: ( '_' RULE_SINGLE_QUOTED_STRING )
-            // InternalCompleteOCL.g:19291:19: '_' RULE_SINGLE_QUOTED_STRING
+            // InternalCompleteOCL.g:19331:17: ( '_' RULE_SINGLE_QUOTED_STRING )
+            // InternalCompleteOCL.g:19331:19: '_' RULE_SINGLE_QUOTED_STRING
             {
             match('_');
             mRULE_SINGLE_QUOTED_STRING();
@@ -2248,10 +2358,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19293:10: ( ( '0' .. '9' )+ )
-            // InternalCompleteOCL.g:19293:12: ( '0' .. '9' )+
+            // InternalCompleteOCL.g:19333:10: ( ( '0' .. '9' )+ )
+            // InternalCompleteOCL.g:19333:12: ( '0' .. '9' )+
             {
-            // InternalCompleteOCL.g:19293:12: ( '0' .. '9' )+
+            // InternalCompleteOCL.g:19333:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -2265,7 +2375,7 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19293:13: '0' .. '9'
+            	    // InternalCompleteOCL.g:19333:13: '0' .. '9'
             	    {
             	    matchRange('0','9');
 
@@ -2297,12 +2407,12 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19295:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalCompleteOCL.g:19295:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalCompleteOCL.g:19335:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalCompleteOCL.g:19335:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*");
 
-            // InternalCompleteOCL.g:19295:24: ( options {greedy=false; } : . )*
+            // InternalCompleteOCL.g:19335:24: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -2327,7 +2437,7 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19295:52: .
+            	    // InternalCompleteOCL.g:19335:52: .
             	    {
             	    matchAny();
 
@@ -2357,12 +2467,12 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19297:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalCompleteOCL.g:19297:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalCompleteOCL.g:19337:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalCompleteOCL.g:19337:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--");
 
-            // InternalCompleteOCL.g:19297:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalCompleteOCL.g:19337:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -2375,7 +2485,7 @@ public class InternalCompleteOCLLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalCompleteOCL.g:19297:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalCompleteOCL.g:19337:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2395,7 +2505,7 @@ public class InternalCompleteOCLLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalCompleteOCL.g:19297:40: ( ( '\\r' )? '\\n' )?
+            // InternalCompleteOCL.g:19337:40: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2404,9 +2514,9 @@ public class InternalCompleteOCLLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalCompleteOCL.g:19297:41: ( '\\r' )? '\\n'
+                    // InternalCompleteOCL.g:19337:41: ( '\\r' )? '\\n'
                     {
-                    // InternalCompleteOCL.g:19297:41: ( '\\r' )?
+                    // InternalCompleteOCL.g:19337:41: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -2415,7 +2525,7 @@ public class InternalCompleteOCLLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalCompleteOCL.g:19297:41: '\\r'
+                            // InternalCompleteOCL.g:19337:41: '\\r'
                             {
                             match('\r');
 
@@ -2447,10 +2557,10 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19299:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalCompleteOCL.g:19299:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalCompleteOCL.g:19339:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalCompleteOCL.g:19339:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalCompleteOCL.g:19299:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalCompleteOCL.g:19339:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt10=0;
             loop10:
             do {
@@ -2504,8 +2614,8 @@ public class InternalCompleteOCLLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalCompleteOCL.g:19301:16: ( . )
-            // InternalCompleteOCL.g:19301:18: .
+            // InternalCompleteOCL.g:19341:16: ( . )
+            // InternalCompleteOCL.g:19341:18: .
             {
             matchAny();
 
@@ -2520,8 +2630,8 @@ public class InternalCompleteOCLLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // InternalCompleteOCL.g:1:8: ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | RULE_UNQUOTED_STRING | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt11=97;
+        // InternalCompleteOCL.g:1:8: ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | RULE_UNQUOTED_STRING | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt11=102;
         alt11 = dfa11.predict(input);
         switch (alt11) {
             case 1 :
@@ -3127,77 +3237,112 @@ public class InternalCompleteOCLLexer extends Lexer {
                 }
                 break;
             case 87 :
-                // InternalCompleteOCL.g:1:529: RULE_UNQUOTED_STRING
+                // InternalCompleteOCL.g:1:529: T__103
+                {
+                mT__103();
+
+                }
+                break;
+            case 88 :
+                // InternalCompleteOCL.g:1:536: T__104
+                {
+                mT__104();
+
+                }
+                break;
+            case 89 :
+                // InternalCompleteOCL.g:1:543: T__105
+                {
+                mT__105();
+
+                }
+                break;
+            case 90 :
+                // InternalCompleteOCL.g:1:550: T__106
+                {
+                mT__106();
+
+                }
+                break;
+            case 91 :
+                // InternalCompleteOCL.g:1:557: T__107
+                {
+                mT__107();
+
+                }
+                break;
+            case 92 :
+                // InternalCompleteOCL.g:1:564: RULE_UNQUOTED_STRING
                 {
                 mRULE_UNQUOTED_STRING();
 
                 }
                 break;
-            case 88 :
-                // InternalCompleteOCL.g:1:550: RULE_DOUBLE_QUOTED_STRING
+            case 93 :
+                // InternalCompleteOCL.g:1:585: RULE_DOUBLE_QUOTED_STRING
                 {
                 mRULE_DOUBLE_QUOTED_STRING();
 
                 }
                 break;
-            case 89 :
-                // InternalCompleteOCL.g:1:576: RULE_SINGLE_QUOTED_STRING
+            case 94 :
+                // InternalCompleteOCL.g:1:611: RULE_SINGLE_QUOTED_STRING
                 {
                 mRULE_SINGLE_QUOTED_STRING();
 
                 }
                 break;
-            case 90 :
-                // InternalCompleteOCL.g:1:602: RULE_ML_SINGLE_QUOTED_STRING
+            case 95 :
+                // InternalCompleteOCL.g:1:637: RULE_ML_SINGLE_QUOTED_STRING
                 {
                 mRULE_ML_SINGLE_QUOTED_STRING();
 
                 }
                 break;
-            case 91 :
-                // InternalCompleteOCL.g:1:631: RULE_SIMPLE_ID
+            case 96 :
+                // InternalCompleteOCL.g:1:666: RULE_SIMPLE_ID
                 {
                 mRULE_SIMPLE_ID();
 
                 }
                 break;
-            case 92 :
-                // InternalCompleteOCL.g:1:646: RULE_ESCAPED_ID
+            case 97 :
+                // InternalCompleteOCL.g:1:681: RULE_ESCAPED_ID
                 {
                 mRULE_ESCAPED_ID();
 
                 }
                 break;
-            case 93 :
-                // InternalCompleteOCL.g:1:662: RULE_INT
+            case 98 :
+                // InternalCompleteOCL.g:1:697: RULE_INT
                 {
                 mRULE_INT();
 
                 }
                 break;
-            case 94 :
-                // InternalCompleteOCL.g:1:671: RULE_ML_COMMENT
+            case 99 :
+                // InternalCompleteOCL.g:1:706: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT();
 
                 }
                 break;
-            case 95 :
-                // InternalCompleteOCL.g:1:687: RULE_SL_COMMENT
+            case 100 :
+                // InternalCompleteOCL.g:1:722: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT();
 
                 }
                 break;
-            case 96 :
-                // InternalCompleteOCL.g:1:703: RULE_WS
+            case 101 :
+                // InternalCompleteOCL.g:1:738: RULE_WS
                 {
                 mRULE_WS();
 
                 }
                 break;
-            case 97 :
-                // InternalCompleteOCL.g:1:711: RULE_ANY_OTHER
+            case 102 :
+                // InternalCompleteOCL.g:1:746: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER();
 
@@ -3211,17 +3356,17 @@ public class InternalCompleteOCLLexer extends Lexer {
 
     protected DFA11 dfa11 = new DFA11(this);
     static final String DFA11_eotS =
-        "\1\uffff\1\70\10\74\1\112\1\74\1\uffff\1\120\1\122\1\124\1\130\1\uffff\3\74\1\136\1\141\3\74\1\147\1\74\1\152\2\uffff\1\74\1\uffff\3\74\2\uffff\1\74\2\uffff\2\74\1\66\1\74\2\uffff\3\66\1\74\6\uffff\1\74\1\u008d\1\u008e\1\uffff\13\74\3\uffff\2\74\15\uffff\1\74\1\u009e\1\74\5\uffff\3\74\3\uffff\1\74\1\u00a5\3\uffff\1\74\1\uffff\7\74\2\uffff\1\74\2\uffff\4\74\1\uffff\1\74\10\uffff\2\74\1\u00b9\1\74\2\uffff\1\74\1\u00bc\1\74\1\u00be\3\74\1\u00c2\4\74\1\u00cb\1\74\1\u00cd\1\uffff\1\u00ce\1\u00cf\3\74\2\uffff\1\u00d3\1\74\1\u00d5\20\74\1\uffff\1\u00e7\1\74\1\uffff\1\74\1\uffff\1\74\1\u00eb\1\74\1\uffff\10\74\1\uffff\1\u00f5\3\uffff\3\74\1\uffff\1\74\1\uffff\1\u00fa\1\74\1\u00fc\2\74\1\u0100\2\74\1\u0103\1\u0104\1\u0105\6\74\1\uffff\3\74\1\uffff\11\74\1\uffff\1\u0118\3\74\1\uffff\1\74\1\uffff\1\74\1\u011e\1\74\1\uffff\2\74\3\uffff\1\74\1\u0123\1\u0124\6\74\1\u012b\2\74\1\u012e\5\74\1\uffff\2\74\1\u0136\2\74\1\uffff\1\u0139\1\74\1\u013b\1\u013c\2\uffff\1\u013d\1\u013e\1\u013f\1\u0140\1\u0141\1\u0142\1\uffff\2\74\1\uffff\3\74\1\u0148\2\74\1\u014b\1\uffff\1\u014c\1\74\1\uffff\1\u014e\10\uffff\1\u014f\3\74\1\u0153\1\uffff\2\74\2\uffff\1\74\2\uffff\3\74\1\uffff\4\74\1\u015e\1\u015f\1\u0160\1\u0161\1\u0162\1\74\5\uffff\4\74\1\u0168\1\uffff";
+        "\1\uffff\1\70\10\74\1\112\1\74\1\uffff\1\120\1\122\1\124\1\130\1\uffff\3\74\1\136\1\141\3\74\1\147\1\74\1\152\2\uffff\1\74\1\uffff\3\74\2\uffff\1\74\2\uffff\2\74\1\66\1\74\2\uffff\3\66\1\74\6\uffff\1\74\1\u008d\1\u008e\1\uffff\13\74\3\uffff\2\74\15\uffff\1\74\1\u009f\1\74\5\uffff\3\74\3\uffff\1\74\1\u00a6\3\uffff\1\74\1\uffff\7\74\2\uffff\1\74\2\uffff\4\74\1\uffff\1\74\10\uffff\2\74\1\u00ba\1\74\2\uffff\1\74\1\u00bd\1\74\1\u00bf\3\74\1\u00c3\4\74\1\u00cd\1\74\1\u00d0\1\u00d1\1\uffff\1\u00d3\1\u00d4\3\74\2\uffff\1\u00d8\1\74\1\u00da\20\74\1\uffff\1\u00ec\1\74\1\uffff\1\74\1\uffff\1\74\1\u00f0\1\74\1\uffff\10\74\1\u00fa\1\uffff\1\u00fb\1\u00fc\2\uffff\1\u00fd\2\uffff\3\74\1\uffff\1\74\1\uffff\1\u0102\1\74\1\u0104\2\74\1\u0108\2\74\1\u010b\1\u010c\1\u010d\6\74\1\uffff\3\74\1\uffff\11\74\4\uffff\1\u0120\3\74\1\uffff\1\74\1\uffff\1\74\1\u0126\1\74\1\uffff\2\74\3\uffff\1\74\1\u012b\1\u012c\6\74\1\u0133\2\74\1\u0136\5\74\1\uffff\2\74\1\u013e\2\74\1\uffff\1\u0141\1\74\1\u0143\1\u0144\2\uffff\1\u0146\1\u0147\1\u0148\1\u0149\1\u014a\1\u014b\1\uffff\2\74\1\uffff\3\74\1\u0151\2\74\1\u0154\1\uffff\1\u0155\1\74\1\uffff\1\u0157\2\uffff\1\u0158\6\uffff\1\u0159\3\74\1\u015d\1\uffff\2\74\2\uffff\1\74\3\uffff\3\74\1\uffff\4\74\1\u0168\1\u0169\1\u016a\1\u016b\1\u016c\1\74\5\uffff\4\74\1\u0172\1\uffff";
     static final String DFA11_eofS =
-        "\u0169\uffff";
+        "\u0173\uffff";
     static final String DFA11_minS =
-        "\1\0\1\136\1\146\1\145\1\141\1\156\2\145\1\156\1\143\1\55\1\157\1\uffff\1\47\1\53\1\75\1\55\1\uffff\1\156\1\162\1\157\1\56\1\55\1\141\1\165\1\157\1\61\1\157\1\72\2\uffff\1\145\1\uffff\1\141\1\157\1\154\2\uffff\1\141\2\uffff\1\150\1\145\1\46\1\141\2\uffff\1\44\2\0\1\47\6\uffff\1\160\2\60\1\uffff\1\142\1\164\1\157\1\147\1\164\1\141\1\162\1\161\2\154\1\144\3\uffff\1\164\1\154\15\uffff\1\144\1\60\1\162\5\uffff\2\160\1\154\3\uffff\1\156\1\52\3\uffff\1\146\1\uffff\1\145\1\163\1\143\2\144\1\163\1\164\2\uffff\1\155\2\uffff\1\145\1\165\1\154\1\141\1\uffff\1\154\10\uffff\2\154\1\60\1\164\2\uffff\1\162\1\60\1\154\1\60\1\145\1\154\1\151\1\60\1\165\1\151\1\101\1\145\1\60\1\154\1\60\1\uffff\2\60\2\154\1\164\2\uffff\1\60\1\151\1\60\1\164\1\153\1\171\1\151\2\145\1\142\1\156\1\145\1\146\1\164\1\163\1\162\1\151\1\165\1\154\1\uffff\1\60\1\141\1\uffff\1\145\1\uffff\1\147\1\60\1\156\1\uffff\1\145\1\155\2\156\1\145\1\164\1\157\1\162\1\uffff\1\60\3\uffff\3\145\1\uffff\1\166\1\uffff\1\60\1\141\1\60\1\141\1\146\1\60\1\156\1\144\3\60\1\151\1\145\1\164\1\145\1\144\1\151\1\uffff\1\162\1\141\1\145\1\uffff\1\147\1\156\1\151\1\171\1\166\1\163\1\141\1\151\1\145\1\uffff\1\60\1\143\1\170\1\145\1\uffff\1\147\1\uffff\1\143\1\60\1\146\1\uffff\1\144\1\141\3\uffff\1\143\2\60\1\163\1\145\1\144\1\171\1\156\1\162\1\60\1\143\1\164\1\60\1\141\1\163\1\164\2\144\1\uffff\2\164\1\60\1\145\1\153\1\uffff\1\60\1\163\2\60\2\uffff\6\60\1\uffff\2\145\1\uffff\1\154\1\141\1\145\1\60\1\123\1\151\1\60\1\uffff\1\60\1\141\1\uffff\1\60\10\uffff\1\60\1\144\1\151\1\147\1\60\1\uffff\1\145\1\157\2\uffff\1\147\2\uffff\1\116\1\144\1\145\1\uffff\1\164\1\156\1\145\1\141\5\60\1\164\5\uffff\1\165\1\162\1\141\1\154\1\60\1\uffff";
+        "\1\0\1\136\1\146\1\145\1\141\1\156\2\145\1\156\1\143\1\55\1\157\1\uffff\1\47\1\53\1\75\1\55\1\uffff\1\156\1\162\1\157\1\56\1\55\1\141\1\165\1\157\1\61\1\157\1\72\2\uffff\1\145\1\uffff\1\141\1\157\1\154\2\uffff\1\141\2\uffff\1\150\1\145\1\46\1\141\2\uffff\1\44\2\0\1\47\6\uffff\1\160\2\60\1\uffff\1\142\1\164\1\157\1\147\1\164\1\141\1\162\1\161\2\154\1\144\3\uffff\1\164\1\154\15\uffff\1\144\1\60\1\162\5\uffff\2\160\1\154\3\uffff\1\156\1\52\3\uffff\1\146\1\uffff\1\145\1\163\1\143\2\144\1\163\1\164\2\uffff\1\155\2\uffff\1\145\1\165\1\154\1\141\1\uffff\1\154\10\uffff\2\154\1\60\1\164\2\uffff\1\162\1\60\1\154\1\60\1\145\1\154\1\151\1\60\1\165\1\151\1\101\1\145\1\60\1\154\2\60\1\uffff\2\60\2\154\1\164\2\uffff\1\60\1\151\1\60\1\164\1\153\1\171\1\151\2\145\1\142\1\156\1\145\1\146\1\164\1\163\1\162\1\151\1\165\1\154\1\uffff\1\60\1\141\1\uffff\1\145\1\uffff\1\147\1\60\1\156\1\uffff\1\145\1\155\2\156\1\145\1\164\1\157\1\162\1\60\1\uffff\2\60\2\uffff\1\60\2\uffff\3\145\1\uffff\1\166\1\uffff\1\60\1\141\1\60\1\141\1\146\1\60\1\156\1\144\3\60\1\151\1\145\1\164\1\145\1\144\1\151\1\uffff\1\162\1\141\1\145\1\uffff\1\147\1\156\1\151\1\171\1\166\1\163\1\141\1\151\1\145\4\uffff\1\60\1\143\1\170\1\145\1\uffff\1\147\1\uffff\1\143\1\60\1\146\1\uffff\1\144\1\141\3\uffff\1\143\2\60\1\163\1\145\1\144\1\171\1\156\1\162\1\60\1\143\1\164\1\60\1\141\1\163\1\164\2\144\1\uffff\2\164\1\60\1\145\1\153\1\uffff\1\60\1\163\2\60\2\uffff\6\60\1\uffff\2\145\1\uffff\1\154\1\141\1\145\1\60\1\123\1\151\1\60\1\uffff\1\60\1\141\1\uffff\1\60\2\uffff\1\60\6\uffff\1\60\1\144\1\151\1\147\1\60\1\uffff\1\145\1\157\2\uffff\1\147\3\uffff\1\116\1\144\1\145\1\uffff\1\164\1\156\1\145\1\141\5\60\1\164\5\uffff\1\165\1\162\1\141\1\154\1\60\1\uffff";
     static final String DFA11_maxS =
-        "\1\uffff\1\136\1\156\1\151\1\157\1\156\1\145\1\164\1\156\1\162\1\76\1\165\1\uffff\1\52\1\53\1\75\1\76\1\uffff\1\156\1\162\1\157\2\56\1\141\1\165\1\157\1\77\1\157\1\72\2\uffff\1\145\1\uffff\1\162\1\157\1\170\2\uffff\1\141\2\uffff\1\162\1\164\1\46\1\141\2\uffff\1\44\2\uffff\1\47\6\uffff\1\160\2\172\1\uffff\1\142\1\164\1\157\1\147\1\164\1\141\1\162\1\164\2\154\1\144\3\uffff\1\164\1\154\15\uffff\1\144\1\172\1\162\5\uffff\2\160\1\154\3\uffff\1\156\1\52\3\uffff\1\162\1\uffff\1\145\1\163\1\143\2\144\1\163\1\164\2\uffff\1\155\2\uffff\1\145\1\165\1\154\1\141\1\uffff\1\154\10\uffff\1\157\1\154\1\172\1\164\2\uffff\1\162\1\172\1\154\1\172\1\145\1\154\1\151\1\172\1\165\1\151\1\126\1\145\1\172\1\154\1\172\1\uffff\2\172\2\154\1\164\2\uffff\1\172\1\151\1\172\1\164\1\153\1\171\1\160\2\145\1\142\1\156\1\145\1\146\1\164\1\163\1\162\1\151\1\165\1\154\1\uffff\1\172\1\141\1\uffff\1\145\1\uffff\1\147\1\172\1\156\1\uffff\1\145\1\155\2\156\1\145\1\164\1\157\1\162\1\uffff\1\172\3\uffff\3\145\1\uffff\1\166\1\uffff\1\172\1\141\1\172\1\141\1\146\1\172\1\156\1\144\3\172\1\151\1\145\1\164\1\145\1\144\1\151\1\uffff\1\162\1\141\1\145\1\uffff\1\147\1\156\1\151\1\171\1\166\1\163\1\141\1\151\1\145\1\uffff\1\172\1\143\1\170\1\145\1\uffff\1\147\1\uffff\1\143\1\172\1\146\1\uffff\1\144\1\141\3\uffff\1\143\2\172\1\163\1\145\1\144\1\171\1\156\1\162\1\172\1\143\1\164\1\172\1\141\1\163\1\164\2\144\1\uffff\2\164\1\172\1\145\1\153\1\uffff\1\172\1\163\2\172\2\uffff\6\172\1\uffff\2\145\1\uffff\1\154\1\141\1\145\1\172\1\123\1\151\1\172\1\uffff\1\172\1\141\1\uffff\1\172\10\uffff\1\172\1\144\1\151\1\147\1\172\1\uffff\1\145\1\157\2\uffff\1\147\2\uffff\1\116\1\144\1\145\1\uffff\1\164\1\156\1\145\1\141\5\172\1\164\5\uffff\1\165\1\162\1\141\1\154\1\172\1\uffff";
+        "\1\uffff\1\136\1\156\1\151\1\157\1\156\1\145\1\164\1\156\1\162\1\76\1\165\1\uffff\1\52\1\53\1\75\1\76\1\uffff\1\156\1\162\1\157\2\56\1\141\1\165\1\157\1\77\1\157\1\72\2\uffff\1\145\1\uffff\1\162\1\157\1\170\2\uffff\1\141\2\uffff\1\162\1\164\1\46\1\141\2\uffff\1\44\2\uffff\1\47\6\uffff\1\160\2\172\1\uffff\1\142\1\164\1\157\1\147\1\164\1\141\1\162\1\164\2\154\1\144\3\uffff\1\164\1\154\15\uffff\1\144\1\172\1\162\5\uffff\2\160\1\154\3\uffff\1\156\1\52\3\uffff\1\162\1\uffff\1\145\1\163\1\143\2\144\1\163\1\164\2\uffff\1\155\2\uffff\1\145\1\165\1\154\1\141\1\uffff\1\154\10\uffff\1\157\1\154\1\172\1\164\2\uffff\1\162\1\172\1\154\1\172\1\145\1\154\1\151\1\172\1\165\1\151\1\126\1\145\1\172\1\154\2\172\1\uffff\2\172\2\154\1\164\2\uffff\1\172\1\151\1\172\1\164\1\153\1\171\1\160\2\145\1\142\1\156\1\145\1\146\1\164\1\163\1\162\1\151\1\165\1\154\1\uffff\1\172\1\141\1\uffff\1\145\1\uffff\1\147\1\172\1\156\1\uffff\1\145\1\155\2\156\1\145\1\164\1\157\1\162\1\172\1\uffff\2\172\2\uffff\1\172\2\uffff\3\145\1\uffff\1\166\1\uffff\1\172\1\141\1\172\1\141\1\146\1\172\1\156\1\144\3\172\1\151\1\145\1\164\1\145\1\144\1\151\1\uffff\1\162\1\141\1\145\1\uffff\1\147\1\156\1\151\1\171\1\166\1\163\1\141\1\151\1\145\4\uffff\1\172\1\143\1\170\1\145\1\uffff\1\147\1\uffff\1\143\1\172\1\146\1\uffff\1\144\1\141\3\uffff\1\143\2\172\1\163\1\145\1\144\1\171\1\156\1\162\1\172\1\143\1\164\1\172\1\141\1\163\1\164\2\144\1\uffff\2\164\1\172\1\145\1\153\1\uffff\1\172\1\163\2\172\2\uffff\6\172\1\uffff\2\145\1\uffff\1\154\1\141\1\145\1\172\1\123\1\151\1\172\1\uffff\1\172\1\141\1\uffff\1\172\2\uffff\1\172\6\uffff\1\172\1\144\1\151\1\147\1\172\1\uffff\1\145\1\157\2\uffff\1\147\3\uffff\1\116\1\144\1\145\1\uffff\1\164\1\156\1\145\1\141\5\172\1\164\5\uffff\1\165\1\162\1\141\1\154\1\172\1\uffff";
     static final String DFA11_acceptS =
-        "\14\uffff\1\22\4\uffff\1\31\13\uffff\1\57\1\60\1\uffff\1\62\3\uffff\1\73\1\74\1\uffff\1\103\1\104\4\uffff\1\123\1\125\4\uffff\1\133\1\135\1\140\1\141\1\2\1\1\3\uffff\1\133\13\uffff\1\40\1\137\1\20\2\uffff\1\22\1\132\1\136\1\23\1\76\1\24\1\27\1\25\1\30\1\32\1\100\1\26\1\31\3\uffff\1\75\1\37\1\41\1\42\1\53\3\uffff\1\52\1\126\1\124\2\uffff\1\56\1\57\1\60\1\uffff\1\62\7\uffff\1\73\1\74\1\uffff\1\103\1\104\4\uffff\1\116\1\uffff\1\123\1\125\1\127\1\130\1\131\1\134\1\135\1\140\4\uffff\1\105\1\106\17\uffff\1\34\5\uffff\1\120\1\72\23\uffff\1\55\2\uffff\1\113\1\uffff\1\46\3\uffff\1\45\10\uffff\1\21\1\uffff\1\33\1\35\1\43\3\uffff\1\61\1\uffff\1\63\21\uffff\1\71\3\uffff\1\10\11\uffff\1\102\4\uffff\1\64\1\uffff\1\65\3\uffff\1\110\2\uffff\1\107\1\121\1\114\22\uffff\1\44\5\uffff\1\111\4\uffff\1\122\1\3\6\uffff\1\11\2\uffff\1\13\7\uffff\1\70\2\uffff\1\112\1\uffff\1\77\1\117\1\36\1\4\1\101\1\5\1\6\1\7\5\uffff\1\17\2\uffff\1\54\1\66\1\uffff\1\115\1\47\3\uffff\1\16\12\uffff\1\14\1\15\1\51\1\50\1\67\5\uffff\1\12";
+        "\14\uffff\1\23\4\uffff\1\32\13\uffff\1\64\1\65\1\uffff\1\67\3\uffff\1\100\1\101\1\uffff\1\110\1\111\4\uffff\1\130\1\132\4\uffff\1\140\1\142\1\145\1\146\1\2\1\1\3\uffff\1\140\13\uffff\1\45\1\144\1\20\2\uffff\1\23\1\137\1\143\1\24\1\103\1\25\1\30\1\26\1\31\1\33\1\105\1\27\1\32\3\uffff\1\102\1\44\1\46\1\47\1\60\3\uffff\1\57\1\133\1\131\2\uffff\1\63\1\64\1\65\1\uffff\1\67\7\uffff\1\100\1\101\1\uffff\1\110\1\111\4\uffff\1\123\1\uffff\1\130\1\132\1\134\1\135\1\136\1\141\1\142\1\145\4\uffff\1\112\1\113\20\uffff\1\40\5\uffff\1\125\1\77\23\uffff\1\62\2\uffff\1\120\1\uffff\1\53\3\uffff\1\52\11\uffff\1\21\2\uffff\1\34\1\41\1\uffff\1\42\1\50\3\uffff\1\66\1\uffff\1\70\21\uffff\1\76\3\uffff\1\10\11\uffff\1\22\1\107\1\35\1\43\4\uffff\1\71\1\uffff\1\72\3\uffff\1\115\2\uffff\1\114\1\126\1\121\22\uffff\1\51\5\uffff\1\116\4\uffff\1\127\1\3\6\uffff\1\11\2\uffff\1\13\7\uffff\1\75\2\uffff\1\117\1\uffff\1\104\1\124\1\uffff\1\36\1\4\1\106\1\5\1\6\1\7\5\uffff\1\17\2\uffff\1\61\1\73\1\uffff\1\122\1\37\1\54\3\uffff\1\16\12\uffff\1\14\1\15\1\56\1\55\1\74\5\uffff\1\12";
     static final String DFA11_specialS =
-        "\1\0\57\uffff\1\2\1\1\u0137\uffff}>";
+        "\1\0\57\uffff\1\1\1\2\u0141\uffff}>";
     static final String[] DFA11_transitionS = DFA11_transitionS_.DFA11_transitionS;
     private static final class DFA11_transitionS_ {
         static final String[] DFA11_transitionS = {
@@ -3316,45 +3461,44 @@ public class InternalCompleteOCLLexer extends Lexer {
                 "",
                 "",
                 "\1\u009d",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u009f",
-                "",
-                "",
-                "",
-                "",
-                "",
+                "\2\74\1\u009e\7\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u00a0",
+                "",
+                "",
+                "",
+                "",
+                "",
                 "\1\u00a1",
                 "\1\u00a2",
-                "",
-                "",
-                "",
                 "\1\u00a3",
+                "",
+                "",
+                "",
                 "\1\u00a4",
+                "\1\u00a5",
                 "",
                 "",
                 "",
-                "\1\u00a6\13\uffff\1\u00a7",
+                "\1\u00a7\13\uffff\1\u00a8",
                 "",
-                "\1\u00a8",
                 "\1\u00a9",
                 "\1\u00aa",
                 "\1\u00ab",
                 "\1\u00ac",
                 "\1\u00ad",
                 "\1\u00ae",
-                "",
-                "",
                 "\1\u00af",
                 "",
                 "",
                 "\1\u00b0",
+                "",
+                "",
                 "\1\u00b1",
                 "\1\u00b2",
                 "\1\u00b3",
-                "",
                 "\1\u00b4",
                 "",
+                "\1\u00b5",
                 "",
                 "",
                 "",
@@ -3362,47 +3506,44 @@ public class InternalCompleteOCLLexer extends Lexer {
                 "",
                 "",
                 "",
-                "\1\u00b6\2\uffff\1\u00b5",
-                "\1\u00b7",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\1\u00b8\31\74",
-                "\1\u00ba",
                 "",
-                "",
+                "\1\u00b7\2\uffff\1\u00b6",
+                "\1\u00b8",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\1\u00b9\31\74",
                 "\1\u00bb",
+                "",
+                "",
+                "\1\u00bc",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00bd",
+                "\1\u00be",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00bf",
                 "\1\u00c0",
                 "\1\u00c1",
+                "\1\u00c2",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00c3",
                 "\1\u00c4",
-                "\1\u00c5\7\uffff\1\u00c6\3\uffff\1\u00c7\5\uffff\1\u00c8\2\uffff\1\u00c9",
-                "\1\u00ca",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00cc",
+                "\1\u00c5",
+                "\1\u00c6\7\uffff\1\u00c7\3\uffff\1\u00c8\5\uffff\1\u00c9\2\uffff\1\u00ca",
+                "\1\u00cb",
+                "\2\74\1\u00cc\7\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u00ce",
+                "\2\74\1\u00cf\7\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
+                "\2\74\1\u00d2\7\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00d0",
-                "\1\u00d1",
-                "\1\u00d2",
-                "",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00d4",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u00d5",
                 "\1\u00d6",
                 "\1\u00d7",
-                "\1\u00d8",
-                "\1\u00da\6\uffff\1\u00d9",
+                "",
+                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u00d9",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u00db",
                 "\1\u00dc",
                 "\1\u00dd",
-                "\1\u00de",
-                "\1\u00df",
+                "\1\u00df\6\uffff\1\u00de",
                 "\1\u00e0",
                 "\1\u00e1",
                 "\1\u00e2",
@@ -3410,180 +3551,194 @@ public class InternalCompleteOCLLexer extends Lexer {
                 "\1\u00e4",
                 "\1\u00e5",
                 "\1\u00e6",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u00e7",
                 "\1\u00e8",
-                "",
                 "\1\u00e9",
-                "",
                 "\1\u00ea",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00ec",
+                "\1\u00eb",
                 "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u00ed",
+                "",
                 "\1\u00ee",
+                "",
                 "\1\u00ef",
-                "\1\u00f0",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u00f1",
+                "",
                 "\1\u00f2",
                 "\1\u00f3",
                 "\1\u00f4",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "",
-                "",
-                "",
+                "\1\u00f5",
                 "\1\u00f6",
                 "\1\u00f7",
                 "\1\u00f8",
-                "",
                 "\1\u00f9",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00fb",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u00fd",
+                "",
+                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "",
+                "",
                 "\1\u00fe",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\10\74\1\u00ff\21\74",
+                "\1\u00ff",
+                "\1\u0100",
+                "",
                 "\1\u0101",
-                "\1\u0102",
+                "",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0103",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0105",
                 "\1\u0106",
-                "\1\u0107",
-                "\1\u0108",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\10\74\1\u0107\21\74",
                 "\1\u0109",
                 "\1\u010a",
-                "\1\u010b",
-                "",
-                "\1\u010c",
-                "\1\u010d",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u010e",
-                "",
                 "\1\u010f",
                 "\1\u0110",
                 "\1\u0111",
                 "\1\u0112",
                 "\1\u0113",
+                "",
                 "\1\u0114",
                 "\1\u0115",
                 "\1\u0116",
-                "\1\u0117",
                 "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0117",
+                "\1\u0118",
                 "\1\u0119",
                 "\1\u011a",
                 "\1\u011b",
-                "",
                 "\1\u011c",
-                "",
                 "\1\u011d",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u011e",
                 "\1\u011f",
                 "",
-                "\1\u0120",
+                "",
+                "",
+                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0121",
-                "",
-                "",
-                "",
                 "\1\u0122",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0123",
+                "",
+                "\1\u0124",
+                "",
                 "\1\u0125",
-                "\1\u0126",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0127",
+                "",
                 "\1\u0128",
                 "\1\u0129",
+                "",
+                "",
+                "",
                 "\1\u012a",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u012c",
-                "\1\u012d",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u012d",
+                "\1\u012e",
                 "\1\u012f",
                 "\1\u0130",
                 "\1\u0131",
                 "\1\u0132",
-                "\1\u0133",
-                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0134",
                 "\1\u0135",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0137",
                 "\1\u0138",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0139",
                 "\1\u013a",
+                "\1\u013b",
+                "",
+                "\1\u013c",
+                "\1\u013d",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u013f",
+                "\1\u0140",
+                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u0142",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
                 "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\2\74\1\u0145\7\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
-                "\1\u0143",
-                "\1\u0144",
-                "",
-                "\1\u0145",
-                "\1\u0146",
-                "\1\u0147",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\1\u0149",
-                "\1\u014a",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u014c",
                 "\1\u014d",
                 "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u014e",
+                "\1\u014f",
                 "\1\u0150",
-                "\1\u0151",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0152",
+                "\1\u0153",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
-                "\1\u0154",
-                "\1\u0155",
-                "",
-                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u0156",
                 "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "",
-                "\1\u0157",
-                "\1\u0158",
-                "\1\u0159",
                 "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 "\1\u015a",
                 "\1\u015b",
                 "\1\u015c",
-                "\1\u015d",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
-                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "",
+                "\1\u015e",
+                "\1\u015f",
+                "",
+                "",
+                "\1\u0160",
+                "",
+                "",
+                "",
+                "\1\u0161",
+                "\1\u0162",
                 "\1\u0163",
-                "",
-                "",
-                "",
-                "",
                 "",
                 "\1\u0164",
                 "\1\u0165",
                 "\1\u0166",
                 "\1\u0167",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
+                "\1\u016d",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "\1\u016e",
+                "\1\u016f",
+                "\1\u0170",
+                "\1\u0171",
                 "\12\74\7\uffff\32\74\4\uffff\1\74\1\uffff\32\74",
                 ""
         };
@@ -3619,7 +3774,7 @@ public class InternalCompleteOCLLexer extends Lexer {
             this.transition = DFA11_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | RULE_UNQUOTED_STRING | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | RULE_UNQUOTED_STRING | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
@@ -3740,20 +3895,20 @@ public class InternalCompleteOCLLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 1 :
-                        int LA11_49 = input.LA(1);
+                        int LA11_48 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA11_49>='\u0000' && LA11_49<='\uFFFF')) ) {s = 133;}
+                        if ( ((LA11_48>='\u0000' && LA11_48<='\uFFFF')) ) {s = 132;}
 
                         else s = 54;
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 :
-                        int LA11_48 = input.LA(1);
+                        int LA11_49 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA11_48>='\u0000' && LA11_48<='\uFFFF')) ) {s = 132;}
+                        if ( ((LA11_49>='\u0000' && LA11_49<='\uFFFF')) ) {s = 133;}
 
                         else s = 54;
 

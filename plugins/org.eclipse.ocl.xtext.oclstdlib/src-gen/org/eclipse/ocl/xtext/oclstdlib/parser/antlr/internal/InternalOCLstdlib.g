@@ -3882,73 +3882,108 @@ ruleEssentialOCLReservedKeyword returns [AntlrDatatypeRuleToken current=new Antl
     }
 
     |
+	kw='and2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getAnd2Keyword_1());
+    }
+
+    |
 	kw='else'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_1());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getElseKeyword_2());
     }
 
     |
 	kw='endif'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_2());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getEndifKeyword_3());
     }
 
     |
 	kw='if'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_3());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getIfKeyword_4());
     }
 
     |
 	kw='implies'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_4());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getImpliesKeyword_5());
+    }
+
+    |
+	kw='implies2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getImplies2Keyword_6());
     }
 
     |
 	kw='in'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_5());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getInKeyword_7());
     }
 
     |
 	kw='let'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_6());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getLetKeyword_8());
     }
 
     |
 	kw='not'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_7());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getNotKeyword_9());
+    }
+
+    |
+	kw='not2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getNot2Keyword_10());
     }
 
     |
 	kw='or'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_8());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getOrKeyword_11());
+    }
+
+    |
+	kw='or2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getOr2Keyword_12());
     }
 
     |
 	kw='then'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_9());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getThenKeyword_13());
     }
 
     |
 	kw='xor'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_10());
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getXorKeyword_14());
+    }
+
+    |
+	kw='xor2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLReservedKeywordAccess().getXor2Keyword_15());
     }
 )
     ;
@@ -3983,6 +4018,13 @@ ruleEssentialOCLUnaryOperatorName returns [AntlrDatatypeRuleToken current=new An
     {
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNotKeyword_1());
+    }
+
+    |
+	kw='not2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2());
     }
 )
     ;
@@ -4083,24 +4125,52 @@ ruleEssentialOCLInfixOperatorName returns [AntlrDatatypeRuleToken current=new An
     }
 
     |
-	kw='or'
+	kw='and2'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11());
-    }
-
-    |
-	kw='xor'
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12());
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11());
     }
 
     |
 	kw='implies'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13());
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12());
+    }
+
+    |
+	kw='implies2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13());
+    }
+
+    |
+	kw='or'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14());
+    }
+
+    |
+	kw='or2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15());
+    }
+
+    |
+	kw='xor'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16());
+    }
+
+    |
+	kw='xor2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17());
     }
 )
     ;

@@ -3316,6 +3316,14 @@ rule__EssentialOCLUnaryOperatorName__Alternatives
 { after(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNotKeyword_1()); }
 )
 
+    |(
+{ before(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2()); }
+
+	'not2'
+
+{ after(grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -3415,27 +3423,59 @@ rule__EssentialOCLInfixOperatorName__Alternatives
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11()); }
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11()); }
 
-	'or'
+	'and2'
 
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11()); }
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11()); }
 )
 
     |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12()); }
-
-	'xor'
-
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12()); }
-)
-
-    |(
-{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13()); }
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12()); }
 
 	'implies'
 
-{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13()); }
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13()); }
+
+	'implies2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14()); }
+
+	'or'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15()); }
+
+	'or2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16()); }
+
+	'xor'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16()); }
+)
+
+    |(
+{ before(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17()); }
+
+	'xor2'
+
+{ after(grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17()); }
 )
 
 ;

@@ -1938,6 +1938,13 @@ ruleEssentialOCLUnaryOperatorName returns [AntlrDatatypeRuleToken current=new An
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNotKeyword_1());
     }
+
+    |
+	kw='not2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLUnaryOperatorNameAccess().getNot2Keyword_2());
+    }
 )
     ;
 
@@ -2037,24 +2044,52 @@ ruleEssentialOCLInfixOperatorName returns [AntlrDatatypeRuleToken current=new An
     }
 
     |
-	kw='or'
+	kw='and2'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_11());
-    }
-
-    |
-	kw='xor'
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_12());
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getAnd2Keyword_11());
     }
 
     |
 	kw='implies'
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_13());
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImpliesKeyword_12());
+    }
+
+    |
+	kw='implies2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getImplies2Keyword_13());
+    }
+
+    |
+	kw='or'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOrKeyword_14());
+    }
+
+    |
+	kw='or2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getOr2Keyword_15());
+    }
+
+    |
+	kw='xor'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXorKeyword_16());
+    }
+
+    |
+	kw='xor2'
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getEssentialOCLInfixOperatorNameAccess().getXor2Keyword_17());
     }
 )
     ;

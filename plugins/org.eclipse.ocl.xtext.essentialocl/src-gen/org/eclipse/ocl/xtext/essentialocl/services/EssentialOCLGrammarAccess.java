@@ -46,57 +46,79 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.essentialocl.EssentialOCL.EssentialOCLReservedKeyword");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cAndKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cElseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cEndifKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cIfKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cImpliesKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cInKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cLetKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cNotKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
-		private final Keyword cOrKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
-		private final Keyword cThenKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
-		private final Keyword cXorKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cAnd2Keyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cElseKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cEndifKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cIfKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cImpliesKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cImplies2Keyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cInKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cLetKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cNotKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cNot2Keyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cOrKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cOr2Keyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Keyword cThenKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		private final Keyword cXorKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cXor2Keyword_15 = (Keyword)cAlternatives.eContents().get(15);
 
 		///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 		//EssentialOCLReservedKeyword:
-		//	'and' | 'else' | 'endif' | 'if' | 'implies' | 'in' | 'let' | 'not' | 'or' | 'then' | 'xor';
+		//	'and' | 'and2' | 'else' | 'endif' | 'if' | 'implies' | 'implies2' | 'in' | 'let' | 'not' | 'not2' | 'or' | 'or2' |
+		//	'then' | 'xor' | 'xor2';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'and' | 'else' | 'endif' | 'if' | 'implies' | 'in' | 'let' | 'not' | 'or' | 'then' | 'xor'
+		//'and' | 'and2' | 'else' | 'endif' | 'if' | 'implies' | 'implies2' | 'in' | 'let' | 'not' | 'not2' | 'or' | 'or2' |
+		//'then' | 'xor' | 'xor2'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'and'
 		public Keyword getAndKeyword_0() { return cAndKeyword_0; }
 
+		//'and2'
+		public Keyword getAnd2Keyword_1() { return cAnd2Keyword_1; }
+
 		//'else'
-		public Keyword getElseKeyword_1() { return cElseKeyword_1; }
+		public Keyword getElseKeyword_2() { return cElseKeyword_2; }
 
 		//'endif'
-		public Keyword getEndifKeyword_2() { return cEndifKeyword_2; }
+		public Keyword getEndifKeyword_3() { return cEndifKeyword_3; }
 
 		//'if'
-		public Keyword getIfKeyword_3() { return cIfKeyword_3; }
+		public Keyword getIfKeyword_4() { return cIfKeyword_4; }
 
 		//'implies'
-		public Keyword getImpliesKeyword_4() { return cImpliesKeyword_4; }
+		public Keyword getImpliesKeyword_5() { return cImpliesKeyword_5; }
+
+		//'implies2'
+		public Keyword getImplies2Keyword_6() { return cImplies2Keyword_6; }
 
 		//'in'
-		public Keyword getInKeyword_5() { return cInKeyword_5; }
+		public Keyword getInKeyword_7() { return cInKeyword_7; }
 
 		//'let'
-		public Keyword getLetKeyword_6() { return cLetKeyword_6; }
+		public Keyword getLetKeyword_8() { return cLetKeyword_8; }
 
 		//'not'
-		public Keyword getNotKeyword_7() { return cNotKeyword_7; }
+		public Keyword getNotKeyword_9() { return cNotKeyword_9; }
+
+		//'not2'
+		public Keyword getNot2Keyword_10() { return cNot2Keyword_10; }
 
 		//'or'
-		public Keyword getOrKeyword_8() { return cOrKeyword_8; }
+		public Keyword getOrKeyword_11() { return cOrKeyword_11; }
+
+		//'or2'
+		public Keyword getOr2Keyword_12() { return cOr2Keyword_12; }
 
 		//'then'
-		public Keyword getThenKeyword_9() { return cThenKeyword_9; }
+		public Keyword getThenKeyword_13() { return cThenKeyword_13; }
 
 		//'xor'
-		public Keyword getXorKeyword_10() { return cXorKeyword_10; }
+		public Keyword getXorKeyword_14() { return cXorKeyword_14; }
+
+		//'xor2'
+		public Keyword getXor2Keyword_15() { return cXor2Keyword_15; }
 	}
 
 	public class EssentialOCLUnaryOperatorNameElements extends AbstractParserRuleElementFinder {
@@ -104,13 +126,14 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cNotKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cNot2Keyword_2 = (Keyword)cAlternatives.eContents().get(2);
 
 		///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 		//EssentialOCLUnaryOperatorName:
-		//	'-' | 'not';
+		//	'-' | 'not' | 'not2';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'-' | 'not'
+		//'-' | 'not' | 'not2'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'-'
@@ -118,6 +141,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'not'
 		public Keyword getNotKeyword_1() { return cNotKeyword_1; }
+
+		//'not2'
+		public Keyword getNot2Keyword_2() { return cNot2Keyword_2; }
 	}
 
 	public class EssentialOCLInfixOperatorNameElements extends AbstractParserRuleElementFinder {
@@ -134,16 +160,22 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEqualsSignKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
 		private final Keyword cLessThanSignGreaterThanSignKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
 		private final Keyword cAndKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
-		private final Keyword cOrKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
-		private final Keyword cXorKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
-		private final Keyword cImpliesKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		private final Keyword cAnd2Keyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cImpliesKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Keyword cImplies2Keyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		private final Keyword cOrKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cOr2Keyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cXorKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
+		private final Keyword cXor2Keyword_17 = (Keyword)cAlternatives.eContents().get(17);
 
 		///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 		//EssentialOCLInfixOperatorName:
-		//	'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'or' | 'xor' | 'implies';
+		//	'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'and2' | 'implies' | 'implies2' | 'or' | 'or2'
+		//	| 'xor' | 'xor2';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'or' | 'xor' | 'implies'
+		//'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'and2' | 'implies' | 'implies2' | 'or' | 'or2' |
+		//'xor' | 'xor2'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'*'
@@ -179,14 +211,26 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'and'
 		public Keyword getAndKeyword_10() { return cAndKeyword_10; }
 
-		//'or'
-		public Keyword getOrKeyword_11() { return cOrKeyword_11; }
-
-		//'xor'
-		public Keyword getXorKeyword_12() { return cXorKeyword_12; }
+		//'and2'
+		public Keyword getAnd2Keyword_11() { return cAnd2Keyword_11; }
 
 		//'implies'
-		public Keyword getImpliesKeyword_13() { return cImpliesKeyword_13; }
+		public Keyword getImpliesKeyword_12() { return cImpliesKeyword_12; }
+
+		//'implies2'
+		public Keyword getImplies2Keyword_13() { return cImplies2Keyword_13; }
+
+		//'or'
+		public Keyword getOrKeyword_14() { return cOrKeyword_14; }
+
+		//'or2'
+		public Keyword getOr2Keyword_15() { return cOr2Keyword_15; }
+
+		//'xor'
+		public Keyword getXorKeyword_16() { return cXorKeyword_16; }
+
+		//'xor2'
+		public Keyword getXor2Keyword_17() { return cXor2Keyword_17; }
 	}
 
 	public class EssentialOCLNavigationOperatorNameElements extends AbstractParserRuleElementFinder {
@@ -2981,7 +3025,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLReservedKeyword:
-	//	'and' | 'else' | 'endif' | 'if' | 'implies' | 'in' | 'let' | 'not' | 'or' | 'then' | 'xor';
+	//	'and' | 'and2' | 'else' | 'endif' | 'if' | 'implies' | 'implies2' | 'in' | 'let' | 'not' | 'not2' | 'or' | 'or2' |
+	//	'then' | 'xor' | 'xor2';
 	public EssentialOCLReservedKeywordElements getEssentialOCLReservedKeywordAccess() {
 		return pEssentialOCLReservedKeyword;
 	}
@@ -2992,7 +3037,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLUnaryOperatorName:
-	//	'-' | 'not';
+	//	'-' | 'not' | 'not2';
 	public EssentialOCLUnaryOperatorNameElements getEssentialOCLUnaryOperatorNameAccess() {
 		return pEssentialOCLUnaryOperatorName;
 	}
@@ -3003,7 +3048,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLInfixOperatorName:
-	//	'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'or' | 'xor' | 'implies';
+	//	'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'and2' | 'implies' | 'implies2' | 'or' | 'or2'
+	//	| 'xor' | 'xor2';
 	public EssentialOCLInfixOperatorNameElements getEssentialOCLInfixOperatorNameAccess() {
 		return pEssentialOCLInfixOperatorName;
 	}
