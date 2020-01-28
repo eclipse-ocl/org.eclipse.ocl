@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2019 Willink Transformations and others.
+ * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -335,7 +335,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_2_1_2() { return cRightParenthesisKeyword_2_1_2; }
 
-		//':' ownedSpecification=SpecificationCS? ';' | ';'
+		//(':' ownedSpecification=SpecificationCS? ';' | ';')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//':' ownedSpecification=SpecificationCS? ';'
@@ -584,8 +584,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedContents+=ModelElementCS | ownedReferences+=ModelElementRefCS)+ '}' |
-		//';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedContents+=ModelElementCS | ownedReferences+=ModelElementRefCS)+ '}' |
+		//';')
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedContents+=ModelElementCS | ownedReferences+=ModelElementRefCS)+ '}'
@@ -834,10 +834,10 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//qualifiers+='!unsettable' | qualifiers+='volatile' | qualifiers+='!volatile') ','?)+
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
-		//qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='id' | qualifiers+='!id' | qualifiers+='ordered' |
+		//(qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='id' | qualifiers+='!id' | qualifiers+='ordered' |
 		//qualifiers+='!ordered' | qualifiers+='readonly' | qualifiers+='!readonly' | qualifiers+='transient' |
 		//qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique' | qualifiers+='unsettable' |
-		//qualifiers+='!unsettable' | qualifiers+='volatile' | qualifiers+='!volatile'
+		//qualifiers+='!unsettable' | qualifiers+='volatile' | qualifiers+='!volatile')
 		public Alternatives getAlternatives_5_1_0() { return cAlternatives_5_1_0; }
 
 		//qualifiers+='derived'
@@ -942,8 +942,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | 'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS?
-		//';' | 'derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | 'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS?
+		//';' | 'derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')* '}' | ';')
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | 'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS?
@@ -1133,7 +1133,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedConstraints+=InvariantConstraintCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedConstraints+=InvariantConstraintCS)* '}' | ';')
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedConstraints+=InvariantConstraintCS)* '}'
@@ -1373,8 +1373,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4_2() { return cRightCurlyBracketKeyword_4_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedLiterals+=EnumerationLiteralCS |
-		//ownedConstraints+=InvariantConstraintCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedLiterals+=EnumerationLiteralCS |
+		//ownedConstraints+=InvariantConstraintCS)* '}' | ';')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedLiterals+=EnumerationLiteralCS |
@@ -1447,7 +1447,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//('{' ownedAnnotations+=AnnotationElementCS* '}' | ';')
 		public Group getGroup() { return cGroup; }
 
-		//'literal' name=UnrestrictedName | name=EnumerationLiteralName
+		//('literal' name=UnrestrictedName | name=EnumerationLiteralName)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//'literal' name=UnrestrictedName
@@ -1492,7 +1492,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//SIGNED
 		public RuleCall getValueSIGNEDParserRuleCall_2_1_0() { return cValueSIGNEDParserRuleCall_2_1_0; }
 
-		//'{' ownedAnnotations+=AnnotationElementCS* '}' | ';'
+		//('{' ownedAnnotations+=AnnotationElementCS* '}' | ';')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//'{' ownedAnnotations+=AnnotationElementCS* '}'
@@ -1537,7 +1537,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//('import' | 'library') (name=UnrestrictedName ':')? ownedPathName=URIPathNameCS isAll?='::*'? ';'
 		public Group getGroup() { return cGroup; }
 
-		//'import' | 'library'
+		//('import' | 'library')
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//'import'
@@ -1859,8 +1859,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique') ','?)+
 		public Group getGroup_9_1() { return cGroup_9_1; }
 
-		//qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' |
-		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique'
+		//(qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' |
+		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique')
 		public Alternatives getAlternatives_9_1_0() { return cAlternatives_9_1_0; }
 
 		//qualifiers+='derived'
@@ -1917,8 +1917,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_9_2() { return cRightCurlyBracketKeyword_9_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':'
-		//ownedBodyExpressions+=SpecificationCS? ';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName?
+		//':' ownedBodyExpressions+=SpecificationCS? ';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
 		public Alternatives getAlternatives_10() { return cAlternatives_10; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':'
@@ -2047,7 +2047,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//URI
 		public RuleCall getNsURIURIParserRuleCall_3_1_0() { return cNsURIURIParserRuleCall_3_1_0; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPackages+=PackageCS | ownedClasses+=ClassCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedPackages+=PackageCS | ownedClasses+=ClassCS)* '}' | ';')
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPackages+=PackageCS | ownedClasses+=ClassCS)* '}'
@@ -2149,7 +2149,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//((qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique') ','?)+
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
-		//qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique'
+		//(qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')
 		public Alternatives getAlternatives_2_1_0() { return cAlternatives_2_1_0; }
 
 		//qualifiers+='ordered'
@@ -2258,7 +2258,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//((qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique') ','?)+
 		public Group getGroup_4_1() { return cGroup_4_1; }
 
-		//qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique'
+		//(qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')
 		public Alternatives getAlternatives_4_1_0() { return cAlternatives_4_1_0; }
 
 		//qualifiers+='ordered'
@@ -2527,11 +2527,11 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//qualifiers+='volatile' | qualifiers+='!volatile') ','?)+
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
-		//qualifiers+='composes' | qualifiers+='!composes' | qualifiers+='derived' | qualifiers+='!derived' |
+		//(qualifiers+='composes' | qualifiers+='!composes' | qualifiers+='derived' | qualifiers+='!derived' |
 		//qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='readonly' | qualifiers+='!readonly' |
 		//qualifiers+='resolve' | qualifiers+='!resolve' | qualifiers+='transient' | qualifiers+='!transient' |
 		//qualifiers+='unique' | qualifiers+='!unique' | qualifiers+='unsettable' | qualifiers+='!unsettable' |
-		//qualifiers+='volatile' | qualifiers+='!volatile'
+		//qualifiers+='volatile' | qualifiers+='!volatile')
 		public Alternatives getAlternatives_6_1_0() { return cAlternatives_6_1_0; }
 
 		//qualifiers+='composes'
@@ -2648,10 +2648,10 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6_2() { return cRightCurlyBracketKeyword_6_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | 'key' referredKeys+=[pivot::Property|UnrestrictedName] (','
+		//('{' (ownedAnnotations+=AnnotationElementCS | 'key' referredKeys+=[pivot::Property|UnrestrictedName] (','
 		//referredKeys+=[pivot::Property|UnrestrictedName])* ';' | 'initial' UnrestrictedName? ':'
 		//ownedDefaultExpressions+=SpecificationCS? ';' | 'derivation' UnrestrictedName? ':'
-		//ownedDefaultExpressions+=SpecificationCS? ';' | ownedImplicitOpposites+=ImplicitOppositeCS ';')* '}' | ';'
+		//ownedDefaultExpressions+=SpecificationCS? ';' | ownedImplicitOpposites+=ImplicitOppositeCS ';')* '}' | ';')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | 'key' referredKeys+=[pivot::Property|UnrestrictedName] (','
@@ -2924,8 +2924,8 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6_2() { return cRightCurlyBracketKeyword_6_2; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedOperations+=OperationCS | ownedProperties+=StructuralFeatureCS |
-		//ownedConstraints+=InvariantConstraintCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedOperations+=OperationCS | ownedProperties+=StructuralFeatureCS |
+		//ownedConstraints+=InvariantConstraintCS)* '}' | ';')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedOperations+=OperationCS | ownedProperties+=StructuralFeatureCS |
@@ -3021,7 +3021,7 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'sysml'
 		public Keyword getSysmlKeyword_1() { return cSysmlKeyword_1; }
 
-		//ownedDetails+=DetailCS ';' | '{' (ownedDetails+=DetailCS ';')* '}'
+		//(ownedDetails+=DetailCS ';' | '{' (ownedDetails+=DetailCS ';')* '}')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//ownedDetails+=DetailCS ';'

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2019 Willink Transformations and others.
+ * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -415,7 +415,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 
-		//'{' ownedAnnotations+=AnnotationElementCS '}' | ';'
+		//('{' ownedAnnotations+=AnnotationElementCS '}' | ';')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//'{' ownedAnnotations+=AnnotationElementCS '}'
@@ -927,7 +927,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//SINGLE_QUOTED_STRING
 		public RuleCall getImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_6_1_0_1() { return cImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_6_1_0_1; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}' | ';')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}'
@@ -1159,7 +1159,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//SINGLE_QUOTED_STRING
 		public RuleCall getImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_13_1_0_1() { return cImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_13_1_0_1; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}' | ';')
 		public Alternatives getAlternatives_14() { return cAlternatives_14; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)* '}'
@@ -1532,8 +1532,8 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//SINGLE_QUOTED_STRING
 		public RuleCall getImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_12_1_0_1() { return cImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_12_1_0_1; }
 
-		//'{' (ownedAnnotations+=AnnotationElementCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';' |
-		//ownedPostconditions+=PostCS | ownedPreconditions+=PreCS)* '}' | ';'
+		//('{' (ownedAnnotations+=AnnotationElementCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';' |
+		//ownedPostconditions+=PostCS | ownedPreconditions+=PreCS)* '}' | ';')
 		public Alternatives getAlternatives_13() { return cAlternatives_13; }
 
 		//'{' (ownedAnnotations+=AnnotationElementCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';' |
@@ -1942,7 +1942,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//SINGLE_QUOTED_STRING
 		public RuleCall getImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_6_1_0_1() { return cImplementationJavaClassCSSINGLE_QUOTED_STRINGTerminalRuleCall_6_1_0_1; }
 
-		//'{' ownedAnnotations+=AnnotationElementCS* '}' | ';'
+		//('{' ownedAnnotations+=AnnotationElementCS* '}' | ';')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//'{' ownedAnnotations+=AnnotationElementCS* '}'
@@ -2122,7 +2122,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//('left' | isRightAssociative?='right') ':' name=Name
 		public Group getGroup() { return cGroup; }
 
-		//'left' | isRightAssociative?='right'
+		//('left' | isRightAssociative?='right')
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//'left'
@@ -2178,7 +2178,7 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//(MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS) ownedMultiplicity=MultiplicityCS?
 		public Group getGroup() { return cGroup; }
 
-		//MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS
+		//(MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//MapTypeCS
