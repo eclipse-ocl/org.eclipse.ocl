@@ -932,6 +932,7 @@ public class PivotTables
 		private static final @NonNull ExecutorFragment _Enumeration__Namespace = new ExecutorFragment(Types._Enumeration, PivotTables.Types._Namespace);
 		private static final @NonNull ExecutorFragment _Enumeration__OclAny = new ExecutorFragment(Types._Enumeration, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull ExecutorFragment _Enumeration__OclElement = new ExecutorFragment(Types._Enumeration, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull ExecutorFragment _Enumeration__OclEnumeration = new ExecutorFragment(Types._Enumeration, OCLstdlibTables.Types._OclEnumeration);
 		private static final @NonNull ExecutorFragment _Enumeration__OclType = new ExecutorFragment(Types._Enumeration, OCLstdlibTables.Types._OclType);
 		private static final @NonNull ExecutorFragment _Enumeration__TemplateableElement = new ExecutorFragment(Types._Enumeration, PivotTables.Types._TemplateableElement);
 		private static final @NonNull ExecutorFragment _Enumeration__Type = new ExecutorFragment(Types._Enumeration, PivotTables.Types._Type);
@@ -1834,9 +1835,6 @@ public class PivotTables
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _Element__getValue = new ExecutorOperation("getValue", Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull ExecutorOperation _Enumeration__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OCLExpression__isNonNull = new ExecutorOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			0, TemplateParameters.EMPTY_LIST, null);
@@ -2845,6 +2843,7 @@ public class PivotTables
 				Fragments._Enumeration__Element /* 2 */,
 				Fragments._Enumeration__OclType /* 2 */,
 				Fragments._Enumeration__NamedElement /* 3 */,
+				Fragments._Enumeration__OclEnumeration /* 3 */,
 				Fragments._Enumeration__TemplateableElement /* 3 */,
 				Fragments._Enumeration__Namespace /* 4 */,
 				Fragments._Enumeration__Type /* 4 */,
@@ -2852,7 +2851,7 @@ public class PivotTables
 				Fragments._Enumeration__DataType /* 6 */,
 				Fragments._Enumeration__Enumeration /* 7 */
 			};
-		private static final int @NonNull [] __Enumeration = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __Enumeration = { 1,1,2,3,2,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _EnumerationLiteral =
 			{
@@ -5582,9 +5581,7 @@ public class PivotTables
 			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
 		};
 
-		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__Enumeration = {
-			PivotTables.Operations._Enumeration__allInstances /* allInstances() */
-		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__Enumeration = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__Class = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__DataType = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__Element = {
@@ -5611,13 +5608,16 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__OclElement = {
-			PivotTables.Operations._Enumeration__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
 			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__OclEnumeration = {
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__OclType = {
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
@@ -9833,6 +9833,7 @@ public class PivotTables
 			Fragments._Enumeration__Namespace.initOperations(_Enumeration__Namespace);
 			Fragments._Enumeration__OclAny.initOperations(_Enumeration__OclAny);
 			Fragments._Enumeration__OclElement.initOperations(_Enumeration__OclElement);
+			Fragments._Enumeration__OclEnumeration.initOperations(_Enumeration__OclEnumeration);
 			Fragments._Enumeration__OclType.initOperations(_Enumeration__OclType);
 			Fragments._Enumeration__TemplateableElement.initOperations(_Enumeration__TemplateableElement);
 			Fragments._Enumeration__Type.initOperations(_Enumeration__Type);

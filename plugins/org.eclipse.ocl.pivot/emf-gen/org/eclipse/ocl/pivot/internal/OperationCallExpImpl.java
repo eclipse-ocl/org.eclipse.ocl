@@ -799,7 +799,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_forAll, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -880,7 +880,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -973,7 +973,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -1052,7 +1052,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

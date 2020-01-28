@@ -291,7 +291,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -418,7 +418,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				throw (InvalidValueException)CAUGHT_severity_0;
 			}
 			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, CAUGHT_severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ @NonNull Object symbol_7;
+			/*@NonInvalid*/ boolean symbol_7;
 			if (le) {
 				symbol_7 = ValueUtil.TRUE_VALUE;
 			}
@@ -797,7 +797,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_7 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_7;
+			return symbol_7;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -852,7 +852,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
-			return Boolean.TRUE == symbol_0;
+			return symbol_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
