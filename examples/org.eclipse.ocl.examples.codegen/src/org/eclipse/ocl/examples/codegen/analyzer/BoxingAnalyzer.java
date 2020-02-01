@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -67,6 +69,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -481,17 +484,48 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgElement) {
 		super.visitCGLibraryOperationCallExp(cgElement);
-		//		if (!cgElement.getReferredOperation().isValidating()) {
-		//			OperationId operationId = cgElement.getReferredOperation().getOperationId();
-		//			if (!hasOclVoidOperation(operationId)) {
-		//				guard(cgElement, cgElement.getSource());
-		//			}
-		//		}
-		rewriteAsBoxed(cgElement.getSource());
+		Operation referredOperation = cgElement.getReferredOperation();
+		OperationId operationId = referredOperation.getOperationId();
+		boolean sourceMayBeNull = hasOclVoidOperation(operationId);
+		CGValuedElement cgSource = cgElement.getSource();
+		if (!sourceMayBeNull) {
+			if (cgSource.isNull()) {
+//				CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
+				CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
+				CGUtil.replace(cgElement, cgLiteralExp);
+				return null;
+			}
+		}
+		List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
 		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			rewriteAsBoxed(cgArguments.get(i));
+			CGValuedElement cgArgument = cgArguments.get(i);
+			Parameter asParameter = ownedParameters.get(i);
+			if (asParameter.isIsRequired()) {
+				if (cgArgument.isNull()) {
+//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
+					CGInvalid cgInvalid = context.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+					CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
+					CGUtil.replace(cgElement, cgLiteralExp);
+					return null;
+				}
+			}
+		}
+		rewriteAsBoxed(cgSource);
+		if (!sourceMayBeNull && !cgSource.isNonNull()) {
+//			rewriteAsGuarded(cgSource, false, "value3 for source parameter");
+			rewriteAsGuarded(cgSource, false, "''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+		}
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGValuedElement cgArgument = cgArguments.get(i);
+			rewriteAsBoxed(cgArgument);
+			Parameter asParameter = ownedParameters.get(i);
+			if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
+//				rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
+				rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+			}
 		}
 		return null;
 	}

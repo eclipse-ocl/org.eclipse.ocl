@@ -174,12 +174,6 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
-import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
-import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
@@ -701,56 +695,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;
 		}
-		else if ((libraryOperation instanceof BooleanAndOperation2)
-				|| ((libraryOperation instanceof BooleanAndOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
-			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
-			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
-			setAst(cgIfExp, element);
-			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
-			CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, pArgument);
-			CGValuedElement cgElseExpression = context.createCGConstantExp(context.getBoolean(false));
-			cgIfExp.setCondition(cgCondition);
-			cgIfExp.setThenExpression(cgThenExpression);
-			cgIfExp.setElseExpression(cgElseExpression);
-			return cgIfExp;
-		}
-		else if ((libraryOperation instanceof BooleanImpliesOperation2)
-				|| ((libraryOperation instanceof BooleanImpliesOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
-			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
-			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
-			setAst(cgIfExp, element);
-			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
-			CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, pArgument);
-			CGValuedElement cgElseExpression = context.createCGConstantExp(context.getBoolean(true));
-			cgIfExp.setCondition(cgCondition);
-			cgIfExp.setThenExpression(cgThenExpression);
-			cgIfExp.setElseExpression(cgElseExpression);
-			return cgIfExp;
-		}
-		else if ((libraryOperation instanceof BooleanOrOperation2)
-				|| ((libraryOperation instanceof BooleanOrOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
-			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
-			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
-			setAst(cgIfExp, element);
-			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
-			CGValuedElement cgThenExpression = context.createCGConstantExp(context.getBoolean(true));
-			CGValuedElement cgElseExpression = doVisit(CGValuedElement.class, pArgument);
-			cgIfExp.setCondition(cgCondition);
-			cgIfExp.setThenExpression(cgThenExpression);
-			cgIfExp.setElseExpression(cgElseExpression);
-			return cgIfExp;
-		}
-		/*		else if (libraryOperation instanceof OclAnyEqual2Operation) {
-			OCLExpression pArgument = element.getOwnedArguments().get(0);
-			CGValuedElement cgArgument = pArgument != null ? doVisit(CGValuedElement.class, pArgument) : null;
-			CGIsEqual2Exp cgIsEqualExp = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
-			cgIsEqualExp.setSource(cgSource);
-			cgIsEqualExp.setArgument(cgArgument);
-			setAst(cgIsEqualExp, element);
-			cgIsEqualExp.setInvalidating(false);
-			cgIsEqualExp.setValidating(true);
-			return cgIsEqualExp;
-		} */
 		else if (libraryOperation instanceof NativeStaticOperation) {
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
 			if (bodyExpression != null) {

@@ -13,8 +13,10 @@ package org.eclipse.ocl.examples.codegen.java;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -104,6 +106,17 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVis
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.java.operation.AndOperation2Handler;
+import org.eclipse.ocl.examples.codegen.java.operation.AndOperationHandler;
+import org.eclipse.ocl.examples.codegen.java.operation.ImpliesOperation2Handler;
+import org.eclipse.ocl.examples.codegen.java.operation.ImpliesOperationHandler;
+import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
+import org.eclipse.ocl.examples.codegen.java.operation.NotOperation2Handler;
+import org.eclipse.ocl.examples.codegen.java.operation.NotOperationHandler;
+import org.eclipse.ocl.examples.codegen.java.operation.OrOperation2Handler;
+import org.eclipse.ocl.examples.codegen.java.operation.OrOperationHandler;
+import org.eclipse.ocl.examples.codegen.java.operation.XorOperation2Handler;
+import org.eclipse.ocl.examples.codegen.java.operation.XorOperationHandler;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
@@ -190,6 +203,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
 	protected final @NonNull JavaStream js;
+	protected final @NonNull Map<@NonNull Class<? extends LibraryOperation>, @NonNull LibraryOperationHandler> libraryOperation2handler = new HashMap<>();;
 
 	/**
 	 * The local Java context for the current operation.
@@ -204,6 +218,20 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		this.id2JavaInterfaceVisitor = createId2JavaClassVisitor();
 		this.environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
 		this.js = codeGenerator.createJavaStream(this);
+		installLibraryHandler(new AndOperationHandler(js));
+		installLibraryHandler(new AndOperation2Handler(js));
+		installLibraryHandler(new ImpliesOperationHandler(js));
+		installLibraryHandler(new ImpliesOperation2Handler(js));
+		installLibraryHandler(new NotOperationHandler(js));
+		installLibraryHandler(new NotOperation2Handler(js));
+		installLibraryHandler(new OrOperationHandler(js));
+		installLibraryHandler(new OrOperation2Handler(js));
+		installLibraryHandler(new XorOperationHandler(js));
+		installLibraryHandler(new XorOperation2Handler(js));
+	}
+
+	protected void installLibraryHandler(@NonNull LibraryOperationHandler libraryOperationHandler) {
+		libraryOperation2handler.put(libraryOperationHandler.getLibraryOperationClass(), libraryOperationHandler);
 	}
 
 	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
@@ -786,7 +814,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER;
 	}
 
-	protected @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
+	public @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
 		return analyzer.getExpression(cgExpression);
 	}
 
@@ -2319,9 +2347,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
+		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgOperationCallExp.getLibraryOperation());
+		LibraryOperationHandler libraryOperationHandler = libraryOperation2handler.get(libraryOperation.getClass());
+		if (libraryOperationHandler != null) {
+			return libraryOperationHandler.generate(cgOperationCallExp);
+		}
 		final CGValuedElement source = getExpression(cgOperationCallExp.getSource());
 		final List<CGValuedElement> arguments = cgOperationCallExp.getArguments();
-		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgOperationCallExp.getLibraryOperation());
 		Method actualMethod = getJavaMethod(libraryOperation, arguments.size());
 		Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
 		boolean actualIsNonNull = (actualMethod != null) && (context.getIsNonNull(actualMethod) == Boolean.TRUE);
@@ -2333,6 +2365,52 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : arguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
 				return false;
+			}
+		}
+		for (int i = 0; i < arguments.size(); i++) {
+			CGValuedElement cgArgument = arguments.get(i);
+			Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i);
+			if (asParameter.isIsRequired()) {
+				if (cgArgument.isNull()) {
+					js.append("throw new ");
+					js.appendClassReference(null, InvalidValueException.class);
+					js.append("(\"Null argument\");\n");
+					return false;
+				}
+				else if (cgArgument.isInvalid()) {
+					js.append("throw new ");
+					js.appendClassReference(null, InvalidValueException.class);
+					js.append("(\"Invalid argument\");\n");
+					return false;
+				}
+				else {
+					if (!cgArgument.isNonNull()) {
+						js.append("if (");
+						js.appendValueName(cgArgument);
+						js.append(" == null) {\n");
+						js.pushIndentation(null);
+						js.append("throw new ");
+						js.appendClassReference(null, InvalidValueException.class);
+						js.append("(\"Null argument\");\n");
+						js.popIndentation();
+						js.append("}\n");
+					}
+					if (!cgArgument.isNonInvalid()) {
+						js.append("if (");
+						js.appendValueName(cgArgument);
+						js.append(" instanceof ");
+						js.appendClassReference(null, InvalidValueException.class);
+						js.append(") {\n");
+						js.pushIndentation(null);
+						js.append("throw (");
+						js.appendClassReference(null, InvalidValueException.class);
+						js.append(")");
+						js.appendValueName(cgArgument);
+						js.append(";\n");
+						js.popIndentation();
+						js.append("}\n");
+					}
+				}
 			}
 		}
 		if (expectedIsNonNull && !actualIsNonNull) {
