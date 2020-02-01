@@ -223,6 +223,7 @@ public class OCLstdlibTests extends XtextTestCase
 						"    type OclEnumeration conformsTo OclAny {}\n"+
 						"    type OclInvalid : InvalidType {}\n"+
 						"    type OclSelf : SelfType conformsTo OclAny {}\n"+
+						"    type OclVoid : VoidType {}\n"+
 						"    type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
 						"    type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"+
 						"    type Real : PrimitiveType conformsTo OclComparable {}\n"+
