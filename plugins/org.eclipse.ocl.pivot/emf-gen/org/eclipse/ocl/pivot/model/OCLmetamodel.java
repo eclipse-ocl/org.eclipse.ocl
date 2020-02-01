@@ -4412,6 +4412,8 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Namespace, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
 			installComment(pr_Namespace_ownedConstraints, "Specifies a set of Constraints owned by this Namespace.");
 			installComment(_Operation, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
+			installComment(pr_Operation_isInvalidating, "Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.");
+			installComment(pr_Operation_isValidating, "Whether this operation may return a non-invalid result for invalid inputs.");
 			installComment(pr_Operation_ownedParameters, "The ordered set of formal Parameters of this BehavioralFeature.\n\nThe parameters owned by this Operation.");
 			installComment(pr_Operation_ownedPostconditions, "An optional set of Constraints specifying the state of the system when the Operation is completed.");
 			installComment(pr_Operation_ownedPreconditions, "An optional set of Constraints on the state of the system when the Operation is invoked.");

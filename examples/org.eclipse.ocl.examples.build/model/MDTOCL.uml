@@ -238,9 +238,15 @@
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Precedences-NamedElement" name="NamedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Precedences-Operation" name="Operation">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-isInvalidating" name="isInvalidating" type="MDTOCL-MDT_OCL_Precedences-Boolean">
+          <ownedComment xmi:id="_6RHlMETNEeqHMbNu9V08SA">
+            <body>Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.</body>
+          </ownedComment>
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OB37VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-isValidating" name="isValidating" type="MDTOCL-MDT_OCL_Precedences-Boolean">
+          <ownedComment xmi:id="_FqeDEETOEeqHMbNu9V08SA">
+            <body>Whether this operation may return a non-invalid result for invalid inputs.</body>
+          </ownedComment>
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OCH7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-precedence" name="precedence" type="MDTOCL-MDT_OCL_Precedences-Precedence">

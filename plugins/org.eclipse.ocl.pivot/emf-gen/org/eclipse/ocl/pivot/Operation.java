@@ -202,6 +202,9 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Invalidating</em>' attribute.
 	 * @see #setIsInvalidating(boolean)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getOperation_IsInvalidating()
@@ -282,6 +285,9 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Whether this operation may return a non-invalid result for invalid inputs.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Validating</em>' attribute.
 	 * @see #setIsValidating(boolean)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getOperation_IsValidating()

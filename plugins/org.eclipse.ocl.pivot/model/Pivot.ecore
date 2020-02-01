@@ -1782,13 +1782,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-bodyExpression"
         name="bodyExpression" eType="#T-pivot-LanguageExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isInvalidating"
-        name="isInvalidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isInvalidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTransient"
         name="isTransient" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTypeof"
         name="isTypeof" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isValidating"
-        name="isValidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isValidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Whether this operation may return a non-invalid result for invalid inputs."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-ownedParameters"
         name="ownedParameters" upperBound="-1" eType="#T-pivot-Parameter" containment="true"
         eOpposite="#F-pivot-Parameter-owningOperation">

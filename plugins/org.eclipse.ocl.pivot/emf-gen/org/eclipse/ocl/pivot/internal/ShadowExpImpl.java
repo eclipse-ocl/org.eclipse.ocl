@@ -49,8 +49,6 @@ import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation;
@@ -249,18 +247,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-			try {
-				final /*@Thrown*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP);
-				CAUGHT_severity_0 = severity_0;
-			}
-			catch (Exception e) {
-				CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-			}
-			if (CAUGHT_severity_0 instanceof InvalidValueException) {
-				throw (InvalidValueException)CAUGHT_severity_0;
-			}
-			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, CAUGHT_severity_0, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
@@ -278,17 +266,31 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					catch (Exception e) {
 						CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 					}
-					final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
-					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
-					final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
-					final /*@Thrown*/ @Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf, eq);
+					final /*@Thrown*/ @Nullable Boolean result;
+					if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
+						result = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
+						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
+						final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
+						if (eq) {
+							result = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_oclIsKindOf;
+							}
+							result = ValueUtil.FALSE_VALUE;
+						}
+					}
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
 			return symbol_0;
@@ -406,18 +408,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-			/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-			try {
-				final /*@Thrown*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
-				CAUGHT_severity_0 = severity_0;
-			}
-			catch (Exception e) {
-				CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-			}
-			if (CAUGHT_severity_0 instanceof InvalidValueException) {
-				throw (InvalidValueException)CAUGHT_severity_0;
-			}
-			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, CAUGHT_severity_0, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_7;
 			if (le) {
 				symbol_7 = ValueUtil.TRUE_VALUE;
@@ -517,30 +509,68 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/**
 							 * isDerived or isImplicit or isStatic or isTransient
 							 */
-							final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
-							/*@NonInvalid*/ boolean or;
-							if (isDerived) {
-								or = ValueUtil.TRUE_VALUE;
+							/*@Caught*/ @Nullable Object CAUGHT_or_0;
+							try {
+								final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
+								final /*@NonInvalid*/ @Nullable Boolean or;
+								if (isDerived) {
+									or = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
+									if (isImplicit) {
+										or = ValueUtil.TRUE_VALUE;
+									}
+									else {
+										or = ValueUtil.FALSE_VALUE;
+									}
+								}
+								final /*@Thrown*/ @Nullable Boolean or_0;
+								if (or == ValueUtil.TRUE_VALUE) {
+									or_0 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
+									if (isStatic) {
+										or_0 = ValueUtil.TRUE_VALUE;
+									}
+									else {
+										if (or == null) {
+											or_0 = null;
+										}
+										else {
+											or_0 = ValueUtil.FALSE_VALUE;
+										}
+									}
+								}
+								CAUGHT_or_0 = or_0;
 							}
-							else {
-								final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
-								or = isImplicit;
+							catch (Exception e) {
+								CAUGHT_or_0 = ValueUtil.createInvalidValue(e);
 							}
-							/*@NonInvalid*/ boolean or_0;
-							if (or) {
-								or_0 = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
-								or_0 = isStatic;
-							}
-							/*@NonInvalid*/ boolean or_1;
-							if (or_0) {
+							final /*@Thrown*/ @Nullable Boolean or_1;
+							if (CAUGHT_or_0 == ValueUtil.TRUE_VALUE) {
 								or_1 = ValueUtil.TRUE_VALUE;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
-								or_1 = isTransient;
+								if (isTransient) {
+									or_1 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (CAUGHT_or_0 instanceof InvalidValueException) {
+										throw (InvalidValueException)CAUGHT_or_0;
+									}
+									if (CAUGHT_or_0 == null) {
+										or_1 = null;
+									}
+									else {
+										or_1 = ValueUtil.FALSE_VALUE;
+									}
+								}
+							}
+							if (or_1 == null) {
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -567,6 +597,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								safe_startsWith_source = null;
 							}
 							else {
+								if (name == null) {
+									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
+								}
 								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
 								safe_startsWith_source = startsWith_0;
 							}
@@ -612,14 +645,35 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * isVolatile or not isRequired
 							 */
 							final /*@NonInvalid*/ boolean isVolatile = _1_5.isIsVolatile();
-							/*@NonInvalid*/ @Nullable Boolean or_2;
+							final /*@Thrown*/ @Nullable Boolean or_2;
 							if (isVolatile) {
 								or_2 = ValueUtil.TRUE_VALUE;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isRequired = _1_5.isIsRequired();
-								final /*@NonInvalid*/ @Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isRequired);
-								or_2 = not;
+								final /*@NonInvalid*/ @Nullable Boolean not;
+								if (!isRequired) {
+									not = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (isRequired) {
+										not = ValueUtil.FALSE_VALUE;
+									}
+									else {
+										not = null;
+									}
+								}
+								if (not == ValueUtil.TRUE_VALUE) {
+									or_2 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (not == null) {
+										or_2 = null;
+									}
+									else {
+										or_2 = ValueUtil.FALSE_VALUE;
+									}
+								}
 							}
 							if (or_2 == null) {
 								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
@@ -665,21 +719,42 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							final /*@NonInvalid*/ @Nullable Property opposite = _1_7.getOpposite();
 							final /*@NonInvalid*/ boolean ne_0 = opposite != null;
-							/*@Thrown*/ boolean and;
-							if (ne_0) {
-								if (opposite == null) {
-									throw new InvalidValueException("Null source for \'Property::isComposite\'");
-								}
-								final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
-								and = isComposite;
+							final /*@Thrown*/ @Nullable Boolean and;
+							if (!ne_0) {
+								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								and = ValueUtil.FALSE_VALUE;
+								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
+								try {
+									if (opposite == null) {
+										throw new InvalidValueException("Null source for \'Property::isComposite\'");
+									}
+									final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
+									CAUGHT_isComposite = isComposite;
+								}
+								catch (Exception e) {
+									CAUGHT_isComposite = ValueUtil.createInvalidValue(e);
+								}
+								if (CAUGHT_isComposite == ValueUtil.FALSE_VALUE) {
+									and = ValueUtil.FALSE_VALUE;
+								}
+								else {
+									if (CAUGHT_isComposite instanceof InvalidValueException) {
+										throw (InvalidValueException)CAUGHT_isComposite;
+									}
+									and = ValueUtil.TRUE_VALUE;
+								}
+							}
+							if (and == null) {
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {
 								accumulator_6.add(_1_7);
 							}
+						}
+						if (classProperties instanceof InvalidValueException) {
+							throw (InvalidValueException)classProperties;
 						}
 						final /*@Thrown*/ @NonNull SetValue extraProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
 						final /*@Thrown*/ @NonNull SetValue missingProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
@@ -794,7 +869,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				symbol_7 = logDiagnostic;
 			}
 			return symbol_7;
@@ -829,18 +904,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-			try {
-				final /*@Thrown*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
-				CAUGHT_severity_0 = severity_0;
-			}
-			catch (Exception e) {
-				CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-			}
-			if (CAUGHT_severity_0 instanceof InvalidValueException) {
-				throw (InvalidValueException)CAUGHT_severity_0;
-			}
-			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, CAUGHT_severity_0, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
 				symbol_0 = ValueUtil.TRUE_VALUE;
@@ -849,7 +914,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_0 = logDiagnostic;
 			}
 			return symbol_0;

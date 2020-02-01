@@ -638,10 +638,14 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedPreconditions->isUnique(name)&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="qfUk8" isComposite="true" isRequired="false" name="bodyExpression" type="#BfHsW"/>
-      <ownedProperties xmi:id="S+5tf" defaultValueString="false" name="isInvalidating" type="#ZuwnB"/>
+      <ownedProperties xmi:id="S+5tf" defaultValueString="false" name="isInvalidating" type="#ZuwnB">
+        <ownedComments body="Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
+      </ownedProperties>
       <ownedProperties xmi:id="QaKjy" defaultValueString="false" name="isTransient" type="#ZuwnB"/>
       <ownedProperties xmi:id="rpGji" defaultValueString="false" name="isTypeof" type="#ZuwnB"/>
-      <ownedProperties xmi:id="tcgYs" defaultValueString="false" name="isValidating" type="#ZuwnB"/>
+      <ownedProperties xmi:id="tcgYs" defaultValueString="false" name="isValidating" type="#ZuwnB">
+        <ownedComments body="Whether this operation may return a non-invalid result for invalid inputs."/>
+      </ownedProperties>
       <ownedProperties xmi:id=",hgri" isComposite="true" name="ownedParameters" opposite="#1FOo," type="#2ezwj">
         <ownedComments body="The ordered set of formal Parameters of this BehavioralFeature.&#xA;&#xA;The parameters owned by this Operation."/>
       </ownedProperties>
