@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -17,13 +17,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -300,6 +299,51 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 * @generated
 	 */
 	@Override
+	public @NonNull CGValuedElement getNamedValue() {
+		return init != null ? init.getNamedValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGValuedElement getReferredValue() {
+		return init != null ? init : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGValuedElement getSourceValue() {
+		return init != null ? init.getSourceValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGValuedElement getTypedValue() {
+		return init != null ? init.getTypedValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable String getValueName() {
+		return init != null ? init.getValueName() : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isBoxed() {
 		return true;
 	}
@@ -336,8 +380,17 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 * @generated
 	 */
 	@Override
+	public @Nullable Boolean isEquivalentTo(@NonNull CGValuedElement thatValue) {
+		return init != null ? thatValue.isEquivalentTo(init) : super.isEquivalentTo(thatValue);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
-		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGShadowPart)thatValue) : null;
+		return init != null ? thatValue.isEquivalentToInternal(init) : null;
 	}
 
 	/**

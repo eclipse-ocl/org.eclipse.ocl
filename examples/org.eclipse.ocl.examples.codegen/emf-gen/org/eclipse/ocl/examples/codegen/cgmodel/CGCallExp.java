@@ -41,7 +41,7 @@ public interface CGCallExp extends CGValuedElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Whether this call expression may return an invalid result for non-invalid inputs.
+	 * Whether this call expression may return an invalid result for non-invalid (or invalid if also validating) inputs.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Invalidating</em>' attribute.
 	 * @see #setInvalidating(boolean)

@@ -74,7 +74,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="invalidating" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether this call expression may return an invalid result for non-invalid inputs."/>
+        <details key="documentation" value="Whether this call expression may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="validating" lowerBound="1"
