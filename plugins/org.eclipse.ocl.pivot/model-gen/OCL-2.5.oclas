@@ -210,7 +210,8 @@
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="Z7lXU" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="gKkjU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" name="and2" type="#XEMMs">
+      <ownedOperations xmi:id="gKkjU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" name="and2" precedence="#VT87C"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then false&#xA;&#x9;&#x9;      elseif b = false then false&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -300,7 +301,7 @@
         <ownedParameters xmi:id="5o8Gk" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="AfRB7" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2" name="implies2"
-          type="#XEMMs">
+          precedence="#1Odhg" type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then true&#xA;&#x9;&#x9;      elseif b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -324,8 +325,8 @@
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="Nlx5s" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="DH5kA" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isRequired="false"
-          isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs">
+      <ownedOperations xmi:id="DH5kA" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
+          isRequired="false" isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;      elseif self = null then null&#xA;&#x9;&#x9;      else self = false&#xA;&#x9;&#x9;      endif"
             isRequired="false" type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#XEMMs">
@@ -349,7 +350,8 @@
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="vaZxA" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2" name="not2" type="#XEMMs">
+      <ownedOperations xmi:id="vaZxA" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2" name="not2" precedence="#tgQwH"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self then false else true endif" type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
             <ownedCondition xsi:type="pivot:VariableExp" name="self" referredVariable="#Tj7Dn" type="#XEMMs"/>
@@ -425,7 +427,8 @@
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="1KtsO" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="UAjYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" name="or2" type="#XEMMs">
+      <ownedOperations xmi:id="UAjYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" name="or2" precedence="#BEt7C"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -494,7 +497,8 @@
         <ownedComments body="oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].&#xA;oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null].&#xA;"/>
         <ownedParameters xmi:id="Nt2tV" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="cyLmU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2" name="xor2" type="#XEMMs">
+      <ownedOperations xmi:id="cyLmU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2" name="xor2" precedence="#ZtB8C"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self &lt;> b" type="#XEMMs">
           <ownedBody xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#76cxV" type="#XEMMs">
             <ownedArguments xsi:type="pivot:VariableExp" name="b" referredVariable="#DJZZ4" type="#XEMMs"/>
@@ -1354,20 +1358,10 @@
           isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="bEMeu" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="and2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
-      </ownedOperations>
       <ownedOperations xmi:id="XCoFh" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation" isRequired="false"
           isValidating="true" name="implies" precedence="#1Odhg" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="7Y57U" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="implies2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="qUBsa" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="not2"
-          type="#XEMMs"/>
       <ownedOperations xmi:id="DoKPW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" name="oclAsSet"
           type="#UQF4+"/>
       <ownedOperations xmi:id="QOXxW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation" isRequired="false"
@@ -1398,17 +1392,9 @@
           isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="P6KTu" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="or2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
-      </ownedOperations>
       <ownedOperations xmi:id="Xfrkw" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
           type="#AlwVZ">
         <ownedComments body="Returns 'invalid'."/>
-      </ownedOperations>
-      <ownedOperations xmi:id="Xszgu" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="xor2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedProperties xmi:id="QSjNW" isRequired="false" name="oclBadProperty" type="#jbMkR">
         <ownedComments body="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
@@ -1542,43 +1528,48 @@
           name="allInstances" type="#PRF4+">
         <ownedComments body="Returns oclText[Set{null}]."/>
       </ownedOperations>
-      <ownedOperations xmi:id="QtFRO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation" isRequired="false"
-          name="and" precedence="#VT87C" type="#XEMMs">
+      <ownedOperations xmi:id="QtFRO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation" isInvalidating="true"
+          isRequired="false" isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="0KKcO" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="and2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="Y376g" implementationClass="org.eclipse.ocl.pivot.library.string.StringConcatOperation" name="concat" type="#AlwVZ">
         <ownedComments body="The concatenation of oclText[null] and s.&#xA;"/>
         <ownedParameters isRequired="false" name="s" type="#AlwVZ"/>
       </ownedOperations>
-      <ownedOperations xmi:id="wImDB" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation" isRequired="false"
-          name="implies" precedence="#1Odhg" type="#XEMMs">
+      <ownedOperations xmi:id="wImDB" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation" isInvalidating="true"
+          isRequired="false" isValidating="true" name="implies" precedence="#1Odhg" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="Uf350" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="implies2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="XHfd6" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isRequired="false"
-          isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs"/>
-      <ownedOperations xmi:id="Db,p6" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="not2"
-          type="#XEMMs"/>
+      <ownedOperations xmi:id="XHfd6" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
+          isRequired="false" isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs"/>
       <ownedOperations xmi:id="cuIN2" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" name="oclAsSet"
           type="#UQF4+"/>
+      <ownedOperations xmi:id="pUVv2" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation" isInvalidating="true"
+          name="oclAsType" type="#,NgLC">
+        <ownedParameters isTypeof="true" name="type" type="#,NgLC"/>
+        <ownedSignature>
+          <ownedParameters xmi:id=",NgLC" name="TT"/>
+        </ownedSignature>
+      </ownedOperations>
       <ownedOperations xmi:id="54ym9" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation" isValidating="true"
           name="oclIsInvalid" type="#XEMMs"/>
+      <ownedOperations xmi:id="E0n7M" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation" name="oclIsKindOf"
+          type="#XEMMs">
+        <ownedParameters name="type" type="#hlrMH"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="q8HLd" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation" name="oclIsTypeOf"
+          type="#XEMMs">
+        <ownedParameters name="type" type="#hlrMH"/>
+      </ownedOperations>
       <ownedOperations xmi:id="SYkAR" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation" isValidating="true"
           name="oclIsUndefined" type="#XEMMs"/>
-      <ownedOperations xmi:id="c9uQO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation" isRequired="false"
-          name="or" precedence="#BEt7C" type="#XEMMs">
+      <ownedOperations xmi:id="2taUZ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation" isTypeof="true"
+          name="oclType" type="#zlfMH"/>
+      <ownedOperations xmi:id="FF3Q3" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation" name="oclTypes"
+          type="#PRF4+"/>
+      <ownedOperations xmi:id="c9uQO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation" isInvalidating="true"
+          isRequired="false" isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="oAJRO" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="or2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="wlpiQ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
           type="#AlwVZ">
@@ -1587,10 +1578,6 @@
       <ownedOperations xmi:id="UHLRO" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation" isRequired="false"
           name="xor" precedence="#ZtB8C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="wyxeO" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" name="xor2"
-          type="#XEMMs">
-        <ownedParameters name="b" type="#XEMMs"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Vw5fK" isAbstract="true" name="OrderedCollection" superClasses="#cfVYj">

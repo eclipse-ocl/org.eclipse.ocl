@@ -111,6 +111,7 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorTypeParameter __OclAny__oclAsType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
 		public static final @NonNull ExecutorTypeParameter __OclElement__oclAsModelType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
 		public static final @NonNull ExecutorTypeParameter __OclInvalid__oclAsType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
+		public static final @NonNull ExecutorTypeParameter __OclVoid__oclAsType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
 
 		public static final @NonNull ExecutorTypeParameter _OrderedCollection_T = new ExecutorTypeParameter(TypeId.T_1, "T");
 
@@ -434,6 +435,7 @@ public class OCLstdlibTables
 		public static final @NonNull ParameterTypes _OclSelf = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclSelf);
 		public static final @NonNull ParameterTypes _OclState = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclState);
 		public static final @NonNull ParameterTypes _OclType = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclType);
+		public static final @NonNull ParameterTypes _OclVoid_oclAsType_TT = TypeUtil.createParameterTypes(OCLstdlibTables.TypeParameters.__OclVoid__oclAsType_TT);
 		public static final @NonNull ParameterTypes _OrderedCollection__OrderedSet_T__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType("OrderedCollection", OCLstdlibTables.TypeParameters._OrderedSet_T));
 		public static final @NonNull ParameterTypes _OrderedCollection__Sequence_T__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType("OrderedCollection", OCLstdlibTables.TypeParameters._Sequence_T));
 		public static final @NonNull ParameterTypes _OrderedSet_T = TypeUtil.createParameterTypes(OCLstdlibTables.TypeParameters._OrderedSet_T);
@@ -793,34 +795,24 @@ public class OCLstdlibTables
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__and2 = new ExecutorOperation("and2", Parameters._Boolean, Types._OclInvalid,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__implies2 = new ExecutorOperation("implies2", Parameters._Boolean, Types._OclInvalid,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__not2 = new ExecutorOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclAsSet = new ExecutorOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclAsType = new ExecutorOperation("oclAsType", Parameters._OclInvalid_oclAsType_TT, Types._OclInvalid,
-			10, TypeUtil.createTemplateParameters(TypeParameters.__OclInvalid__oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
+			7, TypeUtil.createTemplateParameters(TypeParameters.__OclInvalid__oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclBadOperation = new ExecutorOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			11, TemplateParameters.EMPTY_LIST, null);
+			8, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsInvalid = new ExecutorOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsKindOf = new ExecutorOperation("oclIsKindOf", Parameters._OclType, Types._OclInvalid,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsTypeOf = new ExecutorOperation("oclIsTypeOf", Parameters._OclType, Types._OclInvalid,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsUndefined = new ExecutorOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclType = new ExecutorOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__or2 = new ExecutorOperation("or2", Parameters._Boolean, Types._OclInvalid,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__xor2 = new ExecutorOperation("xor2", Parameters._Boolean, Types._OclInvalid,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OclMessage__hasReturned = new ExecutorOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -865,26 +857,26 @@ public class OCLstdlibTables
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__and2 = new ExecutorOperation("and2", Parameters._Boolean, Types._OclVoid,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__concat = new ExecutorOperation("concat", Parameters._String, Types._OclVoid,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__implies2 = new ExecutorOperation("implies2", Parameters._Boolean, Types._OclVoid,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__not2 = new ExecutorOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__oclAsSet = new ExecutorOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__oclAsType = new ExecutorOperation("oclAsType", Parameters._OclVoid_oclAsType_TT, Types._OclVoid,
+			11, TypeUtil.createTemplateParameters(TypeParameters.__OclVoid__oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__oclIsInvalid = new ExecutorOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__oclIsKindOf = new ExecutorOperation("oclIsKindOf", Parameters._OclType, Types._OclVoid,
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__oclIsTypeOf = new ExecutorOperation("oclIsTypeOf", Parameters._OclType, Types._OclVoid,
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__oclIsUndefined = new ExecutorOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__or2 = new ExecutorOperation("or2", Parameters._Boolean, Types._OclVoid,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__oclType = new ExecutorOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
+			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__oclTypes = new ExecutorOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
+			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__xor2 = new ExecutorOperation("xor2", Parameters._Boolean, Types._OclVoid,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OrderedCollection__at = new ExecutorOperation("at", Parameters._Integer, Types._OrderedCollection,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
@@ -1858,9 +1850,6 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclInvalid__implies /* _'implies'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances() */,
-			OCLstdlibTables.Operations._OclInvalid__and2 /* and2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclInvalid__implies2 /* implies2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclInvalid__not2 /* not2() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclBadOperation /* oclBadOperation() */,
@@ -1869,9 +1858,7 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclInvalid__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclInvalid__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclInvalid__or2 /* or2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclInvalid__toString /* toString() */,
-			OCLstdlibTables.Operations._OclInvalid__xor2 /* xor2(Boolean[1]) */
+			OCLstdlibTables.Operations._OclInvalid__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclInvalid__OclAny = {
 			OCLstdlibTables.Operations._OclInvalid___lt__gt_ /* _'<>'(OclSelf[1]) */,
@@ -1887,7 +1874,7 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
 			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclVoid__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclInvalid__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclInvalid__OclVoid = {
@@ -1900,16 +1887,16 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclInvalid__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclVoid__xor /* _'xor'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances() */,
-			OCLstdlibTables.Operations._OclInvalid__and2 /* and2(Boolean[1]) */,
 			OCLstdlibTables.Operations._OclVoid__concat /* concat(String[?]) */,
-			OCLstdlibTables.Operations._OclInvalid__implies2 /* implies2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclInvalid__not2 /* not2() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclInvalid__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclInvalid__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclInvalid__or2 /* or2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclInvalid__toString /* toString() */,
-			OCLstdlibTables.Operations._OclInvalid__xor2 /* xor2(Boolean[1]) */
+			OCLstdlibTables.Operations._OclInvalid__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclVoid__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclInvalid__toString /* toString() */
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclLambda__OclLambda = {};
@@ -2110,32 +2097,32 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclVoid__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclVoid__xor /* _'xor'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclVoid__allInstances /* allInstances() */,
-			OCLstdlibTables.Operations._OclVoid__and2 /* and2(Boolean[1]) */,
 			OCLstdlibTables.Operations._OclVoid__concat /* concat(String[?]) */,
-			OCLstdlibTables.Operations._OclVoid__implies2 /* implies2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclVoid__not2 /* not2() */,
 			OCLstdlibTables.Operations._OclVoid__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclVoid__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclVoid__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclVoid__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclVoid__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclVoid__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclVoid__or2 /* or2(Boolean[1]) */,
-			OCLstdlibTables.Operations._OclVoid__toString /* toString() */,
-			OCLstdlibTables.Operations._OclVoid__xor2 /* xor2(Boolean[1]) */
+			OCLstdlibTables.Operations._OclVoid__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclVoid__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclVoid__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclVoid__OclAny = {
 			OCLstdlibTables.Operations._OclVoid___lt__gt_ /* _'<>'(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclVoid___eq_ /* _'='(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclVoid__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclVoid__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
 			OCLstdlibTables.Operations._OclVoid__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclVoid__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclVoid__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclVoid__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
 			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclVoid__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclVoid__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclVoid__toString /* toString() */
 		};
 
