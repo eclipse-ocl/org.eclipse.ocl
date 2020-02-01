@@ -14,8 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  */
@@ -51,6 +53,15 @@ public interface LibraryOperation extends LibraryFeature
 		 */
 		@Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 
+		/**
+		 * Evaluate this operation using the boxedSourceAndArgumentValues in conjunction with the executor. The call
+		 * to this operation is provided by the caller. The impementation of the evaluate API and related methods may
+		 * that the caller has checked that source and arguments conform to this operation's declaration.
+		 *
+		 * @throws InvalidValueException for a well-behaved failure such as an invalid value
+		 * @throws EvaluationHaltedException for an external abort request
+		 * @throws for an uncontrolled failure that should be treated as invalid
+		 */
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 	}
 
