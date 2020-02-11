@@ -2016,4 +2016,11 @@ public class PivotUtil
 			return true;
 		}
 	}
+
+	/**
+	 * @since 1.11
+	 */
+	public static boolean isDataType(@NonNull CompleteClass completeClass) {
+		return completeClass.getPrimaryClass() instanceof DataType;
+	}
 }
