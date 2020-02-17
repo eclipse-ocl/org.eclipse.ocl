@@ -33,7 +33,10 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
@@ -79,7 +82,13 @@ import com.google.inject.Injector;
 @SuppressWarnings("null")
 public class EditorTests extends XtextTestCase
 {
-	protected FileEditorInput createEcoreFileEditorInput(String projectName, String fileName, String testDocument)throws IOException, CoreException {
+	private void checkContent(@NonNull XtextEditor editor, @NonNull String referenceContent) {
+		IXtextDocument document = editor.getDocument();
+		String content = document.get();
+		assertEquals(referenceContent, content);
+	}
+
+	protected FileEditorInput createEcoreFileEditorInput(@NonNull String projectName, @NonNull String fileName, @NonNull String testDocument)throws IOException, CoreException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String ecoreString = createEcoreString(ocl, fileName, testDocument, true);
 		InputStream inputStream = new URIConverter.ReadableInputStream(ecoreString, "UTF-8");
@@ -88,14 +97,14 @@ public class EditorTests extends XtextTestCase
 		return fileEditorInput;
 	}
 
-	protected FileEditorInput createFileEditorInput(String projectName, String testFile, InputStream inputStream) throws CoreException {
+	protected FileEditorInput createFileEditorInput(@NonNull String projectName, @NonNull String testFile, @NonNull InputStream inputStream) throws CoreException {
 		IProject project = createProject(projectName);
 		IFile file1 = project.getFile(testFile);
 		file1.create(inputStream, true, null);
 		return new FileEditorInput(file1);
 	}
 
-	protected IProject createProject(String projectName) throws CoreException {
+	protected IProject createProject(@NonNull String projectName) throws CoreException {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project = root.getProject(projectName);
@@ -106,29 +115,30 @@ public class EditorTests extends XtextTestCase
 		return project;
 	}
 
-	protected void doTearDown(XtextEditor editor) {
+	protected void doTearDown(@NonNull XtextEditor editor) {
 		TestUIUtil.flushEvents();
 		editor.close(false);
 		TestUIUtil.flushEvents();
 	}
 
-	public void doTestEditor(String editorId, String testFile, String testContent) throws Exception {
+	public void doTestEditor(@NonNull String editorId, @NonNull String testFile, @NonNull String testContent) throws Exception {
 		XtextEditor editor = doStartUp(editorId, testFile, testContent);
+		checkContent(editor, testContent);
 		doTearDown(editor);
 	}
 
-	public XtextEditor doStartUp(String editorId, String testFile, String testContent)
+	public XtextEditor doStartUp(@NonNull String editorId, @NonNull String testFile, @NonNull String testFileContent)
 			throws CoreException, PartInitException {
-		InputStream inputStream = new URIConverter.ReadableInputStream(testContent, "UTF-8");
+		InputStream inputStream = new URIConverter.ReadableInputStream(testFileContent, "UTF-8");
 		FileEditorInput fileEditorInput = createFileEditorInput("test", testFile, inputStream);
 		XtextEditor editor = doTestEditor(editorId, fileEditorInput);
 		IXtextDocument document = editor.getDocument();
 		String content = document.get();
-		assertEquals(testContent, content);
+	//	assertEquals(testFileContent, content);
 		return editor;
 	}
 
-	protected XtextEditor doTestEditor(String editorId, FileEditorInput fileEditorInput) throws PartInitException, CoreException {
+	protected XtextEditor doTestEditor(@NonNull String editorId, @NonNull FileEditorInput fileEditorInput) throws PartInitException, CoreException {
 		Injector injector = null;
 		if (editorId == CompleteOCLUiModule.EDITOR_ID) {
 			injector = CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
@@ -178,7 +188,7 @@ public class EditorTests extends XtextTestCase
 		return editor;
 	}
 
-	private String doTestEditor(String editorId, URI testFile) throws CoreException, PartInitException {
+	private String doTestEditor(@NonNull String editorId, @NonNull URI testFile) throws CoreException, PartInitException {
 		IEditorInput input = new EMFURIEditorInput(testFile);
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
@@ -205,6 +215,7 @@ public class EditorTests extends XtextTestCase
 		{
 			@Override
 			public Object exec(@Nullable XtextResource resource) throws Exception {
+				assert resource != null;
 				assertNoResourceErrorsOrWarnings("Loaded CS", resource);
 				BaseCSResource csResource = (BaseCSResource)resource;
 				CS2AS cs2as = csResource.findCS2AS();
@@ -223,7 +234,7 @@ public class EditorTests extends XtextTestCase
 		}
 	}
 
-	protected Set<EObject> indexPivotContent(XtextDocument document, final String prefix) {
+	protected Set<EObject> indexPivotContent(@NonNull XtextDocument document, final @NonNull String prefix) {
 		@SuppressWarnings("unused") String doc = document.get();
 		final Set<EObject> pivotContent = new HashSet<EObject>();
 		document.readOnly(new IUnitOfWork<Object, XtextResource>()
@@ -245,6 +256,20 @@ public class EditorTests extends XtextTestCase
 			}
 		});
 		return pivotContent;
+	}
+
+	private void replaceInContent(@NonNull XtextEditor editor, @NonNull String oldContent, @NonNull String newContent) throws BadLocationException {
+		IXtextDocument document = editor.getDocument();
+		document.modify(new IUnitOfWork<Object, XtextResource>() {
+			@Override
+			public Object exec(XtextResource xtextResource) throws Exception {
+				String xtextContent = xtextResource.getContents().get(0).toString();
+				int index = xtextContent.indexOf(oldContent);
+				assert index >= 0;
+				xtextResource.update(index, oldContent.length(), newContent);
+				return null;
+			}
+		});
 	}
 
 	@Override
@@ -282,7 +307,26 @@ public class EditorTests extends XtextTestCase
 	}
 
 	public void testEditor_OpenOCLinEcoreEditor4Ecore() throws Exception {
-		doTestEditor(OCLinEcoreUiModule.EDITOR_ID, "test.ecore", "package test : test = 'test' { }");
+		String testFileName = "test.ecore";
+		String ecoreContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n" +
+				"    name=\"test\" nsURI=\"testURI\" nsPrefix=\"test\"/>\n";
+		String oclinecoreContent = "package test : test = 'testURI';";
+		XtextEditor editor = doStartUp(OCLinEcoreUiModule.EDITOR_ID, testFileName, ecoreContent);
+		checkContent(editor, oclinecoreContent);
+		replaceInContent(editor, "testURI", "testing");
+		editor.doSave(null);
+		URI uri = EditUIUtil.getURI(editor.getEditorInput(), URIConverter.INSTANCE);
+		InputStream inputStream = URIConverter.INSTANCE.createInputStream(uri, null);
+		Reader reader = new InputStreamReader(inputStream);
+		StringBuilder s = new StringBuilder();
+		char ch[] = new char[4096];
+		for (int count; (count = reader.read(ch)) > 0; ) {
+			s.append(ch, 0, count);
+		}
+		String tweakedEcoreContent = ecoreContent.replace("testURI", "testing");
+		assertEquals(tweakedEcoreContent, s.toString());
+		doTearDown(editor);
 	}
 
 	public void testEditor_OpenOCLinEcoreEditor_Bug460625() throws Exception {
@@ -297,6 +341,7 @@ public class EditorTests extends XtextTestCase
 				"	}\n" +
 				"}\n";
 		XtextEditor editor = doStartUp(OCLinEcoreUiModule.EDITOR_ID, "Bug460625.ecore", testContent);
+		checkContent(editor, testContent);
 		int selectionOffset = testContent.indexOf("->");
 		int selectionLength = "->".length();
 		editor.selectAndReveal(selectionOffset, selectionLength);
