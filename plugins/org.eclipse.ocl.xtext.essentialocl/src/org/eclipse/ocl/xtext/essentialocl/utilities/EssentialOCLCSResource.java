@@ -273,6 +273,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
 			return new TransientASResource(asResourceSet, asURI);
 		}
+		ASResource asResource = (ASResource) asResourceSet.getResource(asURI, false);
+		if (asResource != null) {		// This happens for a *.ecore load for an OCLinEcore edit - see Bug 560196
+			return asResource;
+		}
 		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
 		if (asResource2 instanceof ASResource) {
 			((ASResource)asResource2).setSaveable(false);
