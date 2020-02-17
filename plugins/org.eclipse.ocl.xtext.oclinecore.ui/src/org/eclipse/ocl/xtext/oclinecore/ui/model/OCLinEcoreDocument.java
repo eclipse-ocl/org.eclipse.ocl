@@ -66,8 +66,8 @@ public class OCLinEcoreDocument extends BaseDocument
 					if (asResource != null) {
 						CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
 						if (cs2as != null) {
-							Resource csResource = cs2as.getCSResource();
-							checkForErrors(csResource);
+						//	Resource csResource = cs2as.getCSResource();
+						//	checkForErrors(csResource);
 							Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
 							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
