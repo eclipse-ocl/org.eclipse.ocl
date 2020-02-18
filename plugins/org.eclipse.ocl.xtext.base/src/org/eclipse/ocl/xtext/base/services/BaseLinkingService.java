@@ -53,7 +53,7 @@ public class BaseLinkingService extends DefaultLinkingService
 			depth++;
 			String text = getText(node);
 			boolean traceLookup = BaseScopeProvider.LOOKUP.isActive();
-			if ((text == null) || "".equals(text)) {				// Avoid IQualifiedNameConverter IAE
+			if (text == null) {				// Avoid IQualifiedNameConverter IAE
 				if (traceLookup) {
 					BaseScopeProvider.LOOKUP.println("" + depth + " Lookup null");
 				}
