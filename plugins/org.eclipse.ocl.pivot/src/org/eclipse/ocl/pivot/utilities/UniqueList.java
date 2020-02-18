@@ -41,7 +41,7 @@ public class UniqueList<E> extends ArrayList<E> implements Set<E>
      */
     public UniqueList(Collection<? extends E> c) {
     	if (c.size() >= SMALL_TO_LARGE_THRESHOLD) {
-        	set = new HashSet<>(c);
+        	set = new HashSet<>(c.size());
      	}
        	for (E aT : c) {
        		add(aT);
