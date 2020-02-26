@@ -59,12 +59,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="OclElement" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
     <eStructuralFeatures xsi:type="ecore:EReference" name="oclContainer" eType="#//OclElement">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="oclContents"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The object for which self is a composed content or null if there is no such object.&#xA;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oclContents" ordered="false"
         upperBound="-1" eType="#//OclElement">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="oclContainer"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The composed contents of self."/>
       </eAnnotations>

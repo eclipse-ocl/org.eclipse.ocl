@@ -402,7 +402,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_collect_V2 = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
-		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclInvalid = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Set_collectNested_V_NullFree = createBagType(_Bag_Bag_T);
@@ -702,9 +701,6 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Map_V);
-			ownedClasses.add(type = _Bag_OclElement);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_OclElement);
 			ownedClasses.add(type = _Bag_OclEnumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclEnumeration);
@@ -2852,8 +2848,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid);
 		private final @NonNull Property pr_OclElement_oclContainer = createProperty("oclContainer", _OclElement);
 		private final @NonNull Property pr_OclElement_oclContents = createProperty("oclContents", _Set_OclElement_NullFree);
-		private final @NonNull Property pr_OclElement_OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement);
-		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement);
+		private final @NonNull Property pr_OclElement_oclContainer_oclContents = createProperty("oclContainer", _OclElement);
+		private final @NonNull Property pr_OclElement_oclContents_oclContainer = createProperty("oclContents", _OclElement);
 		private final @NonNull Property pr_OclEnumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
 		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty("oclBadProperty", _OclAny);
 
@@ -2908,22 +2904,24 @@ public class OCLstdlib extends ASResourceImpl
 			ownedProperties.add(property = pr_OclElement_oclContainer);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_OclElement_OclElement_oclContainer);
+			property.setOpposite(pr_OclElement_oclContents_oclContainer);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 			ownedProperties.add(property = pr_OclElement_oclContents);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_OclElement_OclElement_oclContents);
+			property.setOpposite(pr_OclElement_oclContainer_oclContents);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
-			ownedProperties.add(property = pr_OclElement_OclElement_oclContainer);
+			ownedProperties.add(property = pr_OclElement_oclContainer_oclContents);
 			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_OclElement_oclContainer);
-			ownedProperties.add(property = pr_OclElement_OclElement_oclContents);
-			property.setIsImplicit(true);
+			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclElement_oclContents);
+			ownedProperties.add(property = pr_OclElement_oclContents_oclContainer);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OclElement_oclContainer);
 
 			ownedProperties = _OclEnumeration.getOwnedProperties();
 			ownedProperties.add(property = pr_OclEnumeration_allLiterals);
@@ -2949,7 +2947,6 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Collection_T_NullFree, tp_Collection_T);
 			addBinding(_Bag_Map_V_NullFree, tp_Map_V);
 			addBinding(_Bag_Map_collect_V2, tp_Map_collect_V2);
-			addBinding(_Bag_OclElement, _OclElement);
 			addBinding(_Bag_OclEnumeration, _OclEnumeration);
 			addBinding(_Bag_OclInvalid, _OclInvalid);
 			addBinding(_Bag_Set_collectNested_V_NullFree, tp_Set_collectNested_V);

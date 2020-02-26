@@ -1314,8 +1314,8 @@
           type="#U6ALG">
         <ownedComments body="The composed contents of self."/>
       </ownedProperties>
-      <ownedProperties xmi:id="i+8xQ" isImplicit="true" name="OclElement" opposite="#IcnIy" type="#158KG"/>
-      <ownedProperties xmi:id="hXMRj" isImplicit="true" name="OclElement" opposite="#REFNQ" type="#158KG"/>
+      <ownedProperties xmi:id="GVEcv" isImplicit="true" isRequired="false" name="oclContainer" opposite="#REFNQ" type="#zfDWR"/>
+      <ownedProperties xmi:id="QkSB7" isImplicit="true" isRequired="false" name="oclContents" opposite="#IcnIy" type="#zfDWR"/>
     </ownedClasses>
     <ownedClasses xmi:id="+8+by" isAbstract="true" name="OclEnumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -2407,11 +2407,6 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" name="Bag" superClasses="#LVlMV">
-      <ownedBindings>
-        <ownedSubstitutions actual="#zfDWR" formal="#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="IeoaH" name="Bag" superClasses="#e5QcW">
       <ownedBindings>
         <ownedSubstitutions actual="#+8+by" formal="#k2OA6"/>

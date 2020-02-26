@@ -1165,8 +1165,8 @@ public class OCLstdlibTables
 
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
-		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContainer = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER));
-		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 3, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
+		public static final @NonNull ExecutorProperty _OclElement__oclContainer__oclContents = new EcoreExecutorProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER, Types._OclElement, 2);
+		public static final @NonNull ExecutorProperty _OclElement__oclContents__oclContainer = new EcoreExecutorProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS, Types._OclElement, 3);
 
 		public static final @NonNull ExecutorProperty _OclInvalid__oclBadProperty = new EcoreExecutorProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, Types._OclInvalid, 0);
 		static {

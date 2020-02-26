@@ -1024,6 +1024,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASLibrary
 		createASLibraryAnnotations();
+		// http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName
+		createEmofAnnotations();
 	}
 
 	/**
@@ -1038,6 +1040,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		  (this,
 		   source,
 		   new String[] {
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEmofAnnotations() {
+		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName"; //$NON-NLS-1$
+		addAnnotation
+		  (getOclElement_OclContainer(),
+		   source,
+		   new String[] {
+			   "body", "oclContents" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement_OclContents(),
+		   source,
+		   new String[] {
+			   "body", "oclContainer" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
