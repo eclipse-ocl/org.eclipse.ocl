@@ -1040,11 +1040,11 @@ abstract type OclElement conformsTo OclAny {
 	/**
 	The object for which self is a composed content or null if there is no such object.
 	**/
-	property oclContainer : OclElement[?] => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty';
+	property oclContainer : OclElement[?] opposite oclContents : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty';
 	/**
 	The composed contents of self.
 	*/
-	property oclContents : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty';
+	property oclContents : Set(OclElement[*|1]) opposite oclContainer : OclElement[?] => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty';
 }
 
 /**
