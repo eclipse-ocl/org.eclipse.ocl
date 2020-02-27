@@ -400,6 +400,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Bag_selectByKind_TT_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Collection = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_collect_V2 = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
@@ -426,6 +427,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Collection_selectByKind_TT_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_selectByType_TT_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_collect_V2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
@@ -695,6 +697,9 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Collection_T_1);
+			ownedClasses.add(type = _Bag_Collection);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Collection);
 			ownedClasses.add(type = _Bag_Map_collect_V2);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Map_collect_V2);
@@ -783,6 +788,9 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Collection_T_1);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_Collection);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_EnumerationLiteral);
@@ -1918,7 +1926,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, true));
 			ownedOperations.add(operation = op_Bag_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Bag_T, false));
 			ownedOperations.add(operation = op_Bag_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("objects", _Collection_OclAny_NullFree, true));
@@ -1951,23 +1959,23 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_asSet);
 			ownedOperations.add(operation = op_Collection_count);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_excludes);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_excludesAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("c2", _Collection_Collection_excludesAll_T2_NullFree, true));
 			ownedOperations.add(operation = op_Collection_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("objects", _Collection_OclAny_NullFree, true));
 			ownedOperations.add(operation = op_Collection_flatten);
 			ownedOperations.add(operation = op_Collection_includes);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_includesAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("c2", _Collection_Collection_includesAll_T2_NullFree, true));
@@ -2018,11 +2026,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
 			ownedOperations.add(operation = op_Map_excludes);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
 			ownedOperations.add(operation = op_Map_excludes_1);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
-			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
+			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_excludesAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_excludesAll_K2_NullFree, true));
@@ -2031,14 +2039,14 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludesMap_K2_Map_excludesMap_V2, true));
 			ownedOperations.add(operation = op_Map_excludesValue);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
 			ownedOperations.add(operation = op_Map_excluding_1);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
-			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
+			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("keys", _Collection_OclAny_NullFree, true));
@@ -2047,11 +2055,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludingMap_K2_Map_excludingMap_V2, true));
 			ownedOperations.add(operation = op_Map_includes);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
 			ownedOperations.add(operation = op_Map_includes_1);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
-			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
+			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_includesAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_includesAll_K2_NullFree, true));
@@ -2060,7 +2068,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("map", _Map_Map_includesMap_K2_Map_includesMap_V2, true));
 			ownedOperations.add(operation = op_Map_includesValue);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("value", tp_Map_V, false));
 			ownedOperations.add(operation = op_Map_including);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
@@ -2300,7 +2308,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OrderedCollection_indexOf);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("obj", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("obj", tp_OrderedCollection_T, false));
 			ownedOperations.add(operation = op_OrderedCollection_last);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
@@ -2323,7 +2331,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("objects", _OrderedCollection_OrderedSet_T_NullFree, true));
 			ownedOperations.add(operation = op_OrderedSet_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_OrderedSet_T, false));
 			ownedOperations.add(operation = op_OrderedSet_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("objects", _Collection_OclAny_NullFree, true));
@@ -2375,7 +2383,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("objects", _OrderedCollection_Sequence_T_NullFree, true));
 			ownedOperations.add(operation = op_Sequence_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Sequence_T, false));
 			ownedOperations.add(operation = op_Sequence_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("objects", _Collection_OclAny_NullFree, true));
@@ -2424,7 +2432,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, true));
 			ownedOperations.add(operation = op_Set_excluding);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("object", _OclAny, false));
+			ownedParameters.add(parameter = createParameter("object", tp_Set_T, false));
 			ownedOperations.add(operation = op_Set_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("objects", _Collection_OclAny_NullFree, true));
@@ -2843,7 +2851,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedCoercions.add(coercion = op_Integer_toUnlimitedNatural);
 		}
 
-		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", tp_Collection_T);
+		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", _OclType);
 		private final @NonNull Property pr_Collection_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_Collection_upper = createProperty("upper", _Integer);
 		private final @NonNull Property pr_EnumerationLiteral_OclEnumeration_allLiterals = createProperty("OclEnumeration", _Bag_OclEnumeration);
@@ -2856,6 +2864,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclEnumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
 		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty("oclBadProperty", _OclAny);
+		private final @NonNull Property pr_OclType_Collection_elementType = createProperty("Collection", _Bag_Collection);
 
 		private void installProperties() {
 			List<Property> ownedProperties;
@@ -2865,6 +2874,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedProperties.add(property = pr_Collection_elementType);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
+			property.setOpposite(pr_OclType_Collection_elementType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
 			ownedProperties.add(property = pr_Collection_lower);
@@ -2938,6 +2948,12 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclAny_OclInvalid_oclBadProperty);
+
+			ownedProperties = _OclType.getOwnedProperties();
+			ownedProperties.add(property = pr_OclType_Collection_elementType);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Collection_elementType);
 		}
 
 		private void installTemplateBindings() {
@@ -2946,6 +2962,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Bag_flatten_T2_NullFree, tp_Bag_flatten_T2);
 			addBinding(_Bag_Bag_selectByKind_TT_NullFree, tp_Bag_selectByKind_TT);
 			addBinding(_Bag_Bag_selectByType_TT_NullFree, tp_Bag_selectByType_TT);
+			addBinding(_Bag_Collection, _Collection_Collection_T);
 			addBinding(_Bag_Collection_T_NullFree, tp_Collection_T);
 			addBinding(_Bag_Map_V_NullFree, tp_Map_V);
 			addBinding(_Bag_Map_collect_V2, tp_Map_collect_V2);
@@ -2961,6 +2978,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_Bag_flatten_T2, tp_Bag_flatten_T2);
 			addBinding(_Collection_Bag_selectByKind_TT, tp_Bag_selectByKind_TT);
 			addBinding(_Collection_Bag_selectByType_TT, tp_Bag_selectByType_TT);
+			addBinding(_Collection_Collection, _Collection_Collection_T);
 			addBinding(_Collection_Collection_T_1, tp_Collection_T);
 			addBinding(_Collection_Collection_collectNested_V_NullFree, tp_Collection_collectNested_V);
 			addBinding(_Collection_Collection_collect_V_NullFree, tp_Collection_collect_V);

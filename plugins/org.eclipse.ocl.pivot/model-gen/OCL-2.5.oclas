@@ -54,10 +54,10 @@
           <ownedParameters xmi:id="tKoqz" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="PpLPA" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
+      <ownedOperations xmi:id="X8DTO" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
           type="#yEcHF">
         <ownedComments body="The bag containing all elements of oclText[self] apart from all occurrences of object.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#k2OA6"/>
       </ownedOperations>
       <ownedOperations xmi:id="pgH9f" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" name="excludingAll"
           type="#yEcHF">
@@ -578,15 +578,15 @@
           <ownedParameters xmi:id="bIJfG" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="FLuaO" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionCountOperation" name="count"
+      <ownedOperations xmi:id="Nemec" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionCountOperation" name="count"
           type="#tYtCd">
         <ownedComments body="The number of times that object occurs in the collection oclText[self].&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#qs59R"/>
       </ownedOperations>
-      <ownedOperations xmi:id="P+mn," implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation" name="excludes"
+      <ownedOperations xmi:id="XRfrN" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation" name="excludes"
           type="#XEMMs">
         <ownedComments body="True if object is not an element of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#qs59R"/>
       </ownedOperations>
       <ownedOperations xmi:id="vFNWB" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation" name="excludesAll"
           type="#XEMMs">
@@ -596,10 +596,10 @@
           <ownedParameters xmi:id="THtXS" name="T2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="N3HRt" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
+      <ownedOperations xmi:id="VKAV7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
           type="#IgEJU">
         <ownedComments body="The collection containing all elements of oclText[self] apart from object.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#qs59R"/>
       </ownedOperations>
       <ownedOperations xmi:id="nuD,M" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" name="excludingAll"
           type="#IgEJU">
@@ -639,10 +639,10 @@
         <ownedIterators xmi:id="HfeAP" isRequired="false" name="i" type="#qs59R"/>
         <ownedParameters isRequired="false" name="lambda" type="#9VTck"/>
       </ownedOperations>
-      <ownedOperations xmi:id="BKNJO" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation" name="includes"
+      <ownedOperations xmi:id="JdFNc" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation" name="includes"
           type="#XEMMs">
         <ownedComments body="True if object is an element of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#qs59R"/>
       </ownedOperations>
       <ownedOperations xmi:id="9ETDK" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation" name="includesAll"
           type="#XEMMs">
@@ -767,7 +767,7 @@
         <ownedParameters name="c" type="#IgEJU"/>
       </ownedOperations>
       <ownedProperties xmi:id="WTuwp" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty" isStatic="true"
-          name="elementType" type="#qs59R">
+          name="elementType" type="#hlrMH">
         <ownedComments body="Evaluates to the type of the collection elements.&#xA;"/>
       </ownedProperties>
       <ownedProperties xmi:id="BucvH" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty" isStatic="true"
@@ -913,15 +913,15 @@
           <ownedParameters xmi:id="QNM7m" name="V2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="GTpOT" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesOperation" name="excludes" type="#XEMMs">
+      <ownedOperations xmi:id="OmhSh" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesOperation" name="excludes" type="#XEMMs">
         <ownedComments body="True if oclText[key] is not one of the keys of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
       </ownedOperations>
-      <ownedOperations xmi:id="4v4G3" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation" name="excludes"
+      <ownedOperations xmi:id="SshSh" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation" name="excludes"
           type="#XEMMs">
         <ownedComments body="True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
-        <ownedParameters isRequired="false" name="value" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
+        <ownedParameters isRequired="false" name="value" type="#HeAuH"/>
       </ownedOperations>
       <ownedOperations xmi:id="hW+,U" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation" name="excludesAll"
           type="#XEMMs">
@@ -940,20 +940,20 @@
           <ownedParameters xmi:id="Juyuu" name="V2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="FoD,z" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation" name="excludesValue"
+      <ownedOperations xmi:id="u87CC" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation" name="excludesValue"
           type="#XEMMs">
         <ownedComments body="True if oclText[value] is not one of the values of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="value" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="value" type="#HeAuH"/>
       </ownedOperations>
-      <ownedOperations xmi:id="EMK4A" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingOperation" name="excluding" type="#LpeHF">
+      <ownedOperations xmi:id="MfC8O" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingOperation" name="excluding" type="#LpeHF">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
       </ownedOperations>
-      <ownedOperations xmi:id="2oZwk" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation" name="excluding"
+      <ownedOperations xmi:id="QlC8O" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation" name="excluding"
           type="#LpeHF">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
-        <ownedParameters isRequired="false" name="value" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
+        <ownedParameters isRequired="false" name="value" type="#HeAuH"/>
       </ownedOperations>
       <ownedOperations xmi:id="eDGmg" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation" name="excludingAll"
           type="#LpeHF">
@@ -995,15 +995,15 @@
         <ownedIterators isRequired="false" name="k" type="#8dAuH"/>
         <ownedParameters isRequired="false" name="lambda" type="#7A0zM"/>
       </ownedOperations>
-      <ownedOperations xmi:id="4ePwh" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesOperation" name="includes" type="#XEMMs">
+      <ownedOperations xmi:id="AyH0v" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesOperation" name="includes" type="#XEMMs">
         <ownedComments body="True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
       </ownedOperations>
-      <ownedOperations xmi:id="q7eoF" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation" name="includes"
+      <ownedOperations xmi:id="E4H0v" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation" name="includes"
           type="#XEMMs">
         <ownedComments body="True if oclText[key] and oclText[value] are a key-value pair of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="key" type="#jbMkR"/>
-        <ownedParameters isRequired="false" name="value" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="key" type="#8dAuH"/>
+        <ownedParameters isRequired="false" name="value" type="#HeAuH"/>
       </ownedOperations>
       <ownedOperations xmi:id="vVEtd" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation" name="includesAll"
           type="#XEMMs">
@@ -1022,10 +1022,10 @@
           <ownedParameters xmi:id="Hnz9Q" name="V2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="T59Fh" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation" name="includesValue"
+      <ownedOperations xmi:id="8N2Jv" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation" name="includesValue"
           type="#XEMMs">
         <ownedComments body="True if oclText[value] is one of the values of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters isRequired="false" name="value" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="value" type="#HeAuH"/>
       </ownedOperations>
       <ownedOperations xmi:id="eSiNR" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation" name="including"
           type="#LpeHF">
@@ -1502,6 +1502,7 @@
         <ownedComments body="Returns true if type2 conforms to self."/>
         <ownedParameters isRequired="false" name="type2" type="#hlrMH"/>
       </ownedOperations>
+      <ownedProperties xmi:id="NmBaK" isImplicit="true" name="Collection" opposite="#WTuwp" type="#CXWH,"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:VoidType" xmi:id="7u3MH" isAbstract="true" name="OclVoid" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1596,10 +1597,10 @@
           isRequired="false" name="first" type="#feFHs">
         <ownedComments body="The first element in oclText[self].&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="Y,g1G" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation"
+      <ownedOperations xmi:id="gSZ5U" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation"
           isInvalidating="true" name="indexOf" type="#tYtCd">
         <ownedComments body="The index of object obj in the ordered collection.&#xA;"/>
-        <ownedParameters isRequired="false" name="obj" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="obj" type="#feFHs"/>
       </ownedOperations>
       <ownedOperations xmi:id="MC+Qh" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation" isInvalidating="true"
           isRequired="false" name="last" type="#feFHs">
@@ -1665,10 +1666,10 @@
           <ownedParameters xmi:id="uWtir" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="IuVZi" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
+      <ownedOperations xmi:id="QBOdw" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
           type="#fIXUp">
         <ownedComments body="The ordered set  containing all elements of oclText[self] apart from object.&#xA;&#xA;The order of the remaining elements is not changed.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#53+C2"/>
       </ownedOperations>
       <ownedOperations xmi:id="ilRHC" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" name="excludingAll"
           type="#fIXUp">
@@ -1934,10 +1935,10 @@
           <ownedParameters xmi:id="qdc76" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="kZxvq" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
+      <ownedOperations xmi:id="sspz4" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
           type="#rk5ZZ">
         <ownedComments body="The sequence containing all elements of oclText[self] apart from all occurrences of object.&#xA;&#xA;The order of the remaining elements is not changed.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#l1i6D"/>
       </ownedOperations>
       <ownedOperations xmi:id="+QtdK" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" name="excludingAll"
           type="#rk5ZZ">
@@ -2070,10 +2071,10 @@
           <ownedParameters xmi:id="vEbKc" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="BFWPB" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
+      <ownedOperations xmi:id="JYOTP" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation" name="excluding"
           type="#MGgHF">
         <ownedComments body="The set containing all elements of oclText[self] without object.&#xA;"/>
-        <ownedParameters isRequired="false" name="object" type="#jbMkR"/>
+        <ownedParameters isRequired="false" name="object" type="#ODsm5"/>
       </ownedOperations>
       <ownedOperations xmi:id="b8R9g" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" name="excludingAll"
           type="#MGgHF">
@@ -2407,6 +2408,11 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="CXWH," name="Bag" superClasses="#Yy+IO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#IgEJU" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" name="Bag" superClasses="#LVlMV">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#k2OA6"/>
@@ -2470,6 +2476,11 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="Txm0H" name="Bag" superClasses="#pMP2W">
       <ownedBindings>
         <ownedSubstitutions actual="#BkHat" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Yy+IO" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#IgEJU" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PdAyF" name="Collection" superClasses="#jbMkR">
