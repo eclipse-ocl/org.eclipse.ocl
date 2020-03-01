@@ -37,12 +37,31 @@ After each first repo contribution, remember to update the aggregates e.g.
 cd ~/downloads/modeling/mdt/ocl/updates/milestones
 ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.10.0
 
+
+
+
+cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim/
+/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.9.0
+rm -rf 6.9.0
+
+cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases/
+/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.3.0
+mv 6.3.0 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
+cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases/
+/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.3.0
+
+
 Downloads are accessible at
 cd ~/downloads/modeling/mdt/ocl/downloads/drops/6.10.0
 
 Archives are accessible at
 cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
 cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
+
+
+cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops
+mv 5.0.5 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
+
 
 --------
 
