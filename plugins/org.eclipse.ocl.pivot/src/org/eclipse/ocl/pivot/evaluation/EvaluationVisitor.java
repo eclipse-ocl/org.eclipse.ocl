@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 /**
  * A specialized visitor that is used for evaluation an
  * {@linkplain OCLExpression OCL expression} by walking its AST.
- * 
+ *
  * The Evaluator interface is deprecated. Its facilities should be obtained by getEvaluator().
  */
 public interface EvaluationVisitor extends Visitor<Object>, Evaluator
@@ -36,9 +36,9 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	public interface EvaluationVisitorExtension extends EvaluationVisitor
 	{
 		@NonNull Executor getExecutor();
-		
+
 		/**
-		 * Return the result of visiting visitable with the outer undecoratedVisitor. 
+		 * Return the result of visiting visitable with the outer undecoratedVisitor.
 		 */
 		@Nullable Object visit(@NonNull Visitable visitable);
 	}
@@ -50,10 +50,10 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
-	
+
 	/**
      * Obtains the environment factory that created me.
-     *  
+     *
 	 * @return the environment factory
 	 */
 	@NonNull EnvironmentFactory getEnvironmentFactory();
@@ -61,7 +61,7 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	/**
      * Obtains the evaluation environment that keeps track of variable values
      * and knows how to call operations, navigate properties, etc.
-     * 
+     *
 	 * @return the evaluation environment
 	 */
 	@Override
@@ -89,12 +89,12 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 
 	@Override
 	boolean isCanceled();
-	
+
 	@Override
 	void setCanceled(boolean isCanceled);
 
 	void setMonitor(@Nullable Monitor monitor);
-    
+
     /**
      * Configures the specified decorated visitor to correctly handle the
      * invocation of recursive <code>visitXxx(...)</code> calls.  In particular,
@@ -102,7 +102,7 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
      * {@link AbstractEvaluationVisitor} of the head decorator of the chain,
      * so that recursive visitation follows the entire decorator chain at
      * every step.
-     * 
+     *
      * @param evaluationVisitor the evaluationVisitor that is not decorated/
      */
 	void setUndecoratedVisitor(@NonNull EvaluationVisitor evaluationVisitor);
