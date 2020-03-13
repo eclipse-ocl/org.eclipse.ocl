@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.examples.tests"
       label="%featureName"
-      version="1.11.20.qualifier"
+      version="1.12.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.examples.tests"
       license-feature="org.eclipse.license"
