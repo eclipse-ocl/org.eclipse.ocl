@@ -199,6 +199,25 @@ public class FlowAnalysisTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	/*	public void testFlowAnalysis_SimpleIfNameGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleIfNameGuard",
+				"let v : String[?] = x?.toString() in if v = null then 'null' else v endif");
+		OperationCallExp asLetVariableInit = (OperationCallExp) PivotUtil.getOwnedInit(PivotUtil.getOwnedVariable(asLetExp));
+		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
+		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
+		StringLiteralExp asThenLiteralExp = (StringLiteralExp) PivotUtil.getOwnedThen(asIn);
+		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedElse(asIn);
+		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition);
+		//		ocl.assertIsNotKnown(asLetVariableInit);
+		//		ocl.assertIsNotKnown(asConditionVariableExp);
+		//		ocl.assertIsNonNull(asThenLiteralExp);
+		//		ocl.assertIsNotKnown(asElseVariableExp);
+		ocl.assertIsNonNull(asIn);
+		ocl.assertIsNonNull(asLetExp);
+		ocl.dispose();
+	} */
+
 	public void testFlowAnalysis_ImpliesPropertyGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("ImpliesVariableGuard",
