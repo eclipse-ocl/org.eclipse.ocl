@@ -10,13 +10,19 @@
   </genAnnotations>
   <foreignModel>Values.ecore</foreignModel>
   <genPackages prefix="Values" basePackage="org.eclipse.ocl.pivot" disposableProviderFactory="true"
-      ecorePackage="Values.ecore#/">
+      classPackageSuffix="internal.{0}" ecorePackage="Values.ecore#/">
     <genClasses ecoreClass="Values.ecore#//BagValue"/>
     <genClasses ecoreClass="Values.ecore#//CollectionValue"/>
+    <genClasses image="false" ecoreClass="Values.ecore#//ComparableValue">
+      <genTypeParameters ecoreTypeParameter="Values.ecore#//ComparableValue/T"/>
+    </genClasses>
     <genClasses ecoreClass="Values.ecore#//IntegerValue"/>
     <genClasses ecoreClass="Values.ecore#//InvalidValue"/>
+    <genClasses image="false" ecoreClass="Values.ecore#//IterableValue"/>
     <genClasses image="false" ecoreClass="Values.ecore#//MapValue"/>
     <genClasses ecoreClass="Values.ecore#//NullValue"/>
+    <genClasses image="false" ecoreClass="Values.ecore#//NumberValue"/>
+    <genClasses image="false" ecoreClass="Values.ecore#//OCLValue"/>
     <genClasses ecoreClass="Values.ecore#//ObjectValue"/>
     <genClasses image="false" ecoreClass="Values.ecore#//OrderedCollectionValue"/>
     <genClasses ecoreClass="Values.ecore#//OrderedSetValue"/>
@@ -25,6 +31,7 @@
     <genClasses ecoreClass="Values.ecore#//SetValue"/>
     <genClasses ecoreClass="Values.ecore#//TupleValue"/>
     <genClasses ecoreClass="Values.ecore#//UniqueCollectionValue"/>
+    <genClasses ecoreClass="Values.ecore#//UnlimitedNaturalValue"/>
     <genClasses ecoreClass="Values.ecore#//UnlimitedValue"/>
     <genClasses ecoreClass="Values.ecore#//Value"/>
   </genPackages>
