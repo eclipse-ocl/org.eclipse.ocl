@@ -12,8 +12,16 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface UniqueCollectionValue extends CollectionValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Unique Collection Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getUniqueCollectionValue()
+ * @generated
+ */
+public interface UniqueCollectionValue extends CollectionValue {
 	/**
 	 * @generated NOT
 	 */
@@ -22,5 +30,5 @@ public interface UniqueCollectionValue extends CollectionValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue set);       
-}
+	@NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue set);
+} // UniqueCollectionValue

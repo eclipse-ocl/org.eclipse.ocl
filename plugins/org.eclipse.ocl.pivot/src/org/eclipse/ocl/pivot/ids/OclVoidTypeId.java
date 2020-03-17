@@ -10,10 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * OclVoidTypeId provides a unique identifier for the null type; OclVoid.
  */
-public interface OclVoidTypeId extends CollectionTypeId, PrimitiveTypeId, TupleTypeId, TemplateParameterId
+public interface OclVoidTypeId extends CollectionTypeId, MapTypeId, PrimitiveTypeId, TupleTypeId, TemplateParameterId
 {
+	@Override
+	@NonNull OclVoidTypeId getGeneralizedId();
+	@Override
+	@NonNull OclVoidTypeId getSpecializedId(@NonNull BindingsId templateBindings);
+	@Override
+	@NonNull OclVoidTypeId getSpecializedId(@NonNull ElementId... templateBindings);
 }

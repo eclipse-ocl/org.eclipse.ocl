@@ -46,13 +46,18 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 	}
 
 	@Override
-	public @NonNull OclVoidTypeIdImpl getGeneralizedId() {
+	public @NonNull OclVoidTypeId getGeneralizedId() {
 		return this;
 	}
 
 	@Override
 	public int getIndex() {
 		return 0;
+	}
+
+	@Override
+	public @NonNull TypeId getKeyTypeId() {
+		return this;
 	}
 
 	@Override
@@ -89,12 +94,17 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 	}
 
 	@Override
-	public @NonNull OclVoidTypeIdImpl getSpecializedId(@NonNull BindingsId templateBindings) {
+	public @NonNull OclVoidTypeId getSpecializedId(@NonNull BindingsId templateBindings) {
 		return this;
 	}
 
 	@Override
-	public @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
+	public @NonNull OclVoidTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
+		return this;
+	}
+
+	@Override
+	public @NonNull TypeId getValueTypeId() {
 		return this;
 	}
 }

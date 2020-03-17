@@ -44,10 +44,13 @@ import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Number Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated not
  */
-public abstract class NumberValueImpl extends Number implements NumberValue
-{
+public abstract class NumberValueImpl extends Number implements NumberValue  {
 	private static final long serialVersionUID = 1L;
 
 	static class EmptyIterator implements Iterator<Value>
@@ -67,15 +70,31 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	}
 
 	/**
+	 * The number of structural features of the '<em>Number Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NUMBER_VALUE_FEATURE_COUNT = 0;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected EClass eStaticClass() {
+		return ValuesPackage.Literals.NUMBER_VALUE;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EClass eStaticClass() {
-		return ValuesPackage.Literals.VALUE;
+	protected NumberValueImpl() {
+		super();
 	}
-
-	protected NumberValueImpl() {}
 
 	@Override
 	public @NonNull BagValue asBagValue() {
@@ -239,4 +258,4 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append(toString());
 	}
-}
+} //NumberValueImpl

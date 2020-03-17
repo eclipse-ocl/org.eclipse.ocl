@@ -32,16 +32,44 @@ import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
-//
-//	Note that it is not necessary to adjust set uniqueness for OCL value equivalence
-//	since Value.equals realises OCL equivalence, and so Collection operations that
-//	inherently use Object.equals automatically observe OCL uniqueness.
-//
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Set Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public class SetValueImpl extends CollectionValueImpl implements SetValue
-{
+public class SetValueImpl extends CollectionValueImpl implements SetValue {
+	public static @NonNull Set<Object> createSetOfEach(@Nullable Object @NonNull [] boxedValues) {
+		Set<Object> result = new HashSet<Object>();
+		for (Object boxedValue : boxedValues) {
+			result.add(boxedValue);
+		}
+		return result;
+	}
+
+	public static class Accumulator extends SetValueImpl implements SetValue.Accumulator
+	{
+		public Accumulator(@NonNull CollectionTypeId typeId) {
+			super(typeId, new HashSet<Object>());
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public boolean add(@Nullable Object value) {
+			return ((Collection<Object>)elements).add(value);
+		}
+	}
+
+	/**
+	 * The number of structural features of the '<em>Set Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SET_VALUE_FEATURE_COUNT = 0;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,28 +80,26 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		return ValuesPackage.Literals.SET_VALUE;
 	}
 
-	public static @NonNull Set<Object> createSetOfEach(@Nullable Object @NonNull [] boxedValues) {
-		Set<Object> result = new HashSet<Object>();
-		for (Object boxedValue : boxedValues) {
-			result.add(boxedValue);
-		}
-		return result;
-	}
-	
-	public static class Accumulator extends SetValueImpl implements SetValue.Accumulator
-	{
-		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new HashSet<Object>());
-		}
-
-		@Override
-		@SuppressWarnings("unchecked")
-		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);			
-		}		
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected SetValueImpl() {
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	//
+	//		Note that it is not necessary to adjust set uniqueness for OCL value equivalence
+	//		since Value.equals realises OCL equivalence, and so Collection operations that
+	//		inherently use Object.equals automatically observe OCL uniqueness.
+	//
 		super(typeId, boxedValues);
 		assert checkElementsAreUnique(elements);
 	}
@@ -87,7 +113,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	public @NonNull SetValue asSetValue() {
         return this;
     }
-		
+
 	@Override
 	public @NonNull Set<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		Set<Object> unboxedValues = new HashSet<Object>();
@@ -189,7 +215,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 //	public @NonNull CollectionTypeId getCollectionTypeId() {
 //		return TypeId.SET;
 //	}
-	
+
 //	@Override
 //	protected @NonNull Set<? extends Object> getElements() {
 //		return (Set<? extends Object>) elements;
@@ -233,7 +259,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
         result.removeAll(set.asCollection());
         return new SetValueImpl(getTypeId(), result);
     }
-    
+
     @Override
 	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
     	List<Object> values = new ArrayList<Object>(elements);
@@ -242,18 +268,18 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
     }
 
     @Override
-	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue set) {       
-    	Set<Object> result = new HashSet<Object>(elements);       
+	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue set) {
+    	Set<Object> result = new HashSet<Object>(elements);
         for (Object e : set.iterable()) {
             if (result.contains(e)) {
                 result.remove(e);
             } else {
                 result.add(e);
             }
-        }        
+        }
         return new SetValueImpl(getTypeId(), result);
     }
-    
+
 	@Override
 	public SequenceValue toSequenceValue() {
 		return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
@@ -264,4 +290,4 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		s.append(TypeId.SET_NAME);
 		super.toString(s, lengthLimit);
 	}
-}
+} //SetValueImpl

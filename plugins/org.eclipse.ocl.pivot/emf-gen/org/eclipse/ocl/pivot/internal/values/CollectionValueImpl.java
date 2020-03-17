@@ -48,10 +48,13 @@ import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Collection Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
-{
+public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue {
 	@SuppressWarnings("serial")
 	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<Object>
 	{
@@ -197,6 +200,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	public static void initStatics() {}
 
 	/**
+	 * The number of structural features of the '<em>Collection Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_VALUE_FEATURE_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -210,6 +222,20 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	private int hashCode = 0;
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected CollectionValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> values) {
 		this.typeId = typeId;
 		this.elements = values;
@@ -742,4 +768,4 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			}
 		}
 	}
-}
+} //CollectionValueImpl

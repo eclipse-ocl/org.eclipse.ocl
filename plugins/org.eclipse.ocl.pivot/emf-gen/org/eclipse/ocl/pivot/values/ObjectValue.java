@@ -10,10 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Object Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getObjectValue()
+ * @generated
+ */
 public interface ObjectValue extends Value
 {
 	/**
 	 * @generated NOT
 	 */
 	Object getObject();
-}
+} // ObjectValue

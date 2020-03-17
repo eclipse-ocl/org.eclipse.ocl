@@ -11,17 +11,35 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 
-public interface NullValue
-	extends ObjectValue, IntegerValue, UnlimitedValue,
-		BagValue, OrderedSetValue, SequenceValue, SetValue, TupleValue
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Null Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getNullValue()
+ * @generated
+ */
+public interface NullValue extends ObjectValue, IntegerValue, UnlimitedValue, BagValue, MapValue, OrderedSetValue, SequenceValue, SetValue, TupleValue
 {
-	@Override
-	@NonNull OclVoidTypeId getTypeId();
 	/**
 	 * @generated NOT
 	 */
 	@Override
-	@NonNull NullValue negate();	
-}
+	@NonNull NullValue excluding(@Nullable Object value);
+
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	@NonNull NullValue excludingAll(@NonNull CollectionValue c);
+
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	@NonNull OclVoidTypeId getTypeId();
+} // NullValue

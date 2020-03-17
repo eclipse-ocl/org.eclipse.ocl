@@ -12,13 +12,22 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Integer Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getIntegerValue()
+ * @generated
+ */
 public interface IntegerValue extends RealValue
-{	
+{
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends IntegerValue {
-		void setValue(@NonNull Integer value);	
+		void setValue(@NonNull Integer value);
 	}
 
 	/**
@@ -103,4 +112,4 @@ public interface IntegerValue extends RealValue
 	 */
 	@Override
 	@NonNull IntegerValue subtractInteger(@NonNull IntegerValue right);
-}
+} // IntegerValue

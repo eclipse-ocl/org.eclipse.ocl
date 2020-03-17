@@ -12,8 +12,16 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface OrderedSetValue extends OrderedCollectionValue, UniqueCollectionValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Ordered Set Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getOrderedSetValue()
+ * @generated
+ */
+public interface OrderedSetValue extends OrderedCollectionValue, UniqueCollectionValue {
 	/**
 	 * @generated NOT
 	 */
@@ -24,3 +32,4 @@ public interface OrderedSetValue extends OrderedCollectionValue, UniqueCollectio
 	 */
     @NonNull OrderedSetValue subOrderedSet(int lower, int upper);
 }
+ // OrderedSetValue

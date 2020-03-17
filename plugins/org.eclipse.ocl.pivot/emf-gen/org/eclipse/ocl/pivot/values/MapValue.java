@@ -19,8 +19,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 
-public interface MapValue extends IterableValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Map Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getMapValue()
+ * @generated
+ */
+public interface MapValue extends IterableValue {
 	/**
 	 * @generated NOT
 	 * @noimplement This interface is not intended to be implemented by clients.
@@ -112,7 +120,7 @@ public interface MapValue extends IterableValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Set<Map.Entry<Object, Object>> getElements();
+//	@NonNull Set<Map.Entry<Object, Object>> getElements();
 
 	/**
 	 * @generated NOT
@@ -189,4 +197,4 @@ public interface MapValue extends IterableValue
 	 * @generated NOT
 	 */
 	@NonNull IntegerValue size();
-}
+} // MapValue

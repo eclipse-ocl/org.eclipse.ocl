@@ -16,7 +16,28 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.*;
+import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.ComparableValue;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
+import org.eclipse.ocl.pivot.values.MapValue;
+import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.OCLValue;
+import org.eclipse.ocl.pivot.values.ObjectValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.eclipse.ocl.pivot.values.UnlimitedValue;
+import org.eclipse.ocl.pivot.values.Value;
+import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +52,7 @@ import org.eclipse.ocl.pivot.values.*;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage
  * @generated
  */
-public class ValuesSwitch<@Nullable T> extends Switch<T> {
+public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -73,147 +94,222 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject) {
+	protected T1 doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ValuesPackage.BAG_VALUE: {
+			case 0: {
 				BagValue bagValue = (BagValue)theEObject;
-				T result = caseBagValue(bagValue);
+				T1 result = caseBagValue(bagValue);
 				if (result == null) result = caseCollectionValue(bagValue);
+				if (result == null) result = caseIterableValue(bagValue);
 				if (result == null) result = caseValue(bagValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.COLLECTION_VALUE: {
+			case 1: {
 				CollectionValue collectionValue = (CollectionValue)theEObject;
-				T result = caseCollectionValue(collectionValue);
+				T1 result = caseCollectionValue(collectionValue);
+				if (result == null) result = caseIterableValue(collectionValue);
 				if (result == null) result = caseValue(collectionValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.INTEGER_VALUE: {
-				IntegerValue integerValue = (IntegerValue)theEObject;
-				T result = caseIntegerValue(integerValue);
-				if (result == null) result = caseRealValue(integerValue);
-				if (result == null) result = caseValue(integerValue);
+			case 2: {
+				ComparableValue<?> comparableValue = (ComparableValue<?>)theEObject;
+				T1 result = caseComparableValue(comparableValue);
+				if (result == null) result = caseValue(comparableValue);
+				if (result == null) result = caseOCLValue(comparableValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.INVALID_VALUE: {
+			case 3: {
+				IntegerValue integerValue = (IntegerValue)theEObject;
+				T1 result = caseIntegerValue(integerValue);
+				if (result == null) result = caseRealValue(integerValue);
+				if (result == null) result = caseNumberValue(integerValue);
+				if (result == null) result = caseComparableValue(integerValue);
+				if (result == null) result = caseValue(integerValue);
+				if (result == null) result = caseOCLValue(integerValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 4: {
 				InvalidValue invalidValue = (InvalidValue)theEObject;
-				T result = caseInvalidValue(invalidValue);
+				T1 result = caseInvalidValue(invalidValue);
 				if (result == null) result = caseNullValue(invalidValue);
 				if (result == null) result = caseObjectValue(invalidValue);
+				if (result == null) result = caseIntegerValue(invalidValue);
+				if (result == null) result = caseUnlimitedValue(invalidValue);
 				if (result == null) result = caseBagValue(invalidValue);
+				if (result == null) result = caseMapValue(invalidValue);
 				if (result == null) result = caseOrderedSetValue(invalidValue);
 				if (result == null) result = caseSequenceValue(invalidValue);
 				if (result == null) result = caseSetValue(invalidValue);
 				if (result == null) result = caseTupleValue(invalidValue);
-				if (result == null) result = caseUnlimitedValue(invalidValue);
+				if (result == null) result = caseRealValue(invalidValue);
+				if (result == null) result = caseUnlimitedNaturalValue(invalidValue);
 				if (result == null) result = caseOrderedCollectionValue(invalidValue);
 				if (result == null) result = caseUniqueCollectionValue(invalidValue);
-				if (result == null) result = caseIntegerValue(invalidValue);
+				if (result == null) result = caseNumberValue(invalidValue);
 				if (result == null) result = caseCollectionValue(invalidValue);
-				if (result == null) result = caseRealValue(invalidValue);
+				if (result == null) result = caseIterableValue(invalidValue);
+				if (result == null) result = caseComparableValue(invalidValue);
 				if (result == null) result = caseValue(invalidValue);
+				if (result == null) result = caseOCLValue(invalidValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.NULL_VALUE: {
+			case 5: {
+				IterableValue iterableValue = (IterableValue)theEObject;
+				T1 result = caseIterableValue(iterableValue);
+				if (result == null) result = caseValue(iterableValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 6: {
+				MapValue mapValue = (MapValue)theEObject;
+				T1 result = caseMapValue(mapValue);
+				if (result == null) result = caseIterableValue(mapValue);
+				if (result == null) result = caseValue(mapValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 7: {
 				NullValue nullValue = (NullValue)theEObject;
-				T result = caseNullValue(nullValue);
+				T1 result = caseNullValue(nullValue);
 				if (result == null) result = caseObjectValue(nullValue);
+				if (result == null) result = caseIntegerValue(nullValue);
+				if (result == null) result = caseUnlimitedValue(nullValue);
 				if (result == null) result = caseBagValue(nullValue);
+				if (result == null) result = caseMapValue(nullValue);
 				if (result == null) result = caseOrderedSetValue(nullValue);
 				if (result == null) result = caseSequenceValue(nullValue);
 				if (result == null) result = caseSetValue(nullValue);
 				if (result == null) result = caseTupleValue(nullValue);
-				if (result == null) result = caseUnlimitedValue(nullValue);
+				if (result == null) result = caseRealValue(nullValue);
+				if (result == null) result = caseUnlimitedNaturalValue(nullValue);
 				if (result == null) result = caseOrderedCollectionValue(nullValue);
 				if (result == null) result = caseUniqueCollectionValue(nullValue);
-				if (result == null) result = caseIntegerValue(nullValue);
+				if (result == null) result = caseNumberValue(nullValue);
 				if (result == null) result = caseCollectionValue(nullValue);
-				if (result == null) result = caseRealValue(nullValue);
+				if (result == null) result = caseIterableValue(nullValue);
+				if (result == null) result = caseComparableValue(nullValue);
 				if (result == null) result = caseValue(nullValue);
+				if (result == null) result = caseOCLValue(nullValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.OBJECT_VALUE: {
+			case 8: {
+				NumberValue numberValue = (NumberValue)theEObject;
+				T1 result = caseNumberValue(numberValue);
+				if (result == null) result = caseComparableValue(numberValue);
+				if (result == null) result = caseValue(numberValue);
+				if (result == null) result = caseOCLValue(numberValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 9: {
+				OCLValue oclValue = (OCLValue)theEObject;
+				T1 result = caseOCLValue(oclValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 10: {
 				ObjectValue objectValue = (ObjectValue)theEObject;
-				T result = caseObjectValue(objectValue);
+				T1 result = caseObjectValue(objectValue);
 				if (result == null) result = caseValue(objectValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.ORDERED_COLLECTION_VALUE: {
+			case 11: {
 				OrderedCollectionValue orderedCollectionValue = (OrderedCollectionValue)theEObject;
-				T result = caseOrderedCollectionValue(orderedCollectionValue);
+				T1 result = caseOrderedCollectionValue(orderedCollectionValue);
 				if (result == null) result = caseCollectionValue(orderedCollectionValue);
+				if (result == null) result = caseIterableValue(orderedCollectionValue);
 				if (result == null) result = caseValue(orderedCollectionValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.ORDERED_SET_VALUE: {
+			case 12: {
 				OrderedSetValue orderedSetValue = (OrderedSetValue)theEObject;
-				T result = caseOrderedSetValue(orderedSetValue);
+				T1 result = caseOrderedSetValue(orderedSetValue);
 				if (result == null) result = caseOrderedCollectionValue(orderedSetValue);
 				if (result == null) result = caseUniqueCollectionValue(orderedSetValue);
 				if (result == null) result = caseCollectionValue(orderedSetValue);
+				if (result == null) result = caseIterableValue(orderedSetValue);
 				if (result == null) result = caseValue(orderedSetValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.REAL_VALUE: {
+			case 13: {
 				RealValue realValue = (RealValue)theEObject;
-				T result = caseRealValue(realValue);
+				T1 result = caseRealValue(realValue);
+				if (result == null) result = caseNumberValue(realValue);
+				if (result == null) result = caseComparableValue(realValue);
 				if (result == null) result = caseValue(realValue);
+				if (result == null) result = caseOCLValue(realValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.SEQUENCE_VALUE: {
+			case 14: {
 				SequenceValue sequenceValue = (SequenceValue)theEObject;
-				T result = caseSequenceValue(sequenceValue);
+				T1 result = caseSequenceValue(sequenceValue);
 				if (result == null) result = caseOrderedCollectionValue(sequenceValue);
 				if (result == null) result = caseCollectionValue(sequenceValue);
+				if (result == null) result = caseIterableValue(sequenceValue);
 				if (result == null) result = caseValue(sequenceValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.SET_VALUE: {
+			case 15: {
 				SetValue setValue = (SetValue)theEObject;
-				T result = caseSetValue(setValue);
+				T1 result = caseSetValue(setValue);
 				if (result == null) result = caseUniqueCollectionValue(setValue);
 				if (result == null) result = caseCollectionValue(setValue);
+				if (result == null) result = caseIterableValue(setValue);
 				if (result == null) result = caseValue(setValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.TUPLE_VALUE: {
+			case 16: {
 				TupleValue tupleValue = (TupleValue)theEObject;
-				T result = caseTupleValue(tupleValue);
+				T1 result = caseTupleValue(tupleValue);
 				if (result == null) result = caseValue(tupleValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.UNIQUE_COLLECTION_VALUE: {
+			case 17: {
 				UniqueCollectionValue uniqueCollectionValue = (UniqueCollectionValue)theEObject;
-				T result = caseUniqueCollectionValue(uniqueCollectionValue);
+				T1 result = caseUniqueCollectionValue(uniqueCollectionValue);
 				if (result == null) result = caseCollectionValue(uniqueCollectionValue);
+				if (result == null) result = caseIterableValue(uniqueCollectionValue);
 				if (result == null) result = caseValue(uniqueCollectionValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.UNLIMITED_VALUE: {
-				UnlimitedValue unlimitedValue = (UnlimitedValue)theEObject;
-				T result = caseUnlimitedValue(unlimitedValue);
-//				if (result == null) result = caseIntegerValue(unlimitedValue);
-//				if (result == null) result = caseRealValue(unlimitedValue);
-				if (result == null) result = caseValue(unlimitedValue);
+			case 18: {
+				UnlimitedNaturalValue unlimitedNaturalValue = (UnlimitedNaturalValue)theEObject;
+				T1 result = caseUnlimitedNaturalValue(unlimitedNaturalValue);
+				if (result == null) result = caseNumberValue(unlimitedNaturalValue);
+				if (result == null) result = caseComparableValue(unlimitedNaturalValue);
+				if (result == null) result = caseValue(unlimitedNaturalValue);
+				if (result == null) result = caseOCLValue(unlimitedNaturalValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.VALUE: {
+			case 19: {
+				UnlimitedValue unlimitedValue = (UnlimitedValue)theEObject;
+				T1 result = caseUnlimitedValue(unlimitedValue);
+				if (result == null) result = caseUnlimitedNaturalValue(unlimitedValue);
+				if (result == null) result = caseNumberValue(unlimitedValue);
+				if (result == null) result = caseComparableValue(unlimitedValue);
+				if (result == null) result = caseValue(unlimitedValue);
+				if (result == null) result = caseOCLValue(unlimitedValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 20: {
 				Value value = (Value)theEObject;
-				T result = caseValue(value);
+				T1 result = caseValue(value);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -232,7 +328,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseBagValue(BagValue object) {
+	public T1 caseBagValue(BagValue object) {
 		return null;
 	}
 
@@ -247,7 +343,22 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCollectionValue(CollectionValue object) {
+	public T1 caseCollectionValue(CollectionValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Comparable Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Comparable Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T> T1 caseComparableValue(ComparableValue<T> object) {
 		return null;
 	}
 
@@ -262,7 +373,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseIntegerValue(IntegerValue object) {
+	public T1 caseIntegerValue(IntegerValue object) {
 		return null;
 	}
 
@@ -277,7 +388,37 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInvalidValue(InvalidValue object) {
+	public T1 caseInvalidValue(InvalidValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Iterable Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Iterable Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseIterableValue(IterableValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Map Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Map Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseMapValue(MapValue object) {
 		return null;
 	}
 
@@ -292,7 +433,37 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNullValue(NullValue object) {
+	public T1 caseNullValue(NullValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Number Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Number Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseNumberValue(NumberValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>OCL Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>OCL Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseOCLValue(OCLValue object) {
 		return null;
 	}
 
@@ -307,7 +478,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseObjectValue(ObjectValue object) {
+	public T1 caseObjectValue(ObjectValue object) {
 		return null;
 	}
 
@@ -322,7 +493,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOrderedCollectionValue(OrderedCollectionValue object) {
+	public T1 caseOrderedCollectionValue(OrderedCollectionValue object) {
 		return null;
 	}
 
@@ -337,7 +508,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseOrderedSetValue(OrderedSetValue object) {
+	public T1 caseOrderedSetValue(OrderedSetValue object) {
 		return null;
 	}
 
@@ -352,7 +523,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRealValue(RealValue object) {
+	public T1 caseRealValue(RealValue object) {
 		return null;
 	}
 
@@ -367,7 +538,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSequenceValue(SequenceValue object) {
+	public T1 caseSequenceValue(SequenceValue object) {
 		return null;
 	}
 
@@ -382,7 +553,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSetValue(SetValue object) {
+	public T1 caseSetValue(SetValue object) {
 		return null;
 	}
 
@@ -397,7 +568,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTupleValue(TupleValue object) {
+	public T1 caseTupleValue(TupleValue object) {
 		return null;
 	}
 
@@ -412,7 +583,22 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUniqueCollectionValue(UniqueCollectionValue object) {
+	public T1 caseUniqueCollectionValue(UniqueCollectionValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unlimited Natural Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unlimited Natural Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseUnlimitedNaturalValue(UnlimitedNaturalValue object) {
 		return null;
 	}
 
@@ -427,7 +613,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUnlimitedValue(UnlimitedValue object) {
+	public T1 caseUnlimitedValue(UnlimitedValue object) {
 		return null;
 	}
 
@@ -442,7 +628,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseValue(Value object) {
+	public T1 caseValue(Value object) {
 		return null;
 	}
 
@@ -458,7 +644,7 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object) {
+	public T1 defaultCase(EObject object) {
 		return null;
 	}
 

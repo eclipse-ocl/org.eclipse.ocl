@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -24,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -164,6 +167,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull Map<? extends Object, ? extends Object> asMap() {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
 	public @NonNull MapValue asMapValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.MAP_NAME, getTypeName());
 	}
@@ -231,6 +239,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @Nullable Value at(int index) {
 		return toInvalidValue();
+	}
+
+	@Override
+	public Object at(Object right) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
 
 	@Override
@@ -332,10 +345,20 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull Set<Entry<Object, Object>> entrySet() {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
 
+
+	@Override
+	public @NonNull Boolean excludes(@Nullable Object key, @Nullable Object value) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
 
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
@@ -343,12 +366,32 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull CollectionValue excluding(@Nullable Object value) {
+	public @NonNull Boolean excludesMap(@NonNull MapValue m) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
+	public @NonNull Boolean excludesValue(@Nullable Object value) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
+	public @NonNull NullValue excluding(@Nullable Object value) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue c) {
+	public @NonNull MapValue excluding(@Nullable Object key, @Nullable Object value) {
+		return toInvalidValue();
+	}
+
+	@Override
+	public @NonNull NullValue excludingAll(@NonNull CollectionValue c) {
+		return toInvalidValue();
+	}
+
+	@Override
+	public @NonNull MapValue excludingMap(@NonNull MapValue m) {
 		return toInvalidValue();
 	}
 
@@ -386,6 +429,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull SetValue getKeys() {
+		return toInvalidValue();
+	}
+
+	@Override
 	public String getKind() {
 		return TypeId.COLLECTION_NAME;		// FIXME UOE ??
 	}
@@ -413,7 +461,17 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull BagValue getValues() {
+		return toInvalidValue();
+	}
+
+	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
+	public @NonNull Boolean includes(@Nullable Object key, @Nullable Object value) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
 
@@ -423,12 +481,32 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull Boolean includesMap(@NonNull MapValue m) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
+	public @NonNull Boolean includesValue(@Nullable Object value) {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
+	}
+
+	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
 		return toInvalidValue();
 	}
 
 	@Override
+	public @NonNull MapValue including(@NonNull MapTypeId returnTypeId, @Nullable Object key, @Nullable Object value) {
+		return toInvalidValue();
+	}
+
+	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue c) {
+		return toInvalidValue();
+	}
+
+	@Override
+	public @NonNull MapValue includingMap(@NonNull MapTypeId returnTypeId, @NonNull MapValue m) {
 		return toInvalidValue();
 	}
 
@@ -508,6 +586,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull Iterator iterator() {
 		return new Iterator();
+	}
+
+	@Override
+	public @NonNull Set<Object> keySet() {
+		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
 
 	@Override
