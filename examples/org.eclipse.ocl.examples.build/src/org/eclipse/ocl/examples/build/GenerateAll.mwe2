@@ -23,7 +23,7 @@ Workflow {
   component = @GenerateCSModels {}
   component = @GenerateCGModels {}
   component = @GenerateAllEditors {}
+  component = @GenerateValuesModels {}
+  component = @GenerateTestModels {}
   component = @GenerateOCLstdlibModel {}
-//FIXME GenerateTestModels requires manual fixup of the Values package
-//  component = @GenerateTestModels {}
 }

@@ -19,30 +19,21 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
 /**
- *	Generate the Models and Visitors for the Code Generator.
+ *	Generate the Models for the Values model.
  */
 Workflow {
-	bean = ResourceSetImpl : resourceSet {}
-    bean = StandaloneSetup { resourceSet = resourceSet
+	bean = ResourceSetImpl : valuesResourceSet {}
+    bean = StandaloneSetup { resourceSet = valuesResourceSet
     	platformUri = ".."
     	scanClassPath = true
     }
-    bean = EcoreGenModelSetup { resourceSet = resourceSet }
-//	bean = CGElementModelSpec.Register {}
-//	bean = CGTypedElementModelSpec.Register {}
-//	bean = CGValuedElementModelSpec.Register {}
-	
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+    bean = EcoreGenModelSetup { resourceSet = valuesResourceSet }
+	component = GenerateModel { resourceSet = valuesResourceSet skipOnErrors = true
 		genModel = "/org.eclipse.ocl.pivot/model/Values.genmodel"
 		clearResourceSet = false
 	}
-	
-//    component = GenerateCGVisitors { resourceSet = resourceSet
-//    	projectName = "org.eclipse.ocl.pivot"
-//    	genModelFile = "model/Values.genmodel"
-//    }
-//	component = ConvertToUnixLineEndings {
-//		directory = "org.eclipse.ocl.pivot/emf-gen"
-//	}
+		component = ConvertToUnixLineEndings {
+		directory = "org.eclipse.ocl.pivot/emf-gen"
+	}
 }
 
