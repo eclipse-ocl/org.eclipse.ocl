@@ -24,13 +24,6 @@ Workflow {
     //	Models with no script of their own.
     //
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.pivot/model/Values.genmodel"
-    	//
-    	// NB This is irregular, with *Impl largely manual.
-    	// Generate then use GIT diff to keep only the good new bits
-    	//
-    }
-	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
     	genModel = "/org.eclipse.ocl.examples.emf.validation.validity/model/Validity.genmodel"
     }
     //
