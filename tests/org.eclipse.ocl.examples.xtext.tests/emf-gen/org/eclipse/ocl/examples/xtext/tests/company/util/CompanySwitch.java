@@ -66,19 +66,19 @@ public class CompanySwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case CompanyPackage.COMPANY: {
+			case 0: {
 				Company company = (Company)theEObject;
 				T result = caseCompany(company);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompanyPackage.EMPLOYEE: {
+			case 1: {
 				Employee employee = (Employee)theEObject;
 				T result = caseEmployee(employee);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CompanyPackage.BUG418716: {
+			case 2: {
 				Bug418716 bug418716 = (Bug418716)theEObject;
 				T result = caseBug418716(bug418716);
 				if (result == null) result = defaultCase(theEObject);

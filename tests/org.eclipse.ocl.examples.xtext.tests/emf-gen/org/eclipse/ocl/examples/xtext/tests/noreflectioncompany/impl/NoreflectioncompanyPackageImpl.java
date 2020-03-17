@@ -105,6 +105,7 @@ public class NoreflectioncompanyPackageImpl extends EPackageImpl implements Nore
 		EValidator.Registry.INSTANCE.put
 			(theNoreflectioncompanyPackage,
 			 new EValidator.Descriptor() {
+				 @Override
 				 public EValidator getEValidator() {
 					 return NoreflectioncompanyValidator.INSTANCE;
 				 }
@@ -277,22 +278,22 @@ public class NoreflectioncompanyPackageImpl extends EPackageImpl implements Nore
 		isCreated = true;
 
 		// Create classes and their features
-		companyEClass = createEClass(COMPANY);
-		createEAttribute(companyEClass, COMPANY__NAME);
-		createEReference(companyEClass, COMPANY__EMPLOYEES);
-		createEAttribute(companyEClass, COMPANY__SIZE);
+		companyEClass = createEClass(0);
+		createEAttribute(companyEClass, 0);
+		createEReference(companyEClass, 1);
+		createEAttribute(companyEClass, 2);
 
-		employeeEClass = createEClass(EMPLOYEE);
-		createEAttribute(employeeEClass, EMPLOYEE__NAME);
-		createEReference(employeeEClass, EMPLOYEE__MANAGER);
-		createEReference(employeeEClass, EMPLOYEE__COMPANY);
-		createEReference(employeeEClass, EMPLOYEE__DIRECT_REPORTS);
-		createEReference(employeeEClass, EMPLOYEE__ALL_REPORTS);
-		createEReference(employeeEClass, EMPLOYEE__REPORTING_CHAIN);
-		createEAttribute(employeeEClass, EMPLOYEE__HAS_NAME_AS_ATTRIBUTE);
+		employeeEClass = createEClass(1);
+		createEAttribute(employeeEClass, 0);
+		createEReference(employeeEClass, 1);
+		createEReference(employeeEClass, 2);
+		createEReference(employeeEClass, 3);
+		createEReference(employeeEClass, 4);
+		createEReference(employeeEClass, 5);
+		createEAttribute(employeeEClass, 6);
 
 		// Create enums
-		companySizeKindEEnum = createEEnum(COMPANY_SIZE_KIND);
+		companySizeKindEEnum = createEEnum(2);
 	}
 
 	/**

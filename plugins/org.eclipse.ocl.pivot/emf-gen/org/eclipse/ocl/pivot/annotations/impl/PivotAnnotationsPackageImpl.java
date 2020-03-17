@@ -336,30 +336,30 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		isCreated = true;
 
 		// Create classes and their features
-		asLibrary_EPackageEClass = createEClass(AS_LIBRARY_EPACKAGE);
+		asLibrary_EPackageEClass = createEClass(0);
 
-		asMetamodel_EPackageEClass = createEClass(AS_METAMODEL_EPACKAGE);
+		asMetamodel_EPackageEClass = createEClass(1);
 
-		collection_EClassEClass = createEClass(COLLECTION_ECLASS);
-		createEAttribute(collection_EClassEClass, COLLECTION_ECLASS__NULL_FREE);
+		collection_EClassEClass = createEClass(2);
+		createEAttribute(collection_EClassEClass, 0);
 
-		collection_EPackageEClass = createEClass(COLLECTION_EPACKAGE);
-		createEAttribute(collection_EPackageEClass, COLLECTION_EPACKAGE__NULL_FREE);
+		collection_EPackageEClass = createEClass(3);
+		createEAttribute(collection_EPackageEClass, 0);
 
-		collection_ETypedElementEClass = createEClass(COLLECTION_ETYPED_ELEMENT);
-		createEAttribute(collection_ETypedElementEClass, COLLECTION_ETYPED_ELEMENT__NULL_FREE);
+		collection_ETypedElementEClass = createEClass(4);
+		createEAttribute(collection_ETypedElementEClass, 0);
 
-		ecore_OCL_EClassifierEClass = createEClass(ECORE_OCL_ECLASSIFIER);
+		ecore_OCL_EClassifierEClass = createEClass(5);
 
-		ecore_OCL_EOperationEClass = createEClass(ECORE_OCL_EOPERATION);
-		createEAttribute(ecore_OCL_EOperationEClass, ECORE_OCL_EOPERATION__BODY);
+		ecore_OCL_EOperationEClass = createEClass(6);
+		createEAttribute(ecore_OCL_EOperationEClass, 0);
 
-		ecore_OCL_EStructuralFeatureEClass = createEClass(ECORE_OCL_ESTRUCTURAL_FEATURE);
-		createEAttribute(ecore_OCL_EStructuralFeatureEClass, ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION);
+		ecore_OCL_EStructuralFeatureEClass = createEClass(7);
+		createEAttribute(ecore_OCL_EStructuralFeatureEClass, 0);
 
-		import_EPackageEClass = createEClass(IMPORT_EPACKAGE);
+		import_EPackageEClass = createEClass(8);
 
-		metaAnnotation_EAnnotationEClass = createEClass(META_ANNOTATION_EANNOTATION);
+		metaAnnotation_EAnnotationEClass = createEClass(9);
 	}
 
 	/**
@@ -434,85 +434,85 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 	protected void createMetaAnnotationAnnotations() {
 		String source = "http://www.eclipse.org/OCL/MetaAnnotation";
 		addAnnotation
-		(asLibrary_EPackageEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
-		});
+		  (asLibrary_EPackageEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
+		   });
 		addAnnotation
-		(asMetamodel_EPackageEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
-		});
+		  (asMetamodel_EPackageEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
+		   });
 		addAnnotation
-		(collection_EClassEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
-		});
+		  (collection_EClassEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
 		addAnnotation
-		(collection_EPackageEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
-		});
+		  (collection_EPackageEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
+		   });
 		addAnnotation
-		(collection_ETypedElementEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//ETypedElement")
-		});
+		  (collection_ETypedElementEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//ETypedElement")
+		   });
 		addAnnotation
-		(ecore_OCL_EClassifierEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClassifier")
-		});
+		  (ecore_OCL_EClassifierEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClassifier")
+		   });
 		addAnnotation
-		(ecore_OCL_EOperationEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EOperation")
-		});
+		  (ecore_OCL_EOperationEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EOperation")
+		   });
 		addAnnotation
-		(ecore_OCL_EStructuralFeatureEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EStructuralFeature")
-		});
+		  (ecore_OCL_EStructuralFeatureEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EStructuralFeature")
+		   });
 		addAnnotation
-		(import_EPackageEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
-		});
+		  (import_EPackageEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
+		   });
 		addAnnotation
-		(metaAnnotation_EAnnotationEClass,
-			source,
-			new String[] {
-		},
-			new URI[] {
-				URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
-		});
+		  (metaAnnotation_EAnnotationEClass,
+		   source,
+		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
 	}
 
 } //AnnotationsPackageImpl

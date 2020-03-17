@@ -42,6 +42,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container implements AbstractNode {
 	/**
+	 * The number of structural features of the '<em>Abstract Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ABSTRACT_NODE_FEATURE_COUNT = 5;
+
+	/**
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -275,15 +284,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			case 0:
 				return isEnabled();
-			case ValidityPackage.ABSTRACT_NODE__GRAYED:
+			case 1:
 				return isGrayed();
-			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+			case 2:
 				return isVisible();
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
+			case 3:
 				return getLabel();
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			case 4:
 				return getWorstResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -297,13 +306,13 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			case 0:
 				setEnabled((Boolean)newValue);
 				return;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
+			case 3:
 				setLabel((String)newValue);
 				return;
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			case 4:
 				setWorstResult((Result)newValue);
 				return;
 		}
@@ -318,13 +327,13 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			case 0:
 				setEnabled(ENABLED_EDEFAULT);
 				return;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
+			case 3:
 				setLabel(LABEL_EDEFAULT);
 				return;
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			case 4:
 				setWorstResult((Result)null);
 				return;
 		}
@@ -339,15 +348,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			case 0:
 				return enabled != ENABLED_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__GRAYED:
+			case 1:
 				return grayed != GRAYED_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+			case 2:
 				return visible != VISIBLE_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
+			case 3:
 				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			case 4:
 				return worstResult != null;
 		}
 		return super.eIsSet(featureID);

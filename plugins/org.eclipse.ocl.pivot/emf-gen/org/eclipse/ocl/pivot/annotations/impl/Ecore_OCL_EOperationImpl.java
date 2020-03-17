@@ -32,6 +32,24 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container implements Ecore_OCL_EOperation {
 	/**
+	 * The number of structural features of the '<em>Ecore OCL EOperation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_EOPERATION_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Ecore OCL EOperation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_EOPERATION_OPERATION_COUNT = 0;
+
+	/**
 	 * The default value of the '{@link #getBody() <em>Body</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +108,7 @@ public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container imple
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotAnnotationsPackage.ECORE_OCL_EOPERATION__BODY, oldBody, body));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldBody, body));
 	}
 
 	/**
@@ -101,7 +119,7 @@ public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION__BODY:
+			case 0:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +133,7 @@ public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION__BODY:
+			case 0:
 				setBody((String)newValue);
 				return;
 		}
@@ -130,7 +148,7 @@ public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION__BODY:
+			case 0:
 				setBody(BODY_EDEFAULT);
 				return;
 		}
@@ -145,7 +163,7 @@ public class Ecore_OCL_EOperationImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION__BODY:
+			case 0:
 				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
 		}
 		return super.eIsSet(featureID);

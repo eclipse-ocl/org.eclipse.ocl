@@ -60,8 +60,8 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case NoreflectioncompanyPackage.COMPANY: return createCompany();
-			case NoreflectioncompanyPackage.EMPLOYEE: return createEmployee();
+			case 0: return createCompany();
+			case 1: return createEmployee();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -75,7 +75,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case NoreflectioncompanyPackage.COMPANY_SIZE_KIND:
+			case 2:
 				return createCompanySizeKindFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -90,7 +90,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case NoreflectioncompanyPackage.COMPANY_SIZE_KIND:
+			case 2:
 				return convertCompanySizeKindToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

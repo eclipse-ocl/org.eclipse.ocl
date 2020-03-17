@@ -27,6 +27,23 @@ import org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.asubsub.Bug477283As
  */
 public class ASubSubImpl extends MinimalEObjectImpl.Container implements ASubSub {
 	/**
+	 * The number of structural features of the '<em>ASub Sub</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASUB_SUB_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>ASub Sub</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASUB_SUB_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

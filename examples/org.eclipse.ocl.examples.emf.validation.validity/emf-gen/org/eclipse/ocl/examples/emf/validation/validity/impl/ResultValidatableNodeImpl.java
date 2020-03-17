@@ -32,6 +32,14 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements ResultValidatableNode {
 	/**
+	 * The number of structural features of the '<em>Result Validatable Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_VALIDATABLE_NODE_FEATURE_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_FEATURE_COUNT + 1;
+	/**
 	 * The cached value of the '{@link #getResultConstrainingNode() <em>Result Constraining Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -64,6 +72,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResultConstrainingNode getResultConstrainingNode() {
 		if (resultConstrainingNode != null && resultConstrainingNode.eIsProxy()) {
 			InternalEObject oldResultConstrainingNode = (InternalEObject)resultConstrainingNode;
@@ -98,13 +107,14 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setResultConstrainingNode(ResultConstrainingNode newResultConstrainingNode) {
 		if (newResultConstrainingNode != resultConstrainingNode) {
 			NotificationChain msgs = null;
 			if (resultConstrainingNode != null)
-				msgs = ((InternalEObject)resultConstrainingNode).eInverseRemove(this, ValidityPackage.RESULT_CONSTRAINING_NODE__RESULT_VALIDATABLE_NODE, ResultConstrainingNode.class, msgs);
+				msgs = ((InternalEObject)resultConstrainingNode).eInverseRemove(this, 8, ResultConstrainingNode.class, msgs);
 			if (newResultConstrainingNode != null)
-				msgs = ((InternalEObject)newResultConstrainingNode).eInverseAdd(this, ValidityPackage.RESULT_CONSTRAINING_NODE__RESULT_VALIDATABLE_NODE, ResultConstrainingNode.class, msgs);
+				msgs = ((InternalEObject)newResultConstrainingNode).eInverseAdd(this, 8, ResultConstrainingNode.class, msgs);
 			msgs = basicSetResultConstrainingNode(newResultConstrainingNode, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -118,9 +128,9 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				if (resultConstrainingNode != null)
-					msgs = ((InternalEObject)resultConstrainingNode).eInverseRemove(this, ValidityPackage.RESULT_CONSTRAINING_NODE__RESULT_VALIDATABLE_NODE, ResultConstrainingNode.class, msgs);
+					msgs = ((InternalEObject)resultConstrainingNode).eInverseRemove(this, 8, ResultConstrainingNode.class, msgs);
 				return basicSetResultConstrainingNode((ResultConstrainingNode)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -134,7 +144,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				return basicSetResultConstrainingNode(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -148,7 +158,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				if (resolve) return getResultConstrainingNode();
 				return basicGetResultConstrainingNode();
 		}
@@ -163,7 +173,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				setResultConstrainingNode((ResultConstrainingNode)newValue);
 				return;
 		}
@@ -178,7 +188,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				setResultConstrainingNode((ResultConstrainingNode)null);
 				return;
 		}
@@ -193,7 +203,7 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE:
+			case 8:
 				return resultConstrainingNode != null;
 		}
 		return super.eIsSet(featureID);

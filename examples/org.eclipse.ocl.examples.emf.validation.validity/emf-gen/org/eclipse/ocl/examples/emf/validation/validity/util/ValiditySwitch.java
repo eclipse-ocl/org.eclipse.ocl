@@ -73,20 +73,20 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ValidityPackage.ABSTRACT_NODE: {
+			case 0: {
 				AbstractNode abstractNode = (AbstractNode)theEObject;
 				T result = caseAbstractNode(abstractNode);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.CONSTRAINING_NODE: {
+			case 1: {
 				ConstrainingNode constrainingNode = (ConstrainingNode)theEObject;
 				T result = caseConstrainingNode(constrainingNode);
 				if (result == null) result = caseAbstractNode(constrainingNode);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.LEAF_CONSTRAINING_NODE: {
+			case 2: {
 				LeafConstrainingNode leafConstrainingNode = (LeafConstrainingNode)theEObject;
 				T result = caseLeafConstrainingNode(leafConstrainingNode);
 				if (result == null) result = caseConstrainingNode(leafConstrainingNode);
@@ -94,13 +94,13 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.RESULT: {
+			case 3: {
 				Result result = (Result)theEObject;
 				T theResult = caseResult(result);
 				if (theResult == null) theResult = defaultCase(theEObject);
 				return theResult;
 			}
-			case ValidityPackage.RESULT_CONSTRAINING_NODE: {
+			case 4: {
 				ResultConstrainingNode resultConstrainingNode = (ResultConstrainingNode)theEObject;
 				T result = caseResultConstrainingNode(resultConstrainingNode);
 				if (result == null) result = caseConstrainingNode(resultConstrainingNode);
@@ -108,13 +108,13 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.RESULT_SET: {
+			case 5: {
 				ResultSet resultSet = (ResultSet)theEObject;
 				T result = caseResultSet(resultSet);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.RESULT_VALIDATABLE_NODE: {
+			case 6: {
 				ResultValidatableNode resultValidatableNode = (ResultValidatableNode)theEObject;
 				T result = caseResultValidatableNode(resultValidatableNode);
 				if (result == null) result = caseValidatableNode(resultValidatableNode);
@@ -122,13 +122,13 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.ROOT_NODE: {
+			case 7: {
 				RootNode rootNode = (RootNode)theEObject;
 				T result = caseRootNode(rootNode);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.ROOT_CONSTRAINING_NODE: {
+			case 8: {
 				RootConstrainingNode rootConstrainingNode = (RootConstrainingNode)theEObject;
 				T result = caseRootConstrainingNode(rootConstrainingNode);
 				if (result == null) result = caseConstrainingNode(rootConstrainingNode);
@@ -136,7 +136,7 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.ROOT_VALIDATABLE_NODE: {
+			case 9: {
 				RootValidatableNode rootValidatableNode = (RootValidatableNode)theEObject;
 				T result = caseRootValidatableNode(rootValidatableNode);
 				if (result == null) result = caseValidatableNode(rootValidatableNode);
@@ -144,7 +144,7 @@ public class ValiditySwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValidityPackage.VALIDATABLE_NODE: {
+			case 10: {
 				ValidatableNode validatableNode = (ValidatableNode)theEObject;
 				T result = caseValidatableNode(validatableNode);
 				if (result == null) result = caseAbstractNode(validatableNode);

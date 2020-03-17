@@ -66,44 +66,6 @@ public interface Bug477283BPackage extends EPackage {
 	Bug477283BPackage eINSTANCE = org.eclipse.ocl.examples.xtext.tests.bug477283.b.impl.Bug477283BPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.b.impl.BImpl <em>B</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.b.impl.BImpl
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.b.impl.Bug477283BPackageImpl#getB()
-	 * @generated
-	 */
-	int B = 0;
-
-	/**
-	 * The feature id for the '<em><b>Ref</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int B__REF = 0;
-
-	/**
-	 * The number of structural features of the '<em>B</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int B_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>B</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int B_OPERATION_COUNT = 0;
-
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.b.B <em>B</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

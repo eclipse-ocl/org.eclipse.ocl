@@ -18,5 +18,5 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface MapEntry
 {
 	@Nullable Object getKey();
-	@Nullable Object getValue();	
+	@Nullable Object getValue();
 }

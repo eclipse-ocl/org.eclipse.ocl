@@ -112,6 +112,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 		EValidator.Registry.INSTANCE.put
 			(theCompanyPackage,
 			 new EValidator.Descriptor() {
+				 @Override
 				 public EValidator getEValidator() {
 					 return CompanyValidator.INSTANCE;
 				 }
@@ -280,6 +281,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBug418716() {
 		return bug418716EClass;
 	}
@@ -289,6 +291,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBug418716_AttributeWithInitital() {
 		return (EAttribute)bug418716EClass.getEStructuralFeatures().get(0);
 	}
@@ -298,6 +301,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBug418716_AttributeWithoutInitital() {
 		return (EAttribute)bug418716EClass.getEStructuralFeatures().get(1);
 	}
@@ -351,30 +355,30 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		companyEClass = createEClass(COMPANY);
-		createEAttribute(companyEClass, COMPANY__NAME);
-		createEReference(companyEClass, COMPANY__EMPLOYEES);
-		createEAttribute(companyEClass, COMPANY__SIZE);
-		createEOperation(companyEClass, COMPANY___DUMMY_INVARIANT__DIAGNOSTICCHAIN_MAP);
+		companyEClass = createEClass(0);
+		createEAttribute(companyEClass, 0);
+		createEReference(companyEClass, 1);
+		createEAttribute(companyEClass, 2);
+		createEOperation(companyEClass, 0);
 
-		employeeEClass = createEClass(EMPLOYEE);
-		createEAttribute(employeeEClass, EMPLOYEE__NAME);
-		createEReference(employeeEClass, EMPLOYEE__MANAGER);
-		createEReference(employeeEClass, EMPLOYEE__COMPANY);
-		createEReference(employeeEClass, EMPLOYEE__DIRECT_REPORTS);
-		createEReference(employeeEClass, EMPLOYEE__ALL_REPORTS);
-		createEReference(employeeEClass, EMPLOYEE__REPORTING_CHAIN);
-		createEAttribute(employeeEClass, EMPLOYEE__HAS_NAME_AS_ATTRIBUTE);
-		createEOperation(employeeEClass, EMPLOYEE___REPORTS_TO__EMPLOYEE);
-		createEOperation(employeeEClass, EMPLOYEE___HAS_NAME_AS_OPERATION);
-		createEOperation(employeeEClass, EMPLOYEE___NO_MANAGER_IMPLIES_DIRECT_REPORTS__DIAGNOSTICCHAIN_MAP);
+		employeeEClass = createEClass(1);
+		createEAttribute(employeeEClass, 0);
+		createEReference(employeeEClass, 1);
+		createEReference(employeeEClass, 2);
+		createEReference(employeeEClass, 3);
+		createEReference(employeeEClass, 4);
+		createEReference(employeeEClass, 5);
+		createEAttribute(employeeEClass, 6);
+		createEOperation(employeeEClass, 0);
+		createEOperation(employeeEClass, 1);
+		createEOperation(employeeEClass, 2);
 
-		bug418716EClass = createEClass(BUG418716);
-		createEAttribute(bug418716EClass, BUG418716__ATTRIBUTE_WITH_INITITAL);
-		createEAttribute(bug418716EClass, BUG418716__ATTRIBUTE_WITHOUT_INITITAL);
+		bug418716EClass = createEClass(2);
+		createEAttribute(bug418716EClass, 0);
+		createEAttribute(bug418716EClass, 1);
 
 		// Create enums
-		companySizeKindEEnum = createEEnum(COMPANY_SIZE_KIND);
+		companySizeKindEEnum = createEEnum(3);
 	}
 
 	/**
@@ -524,7 +528,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage {
 		  (getCompany_Size(),
 		   source,
 		   new String[] {
-			   "derivation", "let table : Set(Tuple(range : Sequence(Integer), size : CompanySizeKind)) = Set{Tuple{range = Sequence{0..49}, size = CompanySizeKind::small}, Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium}, Tuple{range = Sequence{1000..1000000}, size = CompanySizeKind::large}} in table->any(range->includes(employees->size()))?.size" //$NON-NLS-1$ //$NON-NLS-2$
+			   "derivation", "let table = Set{Tuple{range = Sequence{0..49}, size = CompanySizeKind::small}, Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium}, Tuple{range = Sequence{1000..1000000}, size = CompanySizeKind::large}} in table->any(range->includes(employees->size())).size" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (employeeEClass,

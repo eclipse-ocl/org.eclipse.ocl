@@ -46,7 +46,6 @@ public interface Bug418716 extends EObject {
 	 * @see #setAttributeWithInitital(int)
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getBug418716_AttributeWithInitital()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='/**\n * 100\n \052/\nfinal &lt;%int%&gt; ECORE_INT_100 = &lt;%org.eclipse.ocl.pivot.utilities.ValueUtil%&gt;.intValueOf(&lt;%org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables%&gt;.INT_100);\nreturn ECORE_INT_100;'"
 	 * @generated
 	 */
 	int getAttributeWithInitital();
@@ -73,7 +72,6 @@ public interface Bug418716 extends EObject {
 	 * @see #setAttributeWithoutInitital(int)
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getBug418716_AttributeWithoutInitital()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/test/Pivot/Company.ecore!Bug418716!AttributeWithoutInitital'"
 	 * @generated
 	 */
 	int getAttributeWithoutInitital();

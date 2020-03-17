@@ -73,61 +73,61 @@ public class PivotAnnotationsSwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case PivotAnnotationsPackage.AS_LIBRARY_EPACKAGE: {
+			case 0: {
 				ASLibrary_EPackage asLibrary_EPackage = (ASLibrary_EPackage)theEObject;
 				T result = caseASLibrary_EPackage(asLibrary_EPackage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.AS_METAMODEL_EPACKAGE: {
+			case 1: {
 				ASMetamodel_EPackage asMetamodel_EPackage = (ASMetamodel_EPackage)theEObject;
 				T result = caseASMetamodel_EPackage(asMetamodel_EPackage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.COLLECTION_ECLASS: {
+			case 2: {
 				Collection_EClass collection_EClass = (Collection_EClass)theEObject;
 				T result = caseCollection_EClass(collection_EClass);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.COLLECTION_EPACKAGE: {
+			case 3: {
 				Collection_EPackage collection_EPackage = (Collection_EPackage)theEObject;
 				T result = caseCollection_EPackage(collection_EPackage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT: {
+			case 4: {
 				Collection_ETypedElement collection_ETypedElement = (Collection_ETypedElement)theEObject;
 				T result = caseCollection_ETypedElement(collection_ETypedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.ECORE_OCL_ECLASSIFIER: {
+			case 5: {
 				Ecore_OCL_EClassifier ecore_OCL_EClassifier = (Ecore_OCL_EClassifier)theEObject;
 				T result = caseEcore_OCL_EClassifier(ecore_OCL_EClassifier);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION: {
+			case 6: {
 				Ecore_OCL_EOperation ecore_OCL_EOperation = (Ecore_OCL_EOperation)theEObject;
 				T result = caseEcore_OCL_EOperation(ecore_OCL_EOperation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE: {
+			case 7: {
 				Ecore_OCL_EStructuralFeature ecore_OCL_EStructuralFeature = (Ecore_OCL_EStructuralFeature)theEObject;
 				T result = caseEcore_OCL_EStructuralFeature(ecore_OCL_EStructuralFeature);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.IMPORT_EPACKAGE: {
+			case 8: {
 				Import_EPackage import_EPackage = (Import_EPackage)theEObject;
 				T result = caseImport_EPackage(import_EPackage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case PivotAnnotationsPackage.META_ANNOTATION_EANNOTATION: {
+			case 9: {
 				MetaAnnotation_EAnnotation metaAnnotation_EAnnotation = (MetaAnnotation_EAnnotation)theEObject;
 				T result = caseMetaAnnotation_EAnnotation(metaAnnotation_EAnnotation);
 				if (result == null) result = defaultCase(theEObject);

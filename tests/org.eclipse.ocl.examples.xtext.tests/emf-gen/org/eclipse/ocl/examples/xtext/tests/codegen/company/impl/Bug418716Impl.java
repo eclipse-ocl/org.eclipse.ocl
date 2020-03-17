@@ -40,6 +40,24 @@ import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackag
  */
 public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	/**
+	 * The number of structural features of the '<em>Bug418716</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BUG418716_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Bug418716</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BUG418716_OPERATION_COUNT = 0;
+
+	/**
 	 * The default value of the '{@link #getAttributeWithInitital() <em>Attribute With Initital</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,7 +136,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 		int oldAttributeWithInitital = attributeWithInitital;
 		attributeWithInitital = newAttributeWithInitital;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodegencompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL, oldAttributeWithInitital, attributeWithInitital));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldAttributeWithInitital, attributeWithInitital));
 	}
 
 	/**
@@ -141,7 +159,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 		int oldAttributeWithoutInitital = attributeWithoutInitital;
 		attributeWithoutInitital = newAttributeWithoutInitital;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodegencompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, oldAttributeWithoutInitital, attributeWithoutInitital));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldAttributeWithoutInitital, attributeWithoutInitital));
 	}
 
 	/**
@@ -152,9 +170,9 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				return getAttributeWithInitital();
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				return getAttributeWithoutInitital();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -168,10 +186,10 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				setAttributeWithInitital((Integer)newValue);
 				return;
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				setAttributeWithoutInitital((Integer)newValue);
 				return;
 		}
@@ -186,10 +204,10 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				setAttributeWithInitital(ATTRIBUTE_WITH_INITITAL_EDEFAULT);
 				return;
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				setAttributeWithoutInitital(ATTRIBUTE_WITHOUT_INITITAL_EDEFAULT);
 				return;
 		}
@@ -204,9 +222,9 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				return attributeWithInitital != ATTRIBUTE_WITH_INITITAL_EDEFAULT;
-			case CodegencompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				return attributeWithoutInitital != ATTRIBUTE_WITHOUT_INITITAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

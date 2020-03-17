@@ -34,6 +34,14 @@ import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocato
  */
 public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements LeafConstrainingNode {
 	/**
+	 * The number of structural features of the '<em>Leaf Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LEAF_CONSTRAINING_NODE_FEATURE_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_FEATURE_COUNT + 3;
+	/**
 	 * The default value of the '{@link #getConstraintLocator() <em>Constraint Locator</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,6 +102,7 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ConstraintLocator getConstraintLocator() {
 		return constraintLocator;
 	}
@@ -103,6 +112,7 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setConstraintLocator(ConstraintLocator newConstraintLocator) {
 		constraintLocator = newConstraintLocator;
 	}
@@ -115,11 +125,11 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_LOCATOR:
+			case 8:
 				return getConstraintLocator();
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_RESOURCE:
+			case 9:
 				return getConstraintResource();
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_STRING:
+			case 10:
 				return getConstraintString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -133,7 +143,7 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_LOCATOR:
+			case 8:
 				setConstraintLocator((ConstraintLocator)newValue);
 				return;
 		}
@@ -148,7 +158,7 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_LOCATOR:
+			case 8:
 				setConstraintLocator(CONSTRAINT_LOCATOR_EDEFAULT);
 				return;
 		}
@@ -163,11 +173,11 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_LOCATOR:
+			case 8:
 				return CONSTRAINT_LOCATOR_EDEFAULT == null ? constraintLocator != null : !CONSTRAINT_LOCATOR_EDEFAULT.equals(constraintLocator);
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_RESOURCE:
+			case 9:
 				return CONSTRAINT_RESOURCE_EDEFAULT == null ? getConstraintResource() != null : !CONSTRAINT_RESOURCE_EDEFAULT.equals(getConstraintResource());
-			case ValidityPackage.LEAF_CONSTRAINING_NODE__CONSTRAINT_STRING:
+			case 10:
 				return CONSTRAINT_STRING_EDEFAULT == null ? getConstraintString() != null : !CONSTRAINT_STRING_EDEFAULT.equals(getConstraintString());
 		}
 		return super.eIsSet(featureID);

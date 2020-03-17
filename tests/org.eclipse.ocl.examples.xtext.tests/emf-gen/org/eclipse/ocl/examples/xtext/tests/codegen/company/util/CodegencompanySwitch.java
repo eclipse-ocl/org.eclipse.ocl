@@ -81,19 +81,19 @@ public class CodegencompanySwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case CodegencompanyPackage.COMPANY: {
+			case 0: {
 				Company company = (Company)theEObject;
 				T result = caseCompany(company);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodegencompanyPackage.EMPLOYEE: {
+			case 1: {
 				Employee employee = (Employee)theEObject;
 				T result = caseEmployee(employee);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodegencompanyPackage.BUG418716: {
+			case 2: {
 				Bug418716 bug418716 = (Bug418716)theEObject;
 				T result = caseBug418716(bug418716);
 				if (result == null) result = defaultCase(theEObject);

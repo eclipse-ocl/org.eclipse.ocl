@@ -32,7 +32,7 @@ public class Unlimited extends Number
 	public float floatValue() {
 		throw new UnsupportedOperationException("Unlimited has no floatValue()");
 	}
-	
+
 	@Override
 	public int intValue() {
 		throw new UnsupportedOperationException("Unlimited has no intValue()");

@@ -114,13 +114,13 @@ public class CompanyValidator extends OCLinEcoreEObjectValidator {
 	@Override
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
-			case CompanyPackage.COMPANY:
+			case 0:
 				return validateCompany((Company)value, diagnostics, context);
-			case CompanyPackage.EMPLOYEE:
+			case 1:
 				return validateEmployee((Employee)value, diagnostics, context);
-			case CompanyPackage.BUG418716:
+			case 2:
 				return validateBug418716((Bug418716)value, diagnostics, context);
-			case CompanyPackage.COMPANY_SIZE_KIND:
+			case 3:
 				return validateCompanySizeKind((CompanySizeKind)value, diagnostics, context);
 			default:
 				return true;

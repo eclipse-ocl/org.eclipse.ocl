@@ -32,30 +32,30 @@ public interface TemplateParameterSubstitutions
 	@Nullable Type get(@Nullable TemplateParameter templateParameter);
 
 	/**
-	 * Return true if there are no formal TemplateParameters with actual values. 
+	 * Return true if there are no formal TemplateParameters with actual values.
 	 */
 	boolean isEmpty();
 
 	/**
 	 * Install actualType as the resolutions of formalTemplateParameter, returning the highest common type of actualType
-	 * and any pre-existing resolution. 
+	 * and any pre-existing resolution.
 	 */
 	@NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
-	
+
 	public static final @NonNull TemplateParameterSubstitutions EMPTY = new Empty();
-	
+
 	public static class Empty implements TemplateParameterSubstitutions
 	{
 		@Override
 		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
 			return null;
 		}
-		
+
 		@Override
 		public boolean isEmpty() {
 			return true;
 		}
-		
+
 		@Override
 		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 			return actualType;

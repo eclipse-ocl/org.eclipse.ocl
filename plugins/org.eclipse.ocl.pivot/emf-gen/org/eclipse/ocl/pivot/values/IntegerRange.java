@@ -23,7 +23,7 @@ public interface IntegerRange extends List<Value>
 {
 	@NonNull IntegerValue getFirst();
 	@NonNull IntegerValue getLast();
-	@NonNull IntegerValue getSize();	
+	@NonNull IntegerValue getSize();
 //	@NonNull ValueFactory getValueFactory();
 	@Override
 	@NonNull Iterator<Value> iterator();
