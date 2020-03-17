@@ -113,6 +113,7 @@ public class Bug477283APackageImpl extends EPackageImpl implements Bug477283APac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getA() {
 		return aEClass;
 	}
@@ -122,6 +123,7 @@ public class Bug477283APackageImpl extends EPackageImpl implements Bug477283APac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug477283AFactory getBug477283AFactory() {
 		return (Bug477283AFactory)getEFactoryInstance();
 	}
@@ -145,7 +147,7 @@ public class Bug477283APackageImpl extends EPackageImpl implements Bug477283APac
 		isCreated = true;
 
 		// Create classes and their features
-		aEClass = createEClass(A);
+		aEClass = createEClass(0);
 	}
 
 	/**

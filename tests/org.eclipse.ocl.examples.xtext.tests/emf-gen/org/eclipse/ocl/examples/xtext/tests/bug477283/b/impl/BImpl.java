@@ -38,6 +38,22 @@ import org.eclipse.ocl.examples.xtext.tests.bug477283.b.Bug477283BPackage;
  */
 public class BImpl extends MinimalEObjectImpl.Container implements B {
 	/**
+	 * The number of structural features of the '<em>B</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int B_FEATURE_COUNT = 1;
+	/**
+	 * The number of operations of the '<em>B</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int B_OPERATION_COUNT = 0;
+	/**
 	 * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,13 +87,14 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ASub getRef() {
 		if (ref != null && ref.eIsProxy()) {
 			InternalEObject oldRef = (InternalEObject)ref;
 			ref = (ASub)eResolveProxy(oldRef);
 			if (ref != oldRef) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Bug477283BPackage.B__REF, oldRef, ref));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 0, oldRef, ref));
 			}
 		}
 		return ref;
@@ -97,11 +114,12 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRef(ASub newRef) {
 		ASub oldRef = ref;
 		ref = newRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Bug477283BPackage.B__REF, oldRef, ref));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldRef, ref));
 	}
 
 	/**
@@ -112,7 +130,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case Bug477283BPackage.B__REF:
+			case 0:
 				if (resolve) return getRef();
 				return basicGetRef();
 		}
@@ -127,7 +145,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case Bug477283BPackage.B__REF:
+			case 0:
 				setRef((ASub)newValue);
 				return;
 		}
@@ -142,7 +160,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case Bug477283BPackage.B__REF:
+			case 0:
 				setRef((ASub)null);
 				return;
 		}
@@ -157,7 +175,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case Bug477283BPackage.B__REF:
+			case 0:
 				return ref != null;
 		}
 		return super.eIsSet(featureID);

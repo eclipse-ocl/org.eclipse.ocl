@@ -33,6 +33,15 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class RootValidatableNodeImpl extends ValidatableNodeImpl implements RootValidatableNode {
 	/**
+	 * The number of structural features of the '<em>Root Validatable Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_VALIDATABLE_NODE_FEATURE_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_FEATURE_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -56,8 +65,9 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public RootNode getRootNode() {
-		if (eContainerFeatureID() != ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (RootNode)eInternalContainer();
 	}
 
@@ -67,7 +77,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	 * @generated
 	 */
 	public NotificationChain basicSetRootNode(RootNode newRootNode, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newRootNode, ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newRootNode, 8, msgs);
 		return msgs;
 	}
 
@@ -76,15 +86,16 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRootNode(RootNode newRootNode) {
-		if (newRootNode != eInternalContainer() || (eContainerFeatureID() != ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE && newRootNode != null)) {
+		if (newRootNode != eInternalContainer() || (eContainerFeatureID() != (8) && newRootNode != null)) {
 			if (EcoreUtil.isAncestor(this, newRootNode))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newRootNode != null)
-				msgs = ((InternalEObject)newRootNode).eInverseAdd(this, ValidityPackage.ROOT_NODE__VALIDATABLE_NODES, RootNode.class, msgs);
+				msgs = ((InternalEObject)newRootNode).eInverseAdd(this, 2, RootNode.class, msgs);
 			msgs = basicSetRootNode(newRootNode, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -98,7 +109,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetRootNode((RootNode)otherEnd, msgs);
@@ -114,7 +125,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				return basicSetRootNode(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -128,8 +139,8 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
-				return eInternalContainer().eInverseRemove(this, ValidityPackage.ROOT_NODE__VALIDATABLE_NODES, RootNode.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, 2, RootNode.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -142,7 +153,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				return getRootNode();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,7 +167,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				setRootNode((RootNode)newValue);
 				return;
 		}
@@ -171,7 +182,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				setRootNode((RootNode)null);
 				return;
 		}
@@ -186,7 +197,7 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE:
+			case 8:
 				return getRootNode() != null;
 		}
 		return super.eIsSet(featureID);

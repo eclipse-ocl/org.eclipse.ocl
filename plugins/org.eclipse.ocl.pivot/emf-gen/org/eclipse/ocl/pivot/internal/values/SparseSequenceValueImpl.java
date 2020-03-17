@@ -37,7 +37,7 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 		List<?> list = elements instanceof List<?> ? (List<?>)elements : new ArrayList<Object>(elements);
 		return list;
 	}
-	
+
 	public static class Accumulator extends SparseSequenceValueImpl implements SequenceValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
@@ -51,8 +51,8 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 		@Override
 		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);			
-		}		
+			return ((Collection<Object>)elements).add(value);
+		}
 
 	    @Override
 		public @NonNull SequenceValue append(@Nullable Object value) {

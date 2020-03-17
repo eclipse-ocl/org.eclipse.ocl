@@ -76,7 +76,7 @@ public class Bug477283subSwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case Bug477283subPackage.ASUB: {
+			case 0: {
 				ASub aSub = (ASub)theEObject;
 				T result = caseASub(aSub);
 				if (result == null) result = defaultCase(theEObject);

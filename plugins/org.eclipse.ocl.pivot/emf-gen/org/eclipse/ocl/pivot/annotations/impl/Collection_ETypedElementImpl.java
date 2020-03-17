@@ -32,6 +32,24 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container implements Collection_ETypedElement {
 	/**
+	 * The number of structural features of the '<em>Collection ETyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_ETYPED_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Collection ETyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COLLECTION_ETYPED_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The default value of the '{@link #isNullFree() <em>Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +108,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 		boolean oldNullFree = nullFree;
 		nullFree = newNullFree;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT__NULL_FREE, oldNullFree, nullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldNullFree, nullFree));
 	}
 
 	/**
@@ -101,7 +119,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT__NULL_FREE:
+			case 0:
 				return isNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +133,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT__NULL_FREE:
+			case 0:
 				setNullFree((Boolean)newValue);
 				return;
 		}
@@ -130,7 +148,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT__NULL_FREE:
+			case 0:
 				setNullFree(NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -145,7 +163,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT__NULL_FREE:
+			case 0:
 				return nullFree != NULL_FREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

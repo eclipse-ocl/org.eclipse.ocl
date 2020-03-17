@@ -17,6 +17,8 @@ package org.eclipse.ocl.examples.xtext.tests.codegen.company.impl;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -43,13 +45,20 @@ import org.eclipse.ocl.examples.xtext.tests.codegen.company.Company;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CompanySizeKind;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Employee;
 
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,6 +76,24 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * @generated
  */
 public class CompanyImpl extends EObjectImpl implements Company {
+	/**
+	 * The number of structural features of the '<em>Company</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPANY_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Company</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPANY_OPERATION_COUNT = 1;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -146,7 +173,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodegencompanyPackage.COMPANY__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
 	}
 
 	/**
@@ -157,7 +184,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public EList<Employee> getEmployees() {
 		if (employees == null) {
-			employees = new EObjectContainmentWithInverseEList<Employee>(Employee.class, this, CodegencompanyPackage.COMPANY__EMPLOYEES, CodegencompanyPackage.EMPLOYEE__COMPANY);
+			employees = new EObjectContainmentWithInverseEList<Employee>(Employee.class, this, 1, 2);
 		}
 		return employees;
 	}
@@ -183,25 +210,25 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		 * in
 		 *   table->any(range->includes(employees->size())).size
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		java.util.@NonNull Iterator<Object> ITERATOR__1 = CodegencompanyTables.table.iterator();
-		/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue any;
+		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+		@NonNull Iterator<Object> ITERATOR__1 = CodegencompanyTables.table.iterator();
+		/*@Thrown*/ @NonNull TupleValue any;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
 				throw new InvalidValueException("Nothing to return for ''any''");
 			}
 			@SuppressWarnings("null")
-			/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue _1 = (org.eclipse.ocl.pivot.values.@NonNull TupleValue)ITERATOR__1.next();
+			/*@NonInvalid*/ @NonNull TupleValue _1 = (@NonNull TupleValue)ITERATOR__1.next();
 			/**
 			 * range->includes(employees->size())
 			 */
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = (org.eclipse.ocl.pivot.values.@NonNull SequenceValue)_1.getValue(0/*range*/);
+			final /*@NonInvalid*/ @NonNull SequenceValue range = (@NonNull SequenceValue)_1.getValue(0/*range*/);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
+			final /*@NonInvalid*/ @NonNull List<Employee> employees = this.getEmployees();
+			final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
+			final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
 			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
 			//
 			if (includes != ValueUtil.FALSE_VALUE) {			// Carry on till something found
@@ -210,9 +237,9 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			}
 		}
 		@SuppressWarnings("null")
-		final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_0 = (org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId)any.getValue(1/*size*/);
+		final /*@Thrown*/ @NonNull EnumerationLiteralId size_0 = (@NonNull EnumerationLiteralId)any.getValue(1/*size*/);
 		@SuppressWarnings("null")
-		final /*@Thrown*/ org.eclipse.ocl.examples.xtext.tests.codegen.company.@NonNull CompanySizeKind ECORE_size_0 = (org.eclipse.ocl.examples.xtext.tests.codegen.company.@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
+		final /*@Thrown*/ @NonNull CompanySizeKind ECORE_size_0 = (@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
 		return ECORE_size_0;
 	}
 
@@ -238,7 +265,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmployees()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -252,7 +279,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return ((InternalEList<?>)getEmployees()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -266,11 +293,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__NAME:
+			case 0:
 				return getName();
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return getEmployees();
-			case CodegencompanyPackage.COMPANY__SIZE:
+			case 2:
 				return getSize();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -285,10 +312,10 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__NAME:
+			case 0:
 				setName((String)newValue);
 				return;
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				getEmployees().clear();
 				getEmployees().addAll((Collection<? extends Employee>)newValue);
 				return;
@@ -304,10 +331,10 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__NAME:
+			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				getEmployees().clear();
 				return;
 		}
@@ -322,11 +349,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CodegencompanyPackage.COMPANY__NAME:
+			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case CodegencompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return employees != null && !employees.isEmpty();
-			case CodegencompanyPackage.COMPANY__SIZE:
+			case 2:
 				return getSize() != SIZE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -341,7 +368,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case CodegencompanyPackage.COMPANY___DUMMY_INVARIANT__DIAGNOSTICCHAIN_MAP:
+			case 0:
 				return dummyInvariant((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);

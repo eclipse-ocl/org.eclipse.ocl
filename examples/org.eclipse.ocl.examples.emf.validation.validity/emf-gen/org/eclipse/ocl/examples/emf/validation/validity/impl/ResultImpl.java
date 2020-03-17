@@ -49,6 +49,15 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	/**
+	 * The number of structural features of the '<em>Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_FEATURE_COUNT = 8;
+
+	/**
 	 * The cached value of the '{@link #getResultValidatableNode() <em>Result Validatable Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -142,8 +151,9 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResultSet getResultSet() {
-		if (eContainerFeatureID() != ValidityPackage.RESULT__RESULT_SET) return null;
+		if (eContainerFeatureID() != (0)) return null;
 		return (ResultSet)eInternalContainer();
 	}
 
@@ -153,7 +163,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * @generated
 	 */
 	public NotificationChain basicSetResultSet(ResultSet newResultSet, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newResultSet, ValidityPackage.RESULT__RESULT_SET, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newResultSet, 0, msgs);
 		return msgs;
 	}
 
@@ -162,15 +172,16 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setResultSet(ResultSet newResultSet) {
-		if (newResultSet != eInternalContainer() || (eContainerFeatureID() != ValidityPackage.RESULT__RESULT_SET && newResultSet != null)) {
+		if (newResultSet != eInternalContainer() || (eContainerFeatureID() != (0) && newResultSet != null)) {
 			if (EcoreUtil.isAncestor(this, newResultSet))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newResultSet != null)
-				msgs = ((InternalEObject)newResultSet).eInverseAdd(this, ValidityPackage.RESULT_SET__RESULTS, ResultSet.class, msgs);
+				msgs = ((InternalEObject)newResultSet).eInverseAdd(this, 1, ResultSet.class, msgs);
 			msgs = basicSetResultSet(newResultSet, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -181,6 +192,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResultValidatableNode getResultValidatableNode() {
 		if (resultValidatableNode != null && resultValidatableNode.eIsProxy()) {
 			InternalEObject oldResultValidatableNode = (InternalEObject)resultValidatableNode;
@@ -205,6 +217,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setResultValidatableNode(ResultValidatableNode newResultValidatableNode) {
 		resultValidatableNode = newResultValidatableNode;
 	}
@@ -214,6 +227,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Severity getSeverity() {
 		return severity;
 	}
@@ -241,6 +255,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getDiagnostic() {
 		return diagnostic;
 	}
@@ -250,6 +265,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDiagnostic(Object newDiagnostic) {
 		diagnostic = newDiagnostic;
 	}
@@ -288,6 +304,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Throwable getException() {
 		return exception;
 	}
@@ -297,6 +314,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setException(Throwable newException) {
 		exception = newException;
 	}
@@ -309,7 +327,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetResultSet((ResultSet)otherEnd, msgs);
@@ -325,7 +343,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				return basicSetResultSet(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -339,8 +357,8 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ValidityPackage.RESULT__RESULT_SET:
-				return eInternalContainer().eInverseRemove(this, ValidityPackage.RESULT_SET__RESULTS, ResultSet.class, msgs);
+			case 0:
+				return eInternalContainer().eInverseRemove(this, 1, ResultSet.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -353,22 +371,22 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				return getResultSet();
-			case ValidityPackage.RESULT__RESULT_VALIDATABLE_NODE:
+			case 1:
 				if (resolve) return getResultValidatableNode();
 				return basicGetResultValidatableNode();
-			case ValidityPackage.RESULT__SEVERITY:
+			case 2:
 				return getSeverity();
-			case ValidityPackage.RESULT__DIAGNOSTIC:
+			case 3:
 				return getDiagnostic();
-			case ValidityPackage.RESULT__VALIDATABLE_NODE:
+			case 4:
 				return getValidatableNode();
-			case ValidityPackage.RESULT__LEAF_CONSTRAINING_NODE:
+			case 5:
 				return getLeafConstrainingNode();
-			case ValidityPackage.RESULT__RESULT_CONSTRAINING_NODE:
+			case 6:
 				return getResultConstrainingNode();
-			case ValidityPackage.RESULT__EXCEPTION:
+			case 7:
 				return getException();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -382,19 +400,19 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				setResultSet((ResultSet)newValue);
 				return;
-			case ValidityPackage.RESULT__RESULT_VALIDATABLE_NODE:
+			case 1:
 				setResultValidatableNode((ResultValidatableNode)newValue);
 				return;
-			case ValidityPackage.RESULT__SEVERITY:
+			case 2:
 				setSeverity((Severity)newValue);
 				return;
-			case ValidityPackage.RESULT__DIAGNOSTIC:
+			case 3:
 				setDiagnostic(newValue);
 				return;
-			case ValidityPackage.RESULT__EXCEPTION:
+			case 7:
 				setException((Throwable)newValue);
 				return;
 		}
@@ -409,19 +427,19 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				setResultSet((ResultSet)null);
 				return;
-			case ValidityPackage.RESULT__RESULT_VALIDATABLE_NODE:
+			case 1:
 				setResultValidatableNode((ResultValidatableNode)null);
 				return;
-			case ValidityPackage.RESULT__SEVERITY:
+			case 2:
 				setSeverity(SEVERITY_EDEFAULT);
 				return;
-			case ValidityPackage.RESULT__DIAGNOSTIC:
+			case 3:
 				setDiagnostic(DIAGNOSTIC_EDEFAULT);
 				return;
-			case ValidityPackage.RESULT__EXCEPTION:
+			case 7:
 				setException(EXCEPTION_EDEFAULT);
 				return;
 		}
@@ -436,21 +454,21 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.RESULT__RESULT_SET:
+			case 0:
 				return getResultSet() != null;
-			case ValidityPackage.RESULT__RESULT_VALIDATABLE_NODE:
+			case 1:
 				return resultValidatableNode != null;
-			case ValidityPackage.RESULT__SEVERITY:
+			case 2:
 				return severity != SEVERITY_EDEFAULT;
-			case ValidityPackage.RESULT__DIAGNOSTIC:
+			case 3:
 				return DIAGNOSTIC_EDEFAULT == null ? diagnostic != null : !DIAGNOSTIC_EDEFAULT.equals(diagnostic);
-			case ValidityPackage.RESULT__VALIDATABLE_NODE:
+			case 4:
 				return getValidatableNode() != null;
-			case ValidityPackage.RESULT__LEAF_CONSTRAINING_NODE:
+			case 5:
 				return getLeafConstrainingNode() != null;
-			case ValidityPackage.RESULT__RESULT_CONSTRAINING_NODE:
+			case 6:
 				return getResultConstrainingNode() != null;
-			case ValidityPackage.RESULT__EXCEPTION:
+			case 7:
 				return EXCEPTION_EDEFAULT == null ? exception != null : !EXCEPTION_EDEFAULT.equals(exception);
 		}
 		return super.eIsSet(featureID);

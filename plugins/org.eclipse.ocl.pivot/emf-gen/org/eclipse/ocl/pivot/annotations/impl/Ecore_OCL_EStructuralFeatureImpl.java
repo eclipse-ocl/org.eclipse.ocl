@@ -32,6 +32,24 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Container implements Ecore_OCL_EStructuralFeature {
 	/**
+	 * The number of structural features of the '<em>Ecore OCL EStructural Feature</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_ESTRUCTURAL_FEATURE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Ecore OCL EStructural Feature</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_ESTRUCTURAL_FEATURE_OPERATION_COUNT = 0;
+
+	/**
 	 * The default value of the '{@link #getDerivation() <em>Derivation</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +108,7 @@ public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Contain
 		String oldDerivation = derivation;
 		derivation = newDerivation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION, oldDerivation, derivation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldDerivation, derivation));
 	}
 
 	/**
@@ -101,7 +119,7 @@ public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Contain
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION:
+			case 0:
 				return getDerivation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +133,7 @@ public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Contain
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION:
+			case 0:
 				setDerivation((String)newValue);
 				return;
 		}
@@ -130,7 +148,7 @@ public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Contain
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION:
+			case 0:
 				setDerivation(DERIVATION_EDEFAULT);
 				return;
 		}
@@ -145,7 +163,7 @@ public class Ecore_OCL_EStructuralFeatureImpl extends MinimalEObjectImpl.Contain
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE__DERIVATION:
+			case 0:
 				return DERIVATION_EDEFAULT == null ? derivation != null : !DERIVATION_EDEFAULT.equals(derivation);
 		}
 		return super.eIsSet(featureID);

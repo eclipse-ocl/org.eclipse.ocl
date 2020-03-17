@@ -27,6 +27,23 @@ import org.eclipse.ocl.examples.xtext.tests.bug477283.a.Bug477283APackage;
  */
 public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
+	 * The number of structural features of the '<em>A</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int A_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>A</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int A_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

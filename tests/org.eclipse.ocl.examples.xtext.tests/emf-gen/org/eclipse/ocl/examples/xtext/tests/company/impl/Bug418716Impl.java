@@ -38,6 +38,24 @@ import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
  */
 public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	/**
+	 * The number of structural features of the '<em>Bug418716</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BUG418716_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Bug418716</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BUG418716_OPERATION_COUNT = 0;
+
+	/**
 	 * The cached setting delegate for the '{@link #getAttributeWithInitital() <em>Attribute With Initital</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,6 +109,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithInitital() {
 		return (Integer)ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
 	}
@@ -100,6 +119,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithInitital(int newAttributeWithInitital) {
 		ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAttributeWithInitital);
 	}
@@ -109,6 +129,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithoutInitital() {
 		return attributeWithoutInitital;
 	}
@@ -118,11 +139,12 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithoutInitital(int newAttributeWithoutInitital) {
 		int oldAttributeWithoutInitital = attributeWithoutInitital;
 		attributeWithoutInitital = newAttributeWithoutInitital;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, oldAttributeWithoutInitital, attributeWithoutInitital));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldAttributeWithoutInitital, attributeWithoutInitital));
 	}
 
 	/**
@@ -133,9 +155,9 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				return getAttributeWithInitital();
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				return getAttributeWithoutInitital();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -149,10 +171,10 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				setAttributeWithInitital((Integer)newValue);
 				return;
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				setAttributeWithoutInitital((Integer)newValue);
 				return;
 		}
@@ -167,10 +189,10 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				setAttributeWithoutInitital(ATTRIBUTE_WITHOUT_INITITAL_EDEFAULT);
 				return;
 		}
@@ -185,9 +207,9 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITH_INITITAL:
+			case 0:
 				return ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
-			case CompanyPackage.BUG418716__ATTRIBUTE_WITHOUT_INITITAL:
+			case 1:
 				return attributeWithoutInitital != ATTRIBUTE_WITHOUT_INITITAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

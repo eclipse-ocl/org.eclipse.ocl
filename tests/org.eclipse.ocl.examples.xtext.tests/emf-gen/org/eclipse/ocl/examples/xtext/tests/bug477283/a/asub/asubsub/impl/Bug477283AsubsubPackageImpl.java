@@ -114,6 +114,7 @@ public class Bug477283AsubsubPackageImpl extends EPackageImpl implements Bug4772
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getASubSub() {
 		return aSubSubEClass;
 	}
@@ -123,6 +124,7 @@ public class Bug477283AsubsubPackageImpl extends EPackageImpl implements Bug4772
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug477283AsubsubFactory getBug477283AsubsubFactory() {
 		return (Bug477283AsubsubFactory)getEFactoryInstance();
 	}
@@ -146,7 +148,7 @@ public class Bug477283AsubsubPackageImpl extends EPackageImpl implements Bug4772
 		isCreated = true;
 
 		// Create classes and their features
-		aSubSubEClass = createEClass(ASUB_SUB);
+		aSubSubEClass = createEClass(0);
 	}
 
 	/**

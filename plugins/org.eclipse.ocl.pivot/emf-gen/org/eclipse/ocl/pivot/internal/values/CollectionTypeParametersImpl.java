@@ -25,7 +25,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	protected class Iterator implements java.util.Iterator<Object>
 	{
 		private int position = 0;
-		
+
 		@Override
 		public boolean hasNext() {
 			return position < 3;
@@ -46,7 +46,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	private final int hashCode;
 	private final @NonNull T elementType;
 	private final boolean isNullFree;
@@ -63,7 +63,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		hash = 111 * hash + this.upper.hashCode();
 		hashCode = hash;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof CollectionTypeParametersImpl<?>)) {
@@ -116,7 +116,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	@Override
 	public @NonNull Iterator iterator() {
 		return new Iterator();
-	}		
+	}
 
 	public int parametersSize() {
 		return 1;

@@ -24,6 +24,23 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class Ecore_OCL_EClassifierImpl extends MinimalEObjectImpl.Container implements Ecore_OCL_EClassifier {
 	/**
+	 * The number of structural features of the '<em>Ecore OCL EClassifier</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_ECLASSIFIER_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>Ecore OCL EClassifier</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ECORE_OCL_ECLASSIFIER_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

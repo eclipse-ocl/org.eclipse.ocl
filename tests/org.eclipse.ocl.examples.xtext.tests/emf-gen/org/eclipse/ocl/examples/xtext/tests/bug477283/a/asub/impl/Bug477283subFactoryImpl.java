@@ -66,7 +66,7 @@ public class Bug477283subFactoryImpl extends EFactoryImpl implements Bug477283su
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case Bug477283subPackage.ASUB: return createASub();
+			case 0: return createASub();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

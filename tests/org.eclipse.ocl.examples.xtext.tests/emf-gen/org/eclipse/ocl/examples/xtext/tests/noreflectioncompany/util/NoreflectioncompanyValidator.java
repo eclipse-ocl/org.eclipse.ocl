@@ -115,11 +115,11 @@ public class NoreflectioncompanyValidator extends EObjectValidator {
 	@Override
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
-			case NoreflectioncompanyPackage.COMPANY:
+			case 0:
 				return validateCompany((Company)value, diagnostics, context);
-			case NoreflectioncompanyPackage.EMPLOYEE:
+			case 1:
 				return validateEmployee((Employee)value, diagnostics, context);
-			case NoreflectioncompanyPackage.COMPANY_SIZE_KIND:
+			case 2:
 				return validateCompanySizeKind((CompanySizeKind)value, diagnostics, context);
 			default:
 				return true;

@@ -223,6 +223,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAbstractNode() {
 		return abstractNodeEClass;
 	}
@@ -232,6 +233,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAbstractNode_Enabled() {
 		return (EAttribute)abstractNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -241,6 +243,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAbstractNode_Grayed() {
 		return (EAttribute)abstractNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -250,6 +253,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAbstractNode_Visible() {
 		return (EAttribute)abstractNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -259,6 +263,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAbstractNode_Label() {
 		return (EAttribute)abstractNodeEClass.getEStructuralFeatures().get(3);
 	}
@@ -268,6 +273,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getAbstractNode_WorstResult() {
 		return (EReference)abstractNodeEClass.getEStructuralFeatures().get(4);
 	}
@@ -277,6 +283,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getConstrainingNode() {
 		return constrainingNodeEClass;
 	}
@@ -286,6 +293,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getConstrainingNode_Parent() {
 		return (EReference)constrainingNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -295,6 +303,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getConstrainingNode_Children() {
 		return (EReference)constrainingNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -304,6 +313,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getConstrainingNode_ConstrainingObject() {
 		return (EAttribute)constrainingNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -313,6 +323,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLeafConstrainingNode() {
 		return leafConstrainingNodeEClass;
 	}
@@ -322,6 +333,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLeafConstrainingNode_ConstraintLocator() {
 		return (EAttribute)leafConstrainingNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -331,6 +343,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLeafConstrainingNode_ConstraintResource() {
 		return (EAttribute)leafConstrainingNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -340,6 +353,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLeafConstrainingNode_ConstraintString() {
 		return (EAttribute)leafConstrainingNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -349,6 +363,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getResult() {
 		return resultEClass;
 	}
@@ -358,6 +373,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResult_ResultSet() {
 		return (EReference)resultEClass.getEStructuralFeatures().get(0);
 	}
@@ -367,6 +383,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResult_ResultValidatableNode() {
 		return (EReference)resultEClass.getEStructuralFeatures().get(1);
 	}
@@ -376,6 +393,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getResult_Severity() {
 		return (EAttribute)resultEClass.getEStructuralFeatures().get(2);
 	}
@@ -385,6 +403,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getResult_Diagnostic() {
 		return (EAttribute)resultEClass.getEStructuralFeatures().get(3);
 	}
@@ -394,6 +413,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResult_ValidatableNode() {
 		return (EReference)resultEClass.getEStructuralFeatures().get(4);
 	}
@@ -403,6 +423,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResult_LeafConstrainingNode() {
 		return (EReference)resultEClass.getEStructuralFeatures().get(5);
 	}
@@ -412,6 +433,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResult_ResultConstrainingNode() {
 		return (EReference)resultEClass.getEStructuralFeatures().get(6);
 	}
@@ -421,6 +443,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getResult_Exception() {
 		return (EAttribute)resultEClass.getEStructuralFeatures().get(7);
 	}
@@ -430,6 +453,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getResultConstrainingNode() {
 		return resultConstrainingNodeEClass;
 	}
@@ -439,6 +463,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResultConstrainingNode_ResultValidatableNode() {
 		return (EReference)resultConstrainingNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -448,6 +473,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getResultSet() {
 		return resultSetEClass;
 	}
@@ -457,6 +483,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResultSet_Root() {
 		return (EReference)resultSetEClass.getEStructuralFeatures().get(0);
 	}
@@ -466,6 +493,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResultSet_Results() {
 		return (EReference)resultSetEClass.getEStructuralFeatures().get(1);
 	}
@@ -475,6 +503,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getResultSet_Timestamp() {
 		return (EAttribute)resultSetEClass.getEStructuralFeatures().get(2);
 	}
@@ -484,6 +513,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getResultValidatableNode() {
 		return resultValidatableNodeEClass;
 	}
@@ -493,6 +523,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getResultValidatableNode_ResultConstrainingNode() {
 		return (EReference)resultValidatableNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -502,6 +533,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getRootNode() {
 		return rootNodeEClass;
 	}
@@ -511,6 +543,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getRootNode_ResultSets() {
 		return (EReference)rootNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -520,6 +553,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getRootNode_ConstrainingNodes() {
 		return (EReference)rootNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -529,6 +563,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getRootNode_ValidatableNodes() {
 		return (EReference)rootNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -538,6 +573,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getRootConstrainingNode() {
 		return rootConstrainingNodeEClass;
 	}
@@ -547,6 +583,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getRootConstrainingNode_RootNode() {
 		return (EReference)rootConstrainingNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -556,6 +593,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getRootValidatableNode() {
 		return rootValidatableNodeEClass;
 	}
@@ -565,6 +603,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getRootValidatableNode_RootNode() {
 		return (EReference)rootValidatableNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -574,6 +613,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getValidatableNode() {
 		return validatableNodeEClass;
 	}
@@ -583,6 +623,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getValidatableNode_Parent() {
 		return (EReference)validatableNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -592,6 +633,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getValidatableNode_Children() {
 		return (EReference)validatableNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -601,6 +643,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getValidatableNode_ConstrainedObject() {
 		return (EReference)validatableNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -610,6 +653,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getSeverity() {
 		return severityEEnum;
 	}
@@ -619,6 +663,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getConstraintLocator() {
 		return constraintLocatorEDataType;
 	}
@@ -628,6 +673,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getObject() {
 		return objectEDataType;
 	}
@@ -637,6 +683,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getResource() {
 		return resourceEDataType;
 	}
@@ -646,6 +693,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getThrowable() {
 		return throwableEDataType;
 	}
@@ -655,6 +703,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ValidityFactory getValidityFactory() {
 		return (ValidityFactory)getEFactoryInstance();
 	}
@@ -678,68 +727,68 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		isCreated = true;
 
 		// Create classes and their features
-		abstractNodeEClass = createEClass(ABSTRACT_NODE);
-		createEAttribute(abstractNodeEClass, ABSTRACT_NODE__ENABLED);
-		createEAttribute(abstractNodeEClass, ABSTRACT_NODE__GRAYED);
-		createEAttribute(abstractNodeEClass, ABSTRACT_NODE__VISIBLE);
-		createEAttribute(abstractNodeEClass, ABSTRACT_NODE__LABEL);
-		createEReference(abstractNodeEClass, ABSTRACT_NODE__WORST_RESULT);
+		abstractNodeEClass = createEClass(0);
+		createEAttribute(abstractNodeEClass, 0);
+		createEAttribute(abstractNodeEClass, 1);
+		createEAttribute(abstractNodeEClass, 2);
+		createEAttribute(abstractNodeEClass, 3);
+		createEReference(abstractNodeEClass, 4);
 
-		constrainingNodeEClass = createEClass(CONSTRAINING_NODE);
-		createEReference(constrainingNodeEClass, CONSTRAINING_NODE__PARENT);
-		createEReference(constrainingNodeEClass, CONSTRAINING_NODE__CHILDREN);
-		createEAttribute(constrainingNodeEClass, CONSTRAINING_NODE__CONSTRAINING_OBJECT);
+		constrainingNodeEClass = createEClass(1);
+		createEReference(constrainingNodeEClass, 5);
+		createEReference(constrainingNodeEClass, 6);
+		createEAttribute(constrainingNodeEClass, 7);
 
-		leafConstrainingNodeEClass = createEClass(LEAF_CONSTRAINING_NODE);
-		createEAttribute(leafConstrainingNodeEClass, LEAF_CONSTRAINING_NODE__CONSTRAINT_LOCATOR);
-		createEAttribute(leafConstrainingNodeEClass, LEAF_CONSTRAINING_NODE__CONSTRAINT_RESOURCE);
-		createEAttribute(leafConstrainingNodeEClass, LEAF_CONSTRAINING_NODE__CONSTRAINT_STRING);
+		leafConstrainingNodeEClass = createEClass(2);
+		createEAttribute(leafConstrainingNodeEClass, 8);
+		createEAttribute(leafConstrainingNodeEClass, 9);
+		createEAttribute(leafConstrainingNodeEClass, 10);
 
-		resultEClass = createEClass(RESULT);
-		createEReference(resultEClass, RESULT__RESULT_SET);
-		createEReference(resultEClass, RESULT__RESULT_VALIDATABLE_NODE);
-		createEAttribute(resultEClass, RESULT__SEVERITY);
-		createEAttribute(resultEClass, RESULT__DIAGNOSTIC);
-		createEReference(resultEClass, RESULT__VALIDATABLE_NODE);
-		createEReference(resultEClass, RESULT__LEAF_CONSTRAINING_NODE);
-		createEReference(resultEClass, RESULT__RESULT_CONSTRAINING_NODE);
-		createEAttribute(resultEClass, RESULT__EXCEPTION);
+		resultEClass = createEClass(3);
+		createEReference(resultEClass, 0);
+		createEReference(resultEClass, 1);
+		createEAttribute(resultEClass, 2);
+		createEAttribute(resultEClass, 3);
+		createEReference(resultEClass, 4);
+		createEReference(resultEClass, 5);
+		createEReference(resultEClass, 6);
+		createEAttribute(resultEClass, 7);
 
-		resultConstrainingNodeEClass = createEClass(RESULT_CONSTRAINING_NODE);
-		createEReference(resultConstrainingNodeEClass, RESULT_CONSTRAINING_NODE__RESULT_VALIDATABLE_NODE);
+		resultConstrainingNodeEClass = createEClass(4);
+		createEReference(resultConstrainingNodeEClass, 8);
 
-		resultSetEClass = createEClass(RESULT_SET);
-		createEReference(resultSetEClass, RESULT_SET__ROOT);
-		createEReference(resultSetEClass, RESULT_SET__RESULTS);
-		createEAttribute(resultSetEClass, RESULT_SET__TIMESTAMP);
+		resultSetEClass = createEClass(5);
+		createEReference(resultSetEClass, 0);
+		createEReference(resultSetEClass, 1);
+		createEAttribute(resultSetEClass, 2);
 
-		resultValidatableNodeEClass = createEClass(RESULT_VALIDATABLE_NODE);
-		createEReference(resultValidatableNodeEClass, RESULT_VALIDATABLE_NODE__RESULT_CONSTRAINING_NODE);
+		resultValidatableNodeEClass = createEClass(6);
+		createEReference(resultValidatableNodeEClass, 8);
 
-		rootNodeEClass = createEClass(ROOT_NODE);
-		createEReference(rootNodeEClass, ROOT_NODE__RESULT_SETS);
-		createEReference(rootNodeEClass, ROOT_NODE__CONSTRAINING_NODES);
-		createEReference(rootNodeEClass, ROOT_NODE__VALIDATABLE_NODES);
+		rootNodeEClass = createEClass(7);
+		createEReference(rootNodeEClass, 0);
+		createEReference(rootNodeEClass, 1);
+		createEReference(rootNodeEClass, 2);
 
-		rootConstrainingNodeEClass = createEClass(ROOT_CONSTRAINING_NODE);
-		createEReference(rootConstrainingNodeEClass, ROOT_CONSTRAINING_NODE__ROOT_NODE);
+		rootConstrainingNodeEClass = createEClass(8);
+		createEReference(rootConstrainingNodeEClass, 8);
 
-		rootValidatableNodeEClass = createEClass(ROOT_VALIDATABLE_NODE);
-		createEReference(rootValidatableNodeEClass, ROOT_VALIDATABLE_NODE__ROOT_NODE);
+		rootValidatableNodeEClass = createEClass(9);
+		createEReference(rootValidatableNodeEClass, 8);
 
-		validatableNodeEClass = createEClass(VALIDATABLE_NODE);
-		createEReference(validatableNodeEClass, VALIDATABLE_NODE__PARENT);
-		createEReference(validatableNodeEClass, VALIDATABLE_NODE__CHILDREN);
-		createEReference(validatableNodeEClass, VALIDATABLE_NODE__CONSTRAINED_OBJECT);
+		validatableNodeEClass = createEClass(10);
+		createEReference(validatableNodeEClass, 5);
+		createEReference(validatableNodeEClass, 6);
+		createEReference(validatableNodeEClass, 7);
 
 		// Create enums
-		severityEEnum = createEEnum(SEVERITY);
+		severityEEnum = createEEnum(11);
 
 		// Create data types
-		constraintLocatorEDataType = createEDataType(CONSTRAINT_LOCATOR);
-		objectEDataType = createEDataType(OBJECT);
-		resourceEDataType = createEDataType(RESOURCE);
-		throwableEDataType = createEDataType(THROWABLE);
+		constraintLocatorEDataType = createEDataType(12);
+		objectEDataType = createEDataType(13);
+		resourceEDataType = createEDataType(14);
+		throwableEDataType = createEDataType(15);
 	}
 
 	/**
@@ -765,9 +814,6 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-
 		// Create type parameters
 
 		// Set bounds for type parameters
@@ -786,7 +832,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		initEAttribute(getAbstractNode_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 1, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractNode_Grayed(), ecorePackage.getEBoolean(), "grayed", "false", 1, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractNode_Visible(), ecorePackage.getEBoolean(), "visible", "true", 1, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAbstractNode_Label(), theEcorePackage.getEString(), "label", "", 1, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractNode_Label(), ecorePackage.getEString(), "label", "", 1, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractNode_WorstResult(), this.getResult(), null, "worstResult", null, 0, 1, AbstractNode.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		addEOperation(abstractNodeEClass, this.getAbstractNode(), "getParent", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -801,7 +847,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		initEClass(leafConstrainingNodeEClass, LeafConstrainingNode.class, "LeafConstrainingNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLeafConstrainingNode_ConstraintLocator(), this.getConstraintLocator(), "constraintLocator", null, 1, 1, LeafConstrainingNode.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLeafConstrainingNode_ConstraintResource(), this.getResource(), "constraintResource", null, 0, 1, LeafConstrainingNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLeafConstrainingNode_ConstraintString(), theEcorePackage.getEString(), "constraintString", null, 0, 1, LeafConstrainingNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLeafConstrainingNode_ConstraintString(), ecorePackage.getEString(), "constraintString", null, 0, 1, LeafConstrainingNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(resultEClass, Result.class, "Result", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResult_ResultSet(), this.getResultSet(), this.getResultSet_Results(), "resultSet", null, 1, 1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -838,7 +884,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		initEClass(validatableNodeEClass, ValidatableNode.class, "ValidatableNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getValidatableNode_Parent(), this.getValidatableNode(), this.getValidatableNode_Children(), "parent", null, 0, 1, ValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValidatableNode_Children(), this.getValidatableNode(), this.getValidatableNode_Parent(), "children", null, 0, -1, ValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getValidatableNode_ConstrainedObject(), theEcorePackage.getEObject(), null, "constrainedObject", null, 1, 1, ValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getValidatableNode_ConstrainedObject(), ecorePackage.getEObject(), null, "constrainedObject", null, 1, 1, ValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(severityEEnum, Severity.class, "Severity");

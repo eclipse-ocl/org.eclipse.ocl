@@ -20,7 +20,7 @@ public class MapEntryImpl implements MapEntry
 {
 	protected final @Nullable Object key;	// not invalid
 	protected final @Nullable Object value;	// not  invalid
-	
+
 	public MapEntryImpl(@Nullable Object key, @Nullable Object value) {
 		this.key = key;
 		this.value = value;
