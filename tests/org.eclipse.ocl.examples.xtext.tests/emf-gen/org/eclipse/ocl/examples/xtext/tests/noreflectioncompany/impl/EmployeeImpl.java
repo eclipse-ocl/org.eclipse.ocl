@@ -46,6 +46,15 @@ import org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.util.Noreflectio
  */
 public class EmployeeImpl extends EObjectImpl implements Employee {
 	/**
+	 * The number of structural features of the '<em>Employee</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EMPLOYEE_FEATURE_COUNT = 7;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -154,7 +163,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NoreflectioncompanyPackage.EMPLOYEE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
 	}
 
 	/**
@@ -169,7 +178,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			manager = (Employee)eResolveProxy(oldManager);
 			if (manager != oldManager) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NoreflectioncompanyPackage.EMPLOYEE__MANAGER, oldManager, manager));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldManager, manager));
 			}
 		}
 		return manager;
@@ -194,7 +203,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		Employee oldManager = manager;
 		manager = newManager;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NoreflectioncompanyPackage.EMPLOYEE__MANAGER, oldManager, manager));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldManager, manager));
 	}
 
 	/**
@@ -204,7 +213,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 */
 	@Override
 	public Company getCompany() {
-		if (eContainerFeatureID() != NoreflectioncompanyPackage.EMPLOYEE__COMPANY) return null;
+		if (eContainerFeatureID() != (2)) return null;
 		return (Company)eInternalContainer();
 	}
 
@@ -214,7 +223,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * @generated
 	 */
 	public NotificationChain basicSetCompany(Company newCompany, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newCompany, NoreflectioncompanyPackage.EMPLOYEE__COMPANY, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newCompany, 2, msgs);
 		return msgs;
 	}
 
@@ -225,19 +234,19 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 */
 	@Override
 	public void setCompany(Company newCompany) {
-		if (newCompany != eInternalContainer() || (eContainerFeatureID() != NoreflectioncompanyPackage.EMPLOYEE__COMPANY && newCompany != null)) {
+		if (newCompany != eInternalContainer() || (eContainerFeatureID() != (2) && newCompany != null)) {
 			if (EcoreUtil.isAncestor(this, newCompany))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newCompany != null)
-				msgs = ((InternalEObject)newCompany).eInverseAdd(this, NoreflectioncompanyPackage.COMPANY__EMPLOYEES, Company.class, msgs);
+				msgs = ((InternalEObject)newCompany).eInverseAdd(this, 1, Company.class, msgs);
 			msgs = basicSetCompany(newCompany, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NoreflectioncompanyPackage.EMPLOYEE__COMPANY, newCompany, newCompany));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, newCompany, newCompany));
 	}
 
 	/**
@@ -372,7 +381,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetCompany((Company)otherEnd, msgs);
@@ -388,7 +397,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				return basicSetCompany(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -402,8 +411,8 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
-				return eInternalContainer().eInverseRemove(this, NoreflectioncompanyPackage.COMPANY__EMPLOYEES, Company.class, msgs);
+			case 2:
+				return eInternalContainer().eInverseRemove(this, 1, Company.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -416,20 +425,20 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__NAME:
+			case 0:
 				return getName();
-			case NoreflectioncompanyPackage.EMPLOYEE__MANAGER:
+			case 1:
 				if (resolve) return getManager();
 				return basicGetManager();
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				return getCompany();
-			case NoreflectioncompanyPackage.EMPLOYEE__DIRECT_REPORTS:
+			case 3:
 				return getDirectReports();
-			case NoreflectioncompanyPackage.EMPLOYEE__ALL_REPORTS:
+			case 4:
 				return getAllReports();
-			case NoreflectioncompanyPackage.EMPLOYEE__REPORTING_CHAIN:
+			case 5:
 				return getReportingChain();
-			case NoreflectioncompanyPackage.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE:
+			case 6:
 				return isHasNameAsAttribute();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -443,13 +452,13 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__NAME:
+			case 0:
 				setName((String)newValue);
 				return;
-			case NoreflectioncompanyPackage.EMPLOYEE__MANAGER:
+			case 1:
 				setManager((Employee)newValue);
 				return;
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				setCompany((Company)newValue);
 				return;
 		}
@@ -464,13 +473,13 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__NAME:
+			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case NoreflectioncompanyPackage.EMPLOYEE__MANAGER:
+			case 1:
 				setManager((Employee)null);
 				return;
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				setCompany((Company)null);
 				return;
 		}
@@ -485,19 +494,19 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.EMPLOYEE__NAME:
+			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NoreflectioncompanyPackage.EMPLOYEE__MANAGER:
+			case 1:
 				return manager != null;
-			case NoreflectioncompanyPackage.EMPLOYEE__COMPANY:
+			case 2:
 				return getCompany() != null;
-			case NoreflectioncompanyPackage.EMPLOYEE__DIRECT_REPORTS:
+			case 3:
 				return DIRECT_REPORTS__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
-			case NoreflectioncompanyPackage.EMPLOYEE__ALL_REPORTS:
+			case 4:
 				return ALL_REPORTS__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
-			case NoreflectioncompanyPackage.EMPLOYEE__REPORTING_CHAIN:
+			case 5:
 				return REPORTING_CHAIN__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
-			case NoreflectioncompanyPackage.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE:
+			case 6:
 				return HAS_NAME_AS_ATTRIBUTE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 		}
 		return super.eIsSet(featureID);

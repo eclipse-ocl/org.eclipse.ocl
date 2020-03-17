@@ -743,7 +743,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!transient'?
+	 *         qualifiers+='unique'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
@@ -751,10 +751,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
-	 *                 qualifiers+='unique' |
+	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!transient'?
+	 *             qualifiers+='unique'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |

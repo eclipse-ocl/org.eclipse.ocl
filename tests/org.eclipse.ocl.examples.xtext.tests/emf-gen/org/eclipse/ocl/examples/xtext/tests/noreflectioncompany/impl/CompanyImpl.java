@@ -41,6 +41,15 @@ import org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.util.Noreflectio
  */
 public class CompanyImpl extends EObjectImpl implements Company {
 	/**
+	 * The number of structural features of the '<em>Company</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int COMPANY_FEATURE_COUNT = 3;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -119,7 +128,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NoreflectioncompanyPackage.COMPANY__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
 	}
 
 	/**
@@ -130,7 +139,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public EList<Employee> getEmployees() {
 		if (employees == null) {
-			employees = new EObjectContainmentWithInverseEList<Employee>(Employee.class, this, NoreflectioncompanyPackage.COMPANY__EMPLOYEES, NoreflectioncompanyPackage.EMPLOYEE__COMPANY);
+			employees = new EObjectContainmentWithInverseEList<Employee>(Employee.class, this, 1, 2);
 		}
 		return employees;
 	}
@@ -185,7 +194,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmployees()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -199,7 +208,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return ((InternalEList<?>)getEmployees()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -213,11 +222,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__NAME:
+			case 0:
 				return getName();
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return getEmployees();
-			case NoreflectioncompanyPackage.COMPANY__SIZE:
+			case 2:
 				return getSize();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -232,10 +241,10 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__NAME:
+			case 0:
 				setName((String)newValue);
 				return;
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				getEmployees().clear();
 				getEmployees().addAll((Collection<? extends Employee>)newValue);
 				return;
@@ -251,10 +260,10 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__NAME:
+			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				getEmployees().clear();
 				return;
 		}
@@ -269,11 +278,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NoreflectioncompanyPackage.COMPANY__NAME:
+			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NoreflectioncompanyPackage.COMPANY__EMPLOYEES:
+			case 1:
 				return employees != null && !employees.isEmpty();
-			case NoreflectioncompanyPackage.COMPANY__SIZE:
+			case 2:
 				return SIZE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 		}
 		return super.eIsSet(featureID);

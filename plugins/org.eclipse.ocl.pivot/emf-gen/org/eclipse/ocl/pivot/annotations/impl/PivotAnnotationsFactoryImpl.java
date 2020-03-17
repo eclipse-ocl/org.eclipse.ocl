@@ -74,16 +74,16 @@ public class PivotAnnotationsFactoryImpl extends EFactoryImpl implements PivotAn
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case PivotAnnotationsPackage.AS_LIBRARY_EPACKAGE: return createASLibrary_EPackage();
-			case PivotAnnotationsPackage.AS_METAMODEL_EPACKAGE: return createASMetamodel_EPackage();
-			case PivotAnnotationsPackage.COLLECTION_ECLASS: return createCollection_EClass();
-			case PivotAnnotationsPackage.COLLECTION_EPACKAGE: return createCollection_EPackage();
-			case PivotAnnotationsPackage.COLLECTION_ETYPED_ELEMENT: return createCollection_ETypedElement();
-			case PivotAnnotationsPackage.ECORE_OCL_ECLASSIFIER: return createEcore_OCL_EClassifier();
-			case PivotAnnotationsPackage.ECORE_OCL_EOPERATION: return createEcore_OCL_EOperation();
-			case PivotAnnotationsPackage.ECORE_OCL_ESTRUCTURAL_FEATURE: return createEcore_OCL_EStructuralFeature();
-			case PivotAnnotationsPackage.IMPORT_EPACKAGE: return createImport_EPackage();
-			case PivotAnnotationsPackage.META_ANNOTATION_EANNOTATION: return createMetaAnnotation_EAnnotation();
+			case 0: return createASLibrary_EPackage();
+			case 1: return createASMetamodel_EPackage();
+			case 2: return createCollection_EClass();
+			case 3: return createCollection_EPackage();
+			case 4: return createCollection_ETypedElement();
+			case 5: return createEcore_OCL_EClassifier();
+			case 6: return createEcore_OCL_EOperation();
+			case 7: return createEcore_OCL_EStructuralFeature();
+			case 8: return createImport_EPackage();
+			case 9: return createMetaAnnotation_EAnnotation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

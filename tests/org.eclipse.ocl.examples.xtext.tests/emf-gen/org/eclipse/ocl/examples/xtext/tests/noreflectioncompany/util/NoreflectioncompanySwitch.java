@@ -66,13 +66,13 @@ public class NoreflectioncompanySwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case NoreflectioncompanyPackage.COMPANY: {
+			case 0: {
 				Company company = (Company)theEObject;
 				T result = caseCompany(company);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NoreflectioncompanyPackage.EMPLOYEE: {
+			case 1: {
 				Employee employee = (Employee)theEObject;
 				T result = caseEmployee(employee);
 				if (result == null) result = defaultCase(theEObject);

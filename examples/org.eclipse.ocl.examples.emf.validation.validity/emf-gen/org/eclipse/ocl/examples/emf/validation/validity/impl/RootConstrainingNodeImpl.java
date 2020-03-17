@@ -34,6 +34,15 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements RootConstrainingNode {
 	/**
+	 * The number of structural features of the '<em>Root Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_CONSTRAINING_NODE_FEATURE_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_FEATURE_COUNT + 1;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -57,8 +66,9 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public RootNode getRootNode() {
-		if (eContainerFeatureID() != ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (RootNode)eInternalContainer();
 	}
 
@@ -68,7 +78,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	 * @generated
 	 */
 	public NotificationChain basicSetRootNode(RootNode newRootNode, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newRootNode, ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newRootNode, 8, msgs);
 		return msgs;
 	}
 
@@ -77,15 +87,16 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRootNode(RootNode newRootNode) {
-		if (newRootNode != eInternalContainer() || (eContainerFeatureID() != ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE && newRootNode != null)) {
+		if (newRootNode != eInternalContainer() || (eContainerFeatureID() != (8) && newRootNode != null)) {
 			if (EcoreUtil.isAncestor(this, newRootNode))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newRootNode != null)
-				msgs = ((InternalEObject)newRootNode).eInverseAdd(this, ValidityPackage.ROOT_NODE__CONSTRAINING_NODES, RootNode.class, msgs);
+				msgs = ((InternalEObject)newRootNode).eInverseAdd(this, 1, RootNode.class, msgs);
 			msgs = basicSetRootNode(newRootNode, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -99,7 +110,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetRootNode((RootNode)otherEnd, msgs);
@@ -115,7 +126,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				return basicSetRootNode(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -129,8 +140,8 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
-				return eInternalContainer().eInverseRemove(this, ValidityPackage.ROOT_NODE__CONSTRAINING_NODES, RootNode.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, 1, RootNode.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -143,7 +154,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				return getRootNode();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -157,7 +168,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				setRootNode((RootNode)newValue);
 				return;
 		}
@@ -172,7 +183,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				setRootNode((RootNode)null);
 				return;
 		}
@@ -187,7 +198,7 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE:
+			case 8:
 				return getRootNode() != null;
 		}
 		return super.eIsSet(featureID);

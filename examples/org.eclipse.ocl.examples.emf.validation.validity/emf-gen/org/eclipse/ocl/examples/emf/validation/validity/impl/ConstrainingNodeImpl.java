@@ -40,6 +40,15 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class ConstrainingNodeImpl extends AbstractNodeImpl implements ConstrainingNode {
 	/**
+	 * The number of structural features of the '<em>Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONSTRAINING_NODE_FEATURE_COUNT = AbstractNodeImpl.ABSTRACT_NODE_FEATURE_COUNT + 3;
+
+	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,7 +104,7 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	 */
 	@Override
 	public ConstrainingNode getParent() {
-		if (eContainerFeatureID() != ValidityPackage.CONSTRAINING_NODE__PARENT) return null;
+		if (eContainerFeatureID() != (5)) return null;
 		return (ConstrainingNode)eInternalContainer();
 	}
 
@@ -105,7 +114,7 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	 * @generated
 	 */
 	public NotificationChain basicSetParent(ConstrainingNode newParent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParent, ValidityPackage.CONSTRAINING_NODE__PARENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newParent, 5, msgs);
 		return msgs;
 	}
 
@@ -116,14 +125,14 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	 */
 	@Override
 	public void setParent(ConstrainingNode newParent) {
-		if (newParent != eInternalContainer() || (eContainerFeatureID() != ValidityPackage.CONSTRAINING_NODE__PARENT && newParent != null)) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != (5) && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, ValidityPackage.CONSTRAINING_NODE__CHILDREN, ConstrainingNode.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, 6, ConstrainingNode.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -138,7 +147,7 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@SuppressWarnings("null")
 	public @NonNull EList<ConstrainingNode> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentWithInverseEList<ConstrainingNode>(ConstrainingNode.class, this, ValidityPackage.CONSTRAINING_NODE__CHILDREN, ValidityPackage.CONSTRAINING_NODE__PARENT);
+			children = new EObjectContainmentWithInverseEList<ConstrainingNode>(ConstrainingNode.class, this, ValidityPackage.Literals.CONSTRAINING_NODE__CHILDREN.getFeatureID(), ValidityPackage.Literals.CONSTRAINING_NODE__PARENT.getFeatureID());
 		}
 		return children;
 	}
@@ -172,11 +181,11 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((ConstrainingNode)otherEnd, msgs);
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -190,9 +199,9 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				return basicSetParent(null, msgs);
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -206,8 +215,8 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
-				return eInternalContainer().eInverseRemove(this, ValidityPackage.CONSTRAINING_NODE__CHILDREN, ConstrainingNode.class, msgs);
+			case 5:
+				return eInternalContainer().eInverseRemove(this, 6, ConstrainingNode.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -220,11 +229,11 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				return getParent();
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				return getChildren();
-			case ValidityPackage.CONSTRAINING_NODE__CONSTRAINING_OBJECT:
+			case 7:
 				return getConstrainingObject();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -239,14 +248,14 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				setParent((ConstrainingNode)newValue);
 				return;
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				getChildren().clear();
 				getChildren().addAll((Collection<? extends ConstrainingNode>)newValue);
 				return;
-			case ValidityPackage.CONSTRAINING_NODE__CONSTRAINING_OBJECT:
+			case 7:
 				setConstrainingObject(newValue);
 				return;
 		}
@@ -261,13 +270,13 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				setParent((ConstrainingNode)null);
 				return;
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				getChildren().clear();
 				return;
-			case ValidityPackage.CONSTRAINING_NODE__CONSTRAINING_OBJECT:
+			case 7:
 				setConstrainingObject(CONSTRAINING_OBJECT_EDEFAULT);
 				return;
 		}
@@ -282,11 +291,11 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.CONSTRAINING_NODE__PARENT:
+			case 5:
 				return getParent() != null;
-			case ValidityPackage.CONSTRAINING_NODE__CHILDREN:
+			case 6:
 				return children != null && !children.isEmpty();
-			case ValidityPackage.CONSTRAINING_NODE__CONSTRAINING_OBJECT:
+			case 7:
 				return CONSTRAINING_OBJECT_EDEFAULT == null ? constrainingObject != null : !CONSTRAINING_OBJECT_EDEFAULT.equals(constrainingObject);
 		}
 		return super.eIsSet(featureID);

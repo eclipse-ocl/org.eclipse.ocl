@@ -24,6 +24,23 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class ASLibrary_EPackageImpl extends MinimalEObjectImpl.Container implements ASLibrary_EPackage {
 	/**
+	 * The number of structural features of the '<em>AS Library EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int AS_LIBRARY_EPACKAGE_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>AS Library EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int AS_LIBRARY_EPACKAGE_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -105,6 +105,7 @@ public class Bug477283BPackageImpl extends EPackageImpl implements Bug477283BPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getB() {
 		return bEClass;
 	}
@@ -114,6 +115,7 @@ public class Bug477283BPackageImpl extends EPackageImpl implements Bug477283BPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getB_Ref() {
 		return (EReference)bEClass.getEStructuralFeatures().get(0);
 	}
@@ -123,6 +125,7 @@ public class Bug477283BPackageImpl extends EPackageImpl implements Bug477283BPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug477283BFactory getBug477283BFactory() {
 		return (Bug477283BFactory)getEFactoryInstance();
 	}
@@ -146,8 +149,8 @@ public class Bug477283BPackageImpl extends EPackageImpl implements Bug477283BPac
 		isCreated = true;
 
 		// Create classes and their features
-		bEClass = createEClass(B);
-		createEReference(bEClass, B__REF);
+		bEClass = createEClass(0);
+		createEReference(bEClass, 0);
 	}
 
 	/**

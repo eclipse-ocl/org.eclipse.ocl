@@ -72,9 +72,9 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case CodegencompanyPackage.COMPANY: return createCompany();
-			case CodegencompanyPackage.EMPLOYEE: return createEmployee();
-			case CodegencompanyPackage.BUG418716: return createBug418716();
+			case 0: return createCompany();
+			case 1: return createEmployee();
+			case 2: return createBug418716();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -88,7 +88,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case CodegencompanyPackage.COMPANY_SIZE_KIND:
+			case 3:
 				return createCompanySizeKindFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -103,7 +103,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case CodegencompanyPackage.COMPANY_SIZE_KIND:
+			case 3:
 				return convertCompanySizeKindToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

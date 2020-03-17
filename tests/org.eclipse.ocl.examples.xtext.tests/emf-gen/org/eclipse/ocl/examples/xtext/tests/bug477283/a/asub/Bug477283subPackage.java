@@ -65,35 +65,6 @@ public interface Bug477283subPackage extends EPackage {
 	Bug477283subPackage eINSTANCE = org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.impl.Bug477283subPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.impl.ASubImpl <em>ASub</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.impl.ASubImpl
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.impl.Bug477283subPackageImpl#getASub()
-	 * @generated
-	 */
-	int ASUB = 0;
-
-	/**
-	 * The number of structural features of the '<em>ASub</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASUB_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>ASub</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASUB_OPERATION_COUNT = 0;
-
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.ASub <em>ASub</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

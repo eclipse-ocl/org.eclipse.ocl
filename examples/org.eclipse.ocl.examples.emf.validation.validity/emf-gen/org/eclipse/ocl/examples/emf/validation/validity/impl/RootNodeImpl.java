@@ -45,6 +45,15 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  */
 public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNode {
 	/**
+	 * The number of structural features of the '<em>Root Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_NODE_FEATURE_COUNT = 3;
+
+	/**
 	 * The cached value of the '{@link #getResultSets() <em>Result Sets</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -98,6 +107,7 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull EList<ResultSet> getResultSets() {
 		if (resultSets == null) {
@@ -111,10 +121,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	 * <!-- end-user-doc -->
 	 * @generated NOT // Bug 414352 workaround
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull EList<RootConstrainingNode> getConstrainingNodes() {
 		if (constrainingNodes == null) {
-			constrainingNodes = new EObjectContainmentWithInverseEList<RootConstrainingNode>(RootConstrainingNode.class, this, ValidityPackage.ROOT_NODE__CONSTRAINING_NODES, ValidityPackage.ROOT_CONSTRAINING_NODE__ROOT_NODE);
+			constrainingNodes = new EObjectContainmentWithInverseEList<RootConstrainingNode>(RootConstrainingNode.class, this, ValidityPackage.Literals.ROOT_NODE__CONSTRAINING_NODES.getFeatureID(), ValidityPackage.Literals.ROOT_CONSTRAINING_NODE__ROOT_NODE.getFeatureID());
 		}
 		return constrainingNodes;
 	}
@@ -124,10 +135,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	 * <!-- end-user-doc -->
 	 * @generated NOT // Bug 414352 workaround
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull EList<RootValidatableNode> getValidatableNodes() {
 		if (validatableNodes == null) {
-			validatableNodes = new EObjectContainmentWithInverseEList<RootValidatableNode>(RootValidatableNode.class, this, ValidityPackage.ROOT_NODE__VALIDATABLE_NODES, ValidityPackage.ROOT_VALIDATABLE_NODE__ROOT_NODE);
+			validatableNodes = new EObjectContainmentWithInverseEList<RootValidatableNode>(RootValidatableNode.class, this, ValidityPackage.Literals.ROOT_NODE__VALIDATABLE_NODES.getFeatureID(), ValidityPackage.Literals.ROOT_VALIDATABLE_NODE__ROOT_NODE.getFeatureID());
 		}
 		return validatableNodes;
 	}
@@ -141,11 +153,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getResultSets()).basicAdd(otherEnd, msgs);
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConstrainingNodes()).basicAdd(otherEnd, msgs);
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getValidatableNodes()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -159,11 +171,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				return ((InternalEList<?>)getResultSets()).basicRemove(otherEnd, msgs);
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				return ((InternalEList<?>)getConstrainingNodes()).basicRemove(otherEnd, msgs);
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				return ((InternalEList<?>)getValidatableNodes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -177,11 +189,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				return getResultSets();
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				return getConstrainingNodes();
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				return getValidatableNodes();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -196,15 +208,15 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				getResultSets().clear();
 				getResultSets().addAll((Collection<? extends ResultSet>)newValue);
 				return;
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				getConstrainingNodes().clear();
 				getConstrainingNodes().addAll((Collection<? extends RootConstrainingNode>)newValue);
 				return;
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				getValidatableNodes().clear();
 				getValidatableNodes().addAll((Collection<? extends RootValidatableNode>)newValue);
 				return;
@@ -220,13 +232,13 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				getResultSets().clear();
 				return;
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				getConstrainingNodes().clear();
 				return;
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				getValidatableNodes().clear();
 				return;
 		}
@@ -241,11 +253,11 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ROOT_NODE__RESULT_SETS:
+			case 0:
 				return resultSets != null && !resultSets.isEmpty();
-			case ValidityPackage.ROOT_NODE__CONSTRAINING_NODES:
+			case 1:
 				return constrainingNodes != null && !constrainingNodes.isEmpty();
-			case ValidityPackage.ROOT_NODE__VALIDATABLE_NODES:
+			case 2:
 				return validatableNodes != null && !validatableNodes.isEmpty();
 		}
 		return super.eIsSet(featureID);

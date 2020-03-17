@@ -66,7 +66,7 @@ public class Bug477283AFactoryImpl extends EFactoryImpl implements Bug477283AFac
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case Bug477283APackage.A: return createA();
+			case 0: return createA();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

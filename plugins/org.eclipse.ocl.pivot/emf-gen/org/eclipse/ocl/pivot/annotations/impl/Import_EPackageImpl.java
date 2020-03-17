@@ -24,6 +24,23 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class Import_EPackageImpl extends MinimalEObjectImpl.Container implements Import_EPackage {
 	/**
+	 * The number of structural features of the '<em>Import EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IMPORT_EPACKAGE_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>Import EPackage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IMPORT_EPACKAGE_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

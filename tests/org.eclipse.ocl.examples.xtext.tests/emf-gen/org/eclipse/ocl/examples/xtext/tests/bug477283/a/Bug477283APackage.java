@@ -65,35 +65,6 @@ public interface Bug477283APackage extends EPackage {
 	Bug477283APackage eINSTANCE = org.eclipse.ocl.examples.xtext.tests.bug477283.a.impl.Bug477283APackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.a.impl.AImpl <em>A</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.a.impl.AImpl
-	 * @see org.eclipse.ocl.examples.xtext.tests.bug477283.a.impl.Bug477283APackageImpl#getA()
-	 * @generated
-	 */
-	int A = 0;
-
-	/**
-	 * The number of structural features of the '<em>A</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int A_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>A</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int A_OPERATION_COUNT = 0;
-
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext.tests.bug477283.a.A <em>A</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

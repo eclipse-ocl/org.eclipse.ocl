@@ -61,9 +61,9 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case CompanyPackage.COMPANY: return createCompany();
-			case CompanyPackage.EMPLOYEE: return createEmployee();
-			case CompanyPackage.BUG418716: return createBug418716();
+			case 0: return createCompany();
+			case 1: return createEmployee();
+			case 2: return createBug418716();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -77,7 +77,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case CompanyPackage.COMPANY_SIZE_KIND:
+			case 3:
 				return createCompanySizeKindFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -92,7 +92,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case CompanyPackage.COMPANY_SIZE_KIND:
+			case 3:
 				return convertCompanySizeKindToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

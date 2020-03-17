@@ -379,7 +379,7 @@ implements PivotFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class createClass() {
@@ -458,7 +458,7 @@ implements PivotFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage() {

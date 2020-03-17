@@ -24,6 +24,23 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  */
 public class MetaAnnotation_EAnnotationImpl extends MinimalEObjectImpl.Container implements MetaAnnotation_EAnnotation {
 	/**
+	 * The number of structural features of the '<em>Meta Annotation EAnnotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int META_ANNOTATION_EANNOTATION_FEATURE_COUNT = 0;
+	/**
+	 * The number of operations of the '<em>Meta Annotation EAnnotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int META_ANNOTATION_EANNOTATION_OPERATION_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
