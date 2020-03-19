@@ -13,7 +13,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="IterableValue" abstract="true" interface="true"
       eSuperTypes="#//Value"/>
   <eClassifiers xsi:type="ecore:EClass" name="MapValue" eSuperTypes="#//IterableValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NullValue" eSuperTypes="#//ObjectValue #//IntegerValue #//UnlimitedValue #//BagValue #//MapValue #//OrderedSetValue #//SequenceValue #//SetValue #//TupleValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NullValue" eSuperTypes="#//ObjectValue #//IntegerValue #//UnlimitedValue #//BagValue #//OrderedSetValue #//SequenceValue #//SetValue #//TupleValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="NumberValue" abstract="true">
     <eGenericSuperTypes eClassifier="#//ComparableValue">
       <eTypeArguments eClassifier="#//NumberValue"/>
