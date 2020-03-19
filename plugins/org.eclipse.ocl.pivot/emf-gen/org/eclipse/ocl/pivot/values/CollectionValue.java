@@ -22,8 +22,16 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
-public interface CollectionValue extends IterableValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Collection Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getCollectionValue()
+ * @generated
+ */
+public interface CollectionValue extends IterableValue {
 	/**
 	 * @generated NOT
 	 */
@@ -181,4 +189,4 @@ public interface CollectionValue extends IterableValue
 	 * @generated NOT
 	 */
 	@NonNull CollectionValue union(@NonNull CollectionValue c);
-}
+} // CollectionValue

@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Ordered Collection Value</b></em>'.
@@ -23,9 +22,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage#getOrderedCollectionValue()
  * @generated
  */
-public interface OrderedCollectionValue extends CollectionValue
-{
-	
+public interface OrderedCollectionValue extends CollectionValue {
+
 	/**
 	 * @generated NOT
 	 */

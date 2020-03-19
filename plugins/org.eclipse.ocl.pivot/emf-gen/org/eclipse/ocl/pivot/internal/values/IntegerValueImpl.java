@@ -31,11 +31,24 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Integer Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated not
  */
 public abstract class IntegerValueImpl extends NumberValueImpl implements IntegerValue, UnlimitedNaturalValue
 {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The number of structural features of the '<em>Integer Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INTEGER_VALUE_FEATURE_COUNT = RealValueImpl.REAL_VALUE_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -47,6 +60,15 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 		return ValuesPackage.Literals.INTEGER_VALUE;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntegerValueImpl() {
+		super();
+	}
+
 	@Override
 	public @NonNull RealValue addReal(@NonNull RealValue rightValue) {
 		try {
@@ -56,7 +78,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 			throw new InvalidValueException(PivotMessages.InvalidReal, e, null, rightValue);
 		}
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue asIntegerValue() {
 		return this;
@@ -161,7 +183,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 	public @NonNull TypeId getTypeId() {
 		return TypeId.INTEGER;
 	}
-	
+
 	@Override
 	public @Nullable IntegerValue isIntegerValue() {
 		return this;
@@ -171,7 +193,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 	public boolean isUnlimited() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isUnlimitedNatural() {
 		return signum() >= 0;
@@ -253,4 +275,4 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 			throw new InvalidValueException(PivotMessages.InvalidReal, e, null, rightValue);
 		}
 	}
-}
+} //IntegerValueImpl

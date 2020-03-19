@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -33,10 +34,22 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Sequence Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public abstract class SequenceValueImpl extends CollectionValueImpl implements SequenceValue
-{
+public abstract class SequenceValueImpl extends CollectionValueImpl implements SequenceValue {
+	/**
+	 * The number of structural features of the '<em>Sequence Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SEQUENCE_VALUE_FEATURE_COUNT = 0;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47,6 +60,20 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return ValuesPackage.Literals.SEQUENCE_VALUE;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected SequenceValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public SequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> values) {
 		super(typeId, values);
 	}
@@ -67,7 +94,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
         result.addAll(objects.getElements());
         return new SparseSequenceValueImpl(getTypeId(), result);
     }
-	
+
 	@Override
 	public @NonNull List<? extends Object> asList() {
 		return getElements();
@@ -82,7 +109,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	public @NonNull SequenceValue asSequenceValue() {
         return this;
     }
-		
+
 	@Override
 	public @NonNull List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		List<Object> unboxedValues = new ArrayList<Object>();
@@ -94,10 +121,10 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 
     @Override
 	public @Nullable Object at(int index) {
-        index = index - 1;        
+        index = index - 1;
         if (index < 0 || elements.size() <= index) {
         	throw new InvalidValueException(PivotMessages.IndexOutOfRange, index + 1, size());
-		}        
+		}
         return getElements().get(index);
     }
 
@@ -106,8 +133,8 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		if (!(obj instanceof SequenceValue) || (obj instanceof OrderedSetValue)) {
 			return false;
 		}
-		Iterator<@Nullable ? extends Object> theseElements = iterator();
-		Iterator<@Nullable ? extends Object> thoseElements = ((SequenceValue)obj).iterator();
+		Iterator<? extends Object> theseElements = iterator();
+		Iterator<? extends Object> thoseElements = ((SequenceValue)obj).iterator();
 		while (theseElements.hasNext() && thoseElements.hasNext()) {
 			Object thisValue = theseElements.next();
 			Object thatValue = thoseElements.next();
@@ -199,17 +226,17 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 //	public @NonNull CollectionTypeId getCollectionTypeId() {
 //		return TypeId.SEQUENCE;
 //	}
-    
+
 	@Override
 	public @NonNull List<? extends Object> getElements() {
 		return (List<? extends Object>) elements;
 	}
-	
+
 	@Override
 	public @NonNull String getKind() {
 	    return TypeId.SEQUENCE_NAME;
 	}
-	   
+
 	@Override
 	public @NonNull SequenceValue including(@Nullable Object value) {
 		if (value instanceof InvalidValueException) {
@@ -243,10 +270,10 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "insertAt");
 		}
-        index = index - 1;        
+        index = index - 1;
         if (index < 0 || index > elements.size()) {
         	throw new InvalidValueException(PivotMessages.IndexOutOfRange, index + 1, size());
-        }        
+        }
 		List<Object> result = new ArrayList<Object>(elements);
 		result.add(index, object);
 		return new SparseSequenceValueImpl(getTypeId(), result);
@@ -261,7 +288,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	public boolean isUnique() {
 		return false;
 	}
-   
+
     @Override
 	public @Nullable Object last() {
         int size = elements.size();
@@ -295,23 +322,23 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		Collections.reverse(elements);
         return new SparseSequenceValueImpl(getTypeId(), elements);
     }
-	   
+
     @Override
 	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
     	List<Object> values = new ArrayList<Object>(elements);
     	Collections.sort(values, comparator);
     	return new SparseSequenceValueImpl(getTypeId(), values);
     }
-	
+
     /**
      * Implementation of the OCL
      * <tt>Sequence::subSequence(lower : Integer, upper : Integer) : Sequence(T)</tt>
      * operation.
-     * 
+     *
      * @param lower the 1-based (in OCL fashion) inclusive lower bound
      * @param upper the 1-based (in OCL fashion) inclusive upper bound
      * @return the source collection with the object inserted at the index
-     * 
+     *
      * @throws IndexOutOfBoundsException if an index is out of bounds
      * @throws IllegalArgumentException if the lower bound is greater than the upper
      */
@@ -319,7 +346,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	public @NonNull SequenceValue subSequence(int lower, int upper) {
         lower = lower - 1;
         upper = upper - 1;
-        
+
         if (lower < 0) {
 			throw new InvalidValueException(new IndexOutOfBoundsException("lower: " + (lower + 1))); //$NON-NLS-1$
         } else if (upper >= elements.size()) {
@@ -331,7 +358,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 				"lower: " + (lower + 1) + ", upper: " //$NON-NLS-1$ //$NON-NLS-2$
 					+ (upper + 1)));
         }
-        
+
 		List<Object> result = new ArrayList<Object>();
         int curr = 0;
         for (Object object : iterable()) {
@@ -353,4 +380,4 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		s.append(TypeId.SEQUENCE_NAME);
 		super.toString(s, lengthLimit);
 	}
-}
+} //SequenceValueImpl

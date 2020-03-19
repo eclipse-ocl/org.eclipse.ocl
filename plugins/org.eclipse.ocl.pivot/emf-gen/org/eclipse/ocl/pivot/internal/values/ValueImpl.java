@@ -40,10 +40,16 @@ import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated not
  */
-public abstract class ValueImpl extends ValueUtil implements Value
-{
+public abstract class ValueImpl extends ValueUtil implements Value {
+	/**
+	 * @generated NOT
+	 */
 	static class EmptyIterator implements Iterator<Value>
 	{
 		@Override
@@ -61,56 +67,95 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	/**
+	 * The number of structural features of the '<em>Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 * @ordered
+	 */
+	public static final int VALUE_FEATURE_COUNT = 0;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.VALUE;
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	protected ValueImpl() {}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull BagValue asBagValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BAG_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull Double asDouble() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Double", getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @Nullable Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return asObject();
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public Element asElement() {
 		return null;
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull Integer asInteger() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INTEGER_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull IntegerValue asIntegerValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INTEGER_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull MapValue asMapValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.MAP_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull EObject asNavigableObject() {
 		Object object = asObject();
@@ -122,76 +167,114 @@ public abstract class ValueImpl extends ValueUtil implements Value
 		}
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull ObjectValue asObjectValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Object", getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ORDERED_COLLECTION_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ORDERED_SET_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull RealValue asRealValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.REAL_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SEQUENCE_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull SetValue asSetValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SET_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull TupleValue asTupleValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.TUPLE_NAME, getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Unique Collection", getTypeName());
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @Nullable Object asUnboxedObject(@NonNull IdResolver idResolver) {
 		return asObject();
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public @NonNull UnlimitedNaturalValue asUnlimitedNaturalValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNLIMITED_NATURAL_NAME, getTypeName());
 	}
 
-	//	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
-	//		return getType(standardLibrary);
-	//	}
-
+	/**
+	 * @generated NOT
+	 */
 	public @NonNull String getTypeName() {
 		return getTypeId().getDisplayName();
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public boolean isInvalid() {
 		return false;
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public boolean isUndefined() {
 		return false;
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {		// FIXME change to abstract once a major version permits the API change
 		s.append(getClass().getSimpleName());
 	}
-}
+} //ValueImpl

@@ -16,10 +16,22 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Object Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue
-{
+public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue {
+	/**
+	 * The number of structural features of the '<em>Object Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_VALUE_FEATURE_COUNT = ValueImpl.VALUE_FEATURE_COUNT + 0;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -29,8 +41,15 @@ public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.OBJECT_VALUE;
 	}
-	
-	protected ObjectValueImpl() {}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ObjectValueImpl() {
+		super();
+	}
 
 	@Override
 	public @NonNull Object asObject() {
@@ -62,4 +81,4 @@ public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue
 	public String toString() {
 		return String.valueOf(getObject());
 	}
-}
+} //ObjectValueImpl

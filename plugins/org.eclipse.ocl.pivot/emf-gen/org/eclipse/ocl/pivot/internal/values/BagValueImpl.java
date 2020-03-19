@@ -30,20 +30,13 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Bag Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public class BagValueImpl extends CollectionValueImpl implements BagValue
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return ValuesPackage.Literals.BAG_VALUE;
-	}
-
+public class BagValueImpl extends CollectionValueImpl implements BagValue {
 	public static @NonNull Bag<Object> createBagOfEach(@Nullable Object @NonNull [] boxedValues) {
 		Bag<Object> result = new BagImpl<Object>();
 		for (Object boxedValue : boxedValues) {
@@ -65,6 +58,39 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 		}
 	}
 
+	/**
+	 * The number of structural features of the '<em>Bag Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BAG_VALUE_FEATURE_COUNT = CollectionValueImpl.COLLECTION_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return ValuesPackage.Literals.BAG_VALUE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected BagValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public BagValueImpl(@NonNull CollectionTypeId typeId, @NonNull Bag<? extends Object> boxedValues) {
 		super(typeId, boxedValues);
 	}
@@ -242,4 +268,4 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 		s.append(TypeId.BAG_NAME);
 		super.toString(s, lengthLimit);
 	}
-}
+} //BagValueImpl

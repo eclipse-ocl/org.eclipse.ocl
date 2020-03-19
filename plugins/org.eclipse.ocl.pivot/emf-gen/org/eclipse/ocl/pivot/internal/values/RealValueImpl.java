@@ -32,21 +32,14 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Real Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public class RealValueImpl extends NumberValueImpl implements RealValue
-{
+public class RealValueImpl extends NumberValueImpl implements RealValue {
 	private static final long serialVersionUID = -6016171050097266652L;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return ValuesPackage.Literals.REAL_VALUE;
-	}
 
 	private static final int MINIMUM_SCALE = Double.SIZE/2;		// Gives nearly twice the precision of Double
 
@@ -62,20 +55,58 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 			throw new InvalidValueException(e, "divideBigDecimal");
 		}
 	}
-	
+
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
 
+	/**
+	 * The number of structural features of the '<em>Real Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REAL_VALUE_FEATURE_COUNT = NumberValueImpl.NUMBER_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return ValuesPackage.Literals.REAL_VALUE;
+	}
+
 	private final @NonNull BigDecimal value;
 	private Object integerValue = null;	// Lazily computed exact IntegerValue or Exception
-	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected RealValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@SuppressWarnings("null")
 	public RealValueImpl(double value) {
 		this(BigDecimal.valueOf(value));
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public RealValueImpl(@NonNull BigDecimal value) {
 		this.value = value;
 		assert value != null;
@@ -122,7 +153,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 			return ecoreValue != null ? ecoreValue : doubleValue();
 		}
 	}
-	
+
 	@Override
 	public @NonNull Number asNumber() {
 		return value;
@@ -152,7 +183,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	public @NonNull BigInteger bigIntegerValue() {
 		Object intValue = getIntegerValue();
 		if (intValue instanceof Exception) {
-			throw new InvalidValueException((Exception) intValue, "bigIntegerValue");			
+			throw new InvalidValueException((Exception) intValue, "bigIntegerValue");
 		}
 		else {
 			return ((IntegerValue) intValue).bigIntegerValue();
@@ -258,7 +289,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 				integerValue = ValueUtil.integerValueOf(intValue);
 			}
 			catch (ArithmeticException e) {
-				integerValue = e;			
+				integerValue = e;
 			}
 		}
 		return integerValue;
@@ -278,7 +309,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 		Object intValue = getIntegerValue();
 		if (intValue instanceof IntegerValue) {
 			return intValue.hashCode();
-		} 
+		}
 		else {
 			return value.hashCode();
 		}
@@ -288,7 +319,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	public int intValue() {
 		return value.intValue();
 	}
-	
+
 	@Override
 	public @Nullable IntegerValue isIntegerValue() {
 		return null;
@@ -379,7 +410,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 		@SuppressWarnings("null") @NonNull BigDecimal result = value.negate();
 		return ValueUtil.realValueOf(result);
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue round() {
 		BigDecimal rounded;
@@ -422,4 +453,4 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	public String toString() {
 		return value.toString();
 	}
-}
+} //RealValueImpl

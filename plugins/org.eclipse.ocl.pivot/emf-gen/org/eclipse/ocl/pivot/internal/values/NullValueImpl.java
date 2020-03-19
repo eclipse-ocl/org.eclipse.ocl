@@ -26,33 +26,43 @@ import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * An InvalidValueException wraps an InvalidValue and is used to return the InvalidValue
- * to the caller. Exceptions are a
- * is thrown when an Invalid Value arises during
- * an evaluation, and when no EvaluationEnvironment is available to support
- * throwing an InvalidEvaluationException. When such an environment is
- * available the InvalidValueException is rethrown as an 
- * InvalidEvaluationException.
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Null Value</b></em>'.
+ * <!-- end-user-doc -->
  *
- * * @generated NOT
+ * @generated not
  */
 public class NullValueImpl extends UndefinedValueImpl implements NullValue
-{	
+{
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The number of structural features of the '<em>Null Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NULL_VALUE_FEATURE_COUNT = ObjectValueImpl.OBJECT_VALUE_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.NULL_VALUE;
 	}
-	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public NullValueImpl() {
 		super(null);
 	}
-	
+
 	@Override
 	public List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return null;
@@ -62,7 +72,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	public Element asElement() {
 		return null;
 	}
-	
+
 	@Override
 	public List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		return null;
@@ -112,4 +122,4 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	public String toString() {
 		return "null";
 	}
-}
+} //NullValueImpl

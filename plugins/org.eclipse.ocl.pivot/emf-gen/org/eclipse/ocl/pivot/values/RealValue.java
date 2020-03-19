@@ -16,6 +16,15 @@ import java.math.BigInteger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Real Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getRealValue()
+ * @generated
+ */
 public interface RealValue extends NumberValue
 {
 	/**
@@ -32,7 +41,7 @@ public interface RealValue extends NumberValue
 	 * @generated NOT
 	 */
 	@NonNull RealValue addReal(@NonNull RealValue right);
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -42,7 +51,7 @@ public interface RealValue extends NumberValue
 	 * @generated NOT
 	 */
 	@NonNull BigDecimal bigDecimalValue();
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -87,7 +96,7 @@ public interface RealValue extends NumberValue
 	 * @generated NOT
 	 */
 	@NonNull IntegerValue floor();
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -151,7 +160,7 @@ public interface RealValue extends NumberValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull RealValue negate();	
+	@NonNull RealValue negate();
 
 	/**
 	 * @generated NOT
@@ -167,4 +176,4 @@ public interface RealValue extends NumberValue
 	 * @generated NOT
 	 */
 	@NonNull RealValue subtractReal(@NonNull RealValue right);
-}
+} // RealValue

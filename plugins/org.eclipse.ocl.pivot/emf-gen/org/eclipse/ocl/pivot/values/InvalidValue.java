@@ -11,6 +11,14 @@
 package org.eclipse.ocl.pivot.values;
 
 
-public interface InvalidValue extends NullValue
-{	
-}
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Invalid Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getInvalidValue()
+ * @generated
+ */
+public interface InvalidValue extends NullValue {
+} // InvalidValue

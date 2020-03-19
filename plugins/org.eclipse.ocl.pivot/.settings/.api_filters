@@ -24,6 +24,227 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/BagValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.BagValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.BagValueImpl"/>
+                <message_argument value="BAG_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="BAG_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="BagValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/CollectionValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.CollectionValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.CollectionValueImpl"/>
+                <message_argument value="COLLECTION_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="COLLECTION_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CollectionValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/IntegerValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.IntegerValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.IntegerValueImpl"/>
+                <message_argument value="INTEGER_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="354463860">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.IntegerValueImpl"/>
+                <message_argument value="IntegerValueImpl()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="INTEGER_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/MapValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.MapValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.MapValueImpl"/>
+                <message_argument value="MAP_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MAP_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MapValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/NullValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.NullValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.NullValueImpl"/>
+                <message_argument value="NULL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="NULL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/NumberValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.NumberValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.NumberValueImpl"/>
+                <message_argument value="NUMBER_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="421650549">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.NumberValueImpl"/>
+                <message_argument value="eStaticClass()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="NUMBER_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/ObjectValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.ObjectValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.ObjectValueImpl"/>
+                <message_argument value="OBJECT_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="OBJECT_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/OrderedSetValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.OrderedSetValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.OrderedSetValueImpl"/>
+                <message_argument value="ORDERED_SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORDERED_SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="OrderedSetValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/RealValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.RealValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.RealValueImpl"/>
+                <message_argument value="REAL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="REAL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="RealValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/SequenceValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.SequenceValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.SequenceValueImpl"/>
+                <message_argument value="SEQUENCE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SEQUENCE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SequenceValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/SetValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.SetValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.SetValueImpl"/>
+                <message_argument value="SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SetValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/TupleValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.TupleValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.TupleValueImpl"/>
+                <message_argument value="TUPLE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="TUPLE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="TupleValueImpl()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/ValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.ValueImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.ValueImpl"/>
+                <message_argument value="VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Parameters">
         <filter id="338755678">
             <message_arguments>
@@ -82,6 +303,376 @@
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getComparableValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getIterableValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getNumberValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getOCLValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getUnlimitedNaturalValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="BAG_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="BAG_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="COLLECTION_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="COLLECTION_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="INTEGER_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="INTEGER_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="INVALID_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="INVALID_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="MAP_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="MAP_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="NULL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="NULL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="OBJECT_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="OBJECT_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="ORDERED_COLLECTION_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="ORDERED_COLLECTION_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="ORDERED_SET_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="ORDERED_SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="REAL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="REAL_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="SEQUENCE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="SEQUENCE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="SET_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="SET_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="TUPLE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="TUPLE_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="UNIQUE_COLLECTION_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="UNIQUE_COLLECTION_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="UNLIMITED_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="UNLIMITED_VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="VALUE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComparableValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIterableValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getNumberValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOCLValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getUnlimitedNaturalValue()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="COMPARABLE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="ITERABLE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="NUMBER_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="OCL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="UNLIMITED_NATURAL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMPARABLE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERABLE_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NUMBER_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNLIMITED_NATURAL_VALUE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesAdapterFactory.java" type="org.eclipse.ocl.pivot.values.util.ValuesAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createComparableValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createIterableValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createMapValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createNumberValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createOCLValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createUnlimitedNaturalValueAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesSwitch.java" type="org.eclipse.ocl.pivot.values.util.ValuesSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseComparableValue(ComparableValue&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseIterableValue(IterableValue)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseMapValue(MapValue)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseNumberValue(NumberValue)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseOCLValue(OCLValue)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseUnlimitedNaturalValue(UnlimitedNaturalValue)"/>
             </message_arguments>
         </filter>
     </resource>

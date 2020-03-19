@@ -10,12 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+
 /**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Bag Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getBagValue()
+ * @generated
  */
-public interface BagValue extends CollectionValue
-{
+public interface BagValue extends CollectionValue {
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue.Accumulator, BagValue {}
-}
+} // BagValue

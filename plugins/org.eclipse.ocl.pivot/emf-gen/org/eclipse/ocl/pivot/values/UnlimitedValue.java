@@ -11,6 +11,14 @@
 package org.eclipse.ocl.pivot.values;
 
 
-public interface UnlimitedValue extends UnlimitedNaturalValue
-{
-}
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Unlimited Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getUnlimitedValue()
+ * @generated
+ */
+public interface UnlimitedValue extends UnlimitedNaturalValue {
+} // UnlimitedValue
