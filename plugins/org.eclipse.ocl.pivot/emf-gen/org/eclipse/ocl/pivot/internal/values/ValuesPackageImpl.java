@@ -13,14 +13,19 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.ComparableValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
@@ -29,6 +34,7 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesFactory;
@@ -60,6 +66,13 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass comparableValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass integerValueEClass = null;
 
 	/**
@@ -74,6 +87,13 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass iterableValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass mapValueEClass = null;
 
 	/**
@@ -82,6 +102,20 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	private EClass nullValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass numberValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oclValueEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -144,6 +178,13 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass unlimitedNaturalValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass unlimitedValueEClass = null;
 
 	/**
@@ -181,7 +222,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link ValuesPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -195,8 +236,8 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		if (isInited) return (ValuesPackage)EPackage.Registry.INSTANCE.getEPackage(ValuesPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		ValuesPackageImpl theValuesPackage = (ValuesPackageImpl)(ePackage instanceof ValuesPackageImpl ? ePackage : new ValuesPackageImpl());
+		Object registeredValuesPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		ValuesPackageImpl theValuesPackage = registeredValuesPackage instanceof ValuesPackageImpl ? (ValuesPackageImpl)registeredValuesPackage : new ValuesPackageImpl();
 
 		isInited = true;
 
@@ -209,7 +250,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		// Mark meta-data to indicate it can't be changed
 		theValuesPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ValuesPackage.eNS_URI, theValuesPackage);
 		return theValuesPackage;
@@ -241,6 +281,16 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getComparableValue() {
+		return comparableValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getIntegerValue() {
 		return integerValueEClass;
 	}
@@ -261,6 +311,16 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getIterableValue() {
+		return iterableValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getMapValue() {
 		return mapValueEClass;
 	}
@@ -273,6 +333,26 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	@Override
 	public EClass getNullValue() {
 		return nullValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getNumberValue() {
+		return numberValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getOCLValue() {
+		return oclValueEClass;
 	}
 
 	/**
@@ -361,6 +441,16 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getUnlimitedNaturalValue() {
+		return unlimitedNaturalValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getUnlimitedValue() {
 		return unlimitedValueEClass;
 	}
@@ -404,37 +494,47 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		bagValueEClass = createEClass(BAG_VALUE);
+		bagValueEClass = createEClass(0);
 
-		collectionValueEClass = createEClass(COLLECTION_VALUE);
+		collectionValueEClass = createEClass(1);
 
-		integerValueEClass = createEClass(INTEGER_VALUE);
+		comparableValueEClass = createEClass(2);
 
-		invalidValueEClass = createEClass(INVALID_VALUE);
+		integerValueEClass = createEClass(3);
 
-		mapValueEClass = createEClass(MAP_VALUE);
+		invalidValueEClass = createEClass(4);
 
-		nullValueEClass = createEClass(NULL_VALUE);
+		iterableValueEClass = createEClass(5);
 
-		objectValueEClass = createEClass(OBJECT_VALUE);
+		mapValueEClass = createEClass(6);
 
-		orderedCollectionValueEClass = createEClass(ORDERED_COLLECTION_VALUE);
+		nullValueEClass = createEClass(7);
 
-		orderedSetValueEClass = createEClass(ORDERED_SET_VALUE);
+		numberValueEClass = createEClass(8);
 
-		realValueEClass = createEClass(REAL_VALUE);
+		oclValueEClass = createEClass(9);
 
-		sequenceValueEClass = createEClass(SEQUENCE_VALUE);
+		objectValueEClass = createEClass(10);
 
-		setValueEClass = createEClass(SET_VALUE);
+		orderedCollectionValueEClass = createEClass(11);
 
-		tupleValueEClass = createEClass(TUPLE_VALUE);
+		orderedSetValueEClass = createEClass(12);
 
-		uniqueCollectionValueEClass = createEClass(UNIQUE_COLLECTION_VALUE);
+		realValueEClass = createEClass(13);
 
-		unlimitedValueEClass = createEClass(UNLIMITED_VALUE);
+		sequenceValueEClass = createEClass(14);
 
-		valueEClass = createEClass(VALUE);
+		setValueEClass = createEClass(15);
+
+		tupleValueEClass = createEClass(16);
+
+		uniqueCollectionValueEClass = createEClass(17);
+
+		unlimitedNaturalValueEClass = createEClass(18);
+
+		unlimitedValueEClass = createEClass(19);
+
+		valueEClass = createEClass(20);
 	}
 
 	/**
@@ -461,62 +561,81 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		setNsURI(eNS_URI);
 
 		// Create type parameters
+		addETypeParameter(comparableValueEClass, "T");
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
 		bagValueEClass.getESuperTypes().add(this.getCollectionValue());
-		collectionValueEClass.getESuperTypes().add(this.getValue());
+		collectionValueEClass.getESuperTypes().add(this.getIterableValue());
+		comparableValueEClass.getESuperTypes().add(this.getValue());
+		comparableValueEClass.getESuperTypes().add(this.getOCLValue());
 		integerValueEClass.getESuperTypes().add(this.getRealValue());
 		invalidValueEClass.getESuperTypes().add(this.getNullValue());
-		mapValueEClass.getESuperTypes().add(this.getValue());
+		iterableValueEClass.getESuperTypes().add(this.getValue());
+		mapValueEClass.getESuperTypes().add(this.getIterableValue());
 		nullValueEClass.getESuperTypes().add(this.getObjectValue());
+		nullValueEClass.getESuperTypes().add(this.getIntegerValue());
+		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
 		nullValueEClass.getESuperTypes().add(this.getBagValue());
-		nullValueEClass.getESuperTypes().add(this.getMapValue());
 		nullValueEClass.getESuperTypes().add(this.getOrderedSetValue());
 		nullValueEClass.getESuperTypes().add(this.getSequenceValue());
 		nullValueEClass.getESuperTypes().add(this.getSetValue());
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
-		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
+		EGenericType g1 = createEGenericType(this.getComparableValue());
+		EGenericType g2 = createEGenericType(this.getNumberValue());
+		g1.getETypeArguments().add(g2);
+		numberValueEClass.getEGenericSuperTypes().add(g1);
 		objectValueEClass.getESuperTypes().add(this.getValue());
 		orderedCollectionValueEClass.getESuperTypes().add(this.getCollectionValue());
 		orderedSetValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
 		orderedSetValueEClass.getESuperTypes().add(this.getUniqueCollectionValue());
-		realValueEClass.getESuperTypes().add(this.getValue());
+		realValueEClass.getESuperTypes().add(this.getNumberValue());
 		sequenceValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
 		setValueEClass.getESuperTypes().add(this.getUniqueCollectionValue());
 		tupleValueEClass.getESuperTypes().add(this.getValue());
 		uniqueCollectionValueEClass.getESuperTypes().add(this.getCollectionValue());
-		unlimitedValueEClass.getESuperTypes().add(this.getIntegerValue());
+		unlimitedNaturalValueEClass.getESuperTypes().add(this.getNumberValue());
+		unlimitedValueEClass.getESuperTypes().add(this.getUnlimitedNaturalValue());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(bagValueEClass, BagValue.class, "BagValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(collectionValueEClass, CollectionValue.class, "CollectionValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(integerValueEClass, IntegerValue.class, "IntegerValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(comparableValueEClass, ComparableValue.class, "ComparableValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(invalidValueEClass, InvalidValue.class, "InvalidValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(integerValueEClass, IntegerValue.class, "IntegerValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(mapValueEClass, MapValue.class, "MapValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(invalidValueEClass, InvalidValue.class, "InvalidValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(iterableValueEClass, IterableValue.class, "IterableValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(mapValueEClass, MapValue.class, "MapValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(nullValueEClass, NullValue.class, "NullValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(numberValueEClass, NumberValue.class, "NumberValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(oclValueEClass, OCLValue.class, "OCLValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(objectValueEClass, ObjectValue.class, "ObjectValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(orderedCollectionValueEClass, OrderedCollectionValue.class, "OrderedCollectionValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(orderedSetValueEClass, OrderedSetValue.class, "OrderedSetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(orderedSetValueEClass, OrderedSetValue.class, "OrderedSetValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(realValueEClass, RealValue.class, "RealValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(sequenceValueEClass, SequenceValue.class, "SequenceValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(sequenceValueEClass, SequenceValue.class, "SequenceValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(setValueEClass, SetValue.class, "SetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(tupleValueEClass, TupleValue.class, "TupleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(uniqueCollectionValueEClass, UniqueCollectionValue.class, "UniqueCollectionValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(unlimitedNaturalValueEClass, UnlimitedNaturalValue.class, "UnlimitedNaturalValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(unlimitedValueEClass, UnlimitedValue.class, "UnlimitedValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

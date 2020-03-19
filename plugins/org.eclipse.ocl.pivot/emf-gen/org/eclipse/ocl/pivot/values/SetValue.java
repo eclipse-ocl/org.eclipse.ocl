@@ -10,10 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-public interface SetValue extends UniqueCollectionValue
-{
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Set Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSetValue()
+ * @generated
+ */
+public interface SetValue extends UniqueCollectionValue {
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue.Accumulator, SetValue {}
-}
+} // SetValue

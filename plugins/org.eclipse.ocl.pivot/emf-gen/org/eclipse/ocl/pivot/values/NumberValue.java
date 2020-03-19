@@ -13,7 +13,15 @@ package org.eclipse.ocl.pivot.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Number Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getNumberValue()
+ * @generated
+ */
 public interface NumberValue extends ComparableValue<NumberValue>
 {
 	/**
@@ -25,9 +33,9 @@ public interface NumberValue extends ComparableValue<NumberValue>
 	 * @generated NOT
 	 */
 	int commutatedCompareToReal(@NonNull RealValue left);
-	
+
 	/**
 	 * @generated NOT
 	 */
 	@Nullable UnlimitedNaturalValue isUnlimitedNaturalValue();
-}
+} // NumberValue

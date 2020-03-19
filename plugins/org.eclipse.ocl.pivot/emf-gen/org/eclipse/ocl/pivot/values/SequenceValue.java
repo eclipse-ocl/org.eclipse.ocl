@@ -12,8 +12,16 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface SequenceValue extends OrderedCollectionValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Sequence Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSequenceValue()
+ * @generated
+ */
+public interface SequenceValue extends OrderedCollectionValue {
 	/**
 	 * @generated NOT
 	 */
@@ -23,4 +31,4 @@ public interface SequenceValue extends OrderedCollectionValue
 	 * @generated NOT
 	 */
     @NonNull SequenceValue subSequence(int lower, int upper);
-}
+} // SequenceValue

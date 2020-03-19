@@ -12,8 +12,16 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface UnlimitedNaturalValue extends NumberValue
-{
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Unlimited Natural Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getUnlimitedNaturalValue()
+ * @generated
+ */
+public interface UnlimitedNaturalValue extends NumberValue {
 	/**
 	 * @generated NOT
 	 */
@@ -48,4 +56,4 @@ public interface UnlimitedNaturalValue extends NumberValue
 	 * @generated NOT
 	 */
 	@NonNull UnlimitedNaturalValue minUnlimited(@NonNull UnlimitedNaturalValue right);
-}
+} // UnlimitedNaturalValue

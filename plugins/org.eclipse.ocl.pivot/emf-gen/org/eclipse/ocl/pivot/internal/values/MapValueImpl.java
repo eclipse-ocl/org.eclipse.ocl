@@ -38,10 +38,13 @@ import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Map Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Object>
-{
+public class MapValueImpl extends ValueImpl implements MapValue {
 	/**
 	 * @since 1.6
 	 */
@@ -85,6 +88,15 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	/**
+	 * The number of structural features of the '<em>Map Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MAP_VALUE_FEATURE_COUNT = 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -98,6 +110,20 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	protected @NonNull Map<Object, Object> boxedValues;
 	private int hashCode = 0;
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected MapValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public MapValueImpl(@NonNull MapTypeId typeId, @NonNull Map<Object, Object> boxedValues) {
 		this.typeId = typeId;
 		this.boxedValues = boxedValues;
@@ -564,4 +590,4 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		}
 		s.append("}");
 	}
-}
+} //MapValueImpl

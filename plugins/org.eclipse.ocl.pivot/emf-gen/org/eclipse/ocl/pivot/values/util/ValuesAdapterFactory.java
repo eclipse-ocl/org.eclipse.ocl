@@ -17,7 +17,28 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.*;
+import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.ComparableValue;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
+import org.eclipse.ocl.pivot.values.MapValue;
+import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.OCLValue;
+import org.eclipse.ocl.pivot.values.ObjectValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+import org.eclipse.ocl.pivot.values.UnlimitedValue;
+import org.eclipse.ocl.pivot.values.Value;
+import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -84,6 +105,10 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 				return createCollectionValueAdapter();
 			}
 			@Override
+			public <T> Adapter caseComparableValue(ComparableValue<T> object) {
+				return createComparableValueAdapter();
+			}
+			@Override
 			public Adapter caseIntegerValue(IntegerValue object) {
 				return createIntegerValueAdapter();
 			}
@@ -92,8 +117,24 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 				return createInvalidValueAdapter();
 			}
 			@Override
+			public Adapter caseIterableValue(IterableValue object) {
+				return createIterableValueAdapter();
+			}
+			@Override
+			public Adapter caseMapValue(MapValue object) {
+				return createMapValueAdapter();
+			}
+			@Override
 			public Adapter caseNullValue(NullValue object) {
 				return createNullValueAdapter();
+			}
+			@Override
+			public Adapter caseNumberValue(NumberValue object) {
+				return createNumberValueAdapter();
+			}
+			@Override
+			public Adapter caseOCLValue(OCLValue object) {
+				return createOCLValueAdapter();
 			}
 			@Override
 			public Adapter caseObjectValue(ObjectValue object) {
@@ -126,6 +167,10 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseUniqueCollectionValue(UniqueCollectionValue object) {
 				return createUniqueCollectionValueAdapter();
+			}
+			@Override
+			public Adapter caseUnlimitedNaturalValue(UnlimitedNaturalValue object) {
+				return createUnlimitedNaturalValueAdapter();
 			}
 			@Override
 			public Adapter caseUnlimitedValue(UnlimitedValue object) {
@@ -184,6 +229,20 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.ComparableValue <em>Comparable Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.ComparableValue
+	 * @generated
+	 */
+	public Adapter createComparableValueAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -212,6 +271,34 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.IterableValue <em>Iterable Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.IterableValue
+	 * @generated
+	 */
+	public Adapter createIterableValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.MapValue <em>Map Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.MapValue
+	 * @generated
+	 */
+	public Adapter createMapValueAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.NullValue <em>Null Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -222,6 +309,34 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNullValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.NumberValue <em>Number Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.NumberValue
+	 * @generated
+	 */
+	public Adapter createNumberValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.OCLValue <em>OCL Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.OCLValue
+	 * @generated
+	 */
+	public Adapter createOCLValueAdapter() {
 		return null;
 	}
 
@@ -334,6 +449,20 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUniqueCollectionValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
+	 * @generated
+	 */
+	public Adapter createUnlimitedNaturalValueAdapter() {
 		return null;
 	}
 

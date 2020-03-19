@@ -19,6 +19,11 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
  * A value support wrapping/boxing a value whose Java implementation does not comply with OCL semantics, primarily
  * that equal values return true from Object.equals(Object) but also for variant metamodel elements.
  * <p>
@@ -40,6 +45,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * if the conversion to XXX is exact and type conformant.
  * <p>
  * isXXX returns an XXX-related value if self is an XXX and is not a NullValue/InvalidValue, returns null otherwise.
+ * <!-- end-model-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getValue()
+ * @generated
  */
 public interface Value
 {

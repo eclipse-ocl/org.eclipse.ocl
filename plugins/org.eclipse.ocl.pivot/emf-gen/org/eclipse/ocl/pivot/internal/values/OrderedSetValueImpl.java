@@ -37,10 +37,22 @@ import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Ordered Set Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public abstract class OrderedSetValueImpl extends CollectionValueImpl implements OrderedSetValue
-{    
+public abstract class OrderedSetValueImpl extends CollectionValueImpl implements OrderedSetValue {
+	/**
+	 * The number of structural features of the '<em>Ordered Set Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ORDERED_SET_VALUE_FEATURE_COUNT = 0;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -51,6 +63,20 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		return ValuesPackage.Literals.ORDERED_SET_VALUE;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected OrderedSetValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public OrderedSetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> elements) {
 		super(typeId, elements);
 		assert checkElementsAreUnique(this.elements);
@@ -88,13 +114,13 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
         return this;
 	}
-	
+
     @Override
 	public @Nullable Object at(int index) {
-        index = index - 1;        
+        index = index - 1;
         if (index < 0 || index >= elements.size()) {
         	throw new InvalidValueException(PivotMessages.IndexOutOfRange, index + 1, size());
-		}        
+		}
         int curr = 0;
         for (Iterator<? extends Object> it = iterator(); it.hasNext();) {
         	Object object = it.next();
@@ -209,14 +235,14 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 
     @Override
 	public @NonNull IntegerValue indexOf(@Nullable Object object) {
-        int index = 1;        
+        int index = 1;
         if (object == null) {
             for (Object next : elements) {
                 if (next == null) {
                     return ValueUtil.integerValueOf(index);
                 }
                 index++;
-            }        
+            }
         }
         else {
             for (Object next : elements) {
@@ -224,7 +250,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
                     return ValueUtil.integerValueOf(index);
                 }
                 index++;
-            }        
+            }
         }
         throw new InvalidValueException(PivotMessages.MissingValue, "indexOf");
     }
@@ -240,7 +266,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
         if ((index < 0) || (effectiveSize < index)) {
         	throw new InvalidValueException(PivotMessages.IndexOutOfRange, index + 1, size());
         }
-        
+
         OrderedSet<Object> result = new OrderedSetImpl<Object>();
         int curr = 0;
         if (object == null) {
@@ -267,7 +293,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 				}
 			}
 		}
-        
+
         if (index == effectiveSize) {
         	// the loop finished before we could add the object
         	result.add(object);
@@ -305,7 +331,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		Collections.reverse(elements);
         return new SparseOrderedSetValueImpl(getTypeId(), elements);
     }
-    
+
     @Override
 	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
     	List<Object> values = new ArrayList<Object>(elements);
@@ -317,7 +343,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
         lower = lower - 1;
         upper = upper - 1;
-        
+
         if (lower < 0) {
 			throw new InvalidValueException(new IndexOutOfBoundsException("lower: " + (lower + 1))); //$NON-NLS-1$
         } else if (upper >= elements.size()) {
@@ -329,7 +355,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 				"lower: " + (lower + 1) + ", upper: " //$NON-NLS-1$ //$NON-NLS-2$
 					+ (upper + 1)));
         }
-        
+
         OrderedSet<Object> result = new OrderedSetImpl<Object>();
         int curr = 0;
         for (Iterator<? extends Object> it = elements.iterator(); it.hasNext();) {
@@ -347,19 +373,19 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 //	}
 
     @Override
-	public @NonNull OrderedSetValue symmetricDifference(@NonNull UniqueCollectionValue set) {       
-    	OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);       
+	public @NonNull OrderedSetValue symmetricDifference(@NonNull UniqueCollectionValue set) {
+    	OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
         for (Object e : set.iterable()) {
             if (result.contains(e)) {
                 result.remove(e);
             } else {
                 result.add(e);
             }
-        }        
+        }
         return new SparseOrderedSetValueImpl(getTypeId(), result);
     }
 
 //	public SequenceValue toSequenceValue() {
 //		return this;
 //	}
-}
+} //OrderedSetValueImpl

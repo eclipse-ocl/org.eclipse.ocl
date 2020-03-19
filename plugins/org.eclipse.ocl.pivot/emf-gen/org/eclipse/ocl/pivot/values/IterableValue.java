@@ -17,10 +17,17 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Iterable Value</b></em>'.
+ * @extends Iterable<Object>
  * @since 1.6
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getIterableValue()
+ * @generated not
  */
-public interface IterableValue extends Value, Iterable<@Nullable Object>
-{
+public interface IterableValue extends Value, Iterable<@Nullable Object> {
 	/**
 	 * @generated NOT
 	 */
@@ -49,9 +56,12 @@ public interface IterableValue extends Value, Iterable<@Nullable Object>
 		return this;
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@SuppressWarnings("null")
 	@Override
 	default @NonNull Iterator<@Nullable Object> iterator() {
 		return Collections.emptyIterator();
 	}
-}
+} // IterableValue

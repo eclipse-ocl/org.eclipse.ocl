@@ -24,13 +24,22 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
- * UML implementation of a tuple value.
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Tuple Value</b></em>'.
+ * <!-- end-user-doc -->
  *
- * @author Christian W. Damus (cdamus)
- * @generated NOT
+ * @generated
  */
-public class TupleValueImpl extends ValueImpl implements TupleValue
-{
+public class TupleValueImpl extends ValueImpl implements TupleValue {
+	/**
+	 * The number of structural features of the '<em>Tuple Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TUPLE_VALUE_FEATURE_COUNT = ValueImpl.VALUE_FEATURE_COUNT + 0;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -46,10 +55,20 @@ public class TupleValueImpl extends ValueImpl implements TupleValue
 	private Integer hashCode = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected TupleValueImpl() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Initializes me with a map of part values.
 	 *
 	 * @param tupleTypeId my type
 	 * @param values my parts
+	 * @generated NOT
 	 */
 	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @NonNull Map<@NonNull ? extends TuplePartId, @Nullable Object> values) {
 		this.tupleTypeId = tupleTypeId;
@@ -65,6 +84,7 @@ public class TupleValueImpl extends ValueImpl implements TupleValue
 	 *
 	 * @param tupleTypeId my type
 	 * @param values my values which are aligned to the tupleTypeId.getParts()
+	 * @generated NOT
 	 */
 	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @Nullable Object... values) {
 		this.tupleTypeId = tupleTypeId;
@@ -179,4 +199,4 @@ public class TupleValueImpl extends ValueImpl implements TupleValue
             return o.toString();
         }
     } */
-}
+} //TupleValueImpl

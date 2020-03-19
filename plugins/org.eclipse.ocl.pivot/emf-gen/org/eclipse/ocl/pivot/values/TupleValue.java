@@ -17,43 +17,45 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
 /**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Tuple Value</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
  * Interface of a tuple instance value.  OCL expressions resulting in tuples
  * yield instances of this interface.
+ * <!-- end-model-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.pivot.values.ValuesPackage#getTupleValue()
+ * @generated
  */
 public interface TupleValue extends Value {
     /**
      * Obtains the tuple's type.
-     * 
+     *
      * @return its type
 	 * @generated NOT
      */
-@Override
-	//	@NonNull DomainType getType();
+	@Override
 	@NonNull TupleTypeId getTypeId();
-	
+
     /**
      * Queries the value of the specified tuple part.
-     * 
-     * @param partName the name of the part
-     * @return the corresponding value
-     * @throws InvalidValueException 
-	 * @generated NOT
-     */
-//	@Nullable Object getValue(@NonNull String partName);
-    
-    /**
-     * Queries the value of the specified tuple part.
-     * 
+     *
      * @param partId the tuple part (as an attribute)
      * @return the corresponding value
-     * @throws InvalidValueException 
+     * @throws InvalidValueException
+     *
 	 * @generated NOT
      */
 	@Nullable Object getValue(@NonNull TuplePartId partId);
-    
+
     /**
      * Queries the value of the specified tuple part at 0-based index corresponding to the position of the
      * required part-name in the alphabetically sorted list of all part-names.
-     */
+     *
+	 * @generated NOT
+      */
 	@Nullable Object getValue(int index);
-}
+} // TupleValue
