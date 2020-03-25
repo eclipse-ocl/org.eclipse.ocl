@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,6 +66,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
@@ -979,7 +981,16 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull String getImplementationName(@NonNull Operation operation) {
 		if (operation.getImplementationClass() != null) {
-			return operation.getImplementationClass() + ".INSTANCE";
+			ImplementationManager implementationManager = metamodelManager.getImplementationManager();
+			Field field = null;
+			try {
+				field = implementationManager.loadImplementationInstanceField(operation);
+			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			}
+			if (field == null) {
+				throw new IllegalStateException("No implementation class instance field for " + operation);
+			}
+			return field.getDeclaringClass().getName() + "." + field.getName();
 		}
 		else {
 			//		    List<Constraint> constraints = operation.getOwnedRule();

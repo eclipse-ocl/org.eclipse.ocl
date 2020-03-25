@@ -304,7 +304,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
 				private final @NonNull Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())» = createIteration("«iteration.
 				name»", «iteration.type.getSymbolName()», «IF iteration.implementationClass !== null»"«iteration.
-				implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				implementationClass»", «getInstanceField(iteration)»«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDFOR»
 			«ENDFOR»
 
@@ -430,7 +430,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
 				private final @NonNull Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())» = createOperation("«operation.
 				name»", «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
-				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				implementationClass»", «getInstanceField(operation)»«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDFOR»
 			«ENDFOR»
 
@@ -619,7 +619,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«ENDIF»
 					«IF property.implementationClass !== null»
 						property.setImplementationClass("«property.implementationClass»");
-						property.setImplementation(«property.implementationClass».INSTANCE);
+						property.setImplementation(«getInstanceField(property)»);
 					«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
@@ -672,7 +672,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«FOR property : type.getSortedProperties()»
 						«IF property.implementationClass !== null»
 							«property.getSymbolName()».setImplementationClass("«property.implementationClass»");
-							«property.getSymbolName()».setImplementation(«property.implementationClass».INSTANCE);
+							«property.getSymbolName()».setImplementation(«getInstanceField(property)»);
 						«ENDIF»
 					«ENDFOR»
 					«type.emitSuperClasses("type")»

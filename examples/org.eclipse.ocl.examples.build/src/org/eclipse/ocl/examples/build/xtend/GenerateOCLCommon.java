@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.xtend;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -63,6 +65,7 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -614,6 +617,14 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return basicPackageId == IdManager.METAMODEL ? "IdManager.METAMODEL" : "null";
 	}
 
+	protected @NonNull String getInstanceField(@NonNull Feature feature) throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		ImplementationManager implementationManager = metamodelManager.getImplementationManager();
+		Field field = implementationManager.loadImplementationInstanceField(feature);
+		if (field == null) {
+			throw new IllegalStateException("No implementation class instance field for " + feature);
+		}
+		return field.getDeclaringClass().getName() + "." + field.getName();
+	}
 
 	protected @NonNull String getMoniker(@NonNull Element elem) {
 		String moniker = element2moniker.get(elem);

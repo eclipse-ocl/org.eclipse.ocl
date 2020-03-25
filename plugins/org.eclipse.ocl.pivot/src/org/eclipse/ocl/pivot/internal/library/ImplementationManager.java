@@ -203,35 +203,72 @@ public class ImplementationManager
 	 */
 	public @Nullable LibraryFeature loadImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		LibraryFeature implementation = feature.getImplementation();
-		if (implementation == null) {
+		if (implementation != null) {
+			return implementation;
+		}
+		Field field = loadImplementationInstanceField(feature);
+		return field != null ? (LibraryFeature) field.get(null) : null;
+	}
+
+	/**
+	 * Return the Java field that points at the implementation of a feature.
+	 *
+	 * @param feature to be implemented.
+	 * @return the implementation, or null if the feature has no implementation
+	 * as is the case for a normal model feature
+	 * @throws ClassNotFoundException if the implementation class realising
+	 * the implementation is not loadable
+	 * @throws NoSuchFieldException if the implementation class realising
+	 * the implementation does not provide a static INSTANCE field
+	 * @throws SecurityException if the implementation class is not accessible
+	 * @throws IllegalAccessException if the implementation class is not accessible
+	 * @throws IllegalArgumentException if the implementation class is not accessible
+	 * @since 1.12
+	 */
+	public @Nullable Field loadImplementationInstanceField(@NonNull Feature feature) throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Class<?> theClass = null;
+//		LibraryFeature implementation = feature.getImplementation();
+//		if (implementation != null) {
+//			theClass = implementation.getClass();
+//		}
+//		else {
 			String implementationClassName = feature.getImplementationClass();
-			if (implementationClassName != null) {
-				Class<?> theClass = null;
-				ClassLoader featureClassLoader = feature.getClass().getClassLoader();
-				if (featureClassLoader != null) {
-					addClassLoader(featureClassLoader);
-				}
-				ClassNotFoundException e = null;
-				for (@NonNull ClassLoader classLoader : getClassLoaders()) {
-					try {
-						theClass = classLoader.loadClass(implementationClassName);
-						e = null;
-						break;
-					} catch (ClassNotFoundException e1) {
-						if (e == null) {
-							e = e1;
-						}
+			if (implementationClassName == null) {
+				return null;
+			}
+			ClassLoader featureClassLoader = feature.getClass().getClassLoader();
+			if (featureClassLoader != null) {
+				addClassLoader(featureClassLoader);
+			}
+			ClassNotFoundException e = null;
+			for (@NonNull ClassLoader classLoader : getClassLoaders()) {
+				try {
+					theClass = classLoader.loadClass(implementationClassName);
+					e = null;
+					break;
+				} catch (ClassNotFoundException e1) {
+					if (e == null) {
+						e = e1;
 					}
 				}
-				if (e != null) {
-					throw e;
-				}
-				if (theClass != null) {
-					Field field = theClass.getField("INSTANCE");
-					implementation = (LibraryFeature) field.get(null);
-				}
 			}
+			if (e != null) {
+				throw e;
+			}
+//		}
+		if (theClass == null) {
+			return null;
 		}
-		return implementation;
+		Field field = null;
+		try {
+			field = theClass.getField("INSTANCE2");
+		} catch (NoSuchFieldException e1) {
+		} catch (SecurityException e1) {
+		}
+		if (field == null) {
+			field = theClass.getField("INSTANCE");
+		}
+		assert field != null;
+		return field;
 	}
 }
