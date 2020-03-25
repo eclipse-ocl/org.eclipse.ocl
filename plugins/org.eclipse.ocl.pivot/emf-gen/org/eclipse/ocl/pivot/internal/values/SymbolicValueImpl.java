@@ -60,7 +60,7 @@ public class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
 
 	@Override
 	public @NonNull TypeId getTypeId() {
-		throw new UnsupportedOperationException();
+		return getTypeId2();
 	}
 
 	@Override

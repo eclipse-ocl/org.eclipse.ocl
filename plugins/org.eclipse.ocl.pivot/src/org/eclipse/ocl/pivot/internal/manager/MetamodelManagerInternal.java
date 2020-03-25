@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -27,6 +28,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -54,6 +56,12 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	{
 		@NonNull FinalAnalysis getFinalAnalysis();
 		@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
+		/**
+		 * @since 1.12
+		 */
+		default @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @NonNull Object... parameters) {
+			throw new UnsupportedOperationException();
+		}
 		void resetFinalAnalysis();
 		void resetFlowAnalysis();
 	}

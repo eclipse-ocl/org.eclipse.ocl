@@ -89,6 +89,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -886,6 +887,9 @@ public abstract class ValueUtil
 	}
 
 	public static boolean isBoxed(@Nullable Object object) {
+		if (object instanceof SymbolicValue) {
+			return true;
+		}
 		if (object instanceof NullValue) {
 			return false;
 		}

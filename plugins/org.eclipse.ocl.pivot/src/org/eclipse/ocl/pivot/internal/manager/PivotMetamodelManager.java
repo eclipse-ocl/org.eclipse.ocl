@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -83,8 +84,13 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -96,6 +102,9 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -113,6 +122,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
@@ -132,6 +142,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -1175,6 +1186,90 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
 		}
 		return flowAnalysis;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @NonNull Object... parameters) {
+		OCLExpression oclExpression = PivotUtil.getOwnedBody(expressionInOCL);
+		OCLExpression contextExpression = FlowAnalysis.getControlExpression(oclExpression);
+	//	Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
+	//	if (oclExpression2flowAnalysis2 == null) {
+	//		oclExpression2flowAnalysis2 = oclExpression2flowAnalysis = new HashMap<>();
+	//	}
+//		ModelManager modelManager = environmentFactory.createModelManager(oclExpression);
+	//	Object context = null;
+		ModelManager modelManager = null;
+	//	EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(null, expressionInOCL, modelManager);
+
+
+	//	if (modelManager == null) {
+			// let the evaluation environment create one
+			modelManager = environmentFactory.createModelManager(context);
+	//	}
+		// can determine a more appropriate context from the context
+		// variable of the expression, to account for stereotype constraints
+		//		context = HelperUtil.getConstraintContext(rootEnvironment, context, expression);
+	//	ExecutorInternal executor = createExecutor(modelManager);
+		ExecutorInternal executor = new BasicOCLExecutor((EnvironmentFactoryInternalExtension) environmentFactory, modelManager)
+		{
+		/*	@Override
+			protected @NonNull EvaluationEnvironmentExtension createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
+			//	return super.createRootEvaluationEnvironment(executableObject);
+				return new BasicEvaluationEnvironment(this, executableObject)
+				{
+					@Override
+					public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
+						// TODO Auto-generated method stub
+						super.add(referredVariable, value);
+					}
+				};
+			} */
+
+			@Override
+			public @Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp navigationCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue) {
+				return new SymbolicNavigationCallValueImpl(navigationCallExp, sourceValue);
+			}
+
+			@Override
+			public Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+				return super.internalExecuteOperationCallExp(operationCallExp, sourceAndArgumentValues);
+			}
+
+		};
+		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expressionInOCL);
+		IdResolver idResolver = environmentFactory.getIdResolver();
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+		if (contextVariable != null) {
+			Object value = context; //new SymbolicVariableValueImpl(contextVariable); //idResolver.boxedValueOf(context);
+			evaluationEnvironment.add(contextVariable, idResolver.boxedValueOf(value));
+		}
+		int i = 0;
+		for (Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
+			evaluationEnvironment.add(parameterVariable, idResolver.boxedValueOf(parameters[i++]));
+		}
+		EvaluationVisitor evaluationVisitor =  executor.getEvaluationVisitor();
+
+
+
+
+//		ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
+//		EvaluationVisitor evaluationVisitor = executor.getEvaluationVisitor();
+		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(evaluationVisitor);
+		try {
+			symbolicEvaluationVisitor.evaluate(expressionInOCL);
+		}
+		catch (InvalidValueException e) {
+			// Ok so some results are unarguably invalid.
+		}
+	//	FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(contextExpression);
+	//	if (flowAnalysis == null) {
+	//		flowAnalysis = environmentFactory.createFlowAnalysis(contextExpression);
+	//		oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
+	//	}
+		return symbolicEvaluationVisitor;
 	}
 
 	@Override

@@ -241,6 +241,22 @@ public abstract class NumberValueImpl extends Number implements NumberValue  {
 		return false;
 	}
 
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public boolean mayBeInvalid() {
+		return false;
+	}
+
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public boolean mayBeNull() {
+		return false;
+	}
+
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
 		return equals(thatValue);

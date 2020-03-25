@@ -91,17 +91,18 @@ public interface CollectionValue extends IterableValue {
 
 	/**
 	 * @generated NOT
+	 */
+	boolean flatten(@NonNull Collection<Object> flattenedElements);
+
+	/**
+	 * @generated NOT
 	 * @since 1.12
 	 */
 	default @NonNull CollectionTypeId getCollectionTypeId() { return getTypeId(); }
 
 	/**
 	 * @generated NOT
-	 */
-	boolean flatten(@NonNull Collection<Object> flattenedElements);
-
-	/**
-	 * @generated NOT
+	 * @since 1.12
 	 */
 	@NonNull Collection<? extends Object> getElements();
 

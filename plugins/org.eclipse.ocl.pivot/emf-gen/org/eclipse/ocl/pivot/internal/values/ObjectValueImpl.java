@@ -78,7 +78,7 @@ public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue {
 	}
 
 	@Override
-	public String toString() {
-		return String.valueOf(getObject());
+	public void toString(@NonNull StringBuilder s, int lengthLimit) {
+		s.append(String.valueOf(getObject()));
 	}
 } //ObjectValueImpl

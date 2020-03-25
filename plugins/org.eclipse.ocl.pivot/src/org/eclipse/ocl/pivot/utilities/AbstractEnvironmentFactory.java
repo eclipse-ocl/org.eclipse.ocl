@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -304,7 +305,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		// can determine a more appropriate context from the context
 		// variable of the expression, to account for stereotype constraints
 		//		context = HelperUtil.getConstraintContext(rootEnvironment, context, expression);
-		ExecutorInternal executor = createExecutor(modelManager);
+	//	ExecutorInternal executor = createExecutor(modelManager);
+		ExecutorInternal executor = new BasicOCLExecutor(this, modelManager)
+		{
+			@Override
+			public @Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp navigationCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue) {
+				return super.internalExecuteNavigationCallExp(navigationCallExp, referredProperty, sourceValue);
+			}
+
+			@Override
+			public Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+				return super.internalExecuteOperationCallExp(operationCallExp, sourceAndArgumentValues);
+			}
+
+		};
 		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expression);
 		Variable contextVariable = expression.getOwnedContext();
 		if (contextVariable != null) {

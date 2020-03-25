@@ -96,6 +96,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -332,8 +333,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	@Override
 	public Object visitIfExp(@NonNull IfExp ifExp) {
 		OCLExpression condition = ifExp.getOwnedCondition();
-		Object acceptedValue = condition.accept(undecoratedVisitor);
-		Object evaluatedCondition = ValueUtil.asBoolean(acceptedValue);
+		Object conditionValue = condition.accept(undecoratedVisitor);
+		Object evaluatedCondition = ValueUtil.asBoolean(conditionValue);
 		OCLExpression expression = null;
 		if (evaluatedCondition == ValueUtil.TRUE_VALUE) {
 			expression = ifExp.getOwnedThen();
@@ -700,7 +701,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
 					try {
 						Object result = implementation.evaluate(context, operationCallExp.getTypeId(), sourceValue, onlyArgument);
-						assert !(result instanceof NullValue);
+						assert !(result instanceof NullValue) || (result instanceof SymbolicValue);
 						return result;
 					}
 					catch (InvalidValueException e) {

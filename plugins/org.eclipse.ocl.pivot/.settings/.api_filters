@@ -316,6 +316,18 @@
                 <message_argument value="getTypeId2()"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="mayBeInvalid()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="mayBeNull()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
         <filter id="403804204">
@@ -767,6 +779,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/MetamodelManagerInternal.java" type="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal$MetamodelManagerInternalExtension2">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
+                <message_argument value="getSymbolicAnalysis(ExpressionInOCL, Object, Object[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
         <filter id="404000815">
             <message_arguments>
@@ -810,6 +830,14 @@
             <message_arguments>
                 <message_argument value="Technology"/>
                 <message_argument value="AbstractTechnology"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/oclany/OclAnyToStringOperation.java" type="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation"/>
+                <message_argument value="INSTANCE2"/>
             </message_arguments>
         </filter>
     </resource>

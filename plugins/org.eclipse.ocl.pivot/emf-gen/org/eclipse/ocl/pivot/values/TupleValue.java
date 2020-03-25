@@ -40,7 +40,7 @@ public interface TupleValue extends Value {
      */
 	default @NonNull TupleTypeId getTupleTypeId() { return getTypeId(); }
 
-    /**
+	/**
      * Obtains the tuple's type.
      *
      * @return its type

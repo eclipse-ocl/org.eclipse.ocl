@@ -129,11 +129,6 @@ public interface MapValue extends IterableValue {
 
 	/**
 	 * @generated NOT
-	 */
-	@NonNull BagValue getValues();
-
-	/**
-	 * @generated NOT
 	 * @since 1.12
 	 */
 	default @NonNull MapTypeId getMapTypeId() { return getTypeId(); }
@@ -143,6 +138,11 @@ public interface MapValue extends IterableValue {
 	 */
 	@Override
 	@NonNull MapTypeId getTypeId();
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull BagValue getValues();
 
 	/**
 	 * @generated NOT

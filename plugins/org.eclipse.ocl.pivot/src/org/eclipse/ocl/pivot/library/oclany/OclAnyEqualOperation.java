@@ -39,7 +39,7 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 		if (left == null) {
 			return right == null;
 		}
-		else if ((left instanceof Type) && (right instanceof Type)){
+		else if ((left instanceof Type) && (right instanceof Type)) {
 			boolean result = ((Type) left).getTypeId().equals(((Type) right).getTypeId());		// FIXME is this a sound/efficient tradeoff for not boxing?
 			return result;
 		}

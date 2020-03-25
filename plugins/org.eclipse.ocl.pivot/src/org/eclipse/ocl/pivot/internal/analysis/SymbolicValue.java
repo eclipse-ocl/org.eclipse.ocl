@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.analysis;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * SymbolicValue defines a symbolic evauation result
+ * SymbolicValue defines a symbolic evaluation result
  * .
  * @since 1.12
  */

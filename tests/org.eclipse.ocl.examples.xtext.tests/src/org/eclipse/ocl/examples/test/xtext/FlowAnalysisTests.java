@@ -15,21 +15,28 @@ import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -77,7 +84,7 @@ public class FlowAnalysisTests extends XtextTestCase
 				flowAnalysis.isNonNull(asExpression));
 		}
 
-		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
+		protected @NonNull ExpressionInOCL createInvariantTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
 			String testContext =
 					"package deductions : ded = 'http://deductions'\n" +
 							"{\n" +
@@ -100,7 +107,37 @@ public class FlowAnalysisTests extends XtextTestCase
 			org.eclipse.ocl.pivot.Package deductionsPackage = NameUtil.getNameable(model.getOwnedPackages(), "deductions");
 			org.eclipse.ocl.pivot.Class deductionsClass = NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions");
 			Constraint asInvariant = NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName);
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification());
+		}
+
+		protected @NonNull ExpressionInOCL createQueryTestModel(@NonNull String queryName, @NonNull String querySignature, @NonNull String queryBody) throws IOException, ParserException {
+			String testContext =
+					"package deductions : ded = 'http://deductions'\n" +
+							"{\n" +
+							"  class Deductions\n" +
+							"  {\n" +
+							"    property dummy : Dummy[?];\n" +
+							"    property x : Integer[?];\n" +
+							"    operation " + querySignature + " {\nbody: " + queryBody + ";\n}\n" +
+							"  }\n" +
+							"  class Dummy\n" +
+							"  {\n" +
+							"    property dummy : Dummy[?];\n" +
+							"    operation func(i : Integer, j : Integer) : Dummy[?];\n" +
+							"  }\n" +
+							"}";
+			String fileName = "FlowAnalysis_" + queryName;
+			createOCLinEcoreFile(fileName + ".oclinecore", testContext);
+			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
+			Model model = PivotUtil.getModel(asResource);
+			org.eclipse.ocl.pivot.Package deductionsPackage = NameUtil.getNameable(model.getOwnedPackages(), "deductions");
+			org.eclipse.ocl.pivot.Class deductionsClass = NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions");
+			Operation asOperation = NameUtil.getNameable(deductionsClass.getOwnedOperations(), queryName);
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asOperation.getBodyExpression());
+		}
+
+		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
+			return createInvariantTestModel(invariantName, invariantBody).getOwnedBody();
 		}
 
 		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {
@@ -131,6 +168,11 @@ public class FlowAnalysisTests extends XtextTestCase
 		protected FlowAnalysis getFlowAnalysis(@NonNull OCLExpression asExpression) {
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(asExpression);
+		}
+
+		protected @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL asExpressionInOCL, @Nullable Object context, @NonNull Object... parameters) {
+			MetamodelManagerInternal metamodelManager = getMetamodelManager();
+			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getSymbolicAnalysis(asExpressionInOCL, context, parameters);
 		}
 	}
 
@@ -199,24 +241,91 @@ public class FlowAnalysisTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	/*	public void testFlowAnalysis_SimpleIfNameGuard() throws Exception {
+	public void testFlowAnalysis_SimpleIfNameGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
-		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleIfNameGuard",
-				"let v : String[?] = x?.toString() in if v = null then 'null' else v endif");
+		ExpressionInOCL asExpressionInOCL = ocl.createInvariantTestModel("SimpleIfNameGuard",
+				"(let v : String[?] = self?.toString() in if v = null then 'null' else v endif) <> null");
+		OperationCallExp asOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		LetExp asLetExp = (LetExp) PivotUtil.getOwnedSource(asOperationCallExp);
+//		LetExp asLetExp = (LetExp) PivotUtil.getOwnedInit(PivotUtil.getOwnedSource(asOperationCallExp));
 		OperationCallExp asLetVariableInit = (OperationCallExp) PivotUtil.getOwnedInit(PivotUtil.getOwnedVariable(asLetExp));
-		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
-		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
-		StringLiteralExp asThenLiteralExp = (StringLiteralExp) PivotUtil.getOwnedThen(asIn);
-		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedElse(asIn);
+		IfExp asIf = (IfExp) PivotUtil.getOwnedIn(asLetExp);
+		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIf);
+		StringLiteralExp asThenLiteralExp = (StringLiteralExp) PivotUtil.getOwnedThen(asIf);
+		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedElse(asIf);
 		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition);
 		//		ocl.assertIsNotKnown(asLetVariableInit);
 		//		ocl.assertIsNotKnown(asConditionVariableExp);
 		//		ocl.assertIsNonNull(asThenLiteralExp);
 		//		ocl.assertIsNotKnown(asElseVariableExp);
-		ocl.assertIsNonNull(asIn);
-		ocl.assertIsNonNull(asLetExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null);
+		assert !symbolicAnalysis1.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis1.mayBeNull(asIf);
+		assert !symbolicAnalysis1.mayBeNull(asLetExp);
+		assert ocl.getIdResolver().oclEquals(symbolicAnalysis1.get(asIf), "null");
+		assert symbolicAnalysis1.isDead(asElseVariableExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValueImpl(TypeId.STRING, false, false));
+		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis2.mayBeNull(asIf);
+		assert !symbolicAnalysis2.mayBeNull(asLetExp);
+//		assert ocl.getIdResolver().oclEquals(symbolicAnalysis2.get(asIf), "null");
+		assert symbolicAnalysis2.isDead(asThenLiteralExp);
 		ocl.dispose();
-	} */
+	}
+
+	public void testSymbolicAnalysis_BadDivide() throws Exception {
+		MyOCL ocl = new MyOCL();
+		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadDivide", "BadDivide(num : Real, den : Real) : Real",
+	//			"let num = 5.0 in den = 0.0 in num / den");
+				"num / den");
+		OperationCallExp asOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
+		VariableExp asDenExp = (VariableExp) PivotUtil.getOwnedArgument(asOperationCallExp, 0);
+
+		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, 5.0, 0.0);
+		assert !symbolicAnalysis1.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis1.mayBeNull(asNumExp);
+		assert !symbolicAnalysis1.mayBeNull(asDenExp);
+		assert !symbolicAnalysis1.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis1.mayBeInvalid(asDenExp);
+		assert symbolicAnalysis1.mayBeInvalid(asOperationCallExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, 5.0, 1.0);
+		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis2.mayBeNull(asNumExp);
+		assert !symbolicAnalysis2.mayBeNull(asDenExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asDenExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asOperationCallExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new SymbolicUnknownValueImpl(TypeId.REAL, false, false), 0.0);
+		assert !symbolicAnalysis3.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis3.mayBeNull(asNumExp);
+		assert !symbolicAnalysis3.mayBeNull(asDenExp);
+		assert !symbolicAnalysis3.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis3.mayBeInvalid(asDenExp);
+		assert symbolicAnalysis3.mayBeInvalid(asOperationCallExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new SymbolicUnknownValueImpl(TypeId.REAL, false, false), 1.0);
+		assert !symbolicAnalysis4.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis4.mayBeNull(asNumExp);
+		assert !symbolicAnalysis4.mayBeNull(asDenExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asDenExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asOperationCallExp);
+//		assert ocl.getIdResolver().oclEquals(symbolicAnalysis1.get(asIf), "null");
+//		assert symbolicAnalysis1.isDead(asElseVariableExp);
+
+//		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValueImpl(TypeId.STRING, false, false));
+//		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
+//		assert !symbolicAnalysis2.mayBeNull(asIf);
+//		assert !symbolicAnalysis2.mayBeNull(asLetExp);
+//		assert ocl.getIdResolver().oclEquals(symbolicAnalysis2.get(asIf), "null");
+//		assert symbolicAnalysis2.isDead(asThenLiteralExp); */
+		ocl.dispose();
+	}
 
 	public void testFlowAnalysis_ImpliesPropertyGuard() throws Exception {
 		MyOCL ocl = new MyOCL();

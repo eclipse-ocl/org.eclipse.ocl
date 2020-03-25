@@ -1521,6 +1521,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.12
+	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedParameters(@NonNull ExpressionInOCL expressionInOCL) {
+		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Parameter> getOwnedParameters(@NonNull Operation operation) {
