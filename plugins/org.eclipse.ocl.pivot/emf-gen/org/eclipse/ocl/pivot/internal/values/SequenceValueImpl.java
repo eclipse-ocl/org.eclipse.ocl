@@ -85,14 +85,14 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		}
     	List<Object> result = new ArrayList<Object>(elements);
         result.add(object);
-        return new SparseSequenceValueImpl(getTypeId(), result);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
 	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
     	List<Object> result = new ArrayList<Object>(elements);
         result.addAll(objects.getElements());
-        return new SparseSequenceValueImpl(getTypeId(), result);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override
@@ -163,7 +163,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new SparseSequenceValueImpl(getTypeId(), result);
+			return new SparseSequenceValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -196,7 +196,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new SparseSequenceValueImpl(getTypeId(), result);
+			return new SparseSequenceValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -215,7 +215,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	public @NonNull SequenceValue flatten() {
     	List<Object> flattened = new ArrayList<Object>();
     	if (flatten(flattened)) {
-    		return new SparseSequenceValueImpl(getTypeId(), flattened);
+    		return new SparseSequenceValueImpl(getCollectionTypeId(), flattened);
     	}
     	else {
     		return this;
@@ -244,7 +244,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		}
 		List<Object> result = new ArrayList<Object>(elements);
 		result.add(value);
-		return new SparseSequenceValueImpl(getTypeId(), result);
+		return new SparseSequenceValueImpl(getCollectionTypeId(), result);
 	}
 
 	@Override
@@ -253,7 +253,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		for (Object value : values) {
 			result.add(value);
 		}
-		return new SparseSequenceValueImpl(getTypeId(), result);
+		return new SparseSequenceValueImpl(getCollectionTypeId(), result);
 	}
 
     @Override
@@ -276,7 +276,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
         }
 		List<Object> result = new ArrayList<Object>(elements);
 		result.add(index, object);
-		return new SparseSequenceValueImpl(getTypeId(), result);
+		return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override
@@ -306,28 +306,28 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
     	List<Object> result = new ArrayList<Object>();
         result.add(object);
         result.addAll(elements);
-        return new SparseSequenceValueImpl(getTypeId(), result);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
 	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue objects) {
     	List<Object> result = new ArrayList<Object>(objects.getElements());
         result.addAll(elements);
-        return new SparseSequenceValueImpl(getTypeId(), result);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override
 	public @NonNull SequenceValue reverse() {
 		List<Object> elements = new ArrayList<Object>(this.elements);
 		Collections.reverse(elements);
-        return new SparseSequenceValueImpl(getTypeId(), elements);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), elements);
     }
 
     @Override
 	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
     	List<Object> values = new ArrayList<Object>(elements);
     	Collections.sort(values, comparator);
-    	return new SparseSequenceValueImpl(getTypeId(), values);
+    	return new SparseSequenceValueImpl(getCollectionTypeId(), values);
     }
 
     /**
@@ -367,7 +367,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
             }
             curr++;
         }
-        return new SparseSequenceValueImpl(getTypeId(), result);
+        return new SparseSequenceValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override

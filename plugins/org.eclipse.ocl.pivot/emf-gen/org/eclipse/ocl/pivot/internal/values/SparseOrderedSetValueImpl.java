@@ -60,7 +60,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
     	OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
         result.remove(object);  // appended object must be last
         result.add(object);
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	public @NonNull OrderedSetValue flatten() {
     	OrderedSet<Object> flattened = new OrderedSetImpl<Object>();
     	if (flatten(flattened)) {
-    		return new SparseOrderedSetValueImpl(getTypeId(), flattened);
+    		return new SparseOrderedSetValueImpl(getCollectionTypeId(), flattened);
     	}
     	else {
     		return this;
@@ -94,7 +94,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		}
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
 		result.add(value);
-		return new SparseOrderedSetValueImpl(getTypeId(), result);
+		return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
 	}
 
     @Override
@@ -117,7 +117,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
     	OrderedSet<Object> result = new OrderedSetImpl<Object>();
         result.add(object);
         result.addAll(elements);
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override

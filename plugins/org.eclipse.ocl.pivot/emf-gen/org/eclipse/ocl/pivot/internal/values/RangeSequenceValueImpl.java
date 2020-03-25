@@ -37,12 +37,12 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 		IntegerValue nextValue = theElements.getLast().addInteger(ONE_VALUE);
 		if (nextValue.equals(value)) {
 			IntegerRange range = createRange(theElements.getFirst(), nextValue);
-			return new RangeSequenceValueImpl(getTypeId(), range);
+			return new RangeSequenceValueImpl(getCollectionTypeId(), range);
 		}
 		else {
 			List<Object> elements = createElements();
 			elements.add(value);
-			return new SparseSequenceValueImpl(getTypeId(), elements);
+			return new SparseSequenceValueImpl(getCollectionTypeId(), elements);
 		}
 	}
 
@@ -107,12 +107,12 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 		IntegerValue previousValue = theElements.getFirst().subtractInteger(ONE_VALUE);
 		if (previousValue.equals(value)) {
 			IntegerRange range = createRange(previousValue, theElements.getLast());
-			return new RangeSequenceValueImpl(getTypeId(), range);
+			return new RangeSequenceValueImpl(getCollectionTypeId(), range);
 		}
 		else {
 			List<Object> elements = createElements();
 			elements.add(0, value);
-			return new SparseSequenceValueImpl(getTypeId(), elements);
+			return new SparseSequenceValueImpl(getCollectionTypeId(), elements);
 		}
 	}
 

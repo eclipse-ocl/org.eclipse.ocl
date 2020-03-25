@@ -191,22 +191,23 @@ public interface Value
 	@NonNull UnlimitedNaturalValue asUnlimitedNaturalValue();
 
 	/**
-	 * Return the type of this value determined from its content. In the case of collections
-	 * this may differ from the constructed type. The actual type is used for validating
-	 * oclAsType conversions.
-	 * @throws InvalidValueException
+	 * Return the TypeId of this value determined from its construction context. In the case of collections
+	 * this may differ from the actual type.
+	 *
+	 * Oops dericed interfaces declare a derived TypedId. Needs a major version change to fix.
 	 * @generated NOT
+	 * @deprecated Use getTypeId2 or derived getXXXTypeId to avoid inheritance clash
 	 */
-	//	@NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary);
+	@Deprecated
+	@NonNull TypeId getTypeId();
 
 	/**
-	 *
-	 * Return the type of this value determined from its construction context. In the case of collections
+	 * Return the TypeId of this value determined from its construction context. In the case of collections
 	 * this may differ from the actual type.
 	 * @generated NOT
+	 * @since 1.12
 	 */
-	//	@NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary);
-	@NonNull TypeId getTypeId();
+	default @NonNull TypeId getTypeId2() { return getTypeId(); }
 
 	/**
 	 * @generated NOT

@@ -247,11 +247,14 @@ public abstract class ValueImpl extends ValueUtil implements Value {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNLIMITED_NATURAL_NAME, getTypeName());
 	}
 
+	@Override
+	public abstract @NonNull TypeId getTypeId2();
+
 	/**
 	 * @generated NOT
 	 */
 	public @NonNull String getTypeName() {
-		return getTypeId().getDisplayName();
+		return getTypeId2().getDisplayName();
 	}
 
 	/**

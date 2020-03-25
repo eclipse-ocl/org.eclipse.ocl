@@ -378,7 +378,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			sourceValue = sourceValue.excluding(null);
 		}
-		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId(), null);
+		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId2(), null);
 		LibraryIteration implementation = (LibraryIteration) dynamicSourceType.lookupImplementation(standardLibrary, staticIteration);
 		/*		Operation dynamicIteration = metamodelManager.getDynamicOperation((org.eclipse.ocl.pivot.Type) dynamicSourceType, staticIteration);
  		if (dynamicIteration == null) {
@@ -484,7 +484,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//		} catch (InvalidValueException e) {
 		//			return evaluationEnvironment.throwInvalidEvaluation(e);
 		//		}
-		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId(), null);
+		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId2(), null);
 		LibraryIteration.LibraryIterationExtension implementation = (LibraryIteration.LibraryIterationExtension) dynamicSourceType.lookupImplementation(standardLibrary, staticIteration);
 		/*		Operation dynamicIteration = metamodelManager.getDynamicOperation((org.eclipse.ocl.pivot.Type) dynamicSourceType, staticIteration);
  		if (dynamicIteration == null) {

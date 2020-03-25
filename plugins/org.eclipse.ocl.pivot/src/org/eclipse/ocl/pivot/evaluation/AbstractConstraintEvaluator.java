@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -62,7 +62,7 @@ public abstract class AbstractConstraintEvaluator<T>
 
 	protected final @NonNull ExpressionInOCL query;
 	protected final @NonNull OCLExpression body;
-	
+
 	/**
 	 * Construct an helper for the evaluation of an expression
 	 */
@@ -70,7 +70,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		this.query = query;
 		this.body = getConstraintExpression(query);
 	}
-	
+
 	/**
 	 * Use the evaluationVisitor to execute my expression on the objects within the evaluationVisitor's evaluationEnvironment,
 	 * invoking one of handleSuccessResult, handleFailureResult, handleInvalidResult or handleExceptionResult to provide the return value.
@@ -111,7 +111,7 @@ public abstract class AbstractConstraintEvaluator<T>
 	protected @NonNull String getConstraintResultMessage(@Nullable Object result) {
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
-			TupleTypeId tupleTypeId = tupleValue.getTypeId();
+			TupleTypeId tupleTypeId = tupleValue.getTupleTypeId();
 			TuplePartId messagePartId = tupleTypeId.getPartId(PivotConstants.MESSAGE_PART_NAME);
 			if (messagePartId != null) {
 				return String.valueOf(tupleValue.getValue(messagePartId));
@@ -120,7 +120,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		else if (result == null) {
 			return StringUtil.bind(PivotMessagesInternal.ValidationResultIsNull_ERROR_,
 				getConstraintTypeName(), getConstraintName(), getObjectLabel());
-			
+
 		}
 		return StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_,
 				getConstraintTypeName() + "::" + getConstraintName(), getObjectLabel());
@@ -133,7 +133,7 @@ public abstract class AbstractConstraintEvaluator<T>
 	protected int getConstraintResultSeverity(@Nullable Object result) {
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
-			TupleTypeId tupleTypeId = tupleValue.getTypeId();
+			TupleTypeId tupleTypeId = tupleValue.getTupleTypeId();
 			TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
 			if (severityPartId != null) {
 				IntegerValue value = ValueUtil.integerValueOf(tupleValue.getValue(severityPartId));
@@ -168,7 +168,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		}
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
-			TupleTypeId tupleTypeId = tupleValue.getTypeId();
+			TupleTypeId tupleTypeId = tupleValue.getTupleTypeId();
 			TuplePartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
 			if (statusPartId == null) {
 				return false;

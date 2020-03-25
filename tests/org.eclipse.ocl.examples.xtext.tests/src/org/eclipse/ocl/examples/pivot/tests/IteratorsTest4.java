@@ -253,7 +253,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->closure(ownedPackages->asBag())");
 
 		// empty closure
-		CollectionTypeId collectedId = expected1.getTypeId();
+		CollectionTypeId collectedId = expected1.getCollectionTypeId();
 		//        @SuppressWarnings("unused") DomainType elementType = collectionType.getElementType();
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->closure(owningPackage)");
 		//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");

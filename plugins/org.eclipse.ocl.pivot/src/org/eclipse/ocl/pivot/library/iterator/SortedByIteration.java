@@ -131,6 +131,11 @@ public class SortedByIteration extends AbstractIteration
 			return typeId;
 		}
 
+		@Override
+		public @NonNull TypeId getTypeId2() {
+			return typeId;
+		}
+
 		public void put(@Nullable Object iterVal, @Nullable Object comparable) {
 			if (content.put(iterVal, comparable) != null) {
 				if (!isUnique) {

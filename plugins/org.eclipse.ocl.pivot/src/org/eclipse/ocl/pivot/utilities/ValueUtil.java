@@ -721,7 +721,7 @@ public abstract class ValueUtil
 			return TypeId.STRING_NAME;
 		}
 		else if (value instanceof Value) {
-			return ((Value) value).getTypeId().getDisplayName();
+			return ((Value) value).getTypeId2().getDisplayName();
 		}
 		else if (value == null) {
 			return TypeId.OCL_VOID_NAME;

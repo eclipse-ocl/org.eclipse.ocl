@@ -285,6 +285,38 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/CollectionValue.java" type="org.eclipse.ocl.pivot.values.CollectionValue">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.CollectionValue"/>
+                <message_argument value="getCollectionTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/MapValue.java" type="org.eclipse.ocl.pivot.values.MapValue">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.MapValue"/>
+                <message_argument value="getMapTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/TupleValue.java" type="org.eclipse.ocl.pivot.values.TupleValue">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.TupleValue"/>
+                <message_argument value="getTupleTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/Value.java" type="org.eclipse.ocl.pivot.values.Value">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="getTypeId2()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
         <filter id="403804204">
             <message_arguments>

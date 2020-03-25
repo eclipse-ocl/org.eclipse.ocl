@@ -88,7 +88,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
         Collection<? extends Object> thoseElements = objects.getElements();
 		result.removeAll(thoseElements);  // appended objects must be last
         result.addAll(thoseElements);
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
@@ -174,7 +174,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
     		}
         }
 		if (result.size() < elements.size()) {
-			return new SparseOrderedSetValueImpl(getTypeId(), result);
+			return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -207,7 +207,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new SparseOrderedSetValueImpl(getTypeId(), result);
+			return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -230,7 +230,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		for (Object value : values) {
 			result.add(value);
 		}
-		return new SparseOrderedSetValueImpl(getTypeId(), result);
+		return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
 	}
 
     @Override
@@ -298,7 +298,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
         	// the loop finished before we could add the object
         	result.add(object);
         }
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override
@@ -315,28 +315,28 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	public @NonNull OrderedSetValue minus(@NonNull UniqueCollectionValue set) {
     	OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
         result.removeAll(set.asCollection());
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
 	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue objects) {
     	OrderedSet<Object> result = new OrderedSetImpl<Object>(objects.getElements());
         result.addAll(elements);
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override
 	public @NonNull OrderedSetValue reverse() {
 		List<? extends Object> elements = asList();
 		Collections.reverse(elements);
-        return new SparseOrderedSetValueImpl(getTypeId(), elements);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), elements);
     }
 
     @Override
 	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
     	List<Object> values = new ArrayList<Object>(elements);
     	Collections.sort(values, comparator);
-    	return new SparseOrderedSetValueImpl(getTypeId(), values);
+    	return new SparseOrderedSetValueImpl(getCollectionTypeId(), values);
     }
 
     @Override
@@ -365,7 +365,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
             }
             curr++;
         }
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
 //	public @NonNull SequenceValue subSequence(int lower, int upper) {
@@ -382,7 +382,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
                 result.add(e);
             }
         }
-        return new SparseOrderedSetValueImpl(getTypeId(), result);
+        return new SparseOrderedSetValueImpl(getCollectionTypeId(), result);
     }
 
 //	public SequenceValue toSequenceValue() {

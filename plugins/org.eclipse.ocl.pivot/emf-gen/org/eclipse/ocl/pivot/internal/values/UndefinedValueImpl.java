@@ -399,7 +399,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public abstract @NonNull OclVoidTypeId getTypeId();
 
 	public @NonNull String getTypeName() {
-		return getTypeId().getDisplayName();
+		return getTypeId2().getDisplayName();
 	}
 
 	@Override

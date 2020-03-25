@@ -66,6 +66,21 @@ public class JavaObjectValueImpl extends ObjectValueImpl
 	}
 
 	@Override
+	public @NonNull TypeId getTypeId2() {
+		//		return getType(valueFactory.getStandardLibrary()).getTypeId();
+		TypeId typeId2 = typeId;
+		if (typeId2 == null) {
+			if (object instanceof Comparable) {
+				typeId = typeId2 = TypeId.OCL_COMPARABLE;
+			}
+			else {
+				typeId = typeId2 = TypeId.OCL_ANY;// METACLASS
+			}
+		}
+		return typeId2;
+	}
+
+	@Override
 	public int hashCode() {
 		return object.hashCode();
 	}

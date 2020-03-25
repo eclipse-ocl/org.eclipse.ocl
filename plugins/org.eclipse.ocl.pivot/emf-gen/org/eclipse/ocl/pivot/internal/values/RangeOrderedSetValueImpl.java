@@ -38,13 +38,13 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 		IntegerValue nextValue = theElements.getLast().addInteger(ONE_VALUE);
 		if (nextValue.equals(value)) {
 			IntegerRange range = createRange(theElements.getFirst(), nextValue);
-			return new RangeOrderedSetValueImpl(getTypeId(), range);
+			return new RangeOrderedSetValueImpl(getCollectionTypeId(), range);
 		}
 		else {
 			List<Object> elements = createElements();
 			elements.remove(value);
 			elements.add(value);
-			return new SparseOrderedSetValueImpl(getTypeId(), elements);
+			return new SparseOrderedSetValueImpl(getCollectionTypeId(), elements);
 		}
 	}
 
@@ -121,13 +121,13 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 		IntegerValue previousValue = theElements.getFirst().subtractInteger(ONE_VALUE);
 		if (previousValue.equals(value)) {
 			IntegerRange range = createRange(previousValue, theElements.getLast());
-			return new RangeOrderedSetValueImpl(getTypeId(), range);
+			return new RangeOrderedSetValueImpl(getCollectionTypeId(), range);
 		}
 		else {
 			List<Object> elements = createElements();
 			elements.remove(value);
 			elements.add(0, value);
-			return new SparseOrderedSetValueImpl(getTypeId(), elements);
+			return new SparseOrderedSetValueImpl(getCollectionTypeId(), elements);
 		}
 	}
 

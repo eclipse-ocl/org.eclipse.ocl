@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -140,7 +141,17 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 	}
 
 	@Override
+	public @NonNull TupleTypeId getTupleTypeId() {
+		return tupleTypeId;
+	}
+
+	@Override
 	public @NonNull TupleTypeId getTypeId() {
+		return tupleTypeId;
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId2() {
 		return tupleTypeId;
 	}
 

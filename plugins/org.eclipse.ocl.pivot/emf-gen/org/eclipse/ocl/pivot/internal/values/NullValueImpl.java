@@ -18,8 +18,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
@@ -83,12 +85,33 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 		return obj instanceof NullValueImpl;
 	}
 
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public @NonNull CollectionTypeId getCollectionTypeId() {
+		return TypeId.OCL_VOID;
+	}
+
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public @NonNull TupleTypeId getTupleTypeId() {
+		return TypeId.OCL_VOID;
+	}
+
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}
 
 	@Override
 	public @NonNull OclVoidTypeId getTypeId() {
+		return TypeId.OCL_VOID;
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId2() {
 		return TypeId.OCL_VOID;
 	}
 

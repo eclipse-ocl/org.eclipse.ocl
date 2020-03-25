@@ -361,7 +361,17 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 	}
 
 	@Override
+	public @NonNull MapTypeId getMapTypeId() {
+		return typeId;
+	}
+
+	@Override
 	public @NonNull MapTypeId getTypeId() {
+		return typeId;
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId2() {
 		return typeId;
 	}
 

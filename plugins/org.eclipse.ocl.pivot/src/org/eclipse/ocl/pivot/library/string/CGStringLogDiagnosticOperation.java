@@ -91,7 +91,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 		TupleValue tupleValue = null;
 		if (status instanceof TupleValue) {		// Overt tuples are unpacked in the caller. Obfuscated tuples are handled here.
 			tupleValue = (TupleValue)status;
-			TupleTypeId tupleTypeId = tupleValue.getTypeId();
+			TupleTypeId tupleTypeId = tupleValue.getTupleTypeId();
 			TuplePartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
 			if (statusPartId != null) {
 				status = tupleValue.getValue(statusPartId);
@@ -105,7 +105,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			int emfSeverity;
 			int emfCode = ValueUtil.asIntegerValue(code).intValue();
 			if (tupleValue != null) {
-				TupleTypeId tupleTypeId = tupleValue.getTypeId();
+				TupleTypeId tupleTypeId = tupleValue.getTupleTypeId();
 				TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
 				if (severityPartId != null) {
 					IntegerValue value = ValueUtil.integerValueOf(tupleValue.getValue(severityPartId));

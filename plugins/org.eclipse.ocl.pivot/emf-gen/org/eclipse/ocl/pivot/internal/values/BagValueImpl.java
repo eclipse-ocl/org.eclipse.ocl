@@ -156,7 +156,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new BagValueImpl(getTypeId(), result);
+			return new BagValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -189,7 +189,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new BagValueImpl(getTypeId(), result);
+			return new BagValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -200,17 +200,12 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 	public @NonNull BagValue flatten() {
 		Bag<Object> flattened = new BagImpl<Object>();
 		if (flatten(flattened)) {
-			return new BagValueImpl(getTypeId(), flattened);
+			return new BagValueImpl(getCollectionTypeId(), flattened);
 		}
 		else {
 			return this;
 		}
 	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.BAG;
-	//	}
 
 	@Override
 	public @NonNull Bag<? extends Object> getElements() {
@@ -228,7 +223,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 		Iterable<? extends Object> iterables = elements;
 		Bag<Object> result = new BagImpl<>(iterables);
 		result.add(value);
-		return new BagValueImpl(getTypeId(), result);
+		return new BagValueImpl(getCollectionTypeId(), result);
 	}
 
 	@Override
@@ -238,7 +233,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 		for (Object value : values) {
 			result.add(value);
 		}
-		return new BagValueImpl(getTypeId(), result);
+		return new BagValueImpl(getCollectionTypeId(), result);
 	}
 
 	@Override

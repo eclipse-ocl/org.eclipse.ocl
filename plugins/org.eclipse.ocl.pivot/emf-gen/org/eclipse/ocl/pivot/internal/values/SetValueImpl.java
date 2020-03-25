@@ -160,7 +160,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new SetValueImpl(getTypeId(), result);
+			return new SetValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -193,7 +193,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 			}
 		}
 		if (result.size() < elements.size()) {
-			return new SetValueImpl(getTypeId(), result);
+			return new SetValueImpl(getCollectionTypeId(), result);
 		}
 		else {
 			return this;
@@ -204,7 +204,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 	public @NonNull SetValue flatten() {
     	Set<Object> flattened = new HashSet<Object>();
     	if (flatten(flattened)) {
-    		return new SetValueImpl(getTypeId(), flattened);
+    		return new SetValueImpl(getCollectionTypeId(), flattened);
     	}
     	else {
     		return this;
@@ -231,7 +231,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 		assert !(value instanceof InvalidValueException);
 		Set<Object> result = new HashSet<Object>(elements);
 		result.add(value);
-		return new SetValueImpl(getTypeId(), result);
+		return new SetValueImpl(getCollectionTypeId(), result);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 		for (Object value : values) {
 			result.add(value);
 		}
-		return new SetValueImpl(getTypeId(), result);
+		return new SetValueImpl(getCollectionTypeId(), result);
 	}
 
 	@Override
@@ -257,7 +257,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 	public @NonNull SetValue minus(@NonNull UniqueCollectionValue set) {
     	Set<Object> result = new HashSet<Object>(elements);
         result.removeAll(set.asCollection());
-        return new SetValueImpl(getTypeId(), result);
+        return new SetValueImpl(getCollectionTypeId(), result);
     }
 
     @Override
@@ -277,7 +277,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
                 result.add(e);
             }
         }
-        return new SetValueImpl(getTypeId(), result);
+        return new SetValueImpl(getCollectionTypeId(), result);
     }
 
 	@Override

@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull CollectionSelectByTypeOperation INSTANCE = new CollectionSelectByTypeOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
         	}
         }
         if (changedContents) {
-        	return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
+        	return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getCollectionTypeId(), newElements);
         }
         else {
         	return collectionValue;

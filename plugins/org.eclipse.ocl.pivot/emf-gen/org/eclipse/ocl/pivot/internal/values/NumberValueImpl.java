@@ -228,7 +228,7 @@ public abstract class NumberValueImpl extends Number implements NumberValue  {
 	//	}
 
 	public @NonNull String getTypeName() {
-		return getTypeId().getDisplayName();
+		return getTypeId2().getDisplayName();
 	}
 
 	@Override

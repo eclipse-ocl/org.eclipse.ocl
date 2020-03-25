@@ -36,6 +36,15 @@ public interface TupleValue extends Value {
      *
      * @return its type
 	 * @generated NOT
+     * @since 1.12
+     */
+	default @NonNull TupleTypeId getTupleTypeId() { return getTypeId(); }
+
+    /**
+     * Obtains the tuple's type.
+     *
+     * @return its type
+	 * @generated NOT
      */
 	@Override
 	@NonNull TupleTypeId getTypeId();

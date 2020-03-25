@@ -494,6 +494,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
+	@Override
+	public @NonNull CollectionTypeId getCollectionTypeId() {
+		return typeId;
+	}
+
 	//	public @NonNull CollectionTypeId getCollectionTypeId() {
 	//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
 	//	}
@@ -520,7 +525,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		//
 		//		}
 
-		return getTypeId().getElementTypeId();
+		return getCollectionTypeId().getElementTypeId();
 	}
 
 	@Override
@@ -546,6 +551,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
+		return typeId;
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId2() {
 		return typeId;
 	}
 

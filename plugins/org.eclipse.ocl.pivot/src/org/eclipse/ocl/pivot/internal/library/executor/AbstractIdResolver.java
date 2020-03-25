@@ -833,7 +833,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public org.eclipse.ocl.pivot.@NonNull Class getDynamicTypeOf(@Nullable Object value) {
 		if (value instanceof CollectionValue) {
 			CollectionValue collectionValue = (CollectionValue) value;
-			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
+			CollectionTypeId collectionTypeId = collectionValue.getCollectionTypeId();
 			Type elementType = getDynamicTypeOf(collectionValue.iterable());
 			if (elementType == null) {
 				elementType = getType(collectionTypeId.getElementTypeId(), null);
@@ -1095,7 +1095,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else if (value instanceof Value) {
-			TypeId typeId = ((Value)value).getTypeId();
+			TypeId typeId = ((Value)value).getTypeId2();
 			Type type = key2type.get(typeId);
 			if (type == null) {
 				boolean isTemplated = typeId.isTemplated();
@@ -1201,7 +1201,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return typeKey;
 		}
 		else if (value instanceof Value) {
-			TypeId typeKey = ((Value)value).getTypeId();
+			TypeId typeKey = ((Value)value).getTypeId2();
 			Type type = key2type.get(typeKey);
 			if (type == null) {
 				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);

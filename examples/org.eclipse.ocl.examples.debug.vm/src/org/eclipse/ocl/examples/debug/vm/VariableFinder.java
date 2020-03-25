@@ -627,7 +627,7 @@ public class VariableFinder
 			return ((EObject)valueObject).eClass().getName();
 		}
 		else if (valueObject instanceof Value) {
-			return ((Value)valueObject).getTypeId().toString();
+			return ((Value)valueObject).getTypeId2().toString();
 		}
 		else {
 			return "evalEnv.getTypeOf(envVarName)";		// FIXME

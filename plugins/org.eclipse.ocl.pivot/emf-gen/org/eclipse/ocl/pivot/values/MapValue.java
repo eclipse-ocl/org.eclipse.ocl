@@ -134,6 +134,12 @@ public interface MapValue extends IterableValue {
 
 	/**
 	 * @generated NOT
+	 * @since 1.12
+	 */
+	default @NonNull MapTypeId getMapTypeId() { return getTypeId(); }
+
+	/**
+	 * @generated NOT
 	 */
 	@Override
 	@NonNull MapTypeId getTypeId();

@@ -19,8 +19,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
 
@@ -171,12 +173,33 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		throw this; //return obj instanceof InvalidValueException;
 	}
 
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public @NonNull CollectionTypeId getCollectionTypeId() {
+		return TypeId.OCL_INVALID;
+	}
+
+	/**
+	 * @since 1.12
+	 */
+	@Override
+	public @NonNull TupleTypeId getTupleTypeId() {
+		return TypeId.OCL_INVALID;
+	}
+
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}
 
 	@Override
 	public @NonNull OclInvalidTypeId getTypeId() {
+		return TypeId.OCL_INVALID;
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId2() {
 		return TypeId.OCL_INVALID;
 	}
 
