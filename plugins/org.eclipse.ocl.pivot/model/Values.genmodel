@@ -30,6 +30,7 @@
     <genClasses ecoreClass="Values.ecore#//RealValue"/>
     <genClasses ecoreClass="Values.ecore#//SequenceValue"/>
     <genClasses ecoreClass="Values.ecore#//SetValue"/>
+    <genClasses ecoreClass="Values.ecore#//SymbolicValue"/>
     <genClasses ecoreClass="Values.ecore#//TupleValue"/>
     <genClasses ecoreClass="Values.ecore#//UniqueCollectionValue"/>
     <genClasses ecoreClass="Values.ecore#//UnlimitedNaturalValue"/>

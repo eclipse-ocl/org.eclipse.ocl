@@ -345,6 +345,12 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getSymbolicValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
                 <message_argument value="getUnlimitedNaturalValue()"/>
             </message_arguments>
         </filter>
@@ -562,6 +568,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getSymbolicValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getUnlimitedNaturalValue()"/>
             </message_arguments>
         </filter>
@@ -594,6 +605,12 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="SYMBOLIC_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
                 <message_argument value="UNLIMITED_NATURAL_VALUE"/>
             </message_arguments>
         </filter>
@@ -615,6 +632,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="OCL_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SYMBOLIC_VALUE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -651,6 +673,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="createSymbolicValueAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="createUnlimitedNaturalValueAdapter()"/>
             </message_arguments>
         </filter>
@@ -679,6 +706,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="caseOCLValue(OCLValue)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseSymbolicValue(SymbolicValue)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

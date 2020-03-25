@@ -31,6 +31,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="RealValue" eSuperTypes="#//NumberValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="SequenceValue" abstract="true" eSuperTypes="#//OrderedCollectionValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="SetValue" eSuperTypes="#//UniqueCollectionValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SymbolicValue" eSuperTypes="#//Value">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Interface of a symbolic instance value.  OCL expressions that cannot be fully evaluated result in symbolic values. instances of this interface."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TupleValue" eSuperTypes="#//Value">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Interface of a tuple instance value.  OCL expressions resulting in tuples&#xA;yield instances of this interface."/>
