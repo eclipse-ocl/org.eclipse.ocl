@@ -208,7 +208,7 @@ public class TestUIUtil
 			}
 			boolean allTerminated = true;
 			List<@NonNull IStatus> allResults = null;
-		/*	for (IDebugTarget debugTarget : launch.getDebugTargets()) {
+			/*	for (IDebugTarget debugTarget : launch.getDebugTargets()) {
 				IProcess process = debugTarget.getProcess();
 				if (!process.isTerminated()) {
 					allDead = false;
@@ -233,7 +233,7 @@ public class TestUIUtil
 						allResults.add(result);
 					}
 					else {
-						allResults.add(new Status(process.getExitValue(), null, null));
+						allResults.add(new Status(process.getExitValue(), (String)null, (String)null));
 					}
 				}
 			}
