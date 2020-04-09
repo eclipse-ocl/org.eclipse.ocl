@@ -20,11 +20,13 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.SymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -60,6 +62,9 @@ public class SymbolicUnknownValueImpl extends UndefinedValueImpl implements Symb
 //	}
 
 	@Override
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicConstraint symbolicConstraint) {}
+
+	@Override
 	public @NonNull NullValue divideReal(@NonNull RealValue right) {
 		if (right.asDouble() == 1.0) {
 			return this;
@@ -69,6 +74,12 @@ public class SymbolicUnknownValueImpl extends UndefinedValueImpl implements Symb
 			throw new InvalidValueException(new ArithmeticException("/ by zero"));
 		}
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
 	}
 
 	@Override
@@ -112,10 +123,12 @@ public class SymbolicUnknownValueImpl extends UndefinedValueImpl implements Symb
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append(typeId);
-		s.append("-");
-		s.append(mayBeNull);
-		s.append("-");
-		s.append(mayBeInvalid);
+		s.append("[");
+		s.append(mayBeNull ? "?" : "1");
+		if (mayBeInvalid) {
+			s.append("!");
+		}
+		s.append("]");
 	}
 
 	@Override

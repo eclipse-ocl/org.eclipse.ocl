@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -170,7 +171,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(asExpression);
 		}
 
-		protected @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL asExpressionInOCL, @Nullable Object context, @NonNull Object... parameters) {
+		protected @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL asExpressionInOCL, @Nullable Object context, @Nullable Object[] parameters) {
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getSymbolicAnalysis(asExpressionInOCL, context, parameters);
 		}
@@ -259,14 +260,14 @@ public class FlowAnalysisTests extends XtextTestCase
 		//		ocl.assertIsNonNull(asThenLiteralExp);
 		//		ocl.assertIsNotKnown(asElseVariableExp);
 
-		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null);
+		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[0]);
 		assert !symbolicAnalysis1.mayBeNull(asExpressionInOCL);
 		assert !symbolicAnalysis1.mayBeNull(asIf);
 		assert !symbolicAnalysis1.mayBeNull(asLetExp);
 		assert ocl.getIdResolver().oclEquals(symbolicAnalysis1.get(asIf), "null");
 		assert symbolicAnalysis1.isDead(asElseVariableExp);
 
-		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValueImpl(TypeId.STRING, false, false));
+		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValueImpl(TypeId.STRING, false, false), new Object[0]);
 		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
 		assert !symbolicAnalysis2.mayBeNull(asIf);
 		assert !symbolicAnalysis2.mayBeNull(asLetExp);
@@ -278,13 +279,12 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testSymbolicAnalysis_BadDivide() throws Exception {
 		MyOCL ocl = new MyOCL();
 		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadDivide", "BadDivide(num : Real, den : Real) : Real",
-	//			"let num = 5.0 in den = 0.0 in num / den");
 				"num / den");
 		OperationCallExp asOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
 		VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
 		VariableExp asDenExp = (VariableExp) PivotUtil.getOwnedArgument(asOperationCallExp, 0);
 
-		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, 5.0, 0.0);
+		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5.0, 0.0});
 		assert !symbolicAnalysis1.mayBeNull(asExpressionInOCL);
 		assert !symbolicAnalysis1.mayBeNull(asNumExp);
 		assert !symbolicAnalysis1.mayBeNull(asDenExp);
@@ -292,7 +292,109 @@ public class FlowAnalysisTests extends XtextTestCase
 		assert !symbolicAnalysis1.mayBeInvalid(asDenExp);
 		assert symbolicAnalysis1.mayBeInvalid(asOperationCallExp);
 
-		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, 5.0, 1.0);
+		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5.0, 1.0});
+		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis2.mayBeNull(asNumExp);
+		assert !symbolicAnalysis2.mayBeNull(asDenExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asDenExp);
+		assert !symbolicAnalysis2.mayBeInvalid(asOperationCallExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicUnknownValueImpl(TypeId.REAL, false, false), 0.0});
+		assert !symbolicAnalysis3.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis3.mayBeNull(asNumExp);
+		assert !symbolicAnalysis3.mayBeNull(asDenExp);
+		assert !symbolicAnalysis3.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis3.mayBeInvalid(asDenExp);
+		assert symbolicAnalysis3.mayBeInvalid(asOperationCallExp);
+
+		SymbolicEvaluationVisitor symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicUnknownValueImpl(TypeId.REAL, false, false), 1.0});
+		assert !symbolicAnalysis4.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis4.mayBeNull(asNumExp);
+		assert !symbolicAnalysis4.mayBeNull(asDenExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asNumExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asDenExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asOperationCallExp);
+
+		ocl.dispose();
+	}
+
+	public void testSymbolicAnalysis_ImpliesGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("ImpliesGuard", "ImpliesGuard(x : Integer) : Boolean",
+				"x <> null implies2 x > 0");
+		OperationCallExp impliesExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(impliesExp);
+		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(impliesExp, 0);
+		VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
+		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
+		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
+		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+
+		assert nullExp.isNull();
+
+	/*	SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5});
+		assert !symbolicAnalysis1.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis1.mayBeNull(notEqExp);
+		assert !symbolicAnalysis1.mayBeNull(gtExp);
+
+		assert !symbolicAnalysis1.mayBeNull(neSourceExp);
+		assert symbolicAnalysis1.mayBeNull(nullExp);
+		assert !symbolicAnalysis1.mayBeNull(gtSourceExp);
+		assert !symbolicAnalysis1.mayBeNull(zeroExp);
+
+		assert !symbolicAnalysis1.mayBeInvalid(asExpressionInOCL);
+		assert !symbolicAnalysis1.mayBeInvalid(notEqExp);
+		assert !symbolicAnalysis1.mayBeInvalid(gtExp);
+
+		assert !symbolicAnalysis1.mayBeInvalid(neSourceExp);
+		assert !symbolicAnalysis1.mayBeInvalid(nullExp);
+		assert !symbolicAnalysis1.mayBeInvalid(gtSourceExp);
+		assert !symbolicAnalysis1.mayBeInvalid(zeroExp);
+
+		assert symbolicAnalysis1.isTrue(notEqExp);
+		assert symbolicAnalysis1.isTrue(gtExp);
+		assert symbolicAnalysis1.isTrue(asExpressionInOCL);	*/
+
+	/*	SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{null});
+		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis2.mayBeNull(notEqExp);
+		assert symbolicAnalysis2.isDead(gtExp);
+
+		assert symbolicAnalysis2.mayBeNull(neSourceExp);
+		assert symbolicAnalysis2.mayBeNull(nullExp);
+		assert symbolicAnalysis2.isDead(gtSourceExp);
+		assert symbolicAnalysis2.isDead(zeroExp);
+
+		assert !symbolicAnalysis2.mayBeInvalid(asExpressionInOCL);
+		assert !symbolicAnalysis2.mayBeInvalid(notEqExp);
+
+		assert !symbolicAnalysis2.mayBeInvalid(neSourceExp);
+		assert !symbolicAnalysis2.mayBeInvalid(nullExp);
+
+		assert symbolicAnalysis2.isFalse(notEqExp);
+		assert symbolicAnalysis2.isTrue(asExpressionInOCL); */
+
+		SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicUnknownValueImpl(TypeId.INTEGER, true, false)});
+		assert !symbolicAnalysis3.mayBeNull(asExpressionInOCL);
+		assert !symbolicAnalysis3.mayBeNull(notEqExp);
+		assert !symbolicAnalysis3.mayBeNull(gtExp);
+
+		assert symbolicAnalysis3.mayBeNull(neSourceExp);
+		assert symbolicAnalysis3.mayBeNull(nullExp);
+		assert !symbolicAnalysis3.mayBeNull(gtSourceExp);
+		assert !symbolicAnalysis3.mayBeNull(zeroExp);
+
+		assert !symbolicAnalysis3.mayBeInvalid(asExpressionInOCL);
+		assert !symbolicAnalysis3.mayBeInvalid(notEqExp);
+
+		assert !symbolicAnalysis3.mayBeInvalid(neSourceExp);
+		assert !symbolicAnalysis3.mayBeInvalid(nullExp);
+
+		assert symbolicAnalysis3.isFalse(notEqExp);
+		assert symbolicAnalysis3.isTrue(asExpressionInOCL);
+
+/*		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, 5.0, 1.0);
 		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
 		assert !symbolicAnalysis2.mayBeNull(asNumExp);
 		assert !symbolicAnalysis2.mayBeNull(asDenExp);
@@ -314,16 +416,8 @@ public class FlowAnalysisTests extends XtextTestCase
 		assert !symbolicAnalysis4.mayBeNull(asDenExp);
 		assert !symbolicAnalysis4.mayBeInvalid(asNumExp);
 		assert !symbolicAnalysis4.mayBeInvalid(asDenExp);
-		assert !symbolicAnalysis4.mayBeInvalid(asOperationCallExp);
-//		assert ocl.getIdResolver().oclEquals(symbolicAnalysis1.get(asIf), "null");
-//		assert symbolicAnalysis1.isDead(asElseVariableExp);
+		assert !symbolicAnalysis4.mayBeInvalid(asOperationCallExp); */
 
-//		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValueImpl(TypeId.STRING, false, false));
-//		assert !symbolicAnalysis2.mayBeNull(asExpressionInOCL);
-//		assert !symbolicAnalysis2.mayBeNull(asIf);
-//		assert !symbolicAnalysis2.mayBeNull(asLetExp);
-//		assert ocl.getIdResolver().oclEquals(symbolicAnalysis2.get(asIf), "null");
-//		assert symbolicAnalysis2.isDead(asThenLiteralExp); */
 		ocl.dispose();
 	}
 

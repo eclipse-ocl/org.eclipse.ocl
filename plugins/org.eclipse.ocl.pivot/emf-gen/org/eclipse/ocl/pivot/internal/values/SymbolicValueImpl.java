@@ -13,6 +13,8 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.values.SymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -57,6 +59,9 @@ public class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
 	public @NonNull Object asObject() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicConstraint symbolicConstraint) {}
 
 	@Override
 	public @NonNull TypeId getTypeId() {

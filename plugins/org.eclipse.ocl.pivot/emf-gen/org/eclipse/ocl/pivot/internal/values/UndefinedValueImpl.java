@@ -679,8 +679,15 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public /*final*/ @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append(toString());
+		s.append(super.toString());
 	}
 
 	@Override

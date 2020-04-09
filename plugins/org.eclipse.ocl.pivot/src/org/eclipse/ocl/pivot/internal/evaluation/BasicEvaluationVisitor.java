@@ -71,8 +71,11 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleMapIterationManager;
@@ -332,17 +335,51 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitIfExp(@NonNull IfExp ifExp) {
-		OCLExpression condition = ifExp.getOwnedCondition();
+		OCLExpression condition = PivotUtil.getOwnedCondition(ifExp);
 		Object conditionValue = condition.accept(undecoratedVisitor);
 		Object evaluatedCondition = ValueUtil.asBoolean(conditionValue);
-		OCLExpression expression = null;
 		if (evaluatedCondition == ValueUtil.TRUE_VALUE) {
-			expression = ifExp.getOwnedThen();
+			OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
+			return expression.accept(undecoratedVisitor);
+		}
+		else if (evaluatedCondition == ValueUtil.FALSE_VALUE) {
+			OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
+			return expression.accept(undecoratedVisitor);
 		}
 		else {
-			expression = ifExp.getOwnedElse();
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(conditionValue);
+			boolean mayBeNull = ValueUtil.mayBeNull(conditionValue);
+			SymbolicExecutor symbolicExecutor = (SymbolicExecutor)context;
+			try {
+				OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
+				symbolicExecutor.pushSymbolicEvaluationEnvironment(expression, conditionValue, Boolean.TRUE);
+				Object thenValue = expression.accept(undecoratedVisitor);
+				if (ValueUtil.mayBeInvalid(thenValue)) {
+					mayBeInvalid = true;
+				}
+				if (ValueUtil.mayBeNull(thenValue)) {
+					mayBeNull = true;
+				}
+			}
+			finally {
+				context.popEvaluationEnvironment();
+			}
+			try {
+				OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
+				symbolicExecutor.pushSymbolicEvaluationEnvironment(expression, conditionValue, Boolean.FALSE);
+				Object elseValue = expression.accept(undecoratedVisitor);
+				if (ValueUtil.mayBeInvalid(elseValue)) {
+					mayBeInvalid = true;
+				}
+				if (ValueUtil.mayBeNull(elseValue)) {
+					mayBeNull = true;
+				}
+			}
+			finally {
+				context.popEvaluationEnvironment();
+			}
+			return new SymbolicUnknownValueImpl(ifExp.getTypeId(), mayBeNull, mayBeInvalid);
 		}
-		return expression.accept(undecoratedVisitor);
 	}
 
 	/**
@@ -921,6 +958,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		Object value = context.getValueOf(variableDeclaration);
 		if (value instanceof InvalidValueException) {
 			throw (InvalidValueException)value;
+		}
+		else if (value instanceof SymbolicValue) {		// FIXME obsolete wrt SymbolicConstraint
+			return new SymbolicVariableValueImpl(variableDeclaration, (SymbolicValue)value);
 		}
 		else {
 			return value;

@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -44,10 +45,21 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 		if (sourceValue == Boolean.FALSE) {
 			return TRUE_VALUE;
 		}
-		Object firstArgument = executor.evaluate(argument0);
-		Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
-		Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
-		return evaluate(sourceBoolean, argBoolean);
+		else if (sourceValue == Boolean.TRUE) {
+			Object firstArgument = executor.evaluate(argument0);
+			Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
+			return argBoolean;
+		}
+		try {
+			((SymbolicExecutor)executor).pushSymbolicEvaluationEnvironment(callExp.getOwnedSource(), sourceValue, Boolean.TRUE);
+			Object firstArgument = executor.evaluate(argument0);
+			Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
+			Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
+			return evaluate(sourceBoolean, argBoolean);
+		}
+		finally {
+			executor.popEvaluationEnvironment();
+		}
 	}
 
 	@Override

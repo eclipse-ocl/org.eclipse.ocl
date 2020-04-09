@@ -10,6 +10,8 @@
  */
 package org.eclipse.ocl.pivot.values;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,5 +27,10 @@ package org.eclipse.ocl.pivot.values;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSymbolicValue()
  * @generated
  */
-public interface SymbolicValue extends Value {
+public interface SymbolicValue extends Value
+{
+	/**
+	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
+	 */
+	void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicConstraint symbolicConstraint);
 } // SymbolicValue

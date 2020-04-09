@@ -35,7 +35,9 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -542,8 +544,16 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
 		EvaluationEnvironment.EvaluationEnvironmentExtension evaluationEnvironment2 = ClassUtil.nonNullState(evaluationEnvironment);
 		EvaluationEnvironment.EvaluationEnvironmentExtension nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment2, executableObject, caller);
-		evaluationEnvironment = nestedEvaluationEnvironment;
+		pushEvaluationEnvironment(nestedEvaluationEnvironment);
 		return nestedEvaluationEnvironment;
+	}
+
+	/**
+	 * @since 1.12
+	 */
+	protected EvaluationEnvironmentExtension pushEvaluationEnvironment(@NonNull EvaluationEnvironmentExtension nestedEvaluationEnvironment) {
+		assert nestedEvaluationEnvironment.getParentEvaluationEnvironment() == evaluationEnvironment;
+		return evaluationEnvironment = nestedEvaluationEnvironment;
 	}
 
 	/**
@@ -558,6 +568,13 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		evaluationEnvironment.replace(referredVariable, value);
+	}
+
+	/**
+	 * @since 1.12
+	 */
+	protected @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+		return evaluationEnvironment.replaceInternal(referredVariable, value);
 	}
 
 	/**

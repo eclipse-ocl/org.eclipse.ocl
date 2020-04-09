@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -138,6 +139,11 @@ public abstract class ExecutorManager implements ExecutorExtension
 
 		@Override
 		public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+
+		@Override
+		public @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+			return null;
+		}
 
 		@Override
 		public <T> void setOption(@NonNull Option<T> option, @Nullable T value) {

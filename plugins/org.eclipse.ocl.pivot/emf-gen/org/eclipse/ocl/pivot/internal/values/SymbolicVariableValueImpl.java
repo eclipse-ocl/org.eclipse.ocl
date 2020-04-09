@@ -13,6 +13,9 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.values.SymbolicConstraint;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,14 +28,18 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public class SymbolicVariableValueImpl extends SymbolicValueImpl { //implements EObject {
 
 	protected final @NonNull VariableDeclaration variable;
+	protected final @NonNull SymbolicValue value;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param variable
+	 * @param value
+	 * @param object
 	 * @generated NOT
 	 */
-	public SymbolicVariableValueImpl(@NonNull VariableDeclaration variable) {
+	public SymbolicVariableValueImpl(@NonNull VariableDeclaration variable, @NonNull SymbolicValue value) {
 		this.variable = variable;
+		this.value = value;
 	}
 
 //	@Override
@@ -41,18 +48,36 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl { //implements 
 //	}
 
 	@Override
-	public @NonNull TypeId getTypeId() {
-		return variable.getTypeId();
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicConstraint symbolicConstraint) {
+		symbolicExecutor.add(variable, symbolicConstraint);
 	}
 
 	@Override
+	public @NonNull TypeId getTypeId2() {
+		return variable.getTypeId();
+	}
+
+	public @NonNull SymbolicValue getValue() {
+		return value;
+	}
+
+//	public @NonNull VariableDeclaration getVariable() {
+//		return variable;
+//	}
+
+	@Override
 	public boolean mayBeNull() {
-		return !variable.isIsRequired();
+		boolean isRequired = variable.isIsRequired();
+		boolean mayBeNull = value.mayBeNull();
+		assert !isRequired || !mayBeNull;
+		return mayBeNull;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append(variable.getName());
+		s.append(":");
+		value.toString(s, lengthLimit);
 	}
 
 /*	@Override

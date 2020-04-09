@@ -19,29 +19,28 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclComparableComparisonOperation provides the abstract support for a comparison operation.
  */
 public abstract class OclComparableComparisonOperation extends AbstractUntypedBinaryOperation
-{	
+{
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object left, @Nullable Object right) {
-		return evaluate(getExecutor(evaluator), left, right); 
+		return evaluate(getExecutor(evaluator), left, right);
 	}
 
-	/**
-	 * @since 1.1
-	 */
 	@Override
-	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object left, @Nullable Object right) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object left, @Nullable Object right) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		IdResolver idResolver = executor.getIdResolver();
 		CompleteInheritance leftType = idResolver.getDynamicTypeOf(left).getInheritance(standardLibrary);
@@ -61,12 +60,28 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		}
 		if (implementation != null) {
 			Object comparison = implementation.evaluate(executor, TypeId.INTEGER, left, right);
+			if (comparison instanceof SymbolicValue) {
+				boolean mayBeInvalid = ValueUtil.mayBeInvalid(left) || ValueUtil.mayBeInvalid(right);
+				boolean mayBeNull = ValueUtil.mayBeNull(left) || ValueUtil.mayBeNull(right);
+				return new SymbolicUnknownValueImpl(TypeId.BOOLEAN, false, mayBeNull || mayBeInvalid);
+			}
 			intComparison = ValueUtil.asInteger(comparison);
 			return getResultValue(intComparison) != false;			// FIXME redundant test to suppress warning
 		}
 		else {
-			throw new InvalidValueException("Unsupported compareTo for ''{0}''", left != null ? left.getClass().getName() : NULL_STRING); //$NON-NLS-1$
+		//	throw new InvalidValueException("Unsupported compareTo for ''{0}''", left != null ? left.getClass().getName() : NULL_STRING); //$NON-NLS-1$
+			ValueUtil.throwUnsupportedCompareTo(left, right);
+			return false;
 		}
+	}
+
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object left, @Nullable Object right) {
+		// FIXME This reverse hierarchy call is necessary to preserve API but accommodate SymbolicValue
+		return (Boolean)evaluate(executor, TypeId.BOOLEAN, left, right);
 	}
 
 	protected abstract boolean getResultValue(Integer comparison);

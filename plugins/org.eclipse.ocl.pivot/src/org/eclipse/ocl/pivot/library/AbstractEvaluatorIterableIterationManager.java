@@ -127,7 +127,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		if (accumulatorVariable != null) {
 			getEvaluationEnvironment().add(accumulatorVariable, accumulatorValue);
 		}
-		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
+		this.executor.pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
 	public AbstractEvaluatorIterableIterationManager(@NonNull AbstractEvaluatorIterableIterationManager<IV> iterationManager, @NonNull IV iterableValue) {
@@ -137,7 +137,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		this.iterableValue = iterableValue;
 		this.accumulatorValue = iterationManager.accumulatorValue;
 		this.accumulatorVariable = iterationManager.accumulatorVariable;
-		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
+		this.executor.pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
 	@Override

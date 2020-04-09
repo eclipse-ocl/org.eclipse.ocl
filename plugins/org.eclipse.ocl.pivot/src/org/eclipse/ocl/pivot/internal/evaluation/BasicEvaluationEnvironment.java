@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -128,7 +129,8 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 				throw new IllegalArgumentException(message);
 			}
 		}
-		variableValues.put(referredVariable, value);
+		Object oldValue = variableValues.put(referredVariable, value);
+
 	}
 
 	/**
@@ -261,6 +263,10 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		variableValues.put(referredVariable, value);
+	}
+	@Override
+	public @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+		return variableValues.put(referredVariable, value);
 	}
 
 	/**

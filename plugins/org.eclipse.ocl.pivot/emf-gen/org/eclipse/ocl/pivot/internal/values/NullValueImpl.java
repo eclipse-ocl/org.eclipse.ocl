@@ -161,7 +161,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return "null";
 	}
 } //NullValueImpl

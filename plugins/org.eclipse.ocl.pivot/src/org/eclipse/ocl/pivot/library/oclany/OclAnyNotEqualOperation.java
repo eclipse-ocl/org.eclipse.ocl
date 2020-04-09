@@ -13,8 +13,11 @@ package org.eclipse.ocl.pivot.library.oclany;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicConstraint;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 
 /**
@@ -25,6 +28,11 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 {
 	public static final @NonNull OclAnyNotEqualOperation INSTANCE = new OclAnyNotEqualOperation();
+
+	@Override
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicValue resultValue, @NonNull SymbolicConstraint resultConstraint) {
+		deduceFrom(symbolicExecutor, resultValue, resultConstraint, true);
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {

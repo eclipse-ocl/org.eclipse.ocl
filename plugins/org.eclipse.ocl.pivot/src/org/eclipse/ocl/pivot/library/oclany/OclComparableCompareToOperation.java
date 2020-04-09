@@ -12,9 +12,13 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.SymbolicConstraintImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SymbolicOperator;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclComparableCompareToOperation realizes the abstract compareTo library operation using intrinsic Java functionality.
@@ -28,6 +32,11 @@ public class OclComparableCompareToOperation extends AbstractSimpleBinaryOperati
 		if (left instanceof Comparable<?>) {
 			@SuppressWarnings("unchecked") int compareTo = ((Comparable<Object>)left).compareTo(right);
 			return integerValueOf(compareTo);
+		}
+		else if (left instanceof SymbolicValue) {
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(left) || ValueUtil.mayBeInvalid(right);
+			boolean mayBeNull = ValueUtil.mayBeNull(left) || ValueUtil.mayBeNull(right);
+			return new SymbolicConstraintImpl(TypeId.INTEGER, false, mayBeNull || mayBeInvalid, SymbolicOperator.COMPARE_TO, right);
 		}
 		else {
 			return integerValueOf(ValueUtil.throwUnsupportedCompareTo(left, right));

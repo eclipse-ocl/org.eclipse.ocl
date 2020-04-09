@@ -31,10 +31,14 @@ public interface Executor extends Evaluator
 {
 	/**
 	 * @since 1.3
+	 * @deprecated all methods moved to Executor with Java 8 defaults
 	 */
+	@Deprecated
 	public interface ExecutorExtension extends Executor
 	{
+		@Override
 		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
+		@Override
 		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
@@ -78,7 +82,17 @@ public interface Executor extends Evaluator
 	 */
 	@Deprecated
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
+	/**
+	 * @since 1.12
+	 */
+	default @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
+		return pushEvaluationEnvironment(executableObject, caller instanceof OCLExpression ? (OCLExpression)caller : null);
+	}
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
+	/**
+	 * @since 1.12
+	 */
+	default void resetCaches() {}
 	@Override
 	void setLogger(@Nullable EvaluationLogger logger);
 }

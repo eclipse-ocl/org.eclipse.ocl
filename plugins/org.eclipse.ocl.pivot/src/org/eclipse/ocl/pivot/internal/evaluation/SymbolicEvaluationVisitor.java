@@ -95,10 +95,20 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		return !element2value.containsKey(element);
 	}
 
+	public boolean isFalse(@NonNull Element element) {
+		Object object = element2value.get(element);
+		return object == Boolean.FALSE;
+	}
+
+	public boolean isTrue(@NonNull Element element) {
+		Object object = element2value.get(element);
+		return object == Boolean.TRUE;
+	}
+
 	public boolean mayBeInvalid(@NonNull Element element) {
 		Object object = element2value.get(element);
 		if (object == null) {
-			return true;
+			return !element2value.containsKey(element);				// null may not be invalid
 		}
 		if (object instanceof Value) {
 			return ((Value)object).mayBeInvalid();
