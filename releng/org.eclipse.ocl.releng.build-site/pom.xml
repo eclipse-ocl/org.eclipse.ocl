@@ -27,6 +27,7 @@
         <includes>
           <include>downloads.sh</include>
           <include>index.html</include>
+          <include>publish.sh</include>
           <include>updates.sh</include>
         </includes>
       </resource>

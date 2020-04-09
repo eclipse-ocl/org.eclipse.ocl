@@ -10,9 +10,8 @@
 #     E.D.Willink - initial API and implementation
 #*******************************************************************************
 #
-#	Promote the PUBLISH__URL to the downloads 'page'.
+#	Promote ~/publish.zip to the downloads 'page'.
 #
-#	-u PUBLISH__URL			The zip to be published e.g. https://ci.eclipse.org/ocl/job/ocl-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.5.0.v20171021-1702.zip
 #	-v PUBLISH__VERSION		Unqualified version e.g. 6.5.0
 #	-t PUBLISH__BUILD_T		Build type N/I/S/R, blank suppresses promotion
 #	-q PUBLISH__QUALIFIER		Version qualifier e.g. v20171020-1234
@@ -28,17 +27,14 @@ zipPrefix="mdt-ocl-Update-"
 localZip="newJavadoc.zip"
 pdfName="ocl.pdf"
 
-while getopts u:v:t:q:a:j:p: option
+while getopts v:t:q:a: option
 do
 case "${option}"
 in
-u) PUBLISH__URL=${OPTARG};;
 v) PUBLISH__VERSION=${OPTARG};;
 t) PUBLISH__BUILD_T=${OPTARG};;
 q) PUBLISH__QUALIFIER=${OPTARG};;
 a) PUBLISH__ALIAS=${OPTARG};;
-j) PUBLISH__JAVADOC=${OPTARG};;
-p) PUBLISH__PDFDOC=${OPTARG};;
 esac
 done
 
@@ -60,7 +56,7 @@ then
   zipFile="${zipPrefix}${fileStem}.zip"
 
   pushd ${versionFolder}
-    curl -s -k ${PUBLISH__URL} > ${zipFile}
+    cp ~/publish.zip ${zipFile}
     md5sum -b ${zipFile} > ${zipFile}.md5
     sha512sum -b ${zipFile} > ${zipFile}.sha1
     # make sure permissions are for the intended group
@@ -73,7 +69,7 @@ then
     mkdir ${javadocFolder}
   fi
   pushd ${javadocFolder}
-    curl -s -k ${PUBLISH__JAVADOC} > ${localZip}
+    cp ~/javadoc.zip > ${localZip}
     if [ $? -eq 0 ]
     then
       javadocSize=$(wc -c <"$localZip")
@@ -100,7 +96,7 @@ then
     mkdir ${pdfdocFolder}
   fi
   pushd ${pdfdocFolder}
-    curl -s -k ${PUBLISH__PDFDOC} > new${pdfName}
+    cp ~/pdfdoc.zip > new${pdfName}
     if [ $? -eq 0 ]
     then
       pdfSize=$(wc -c <"new${pdfName}")
