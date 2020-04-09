@@ -69,7 +69,7 @@ then
     mkdir ${javadocFolder}
   fi
   pushd ${javadocFolder}
-    cp ~/javadoc.zip > ${localZip}
+    cp ~/javadoc.zip ${localZip}
     if [ $? -eq 0 ]
     then
       javadocSize=$(wc -c <"$localZip")
@@ -96,7 +96,7 @@ then
     mkdir ${pdfdocFolder}
   fi
   pushd ${pdfdocFolder}
-    cp ~/pdfdoc.zip > new${pdfName}
+    cp ~/pdfdoc.zip new${pdfName}
     if [ $? -eq 0 ]
     then
       pdfSize=$(wc -c <"new${pdfName}")
