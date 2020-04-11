@@ -55,11 +55,8 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 		js.append(".TRUE_VALUE) {\n");
 		{
 			js.pushIndentation(null);
-			js.appendValueName(cgIterationCallExp);
-			js.append(" = ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".FALSE_VALUE;			// Abort after second find\n");
-			js.append("break;\n");
+			js.appendAssignBooleanLiteral(true, cgIterationCallExp, false);
+			js.append("break;			// Abort after second find\n");
 			js.popIndentation();
 		}
 		js.append("}\n");

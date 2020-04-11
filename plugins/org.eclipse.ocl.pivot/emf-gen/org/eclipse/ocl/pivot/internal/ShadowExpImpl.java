@@ -251,7 +251,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -412,7 +412,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_7;
 			if (le) {
-				symbol_7 = ValueUtil.TRUE_VALUE;
+				symbol_7 = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
@@ -627,7 +627,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							final /*@NonInvalid*/ @Nullable String defaultValueString = _1_4.getDefaultValueString();
 							final /*@NonInvalid*/ boolean ne = defaultValueString != null;
 							//
-							if (ne == ValueUtil.FALSE_VALUE) {
+							if (!ne) {
 								accumulator_3.add(_1_4);
 							}
 						}
@@ -908,7 +908,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);

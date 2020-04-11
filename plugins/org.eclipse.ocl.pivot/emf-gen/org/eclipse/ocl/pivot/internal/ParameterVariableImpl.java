@@ -110,7 +110,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();

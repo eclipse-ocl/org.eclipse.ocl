@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -168,6 +169,10 @@ public class CGUtil
 		cgParameter.setName(name);
 		cgParameter.setTypeId(typeId);
 		return cgParameter;
+	}
+
+	public static @NonNull CGIterator getAccumulator(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState(cgIterationCallExp.getAccumulator());
 	}
 
 	public static @NonNull OCLExpression getAST(@NonNull CGCallExp cgCallExp) {

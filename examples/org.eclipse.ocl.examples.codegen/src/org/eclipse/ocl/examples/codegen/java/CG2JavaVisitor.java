@@ -1999,16 +1999,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {		// FIXME BUG 421738 move irregulaties to e.g. BooleanPrimitiveDescriptor
 		if (cgIsEqualExp.isTrue()) {
-			js.appendDeclaration(cgIsEqualExp);
-			js.append(" = ");
-			js.appendTrue();
-			js.append(";\n");
+			js.appendAssignBooleanLiteral(false, cgIsEqualExp, true);
 		}
 		else if (cgIsEqualExp.isFalse()) {
-			js.appendDeclaration(cgIsEqualExp);
-			js.append(" = ");
-			js.appendFalse();
-			js.append(";\n");
+			js.appendAssignBooleanLiteral(false, cgIsEqualExp, false);
 		}
 		else {
 			CGValuedElement cgSource = getExpression(cgIsEqualExp.getSource());
@@ -2086,16 +2080,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGIsEqual2Exp(@NonNull CGIsEqual2Exp cgIsEqualExp) {		// FIXME BUG 421738 move irregulaties to e.g. BooleanPrimitiveDescriptor
 		if (cgIsEqualExp.isTrue()) {
-			js.appendDeclaration(cgIsEqualExp);
-			js.append(" = ");
-			js.appendTrue();
-			js.append(";\n");
+			js.appendAssignBooleanLiteral(false, cgIsEqualExp, true);
 		}
 		else if (cgIsEqualExp.isFalse()) {
-			js.appendDeclaration(cgIsEqualExp);
-			js.append(" = ");
-			js.appendFalse();
-			js.append(";\n");
+			js.appendAssignBooleanLiteral(false, cgIsEqualExp, false);
 		}
 		else {
 			CGValuedElement cgSource = getExpression(cgIsEqualExp.getSource());

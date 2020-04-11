@@ -701,7 +701,7 @@ implements org.eclipse.ocl.pivot.Class {
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
@@ -713,7 +713,7 @@ implements org.eclipse.ocl.pivot.Class {
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 							break;
 						}
 						@SuppressWarnings("null")
@@ -724,8 +724,8 @@ implements org.eclipse.ocl.pivot.Class {
 						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.FALSE_VALUE;			// Abort after second find
-							break;
+							result = false;
+							break;			// Abort after second find
 						}
 						else {
 							accumulator.add(name);
@@ -1304,7 +1304,7 @@ implements org.eclipse.ocl.pivot.Class {
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable String name = this.getName();

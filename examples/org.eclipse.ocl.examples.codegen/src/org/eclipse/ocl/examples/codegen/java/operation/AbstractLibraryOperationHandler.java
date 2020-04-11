@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -31,22 +30,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 	}
 
 	protected void appendAssignBooleanLiteral(boolean hasDeclaration, @NonNull CGLibraryOperationCallExp cgOperationCallExp, boolean value) {
-		if (!hasDeclaration) {
-			js.appendDeclaration(cgOperationCallExp);
-		}
-		else {
-			js.appendValueName(cgOperationCallExp);
-		}
-		js.append(" = ");
-		if (cgOperationCallExp.isNonNull()) {
-			js.appendBooleanString(value);
-		}
-		else {
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".");
-			js.append(value ? "TRUE_VALUE" : "FALSE_VALUE");
-		}
-		js.append(";\n");
+		js.appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, value);
 	}
 
 /*	protected void appendAssignNotValue(boolean hasDeclaration, @NonNull CGLibraryOperationCallExp cgOperationCallExp, @NonNull CGValuedElement value) {
@@ -169,19 +153,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 	}
 
 	private void appendEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
-		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
-			if (!value) {
-				js.append("!");
-			}
-			js.appendValueName(cgValue);
-		}
-		else {
-			js.appendValueName(cgValue);
-			js.append(" == ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".");
-			js.append(value ? "TRUE_VALUE" : "FALSE_VALUE");
-		}
+		js.appendEqualsBoolean(cgValue, value);
 	}
 
 	/**

@@ -293,6 +293,25 @@ public class JavaStream
 		}
 	}
 
+	public void appendAssignBooleanLiteral(boolean hasDeclaration, @NonNull CGValuedElement cgValue, boolean value) {
+		if (!hasDeclaration) {
+			appendDeclaration(cgValue);
+		}
+		else {
+			appendValueName(cgValue);
+		}
+		append(" = ");
+		if (cgValue.isNonNull()) {
+			appendBooleanString(value);
+		}
+		else {
+			appendClassReference(null, ValueUtil.class);
+			append(".");
+			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+		append(";\n");
+	}
+
 	public boolean appendAssignment(@NonNull CGValuedElement toVariable, @NonNull CGValuedElement cgExpression) {
 		CGInvalid cgInvalidValue = cgExpression.getInvalidValue();
 		if (cgInvalidValue != null) {
@@ -843,6 +862,22 @@ public class JavaStream
 		}
 	}
 
+	public void appendEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
+		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
+			if (!value) {
+				append("!");
+			}
+			appendValueName(cgValue);
+		}
+		else {
+			appendValueName(cgValue);
+			append(" == ");
+			appendClassReference(null, ValueUtil.class);
+			append(".");
+			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+	}
+
 	public void appendFalse() {
 		appendClassReference(null, ValueUtil.class);
 		append(".FALSE_VALUE");
@@ -898,6 +933,22 @@ public class JavaStream
 			return cgElement.accept(cg2java) == Boolean.TRUE;
 		}
 		return true;
+	}
+
+	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
+		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
+			if (value) {
+				append("!");
+			}
+			appendValueName(cgValue);
+		}
+		else {
+			appendValueName(cgValue);
+			append(" != ");
+			appendClassReference(null, ValueUtil.class);
+			append(".");
+			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
 	}
 
 	public void appendQualifiedLiteralName(@NonNull Operation anOperation) {
@@ -958,6 +1009,16 @@ public class JavaStream
 					};
 					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), castBody);
 					return;
+				}
+				else if (requiredTypeDescriptor.isPrimitive()) { // && cgValue.isConstant() && (cgValue.getTypeId() == TypeId.BOOLEAN)) {
+					if (cgValue.isTrue()) {
+						append("true");
+						return;
+					}
+					else if (cgValue.isFalse()) {
+						append("false");
+						return;
+					}
 				}
 			}
 			appendValueName(cgValue);

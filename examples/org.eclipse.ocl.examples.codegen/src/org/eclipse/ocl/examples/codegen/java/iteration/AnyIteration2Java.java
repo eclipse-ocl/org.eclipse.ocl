@@ -17,7 +17,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 public class AnyIteration2Java extends AbstractIteration2Java
@@ -30,10 +29,8 @@ public class AnyIteration2Java extends AbstractIteration2Java
 		if (cgBody.getASTypeId() == TypeId.BOOLEAN) {
 			CGIterator cgIterator = getIterator(cgIterationCallExp);
 			js.append("if (");
-			js.appendValueName(cgBody);
-			js.append(" != ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".FALSE_VALUE) {			// Carry on till something found\n");
+			js.appendNotEqualsBoolean(cgBody, false);
+			js.append(") {			// Carry on till something found\n");
 			js.pushIndentation(null);
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");

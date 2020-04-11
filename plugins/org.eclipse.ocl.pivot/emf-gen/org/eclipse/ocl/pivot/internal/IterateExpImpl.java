@@ -579,7 +579,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_1;
 			if (le) {
-				symbol_1 = ValueUtil.TRUE_VALUE;
+				symbol_1 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -627,11 +627,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								 */
 								final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
 								//
-								if (isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+								if (isRequired) {					// Normal successful body evaluation result
 									exists = ValueUtil.TRUE_VALUE;
 									break;														// Stop immediately
 								}
-								else if (isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+								else if (!isRequired) {				// Normal unsuccessful body evaluation result
 									;															// Carry on
 								}
 								else {															// Impossible badly typed result
@@ -785,7 +785,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -819,11 +819,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							 */
 							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
 							//
-							if (isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+							if (!isRequired) {					// Normal unsuccessful body evaluation result
 								forAll = ValueUtil.FALSE_VALUE;
 								break;														// Stop immediately
 							}
-							else if (isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+							else if (isRequired) {				// Normal successful body evaluation result
 								;															// Carry on
 							}
 							else {															// Impossible badly typed result
@@ -892,7 +892,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_1;
 			if (le) {
-				symbol_1 = ValueUtil.TRUE_VALUE;
+				symbol_1 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;

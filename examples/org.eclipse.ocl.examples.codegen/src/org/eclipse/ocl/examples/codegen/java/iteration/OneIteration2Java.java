@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 public class OneIteration2Java extends AbstractAccumulation2Java
 {
@@ -28,8 +27,7 @@ public class OneIteration2Java extends AbstractAccumulation2Java
 
 	@Override
 	public void appendAccumulatorInit(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		js.appendClassReference(null, ValueUtil.class);
-		js.append(".FALSE_VALUE");
+		js.appendFalse();
 	}
 
 	@Override
@@ -38,28 +36,20 @@ public class OneIteration2Java extends AbstractAccumulation2Java
 		if (cgBody.getASTypeId() == TypeId.BOOLEAN) {
 			CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
 			js.append("if (");
-			js.appendValueName(cgBody);
-			js.append(" != ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".FALSE_VALUE) {			// Carry on till something found\n");
+			js.appendNotEqualsBoolean(cgBody, false);
+			js.append(") {			// Carry on till something found\n");
 			js.pushIndentation(null);
 			js.append("if (");
 			js.appendValueName(cgAccumulator);
 			js.append(") {\n");
 			js.pushIndentation(null);
-			js.appendValueName(cgIterationCallExp);
-			js.append(" = ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".FALSE_VALUE;\n");
+			js.appendAssignBooleanLiteral(true, cgIterationCallExp, false);
 			js.append("break;\n");
 			js.popIndentation();
 			js.append("}\n");
 			js.append("else {\n");
 			js.pushIndentation(null);
-			js.appendValueName(cgAccumulator);
-			js.append(" = ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".TRUE_VALUE;\n");
+			js.appendAssignBooleanLiteral(true, cgAccumulator, true);
 			js.popIndentation();
 			js.append("}\n");
 			js.popIndentation();
