@@ -1,0 +1,397 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+grammar org.eclipse.ocl.ocl3.xtext.essentialocl.EssentialOCL3 hidden(WS, ML_COMMENT, SL_COMMENT) //with org.eclipse.xtext.common.Terminals
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "platform:/resource/org.eclipse.ocl.ocl3/model/OCL3.ecore#//descriptors" as descriptors
+import "platform:/resource/org.eclipse.ocl.ocl3/model/OCL3.ecore#//expressions" as expressions
+import "platform:/resource/org.eclipse.ocl.ocl3/model/OCL3.ecore#//types" as types
+import "platform:/resource/org.eclipse.ocl.ocl3/model/OCL3.ecore#//values" as values
+
+Grammar returns types::Element:
+	Exp;
+
+ID: SIMPLE_ID | ESCAPED_ID;
+
+Identifier:
+	ID;
+
+/* A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. */
+LOWER returns ecore::EInt:
+	INT
+;
+
+/* A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
+ * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
+ * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
+ * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
+ */
+NUMBER_LITERAL returns values::BigNumber: // Not terminal to allow parser backtracking to sort out "5..7"
+	INT; // EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
+
+StringLiteral:
+	SINGLE_QUOTED_STRING;
+
+/* An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. */
+UPPER returns ecore::EInt:
+	INT | '*'
+;
+	
+URI:
+	SINGLE_QUOTED_STRING;
+
+terminal fragment ESCAPED_CHARACTER:
+	'\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\');
+
+terminal fragment LETTER_CHARACTER:
+	'a'..'z' | 'A'..'Z' | '_';
+
+terminal DOUBLE_QUOTED_STRING:
+	'"' (ESCAPED_CHARACTER | !('\\' | '"'))* '"';
+
+terminal SINGLE_QUOTED_STRING:
+	"'" (ESCAPED_CHARACTER | !('\\' | "'"))* "'";
+
+terminal ML_SINGLE_QUOTED_STRING:
+	"/'"->"'/";
+
+terminal SIMPLE_ID:
+	LETTER_CHARACTER (LETTER_CHARACTER | ('0'..'9'))*;
+
+terminal ESCAPED_ID:
+	"_" SINGLE_QUOTED_STRING;
+
+terminal INT: // String to allow diverse re-use
+	('0'..'9')+;		// multiple leading zeroes occur as floating point fractional part
+
+/* A multi-line comment supports a comment that may span more than one line using familiar slash-star...star-slash comment delimiters */
+terminal ML_COMMENT:
+	'/*' ->'*/';
+
+/* A single-line comment supports a comment that terminates at the end of the line */
+terminal SL_COMMENT:
+	'--' !('\n' | '\r')* ('\r'? '\n')?;
+
+/* Whitespace may occur between any pair of tokens */
+terminal WS:
+	(' ' | '\t' | '\r' | '\n')+;
+
+terminal ANY_OTHER:
+	.;	
+
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLReservedKeyword:
+	'and'
+	| 'and2'
+	| 'else'
+	| 'endif'
+	| 'if'
+	| 'implies'
+	| 'implies2'
+	| 'in'
+	| 'let'
+	| 'not'
+	| 'not2'
+	| 'or'
+	| 'or2'
+	| 'then'
+	| 'xor'
+	| 'xor2';
+
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLUnaryOperatorName:
+	'-' | 'not' | 'not2';
+
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLInfixOperatorName:
+	'*' | '/' | '+' | '-' | '>' | '<' | '>=' | '<=' | '=' | '<>' | 'and' | 'and2' | 'implies' | 'implies2' | 'or' | 'or2' | 'xor' | 'xor2';
+
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLNavigationOperatorName:
+	'.' | '->' | '?.' | '?->';
+
+BinaryOperatorName:
+	InfixOperatorName | NavigationOperatorName;
+
+InfixOperatorName: 			// Intended to be overrideable
+	EssentialOCLInfixOperatorName;
+
+NavigationOperatorName: 	// Intended to be overrideable
+	EssentialOCLNavigationOperatorName;
+
+UnaryOperatorName: 			// Intended to be overrideable
+	EssentialOCLUnaryOperatorName;
+
+//---------------------------------------------------------------------
+//  Names
+//---------------------------------------------------------------------
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLUnrestrictedName returns ecore::EString:
+	Identifier;
+
+UnrestrictedName returns ecore::EString: // Intended to be overridden
+	EssentialOCLUnrestrictedName;
+
+/** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
+EssentialOCLUnreservedName returns ecore::EString:
+	UnrestrictedName
+|	CollectionTypeIdentifier
+|	PrimitiveTypeIdentifier
+|	'Map'
+|	'Tuple'
+;
+
+UnreservedName returns ecore::EString: // Intended to be overridden
+	EssentialOCLUnreservedName;
+
+FirstNameDesc returns descriptors::SimpleNameDesc:
+	name=UnrestrictedName;
+
+NextNameDesc returns descriptors::SimpleNameDesc:
+	name=UnreservedName;
+
+QualifiedNameDesc returns descriptors::QualifiedNameDesc:
+	ownedSimpleNameDescs+=FirstNameDesc ('::' ownedSimpleNameDescs+=NextNameDesc)+;
+
+NameDesc returns descriptors::NameDesc:
+	FirstNameDesc | QualifiedNameDesc;
+
+URIFirstNameDesc returns descriptors::SimpleNameWithURIDesc:
+	name=UnrestrictedName | name=URI;
+
+URIQualifiedName returns descriptors::QualifiedNameDesc:
+	ownedSimpleNameDescs+=URIFirstNameDesc ('::' ownedSimpleNameDescs+=NextNameDesc)*;
+
+URIPathName returns descriptors::NameDesc:
+	URIFirstNameDesc | URIQualifiedName;
+	
+	
+	
+MultiplicityBounds returns descriptors::MultiplicityBounds:
+	 lowerBound=LOWER ('..' upperBound=UPPER)?;
+
+Multiplicity returns descriptors::Multiplicity:
+	'[' (MultiplicityBounds | MultiplicityString) ('|?' | isNullFree?='|1')? ']';
+
+MultiplicityString returns descriptors::MultiplicityString:
+	stringBounds=('*'|'+'|'?');
+	
+
+TemplatedTypeDesc returns descriptors::GenericTypeDesc:
+	ownedNameDesc=NameDesc ('(' ownedBindings+=NameDesc ')')?
+;
+	
+TemplateParameter returns types::TemplateParameter:
+	name=UnrestrictedName
+//	('extends' ownedExtends+=TypeWithoutMultiplicityDesc ('&&' ownedExtends+=TypeWithoutMultiplicityDesc)*)?
+;
+
+TypeParameter returns types::TypeParameter:
+	name=UnrestrictedName
+	('extends' ownedExtends+=TypeWithoutMultiplicityDesc ('&&' ownedExtends+=TypeWithoutMultiplicityDesc)*)?
+;
+
+TypeWithMultiplicityDesc returns descriptors::GenericTypeDesc:
+	TemplatedTypeDesc ownedMultiplicity=Multiplicity?;
+
+TypeWithoutMultiplicityDesc returns descriptors::TypeDesc:
+	(TemplatedTypeDesc | TypeLiteral | CollectionPattern);
+	
+//---------------------------------------------------------------------
+//  Types
+//---------------------------------------------------------------------
+PrimitiveTypeIdentifier:
+	'Boolean'
+	| 'Integer'
+	| 'Real'
+	| 'String'
+	| 'UnlimitedNatural'
+	| 'OclAny'
+	| 'OclInvalid'
+	| 'OclVoid';
+
+CollectionTypeIdentifier returns ecore::EString:
+	'Set'
+	| 'Bag'
+	| 'Sequence'
+	| 'Collection'
+	| 'OrderedSet';
+
+CollectionTypeDesc returns descriptors::CollectionTypeDesc:
+	name=CollectionTypeIdentifier ('(' ownedTypeDesc=TypeWithoutMultiplicityDesc ownedCollectionMultiplicity=Multiplicity? ')')?;
+
+MapTypeDesc returns descriptors::MapTypeDesc:
+	name='Map' ('(' ownedKeyTypeDesc=TypeWithMultiplicityDesc ',' ownedValueTypeDesc=TypeWithMultiplicityDesc ')')?;
+
+TupleTypeDesc returns descriptors::TupleTypeDesc:
+	name='Tuple' ('(' (ownedParts+=TuplePart (',' ownedParts+=TuplePart)*)? ')')?;
+
+TuplePart returns descriptors::TuplePart:
+	name=UnrestrictedName ':' ownedType=TypeWithMultiplicityDesc;
+
+//---------------------------------------------------------------------
+//  Literals
+//---------------------------------------------------------------------
+CollectionLiteralExp returns expressions::CollectionLiteralExp:
+	ownedType=CollectionTypeDesc
+	'{' (ownedParts+=CollectionLiteralPart
+	(',' ownedParts+=CollectionLiteralPart)*)?
+	'}';
+
+CollectionLiteralPart returns expressions::CollectionLiteralPart:
+	(ownedExpression=Exp ('..' ownedLastExpression=Exp)?) | ownedExpression=PatternExp;
+
+CollectionPattern returns expressions::CollectionPattern:
+	ownedType=CollectionTypeDesc
+	'{' (ownedParts+=PatternExp
+	(',' ownedParts+=PatternExp)*
+	('++' restVariableName=Identifier))?
+	'}';
+
+
+ShadowExp returns expressions::ShadowExp:
+	ownedTypeDesc=TypeWithoutMultiplicityDesc '{' (ownedParts+=ShadowPart (',' ownedParts+=ShadowPart)*)? '}';
+
+ShadowPart returns expressions::ShadowPart:		// PatternPart
+	(referredProperty=[types::Property|UnrestrictedName] '='ownedInitExpression=(Exp|PatternExp))
+	| ownedInitExpression=StringLiteralExp;
+
+PatternExp returns expressions::PatternExp:
+	patternVariableName=UnrestrictedName? ':' ownedPatternType=TypeWithMultiplicityDesc;
+
+LambdaLiteralExp returns expressions::LambdaLiteralExp:
+	'Lambda' '{' ownedExpression=Exp '}';
+
+MapLiteralExp returns expressions::MapLiteralExp:
+	ownedType=MapTypeDesc '{' (ownedParts+=MapLiteralPart (',' ownedParts+=MapLiteralPart)*)? '}';
+
+MapLiteralPart returns expressions::MapLiteralPart:
+	ownedKey=Exp '<-' ownedValue=Exp;
+
+PrimitiveLiteralExp returns expressions::PrimitiveLiteralExp:
+	NumberLiteralExp
+	| StringLiteralExp
+	| BooleanLiteralExp
+	| UnlimitedNaturalLiteralExp
+	| InvalidLiteralExp
+	| NullLiteralExp;
+
+TupleLiteralExp returns expressions::TupleLiteralExp:
+	'Tuple' '{' ownedParts+=TupleLiteralPart (',' ownedParts+=TupleLiteralPart)* '}';
+
+TupleLiteralPart returns expressions::TupleLiteralPart:
+	name=UnrestrictedName (':' ownedTypeDesc=TypeWithMultiplicityDesc)? '=' ownedInitExpression=Exp;
+
+NumberLiteralExp returns expressions::NumberLiteralExp:
+	symbol=NUMBER_LITERAL;
+
+StringLiteralExp returns expressions::StringLiteralExp:
+	segments+=StringLiteral+;
+
+BooleanLiteralExp returns expressions::BooleanLiteralExp:
+	symbol='true'
+	| symbol='false';
+
+UnlimitedNaturalLiteralExp returns expressions::UnlimitedNaturalLiteralExp:
+	{expressions::UnlimitedNaturalLiteralExp} '*';
+
+InvalidLiteralExp returns expressions::InvalidLiteralExp:
+	{expressions::InvalidLiteralExp} 'invalid';
+
+NullLiteralExp returns expressions::NullLiteralExp:
+	{expressions::NullLiteralExp} 'null';
+
+TypeLiteral returns descriptors::TypeDesc:
+	CollectionTypeDesc
+	| MapTypeDesc
+	| TupleTypeDesc
+//	| PrimitiveTypeDesc
+;
+
+//TypeLiteralWithMultiplicity returns descriptors::TypeWithMultiplicityDesc:
+//	TypeLiteral ownedMultiplicity=Multiplicity?;
+
+TypeLiteralExp returns expressions::TypeLiteralExp:
+	ownedType=TypeWithMultiplicityDesc;
+
+//TypeNameExp returns expressions::TypeNameExp:
+//	ownedPathName=descriptors::PathName (ownedCurlyBracketedClause=CurlyBracketedClause ('{' ownedPatternGuard=Exp '}')?)?;
+
+//---------------------------------------------------------------------
+//  Expressions
+//---------------------------------------------------------------------
+
+/* An expression elaborates a prefixed expression with zero or more binary operator and expression suffixes.
+ * An optionally prefixed let expression is permitted except when suffixed with further expressions.*/
+Exp returns expressions::Exp:
+	SuffixedPrimaryExp
+;
+
+/* A suffixed primary expression elaborates a primary expression with zero or more unary prefix operators. */
+SuffixedPrimaryExp returns expressions::Exp:
+	(PrefixedPrimaryExp ({expressions::InfixExp.ownedLeft=current} name=BinaryOperatorName ownedRight=Exp)?)
+| 	({expressions::PropertyCallExp} ownedSource=PrefixedPrimaryExp '.' ownedNameDesc=NameDesc ('[' ownedQualifiers+=Exp (',' ownedQualifiers+=Exp)* ']')? (isPre?='@' 'pre')?)
+| 	({expressions::OperationCallExp} ownedSource=PrefixedPrimaryExp '.' ownedNameDesc=NameDesc '(' (ownedArguments+=Exp (',' ownedArguments+=Exp)*)? ')' (isPre?='@' 'pre')?)
+| 	PrefixedPrimaryExp;
+
+/* A prefixed primary expression elaborates a primary expression with zero or more unary prefix operators. */
+PrefixedPrimaryExp returns expressions::Exp:
+	({expressions::PrefixExp} name=UnaryOperatorName ownedRight=PrefixedPrimaryExp)
+| 	PrimaryExp
+| 	({expressions::PropertyCallExp} ownedNameDesc=NameDesc ('[' ownedQualifiers+=Exp (',' ownedQualifiers+=Exp)* ']')? (isPre?='@' 'pre')?)
+| 	({expressions::OperationCallExp} ownedNameDesc=NameDesc '(' (ownedArguments+=Exp (',' ownedArguments+=Exp)*)? ')' (isPre?='@' 'pre')?)
+;
+
+/* A primary expression identifies the basic expressions from which more complex expressions may be constructed. */
+PrimaryExp returns expressions::Exp:
+	NestedExp
+|	IfExp
+| 	SelfExp
+| 	PrimitiveLiteralExp
+| 	TupleLiteralExp
+| 	MapLiteralExp
+| 	CollectionLiteralExp
+| 	LambdaLiteralExp
+| 	ShadowExp
+| 	TypeLiteralExp
+;
+
+CoIteratorVariable returns expressions::Variable:
+	name=UnrestrictedName (':' ownedTypeDesc=TypeWithMultiplicityDesc)?;
+
+IfExp returns expressions::IfExp:
+	'if' ownedCondition=(Exp|PatternExp)
+	'then' ownedThenExpression=Exp
+	(ownedIfThenExpressions+=ElseIfThenExp)*
+	'else' ownedElseExpression=Exp
+	'endif';
+ElseIfThenExp returns expressions::IfThenExp:
+	'elseif' ownedCondition=Exp
+	'then' ownedThenExpression=Exp
+;
+
+LetExp returns expressions::LetExp:
+	'let' ownedVariables+=LetVariable (',' ownedVariables+=LetVariable)*
+	'in' ownedInExpression=Exp;
+
+LetVariable returns expressions::LetVariable:
+	'var' name=UnrestrictedName (':' ownedTypeDesc=TypeWithMultiplicityDesc)? ('=' ownedInitExpression=Exp) ';';
+
+NestedExp returns expressions::NestedExp:
+	'(' ownedExpression=Exp ')';
+
+SelfExp returns expressions::SelfExp:
+	{expressions::SelfExp} 'self';
+	
+
+WildcardTypeDesc returns descriptors::WildcardTypeDesc:
+	{descriptors::WildcardTypeDesc} '?' ('extends' ownedExtends=TypeWithoutMultiplicityDesc)?
+;
+	

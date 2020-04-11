@@ -1,0 +1,1194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.ocl.ocl3/src" modelPluginID="org.eclipse.ocl.ocl3"
+    modelName="BaseCS" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore</foreignModel>
+  <genPackages prefix="Basecs" disposableProviderFactory="true" ecorePackage="BaseCS.ecore#/">
+    <genDataTypes ecoreDataType="BaseCS.ecore#//BigNumber"/>
+    <genDataTypes ecoreDataType="BaseCS.ecore#//CSI"/>
+    <genDataTypes ecoreDataType="BaseCS.ecore#//ScopeFilter"/>
+    <genClasses ecoreClass="BaseCS.ecore#//AnnotationCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//AnnotationCS/ownedContents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//AnnotationCS/ownedReferences"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//AnnotationElementCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//AnnotationElementCS/ownedDetails"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//AttributeCS"/>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//ClassCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ClassCS/instanceClassName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ClassCS/ownedConstraints"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ClassCS/owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//ConstraintCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ConstraintCS/ownedMessageSpecification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ConstraintCS/ownedSpecification"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ConstraintCS/stereotype"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//ContextLessElementCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//DataTypeCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//DataTypeCS/isPrimitive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//DataTypeCS/isSerializable"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//DetailCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//DetailCS/values"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//DocumentationCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//DocumentationCS/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//ElementCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ElementCS/csi"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ElementCS/parent"/>
+      <genOperations ecoreOperation="BaseCS.ecore#//ElementCS/getDescription"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//ElementRefCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//EnumerationCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationCS/isSerializable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//EnumerationCS/ownedLiterals"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//EnumerationLiteralCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationLiteralCS/literal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//EnumerationLiteralCS/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//FeatureCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//ImplicitOppositeCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//ImportCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ImportCS/isAll"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ImportCS/ownedPathName"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ImportCS/referredNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//LambdaTypeCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//LambdaTypeCS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaTypeCS/ownedContextType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaTypeCS/ownedParameterTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaTypeCS/ownedResultType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//ModelElementCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ModelElementCS/originalXmiId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ModelElementCS/ownedAnnotations"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//ModelElementRefCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ModelElementRefCS/ownedPathName"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ModelElementRefCS/referredElement"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//MultiplicityBoundsCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityBoundsCS/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityBoundsCS/upperBound"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//MultiplicityCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityCS/isNullFree"/>
+      <genOperations ecoreOperation="BaseCS.ecore#//MultiplicityCS/getLower"/>
+      <genOperations ecoreOperation="BaseCS.ecore#//MultiplicityCS/getUpper"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//MultiplicityStringCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityStringCS/stringBounds"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//NamedElementCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//NamedElementCS/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//NamespaceCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//OperationCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/ownedBodyExpressions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/ownedExceptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/ownedParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/ownedPostconditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/ownedPreconditions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//OperationCS/owningClass"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//PackageCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PackageCS/nsPrefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PackageCS/nsURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PackageCS/ownedClasses"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//PackageOwnerCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PackageOwnerCS/ownedPackages"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//ParameterCS">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ParameterCS/owningOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//PathElementCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/elementType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/owningPathName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/referredElement"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//PathElementWithURICS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathElementWithURICS/uri"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//PathNameCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathNameCS/context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathNameCS/ownedPathElements"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//PathNameCS/referredElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/scopeFilter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//PivotableElementCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PivotableElementCS/pivot"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//PrimitiveTypeRefCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PrimitiveTypeRefCS/name"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//ReferenceCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/referredKeys"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/referredOpposite"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ReferenceCS/ownedImplicitOpposites"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//RootCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//RootCS/ownedImports"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//RootPackageCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//SpecificationCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//SpecificationCS/exprString"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//StructuralFeatureCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//StructuralFeatureCS/default"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuralFeatureCS/ownedDefaultExpressions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuralFeatureCS/owningClass"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//StructuredClassCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//StructuredClassCS/isAbstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//StructuredClassCS/isInterface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuredClassCS/ownedMetaclass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuredClassCS/ownedOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuredClassCS/ownedProperties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//StructuredClassCS/ownedSuperTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//TemplateBindingCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateBindingCS/ownedMultiplicity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateBindingCS/ownedSubstitutions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateBindingCS/owningElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TemplateParameterCS">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateParameterCS/owningSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//TemplateParameterSubstitutionCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateParameterSubstitutionCS/ownedActualParameter"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateParameterSubstitutionCS/owningBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//TemplateSignatureCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateSignatureCS/ownedParameters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateSignatureCS/owningElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TemplateableElementCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TemplateableElementCS/ownedSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//TuplePartCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//TupleTypeCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TupleTypeCS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TupleTypeCS/ownedParts"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TypeCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//TypeParameterCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypeParameterCS/ownedExtends"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TypeRefCS"/>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TypedElementCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedElementCS/isOptional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedElementCS/ownedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedElementCS/qualifiers"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//TypedRefCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedRefCS/ownedMultiplicity"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//TypedTypeRefCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedTypeRefCS/isTypeof"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedTypeRefCS/ownedBinding"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedTypeRefCS/ownedPathName"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedTypeRefCS/referredType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//VisitableCS"/>
+    <genClasses ecoreClass="BaseCS.ecore#//WildcardTypeRefCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//WildcardTypeRefCS/ownedExtends"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//WildcardTypeRefCS/ownedSuper"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Pivot" disposableProviderFactory="true" loadInitialization="true"
+      literalsInterface="false" ecorePackage="Pivot.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Pivot.ecore#//AssociativityKind">
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//AssociativityKind/left"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//AssociativityKind/right"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Pivot.ecore#//CollectionKind">
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//CollectionKind/Collection"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//CollectionKind/Set"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//CollectionKind/OrderedSet"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//CollectionKind/Bag"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//CollectionKind/Sequence"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Pivot.ecore#//PseudostateKind">
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/initial"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/deepHistory"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/shallowHistory"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/join"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/fork"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/junction"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/choice"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/entryPoint"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/exitPoint"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//PseudostateKind/terminate"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Pivot.ecore#//TransitionKind">
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//TransitionKind/internal"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//TransitionKind/local"/>
+      <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#//TransitionKind/external"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="Pivot.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//Integer"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//LibraryFeature"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//Object"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//Real"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//String"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//Throwable"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#//UnlimitedNatural"/>
+    <genClasses ecoreClass="Pivot.ecore#//Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Annotation/ownedContents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Annotation/ownedDetails"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Annotation/references"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//AnyType"/>
+    <genClasses ecoreClass="Pivot.ecore#//AssociationClass">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//AssociationClass/unownedAttributes"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//AssociationClassCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//AssociationClassCallExp/referredAssociationClass"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//BagType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Behavior">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Behavior/owningTransition"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//BooleanLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//BooleanLiteralExp/booleanSymbol"/>
+      <genOperations ecoreOperation="Pivot.ecore#//BooleanLiteralExp/validateTypeIsBoolean">
+        <genParameters ecoreParameter="Pivot.ecore#//BooleanLiteralExp/validateTypeIsBoolean/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//BooleanLiteralExp/validateTypeIsBoolean/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//CallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CallExp/isImplicit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CallExp/isSafe"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CallExp/ownedSource"/>
+      <genOperations ecoreOperation="Pivot.ecore#//CallExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CallExp/validateSafeSourceCannotBeMap">
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateSafeSourceCannotBeMap/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateSafeSourceCannotBeMap/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CallExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CallExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CallOperationAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//CallOperationAction/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Class">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/extenders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Class/instanceClassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Class/isAbstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Class/isActive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Class/isInterface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/ownedBehaviors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/ownedInvariants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/ownedOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/ownedProperties"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Class/owningPackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Class/superClasses"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Class/validateNameIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateNameIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateNameIsNotNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Class/validateUniqueInvariantName">
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CollectionItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CollectionItem/ownedItem"/>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionItem/validateTypeIsItemType">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionItem/validateTypeIsItemType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionItem/validateTypeIsItemType/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CollectionLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CollectionLiteralExp/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CollectionLiteralExp/ownedParts"/>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralExp/validateBagKindIsBag">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateBagKindIsBag/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateBagKindIsBag/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralExp/validateCollectionKindIsConcrete">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateCollectionKindIsConcrete/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateCollectionKindIsConcrete/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralExp/validateOrderedSetKindIsOrderedSet">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateOrderedSetKindIsOrderedSet/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateOrderedSetKindIsOrderedSet/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralExp/validateSequenceKindIsSequence">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateSequenceKindIsSequence/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateSequenceKindIsSequence/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralExp/validateSetKindIsSet">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateSetKindIsSet/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralExp/validateSetKindIsSet/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//CollectionLiteralPart">
+      <genOperations ecoreOperation="Pivot.ecore#//CollectionLiteralPart/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralPart/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//CollectionLiteralPart/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CollectionRange">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CollectionRange/ownedFirst"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CollectionRange/ownedLast"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CollectionType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//CollectionType/elementType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CollectionType/isNullFree"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CollectionType/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//CollectionType/upper"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Comment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Comment/annotatedElements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Comment/body"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Comment/owningElement"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CompleteClass">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteClass/owningCompletePackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteClass/partialClasses"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CompleteEnvironment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteEnvironment/ownedCompleteModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteEnvironment/ownedStandardLibrary"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CompleteModel">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteModel/orphanCompletePackage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteModel/ownedCompletePackages"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteModel/owningCompleteEnvironment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteModel/partialModels"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompleteModel/primitiveCompletePackage"/>
+      <genOperations ecoreOperation="Pivot.ecore#//CompleteModel/getOwnedCompletePackage">
+        <genParameters ecoreParameter="Pivot.ecore#//CompleteModel/getOwnedCompletePackage/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//CompletePackage">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompletePackage/ownedCompleteClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompletePackage/ownedCompletePackages"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompletePackage/owningCompleteModel"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//CompletePackage/owningCompletePackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//CompletePackage/partialPackages"/>
+      <genOperations ecoreOperation="Pivot.ecore#//CompletePackage/getOwnedCompleteClass">
+        <genParameters ecoreParameter="Pivot.ecore#//CompletePackage/getOwnedCompleteClass/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ConnectionPointReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ConnectionPointReference/entries"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ConnectionPointReference/exits"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//ConnectionPointReference/owningState"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Constraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/constrainedElements"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Constraint/isCallable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/ownedSpecification"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/owningPostContext"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/owningPreContext"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/owningTransition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Constraint/redefinedConstraints"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Constraint/validateBooleanValued">
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateBooleanValued/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateBooleanValued/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Constraint/validateUniqueName">
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateUniqueName/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Constraint/validateUniqueName/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//DataType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//DataType/behavioralClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//DataType/isSerializable"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//DataType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Detail">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Detail/values"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//DynamicBehavior"/>
+    <genClasses ecoreClass="Pivot.ecore#//DynamicElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//DynamicElement/metaType"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//DynamicProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//DynamicProperty/default"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//DynamicProperty/referredProperty"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//DynamicType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//DynamicType/ownedDynamicProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//DynamicValueSpecification"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Element">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Element/annotatingComments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Element/ownedAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Element/ownedComments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Element/ownedExtensions"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Element/allOwnedElements"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Element/getValue">
+        <genParameters ecoreParameter="Pivot.ecore#//Element/getValue/stereotype"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Element/getValue/propertyName"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ElementExtension">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//ElementExtension/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//ElementExtension/isApplied"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//ElementExtension/isRequired"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ElementExtension/stereotype"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//EnumLiteralExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//EnumLiteralExp/referredLiteral"/>
+      <genOperations ecoreOperation="Pivot.ecore#//EnumLiteralExp/validateTypeIsEnumerationType">
+        <genParameters ecoreParameter="Pivot.ecore#//EnumLiteralExp/validateTypeIsEnumerationType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//EnumLiteralExp/validateTypeIsEnumerationType/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Enumeration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Enumeration/ownedLiterals"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//EnumerationLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//EnumerationLiteral/literal"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//EnumerationLiteral/owningEnumeration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//EnumerationLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ExpressionInOCL">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ExpressionInOCL/ownedBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ExpressionInOCL/ownedContext"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ExpressionInOCL/ownedParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ExpressionInOCL/ownedResult"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Feature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Feature/implementation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Feature/implementationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Feature/isStatic"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Feature/validateNameIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateNameIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateNameIsNotNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Feature/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Feature/validateTypeIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateTypeIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Feature/validateTypeIsNotNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//FeatureCallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//FeatureCallExp/isPre"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//FinalState"/>
+    <genClasses ecoreClass="Pivot.ecore#//IfExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//IfExp/isElseIf"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//IfExp/ownedCondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//IfExp/ownedElse"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//IfExp/ownedThen"/>
+      <genOperations ecoreOperation="Pivot.ecore#//IfExp/validateConditionTypeIsBoolean">
+        <genParameters ecoreParameter="Pivot.ecore#//IfExp/validateConditionTypeIsBoolean/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IfExp/validateConditionTypeIsBoolean/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IfExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//IfExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IfExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Import">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Import/importedNamespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Import/xmiidVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//InstanceSpecification">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//InstanceSpecification/classes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//InstanceSpecification/ownedSlots"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//InstanceSpecification/ownedSpecification"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//InstanceSpecification/owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//IntegerLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//IntegerLiteralExp/integerSymbol"/>
+      <genOperations ecoreOperation="Pivot.ecore#//IntegerLiteralExp/validateTypeIsInteger">
+        <genParameters ecoreParameter="Pivot.ecore#//IntegerLiteralExp/validateTypeIsInteger/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IntegerLiteralExp/validateTypeIsInteger/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//InvalidLiteralExp"/>
+    <genClasses ecoreClass="Pivot.ecore#//InvalidType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//IterableType"/>
+    <genClasses ecoreClass="Pivot.ecore#//IterateExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//IterateExp/ownedResult"/>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateOneInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateOneInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateOneInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateSafeIteratorIsRequired">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateSafeIteratorIsRequired/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateSafeIteratorIsRequired/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateTypeIsResultType">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateTypeIsResultType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateTypeIsResultType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateUnsafeSourceCanNotBeNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Iteration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Iteration/ownedAccumulators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Iteration/ownedIterators"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//IteratorExp">
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateAnyBodyTypeIsBoolean">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyBodyTypeIsBoolean/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyBodyTypeIsBoolean/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateAnyHasOneIterator">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyHasOneIterator/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyHasOneIterator/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureBodyTypeIsConformanttoIteratorType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyTypeIsConformanttoIteratorType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyTypeIsConformanttoIteratorType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureElementTypeIsSourceElementType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureElementTypeIsSourceElementType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureElementTypeIsSourceElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureHasOneIterator">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureHasOneIterator/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureHasOneIterator/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureTypeIsUniqueCollection">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureTypeIsUniqueCollection/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureTypeIsUniqueCollection/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateCollectElementTypeIsFlattenedBodyType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateCollectElementTypeIsFlattenedBodyType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateCollectElementTypeIsFlattenedBodyType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateCollectTypeIsUnordered">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateCollectTypeIsUnordered/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateCollectTypeIsUnordered/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceElementType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceElementType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateIteratorTypeIsSourceKeyType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeIteratorIsRequired/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSortedByElementTypeIsSourceElementType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByElementTypeIsSourceElementType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByElementTypeIsSourceElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSortedByIsOrderedIfSourceIsOrdered">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByIsOrderedIfSourceIsOrdered/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByIsOrderedIfSourceIsOrdered/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateSortedByIteratorTypeIsComparable">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByIteratorTypeIsComparable/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateSortedByIteratorTypeIsComparable/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateUnsafeSourceCanNotBeNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//IteratorVariable">
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorVariable/validateHasNoInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorVariable/validateHasNoInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorVariable/validateHasNoInitializer/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//LambdaType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//LambdaType/contextType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//LambdaType/parameterType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//LambdaType/resultType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//LanguageExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//LanguageExpression/body"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//LanguageExpression/language"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//LanguageExpression/owningConstraint"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//LetExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//LetExp/ownedIn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//LetExp/ownedVariable"/>
+      <genOperations ecoreOperation="Pivot.ecore#//LetExp/validateCompatibleNullityForIn">
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateCompatibleNullityForIn/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateCompatibleNullityForIn/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LetExp/validateTypeIsInType">
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateTypeIsInType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateTypeIsInType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LetExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//LetVariable">
+      <genOperations ecoreOperation="Pivot.ecore#//LetVariable/validateCompatibleNullityForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateCompatibleNullityForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateCompatibleNullityForInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LetVariable/validateCompatibleTypeForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateCompatibleTypeForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateCompatibleTypeForInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LetVariable/validateHasInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateHasInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LetVariable/validateHasInitializer/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Library">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Library/ownedPrecedences"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//LiteralExp"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//LoopExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//LoopExp/ownedBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//LoopExp/ownedCoIterators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//LoopExp/ownedIterators"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//LoopExp/referredIteration"/>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCoInitializers">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoInitializers">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateSourceIsCollection">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsCollection/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsCollection/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateSourceIsIterable">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsIterable/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsIterable/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//MapLiteralExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapLiteralExp/ownedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//MapLiteralPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapLiteralPart/ownedKey"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapLiteralPart/ownedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//MapType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapType/entryClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapType/keyType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//MapType/keysAreNullFree"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//MapType/valueType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//MapType/valuesAreNullFree"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//MessageExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageExp/ownedArguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageExp/ownedCalledOperation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageExp/ownedSentSignal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageExp/ownedTarget"/>
+      <genOperations ecoreOperation="Pivot.ecore#//MessageExp/validateOneCallOrOneSend">
+        <genParameters ecoreParameter="Pivot.ecore#//MessageExp/validateOneCallOrOneSend/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//MessageExp/validateOneCallOrOneSend/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//MessageExp/validateTargetIsNotACollection">
+        <genParameters ecoreParameter="Pivot.ecore#//MessageExp/validateTargetIsNotACollection/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//MessageExp/validateTargetIsNotACollection/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//MessageType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageType/referredOperation"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//MessageType/referredSignal"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Model">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Model/externalURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Model/ownedImports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Model/ownedPackages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Model/xmiidVersion"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//MorePivotable"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Nameable"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Namespace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Namespace/ownedConstraints"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//NavigationCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//NavigationCallExp/navigationSource"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//NavigationCallExp/qualifiers"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//NullLiteralExp"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//NumericLiteralExp"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//OCLExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//OCLExpression/typeValue"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OCLExpression/isNonNull"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OCLExpression/isNull"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OCLExpression/validateTypeIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OCLExpression/validateTypeIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OCLExpression/validateTypeIsNotNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Operation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/bodyExpression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isInvalidating"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isTransient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isTypeof"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isValidating"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/ownedParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/ownedPostconditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/ownedPreconditions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/owningClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/precedence"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/raisedExceptions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/redefinedOperations"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Operation/validateCompatibleReturn">
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateCompatibleReturn/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateCompatibleReturn/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Operation/validateLoadableImplementation">
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateLoadableImplementation/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateLoadableImplementation/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Operation/validateUniquePostconditionName">
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateUniquePostconditionName/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateUniquePostconditionName/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Operation/validateUniquePreconditionName">
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateUniquePreconditionName/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/validateUniquePreconditionName/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//OperationCallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//OperationCallExp/isVirtual"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//OperationCallExp/ownedArguments"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//OperationCallExp/referredOperation"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/hasOclVoidOverload"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateArgumentCount">
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentCount/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentCount/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateArgumentTypeIsConformant">
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentTypeIsConformant/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateArgumentTypeIsConformant/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OperationCallExp/validateUnsafeSourceCanNotBeNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//OppositePropertyCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//OppositePropertyCallExp/referredProperty"/>
+      <genOperations ecoreOperation="Pivot.ecore#//OppositePropertyCallExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OppositePropertyCallExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OppositePropertyCallExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OppositePropertyCallExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//OppositePropertyCallExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//OppositePropertyCallExp/validateUnsafeSourceCanNotBeNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//OrderedSetType"/>
+    <genClasses ecoreClass="Pivot.ecore#//OrphanCompletePackage"/>
+    <genClasses ecoreClass="Pivot.ecore#//Package">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Package/URI"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Package/importedPackages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Package/nsPrefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Package/ownedClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Package/ownedInstances"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Package/ownedPackages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Package/ownedProfileApplications"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Package/owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Parameter/isTypeof"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Parameter/owningOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ParameterVariable">
+      <genOperations ecoreOperation="Pivot.ecore#//ParameterVariable/validateHasNoInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ParameterVariable/validateHasNoInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ParameterVariable/validateHasNoInitializer/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Pivotable"/>
+    <genClasses ecoreClass="Pivot.ecore#//Precedence">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Precedence/associativity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Precedence/order"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//PrimitiveCompletePackage"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//PrimitiveLiteralExp"/>
+    <genClasses ecoreClass="Pivot.ecore#//PrimitiveType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//PrimitiveType/coercions"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Profile">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Profile/profileApplications"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ProfileApplication">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ProfileApplication/appliedProfile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//ProfileApplication/isStrict"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//ProfileApplication/owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Property">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/associationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/defaultValueString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isComposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isDerived"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isImplicit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isReadOnly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isResolveProxies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isTransient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isUnsettable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Property/isVolatile"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/keys"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/opposite"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/ownedExpression"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Property/owningClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/redefinedProperties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/referredProperty"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Property/subsettedProperty"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Property/isAttribute">
+        <genParameters ecoreParameter="Pivot.ecore#//Property/isAttribute/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//Property/validateCompatibleDefaultExpression">
+        <genParameters ecoreParameter="Pivot.ecore#//Property/validateCompatibleDefaultExpression/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Property/validateCompatibleDefaultExpression/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//PropertyCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//PropertyCallExp/referredProperty"/>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/getSpecializedReferredPropertyOwningType"/>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/getSpecializedReferredPropertyType"/>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/validateCompatibleResultType">
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateCompatibleResultType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateCompatibleResultType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/validateNonStaticSourceTypeIsConformant">
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateNonStaticSourceTypeIsConformant/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateNonStaticSourceTypeIsConformant/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/validateSafeSourceCanBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateSafeSourceCanBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateSafeSourceCanBeNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//PropertyCallExp/validateUnsafeSourceCanNotBeNull">
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateUnsafeSourceCanNotBeNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//PropertyCallExp/validateUnsafeSourceCanNotBeNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Pseudostate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Pseudostate/kind"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Pseudostate/owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Pseudostate/owningStateMachine"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//RealLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//RealLiteralExp/realSymbol"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//ReferringElement">
+      <genOperations ecoreOperation="Pivot.ecore#//ReferringElement/getReferredElement"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Region">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Region/extendedRegion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Region/ownedSubvertexes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Region/ownedTransitions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Region/owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Region/owningStateMachine"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ResultVariable">
+      <genOperations ecoreOperation="Pivot.ecore#//ResultVariable/validateCompatibleNullityForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateCompatibleNullityForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateCompatibleNullityForInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ResultVariable/validateCompatibleTypeForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateCompatibleTypeForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateCompatibleTypeForInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ResultVariable/validateHasInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateHasInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ResultVariable/validateHasInitializer/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//SelfType">
+      <genOperations ecoreOperation="Pivot.ecore#//SelfType/specializeIn">
+        <genParameters ecoreParameter="Pivot.ecore#//SelfType/specializeIn/expr"/>
+        <genParameters ecoreParameter="Pivot.ecore#//SelfType/specializeIn/selfType"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//SendSignalAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//SendSignalAction/signal"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//SequenceType"/>
+    <genClasses ecoreClass="Pivot.ecore#//SetType"/>
+    <genClasses ecoreClass="Pivot.ecore#//ShadowExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowExp/ownedParts"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//ShadowExp/value"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateDataTypeHasOnePartInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasOnePartInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasOnePartInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//ShadowPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowPart/ownedInit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowPart/referredProperty"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowPart/validateTypeIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Signal"/>
+    <genClasses ecoreClass="Pivot.ecore#//Slot">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Slot/definingProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Slot/ownedValues"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Slot/owningInstance"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//StandardLibrary">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//StandardLibrary/owningCompleteEnvironment"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//State">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//State/isComposite"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//State/isOrthogonal"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//State/isSimple"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//State/isSubmachineState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedConnectionPoints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedConnections"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedDeferrableTriggers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedDoActivity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedEntry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedExit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedRegions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/ownedStateInvariant"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/redefinedState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//State/submachines"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//StateExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//StateExp/referredState"/>
+      <genOperations ecoreOperation="Pivot.ecore#//StateExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//StateExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//StateExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//StateMachine">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//StateMachine/extendedStateMachines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//StateMachine/ownedConnectionPoints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//StateMachine/ownedRegions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//StateMachine/submachineStates"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Stereotype">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Stereotype/ownedExtenders"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//StereotypeExtender">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//StereotypeExtender/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//StereotypeExtender/isRequired"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//StereotypeExtender/owningStereotype"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//StringLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//StringLiteralExp/stringSymbol"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TemplateBinding">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateBinding/ownedSubstitutions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateBinding/owningElement"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateBinding/templateSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TemplateParameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameter/constrainingClasses"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameter/owningSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TemplateParameterSubstitution">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameterSubstitution/actual"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameterSubstitution/formal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameterSubstitution/ownedWildcard"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateParameterSubstitution/owningBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TemplateSignature">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateSignature/ownedParameters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateSignature/owningElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//TemplateableElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateableElement/ownedBindings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateableElement/ownedSignature"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TemplateableElement/unspecializedElement"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Transition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Transition/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/ownedEffect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/ownedGuard"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/ownedTriggers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/owningRegion"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Transition/target"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Trigger">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Trigger/owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Trigger/owningTransition"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TupleLiteralExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TupleLiteralExp/ownedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TupleLiteralPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TupleLiteralPart/ownedInit"/>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TupleType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Type">
+      <genOperations ecoreOperation="Pivot.ecore#//Type/flattenedType"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Type/isClass"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Type/isTemplateParameter"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Type/specializeIn">
+        <genParameters ecoreParameter="Pivot.ecore#//Type/specializeIn/expr"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Type/specializeIn/selfType"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//TypeExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TypeExp/referredType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//TypedElement">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//TypedElement/isMany"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//TypedElement/isRequired"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//TypedElement/type"/>
+      <genOperations ecoreOperation="Pivot.ecore#//TypedElement/CompatibleBody">
+        <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//UnlimitedNaturalLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//UnlimitedNaturalLiteralExp/unlimitedNaturalSymbol"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//UnspecifiedValueExp"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//ValueSpecification">
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/booleanValue"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/integerValue"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/isComputable"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/isNull"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/stringValue"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/unlimitedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Variable/isImplicit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Variable/ownedInit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//Variable/representedParameter"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Variable/validateCompatibleInitialiserType">
+        <genParameters ecoreParameter="Pivot.ecore#//Variable/validateCompatibleInitialiserType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Variable/validateCompatibleInitialiserType/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//VariableDeclaration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//VariableDeclaration/typeValue"/>
+      <genOperations ecoreOperation="Pivot.ecore#//VariableDeclaration/validateNameIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateNameIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateNameIsNotNull/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//VariableDeclaration/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//VariableDeclaration/validateTypeIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateTypeIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//VariableDeclaration/validateTypeIsNotNull/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#//VariableExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//VariableExp/isImplicit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//VariableExp/referredVariable"/>
+      <genOperations ecoreOperation="Pivot.ecore#//VariableExp/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//VariableExp/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//VariableExp/validateTypeIsNotInvalid/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Vertex">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Vertex/incomingTransitions"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Vertex/outgoingTransitions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#//Vertex/owningRegion"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#//Visitable"/>
+    <genClasses ecoreClass="Pivot.ecore#//VoidType"/>
+    <genClasses ecoreClass="Pivot.ecore#//WildcardType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//WildcardType/lowerBound"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//WildcardType/upperBound"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

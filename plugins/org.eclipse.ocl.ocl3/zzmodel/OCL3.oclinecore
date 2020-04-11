@@ -1,0 +1,489 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore';
+
+package ocl3 : ocl3 = 'http://www.eclipse.org/ocl/2020/ocl3'
+{
+	enum NavigationRole { serializable }
+	{
+		literal ITERATOR;
+		literal ACCUMULATOR;
+		literal EXPRESSION;
+	}
+	abstract class AbstractNameExp extends Exp
+	{
+		attribute isPre : Boolean[1] = 'false';
+		property ownedCurlyBracketedClause#owningNameExp : CurlyBracketedClause[?] { composes };
+		property ownedPathName : QualifiedNameRef[?] { composes };
+		property ownedRoundBracketedClause#owningNameExp : RoundBracketedClause[?] { composes };
+		property ownedSquareBracketedClauses#owningNameExp : SquareBracketedClause[0..2|1] { ordered composes };
+
+		/*
+		 * The sourceType propagates the known type of a source expression for use by subsequent analysis of for instance operation arguments.
+		 * For explicit source invocations, sourceType provides the true source type after resolution of implicit set or implicit collect.
+		 */
+		property sourceType : ocl::Type[?] { derived transient !resolve };
+
+		/*
+		 * The sourceTypeValue propates the known value of a source expression when the type is itself a type. This is used during analysis of for instance allInstances() and oclType().
+		 */
+		property sourceTypeValue : ocl::Type[?] { derived transient !resolve };
+	}
+	abstract class AssociationClassCallExp extends CallExp
+	{
+		property referredAssociation : ocl::AssociationClass[?] { derived !resolve };
+	}
+	class BooleanLiteralExp extends PrimitiveLiteralExp
+	{
+		attribute symbol : String[?];
+	}
+	abstract class CallExp extends AbstractNameExp
+	{
+		property arguments : Exp[*|1] { ordered derived !resolve };
+		property source : Exp[?] { derived !resolve };
+	}
+	class CollectionLiteralExp extends LiteralExp
+	{
+		property ownedParts : CollectionLiteralPart[*|1] { ordered composes };
+		property ownedType : CollectionTypeRef[?] { composes };
+	}
+	class CollectionLiteralPart extends ModelElement
+	{
+		property ownedExpression : Exp[?] { composes };
+		property ownedLastExpression : Exp[?] { composes };
+	}
+	class CollectionPattern extends TypeNameRef
+	{
+		property ownedParts : PatternExp[*|1] { ordered composes };
+		property ownedPatternGuard : Exp[?] { composes };
+		property ownedType : CollectionTypeRef[?] { composes };
+		attribute restVariableName : String[?];
+	}
+	class CollectionTypeRef extends TypeNameRef
+	{
+		property ownedCollectionMultiplicity : Multiplicity[?] { composes };
+		property ownedType : TypeNameRef[?] { composes };
+	}
+	class Context extends NamedElement
+	{
+		property ownedExpression : Exp[?] { composes };
+	}
+	class CurlyBracketedClause extends ContextLessElement
+	{
+		property ownedParts#owningCurlyBracketClause : ShadowPart[*|1] { ordered composes };
+		property owningNameExp#ownedCurlyBracketedClause : AbstractNameExp[?];
+		attribute value : String[?];
+	}
+	class Exp extends ModelElement
+	{
+
+	/*
+		 * Return true if csExp is a transitive child of this in the logical expression tree containing this and csExp and only OperatorExp nodes within the tree.
+		 */
+		operation isLocalLeftAncestorOf(csExp : Exp[1]) : Boolean[1];
+
+		/*
+		 * Return true if this is a transitive child of csExp in the logical expression tree containing this and csExp and only OperatorExp nodes within the tree.
+		 */
+		operation isLocalRightAncestorOf(csExp : Exp[1]) : Boolean[1];
+		attribute hasError : Boolean[1] = 'false' { transient };
+		property localLeft : Exp[?] { derived readonly transient volatile !resolve };
+		property localLeftmostDescendant : Exp[1] { derived readonly transient volatile !resolve };
+		property localParent : OperatorExp[?] { derived readonly transient volatile !resolve };
+		property localRight : Exp[?] { derived readonly transient volatile !resolve };
+		property localRightmostDescendant : Exp[1] { derived readonly transient volatile !resolve };
+		property precedence : ocl::Precedence[?] { derived readonly transient volatile !resolve };
+		attribute precedenceOrder : ecore::EInt[1] { derived readonly transient volatile };
+	}
+	class ExpSpecification extends Specification
+	{
+		property ownedExpression : Exp[?] { composes !resolve };
+	}
+	class IfExp extends Exp
+	{
+		attribute isImplicit : Boolean[1] = 'false';
+		property ownedCondition : Exp[?] { composes };
+		property ownedElseExpression : Exp[?] { composes };
+		property ownedIfThenExpressions : IfThenExp[*|1] { ordered composes };
+		property ownedThenExpression : Exp[?] { composes };
+	}
+	class IfThenExp extends Exp
+	{
+		property ownedCondition : Exp[?] { composes };
+		property ownedThenExpression : Exp[?] { composes };
+	}
+	class InfixExp extends OperatorExp
+	{
+		property argument : Exp[?] { derived readonly transient !resolve };
+		property ownedLeft : Exp[1] { composes };
+	}
+	class InvalidLiteralExp extends PrimitiveLiteralExp;
+	abstract class IterateCallExp extends IterationCallExp
+	{
+		property accumulators : Variable[*|1] { ordered derived !resolve };
+	}
+	abstract class IterationCallExp extends CallExp
+	{
+		property coIterators : Variable[*|1] { ordered derived !resolve };
+		property iterators : Variable[*|1] { ordered derived !resolve };
+		property referredIteration : ocl::Iteration[?] { derived !resolve };
+	}
+	class LambdaLiteralExp extends LiteralExp
+	{
+		property ownedExpression : Exp[?] { composes };
+	}
+	class LetExp extends Exp
+	{
+		attribute isImplicit : Boolean[1] = 'false';
+		property ownedInExpression : Exp[?] { composes };
+		property ownedVariables#owningLetExpression : LetVariable[*|1] { ordered composes };
+	}
+	class LetVariable extends Exp,Variable
+	{
+		property ownedRoundBracketedClause : RoundBracketedClause[?] { composes };
+		property owningLetExpression#ownedVariables : LetExp[?];
+	}
+	class LiteralExp extends Exp;
+	class MapLiteralExp extends LiteralExp
+	{
+		property ownedParts : MapLiteralPart[*|1] { ordered composes };
+		property ownedType : MapTypeRef[?] { composes };
+	}
+	class MapLiteralPart extends ModelElement
+	{
+		property ownedKey : Exp[?] { composes };
+		property ownedValue : Exp[?] { composes };
+	}
+	class MapTypeRef extends TypeNameRef
+	{
+		property ownedKeyType : TypeNameRef[?] { composes };
+		property ownedValueType : TypeNameRef[?] { composes };
+	}
+	class NameExp extends
+	AssociationClassCallExp,ShadowExp,IterateCallExp,IterationCallExp,OperationCallExp,PropertyCallExp,VariableExp;
+	class NavigatingArg extends ModelElement
+	{
+		property ownedInitExpression : Exp[?] { composes };
+		property ownedNameExpression : Exp[?] { composes };
+		property ownedType : TypeNameRef[?] { composes };
+		property owningRoundBracketedClause#ownedArguments : RoundBracketedClause[?];
+		attribute prefix : String[?];
+		attribute role : NavigationRole[?] { derived transient };
+		property ownedCoIterator : Variable[?] { composes };
+	}
+	class NestedExp extends Exp
+	{
+		property ownedExpression : Exp[?] { composes };
+	}
+	class NullLiteralExp extends PrimitiveLiteralExp;
+	class NumberLiteralExp extends PrimitiveLiteralExp
+	{
+		attribute symbol : BigNumber[?];
+	}
+	abstract class OperationCallExp extends CallExp
+	{
+		property referredOperation : ocl::Operation[?] { derived !resolve };
+	}
+	abstract class OperatorExp extends Exp,NamedElement
+	{
+		property ownedRight : Exp[1] { composes };
+		property source : Exp[?] { derived readonly transient !resolve };
+	}
+	class PatternExp extends Exp
+	{
+		property ownedPatternType : TypeRef[?] { composes };
+		attribute patternVariableName : String[?];
+	}
+	class PrefixExp extends OperatorExp;
+	class PrimitiveLiteralExp extends LiteralExp;
+	abstract class PropertyCallExp extends CallExp
+	{
+		property referredProperty : ocl::Property[?] { derived !resolve };
+	}
+	class RoundBracketedClause extends ContextLessElement
+	{
+		property ownedArguments#owningRoundBracketedClause : NavigatingArg[*|1] { ordered composes };
+		property owningNameExp#ownedRoundBracketedClause : AbstractNameExp[?];
+	}
+	class SelfExp extends Exp
+	{
+		attribute name : String[?];
+	}
+	abstract class ShadowExp extends AbstractNameExp
+	{
+		property parts : ShadowPart[*|1] { ordered derived !resolve };
+		property typeName : TypeNameExp[?] { derived !resolve };
+		attribute value : String[?] { derived };
+	}
+	class ShadowPart extends ModelElement
+	{
+		property ownedInitExpression : Exp[1] { composes };
+		property owningCurlyBracketClause#ownedParts : CurlyBracketedClause[?];
+		property referredProperty : ocl::Property[?];
+	}
+	class SquareBracketedClause extends ContextLessElement
+	{
+		property ownedTerms : Exp[+|1] { ordered composes };
+		property owningNameExp#ownedSquareBracketedClauses : AbstractNameExp[?];
+	}
+	class StringLiteralExp extends PrimitiveLiteralExp
+	{
+		attribute segments : String[*|1] { ordered !unique };
+	}
+	class TupleLiteralExp extends LiteralExp
+	{
+		property ownedParts : TupleLiteralPart[*|1] { ordered composes };
+	}
+	class TupleLiteralPart extends Variable;
+	class TypeLiteralExp extends LiteralExp
+	{
+		property ownedPathName : QualifiedNameRef[?] { composes };
+		property ownedType : TypeNameRef[1] { composes };
+	}
+	class TypeNameExp extends TypeNameRef
+	{
+		property element : ocl::Type[?] { derived readonly transient volatile !resolve };
+		property ownedCurlyBracketedClause : CurlyBracketedClause[?] { composes };
+		property ownedPathName : QualifiedNameRef[?] { composes };
+		property ownedPatternGuard : Exp[?] { composes };
+	}
+	class UnlimitedNaturalLiteralExp extends PrimitiveLiteralExp;
+	class Variable extends NamedElement
+	{
+		property ownedInitExpression : Exp[?] { composes };
+		property ownedType : TypeNameRef[?] { composes };
+	}
+	abstract class VariableExp extends AbstractNameExp
+	{
+		property referredVariable : ocl::Variable[?] { derived !resolve };
+	}
+	datatype BigNumber : 'java.lang.Number' { serializable };
+	datatype CSI : 'org.eclipse.ocl.xtext.base.utilities.CSI';
+	datatype ScopeFilter : 'org.eclipse.ocl.pivot.internal.scoping.ScopeFilter' { serializable };
+	class Annotation extends AnnotationElement
+	{
+		property ownedContents : ModelElement[*|1] { ordered composes };
+		property ownedReferences : ModelElementRef[*|1] { ordered composes };
+	}
+	abstract class AnnotationElement extends NamedElement
+	{
+		property ownedDetails : Detail[*|1] { ordered composes };
+	}
+	class Attribute extends Property;
+	abstract class Class extends Namespace,Type,TemplateableElement
+	{
+		attribute instanceClassName : String[?];
+		attribute isAbstract : Boolean[1] = 'false';
+		attribute isInterface : Boolean[1] = 'false';
+		property ownedConstraints : Constraint[*|1] { ordered composes };
+		property ownedMetaclass : TypeNameRef[?] { composes };
+		property ownedOperations#owningClass : Operation[*|1] { ordered composes };
+		property ownedProperties#owningClass : Property[*|1] { ordered composes };
+		property ownedSuperTypes : TypeNameRef[*|1] { ordered composes };
+		property owningPackage#ownedClasses : Package[?];
+	}
+	class Constraint extends NamedElement
+	{
+		property ownedMessageSpecification : Specification[?] { composes };
+		property ownedSpecification : Specification[?] { composes };
+		attribute stereotype : String[?];
+	}
+	abstract class ContextLessElement extends Element;
+	class DataType extends Class,Namespace
+	{
+		attribute isPrimitive : Boolean[1] = 'false';
+		attribute isSerializable : Boolean[1] = 'false';
+	}
+	class Detail extends NamedElement
+	{
+		attribute values : String[*|1] { ordered };
+	}
+	class Documentation extends AnnotationElement
+	{
+		attribute value : String[?];
+	}
+	abstract class Element
+	{
+		operation getDescription() : String[?];
+		attribute csi : CSI[?] { transient };
+		property parent : Element[?] { derived readonly transient volatile !resolve };
+	}
+	abstract class ElementRef extends Element
+	{
+		property referredElement : ocl::Element[?] { transient !resolve };
+	}
+	class Enumeration extends Class
+	{
+		attribute isSerializable : Boolean[1] = 'false';
+		property ownedLiterals : EnumerationLiteral[*|1] { ordered composes };
+	}
+	class EnumerationLiteral extends NamedElement
+	{
+		attribute literal : String[?];
+		attribute value : ecore::EInt[1];
+	}
+	abstract class Feature extends TypedElement;
+	class ImplicitOpposite extends Feature;
+	class Import extends Namespace
+	{
+		attribute isAll : Boolean[1] = 'false';
+		property ownedPathName : QualifiedNameRef[?] { composes };
+		property referredNamespace : ocl::Namespace[?] { derived readonly transient volatile !resolve };
+	}
+	class LambdaType extends TypeNameRef,TemplateableElement
+	{
+		property ownedContextType : TypeNameRef[?] { composes };
+		property ownedParameterTypes : TypeNameRef[*|1] { ordered composes };
+		property ownedResultType : TypeNameRef[?] { composes };
+	}
+	class Model extends PackageOwner
+	{
+		property ownedImports : Import[*|1] { ordered composes };
+	}
+	abstract class ModelElement extends Element
+	{
+		attribute originalXmiId : String[?] { transient };
+		property ownedAnnotations : AnnotationElement[*|1] { ordered composes };
+	}
+	class ModelElementRef extends ElementRef
+	{
+		property ownedPathName : QualifiedNameRef[?] { composes };
+		property referredModelElement : ocl::Element[?] { derived readonly transient volatile !resolve };
+	}
+	class MultiplicityBounds extends Multiplicity
+	{
+		attribute lowerBound : ecore::EInt[1] = '1';
+		attribute upperBound : ecore::EIntegerObject[?];
+	}
+	abstract class Multiplicity extends Element
+	{
+		operation getLower() : ecore::EInt[1];
+		operation getUpper() : ecore::EInt[1];
+		attribute isNullFree : Boolean[1] = 'false';
+	}
+	class MultiplicityString extends Multiplicity
+	{
+		attribute stringBounds : String[?] = '1';
+	}
+	abstract class NameRef extends Element
+	{
+		property referredElement : ocl::Element[1];
+	}
+	abstract class NamedElement extends ModelElement
+	{
+		attribute name : String[?];
+	}
+	abstract class Namespace extends NamedElement;
+	class Operation extends Feature,TemplateableElement
+	{
+		property ownedBodyExpressions : Specification[*|1] { ordered composes };
+		property ownedExceptions : TypeNameRef[*|1] { ordered composes };
+		property ownedOperationParameters#owningOperation : Parameter[*|1] { ordered composes };
+		property ownedPostconditions : Constraint[*|1] { ordered composes };
+		property ownedPreconditions : Constraint[*|1] { ordered composes };
+		property owningClass#ownedOperations : Class[?];
+	}
+	class Package extends PackageOwner,Namespace
+	{
+		attribute nsPrefix : String[?];
+		attribute nsURI : String[?];
+		property ownedClasses#owningPackage : Class[*|1] { ordered composes };
+	}
+	abstract class PackageOwner extends ModelElement
+	{
+		property ownedPackages : Package[*|1] { ordered composes };
+	}
+	class Parameter extends TypedElement
+	{
+		property owningOperation#ownedOperationParameters : Operation[?];
+	}
+	class PathElementWithURI extends NameRef
+	{
+		attribute uri : String[?] { transient };
+	}
+	abstract class Property extends Feature
+	{
+		attribute default : String[?];
+		property ownedDefaultExpressions : Specification[*|1] { ordered composes };
+		property owningClass#ownedProperties : Class[?];
+	}
+	class QualifiedNameRef extends NameRef
+	{
+		property context : Element[?] { transient unsettable !resolve };
+		property ownedNameRefs : NameRef[+|1] { ordered composes };
+		attribute scopeFilter : ScopeFilter[?] { transient };
+	}
+	class QualifiedTypeNameRef extends TypeNameRef
+	{
+		property ownedPathName : QualifiedNameRef[?] { composes };
+	}
+	class Reference extends Property
+	{
+		property referredKeys : ocl::Property[*|1] { ordered };
+		property referredOpposite : ocl::Property[?];
+		property ownedImplicitOpposites : ImplicitOpposite[*|1] { ordered composes };
+	}
+	class SimpleNameRef extends NameRef
+	{
+		property elementType : ecore::EClassifier[?] { transient };
+		property owningQualifiedNameRef : QualifiedNameRef[?];
+	}
+	class Specification extends ModelElement
+	{
+		attribute exprString : String[?];
+	}
+	class TemplateBinding extends ElementRef
+	{
+		property ownedMultiplicity : Multiplicity[?] { composes };
+		property ownedSubstitutions#owningBinding : TemplateParameterSubstitution[*|1] { ordered composes };
+		property owningElement : TemplatedTypeNameRef[?];
+	}
+	abstract class TemplateParameter extends NamedElement
+	{
+		property owningTemplateableElement : TemplateableElement[1];
+	}
+	class TemplateParameterSubstitution extends ModelElement
+	{
+		property ownedActualParameter : TypeRef[?] { composes };
+		property owningBinding#ownedSubstitutions : TemplateBinding[?];
+	}
+	abstract class TemplateableElement extends Element
+	{
+		property ownedTemplateParameters : TemplateParameter[*|1] { ordered composes };
+	}
+	class TuplePart extends TypedElement;
+	class TupleTypeRef extends TypeNameRef
+	{
+		property ownedParts : TuplePart[*|1] { ordered composes };
+	}
+	abstract class Type extends ModelElement;
+	class TypeParameter extends TemplateParameter,Type
+	{
+		property ownedExtends : TypeNameRef[*|1] { ordered composes };
+	}
+	abstract class TypeRef extends ElementRef
+	{
+		property referredType : ocl::Type[?] { derived readonly transient volatile !resolve };
+	}
+	abstract class TypedElement extends NamedElement
+	{
+		attribute isOptional : Boolean[1];
+		property ownedTypeRef : TypeNameRef[?] { composes };
+		attribute qualifiers : String[*|1] { ordered };
+	}
+	abstract class TypeNameRef extends TypeRef
+	{
+		attribute name : String[?];
+		property ownedMultiplicity : Multiplicity[?] { composes };
+	}
+	class TemplatedTypeNameRef extends TypeNameRef
+	{
+		attribute isTypeof : Boolean[1] = 'false';
+		property ownedBindings : ModelElementRef[*|1] { ordered composes };
+		property ownedPathName : NameRef[?] { composes };
+	}
+	abstract class Visitable : 'org.eclipse.ocl.xtext.basecs.util.Visitable' { interface };
+	class WildcardTypeRef extends TypeRef
+	{
+		property ownedExtends : TypeNameRef[?] { composes };
+		property ownedSuper : TypeNameRef[?] { composes };
+	}
+}
