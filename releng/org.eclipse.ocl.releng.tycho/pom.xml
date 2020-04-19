@@ -478,8 +478,20 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories-->
+  <distributionManagement>
+    <repository>
+      <id>repo.eclipse.org</id>
+      <name>OCL Repository - Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/ocl-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>repo.eclipse.org</id>
+      <name>OCL Repository - Snapshots</name>
+      <url>https://repo.eclipse.org/content/repositories/ocl-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
   <profiles>
-    <!-- Target platforms are located in org.eclipse.ocl.releng.tycho/targetPlatforms. -->
+  <!-- Target platforms are located in org.eclipse.ocl.releng.tycho/targetPlatforms. -->
     <profile>
       <id>nightly</id>
       <activation>
