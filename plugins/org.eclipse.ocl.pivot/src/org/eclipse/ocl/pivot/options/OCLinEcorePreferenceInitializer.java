@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.options;
 
 import org.eclipse.ocl.common.internal.preferences.AnnotatedPreferenceInitializer;
-import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 
 /**
  * Class used to initialize default preference values.

@@ -26,7 +26,6 @@ package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 import java.lang.String;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.TemplateParameters;

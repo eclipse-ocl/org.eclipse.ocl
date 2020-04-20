@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE uml:Model [
+<!ENTITY _0 "pathmap://UML_PROFILES/Ecore.profile.uml">
+]>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="Ppivot" name="pivot" URI="http://www.eclipse.org/ocl/2015/Pivot">
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="Ppivot.TBoolean" name="Boolean"/>
@@ -1942,8 +1945,8 @@
   <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TVisitable" name="Visitable"/>
   <profileApplication xmi:id="Ppivot.pA0">
     <eAnnotations xmi:id="Ppivot.pA0.eA0" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+      <references xmi:type="ecore:EPackage" href="&_0;#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
     </eAnnotations>
-    <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
+    <appliedProfile href="&_0;#_0"/>
   </profileApplication>
 </uml:Model>

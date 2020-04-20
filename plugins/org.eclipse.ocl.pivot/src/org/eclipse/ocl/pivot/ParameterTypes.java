@@ -13,8 +13,6 @@ package org.eclipse.ocl.pivot;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
 

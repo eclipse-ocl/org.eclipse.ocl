@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pivot:Model [
+<!ENTITY _0 "http://www.eclipse.org/ocl/2015/Library.oclas">
+]>
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore" name="Pivot.ecore" xmiidVersion="1">
   <ownedPackages xmi:id="82dOP" URI="http://www.eclipse.org/ocl/2015/Pivot" name="pivot" nsPrefix="pivot">
@@ -16,7 +19,7 @@
     <ownedClasses xmi:id="ZD0WZ" name="AssociationClassCallExp" superClasses="#cmSzw">
       <ownedProperties xmi:id="12PvD" isRequired="false" name="referredAssociationClass" type="#oE9s0"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:Enumeration" xmi:id=",Swbo" name="AssociativityKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#+8+by">
+    <ownedClasses xsi:type="pivot:Enumeration" xmi:id=",Swbo" name="AssociativityKind" superClasses="&_0;#+8+by">
       <ownedLiterals xmi:id="XL8wB" name="left"/>
       <ownedLiterals xmi:id="sTOCI" name="right" value="1"/>
     </ownedClasses>
@@ -29,7 +32,7 @@
       <ownedProperties xmi:id="bCQ,P" isImplicit="true" isRequired="false" name="State" opposite="#fFtPi" type="#CwtUf"/>
       <ownedProperties xmi:id="1SMka" isImplicit="true" isRequired="false" name="State" opposite="#1HRna" type="#CwtUf"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="ZuwnB" instanceClassName="boolean" name="Boolean" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="ZuwnB" instanceClassName="boolean" name="Boolean" superClasses="&_0;#jbMkR">
       <ownedComments body="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
     </ownedClasses>
     <ownedClasses xmi:id="nyfXB" name="BooleanLiteralExp" superClasses="#mKorp">
@@ -98,7 +101,7 @@
       </ownedInvariants>
       <ownedProperties xmi:id="qB57w" isComposite="true" name="ownedItem" type="#BFtK4"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="DMrVx" name="CollectionKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#+8+by">
+    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="DMrVx" name="CollectionKind" superClasses="&_0;#+8+by">
       <ownedLiterals xmi:id="CLrmU" name="Collection"/>
       <ownedLiterals xmi:id="GxGlF" name="Set" value="1"/>
       <ownedLiterals xmi:id="Zz9xp" name="OrderedSet" value="2"/>
@@ -247,7 +250,7 @@
       <ownedProperties xmi:id="nCwoy" isComposite="true" name="ownedDynamicProperties" type="#2ZLUM"/>
     </ownedClasses>
     <ownedClasses xmi:id="iExtD" name="DynamicValueSpecification" superClasses="#DLUxI"/>
-    <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR">
+    <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="&_0;#zfDWR">
       <ownedComments body="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
       <ownedOperations xmi:id="J2A5u" name="allOwnedElements" type="#+7MeC">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;"/>
@@ -357,7 +360,7 @@
       </ownedProperties>
       <ownedProperties xmi:id="F0BMR" isRequired="false" name="owningPackage" opposite="#M7Qun" type="#3ONqN"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="vCSey" instanceClassName="java.lang.Number" name="Integer" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="vCSey" instanceClassName="java.lang.Number" name="Integer" superClasses="&_0;#jbMkR">
       <ownedComments body="Integer is a primitive type representing integer values."/>
     </ownedClasses>
     <ownedClasses xmi:id="94SC4" name="IntegerLiteralExp" superClasses="#MFRWm">
@@ -503,7 +506,7 @@
       <ownedProperties xmi:id="Yf0DL" isComposite="true" name="ownedPrecedences" type="#vmqJ7"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:DataType" xmi:id="slAkU" instanceClassName="org.eclipse.ocl.pivot.library.LibraryFeature" name="LibraryFeature"
-        superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        superClasses="&_0;#jbMkR"/>
     <ownedClasses xmi:id="fKWWp" isAbstract="true" name="LiteralExp" superClasses="#BFtK4"/>
     <ownedClasses xmi:id="KhrnS" isAbstract="true" name="LoopExp" superClasses="#QJrde">
       <ownedInvariants xmi:id="0p5ql" isCallable="true" name="MatchingMapCoIterators">
@@ -572,9 +575,9 @@
       <ownedProperties xmi:id="n0An," isImplicit="true" name="CompleteModel" opposite="#AF1+9" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="4w3oz" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" isAbstract="true" isInterface="true"
-        name="MorePivotable" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
+        name="MorePivotable" superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"
-        superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="0kVqz" isAbstract="true" name="NamedElement" superClasses="#t5rpa">
       <ownedComments body="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
       <ownedProperties xmi:id="HeJg3" isRequired="false" name="name" type="#CPVxu">
@@ -622,7 +625,7 @@
       <ownedProperties xmi:id="iKMCL" isImplicit="true" isRequired="false" name="TupleLiteralPart" opposite="#M3JBq" type="#LgkF0"/>
       <ownedProperties xmi:id="EjL3q" isImplicit="true" isRequired="false" name="Variable" opposite="#mNUYa" type="#t4j6T"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:DataType" xmi:id="wbJ8m" instanceClassName="java.lang.Object" name="Object" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="wbJ8m" instanceClassName="java.lang.Object" name="Object" superClasses="&_0;#jbMkR"/>
     <ownedClasses xmi:id="Yz,F1" name="Operation" superClasses="#nphZD #MzHoc #5r5y9">
       <ownedComments body="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
       <ownedInvariants xmi:id="UTFpw" isCallable="true" name="CompatibleReturn">
@@ -746,7 +749,7 @@
       </ownedInvariants>
     </ownedClasses>
     <ownedClasses xmi:id="NgpYx" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" isAbstract="true" isInterface="true" name="Pivotable"
-        superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="7Wa4a" name="Precedence" superClasses="#0kVqz">
       <ownedProperties xmi:id="B4T3O" defaultValueString="left" isRequired="false" name="associativity" type="#,Swbo"/>
       <ownedProperties xmi:id="1q9Jp" defaultValueString="0" name="order" type="#vCSey"/>
@@ -866,7 +869,7 @@
       <ownedProperties xmi:id="1udyj" isImplicit="true" name="ConnectionPointReference" opposite="#KPNEV" type="#047h3"/>
       <ownedProperties xmi:id="YlCTk" isImplicit="true" name="ConnectionPointReference" opposite="#Ppbt5" type="#047h3"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="4cZdc" name="PseudostateKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#+8+by">
+    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="4cZdc" name="PseudostateKind" superClasses="&_0;#+8+by">
       <ownedComments body="PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates."/>
       <ownedLiterals xmi:id="paK6z" name="initial"/>
       <ownedLiterals xmi:id="t1qEW" name="deepHistory" value="1"/>
@@ -879,13 +882,13 @@
       <ownedLiterals xmi:id="35,Tt" name="exitPoint" value="8"/>
       <ownedLiterals xmi:id="G3gI5" name="terminate" value="9"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="PVdsa" instanceClassName="java.lang.Number" name="Real" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="PVdsa" instanceClassName="java.lang.Number" name="Real" superClasses="&_0;#jbMkR">
       <ownedComments body="Real is a primitive type representing the mathematical concept of real."/>
     </ownedClasses>
     <ownedClasses xmi:id="drJ4W" name="RealLiteralExp" superClasses="#MFRWm">
       <ownedProperties xmi:id="Xj4U0" name="realSymbol" type="#PVdsa"/>
     </ownedClasses>
-    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR">
+    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement" superClasses="&_0;#zfDWR">
       <ownedOperations xmi:id="TgreS" name="getReferredElement" type="#t5rpa"/>
     </ownedClasses>
     <ownedClasses xmi:id="lqBOs" name="Region" superClasses="#MzHoc">
@@ -1067,7 +1070,7 @@
       <ownedProperties xmi:id="jiEoa" defaultValueString="false" name="isRequired" type="#ZuwnB"/>
       <ownedProperties xmi:id="oy50r" name="owningStereotype" opposite="#Wr4Jx" type="#j7kZ6"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="CPVxu" instanceClassName="java.lang.String" name="String" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="CPVxu" instanceClassName="java.lang.String" name="String" superClasses="&_0;#jbMkR">
       <ownedComments body="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
     </ownedClasses>
     <ownedClasses xmi:id="QWu6h" name="StringLiteralExp" superClasses="#mKorp">
@@ -1128,7 +1131,7 @@
       <ownedProperties xmi:id="5r+xG" isRequired="false" isResolveProxies="false" isTransient="true" name="unspecializedElement" type="#5r5y9"/>
       <ownedProperties xmi:id="po3JH" isImplicit="true" name="TemplateableElement" opposite="#5r+xG" type="#LuTS6"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:DataType" xmi:id="xCIJH" instanceClassName="java.lang.Throwable" name="Throwable" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="xCIJH" instanceClassName="java.lang.Throwable" name="Throwable" superClasses="&_0;#jbMkR"/>
     <ownedClasses xmi:id="GEFmq" name="Transition" superClasses="#MzHoc">
       <ownedComments body="A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it."/>
       <ownedProperties xmi:id="akbkO" defaultValueString="external" name="kind" type="#64DYn">
@@ -1153,7 +1156,7 @@
         <ownedComments body="Designates the target Vertex that is reached when the Transition is taken."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="64DYn" name="TransitionKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#+8+by">
+    <ownedClasses xsi:type="pivot:Enumeration" xmi:id="64DYn" name="TransitionKind" superClasses="&_0;#+8+by">
       <ownedComments body="TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions."/>
       <ownedLiterals xmi:id="ckyor" name="internal">
         <ownedComments body="Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State."/>
@@ -1227,7 +1230,7 @@
         <ownedComments body="The type of the TypedElement."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="java.lang.Number" name="UnlimitedNatural" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="java.lang.Number" name="UnlimitedNatural" superClasses="&_0;#jbMkR">
       <ownedComments body="UnlimitedNatural is a primitive type representing unlimited natural values."/>
     </ownedClasses>
     <ownedClasses xmi:id="HzlbV" name="UnlimitedNaturalLiteralExp" superClasses="#MFRWm">
@@ -1304,7 +1307,7 @@
       </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="WyWDC" instanceClassName="org.eclipse.ocl.pivot.util.Visitable" isAbstract="true" isInterface="true" name="Visitable"
-        superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR"/>
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
       <ownedProperties xmi:id="mvH+v" isRequired="false" name="lowerBound" type="#rrwsa"/>
@@ -1315,1102 +1318,1102 @@
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
     <ownedClasses xsi:type="pivot:BagType" xmi:id="abElO" name="Bag" superClasses="#w2smd">
       <ownedBindings>
-        <ownedSubstitutions actual="#g7Mr0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#g7Mr0" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="rZeOP" name="Bag" superClasses="#B1GQe">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZD0WZ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#ZD0WZ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="qsnI0" name="Bag" superClasses="#AIQKD">
       <ownedBindings>
-        <ownedSubstitutions actual="#wuJTT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#wuJTT" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="7vGqS" name="Bag" superClasses="#RLvrh">
       <ownedBindings>
-        <ownedSubstitutions actual="#pDcbe" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#pDcbe" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="7uaJn" name="Bag" superClasses="#RKDL2">
       <ownedBindings>
-        <ownedSubstitutions actual="#pawWx" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#pawWx" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="q6ECS" name="Bag" superClasses="#AWtDh">
       <ownedBindings>
-        <ownedSubstitutions actual="#wspoT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#wspoT" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="zUrgD" name="Bag" superClasses="#JwTiS">
       <ownedBindings>
-        <ownedSubstitutions actual="#hzOMU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#hzOMU" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="Ii+Il" name="Bag" superClasses="#e9mK0">
       <ownedBindings>
-        <ownedSubstitutions actual="#+gDEJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#+gDEJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="047h3" name="Bag" superClasses="#KUkjG">
       <ownedBindings>
-        <ownedSubstitutions actual="#KXGhD" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#KXGhD" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="Y1h4V" name="Bag" superClasses="#uQK6k">
       <ownedBindings>
-        <ownedSubstitutions actual="#Om,AG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Om,AG" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="nrqci" name="Bag" superClasses="#9GTex">
       <ownedBindings>
-        <ownedSubstitutions actual="#1mHCJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#1mHCJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="44OiT" name="Bag" superClasses="#OU3ji">
       <ownedBindings>
-        <ownedSubstitutions actual="#uVj5N" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#uVj5N" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="XZHUM" name="Bag" superClasses="#t0vVb">
       <ownedBindings>
-        <ownedSubstitutions actual="#lKr4X" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#lKr4X" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="uwltw" name="Bag" superClasses="#EMOv,">
       <ownedBindings>
-        <ownedSubstitutions actual="#URISB" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#URISB" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="61U4t" name="Bag" superClasses="#QR958">
       <ownedBindings>
-        <ownedSubstitutions actual="#Aaj,v" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Aaj,v" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="gfUzv" name="Bag" superClasses="#2680+">
       <ownedBindings>
-        <ownedSubstitutions actual="#WdWUd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#WdWUd" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="B2y2s" name="Bag" superClasses="#XRb47">
       <ownedBindings>
-        <ownedSubstitutions actual="#f3gRG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#f3gRG" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="85RZ1" name="Bag" superClasses="#SV6aE">
       <ownedBindings>
-        <ownedSubstitutions actual="#S9Pb5" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#S9Pb5" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="0ymr3" name="Bag" superClasses="#KOPtG">
       <ownedBindings>
-        <ownedSubstitutions actual="#KhrnS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#KhrnS" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="JK5PO" name="Bag" superClasses="#flhRd">
       <ownedBindings>
-        <ownedSubstitutions actual="#nozov" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#nozov" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="8ZL+w" name="Bag" superClasses="#S1z,,">
       <ownedBindings>
-        <ownedSubstitutions actual="#Sdl6J" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Sdl6J" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="2I901" name="Bag" superClasses="#Mkl2E">
       <ownedBindings>
-        <ownedSubstitutions actual="#cmSzw" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#cmSzw" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="TqxYF" name="Bag" superClasses="#pFaaU">
       <ownedBindings>
-        <ownedSubstitutions actual="#BFtK4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="7ASqb" name="Bag" superClasses="#Rc6rq">
       <ownedBindings>
-        <ownedSubstitutions actual="#p84zd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#p84zd" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="SI01z" name="Bag" superClasses="#ojc3C">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="uyjxK" name="Bag" superClasses="#EOMzZ">
       <ownedBindings>
-        <ownedSubstitutions actual="#Uj1fg" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Uj1fg" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="ZWfM+" name="Bag" superClasses="#vxHON">
       <ownedBindings>
-        <ownedSubstitutions actual="#3ONqN" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#3ONqN" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="chYA4" name="Bag" superClasses="#y8ACH">
       <ownedBindings>
-        <ownedSubstitutions actual="#ywnRJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#ywnRJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="93o0D" name="Bag" superClasses="#TTR2S">
       <ownedBindings>
-        <ownedSubstitutions actual="#7K0sf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#7K0sf" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="QqOV7" name="Bag" superClasses="#mF3WK">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="X5ZAe" name="Bag" superClasses="#tUCCt">
       <ownedBindings>
-        <ownedSubstitutions actual="#lqBOs" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#lqBOs" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="5cmAg" name="Bag" superClasses="#P4OCv">
       <ownedBindings>
-        <ownedSubstitutions actual="#X55Qa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#X55Qa" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="+4q9g" name="Bag" superClasses="#UUT,v">
       <ownedBindings>
-        <ownedSubstitutions actual="#kTahU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#kTahU" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="RTbhG" name="Bag" superClasses="#nuDjV">
       <ownedBindings>
-        <ownedSubstitutions actual="#vWmsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#vWmsa" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="vF7ag" name="Bag" superClasses="#Fhjcv">
       <ownedBindings>
-        <ownedSubstitutions actual="#9Ny9s" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#9Ny9s" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="JaBxR" name="Bag" superClasses="#f1pyg">
       <ownedBindings>
-        <ownedSubstitutions actual="#n412f" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#n412f" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="setTi" name="Bag" superClasses="#C6VVx">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwtUf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#CwtUf" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="2CC9+" name="Bag" superClasses="#Meq+N">
       <ownedBindings>
-        <ownedSubstitutions actual="#cwheG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#cwheG" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="PtLAW" name="Bag" superClasses="#lI0Bl">
       <ownedBindings>
-        <ownedSubstitutions actual="#dBke1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#dBke1" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="6yjmF" name="Bag" superClasses="#QOMoU">
       <ownedBindings>
-        <ownedSubstitutions actual="#Afray" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#Afray" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="LuTS6" name="Bag" superClasses="#hJ8TJ">
       <ownedBindings>
-        <ownedSubstitutions actual="#5r5y9" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#5r5y9" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="ObX5J" name="Bag" superClasses="#k2,6Y">
       <ownedBindings>
-        <ownedSubstitutions actual="#0,h6K" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#0,h6K" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="lf8ud" name="Bag" superClasses="#76kws">
       <ownedBindings>
-        <ownedSubstitutions actual="#j7EI0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#j7EI0" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="xbHbg" name="Bag" superClasses="#H3vcv">
       <ownedBindings>
-        <ownedSubstitutions actual="#PT,bz" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#PT,bz" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="ceQJX" name="Bag" superClasses="#y54Km">
       <ownedBindings>
-        <ownedSubstitutions actual="#y1AoJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#y1AoJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="fi,7q" name="Bag" superClasses="#19n95">
       <ownedBindings>
-        <ownedSubstitutions actual="#t4j6T" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#t4j6T" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="XmaUE" name="Bag" superClasses="#tBDWT">
       <ownedBindings>
-        <ownedSubstitutions actual="#lfR8C" formal="http://www.eclipse.org/ocl/2015/Library.oclas#k2OA6"/>
+        <ownedSubstitutions actual="#lfR8C" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w2smd" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w2smd" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#g7Mr0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#g7Mr0" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="B1GQe" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="B1GQe" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZD0WZ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#ZD0WZ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bDV5t" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bDV5t" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#D4Bd4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#D4Bd4" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AIQKD" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AIQKD" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#wuJTT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#wuJTT" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RLvrh" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RLvrh" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#pDcbe" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#pDcbe" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9cW7G" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9cW7G" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#1s6I1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#1s6I1" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RKDL2" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RKDL2" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#pawWx" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#pawWx" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="g8SO4" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="g8SO4" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Q3Ya2" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Q3Ya2" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AWtDh" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AWtDh" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#wspoT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#wspoT" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="JwTiS" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="JwTiS" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#hzOMU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#hzOMU" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="e9mK0" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="e9mK0" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#+gDEJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#+gDEJ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KUkjG" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KUkjG" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#KXGhD" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#KXGhD" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uQK6k" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uQK6k" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Om,AG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Om,AG" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9GTex" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9GTex" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#1mHCJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#1mHCJ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="C6Q1g" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="C6Q1g" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwgWU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#CwgWU" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OU3ji" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OU3ji" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#uVj5N" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#uVj5N" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="t0vVb" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="t0vVb" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#lKr4X" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#lKr4X" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EMOv," name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EMOv," name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#URISB" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#URISB" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1WxfR" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1WxfR" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#t5rpa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#t5rpa" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QR958" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QR958" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Aaj,v" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Aaj,v" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="B6+H5" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="B6+H5" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZQKYa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#ZQKYa" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2680+" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2680+" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#WdWUd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#WdWUd" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XRb47" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XRb47" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#f3gRG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#f3gRG" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SV6aE" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SV6aE" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#S9Pb5" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#S9Pb5" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KOPtG" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KOPtG" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#KhrnS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#KhrnS" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vytNH" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vytNH" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#33CoS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#33CoS" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="flhRd" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="flhRd" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#nozov" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#nozov" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="S1z,," name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="S1z,," name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Sdl6J" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Sdl6J" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="alVKT" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="alVKT" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#aKB,e" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#aKB,e" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Mkl2E" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Mkl2E" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#cmSzw" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#cmSzw" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="pFaaU" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="pFaaU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#BFtK4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Rc6rq" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Rc6rq" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#p84zd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#p84zd" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ojc3C" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ojc3C" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EOMzZ" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EOMzZ" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Uj1fg" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Uj1fg" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vxHON" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vxHON" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#3ONqN" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#3ONqN" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="a3glO" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="a3glO" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#as9eG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#as9eG" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="T,X+l" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="T,X+l" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#7Wa4a" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#7Wa4a" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="y8ACH" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="y8ACH" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#ywnRJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#ywnRJ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oGxY6" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oGxY6" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#YOH1b" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#YOH1b" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="TTR2S" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="TTR2S" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#7K0sf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#7K0sf" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mF3WK" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mF3WK" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0Q1FS" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0Q1FS" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#EkdzF" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#EkdzF" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tUCCt" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tUCCt" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#lqBOs" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#lqBOs" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P4OCv" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P4OCv" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#X55Qa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#X55Qa" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="UUT,v" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="UUT,v" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#kTahU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#kTahU" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nuDjV" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nuDjV" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#vWmsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#vWmsa" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Fhjcv" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Fhjcv" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#9Ny9s" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#9Ny9s" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="f1pyg" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="f1pyg" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#n412f" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#n412f" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="C6VVx" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="C6VVx" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwtUf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#CwtUf" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Km3Ta" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Km3Ta" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#K5Kb," formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#K5Kb," formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CBQIQ" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CBQIQ" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#CPVxu" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#CPVxu" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Meq+N" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Meq+N" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#cwheG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#cwheG" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="lI0Bl" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="lI0Bl" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#dBke1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#dBke1" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QOMoU" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QOMoU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#Afray" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#Afray" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hJ8TJ" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hJ8TJ" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#5r5y9" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#5r5y9" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mzwec" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mzwec" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#GEFmq" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#GEFmq" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="R0hAQ" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="R0hAQ" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#pUvl+" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#pUvl+" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="j2eRp" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="j2eRp" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#LgkF0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#LgkF0" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="k2,6Y" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="k2,6Y" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#0,h6K" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#0,h6K" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="D2axV" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="D2axV" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#rrwsa" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="76kws" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="76kws" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#j7EI0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#j7EI0" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bexGa" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bexGa" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#DLUxI" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#DLUxI" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="H3vcv" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="H3vcv" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#PT,bz" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#PT,bz" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="y54Km" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="y54Km" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#y1AoJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#y1AoJ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="19n95" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="19n95" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#t4j6T" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#t4j6T" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dxFUO" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dxFUO" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#VVKEz" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#VVKEz" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tBDWT" name="Collection" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tBDWT" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#lfR8C" formal="http://www.eclipse.org/ocl/2015/Library.oclas#qs59R"/>
+        <ownedSubstitutions actual="#lfR8C" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KtLS9" name="OrderedCollection" superClasses="#9cW7G">
       <ownedBindings>
-        <ownedSubstitutions actual="#1s6I1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#1s6I1" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PKGMX" name="OrderedCollection" superClasses="#C6Q1g">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwgWU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#CwgWU" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Cnm2H" name="OrderedCollection" superClasses="#1WxfR">
       <ownedBindings>
-        <ownedSubstitutions actual="#t5rpa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#t5rpa" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OK0ev" name="OrderedCollection" superClasses="#B6+H5">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZQKYa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#ZQKYa" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DLyL1" name="OrderedCollection" superClasses="#2680+">
       <ownedBindings>
-        <ownedSubstitutions actual="#WdWUd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#WdWUd" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8Cjk9" name="OrderedCollection" superClasses="#vytNH">
       <ownedBindings>
-        <ownedSubstitutions actual="#33CoS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#33CoS" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2VPxK" name="OrderedCollection" superClasses="#pFaaU">
       <ownedBindings>
-        <ownedSubstitutions actual="#BFtK4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1zRO5" name="OrderedCollection" superClasses="#ojc3C">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nHW8E" name="OrderedCollection" superClasses="#a3glO">
       <ownedBindings>
-        <ownedSubstitutions actual="#as9eG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#as9eG" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gPNVc" name="OrderedCollection" superClasses="#T,X+l">
       <ownedBindings>
-        <ownedSubstitutions actual="#7Wa4a" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#7Wa4a" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zVstA" name="OrderedCollection" superClasses="#mF3WK">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hkIWm" name="OrderedCollection" superClasses="#UUT,v">
       <ownedBindings>
-        <ownedSubstitutions actual="#kTahU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#kTahU" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="deB,K" name="OrderedCollection" superClasses="#QOMoU">
       <ownedBindings>
-        <ownedSubstitutions actual="#Afray" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#Afray" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="wGUof" name="OrderedCollection" superClasses="#j2eRp">
       <ownedBindings>
-        <ownedSubstitutions actual="#LgkF0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#LgkF0" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QGQIM" name="OrderedCollection" superClasses="#D2axV">
       <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#rrwsa" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oumdQ" name="OrderedCollection" superClasses="#bexGa">
       <ownedBindings>
-        <ownedSubstitutions actual="#DLUxI" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#DLUxI" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="COdUw" name="OrderedCollection" superClasses="#19n95">
       <ownedBindings>
-        <ownedSubstitutions actual="#t4j6T" formal="http://www.eclipse.org/ocl/2015/Library.oclas#feFHs"/>
+        <ownedSubstitutions actual="#t4j6T" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ZEpGc" isNullFree="true" name="OrderedSet" superClasses="#KtLS9 #uXG32">
       <ownedBindings>
-        <ownedSubstitutions actual="#1s6I1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#1s6I1" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ehjA2" isNullFree="true" name="OrderedSet" superClasses="#PKGMX #z0AxQ">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwgWU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#CwgWU" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="R+Drm" isNullFree="true" name="OrderedSet" superClasses="#Cnm2H #mRhbB">
       <ownedBindings>
-        <ownedSubstitutions actual="#t5rpa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#t5rpa" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="dhRTO" isNullFree="true" name="OrderedSet" superClasses="#OK0ev #y0uDp">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZQKYa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#ZQKYa" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="SiPAU" isNullFree="true" name="OrderedSet" superClasses="#DLyL1 #n1swu">
       <ownedBindings>
-        <ownedSubstitutions actual="#WdWUd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#WdWUd" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="LaAZc" isNullFree="true" name="OrderedSet" superClasses="#8Cjk9 #gtdJ3">
       <ownedBindings>
-        <ownedSubstitutions actual="#33CoS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#33CoS" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Ftslp" isNullFree="true" name="OrderedSet" superClasses="#2VPxK #aAKWE">
       <ownedBindings>
-        <ownedSubstitutions actual="#BFtK4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ELvCY" isNullFree="true" name="OrderedSet" superClasses="#1zRO5 #ZeMzy">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="2ezwj" isNullFree="true" name="OrderedSet" superClasses="#nHW8E #LyQh+">
       <ownedBindings>
-        <ownedSubstitutions actual="#as9eG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#as9eG" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="vmqJ7" isNullFree="true" name="OrderedSet" superClasses="#gPNVc #E6H6V">
       <ownedBindings>
-        <ownedSubstitutions actual="#7Wa4a" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#7Wa4a" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="CtJif" isNullFree="true" name="OrderedSet" superClasses="#zVstA #XAnS6">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="w7lKF" isNullFree="true" name="OrderedSet" superClasses="#hkIWm #FPD7f">
       <ownedBindings>
-        <ownedSubstitutions actual="#kTahU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#kTahU" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="p2ezp" isNullFree="true" lower="1" name="OrderedSet" superClasses="#deB,K #BJ8jE">
       <ownedBindings>
-        <ownedSubstitutions actual="#Afray" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#Afray" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id=",dxc+" isNullFree="true" name="OrderedSet" superClasses="#wGUof #UxONZ">
       <ownedBindings>
-        <ownedSubstitutions actual="#LgkF0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#LgkF0" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="3FESv" isNullFree="true" name="OrderedSet" superClasses="#oumdQ #MZhCK">
       <ownedBindings>
-        <ownedSubstitutions actual="#DLUxI" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#DLUxI" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Rl6IP" isNullFree="true" name="OrderedSet" superClasses="#COdUw #m4X5p">
       <ownedBindings>
-        <ownedSubstitutions actual="#t4j6T" formal="http://www.eclipse.org/ocl/2015/Library.oclas#53+C2"/>
+        <ownedSubstitutions actual="#t4j6T" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="r5PCb" isNullFree="true" name="Sequence" superClasses="#QGQIM">
       <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#l1i6D"/>
+        <ownedSubstitutions actual="#rrwsa" formal="&_0;#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="kow3e" isNullFree="true" name="Set" superClasses="#M+E1d">
       <ownedBindings>
-        <ownedSubstitutions actual="#D4Bd4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#D4Bd4" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="awKqS" isNullFree="true" name="Set" superClasses="#CGfnR">
       <ownedBindings>
-        <ownedSubstitutions actual="#pDcbe" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#pDcbe" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="phuMp" isNullFree="true" name="Set" superClasses="#R3CKo">
       <ownedBindings>
-        <ownedSubstitutions actual="#Q3Ya2" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#Q3Ya2" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="J7ICS" isNullFree="true" name="Set" superClasses="#xQd,Q">
       <ownedBindings>
-        <ownedSubstitutions actual="#wspoT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#wspoT" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="niCJl" isNullFree="true" name="Set" superClasses="#P4WGk">
       <ownedBindings>
-        <ownedSubstitutions actual="#+gDEJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#+gDEJ" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="T5,h3" isNullFree="true" name="Set" superClasses="#7OUf2">
       <ownedBindings>
-        <ownedSubstitutions actual="#KXGhD" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#KXGhD" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="31l4V" isNullFree="true" name="Set" superClasses="#fL61U">
       <ownedBindings>
-        <ownedSubstitutions actual="#Om,AG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#Om,AG" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="2ZLUM" isNullFree="true" name="Set" superClasses="#evfRL">
       <ownedBindings>
-        <ownedSubstitutions actual="#lKr4X" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#lKr4X" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="+7MeC" isNullFree="true" name="Set" superClasses="#mRhbB">
       <ownedBindings>
-        <ownedSubstitutions actual="#t5rpa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#t5rpa" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="Nxptw" isNullFree="true" name="Set" superClasses="#1G+qv">
       <ownedBindings>
-        <ownedSubstitutions actual="#URISB" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#URISB" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="g222s" isNullFree="true" name="Set" superClasses="#IML0r">
       <ownedBindings>
-        <ownedSubstitutions actual="#f3gRG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#f3gRG" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="jKxIE" isNullFree="true" name="Set" superClasses="#LgFGD">
       <ownedBindings>
-        <ownedSubstitutions actual="#aKB,e" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#aKB,e" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="xI41z" isNullFree="true" name="Set" superClasses="#ZeMzy">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="4WjM+" isNullFree="true" name="Set" superClasses="#gs3J9">
       <ownedBindings>
-        <ownedSubstitutions actual="#3ONqN" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#3ONqN" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="xrMXr" isNullFree="true" name="Set" superClasses="#ZBhUq">
       <ownedBindings>
-        <ownedSubstitutions actual="#YOH1b" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#YOH1b" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="vqSV7" isNullFree="true" name="Set" superClasses="#XAnS6">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="91QED" isNullFree="true" name="Set" superClasses="#lLlBC">
       <ownedBindings>
-        <ownedSubstitutions actual="#EkdzF" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#EkdzF" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="25dAe" isNullFree="true" name="Set" superClasses="#ePy9c">
       <ownedBindings>
-        <ownedSubstitutions actual="#lqBOs" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#lqBOs" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="z6dAe" isNullFree="true" lower="1" name="Set" superClasses="#ePy9c">
       <ownedBindings>
-        <ownedSubstitutions actual="#lqBOs" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#lqBOs" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="wTfhG" isNullFree="true" name="Set" superClasses="#YpzeF">
       <ownedBindings>
-        <ownedSubstitutions actual="#vWmsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#vWmsa" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="LfxTi" isNullFree="true" name="Set" superClasses="#z0FRh">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwtUf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#CwtUf" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="oaFxR" isNullFree="true" name="Set" superClasses="#QwZuQ">
       <ownedBindings>
-        <ownedSubstitutions actual="#n412f" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#n412f" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="TLTSL" isNullFree="true" name="Set" superClasses="#7gnPK">
       <ownedBindings>
-        <ownedSubstitutions actual="#K5Kb," formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#K5Kb," formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="InrGB" isNullFree="true" lower="1" name="Set" superClasses="#z7,DA">
       <ownedBindings>
-        <ownedSubstitutions actual="#CPVxu" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#CPVxu" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="VDG9+" isNullFree="true" name="Set" superClasses="#9Ya69">
       <ownedBindings>
-        <ownedSubstitutions actual="#cwheG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#cwheG" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="ruPAW" isNullFree="true" lower="1" name="Set" superClasses="#WDk9U">
       <ownedBindings>
-        <ownedSubstitutions actual="#dBke1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#dBke1" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="vYMdN" isNullFree="true" name="Set" superClasses="#XugaM">
       <ownedBindings>
-        <ownedSubstitutions actual="#GEFmq" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#GEFmq" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="aZ9+A" isNullFree="true" name="Set" superClasses="#CvR8,">
       <ownedBindings>
-        <ownedSubstitutions actual="#pUvl+" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#pUvl+" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="Mb2vG" isNullFree="true" name="Set" superClasses="#0wKtF">
       <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#rrwsa" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="mWhS," isNullFree="true" name="Set" superClasses="#Os1P+">
       <ownedBindings>
-        <ownedSubstitutions actual="#VVKEz" formal="http://www.eclipse.org/ocl/2015/Library.oclas#ODsm5"/>
+        <ownedSubstitutions actual="#VVKEz" formal="&_0;#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="M+E1d" name="UniqueCollection" superClasses="#bDV5t">
       <ownedBindings>
-        <ownedSubstitutions actual="#D4Bd4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#D4Bd4" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CGfnR" name="UniqueCollection" superClasses="#RLvrh">
       <ownedBindings>
-        <ownedSubstitutions actual="#pDcbe" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#pDcbe" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uXG32" name="UniqueCollection" superClasses="#9cW7G">
       <ownedBindings>
-        <ownedSubstitutions actual="#1s6I1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#1s6I1" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="R3CKo" name="UniqueCollection" superClasses="#g8SO4">
       <ownedBindings>
-        <ownedSubstitutions actual="#Q3Ya2" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#Q3Ya2" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xQd,Q" name="UniqueCollection" superClasses="#AWtDh">
       <ownedBindings>
-        <ownedSubstitutions actual="#wspoT" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#wspoT" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P4WGk" name="UniqueCollection" superClasses="#e9mK0">
       <ownedBindings>
-        <ownedSubstitutions actual="#+gDEJ" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#+gDEJ" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7OUf2" name="UniqueCollection" superClasses="#KUkjG">
       <ownedBindings>
-        <ownedSubstitutions actual="#KXGhD" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#KXGhD" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fL61U" name="UniqueCollection" superClasses="#uQK6k">
       <ownedBindings>
-        <ownedSubstitutions actual="#Om,AG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#Om,AG" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="z0AxQ" name="UniqueCollection" superClasses="#C6Q1g">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwgWU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#CwgWU" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="evfRL" name="UniqueCollection" superClasses="#t0vVb">
       <ownedBindings>
-        <ownedSubstitutions actual="#lKr4X" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#lKr4X" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1G+qv" name="UniqueCollection" superClasses="#EMOv,">
       <ownedBindings>
-        <ownedSubstitutions actual="#URISB" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#URISB" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mRhbB" name="UniqueCollection" superClasses="#1WxfR">
       <ownedBindings>
-        <ownedSubstitutions actual="#t5rpa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#t5rpa" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="y0uDp" name="UniqueCollection" superClasses="#B6+H5">
       <ownedBindings>
-        <ownedSubstitutions actual="#ZQKYa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#ZQKYa" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="n1swu" name="UniqueCollection" superClasses="#2680+">
       <ownedBindings>
-        <ownedSubstitutions actual="#WdWUd" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#WdWUd" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IML0r" name="UniqueCollection" superClasses="#XRb47">
       <ownedBindings>
-        <ownedSubstitutions actual="#f3gRG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#f3gRG" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gtdJ3" name="UniqueCollection" superClasses="#vytNH">
       <ownedBindings>
-        <ownedSubstitutions actual="#33CoS" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#33CoS" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="LgFGD" name="UniqueCollection" superClasses="#alVKT">
       <ownedBindings>
-        <ownedSubstitutions actual="#aKB,e" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#aKB,e" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="aAKWE" name="UniqueCollection" superClasses="#pFaaU">
       <ownedBindings>
-        <ownedSubstitutions actual="#BFtK4" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ZeMzy" name="UniqueCollection" superClasses="#ojc3C">
       <ownedBindings>
-        <ownedSubstitutions actual="#Yz,F1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#Yz,F1" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gs3J9" name="UniqueCollection" superClasses="#vxHON">
       <ownedBindings>
-        <ownedSubstitutions actual="#3ONqN" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#3ONqN" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="LyQh+" name="UniqueCollection" superClasses="#a3glO">
       <ownedBindings>
-        <ownedSubstitutions actual="#as9eG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#as9eG" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="E6H6V" name="UniqueCollection" superClasses="#T,X+l">
       <ownedBindings>
-        <ownedSubstitutions actual="#7Wa4a" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#7Wa4a" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ZBhUq" name="UniqueCollection" superClasses="#oGxY6">
       <ownedBindings>
-        <ownedSubstitutions actual="#YOH1b" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#YOH1b" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XAnS6" name="UniqueCollection" superClasses="#mF3WK">
       <ownedBindings>
-        <ownedSubstitutions actual="#Gm0Mj" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="lLlBC" name="UniqueCollection" superClasses="#0Q1FS">
       <ownedBindings>
-        <ownedSubstitutions actual="#EkdzF" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#EkdzF" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ePy9c" name="UniqueCollection" superClasses="#tUCCt">
       <ownedBindings>
-        <ownedSubstitutions actual="#lqBOs" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#lqBOs" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FPD7f" name="UniqueCollection" superClasses="#UUT,v">
       <ownedBindings>
-        <ownedSubstitutions actual="#kTahU" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#kTahU" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="YpzeF" name="UniqueCollection" superClasses="#nuDjV">
       <ownedBindings>
-        <ownedSubstitutions actual="#vWmsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#vWmsa" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QwZuQ" name="UniqueCollection" superClasses="#f1pyg">
       <ownedBindings>
-        <ownedSubstitutions actual="#n412f" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#n412f" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="z0FRh" name="UniqueCollection" superClasses="#C6VVx">
       <ownedBindings>
-        <ownedSubstitutions actual="#CwtUf" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#CwtUf" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7gnPK" name="UniqueCollection" superClasses="#Km3Ta">
       <ownedBindings>
-        <ownedSubstitutions actual="#K5Kb," formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#K5Kb," formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="z7,DA" name="UniqueCollection" superClasses="#CBQIQ">
       <ownedBindings>
-        <ownedSubstitutions actual="#CPVxu" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#CPVxu" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9Ya69" name="UniqueCollection" superClasses="#Meq+N">
       <ownedBindings>
-        <ownedSubstitutions actual="#cwheG" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#cwheG" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="WDk9U" name="UniqueCollection" superClasses="#lI0Bl">
       <ownedBindings>
-        <ownedSubstitutions actual="#dBke1" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#dBke1" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="BJ8jE" name="UniqueCollection" superClasses="#QOMoU">
       <ownedBindings>
-        <ownedSubstitutions actual="#Afray" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#Afray" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XugaM" name="UniqueCollection" superClasses="#mzwec">
       <ownedBindings>
-        <ownedSubstitutions actual="#GEFmq" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#GEFmq" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CvR8," name="UniqueCollection" superClasses="#R0hAQ">
       <ownedBindings>
-        <ownedSubstitutions actual="#pUvl+" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#pUvl+" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="UxONZ" name="UniqueCollection" superClasses="#j2eRp">
       <ownedBindings>
-        <ownedSubstitutions actual="#LgkF0" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#LgkF0" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0wKtF" name="UniqueCollection" superClasses="#D2axV">
       <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#rrwsa" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MZhCK" name="UniqueCollection" superClasses="#bexGa">
       <ownedBindings>
-        <ownedSubstitutions actual="#DLUxI" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#DLUxI" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="m4X5p" name="UniqueCollection" superClasses="#19n95">
       <ownedBindings>
-        <ownedSubstitutions actual="#t4j6T" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#t4j6T" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Os1P+" name="UniqueCollection" superClasses="#dxFUO">
       <ownedBindings>
-        <ownedSubstitutions actual="#VVKEz" formal="http://www.eclipse.org/ocl/2015/Library.oclas#jdfjE"/>
+        <ownedSubstitutions actual="#VVKEz" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
   </ownedPackages>
