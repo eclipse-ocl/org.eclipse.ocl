@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
+import org.eclipse.ocl.pivot.utilities.XMIUtil.IdResourceEntityHandler;
 
 /**
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
@@ -188,6 +189,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		defaultSaveOptions.put(XMLResource.OPTION_URI_HANDLER, new URIHandlerImpl.PlatformSchemeAware());
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
+		defaultSaveOptions.put(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER, new IdResourceEntityHandler());
 	}
 
 	@Override

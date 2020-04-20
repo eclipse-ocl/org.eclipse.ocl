@@ -66,6 +66,62 @@ public class XMIUtil
 	}
 
 	/**
+	 * When registered as an XMLResource.OPTION_RESOURCE_ENTITY_HANDLER save option, an
+	 * IdResourceEntityHandler instance allocates sequential numeric XML entities to each distinct
+	 * referenced resource URI reducing the XMI file size by perhaps 10%.
+	 *
+	 * @since 1.12
+	 */
+	public static class IdResourceEntityHandler implements XMLResource.ResourceEntityHandler
+	{
+		/**
+		 * FIXME Workaround for the missing reset in XMLResource.save.
+		 */
+		public static void reset(@Nullable Map<?, ?> options) {
+			if (options != null) {
+				Object resourceEntityHandler = options.get(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER);
+				if (resourceEntityHandler instanceof XMLResource.ResourceEntityHandler) {
+					((XMLResource.ResourceEntityHandler)resourceEntityHandler).reset();
+				}
+			}
+		}
+
+		private Map<String, String> value2name = new HashMap<>();
+		private Map<String, String> name2value = new HashMap<>();
+
+		public IdResourceEntityHandler() {
+			super();
+		}
+
+		@Override
+		public String getEntityName(String entityValue) {
+			String entityName = value2name.get(entityValue);
+			if (entityName == null) {
+				entityName = "_" + value2name.size();			// Entity name must start with an XML letter
+				handleEntity(entityName, entityValue);
+			}
+			return entityName;
+		}
+
+		@Override
+		public Map<String, String> getNameToValueMap() {
+			return name2value;
+		}
+
+		@Override
+		public void handleEntity(String entityName, String entityValue) {
+			name2value.put(entityName, entityValue);
+			value2name.put(entityValue, entityName);
+		}
+
+		@Override
+		public void reset() {
+			name2value.clear();
+			value2name.clear();
+		}
+	};
+
+	/**
 	 * Create short xmi:id's comprising a prefix and a small random count
 	 */
 	public static class ShortPrefixedIdCreator implements IdCreator
@@ -322,6 +378,7 @@ public class XMIUtil
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
 		saveOptions.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
+		saveOptions.put(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER, new IdResourceEntityHandler());
 		return saveOptions;
 	}
 

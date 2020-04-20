@@ -347,6 +347,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public void save(Map<?, ?> options) throws IOException {
 		if (isSaveable) {
 			setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
+			if (options == null) {
+				options = getDefaultSaveOptions();
+			}
+			XMIUtil.IdResourceEntityHandler.reset(options);
 			super.save(options);
 		}
 	}
