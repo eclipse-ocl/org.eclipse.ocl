@@ -51,7 +51,7 @@ import org.eclipse.ocl.types.CollectionType;
 @SuppressWarnings("nls")
 public class BasicOCLTest
 	extends AbstractTestSuite {
-    
+
 	public void testAliasPackageName() throws ParserException {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
@@ -141,7 +141,7 @@ public class BasicOCLTest
     public void hide_test_createStandardLibrary() {
         Resource res = ocl.getEnvironment().getOCLStandardLibrary().getOclAny().eResource();
         URI oldURI = res.getURI();
-        
+
         res.setURI(URI.createFileURI("c:/temp/oclstdlib.ecore"));
         try {
             res.save(Collections.EMPTY_MAP);
@@ -152,7 +152,7 @@ public class BasicOCLTest
             res.setURI(oldURI);
         }
     }
-    
+
     /**
      * Tests that the results of the <tt>oclOperations()</tt> and <tt>oclIterators()</tt>
      * methods are the same regardless of which is invoked first.
@@ -160,274 +160,281 @@ public class BasicOCLTest
     public void test_collectionsAndIteratorsAccess_222747() {
         CollectionType<EClassifier, EOperation> type = ocl.getEnvironment().getOCLFactory().createSetType(
                 (EClassifier) EcorePackage.Literals.ERESOURCE);
-        
+
         Set<EOperation> iterators = new java.util.HashSet<EOperation>(type.oclIterators());
         Set<EOperation> operations = new java.util.HashSet<EOperation>(type.oclOperations());
-        
+
         // compute the set difference
         Set<EOperation> difference = new java.util.HashSet<EOperation>(operations);
         difference.removeAll(iterators);
-        
+
         assertEquals(difference.size(), operations.size());
         assertTrue(operations.size() > 0);
         assertTrue(iterators.size() > 0);
     }
-	
+
 	public void testTrivialExpressions() {
 		OCLExpression<EClassifier> constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true " +
 			"endpackage");
-		
+
 		Object result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
 	}
-	
+
 	public void testLogicalConnectives() {
 		OCLExpression<EClassifier> constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true and true " +
 			"endpackage");
-		
+
 		Object result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: false or false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true and false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true or false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: not true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true implies true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: true implies false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: false implies true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: false implies false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
 	}
-	
+
 	public void testSimpleAttributeExpressions() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<EClassifier> constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: self.name <> 'foo' " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
-		
+
 		eCls.setName("foo");
 		assertFalse(check(constraint, eCls));
 	}
-	
+
 	public void testCollectionExpressions() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
-		
+
 		EAttribute eAttr = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttr.setName("att1");
 		eCls.getEStructuralFeatures().add(eAttr);
 		eAttr = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttr.setName("att2");
 		eCls.getEStructuralFeatures().add(eAttr);
-		
+
 		assertEquals(eCls.getEAttributes().size(),2);
-		
+
 		OCLExpression<EClassifier> constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: self.eAttributes->size() = 2 " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
-		
+
 		OCLExpression<EClassifier> constraint2 = parseConstraint(
 			"package ecore context EClass " +
 			"inv: Tuple{status:Boolean=self.eAttributes->size() = 2}.status " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint2, eCls));
-		
+
 		constraint = parseConstraint(
 			"package ecore context EClass " +
 			"inv: self.eAttributes->forAll(a: EAttribute | not a.derived) " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
 	}
-	
+
 	public void testNonBooleansExpressions() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<EClassifier> expr = parse(
 			"package ecore context EClass " +
 			"inv: self.name " +
 			"endpackage ");
-		
+
 		Object result = evaluate(expr, eCls);
 		assertEquals("bar", result);
-		
+
 		expr = parse(
 			"package ecore context EClass " +
 			"inv: self " +
 			"endpackage");
-		
+
 		result = evaluate(expr, eCls);
 		assertSame(eCls, result);
 	}
-	
+
 	public void testIfExpressions() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<EClassifier> expr = parse(
 			"package ecore context EClass " +
 			"inv: if self.abstract then name = 'bar' else name <> 'bar' endif " +
 			"endpackage ");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		eCls.setAbstract(true);
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("foo");
-		
+
 		assertFalse(check(expr, eCls));
 	}
-	
+
 	public void testIfExpressions_184048() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<EClassifier> expr = parse(
 			"package ecore context EClass " +
 			"inv: if self.abstract then name = 'bar' else name <> 'bar' endif ->asSequence()->at(1)" +
 			"endpackage ");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		eCls.setAbstract(true);
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("foo");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		OCLExpression<EClassifier> expr2 = parse(
 			"package ecore context EClass " +
 			"inv: 7 = 1 + let a : String = invalid in 1 + if self.oclIsUndefined() then 1 else 5 endif " +
 			"endpackage ");
 		assertTrue(check(expr2, eCls));
 	}
-	
+
 	public void testLetExpressions() {
 		EClass eCls = EcoreFactory.eINSTANCE.createEClass();
 		eCls.setName("foo");
-		
+
 		OCLExpression<EClassifier> expr = parse(
 			"package ecore context EClass " +
 			"inv: let feats : OrderedSet(EStructuralFeature) = self.eAllStructuralFeatures in " +
 			"  feats->isEmpty() implies name <> 'bar' " +
 			"endpackage ");
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("bar");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		eCls.getEStructuralFeatures().add(EcoreFactory.eINSTANCE.createEAttribute());
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("foo");
-		
+
 		assertTrue(check(expr, eCls));
 	}
-	
+
 	/**
 	 * Tests the support for data types as context classifiers, rather than
 	 * EClasses.  The parser now supports arbitrary EClassifiers.
+	 * @throws Throwable
 	 */
-	public void test_dataTypeAsContext() {
+	public void test_dataTypeAsContext() throws Throwable {
+		try {
 		OCLExpression<EClassifier> expr = parse(
 			"package ecore context EString " +
 			"inv: self.toUpper() <> self.toLower() " +
 			"endpackage ");
-		
+
 		assertTrue(check(expr, "anything"));
 		assertTrue(check(expr, "ANYTHING"));
-		
+
 		expr = parse(
 			"package ecore context EString " +
 			"inv: self.toUpper() " +
 			"endpackage ");
-		
+
 		assertEquals("ANYTHING", evaluate(expr, "anything"));
+		}
+		catch (Throwable e) {
+			System.out.println(e);
+			throw e;
+		}
 	}
-	
+
 	/**
 	 * Tests the overrides for equality of primitive values.  In OCL, reals
 	 * can equal integers, but not in Java.
@@ -437,13 +444,13 @@ public class BasicOCLTest
 		assertTrue(check("1 = 1.0"));
 		assertTrue(check("1.0 = 1"));
 		assertTrue(check("1.0 = 1.0"));
-		
+
 		assertTrue(check("'foo' = 'foo'"));
-		
+
 		assertTrue(check("ocltest::Color::red = ocltest::Color::red"));
 		assertFalse(check("ocltest::Color::red = ocltest::Color::black"));
 	}
-    
+
 	/**
 	 * Tests backslashes in strings and the non-standard escape for
 	 * double-quotes in the double-quote syntax that is non-standard, anyway.
@@ -457,14 +464,14 @@ public class BasicOCLTest
 			ParsingOptions.USE_BACKSLASH_ESCAPE_PROCESSING, false);
 
 		String self = "";
-        
+
         try {
             assertEquals("str\\ning",
                 evaluate(helper, self, "'str\\ning'"));
-            
+
             assertEquals("str\\(ing",
                 evaluate(helper, self, "'str\\(ing'"));
-            
+
             assertEquals("string",
                 evaluate(helper, self, "let \"s\\\"g\" : String = 'string' in " +
                     "\"s\\\"g\""));
@@ -476,7 +483,7 @@ public class BasicOCLTest
 				oldBackslashProcessingEnabled);
         }
     }
-    
+
 	/**
 	 * Tests backslash escaping in string literals.
 	 */
@@ -545,18 +552,18 @@ public class BasicOCLTest
 			fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
 	}
-    
+
     public void test_stringEscapes_184948() {
         helper.setContext(EcorePackage.Literals.ESTRING);
         String self = "";
-        
+
         try {
 //            assertEquals("str'ing",
 //                evaluate(helper, self, "'str''ing'"));
-            
+
             assertEquals("",
                 evaluate(helper, self, "''"));
-            
+
             assertEquals("",
                 evaluate(helper, self, "''''"));
             assertEquals("",
@@ -567,14 +574,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests that the value of an enumeration literal expression is the Java
      * enumerated type instance, not the <tt>EEnumLiteral</tt> model element.
      */
     public void test_enumerationLiteralValue_198945() {
     	helper.setContext(ExpressionsPackage.Literals.COLLECTION_KIND);
-        
+
         try {
             assertSame(CollectionKind.SEQUENCE_LITERAL,
                 evaluate(helper, CollectionKind.BAG_LITERAL, "CollectionKind::Sequence"));
@@ -582,14 +589,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests the lax null-handling option for <tt>null</tt> values.
      */
     public void test_laxNullHandling_null() {
         helper.setContext(EcorePackage.Literals.EANNOTATION);
         EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-        
+
         try {
             // lax null handling on for literal nulls (which are handled
             // separately from null values in non-OclVoid expressions)
@@ -607,7 +614,7 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "null.oclAsType(EAnnotation)"));
             assertNull(
                 evaluate(helper, annotation, "null.oclAsType(String)"));
-            
+
             // lax null handling on for null values in non-OclVoid expressions)
             assertEquals(Boolean.TRUE,
                 evaluate(helper, annotation, "source.oclIsTypeOf(OclVoid)"));
@@ -619,11 +626,11 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "source.oclAsType(EAnnotation)"));
             assertNull(
                 evaluate(helper, annotation, "source.oclAsType(String)"));
-            
-            
+
+
             EvaluationOptions.setOption(ocl.getEvaluationEnvironment(),
                 EvaluationOptions.LAX_NULL_HANDLING, false);
-            
+
             // strict null handling on for literal nulls (which are handled
             // separately from null values in non-OclVoid expressions)
             assertEquals(getInvalid(),
@@ -640,7 +647,7 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "null.oclAsType(EAnnotation)"));
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "null.oclAsType(String)"));
-            
+
             // strict null handling on for null values in non-OclVoid expressions)
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "source.oclIsTypeOf(OclVoid)"));
@@ -656,14 +663,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests the lax null-handling option for <tt>OclInvalid</tt> values.
      */
     public void test_laxNullHandling_OclInvalid() {
         helper.setContext(EcorePackage.Literals.EANNOTATION);
         EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-        
+
         try {
             // lax null handling on for literal invalids (which are handled
             // separately from invalid values in non-OclInvalid expressions)
@@ -677,7 +684,7 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "invalid.oclAsType(EAnnotation)"));
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "invalid.oclAsType(String)"));
-            
+
             // lax null handling on for invalid values in non-OclInvalid expressions)
             assertEquals(Boolean.TRUE,
                 evaluate(helper, annotation, "source.substring(1, 1).oclIsTypeOf(OclInvalid)"));
@@ -689,11 +696,11 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "source.substring(1, 1).oclAsType(EAnnotation)"));
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "source.substring(1, 1).oclAsType(String)"));
-            
-            
+
+
             EvaluationOptions.setOption(ocl.getEvaluationEnvironment(),
                 EvaluationOptions.LAX_NULL_HANDLING, false);
-            
+
             // strict null handling on for literal invalids (which are handled
             // separately from invalid values in non-OclInvalid expressions)
             assertEquals(getInvalid(),
@@ -706,7 +713,7 @@ public class BasicOCLTest
                 evaluate(helper, annotation, "invalid.oclAsType(EAnnotation)"));
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "invalid.oclAsType(String)"));
-            
+
             // strict null handling on for invalid values in non-OclInvalid expressions)
             assertEquals(getInvalid(),
                 evaluate(helper, annotation, "source.substring(1, 1).oclIsTypeOf(OclInvalid)"));
@@ -722,7 +729,7 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests that lax null handling works with oclAsType in the EClass context,
      * as well (in the Ecore metamodel).
@@ -730,15 +737,15 @@ public class BasicOCLTest
     public void test_lax_null_handling_on_EcoreModel_253252() {
         helper.setContext(EcorePackage.Literals.ECLASSIFIER);
         EClassifier eclassifier = null;
-        
+
         try {
             // lax null handling on for invalid values in non-OclInvalid expressions)
             assertEquals(null,
                 evaluate(helper, eclassifier, "self.oclAsType(EClass)"));
-            
+
             EvaluationOptions.setOption(ocl.getEvaluationEnvironment(),
                 EvaluationOptions.LAX_NULL_HANDLING, false);
-            
+
             // strict null handling on for invalid values in non-OclInvalid expressions)
             assertEquals(getInvalid(),
                 evaluate(helper, eclassifier, "self.oclAsType(EClass)"));
@@ -746,14 +753,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests that the null type conforms to all others, and supports
      * equality comparison with all other types.
      */
     public void test_null_typeConformance_191041() {
         helper.setContext(EcorePackage.Literals.ESTRING);
-        
+
         try {
             assertTrue(
                 check(helper, EcorePackage.eNS_URI, "null <> Set{'foo'}"));
@@ -775,7 +782,7 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * oclAsType must result in invalid for source not conforming to target type and
      * in the source object in case it conforms to the target type
@@ -797,14 +804,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
 		}
     }
-    
+
     /**
      * Tests that the OclInvalid type conforms to all others, and supports
      * equality comparison with all other types.
      */
     public void test_OclInvalid_typeConformance_191041() {
         helper.setContext(EcorePackage.Literals.ESTRING);
-        
+
         try {
             assertTrue(
                 check(helper, EcorePackage.eNS_URI, "(invalid <> Set{'foo'}).oclIsInvalid()"));
@@ -826,7 +833,7 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
 	private void assertInvalidString(String input) {
 		boolean isParserError = false;
 		try {
