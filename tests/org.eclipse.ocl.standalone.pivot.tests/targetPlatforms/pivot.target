@@ -3,7 +3,6 @@
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="com.google.inject" version="0.0.0"/>
-    <unit id="com.ibm.icu" version="0.0.0"/>
     <unit id="javax.inject" version="0.0.0"/>
     <unit id="org.apache.commons.lang" version="0.0.0"/>
     <unit id="org.apache.log4j" version="0.0.0"/>

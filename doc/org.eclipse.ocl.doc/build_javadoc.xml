@@ -41,7 +41,6 @@
       			<fileset dir="${target.platform}\plugins">
 			        <include name="com.google.guava_*.jar"/>
 			        <include name="com.google.inject_*.jar"/>
-			        <include name="com.ibm.icu_*.jar"/>
 			        <include name="lpg.runtime.java_*.jar"/>
 			        <include name="org.antlr.runtime_3.2*.jar"/>
 			        <include name="org.apache.commons.lang_*.jar"/>
