@@ -61,48 +61,49 @@ import org.eclipse.ocl.utilities.PredefinedType;
 /**
  * Implementation of the {@link EvaluationEnvironment} for evaluation of OCL
  * expressions on instances of Ecore models (i.e., on M0 models).
- * 
+ *
  * @author Tim Klinger (tklinger)
  * @author Christian W. Damus (cdamus)
  */
 public class EcoreEvaluationEnvironment
-		extends
-		AbstractEvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject>
-		implements EvaluationEnvironment.Enumerations<EEnumLiteral>,
-		EvaluationEnvironmentWithHiddenOpposites {
+extends
+AbstractEvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject>
+implements EvaluationEnvironment.Enumerations<EEnumLiteral>,
+EvaluationEnvironmentWithHiddenOpposites {
 
 	private boolean mustCheckOperationReflectionConsistency = true;
 
 	private final EcoreEnvironmentFactory factory;
 
-    private final OppositeEndFinder oppositeEndFinder;
+	private final OppositeEndFinder oppositeEndFinder;
 
 	/**
 	 * Initializes me.
-	 * 
+	 *
 	 * @deprecated A root evaluation environment should be created through the correspondent {@link EcoreEnvironmentFactory}
 	 */
+	@Deprecated
 	public EcoreEvaluationEnvironment() {
 		this((EcoreEnvironmentFactory)null);
 	}
-    
-    /**
-     * Initializes me.
-     * @since 3.1
-     */
-    public EcoreEvaluationEnvironment(EcoreEnvironmentFactory factory) {
+
+	/**
+	 * Initializes me.
+	 * @since 3.1
+	 */
+	public EcoreEvaluationEnvironment(EcoreEnvironmentFactory factory) {
 		super();
-        this.factory = factory;
-        if (factory != null) {
-            this.oppositeEndFinder = factory.getOppositeEndFinder();
-        } else {
-        	this.oppositeEndFinder = null;
-        }
-    }
+		this.factory = factory;
+		if (factory != null) {
+			this.oppositeEndFinder = factory.getOppositeEndFinder();
+		} else {
+			this.oppositeEndFinder = null;
+		}
+	}
 
 	/**
 	 * Initializes me with my parent evaluation environment (nesting scope).
-	 * 
+	 *
 	 * @param parent
 	 *            my parent (nesting scope); must not be <code>null</code>
 	 */
@@ -110,47 +111,47 @@ public class EcoreEvaluationEnvironment
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
 		super(parent);
 		EcoreEvaluationEnvironment ecoreParent = (EcoreEvaluationEnvironment) parent;
-        this.factory = ecoreParent.factory;
-        this.oppositeEndFinder = ecoreParent.oppositeEndFinder;
+		this.factory = ecoreParent.factory;
+		this.oppositeEndFinder = ecoreParent.oppositeEndFinder;
 	}
 
 	@Override
 	public Object callOperation(EOperation operation, int opcode,
 			Object source, Object[] args)
-			throws IllegalArgumentException {
+					throws IllegalArgumentException {
 
 		// FIXME: Pull up so that UML environment can benefit.
 		if (InvocationBehavior.INSTANCE.appliesTo(operation)) {
 			EList<Object> arguments = (args.length == 0)
-				? ECollections.emptyEList()
-				: new BasicEList.UnmodifiableEList<Object>(args.length, args);
+					? ECollections.emptyEList()
+						: new BasicEList.UnmodifiableEList<Object>(args.length, args);
 
-			try {
-				Object result;
-				// Fix for Bug 322159
-				Exception checkFailure;
-				if (mustCheckOperationReflectionConsistency
-					&& ((checkFailure = checkOperationReflectionConsistency(source)) != null)) {				
-					EClass operationClass = operation.getEContainingClass();
-					EPackage operationPackage = operationClass.getEPackage();
-					OCLEcorePlugin
-						.warning(
-							OCLStatusCodes.USERMODELSUPPORT_NO_OPERATION_REFLECTION,
-							OCLMessages.bind(
-								OCLMessages.NoOperationReflection_WARNING_,
-								operationPackage.getName()
+					try {
+						Object result;
+						// Fix for Bug 322159
+						Exception checkFailure;
+						if (mustCheckOperationReflectionConsistency
+								&& ((checkFailure = checkOperationReflectionConsistency(source)) != null)) {
+							EClass operationClass = operation.getEContainingClass();
+							EPackage operationPackage = operationClass.getEPackage();
+							OCLEcorePlugin
+							.warning(
+								OCLStatusCodes.USERMODELSUPPORT_NO_OPERATION_REFLECTION,
+								OCLMessages.bind(
+									OCLMessages.NoOperationReflection_WARNING_,
+									operationPackage.getName()
 									+ "::" + operationClass.getName()), //$NON-NLS-1$
-							checkFailure);
-					result = ((EOperation.Internal) operation)
-						.getInvocationDelegate().dynamicInvoke(
-							(InternalEObject) source, arguments);
-				} else {
-					result = ((EObject) source).eInvoke(operation, arguments);
-				}
-				return coerceValue(operation, result, true);
-			} catch (InvocationTargetException e) {
-				throw new IllegalArgumentException(e);
-			}
+								checkFailure);
+							result = ((EOperation.Internal) operation)
+									.getInvocationDelegate().dynamicInvoke(
+										(InternalEObject) source, arguments);
+						} else {
+							result = ((EObject) source).eInvoke(operation, arguments);
+						}
+						return coerceValue(operation, result, true);
+					} catch (InvocationTargetException e) {
+						throw new IllegalArgumentException(e);
+					}
 		}
 
 		// TODO: WBN to pull up createValue to the superclass as a pass-thru
@@ -234,7 +235,7 @@ public class EcoreEvaluationEnvironment
 	// implements the inherited specification
 	public Object navigateProperty(EStructuralFeature property,
 			List<?> qualifiers, Object target)
-			throws IllegalArgumentException {
+					throws IllegalArgumentException {
 
 		if (target instanceof EObject) {
 			EObject etarget = (EObject) target;
@@ -249,14 +250,14 @@ public class EcoreEvaluationEnvironment
 				}
 				return coerceValue(property, etarget.eGet(property), true);
 			}
-    	} else if (target instanceof Tuple<?, ?>) {
-    		@SuppressWarnings("unchecked")
-    		Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) target;
-    		
-    		if (tuple.getTupleType().oclProperties().contains(property)) {
-    			return tuple.getValue(property);
-    		}
-    	}
+		} else if (target instanceof Tuple<?, ?>) {
+			@SuppressWarnings("unchecked")
+			Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) target;
+
+			if (tuple.getTupleType().oclProperties().contains(property)) {
+				return tuple.getValue(property);
+			}
+		}
 
 		throw new IllegalArgumentException();
 	}
@@ -264,10 +265,10 @@ public class EcoreEvaluationEnvironment
 	/**
 	 * Obtains the collection kind appropriate for representing the values of
 	 * the specified typed element.
-	 * 
+	 *
 	 * @param element
 	 *            a typed element (property, operation, etc.)
-	 * 
+	 *
 	 * @return the collection kind appropriate to the multiplicity, orderedness,
 	 *         and uniqueness of the element, or <code>null</code> if it is not
 	 *         many
@@ -293,7 +294,7 @@ public class EcoreEvaluationEnvironment
 	 * this element (or scalar if not multi-valued). The original value may
 	 * either be used as is where possible or, optionally, copied into the new
 	 * collection (if multi-valued).
-	 * 
+	 *
 	 * @param element
 	 *            a typed element (property, operation, etc.)
 	 * @param value
@@ -301,10 +302,10 @@ public class EcoreEvaluationEnvironment
 	 * @param copy
 	 *            whether to copy the specified value into the resulting
 	 *            collection/scalar value
-	 * 
+	 *
 	 * @return the value, in the appropriate OCL collection type or scalar form
 	 *         as required
-	 * 
+	 *
 	 * @see #getCollectionKind(ETypedElement)
 	 * @since 3.2
 	 */
@@ -314,12 +315,12 @@ public class EcoreEvaluationEnvironment
 		if (kind != null) {
 			if (value instanceof Collection<?>) {
 				return copy
-					? CollectionUtil.createNewCollection(kind,
-						(Collection<?>) value)
-					: value;
+						? CollectionUtil.createNewCollection(kind,
+							(Collection<?>) value)
+							: value;
 			} else {
 				Collection<Object> result = CollectionUtil
-					.createNewCollection(kind);
+						.createNewCollection(kind);
 				result.add(value);
 				return result;
 			}
@@ -327,8 +328,8 @@ public class EcoreEvaluationEnvironment
 			if (value instanceof Collection<?>) {
 				Collection<?> collection = (Collection<?>) value;
 				return collection.isEmpty()
-					? null
-					: collection.iterator().next();
+						? null
+							: collection.iterator().next();
 			} else {
 				return value;
 			}
@@ -338,7 +339,7 @@ public class EcoreEvaluationEnvironment
 	// implements the inherited specification
 	public Object navigateAssociationClass(EClassifier associationClass,
 			EStructuralFeature navigationSource, Object target)
-			throws IllegalArgumentException {
+					throws IllegalArgumentException {
 
 		if (target instanceof EObject) {
 			EObject etarget = (EObject) target;
@@ -357,7 +358,7 @@ public class EcoreEvaluationEnvironment
 	/**
 	 * Retrieves the reference feature in the specified context object that
 	 * references the specified association class.
-	 * 
+	 *
 	 * @param context
 	 *            the context object
 	 * @param associationClass
@@ -370,12 +371,12 @@ public class EcoreEvaluationEnvironment
 
 		StringBuffer nameBuf = new StringBuffer(associationClass.getName());
 		UnicodeSupport.setCodePointAt(nameBuf, 0,
-			UnicodeSupport.toLowerCase(UnicodeSupport.codePointAt(nameBuf, 0)));
+			Character.toLowerCase(nameBuf.codePointAt(0)));
 		String name = nameBuf.toString();
 
 		for (EReference next : context.eClass().getEAllReferences()) {
 			if (name.equals(next.getName())
-				&& (associationClass == next.getEReferenceType())) {
+					&& (associationClass == next.getEReferenceType())) {
 				result = next;
 				break;
 			}
@@ -384,21 +385,21 @@ public class EcoreEvaluationEnvironment
 		return result;
 	}
 
-    // implements the inherited specification
-    public Tuple<EOperation, EStructuralFeature> createTuple(EClassifier type,
-            Map<EStructuralFeature, Object> values) {
+	// implements the inherited specification
+	public Tuple<EOperation, EStructuralFeature> createTuple(EClassifier type,
+			Map<EStructuralFeature, Object> values) {
 
-        @SuppressWarnings("unchecked")
-        TupleType<EOperation, EStructuralFeature> tupleType = (TupleType<EOperation, EStructuralFeature>) type;
+		@SuppressWarnings("unchecked")
+		TupleType<EOperation, EStructuralFeature> tupleType = (TupleType<EOperation, EStructuralFeature>) type;
 
-        return new AbstractTuple<EOperation, EStructuralFeature>(tupleType, values)
-        {
+		return new AbstractTuple<EOperation, EStructuralFeature>(tupleType, values)
+		{
 			@Override
 			protected String getName(EStructuralFeature part) {
 				return part.getName();
 			}
 		};
-    }
+	}
 
 	// implements the inherited specification
 	public Map<EClass, Set<EObject>> createExtentMap(Object object) {
@@ -421,7 +422,7 @@ public class EcoreEvaluationEnvironment
 		// special case for Integer/UnlimitedNatural and Real which
 		// are not related types in java but are in OCL
 		if ((object.getClass() == Integer.class)
-			&& (classifier.getInstanceClass() == Double.class)) {
+				&& (classifier.getInstanceClass() == Double.class)) {
 			return Boolean.TRUE;
 		} else if (classifier instanceof AnyType) {
 			return Boolean.TRUE;
@@ -435,7 +436,7 @@ public class EcoreEvaluationEnvironment
 		if (classifier instanceof EClass && object instanceof EObject) {
 			return ((EObject) object).eClass() == classifier;
 		} else if (!(object instanceof EObject)
-			&& !(classifier instanceof EClass)) {
+				&& !(classifier instanceof EClass)) {
 			return object.getClass() == classifier.getInstanceClass();
 		}
 
@@ -449,7 +450,7 @@ public class EcoreEvaluationEnvironment
 
 	/**
 	 * Ecore implementation of the enumeration literal value.
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	public Enumerator getValue(EEnumLiteral enumerationLiteral) {
@@ -466,7 +467,7 @@ public class EcoreEvaluationEnvironment
 	 * The check is enabled by default.
 	 *
 	 * @param checkDisabled true to disable the check
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public void setOperationReflectionCheckDisabled(boolean checkDisabled) {
@@ -482,9 +483,9 @@ public class EcoreEvaluationEnvironment
 	 * <p>
 	 * Lack of support is tested by checking for a missing override of
 	 * {@link org.eclipse.emf.ecore.impl.EOperationImpl#eInvoke(int, EList)}.
-	 * 
+	 *
 	 * @param source the object to check
-	 * 
+	 *
 	 * @since 3.1
 	 * @noextend This interface may be removed in future releases if a better
 	 * workaround for Bug 322159 is found.
@@ -506,26 +507,26 @@ public class EcoreEvaluationEnvironment
 	 * @since 3.1
 	 */
 	public Object navigateOppositeProperty(EReference property, Object target) throws IllegalArgumentException {
-        Object result = null;
-        if (property.isContainment()) {
-            EObject resultCandidate = ((EObject) target).eContainer();
-            if (resultCandidate != null) {
-                // first check if the container is assignment-compatible to the property's owning type:
-                if (property.getEContainingClass().isInstance(resultCandidate)) {
-                    Object propertyValue = resultCandidate.eGet(property);
-                    if (propertyValue == target
-                            || (propertyValue instanceof Collection<?> && ((Collection<?>) propertyValue).contains(target))) {
-                        // important to create a copy because, e.g., the partial evaluator may modify the resulting collection
-                        result = CollectionUtil.createNewBag(Collections.singleton(resultCandidate));
-                    }
-                }
-            }
-        } else {
-            if (oppositeEndFinder != null) {
-                result = oppositeEndFinder.navigateOppositePropertyWithForwardScope(property, (EObject) target);
-            }
-        }
-        return result;
-    }
+		Object result = null;
+		if (property.isContainment()) {
+			EObject resultCandidate = ((EObject) target).eContainer();
+			if (resultCandidate != null) {
+				// first check if the container is assignment-compatible to the property's owning type:
+				if (property.getEContainingClass().isInstance(resultCandidate)) {
+					Object propertyValue = resultCandidate.eGet(property);
+					if (propertyValue == target
+							|| (propertyValue instanceof Collection<?> && ((Collection<?>) propertyValue).contains(target))) {
+						// important to create a copy because, e.g., the partial evaluator may modify the resulting collection
+						result = CollectionUtil.createNewBag(Collections.singleton(resultCandidate));
+					}
+				}
+			}
+		} else {
+			if (oppositeEndFinder != null) {
+				result = oppositeEndFinder.navigateOppositePropertyWithForwardScope(property, (EObject) target);
+			}
+		}
+		return result;
+	}
 
 }

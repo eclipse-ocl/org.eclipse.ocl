@@ -96,7 +96,6 @@ import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.ObjectUtil;
-import org.eclipse.ocl.util.UnicodeSupport;
 import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
@@ -578,12 +577,12 @@ extends AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> 
 					case PredefinedType.TO_LOWER:
 					case PredefinedType.TO_LOWER_CASE:
 						// String::toLower()
-						return UnicodeSupport.toLowerCase((String) sourceVal);
+						return ((String)sourceVal).toLowerCase();
 
 					case PredefinedType.TO_UPPER:
 					case PredefinedType.TO_UPPER_CASE:
 						// String::toUpper()
-						return UnicodeSupport.toUpperCase((String) sourceVal);
+						return ((String)sourceVal).toUpperCase();
 
 					case PredefinedType.TOKENIZE:
 						return tokenize((String) sourceVal, DELIMS, false);
