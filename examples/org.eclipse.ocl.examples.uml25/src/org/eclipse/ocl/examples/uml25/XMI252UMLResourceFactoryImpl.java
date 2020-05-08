@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.uml25;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ import org.eclipse.uml2.uml.resource.CMOF2UMLResourceHandler;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
 
 /**
- * XMI252UMLResourceFactoryImpl supports loading OMG UML 2.5 XMI files as Eclipse UML 4.0 resources.
+ * XMI252UMLResourceFactoryImpl supports loading all OMG UML 2.5 family XMI files as Eclipse UML resources.
  * <p>
  * install() should be invoked to initialize a ResourceSet with the locations of the UML 2.5 XMI files.
  * <p>
@@ -45,7 +46,7 @@ public class XMI252UMLResourceFactoryImpl extends XMI2UMLResourceFactoryImpl imp
 			MYUML_2_5_CONTENT_TYPE_IDENTIFIER, new String[]{XMI2UMLResource.FILE_EXTENSION},
 		RootXMLContentHandlerImpl.XMI_KIND, MYUML_METAMODEL_2_5_NS_URI, null);
 
-	public static void install(@NonNull ResourceSet resourceSet, @NonNull URI uml25uri) {
+	public static @NonNull Map<URI, URI> install(@NonNull ResourceSet resourceSet, @NonNull URI modelFolderURI) {
 		URIConverter uriConverter = resourceSet.getURIConverter();
 		List<ContentHandler> contentHandlers = uriConverter.getContentHandlers();
 		if (!contentHandlers.contains(MYOMG_2_5_CONTENT_HANDLER)) {
@@ -53,12 +54,13 @@ public class XMI252UMLResourceFactoryImpl extends XMI2UMLResourceFactoryImpl imp
 		}
 		resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put(
 				MYUML_2_5_CONTENT_TYPE_IDENTIFIER, new XMI252UMLResourceFactoryImpl());
-		Map<URI, URI> uriMap = uriConverter.getURIMap();
-		uriMap.put(URI.createURI("http://www.omg.org/spec/DD/20131001/"), uml25uri);
-		uriMap.put(URI.createURI("http://www.omg.org/spec/UML/20131001/"), uml25uri);
-//		resourceSet.getPackageRegistry().put("http://www.omg.org/spec/UML/20131001", UMLPackage.eINSTANCE);
+		Map<URI, URI> extraURImap = new HashMap<URI, URI>();
+		extraURImap.put(URI.createURI("http://www.omg.org/spec/DC/20131001/"), modelFolderURI);
+		extraURImap.put(URI.createURI("http://www.omg.org/spec/DD/20131001/"), modelFolderURI);
+		extraURImap.put(URI.createURI("http://www.omg.org/spec/UML/20131001/"), modelFolderURI);
+		return extraURImap;
 	}
-	
+
 	public XMI252UMLResourceFactoryImpl() {
 	}
 
@@ -77,6 +79,7 @@ public class XMI252UMLResourceFactoryImpl extends XMI2UMLResourceFactoryImpl imp
 
 		defaultLoadOptions.put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
 		defaultLoadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER, new CMOF2UMLResourceHandler(null));
+		defaultLoadOptions.put(XMLResource.OPTION_LAX_FEATURE_PROCESSING, Boolean.TRUE);
 
 		return resource;
 	}

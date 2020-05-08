@@ -11,12 +11,13 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.uml25.XMI252UMLResourceFactoryImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -27,20 +28,31 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.resource.XMI2UMLResource;
 
 /**
  * Tests that load a model and verify that there are no unresolved proxies as a result.
  */
 public class UML25LoadTests extends LoadTests
 {
-	@Override
+/*	@Override
 	public @NonNull TestOCL createOCL() {
 		UMLStandaloneSetup.init();
 		TestOCL ocl = new TestOCL(getTestFileSystem(), "UML25LoadTests", getName(), OCL.NO_PROJECTS);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
+	//	XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
+		return ocl;
+	} */
+	protected @Nullable Map<URI, URI> extraURImap = null;
+
+	public @NonNull TestOCL createOCL(@Nullable URI modelFolderURI) {
+		if (modelFolderURI == null) {
+			return super.createOCL();
+		}
+		UMLStandaloneSetup.init();
+		TestOCL ocl = new TestOCL(getTestFileSystem(), "UML25LoadTests", getName(), OCL.NO_PROJECTS);
+		ResourceSet resourceSet = ocl.getResourceSet();
+		extraURImap = XMI252UMLResourceFactoryImpl.install(resourceSet, modelFolderURI);
+		initializeExtraURIMappings(resourceSet);
 		return ocl;
 	}
 
@@ -49,7 +61,7 @@ public class UML25LoadTests extends LoadTests
 		UMLStandaloneSetup.init();
 		TestOCL ocl = new TestOCL(getTestFileSystem(), "UML25LoadTests", getName(), getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet();
-		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
+	//	XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
 		return ocl;
 	}
 
@@ -63,20 +75,28 @@ public class UML25LoadTests extends LoadTests
 	//	}
 
 	@Override
+	protected void initializeExtraURIMappings(@NonNull ResourceSet resourceSet) {
+		if (extraURImap != null) {
+			resourceSet.getURIConverter().getURIMap().putAll(extraURImap);
+		}
+	}
+
+	@Override
 	protected void tearDown() throws Exception {
+		extraURImap = null;
 		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
 		super.tearDown();
 	}
 
-	public void testLoad_UML_2_5_Beta_PrimitiveTypes() throws IOException, InterruptedException, ParserException {
+/*	public void testLoad_UML_2_5_Beta_PrimitiveTypes() throws IOException, InterruptedException, ParserException {
 		OCL ocl = createOCL();
 		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 		ocl.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uml_2_5 = URI.createPlatformResourceURI("/UML-2.5/XMI-2.5-Beta/PrimitiveTypes.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);
+		doLoadUML(ocl, uml_2_5, false, true, NO_MESSAGES, null);
 		ocl.dispose();
-	}
+	} */
 
 	/*	public void testLoad_UML_2_5_Beta_UML() throws IOException, InterruptedException, ParserException {
 //		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/MOF/20110701", UMLPackage.eINSTANCE);
@@ -152,9 +172,10 @@ public class UML25LoadTests extends LoadTests
 	} */
 
 	public void testLoad_UML_2_5_Final_PrimitiveTypes() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/PrimitiveTypes.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("PrimitiveTypes.xmi");
+		OCL ocl = createOCL(modelFolderURI);
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, null);
 		ocl.dispose();
 	}
 
@@ -174,33 +195,37 @@ public class UML25LoadTests extends LoadTests
 	} */
 
 	public void testLoad_UML_2_5_Final_DC() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/DC.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DC.xmi");
+		OCL ocl = createOCL(modelFolderURI);
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, null);
 		ocl.dispose();
 	}
 
 	public void testLoad_UML_2_5_Final_DI() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/DI.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DI.xmi");
+		OCL ocl = createOCL(modelFolderURI);
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, null);
 		ocl.dispose();
 	}
 
 	public void testLoad_UML_2_5_Final_DG() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/DG.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, new @NonNull String[] {
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DG.xmi");
+		OCL ocl = createOCL(modelFolderURI);
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, new @NonNull String[] {
 			"The 'Class::NameIsNotNull' constraint is violated for 'DG::null'"
 		});
 		ocl.dispose();
 	}
 
 	public void testLoad_UML_2_5_Final_UML() throws IOException, InterruptedException, ParserException {
-		OCLInternal ocl = createOCL();
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("UML.xmi");
+		OCLInternal ocl = createOCL(modelFolderURI);
 		GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UML.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, null /*new @NonNull String[] {		// FIXME BUG 551915 validation disabled
+		doLoadUML(ocl, modelURI, false, true, null /*new @NonNull String[] {		// FIXME BUG 551915 validation disabled
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Classification::Operation::returnResult() : Set(UML::Classification::Parameter)'", // needs ->asSet()
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::Association::endType() : Set(UML::CommonStructure::Type[+|1])'", // needs ->oclAsType(Set(uml::CommonStructure::Type[+|1]))
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::StructuredClassifier::part() : Set(UML::Classification::Property)'" // needs ->asSet()
@@ -210,17 +235,19 @@ public class UML25LoadTests extends LoadTests
 	/*	junit.framework.AssertionFailedError: 5 validation errors
 	 */
 	public void testLoad_UML_2_5_Final_UMLDI() throws IOException, InterruptedException, ParserException {
-		OCLInternal ocl = createOCL();
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DI.xmi");
+		OCL ocl = createOCL(modelFolderURI);
 		GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UMLDI.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);		// FIXME BUG 419132 eliminate last argument; always true
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, null);		// FIXME BUG 419132 eliminate last argument; always true
 		ocl.dispose();
 	}
 
 	public void testLoad_UML_2_5_Final_StandardProfile() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
-		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/StandardProfile.xmi", true);
-		doLoadUML(ocl, uml_2_5, true, true, NO_MESSAGES, null);
+		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
+		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("StandardProfile.xmi");
+		OCL ocl = createOCL(modelFolderURI);
+		doLoadUML(ocl, modelURI, false, true, NO_MESSAGES, null);
 		ocl.dispose();
 	}
 }

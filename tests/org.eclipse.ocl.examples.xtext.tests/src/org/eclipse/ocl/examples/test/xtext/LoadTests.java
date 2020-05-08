@@ -285,7 +285,10 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, @NonNull String @Nullable [] validateCompleteOCLMessages, @NonNull String @Nullable [] messages) throws IOException, ParserException {
-		return doLoadUML(ocl, inputURI, new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCLMessages, validateEmbeddedOCL), messages);
+		assert !ignoreNonExistence;
+		assert validateEmbeddedOCL;
+		AbstractLoadCallBack loadCallBacks = new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCLMessages, validateEmbeddedOCL);
+		return doLoadUML(ocl, inputURI, loadCallBacks, messages);
 	}
 
 	private static class AbstractLoadCallBack implements ILoadCallBack
@@ -468,6 +471,7 @@ public class LoadTests extends XtextTestCase
 				if (hasOCLcontent) {
 					OCL ocl2 = createOCLWithProjectMap();
 					ResourceSet resourceSet2 = ocl2.getResourceSet();
+					initializeExtraURIMappings(resourceSet2);
 					BaseCSResource reloadCS = (BaseCSResource) resourceSet2.createResource(oclURI);
 					ocl2.getEnvironmentFactory().adapt(reloadCS);
 					loadCallBacks.validateCompleteOCL(ocl2, reloadCS);
@@ -658,6 +662,9 @@ public class LoadTests extends XtextTestCase
 			//			unloadPivot(metamodelManager);
 		}
 		return csResource;
+	}
+
+	protected void initializeExtraURIMappings(@NonNull ResourceSet resourceSet) {
 	}
 
 	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {
@@ -1234,7 +1241,7 @@ public class LoadTests extends XtextTestCase
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/uml/Internationalized.profile.uml", true);
-		doLoadUML(ocl, uri, false, false, null, null);
+		doLoadUML(ocl, uri, false, true, null, null);
 		ocl.dispose();
 	}
 
