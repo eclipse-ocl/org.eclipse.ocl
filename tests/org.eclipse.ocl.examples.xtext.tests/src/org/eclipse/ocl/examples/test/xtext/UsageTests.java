@@ -714,6 +714,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 			String testProjectName = "SysML_ValueTypes_QUDV";
+			createManifestFile();
 			//
 			URI sourceGenModelURI = getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.genmodel");
 			URI targetGenModelURI = getTestURI("SysML_ValueTypes_QUDV.genmodel");
@@ -728,7 +729,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			//
 			doGenModel(targetGenModelURI);
 			doCompile(ocl, testProjectName);
-			createManifestFile();
 			File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 			List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 			ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
@@ -977,6 +977,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "		}\n"
 						+ "	}\n"
 						+ "}\n";
+		createManifestFile();
 		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
 		genOptions.put("usedGenPackages", "Bug416421A.genmodel#//bug416421A");
 		String genmodelFileB = createGenModelContent(testFileStemB, genOptions);
@@ -988,7 +989,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURIB);
 		doGenModel(genModelURIA);
 		doCompile(ocl, testProjectNameA, testProjectNameB);
-		createManifestFile();
 		ocl.dispose();
 	}
 
