@@ -842,14 +842,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
-		EObject contextElement = ClassUtil.nonNullState(specification.eContainer());
 		if ((specification instanceof ExpressionInOCL) && ((ExpressionInOCL)specification).getOwnedBody() != null) {
 			return (ExpressionInOCL)specification;
 		}
+		EObject contextElement = ClassUtil.nonNullState(specification.eContainer());
 		String expression = specification.getBody();
 		if (expression == null) {
 			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
 		}
+		expression = PivotUtilInternal.getBodyExpression(expression);
 		ParserContext parserContext = createParserContext(specification);
 		if (parserContext == null) {
 			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
