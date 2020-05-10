@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<!-- Following registrations for use in nested workspace should duplicate those in Installer.java for use in a local workspace--> 
+   <extension point="org.eclipse.emf.ecore.uri_mapping">
+      <!--mapping source="http://www.omg.org/spec/DC/20131001/" target="model/"/>
+      <mapping source="http://www.omg.org/spec/DD/20131001/" target="model/"/>
+      <mapping source="http://www.omg.org/spec/UML/20131001/" target="model/"/-->
+   </extension>
+</plugin>

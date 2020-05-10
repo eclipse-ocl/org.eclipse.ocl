@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.uml25;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,11 +53,7 @@ public class XMI252UMLResourceFactoryImpl extends XMI2UMLResourceFactoryImpl imp
 		}
 		resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put(
 				MYUML_2_5_CONTENT_TYPE_IDENTIFIER, new XMI252UMLResourceFactoryImpl());
-		Map<URI, URI> extraURImap = new HashMap<URI, URI>();
-		extraURImap.put(URI.createURI("http://www.omg.org/spec/DC/20131001/"), modelFolderURI);
-		extraURImap.put(URI.createURI("http://www.omg.org/spec/DD/20131001/"), modelFolderURI);
-		extraURImap.put(URI.createURI("http://www.omg.org/spec/UML/20131001/"), modelFolderURI);
-		return extraURImap;
+		return Installer.getExtraURImap(modelFolderURI);
 	}
 
 	public XMI252UMLResourceFactoryImpl() {
