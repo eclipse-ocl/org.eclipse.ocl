@@ -10,16 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * BooleanOrOperation2 realises the 2-valued or() library operation.
@@ -32,21 +30,13 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
-		OCLExpression argument0 = arguments.get(0);
-		assert argument0 != null;
-//		if (argument0.isInvalid()) {		// FIXME Bug 552782, need static isInvalid analysis
-//			throw new InvalidValueException("null argument");
-//		}
-		if (argument0.isNull()) {
-			throw new InvalidValueException("null argument");
-		}
 		if (sourceValue == Boolean.TRUE) {
 			return TRUE_VALUE;
 		}
-		Object firstArgument = executor.evaluate(argument0);
 		Boolean sourceBoolean = ValueUtil.asBoolean(sourceValue);
-		Boolean argBoolean = ValueUtil.asBoolean(firstArgument);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		Object argumentValue = executor.evaluate(argument);
+		Boolean argBoolean = ValueUtil.asBoolean(argumentValue);
 		return evaluate(sourceBoolean, argBoolean);
 	}
 
