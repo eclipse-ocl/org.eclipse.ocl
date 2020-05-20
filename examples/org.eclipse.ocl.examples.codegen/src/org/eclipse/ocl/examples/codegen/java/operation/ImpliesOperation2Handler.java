@@ -29,7 +29,7 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
 			assert !cgOperationCallExp.getReferredOperation().isIsInvalidating();
-			assert !cgOperationCallExp.getReferredOperation().isIsValidating();
+			assert cgOperationCallExp.getReferredOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
 			//	Trivial source cases
@@ -50,12 +50,6 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
 			assert cgArgument != null;
-			if (appendThrowIfNull(cgArgument, "implies2 argument")) {
-				return false;
-			}
-			if (appendThrowIfInvalid(cgArgument, "implies2 argument")) {
-				return false;
-			}
 			if (cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				return true;
@@ -70,27 +64,27 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Real case
 			//
-//			boolean hasConstantSource = cgSource.isTrue();
-//			if (!hasConstantSource) {
-			if (!js.appendLocalStatements(cgSource)) {
-				return false;
-			}
-			appendThrowIfMayBeNull(cgSource, "implies2 source");
-			appendThrowIfMayBeInvalid(cgSource);
-			hasDeclaration = appendDeclaration(hasDeclaration, cgOperationCallExp);
-			try {
+			boolean hasConstantSource = cgSource.isTrue();
+			if (!hasConstantSource) {
+				if (!js.appendLocalStatements(cgSource)) {
+					return false;
+				}
+				appendThrowIfMayBeNull(cgSource, "implies2 source");
+				appendThrowIfMayBeInvalid(cgSource);
+				hasDeclaration = appendDeclaration(hasDeclaration, cgOperationCallExp);
 				appendIfEqualsBoolean0(cgSource, false);
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				appendElse();
-//			}
+			}
+			try {
 				if (!js.appendLocalStatements(cgArgument)) {
 					return false;
 				}
 				if (appendThrowIfNull(cgArgument, "implies2 argument")) {
-					return false;//!hasConstantSource;
+					return !hasConstantSource;
 				}
 				if (appendThrowIfInvalid(cgArgument, "implies2 argument")) {
-					return false;//!hasConstantSource;
+					return !hasConstantSource;
 				}
 				if (cgArgument.isFalse()) {
 					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
@@ -102,9 +96,9 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 				return true;
 			}
 			finally {
-//				if (!hasConstantSource) {
+				if (!hasConstantSource) {
 					appendEndIf();
-//				}
+				}
 			}
 		}
 

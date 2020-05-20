@@ -29,14 +29,18 @@ public class AndOperation2Handler extends AbstractLibraryOperationHandler
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
 			assert !cgOperationCallExp.getReferredOperation().isIsInvalidating();
-			assert !cgOperationCallExp.getReferredOperation().isIsValidating();
+			assert cgOperationCallExp.getReferredOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
 			//	Trivial source cases
 			//
-			CGValuedElement cgSource = cgOperationCallExp.getSource();
-			assert cgSource.isNonInvalid();
-			assert cgSource.isNonNull();
+			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			if (appendThrowIfNull(cgSource, "and2 source")) {
+				return false;
+			}
+			if (appendThrowIfInvalid(cgSource, "and2 source")) {
+				return false;
+			}
 			if (cgSource.isFalse()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 				return true;
@@ -46,8 +50,6 @@ public class AndOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
 			assert cgArgument != null;
-			assert cgArgument.isNonInvalid();
-			assert cgArgument.isNonNull();
 			if (cgArgument.isFalse()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 				return true;
@@ -62,22 +64,41 @@ public class AndOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Real case
 			//
-			if (!js.appendLocalStatements(cgSource)) {
-				return false;
-			}
-			hasDeclaration = appendDeclaration(hasDeclaration, cgOperationCallExp);
-			try {
+			boolean hasConstantSource = cgSource.isTrue();
+			if (!hasConstantSource) {
+				if (!js.appendLocalStatements(cgSource)) {
+					return false;
+				}
+				appendThrowIfMayBeNull(cgSource, "and2 source");
+				appendThrowIfMayBeInvalid(cgSource);
+				hasDeclaration = appendDeclaration(hasDeclaration, cgOperationCallExp);
 				appendIfEqualsBoolean0(cgSource, false);
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 				appendElse();
+			}
+			try {
 				if (!js.appendLocalStatements(cgArgument)) {
 					return false;
 				}
+				if (appendThrowIfNull(cgArgument, "and2 argument")) {
+					return !hasConstantSource;
+				}
+				if (appendThrowIfInvalid(cgArgument, "and2 argument")) {
+					return !hasConstantSource;
+				}
+				if (cgArgument.isTrue()) {
+					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
+					return true;
+				}
+				appendThrowIfMayBeNull(cgArgument, "and2 argument");
+				appendThrowIfMayBeInvalid(cgArgument);
 				appendAssignValue(hasDeclaration, cgOperationCallExp, cgArgument);
 				return true;
 			}
 			finally {
-				appendEndIf();
+				if (!hasConstantSource) {
+					appendEndIf();
+				}
 			}
 		}
 

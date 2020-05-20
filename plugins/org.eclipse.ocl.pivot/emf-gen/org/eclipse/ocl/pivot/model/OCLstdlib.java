@@ -1691,6 +1691,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_and2);
+			operation.setIsValidating(true);
 			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = false then false\n\t\t      elseif b = false then false\n\t\t      else true\n\t\t      endif"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
@@ -1702,6 +1703,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_implies2);
+			operation.setIsValidating(true);
 			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = false then true\n\t\t      elseif b = true then true\n\t\t      else false\n\t\t      endif"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
@@ -1720,6 +1722,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_or2);
+			operation.setIsValidating(true);
 			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t      else false\n\t\t      endif"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));

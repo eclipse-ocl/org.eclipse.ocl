@@ -29,7 +29,7 @@ public class OrOperation2Handler extends AbstractLibraryOperationHandler
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
 			assert !cgOperationCallExp.getReferredOperation().isIsInvalidating();
-			assert !cgOperationCallExp.getReferredOperation().isIsValidating();
+			assert cgOperationCallExp.getReferredOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
 			//	Trivial source cases
@@ -50,12 +50,6 @@ public class OrOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
 			assert cgArgument != null;
-			if (appendThrowIfNull(cgArgument, "or2 argument")) {
-				return false;
-			}
-			if (appendThrowIfInvalid(cgArgument, "or2 argument")) {
-				return false;
-			}
 			if (cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				return true;
@@ -70,7 +64,7 @@ public class OrOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Real case
 			//
-			boolean hasConstantSource = cgSource.isTrue();
+			boolean hasConstantSource = cgSource.isFalse();
 			if (!hasConstantSource) {
 				if (!js.appendLocalStatements(cgSource)) {
 					return false;
