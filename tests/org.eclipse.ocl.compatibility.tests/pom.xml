@@ -556,5 +556,25 @@
         <targetRelease>2019-09</targetRelease>
       </properties>
     </profile>
+    <profile>
+      <id>2019-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>2019-12</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2020-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>2020-03</targetRelease>
+      </properties>
+    </profile>
   </profiles>
 </project>
