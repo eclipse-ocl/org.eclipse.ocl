@@ -113,8 +113,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedDefinitionsDefCSParserRuleCall_4_1_0 = (RuleCall)cOwnedDefinitionsAssignment_4_1.eContents().get(0);
 
 		//ClassifierContextDeclCS:
-		//	'context' ownedSignature=TemplateSignatureCS? selfName=UnrestrictedName? ownedPathName=PathNameCS ('inv'
-		//	ownedInvariants+=ConstraintCS | ownedDefinitions+=DefCS)+;
+		//	'context' ownedSignature=TemplateSignatureCS? selfName=UnrestrictedName?
+		//	ownedPathName=PathNameCS ('inv' ownedInvariants+=ConstraintCS | ownedDefinitions+=DefCS)+;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'context' ownedSignature=TemplateSignatureCS? selfName=UnrestrictedName? ownedPathName=PathNameCS ('inv'
@@ -239,7 +239,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		///*
 		// * A Context declaration can be a Classifier, Operation of Property Context declaration.
 		// */ ContextDeclCS:
-		//	PropertyContextDeclCS | ClassifierContextDeclCS | OperationContextDeclCS;
+		//	PropertyContextDeclCS
+		//	| ClassifierContextDeclCS
+		//	| OperationContextDeclCS;
 		@Override public ParserRule getRule() { return rule; }
 
 		//PropertyContextDeclCS | ClassifierContextDeclCS | OperationContextDeclCS
@@ -316,9 +318,10 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		// * For compatibility with invariants the definition may have a name that is never used.
 		// */
 		//DefOperationCS:
-		//	isStatic?='static'? 'def' UnrestrictedName? ':' ownedSignature=TemplateSignatureCS? name=UnrestrictedName '('
-		//	(ownedParameters+=DefParameterCS (',' ownedParameters+=DefParameterCS)*)? ')' ':' ownedType=TypeExpCS? '='
-		//	ownedSpecification=SpecificationCS;
+		//	isStatic?='static'? 'def' UnrestrictedName? ':' ownedSignature=TemplateSignatureCS?
+		//	name=UnrestrictedName '(' (ownedParameters+=DefParameterCS (',' ownedParameters+=DefParameterCS)*)? ')' ':'
+		//	ownedType=TypeExpCS?
+		//	'=' ownedSpecification=SpecificationCS;
 		@Override public ParserRule getRule() { return rule; }
 
 		//isStatic?='static'? 'def' UnrestrictedName? ':' ownedSignature=TemplateSignatureCS? name=UnrestrictedName '('
@@ -459,8 +462,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		// * For compatibility with invariants the definition may have a name that is never used.
 		// */
 		//DefPropertyCS:
-		//	isStatic?='static'? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS '='
-		//	ownedSpecification=SpecificationCS;
+		//	isStatic?='static'? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS
+		//	'=' ownedSpecification=SpecificationCS;
 		@Override public ParserRule getRule() { return rule; }
 
 		//isStatic?='static'? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS '='
@@ -620,9 +623,10 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		// * For compatibility with invariants the body expression may have a name that is never used.
 		// */
 		//OperationContextDeclCS:
-		//	'context' ownedSignature=TemplateSignatureCS? ownedPathName=PathNameCS '(' (ownedParameters+=ParameterCS (','
-		//	ownedParameters+=ParameterCS)*)? ')' ':' ownedType=TypeExpCS? ('pre' ownedPreconditions+=ConstraintCS | 'post'
-		//	ownedPostconditions+=ConstraintCS | 'body' UnrestrictedName? ':' ownedBodies+=SpecificationCS)*;
+		//	'context' ownedSignature=TemplateSignatureCS? ownedPathName=PathNameCS
+		//	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')' ':' ownedType=TypeExpCS? ('pre'
+		//	ownedPreconditions+=ConstraintCS | 'post' ownedPostconditions+=ConstraintCS | 'body' UnrestrictedName? ':'
+		//	ownedBodies+=SpecificationCS)*;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'context' ownedSignature=TemplateSignatureCS? ownedPathName=PathNameCS '(' (ownedParameters+=ParameterCS (','
@@ -1078,15 +1082,18 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLibraryKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 
 		//UnrestrictedName:
-		//	EssentialOCLUnrestrictedName //| 'body'
+		//	EssentialOCLUnrestrictedName
+		//	//| 'body'
 		// //| 'context'
 		// //| 'def'
 		// //| 'derive'
 		// //|	'endpackage'
-		// | 'import' |
-		//	'include' //| 'init'
+		// | 'import'
+		//	| 'include'
+		//	//| 'init'
 		// //| 'inv'
-		// | 'library' //|	'package'
+		// | 'library'
+		//	//|	'package'
 		// //|	'post'
 		// //|	'pre'
 		// //|	'static'
@@ -1185,7 +1192,15 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOclVoidKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
 
 		//PrimitiveTypeIdentifier:
-		//	'Boolean' | 'Integer' | 'Real' | 'String' | 'UnlimitedNatural' | 'OclAny' | 'OclInvalid' | 'OclMessage' | 'OclState'
+		//	'Boolean'
+		//	| 'Integer'
+		//	| 'Real'
+		//	| 'String'
+		//	| 'UnlimitedNatural'
+		//	| 'OclAny'
+		//	| 'OclInvalid'
+		//	| 'OclMessage'
+		//	| 'OclState'
 		//	| 'OclVoid';
 		@Override public ParserRule getRule() { return rule; }
 
@@ -1353,8 +1368,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ClassifierContextDeclCS:
-	//	'context' ownedSignature=TemplateSignatureCS? selfName=UnrestrictedName? ownedPathName=PathNameCS ('inv'
-	//	ownedInvariants+=ConstraintCS | ownedDefinitions+=DefCS)+;
+	//	'context' ownedSignature=TemplateSignatureCS? selfName=UnrestrictedName?
+	//	ownedPathName=PathNameCS ('inv' ownedInvariants+=ConstraintCS | ownedDefinitions+=DefCS)+;
 	public ClassifierContextDeclCSElements getClassifierContextDeclCSAccess() {
 		return pClassifierContextDeclCS;
 	}
@@ -1385,7 +1400,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///*
 	// * A Context declaration can be a Classifier, Operation of Property Context declaration.
 	// */ ContextDeclCS:
-	//	PropertyContextDeclCS | ClassifierContextDeclCS | OperationContextDeclCS;
+	//	PropertyContextDeclCS
+	//	| ClassifierContextDeclCS
+	//	| OperationContextDeclCS;
 	public ContextDeclCSElements getContextDeclCSAccess() {
 		return pContextDeclCS;
 	}
@@ -1417,9 +1434,10 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	// * For compatibility with invariants the definition may have a name that is never used.
 	// */
 	//DefOperationCS:
-	//	isStatic?='static'? 'def' UnrestrictedName? ':' ownedSignature=TemplateSignatureCS? name=UnrestrictedName '('
-	//	(ownedParameters+=DefParameterCS (',' ownedParameters+=DefParameterCS)*)? ')' ':' ownedType=TypeExpCS? '='
-	//	ownedSpecification=SpecificationCS;
+	//	isStatic?='static'? 'def' UnrestrictedName? ':' ownedSignature=TemplateSignatureCS?
+	//	name=UnrestrictedName '(' (ownedParameters+=DefParameterCS (',' ownedParameters+=DefParameterCS)*)? ')' ':'
+	//	ownedType=TypeExpCS?
+	//	'=' ownedSpecification=SpecificationCS;
 	public DefOperationCSElements getDefOperationCSAccess() {
 		return pDefOperationCS;
 	}
@@ -1449,8 +1467,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	// * For compatibility with invariants the definition may have a name that is never used.
 	// */
 	//DefPropertyCS:
-	//	isStatic?='static'? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS '='
-	//	ownedSpecification=SpecificationCS;
+	//	isStatic?='static'? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS
+	//	'=' ownedSpecification=SpecificationCS;
 	public DefPropertyCSElements getDefPropertyCSAccess() {
 		return pDefPropertyCS;
 	}
@@ -1486,9 +1504,10 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	// * For compatibility with invariants the body expression may have a name that is never used.
 	// */
 	//OperationContextDeclCS:
-	//	'context' ownedSignature=TemplateSignatureCS? ownedPathName=PathNameCS '(' (ownedParameters+=ParameterCS (','
-	//	ownedParameters+=ParameterCS)*)? ')' ':' ownedType=TypeExpCS? ('pre' ownedPreconditions+=ConstraintCS | 'post'
-	//	ownedPostconditions+=ConstraintCS | 'body' UnrestrictedName? ':' ownedBodies+=SpecificationCS)*;
+	//	'context' ownedSignature=TemplateSignatureCS? ownedPathName=PathNameCS
+	//	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')' ':' ownedType=TypeExpCS? ('pre'
+	//	ownedPreconditions+=ConstraintCS | 'post' ownedPostconditions+=ConstraintCS | 'body' UnrestrictedName? ':'
+	//	ownedBodies+=SpecificationCS)*;
 	public OperationContextDeclCSElements getOperationContextDeclCSAccess() {
 		return pOperationContextDeclCS;
 	}
@@ -1588,15 +1607,18 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UnrestrictedName:
-	//	EssentialOCLUnrestrictedName //| 'body'
+	//	EssentialOCLUnrestrictedName
+	//	//| 'body'
 	// //| 'context'
 	// //| 'def'
 	// //| 'derive'
 	// //|	'endpackage'
-	// | 'import' |
-	//	'include' //| 'init'
+	// | 'import'
+	//	| 'include'
+	//	//| 'init'
 	// //| 'inv'
-	// | 'library' //|	'package'
+	// | 'library'
+	//	//|	'package'
 	// //|	'post'
 	// //|	'pre'
 	// //|	'static'
@@ -1635,7 +1657,15 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrimitiveTypeIdentifier:
-	//	'Boolean' | 'Integer' | 'Real' | 'String' | 'UnlimitedNatural' | 'OclAny' | 'OclInvalid' | 'OclMessage' | 'OclState'
+	//	'Boolean'
+	//	| 'Integer'
+	//	| 'Real'
+	//	| 'String'
+	//	| 'UnlimitedNatural'
+	//	| 'OclAny'
+	//	| 'OclInvalid'
+	//	| 'OclMessage'
+	//	| 'OclState'
 	//	| 'OclVoid';
 	public PrimitiveTypeIdentifierElements getPrimitiveTypeIdentifierAccess() {
 		return pPrimitiveTypeIdentifier;
@@ -1658,8 +1688,22 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLReservedKeyword:
-	//	'and' | 'and2' | 'else' | 'endif' | 'if' | 'implies' | 'implies2' | 'in' | 'let' | 'not' | 'not2' | 'or' | 'or2' |
-	//	'then' | 'xor' | 'xor2';
+	//	'and'
+	//	| 'and2'
+	//	| 'else'
+	//	| 'endif'
+	//	| 'if'
+	//	| 'implies'
+	//	| 'implies2'
+	//	| 'in'
+	//	| 'let'
+	//	| 'not'
+	//	| 'not2'
+	//	| 'or'
+	//	| 'or2'
+	//	| 'then'
+	//	| 'xor'
+	//	| 'xor2';
 	public EssentialOCLGrammarAccess.EssentialOCLReservedKeywordElements getEssentialOCLReservedKeywordAccess() {
 		return gaEssentialOCL.getEssentialOCLReservedKeywordAccess();
 	}
@@ -1750,7 +1794,11 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLUnreservedName:
-	//	super::UnrestrictedName | CollectionTypeIdentifier | super::PrimitiveTypeIdentifier | 'Map' | 'Tuple';
+	//	super::UnrestrictedName
+	//	| CollectionTypeIdentifier
+	//	| super::PrimitiveTypeIdentifier
+	//	| 'Map'
+	//	| 'Tuple';
 	public EssentialOCLGrammarAccess.EssentialOCLUnreservedNameElements getEssentialOCLUnreservedNameAccess() {
 		return gaEssentialOCL.getEssentialOCLUnreservedNameAccess();
 	}
@@ -1811,7 +1859,11 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CollectionTypeIdentifier:
-	//	'Set' | 'Bag' | 'Sequence' | 'Collection' | 'OrderedSet';
+	//	'Set'
+	//	| 'Bag'
+	//	| 'Sequence'
+	//	| 'Collection'
+	//	| 'OrderedSet';
 	public EssentialOCLGrammarAccess.CollectionTypeIdentifierElements getCollectionTypeIdentifierAccess() {
 		return gaEssentialOCL.getCollectionTypeIdentifierAccess();
 	}
@@ -1866,7 +1918,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	////---------------------------------------------------------------------
 	// CollectionLiteralExpCS:
-	//	ownedType=CollectionTypeCS '{' (ownedParts+=CollectionLiteralPartCS (',' ownedParts+=CollectionLiteralPartCS)*)? '}';
+	//	ownedType=CollectionTypeCS
+	//	'{' (ownedParts+=CollectionLiteralPartCS (',' ownedParts+=CollectionLiteralPartCS)*)?
+	//	'}';
 	public EssentialOCLGrammarAccess.CollectionLiteralExpCSElements getCollectionLiteralExpCSAccess() {
 		return gaEssentialOCL.getCollectionLiteralExpCSAccess();
 	}
@@ -1886,8 +1940,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CollectionPatternCS:
-	//	ownedType=CollectionTypeCS '{' (ownedParts+=PatternExpCS (',' ownedParts+=PatternExpCS)* ('++'
-	//	restVariableName=Identifier))? '}';
+	//	ownedType=CollectionTypeCS
+	//	'{' (ownedParts+=PatternExpCS (',' ownedParts+=PatternExpCS)* ('++' restVariableName=Identifier))?
+	//	'}';
 	public EssentialOCLGrammarAccess.CollectionPatternCSElements getCollectionPatternCSAccess() {
 		return gaEssentialOCL.getCollectionPatternCSAccess();
 	}
@@ -1948,8 +2003,12 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrimitiveLiteralExpCS:
-	//	NumberLiteralExpCS | StringLiteralExpCS | BooleanLiteralExpCS | UnlimitedNaturalLiteralExpCS | InvalidLiteralExpCS |
-	//	NullLiteralExpCS;
+	//	NumberLiteralExpCS
+	//	| StringLiteralExpCS
+	//	| BooleanLiteralExpCS
+	//	| UnlimitedNaturalLiteralExpCS
+	//	| InvalidLiteralExpCS
+	//	| NullLiteralExpCS;
 	public EssentialOCLGrammarAccess.PrimitiveLiteralExpCSElements getPrimitiveLiteralExpCSAccess() {
 		return gaEssentialOCL.getPrimitiveLiteralExpCSAccess();
 	}
@@ -1999,7 +2058,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanLiteralExpCS:
-	//	symbol='true' | symbol='false';
+	//	symbol='true'
+	//	| symbol='false';
 	public EssentialOCLGrammarAccess.BooleanLiteralExpCSElements getBooleanLiteralExpCSAccess() {
 		return gaEssentialOCL.getBooleanLiteralExpCSAccess();
 	}
@@ -2039,7 +2099,10 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeLiteralCS base::TypedRefCS:
-	//	PrimitiveTypeCS | CollectionTypeCS | MapTypeCS | TupleTypeCS;
+	//	PrimitiveTypeCS
+	//	| CollectionTypeCS
+	//	| MapTypeCS
+	//	| TupleTypeCS;
 	public EssentialOCLGrammarAccess.TypeLiteralCSElements getTypeLiteralCSAccess() {
 		return gaEssentialOCL.getTypeLiteralCSAccess();
 	}
@@ -2148,8 +2211,16 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	///* A primary expression identifies the basic expressions from which more complex expressions may be constructed. */
 	//PrimaryExpCS ExpCS:
-	//	NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | MapLiteralExpCS |
-	//	CollectionLiteralExpCS | LambdaLiteralExpCS | TypeLiteralExpCS | NameExpCS;
+	//	NestedExpCS
+	//	| IfExpCS
+	//	| SelfExpCS
+	//	| PrimitiveLiteralExpCS
+	//	| TupleLiteralExpCS
+	//	| MapLiteralExpCS
+	//	| CollectionLiteralExpCS
+	//	| LambdaLiteralExpCS
+	//	| TypeLiteralExpCS
+	//	| NameExpCS;
 	public EssentialOCLGrammarAccess.PrimaryExpCSElements getPrimaryExpCSAccess() {
 		return gaEssentialOCL.getPrimaryExpCSAccess();
 	}
@@ -2211,7 +2282,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	ownedNameExpression=super::NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
 	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
 	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
-	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS;
+	//	ownedInitExpression=ExpCS)?
+	//	| ':' ownedType=TypeExpCS;
 	public EssentialOCLGrammarAccess.NavigatingArgCSElements getNavigatingArgCSAccess() {
 		return gaEssentialOCL.getNavigatingArgCSAccess();
 	}
@@ -2274,9 +2346,12 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IfExpCS:
-	//	'if' ownedCondition=(ExpCS | PatternExpCS) 'then' ownedThenExpression=ExpCS //	ifThenExpressions+=IfThenExpCS
-	//
-	//	ownedIfThenExpressions+=ElseIfThenExpCS* 'else' ownedElseExpression=ExpCS 'endif';
+	//	'if' ownedCondition=(ExpCS | PatternExpCS)
+	//	'then' ownedThenExpression=ExpCS
+	//	//	ifThenExpressions+=IfThenExpCS
+	// ownedIfThenExpressions+=ElseIfThenExpCS*
+	//	'else' ownedElseExpression=ExpCS
+	//	'endif';
 	public EssentialOCLGrammarAccess.IfExpCSElements getIfExpCSAccess() {
 		return gaEssentialOCL.getIfExpCSAccess();
 	}
@@ -2291,7 +2366,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	// //;
 	// ElseIfThenExpCS
 	//IfThenExpCS:
-	//	'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS;
+	//	'elseif' ownedCondition=ExpCS
+	//	'then' ownedThenExpression=ExpCS;
 	public EssentialOCLGrammarAccess.ElseIfThenExpCSElements getElseIfThenExpCSAccess() {
 		return gaEssentialOCL.getElseIfThenExpCSAccess();
 	}
@@ -2301,7 +2377,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LetExpCS:
-	//	'let' ownedVariables+=LetVariableCS (',' ownedVariables+=LetVariableCS)* 'in' ownedInExpression=ExpCS;
+	//	'let' ownedVariables+=LetVariableCS (',' ownedVariables+=LetVariableCS)*
+	//	'in' ownedInExpression=ExpCS;
 	public EssentialOCLGrammarAccess.LetExpCSElements getLetExpCSAccess() {
 		return gaEssentialOCL.getLetExpCSAccess();
 	}

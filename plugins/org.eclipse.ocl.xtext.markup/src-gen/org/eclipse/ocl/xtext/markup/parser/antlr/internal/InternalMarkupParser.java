@@ -1,19 +1,24 @@
 package org.eclipse.ocl.xtext.markup.parser.antlr.internal;
 
-import org.antlr.runtime.BaseRecognizer;
-import org.antlr.runtime.BitSet;
-import org.antlr.runtime.DFA;
-import org.antlr.runtime.EarlyExitException;
-import org.antlr.runtime.IntStream;
-import org.antlr.runtime.NoViableAltException;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.RecognizerSharedState;
-import org.antlr.runtime.Token;
-import org.antlr.runtime.TokenStream;
+import org.eclipse.xtext.*;
+import org.eclipse.xtext.parser.*;
+import org.eclipse.xtext.parser.impl.*;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser;
-import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
 import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
+import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
+
+
+
+import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 /*******************************************************************************
  * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -25,7 +30,7 @@ import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 @SuppressWarnings("all")
-public class InternalMarkupParser extends CompatibilityAbstractInternalAntlrParser {
+public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_NL", "RULE_WORD", "RULE_WS", "RULE_NUMBER", "RULE_LETTER", "RULE_ESCAPED", "RULE_VERTICAL_WS", "RULE_HORIZONTAL_WS", "RULE_ANY_OTHER", "'b'", "'e'", "'bullet'", "'figure'", "'figureRef'", "'footnote'", "'heading'", "'oclCode'", "'oclEval'", "'oclText'", "':'", "'['", "']'", "'#'", "','"
     };
@@ -71,10 +76,8 @@ public class InternalMarkupParser extends CompatibilityAbstractInternalAntlrPars
         }
 
 
-    @Override
-	public String[] getTokenNames() { return InternalMarkupParser.tokenNames; }
-    @Override
-	public String getGrammarFileName() { return "InternalMarkup.g"; }
+    public String[] getTokenNames() { return InternalMarkupParser.tokenNames; }
+    public String getGrammarFileName() { return "InternalMarkup.g"; }
 
 
 
@@ -3939,12 +3942,10 @@ public class InternalMarkupParser extends CompatibilityAbstractInternalAntlrPars
             this.special = dfa_5;
             this.transition = dfa_6;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "222:1: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -4146,12 +4147,10 @@ public class InternalMarkupParser extends CompatibilityAbstractInternalAntlrPars
             this.special = dfa_12;
             this.transition = dfa_13;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "()+ loopback of 1162:2: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {

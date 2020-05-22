@@ -1,19 +1,24 @@
 package org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal;
 
-import org.antlr.runtime.BaseRecognizer;
-import org.antlr.runtime.BitSet;
-import org.antlr.runtime.DFA;
-import org.antlr.runtime.EarlyExitException;
-import org.antlr.runtime.IntStream;
-import org.antlr.runtime.NoViableAltException;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.RecognizerSharedState;
-import org.antlr.runtime.Token;
-import org.antlr.runtime.TokenStream;
+import org.eclipse.xtext.*;
+import org.eclipse.xtext.parser.*;
+import org.eclipse.xtext.parser.impl.*;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser;
-import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
 import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
+import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
+
+
+
+import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 /*******************************************************************************
  * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -25,7 +30,7 @@ import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 @SuppressWarnings("all")
-public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlrParser {
+public class InternalOCLinEcoreParser extends org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_SINGLE_QUOTED_STRING", "RULE_ML_SINGLE_QUOTED_STRING", "RULE_UNQUOTED_STRING", "RULE_SIMPLE_ID", "RULE_ESCAPED_ID", "RULE_ESCAPED_CHARACTER", "RULE_LETTER_CHARACTER", "RULE_DOUBLE_QUOTED_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "'-'", "'abstract'", "'attribute'", "'body'", "'callable'", "'class'", "'composes'", "'datatype'", "'definition'", "'derivation'", "'derived'", "'enum'", "'extends'", "'id'", "'import'", "'initial'", "'interface'", "'key'", "'library'", "'operation'", "'ordered'", "'package'", "'postcondition'", "'precondition'", "'primitive'", "'property'", "'readonly'", "'reference'", "'resolve'", "'static'", "'throws'", "'transient'", "'unique'", "'unsettable'", "'volatile'", "'invariant'", "'('", "')'", "':'", "';'", "'annotation'", "','", "'{'", "'}'", "'='", "'!derived'", "'!id'", "'!ordered'", "'!readonly'", "'!transient'", "'!unique'", "'!unsettable'", "'!volatile'", "'serializable'", "'!serializable'", "'documentation'", "'literal'", "'::*'", "'opposite'", "'#'", "'!composes'", "'!resolve'", "'sysml'", "'<'", "'>'", "'not'", "'not2'", "'*'", "'/'", "'+'", "'>='", "'<='", "'<>'", "'and'", "'and2'", "'implies'", "'implies2'", "'or'", "'or2'", "'xor'", "'xor2'", "'.'", "'->'", "'?.'", "'?->'", "'Map'", "'Tuple'", "'::'", "'Boolean'", "'Integer'", "'Real'", "'String'", "'UnlimitedNatural'", "'OclAny'", "'OclInvalid'", "'OclVoid'", "'Set'", "'Bag'", "'Sequence'", "'Collection'", "'OrderedSet'", "'..'", "'++'", "'Lambda'", "'<-'", "'true'", "'false'", "'invalid'", "'null'", "'@'", "'pre'", "'['", "']'", "'in'", "'|'", "'if'", "'then'", "'else'", "'endif'", "'elseif'", "'let'", "'self'", "'|?'", "'|1'", "'?'", "'&&'"
     };
@@ -184,10 +189,8 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
         }
 
 
-    @Override
-	public String[] getTokenNames() { return InternalOCLinEcoreParser.tokenNames; }
-    @Override
-	public String getGrammarFileName() { return "InternalOCLinEcore.g"; }
+    public String[] getTokenNames() { return InternalOCLinEcoreParser.tokenNames; }
+    public String getGrammarFileName() { return "InternalOCLinEcore.g"; }
 
 
 
@@ -31450,8 +31453,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_5;
             this.transition = dfa_6;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "2363:2: ( ( (lv_name_2_0= ruleUnrestrictedName ) ) otherlv_3= ':' )?";
         }
     }
@@ -31502,8 +31504,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_11;
             this.transition = dfa_12;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "2443:1: (this_ClassCS_0= ruleClassCS | this_EnumerationLiteralCS_1= ruleEnumerationLiteralCS | this_OperationCS_2= ruleOperationCS | this_PackageCS_3= rulePackageCS | this_StructuralFeatureCS_4= ruleStructuralFeatureCS )";
         }
     }
@@ -31545,8 +31546,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_17;
             this.transition = dfa_18;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "()* loopback of 4381:1: ( ( (lv_ownedAnnotations_14_0= ruleAnnotationElementCS ) ) | ( (lv_ownedOperations_15_0= ruleOperationCS ) ) | ( (lv_ownedProperties_16_0= ruleStructuralFeatureCS ) ) | ( (lv_ownedConstraints_17_0= ruleInvariantConstraintCS ) ) )*";
         }
     }
@@ -31622,8 +31622,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_5;
             this.transition = dfa_23;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "6221:1: ( ( ( (lv_ownedExpression_0_0= ruleExpCS ) ) (otherlv_1= '..' ( (lv_ownedLastExpression_2_0= ruleExpCS ) ) )? ) | ( (lv_ownedExpression_3_0= rulePatternExpCS ) ) )";
         }
     }
@@ -31691,8 +31690,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_5;
             this.transition = dfa_24;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "6434:1: (lv_ownedInitExpression_2_1= ruleExpCS | lv_ownedInitExpression_2_2= rulePatternExpCS )";
         }
     }
@@ -31785,12 +31783,10 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_29;
             this.transition = dfa_30;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "7499:1: (this_TypeNameExpCS_0= ruleTypeNameExpCS | this_TypeLiteralCS_1= ruleTypeLiteralCS | this_CollectionPatternCS_2= ruleCollectionPatternCS )";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -31980,12 +31976,10 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_35;
             this.transition = dfa_36;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "7609:1: ( (this_PrefixedPrimaryExpCS_0= rulePrefixedPrimaryExpCS ( () ( (lv_name_2_0= ruleBinaryOperatorName ) ) ( (lv_ownedRight_3_0= ruleExpCS ) ) )? ) | this_PrefixedLetExpCS_4= rulePrefixedLetExpCS )";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -32144,12 +32138,10 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_41;
             this.transition = dfa_42;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "7858:1: (this_NestedExpCS_0= ruleNestedExpCS | this_IfExpCS_1= ruleIfExpCS | this_SelfExpCS_2= ruleSelfExpCS | this_PrimitiveLiteralExpCS_3= rulePrimitiveLiteralExpCS | this_TupleLiteralExpCS_4= ruleTupleLiteralExpCS | this_MapLiteralExpCS_5= ruleMapLiteralExpCS | this_CollectionLiteralExpCS_6= ruleCollectionLiteralExpCS | this_LambdaLiteralExpCS_7= ruleLambdaLiteralExpCS | this_TypeLiteralExpCS_8= ruleTypeLiteralExpCS | this_NameExpCS_9= ruleNameExpCS )";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -32307,12 +32299,10 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_48;
             this.transition = dfa_49;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "8392:2: ( (otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )? ) | (otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )? ) | ( (otherlv_11= ':' ( (lv_ownedType_12_0= ruleTypeExpCS ) ) )? (otherlv_13= '<-' ( (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS ) ) )? otherlv_15= 'in' ( (lv_ownedInitExpression_16_0= ruleExpCS ) ) ) )?";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -32368,12 +32358,10 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_48;
             this.transition = dfa_49;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "8745:2: ( (otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )? ) | (otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )? ) | ( (otherlv_12= ':' ( (lv_ownedType_13_0= ruleTypeExpCS ) ) )? (otherlv_14= '<-' ( (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS ) ) )? otherlv_16= 'in' ( (lv_ownedInitExpression_17_0= ruleExpCS ) ) ) )?";
         }
-        @Override
-		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -32481,8 +32469,7 @@ public class InternalOCLinEcoreParser extends CompatibilityAbstractInternalAntlr
             this.special = dfa_5;
             this.transition = dfa_51;
         }
-        @Override
-		public String getDescription() {
+        public String getDescription() {
             return "9142:1: (lv_ownedCondition_1_1= ruleExpCS | lv_ownedCondition_1_2= rulePatternExpCS )";
         }
     }
