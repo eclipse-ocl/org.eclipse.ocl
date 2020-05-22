@@ -171,6 +171,9 @@ Workflow {
 		javaPackageName = "${oclstdlibProjectName}"
 		grammarFileStem = "OCLstdlib"
 	}
+	component = InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${oclstdlibRuntimeProject}/src-gen/org/eclipse/ocl/xtext/oclstdlib/parser/antlr/internal/InternalOCLstdlibParser.java"
+	}
 	component = ConvertToUnixLineEndings {
 		directory = "${oclstdlibRuntimeProject}/src-gen"
 	}

@@ -163,6 +163,9 @@ Workflow {
 		javaPackageName = "${completeOCLprojectName}"
 		grammarFileStem = "CompleteOCL"
 	}
+	component = InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${completeOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/completeocl/parser/antlr/internal/InternalCompleteOCLParser.java"
+	}
 	component = ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}/src-gen"
 	}

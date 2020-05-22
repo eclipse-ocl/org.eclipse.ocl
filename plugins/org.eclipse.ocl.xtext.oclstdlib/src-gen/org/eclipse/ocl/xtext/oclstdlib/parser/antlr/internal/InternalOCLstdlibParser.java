@@ -1,24 +1,19 @@
 package org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal;
 
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.parser.*;
-import org.eclipse.xtext.parser.impl.*;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.antlr.runtime.BaseRecognizer;
+import org.antlr.runtime.BitSet;
+import org.antlr.runtime.DFA;
+import org.antlr.runtime.EarlyExitException;
+import org.antlr.runtime.IntStream;
+import org.antlr.runtime.NoViableAltException;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.RecognizerSharedState;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.TokenStream;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
-import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
+import org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser;
 import org.eclipse.ocl.xtext.oclstdlib.services.OCLstdlibGrammarAccess;
-
-
-
-import org.antlr.runtime.*;
-import java.util.Stack;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
 /*******************************************************************************
  * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -30,7 +25,7 @@ import java.util.HashMap;
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 @SuppressWarnings("all")
-public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
+public class InternalOCLstdlibParser extends CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_DOUBLE_QUOTED_STRING", "RULE_SINGLE_QUOTED_STRING", "RULE_ML_SINGLE_QUOTED_STRING", "RULE_SIMPLE_ID", "RULE_ESCAPED_ID", "RULE_INT", "RULE_ESCAPED_CHARACTER", "RULE_LETTER_CHARACTER", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'abstract'", "'annotation'", "'conformsTo'", "'documentation'", "'extends'", "'import'", "'inv'", "'invalidating'", "'iteration'", "'left'", "'library'", "'operation'", "'opposite'", "'package'", "'post'", "'pre'", "'precedence'", "'property'", "'right'", "'static'", "'type'", "'validating'", "'Lambda'", "'Map'", "'Tuple'", "'::'", "':'", "'('", "','", "')'", "'{'", "'}'", "'='", "'::*'", "'coercion'", "'=>'", "'|'", "'body'", "'typeof'", "'and'", "'and2'", "'else'", "'endif'", "'if'", "'implies'", "'implies2'", "'in'", "'let'", "'not'", "'not2'", "'or'", "'or2'", "'then'", "'xor'", "'xor2'", "'-'", "'*'", "'/'", "'+'", "'>'", "'<'", "'>='", "'<='", "'<>'", "'.'", "'->'", "'?.'", "'?->'", "'Boolean'", "'Integer'", "'Real'", "'String'", "'UnlimitedNatural'", "'OclAny'", "'OclInvalid'", "'OclVoid'", "'Set'", "'Bag'", "'Sequence'", "'Collection'", "'OrderedSet'", "'..'", "'++'", "'<-'", "'true'", "'false'", "'invalid'", "'null'", "'@'", "'['", "']'", "'elseif'", "'self'", "'|?'", "'|1'", "'?'", "'&&'"
     };
@@ -159,8 +154,10 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
         }
 
 
-    public String[] getTokenNames() { return InternalOCLstdlibParser.tokenNames; }
-    public String getGrammarFileName() { return "InternalOCLstdlib.g"; }
+    @Override
+	public String[] getTokenNames() { return InternalOCLstdlibParser.tokenNames; }
+    @Override
+	public String getGrammarFileName() { return "InternalOCLstdlib.g"; }
 
 
 
@@ -28118,7 +28115,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_6;
             this.transition = dfa_7;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "1311:1: ( ( (lv_name_1_0= ruleIdentifier ) ) otherlv_2= ':' )?";
         }
     }
@@ -28178,7 +28176,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_12;
             this.transition = dfa_13;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "1677:2: ( (lv_ownedSignature_2_0= ruleTemplateSignatureCS ) )?";
         }
     }
@@ -28231,7 +28230,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_12;
             this.transition = dfa_16;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "2331:2: ( (lv_ownedSignature_3_0= ruleTemplateSignatureCS ) )?";
         }
     }
@@ -28287,7 +28287,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_6;
             this.transition = dfa_21;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "5188:1: ( ( ( (lv_ownedExpression_0_0= ruleExpCS ) ) (otherlv_1= '..' ( (lv_ownedLastExpression_2_0= ruleExpCS ) ) )? ) | ( (lv_ownedExpression_3_0= rulePatternExpCS ) ) )";
         }
     }
@@ -28335,7 +28336,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_6;
             this.transition = dfa_22;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "5401:1: (lv_ownedInitExpression_2_1= ruleExpCS | lv_ownedInitExpression_2_2= rulePatternExpCS )";
         }
     }
@@ -28408,10 +28410,12 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_27;
             this.transition = dfa_28;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "6466:1: (this_TypeNameExpCS_0= ruleTypeNameExpCS | this_TypeLiteralCS_1= ruleTypeLiteralCS | this_CollectionPatternCS_2= ruleCollectionPatternCS )";
         }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        @Override
+		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -28581,10 +28585,12 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_33;
             this.transition = dfa_34;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "6576:1: ( (this_PrefixedPrimaryExpCS_0= rulePrefixedPrimaryExpCS ( () ( (lv_name_2_0= ruleBinaryOperatorName ) ) ( (lv_ownedRight_3_0= ruleExpCS ) ) )? ) | this_PrefixedLetExpCS_4= rulePrefixedLetExpCS )";
         }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        @Override
+		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -28723,10 +28729,12 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_39;
             this.transition = dfa_40;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "6825:1: (this_NestedExpCS_0= ruleNestedExpCS | this_IfExpCS_1= ruleIfExpCS | this_SelfExpCS_2= ruleSelfExpCS | this_PrimitiveLiteralExpCS_3= rulePrimitiveLiteralExpCS | this_TupleLiteralExpCS_4= ruleTupleLiteralExpCS | this_MapLiteralExpCS_5= ruleMapLiteralExpCS | this_CollectionLiteralExpCS_6= ruleCollectionLiteralExpCS | this_LambdaLiteralExpCS_7= ruleLambdaLiteralExpCS | this_TypeLiteralExpCS_8= ruleTypeLiteralExpCS | this_NameExpCS_9= ruleNameExpCS )";
         }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        @Override
+		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -28884,10 +28892,12 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_46;
             this.transition = dfa_47;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "7359:2: ( (otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )? ) | (otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )? ) | ( (otherlv_11= ':' ( (lv_ownedType_12_0= ruleTypeExpCS ) ) )? (otherlv_13= '<-' ( (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS ) ) )? otherlv_15= 'in' ( (lv_ownedInitExpression_16_0= ruleExpCS ) ) ) )?";
         }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        @Override
+		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -28943,10 +28953,12 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_46;
             this.transition = dfa_47;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "7712:2: ( (otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )? ) | (otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )? ) | ( (otherlv_12= ':' ( (lv_ownedType_13_0= ruleTypeExpCS ) ) )? (otherlv_14= '<-' ( (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS ) ) )? otherlv_16= 'in' ( (lv_ownedInitExpression_17_0= ruleExpCS ) ) ) )?";
         }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+        @Override
+		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
@@ -29032,7 +29044,8 @@ public class InternalOCLstdlibParser extends AbstractInternalAntlrParser {
             this.special = dfa_6;
             this.transition = dfa_48;
         }
-        public String getDescription() {
+        @Override
+		public String getDescription() {
             return "8109:1: (lv_ownedCondition_1_1= ruleExpCS | lv_ownedCondition_1_2= rulePatternExpCS )";
         }
     }

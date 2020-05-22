@@ -166,6 +166,9 @@ Workflow {
 		javaPackageName = "${essentialOCLprojectName}"
 		grammarFileStem = "EssentialOCL"
 	}
+	component = InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${essentialOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/essentialocl/parser/antlr/internal/InternalEssentialOCLParser.java"
+	}
 	component = ConvertToUnixLineEndings {
 		directory = "${essentialOCLruntimeProject}/src-gen"
 	}
