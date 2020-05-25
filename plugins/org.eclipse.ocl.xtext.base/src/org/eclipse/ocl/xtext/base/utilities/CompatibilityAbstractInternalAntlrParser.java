@@ -39,7 +39,7 @@ public abstract class CompatibilityAbstractInternalAntlrParser extends AbstractI
  		super.setWithLastConsumed(_this, feature, value, lexerRule);
 	}
 
-	@Override		// this is an Override on Xtext >= 2.22, but not on Xtext < 2.22
+	// @Override -- this is an Override on Xtext >= 2.22, but not on Xtext < 2.22
 	protected void setWithLastConsumed(EObject _this, String feature, boolean value, String lexerRule) {
 		super.setWithLastConsumed(_this, feature, Boolean.valueOf(value), lexerRule);
 	}
