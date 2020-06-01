@@ -91,11 +91,11 @@ then
     fi
   popd
   
-  if [ ! -d "${pdfdocFolder}" ]
+  if [ ! -d "${pdfdocFolder}/${PUBLISH__VERSION}" ]
   then
-    mkdir ${pdfdocFolder}
+    mkdir -p ${pdfdocFolder}/${PUBLISH__VERSION}
   fi
-  pushd ${pdfdocFolder}
+  pushd ${pdfdocFolder}/${PUBLISH__VERSION}
     cp ~/pdfdoc.zip new${pdfName}
     if [ $? -eq 0 ]
     then
