@@ -38,29 +38,40 @@ cd ~/downloads/modeling/mdt/ocl/updates/milestones
 ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.10.0
 
 
+-- Drops maintenance -- https://download.eclipse.org/modeling/mdt/ocl/downloads/drops
+ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.12.0
+ssh genie.ocl@projects-storage.eclipse.org rm -rf  /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.12.0/N201909*
+
+-- Updates maintenance -- https://download.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org pwd ; cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; pwd ; ls -la
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases/6.12.0
+
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly/6.12.0
 
 
-cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim/
-/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.9.0
-rm -rf 6.9.0
+-- Drops archiving -- https://archive.eclipse.org/modeling/mdt/ocl/downloads/drops ---- and edit GIT\mdt\downloads\extras-ocl.php
+ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops ; mv 6.12.0 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
 
-cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases/
-/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.3.0
-mv 6.3.0 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
-cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases/
-/shared/common/apache-ant-1.9.6/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.3.0
+-- Updates archiving -- https://archive.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases/zz*
 
-
-Downloads are accessible at
-cd ~/downloads/modeling/mdt/ocl/downloads/drops/6.10.0
-
-Archives are accessible at
-cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
-cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; mv 6.12.0 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.12.0
 
 
-cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops
-mv 5.0.5 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/downloads/drops
+-- Doc maintenance -- https://download.eclipse.org/ocl/doc/
+ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/download.eclipse.org/ocl/doc/drops/6.12.0
+
+
+
+
+
 
 
 --------
