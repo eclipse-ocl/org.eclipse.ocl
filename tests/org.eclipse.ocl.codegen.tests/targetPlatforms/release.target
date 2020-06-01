@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
+<locations>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/releases/latest"/>
+    <repository location="https://download.eclipse.org/staging/2020-06"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.ocl.master.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.tests.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.examples.tests.feature.group" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/release/latest"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <unit id="com.google.guava" version="0.0.0"/>
+    <unit id="com.google.inject" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+  </location>
+</locations>
+</target>

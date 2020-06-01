@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-   Copyright (c) 2018 Willink Transformations and others.
+   Copyright (c) 2020 Willink Transformations and others.
 
    All rights reserved. This program and the accompanying materials
    are made available under the terms of the Eclipse Public License v2.0
@@ -14,7 +14,7 @@
     <maven>3.0</maven>
   </prerequisites-->
   <groupId>org.eclipse.ocl</groupId>
-  <artifactId>org.eclipse.ocl.standalone.pivot.tests</artifactId>
+  <artifactId>org.eclipse.ocl.codegen.tests</artifactId>
   <version>6.12.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <licenses>
@@ -41,9 +41,9 @@
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
     <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
-    <executionEnvironment>JavaSE-1.8</executionEnvironment>
+    <!--executionEnvironment>J2SE-1.5</executionEnvironment>
     <source-java-version>1.5</source-java-version>
-    <target-java-version>${source-java-version}</target-java-version>
+    <target-java-version>${source-java-version}</target-java-version-->
     <java-source-encoding>UTF-8</java-source-encoding>
     <resource-encoding>UTF-8</resource-encoding>
     <os-jvm-flags/>
@@ -79,11 +79,20 @@
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
-              <artifactId>org.eclipse.ocl.standalone.pivot.tests</artifactId>
-              <version>6.4.0-SNAPSHOT</version>
+              <artifactId>org.eclipse.ocl.codegen.tests</artifactId>
+              <version>6.12.0-SNAPSHOT</version>
               <classifier>targetPlatforms/${targetRelease}</classifier>
             </artifact>
           </target>
+          <dependency-resolution>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>org.eclipse.jdt.annotation</id>
+                <versionRange>[2.0.0,3.0.0)</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
           <environments>
             <environment>
               <os>win32</os>
@@ -109,14 +118,14 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <executions>
           <execution>
-            <id>ecore</id>
+            <id>pivot</id>
             <phase>test</phase>
             <goals>
               <goal>test</goal>
             </goals>
             <configuration>
               <includes>
-                <include>**/StandalonePivotTests.java</include>
+                <include>**/CompatibilityCodegenTests.java</include>
               </includes>
               <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -ea</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
@@ -182,13 +191,33 @@
   </build>
   <profiles>
     <profile>
-      <id>pivot</id>
+      <id>branchTestsLatest</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <buildType></buildType>
-        <targetRelease>pivot</targetRelease>
+        <targetRelease>branchTestsLatest</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>masterLatest</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>masterLatest</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>release</targetRelease>
       </properties>
     </profile>
   </profiles>
