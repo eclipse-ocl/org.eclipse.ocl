@@ -3,7 +3,7 @@ h1. API Reference
 
 h2. Javadoc
 
-The Javadoc for Eclipse OCL 6.4.0 (Photon) APIs may be found by following the "OCL 6.4.0 API Reference":http://download.eclipse.org/ocl/javadoc/6.4.0/ link.
+The Javadoc for Eclipse OCL 2020-06 (6.12.0) APIs may be found by following the "OCL 2020-06 (6.12.0) API Reference":http://download.eclipse.org/ocl/javadoc/6.12.0/ link.
 
 h2. Extension points
 

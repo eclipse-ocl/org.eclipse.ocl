@@ -483,6 +483,15 @@
 <dd>
 <dl>
 <dt>
+<span class="section"><a href="#OOMPH">OOMPH</a></span>
+</dt>
+<dt>
+<span class="section"><a href="#MavenCentralandrepo.eclipse.org">Maven Central and repo.eclipse.org</a></span>
+</dt>
+<dt>
+<span class="section"><a href="#MavenandGradle">Maven and Gradle</a></span>
+</dt>
+<dt>
 <span class="section"><a href="#GenAnnotations">GenModel GenAnnotations</a></span>
 </dt>
 </dl>
@@ -505,7 +514,7 @@
 			<a class="link" href="#GettingStarted" title="Getting Started">Getting Started</a>.
 		</p>
 <p>A PDF version of this documentation is available at 
-			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.6.0/ocl.pdf" target="_new">OCL 6.6.0 Documentation</a>.
+			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.12.0/ocl.pdf" target="_new">OCL 2020-06 (6.12.0) Documentation</a>.
 		</p>
 <div class="section" title="What is OCL?">
 <div class="titlepage">
@@ -762,7 +771,7 @@ assertQueryResults(null,&nbsp;"Set{'b'}",&nbsp;"Set{'a',&nbsp;'b',&nbsp;'c'}&nbs
 </p>
 </div>
 <p>(The null first argument may be a context object.)</p>
-<p>See the org.eclipse.ocl.examples.xtext.tests plugin for further details.</p>
+<p>See the org.eclipse.ocl.xtext.tests plugin for further details.</p>
 </div>
 </div>
 <div class="section" title="Eclipse OCL is Extensible">
@@ -4700,7 +4709,7 @@ in&nbsp;test.substring(start,finish)<br>
 </div>
 <p>The OCL Standard Library Language is used to define the OCL Standard Library, for which *.oclstdlib is the default extension.</p>
 <p>The standard library can be replaced or extended.</p>
-<p>The source for the OCL Standard Library may be found at model/OCL-2.5.oclstdlib in the org.eclipse.ocl.library plugin. </p>
+<p>The source for the OCL Standard Library may be found at model/OCL-2.5.oclstdlib in the org.eclipse.ocl.pivot plugin. </p>
 <div class="section" title="Syntax">
 <div class="titlepage">
 <div>
@@ -4996,7 +5005,7 @@ in&nbsp;test.substring(start,finish)<br>
 <p>
 					
 </p>
-<p>An Operation has a return Type. An infix operation may specify a precedence level. An operation may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryOperation interface. This class is used when evaluating the operation.</p>
+<p>An Operation has a return Type. An infix operation may specify a precedence level. An operation may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryOperation interface. This class is used when evaluating the operation.</p>
 <p>
 						
 </p>
@@ -5074,7 +5083,7 @@ in&nbsp;test.substring(start,finish)<br>
 <p>
 					
 </p>
-<p>An Iteration has a return Type. An Iteration may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryIteration interface. This class is used when evaluating the iteration.</p>
+<p>An Iteration has a return Type. An Iteration may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryIteration interface. This class is used when evaluating the iteration.</p>
 <p>
 						
 </p>
@@ -5210,7 +5219,7 @@ in&nbsp;test.substring(start,finish)<br>
 <p>
 					
 </p>
-<p>A Property may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryProperty interface. This class is used when evaluating the iteration.</p>
+<p>A Property may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryProperty interface. This class is used when evaluating the iteration.</p>
 <p>The content of a Property may comprise Annotations.</p>
 </div>
 <div class="section" title="Specification">
@@ -20923,6 +20932,21 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 					<code class="code">org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.init(ResourceSet)</code> to ensure that all Eclipse and OMG UML namespaces and extensions are registered..
 				</p>
 </div>
+<div class="section" title="Classpath">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Classpath"></a>Classpath</h3>
+</div>
+</div>
+</div>
+<p>A precise Java 5 classpath for the current release may be obtained as a diagnostic output near the end of the console output of the
+
+					<a class="ulink" href="https://ci.eclipse.org/ocl/job/ocl-ecore-standalone/lastBuild/console" target="_new">Jenkins Ecore Classpath</a> or 
+					<a class="ulink" href="https://ci.eclipse.org/ocl/job/ocl-uml-standalone/lastBuild/console" target="_new">Jenkins UML Classpath</a> jobs.
+				</p>
+</div>
 <div class="section" title="Xtext Editors">
 <div class="titlepage">
 <div>
@@ -21064,19 +21088,7 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 <li class="listitem">
 <p>
 					
-<code class="code">org.eclipse.ocl.domain</code>:  the neutral Pivot model interfaces.
-				</p>
-</li>
-<li class="listitem">
-<p>
-					
-<code class="code">org.eclipse.ocl.pivot</code>:  the neutral Pivot model and evaluator.
-				</p>
-</li>
-<li class="listitem">
-<p>
-					
-<code class="code">org.eclipse.ocl.library</code>:  the extensible OCL Stndard Library.
+<code class="code">org.eclipse.ocl.pivot</code>:  the neutral Pivot model, interfaces, Standard Library and evaluator.
 				</p>
 </li>
 <li class="listitem">
@@ -21100,7 +21112,7 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 <li class="listitem">
 <p>
 					
-<code class="code">org.eclipse.ocl.examples.xtext...</code>:  Xtext editors.
+<code class="code">org.eclipse.ocl.xtext...</code>:  Xtext editors.
 				</p>
 </li>
 </ul>
@@ -21417,7 +21429,7 @@ public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;OCLinEcoreEObjectValid
 				
 </p>
 <p>The extract from 
-					<code class="code">/org.eclipse.ocl.library/model/OCL-2.5.oclstdlib</code> shows the declaration of the 
+					<code class="code">/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib</code> shows the declaration of the 
 					<code class="code">Collection</code> type as a templated type with a 
 					<code class="code">T</code> parameter. The 
 					<code class="code">Collection</code> type conformsTo (extends/inherits/generalizes) the 
@@ -21427,7 +21439,7 @@ public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;OCLinEcoreEObjectValid
 <p>The 
 					<code class="code">asSet</code> operation takes no arguments and returns a 
 					<code class="code">Set(T)</code>, a set of the collection template type. The declaration is bound to 
-					<code class="code">org.eclipse.ocl.library.collection.CollectionAsSetOperation</code> which is the Java class name of the implementation.
+					<code class="code">org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation</code> which is the Java class name of the implementation.
 				</p>
 <p>The 
 					<code class="code">exists</code> iteration has two overloads, taking one or two iterators of the collection template type. The iteration body is a lambda expression operating on a collection template element with no additional arguments to return a Boolean value. The iteration also returns a Boolean value. The same Java implementation class is used for both one and two argument forms.
@@ -21457,17 +21469,58 @@ public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;OCLinEcoreEObjectValid
 </div>
 </div>
 <p>If you use Eclipse OCL within Eclipse you should find that the appropriate registrations are provided for you automatically by the plugin registration mechanisms.</p>
-<p>However if you use Eclipse OCL outside Eclipse, for instance in JUnit tests, you must provide the corresponding registrations in your code.</p>
+<p>However if you use Eclipse OCL outside Eclipse, for instance in JUnit tests, you should initialize the appropriate language support using at least one of.</p>
+<div class="literallayout">
+<p>
+<code class="code">org.eclipse.ocl.xtext.completeocl.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CompleteOCLStandaloneSetup.doSetup();&nbsp;&nbsp;//&nbsp;*.ocl<br>
+org.eclipse.ocl.xtext.essentialocl.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;EssentialOCLStandaloneSetup.doSetup();&nbsp;//&nbsp;*.essentialocl<br>
+org.eclipse.ocl.xtext.oclinecore.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OCLinEcoreStandaloneSetup.doSetup();&nbsp;&nbsp;&nbsp;//&nbsp;*.ecore,&nbsp;*.oclinecore<br>
+org.eclipse.ocl.xtext.oclstdlib.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OCLstdlibStandaloneSetup.doSetup();&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;*.oclstdlib<br>
+
+<br>
+
+</code>
+</p>
+</div>
+<p>
+				Failure to initialize language support usually results in one of the following diagnostics.</p>
+<div class="literallayout">
+<p>
+<code class="code">No&nbsp;OCL&nbsp;Standard&nbsp;Library&nbsp;content&nbsp;available<br>
+No&nbsp;'XXX'&nbsp;type&nbsp;in&nbsp;the&nbsp;OCL&nbsp;Standard&nbsp;Library<br>
+
+<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>If you want to use UML models, the optional functionality must be activated.</p>
+<div class="literallayout">
+<p>
+<code class="code">org.eclipse.ocl.pivot.uml.UMLStandaloneSetup.init();&nbsp;							//&nbsp;*.uml<br>
+
+<br>
+
+</code>
+</p>
+</div>
+<p>
+				The following initializations that were once recommended should happen automatically.</p>
 <div class="literallayout">
 <p>
 <code class="code">org.eclipse.ocl.pivot.OCL.initialize(resourceSet);<br>
-org.eclipse.ocl.pivot.uml.UML2AS.initialize(resourceSet);<br>
+org.eclipse.ocl.pivot.uml.internal.es2as.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;UML2AS.initialize(resourceSet);<br>
 org.eclipse.ocl.pivot.model.OCLstdlib.install();<br>
-org.eclipse.ocl.pivot.delegate.OCLDelegateDomain.initialize(resourceSet);<br>
-org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup.doSetup();<br>
-org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup.doSetup();<br>
-org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup.doSetup();<br>
-org.eclipse.ocl.domain.utilities.StandaloneProjectMap.getAdapter(resourceSet);<br>
+org.eclipse.ocl.pivot.internal.delegate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OCLDelegateDomain.initialize(resourceSet);<br>
+org.eclipse.ocl.pivot.internal.resource.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;StandaloneProjectMap.getAdapter(resourceSet);<br>
 
 <br>
 
@@ -21491,7 +21544,7 @@ org.eclipse.ocl.domain.utilities.StandaloneProjectMap.getAdapter(resourceSet);<b
 				</p>
 <p>If *.uml support is also required, invoke
 
-					<code class="code">org.eclipse.ocl.pivot.uml.UML2AS.initialize(ResourceSet)</code> as well. 
+					<code class="code">org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS.initialize(ResourceSet)</code> as well. 
 					This initialization ensures that *.uml is understood and that standard pathmap: locations are resolvable. It also invokes 
 					<code class="code">org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.init(ResourceSet)</code> to ensure that all Eclipse and OMG UML namespaces and extensions are registered.
 				</p>
@@ -21507,12 +21560,12 @@ org.eclipse.ocl.domain.utilities.StandaloneProjectMap.getAdapter(resourceSet);<b
 </div>
 <p>If you want to use the default OCL Standard Library you should invoke 
 					<code class="code">org.eclipse.ocl.pivot.model.OCLstdlib.install()</code> which installs a compiled shareable form of 
-					<code class="code">/org.eclipse.ocl.library/model/OCL-2.5.oclstdlib</code>.
+					<code class="code">/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib</code>.
 				</p>
 <p>If you want to use an alternate library examine the code for the standard installation above, and if you want to compile your library examine the 
 					<code class="code">/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/GenerateOCLstdlibModel.mwe2</code> launcher for the
 
-					<code class="code">/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/acceleo/generateOCLstdlib.mtl</code> Acceleo template.
+					<code class="code">/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/xtend/GenerateOCLstdlibXtend.xtend</code> Xtend template.
 				</p>
 <p>Note that the library is extensible and importable so you may import your own library that in turn imports the standard library.</p>
 <p>If you neglect to install an OCL Standard Library, you get the error &ldquo;No OCL Standard Library content available&rdquo;. If you provide a custom library that fails to meet the miinimal requirements of defining the basic library types (e.g. Boolean, Set, Tuple) and methods (e.g. OclAny::&ldquo;=&rdquo;) you get an error such as &ldquo;No 'Boolean' type in the OCL Standard Library&rdquo;.</p>
@@ -21528,7 +21581,7 @@ org.eclipse.ocl.domain.utilities.StandaloneProjectMap.getAdapter(resourceSet);<b
 </div>
 <p>If you have textual OCL embedded within Ecore models you need to register the EMF delegates so that EMF gets, calls or validates dispatch the embedded OCL to the OCL delegates. The required registrations may be provided by 
 					<code class="code">OCLDelegateDomain.initialize(ResourceSet)</code> from the 
-					<code class="code">org.eclipse.ocl.pivot.delegate</code> package.
+					<code class="code">org.eclipse.ocl.pivot.internal.delegate</code> package.
 				</p>
 <p>This may be invoked with a null argument to install the registrations in the global EPackage.Registry rather than a specified local registry.</p>
 <p>If you neglect to register delegates before generated EMF classes are initialized, you may get an NPE or an error of the form "An exception occurred while delegating evaluation of the ..."</p>
@@ -21584,7 +21637,7 @@ org.eclipse.ocl.xtext.oclstdlib.<br>
 				</p>
 <div class="literallayout">
 <p>
-<code class="code">org.eclipse.ocl.domain.utilities.StandaloneProjectMap.getAdapter(resourceSet);<br>
+<code class="code">org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.getAdapter(resourceSet);<br>
 
 </code>
 </p>
@@ -21603,7 +21656,7 @@ org.eclipse.ocl.xtext.oclstdlib.<br>
 <div>
 <div>
 <h3 class="title">
-<a name="Classpath"></a>Classpath</h3>
+<a name="Classpath2"></a>Classpath</h3>
 </div>
 </div>
 </div>
@@ -21616,13 +21669,11 @@ org.eclipse.ocl.xtext.oclstdlib.<br>
 <p>
 <code class="code">org.eclipse.ocl.common<br>
 &nbsp;&nbsp;org.eclipse.ocl.pivot<br>
-&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.library<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.pivot.internal<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.base<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.essentialocl<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.completeocl<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclinecore<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclstdlib<br>
+&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.base<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.essentialocl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.completeocl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclinecore<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclstdlib<br>
 
 </code>
 </p>
@@ -21639,7 +21690,7 @@ org.eclipse.ocl.xtext.oclstdlib.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclinecore.ui<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.xtext.oclstdlib.ui<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.examples.xtext.console<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.pivot.ui<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.ocl.pivot.ui<br>
 
 </code>
 </p>
@@ -21662,10 +21713,15 @@ org.eclipse.xtext<br>
 &nbsp;&nbsp;&nbsp;&nbsp;org.eclipse.xtext.ui.shared<br>
 &nbsp;&nbsp;org.eclipse.xtext.util<br>
 
+<br>
+
+<br>
+
+<br>
+
 </code>
 </p>
 </div>
-<p></p>
 </div>
 </div>
 <div class="section" title="Pivot Thread Safety">
@@ -21692,7 +21748,7 @@ org.eclipse.xtext<br>
 <p>The code-generated evaluator is intended to be thread-safe; all shared objects update their caches within relatively fine-grained synchronized regions. However there are a number of class static variables that are not synchronized and might therefore experience at best a redundant multiple initialization and at worst an assumed uniqueness violation. Thread safe code must therefore invoke:</p>
 <div class="literallayout">
 <p>
-<code class="code">	org.eclipse.ocl.domain.values.util.ValuesUtil.initAllStatics()<br>
+<code class="code">	org.eclipse.ocl.pivot.utilities.ValueUtil.initAllStatics()<br>
 
 </code>
 </p>
@@ -21710,11 +21766,11 @@ org.eclipse.xtext<br>
 </div>
 </div>
 </div>
-<p>Loose miscellaneous static fields are initialized by ValuesUtil.initAllStatics().</p>
+<p>Loose miscellaneous static fields are initialized by ValueUtil.initAllStatics().</p>
 <p>Most non-static fields are @NonNull and final eliminating thread hazards. However lazy caches cannot be avoided and these require manual review. Caches shared across OCl invocations use Weak references to avoid leakage.</p>
 <p>ElementIds are unique and shared across OCL evaluations and so IdManager maintains a hierarchy of synchronized caches for distinct forms of ElementId.
 						Some ElementIds such as TemplateParameterId are subject to two-phase construction (constructor followed by install). It is assumed that a half-constructed ElementId will not be made visible to other threads.</p>
-<p>Values are optionally shared and so valuesUtil has a few loose statics for simple values such as FALSE, and a synchronized cache for integers in the range -256 to 1024.</p>
+<p>Values are optionally shared and so ValueUtil has a few loose statics for simple values such as FALSE, and a synchronized cache for integers in the range -256 to 1024.</p>
 <p>EvaluatorIterationManagers do not currently permit forking of iterations to multiple threads and may malfunction if application code does so.</p>
 </div>
 </div>
@@ -22235,7 +22291,7 @@ org.eclipse.xtext<br>
 </li>
 </ul>
 </div>
-<table id="N15A14">
+<table id="N15A2B">
 <tr>
 						
 <th>OCL</th>
@@ -22950,8 +23006,8 @@ org.eclipse.xtext<br>
 </div>
 </div>
 </div>
-<p>The Javadoc for Eclipse OCL 6.4.0 (Photon) APIs may be found by following the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.4.0/" target="_new">OCL 6.4.0 API Reference</a> link.
+<p>The Javadoc for Eclipse OCL 2020-06 (6.12.0) APIs may be found by following the 
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.12.0/" target="_new">OCL 2020-06 (6.12.0) API Reference</a> link.
 			</p>
 </div>
 <div class="section" title="Extension points">
@@ -22980,6 +23036,56 @@ org.eclipse.xtext<br>
 </div>
 </div>
 <p>This section contains some details on the way in which the OCL project is built. This should only be of interest to users creating extension of the project.</p>
+<p>The interactive build facilities may be found in the org.eclipse.ocl.examples.build plugin. The &ldquo;Generate OCL All&rdquo; launch invokes all the sub-generators for models and editors.</p>
+<p>The documentation build uses the &ldquo;OCL Documentation&rdquo; Ant external launch; see org.eclipse.ocl.doc/libs/Readme.txt for prerequisites. The build populates the help/html/manual folders whose content should be committted to GIT to ensure that the regular build uses the updated documentation. Publishing ocl.pdf is an option that can be selected when performing a final Jenkins reklease build.</p>
+<p>The Javadoc build uses the &ldquo;Run OCL Javadoc using Ant directly&rdquo; Ant external launch. The build populates the javadoc folder which should not be committted to GIT. Generating and publishing the javadoc is an option that can be selected when performing a final Jenkins release build.</p>
+<p>The distribution build facilities uses the Maven pom.xml in the org.eclipse.ocl.releng.tycho plugin. The &ldquo;Build OCL Distribution - Nightly&rdquo; replicates the Jenkins build locally differing only the absence of the final signing. The build populates the org.eclipse.ocl.releng.build-site plugin</p>
+<div class="section" title="OOMPH">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="OOMPH"></a>OOMPH</h2>
+</div>
+</div>
+</div>
+<p>There is an org.eclipse.ocl.oomph/setups/ocl.setup that users may find helpful to create a development workspace, but the setup is not used by the developers and so may be stale.</p>
+</div>
+<div class="section" title="Maven Central and repo.eclipse.org">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="MavenCentralandrepo.eclipse.org"></a>Maven Central and repo.eclipse.org</h2>
+</div>
+</div>
+</div>
+<p>Eclipse projects, such as OCL, use Maven in the form of Tycho that adds support for Eclipse working practices such as the P2 repositories.</p>
+<p>There is no official support for provision of releases via Maven centeal and few projects provide it. When you find an Eclipse projhect on Maven Central be aware that it was probably provided by a well-meaning but misguided Maven user without knowledge or approval of the Eclipse oroject. It almost certain that that user will neglect to provide updates and so it is just about guaranteed that what you find is very stale.</p>
+<p>Eclipse provides an http://repo.eclipse.org for use by Maven users and some projects publish there. However there is no standard support for http://repo.eclipse.org and it appears that this approach is going obsolete. Attempts to offer OCL via http://repo.eclipse.org have foundered.</p>
+</div>
+<div class="section" title="Maven and Gradle">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="MavenandGradle"></a>Maven and Gradle</h2>
+</div>
+</div>
+</div>
+<p>Some enthusiastic users have succeeded in using Maven directly and even Gradle. Anyone interested is recommended to read</p>
+<p>
+				
+<a class="ulink" href="https://www.eclipse.org/forums/index.php?t=msg&amp;th=1097672&amp;goto=1826425&amp;#msg_1826425" target="_new">Maven and Complete OCL usage</a>
+			
+</p>
+<p>
+				
+<a class="ulink" href="https://www.eclipse.org/forums/index.php?t=msg&amp;th=1097672&amp;goto=1826395&amp;#msg_1826395" target="_new">Gradle usage</a> 
+			
+</p>
+<p>Further contributions from users are welcome.</p>
+</div>
 <div class="section" title="GenModel GenAnnotations">
 <div class="titlepage">
 <div>

@@ -541,6 +541,7 @@
 <topic href="help/Standalone.html" label="Ecore/UML Standalone Configuration">
 <topic href="help/Standalone.html#Ecore" label="Ecore"></topic>
 <topic href="help/Standalone.html#UML" label="UML"></topic>
+<topic href="help/Standalone.html#Classpath" label="Classpath"></topic>
 <topic href="help/Standalone.html#XtextEditors" label="Xtext Editors"></topic>
 </topic>
 </topic>
@@ -567,7 +568,7 @@
 <topic href="help/PivotStandalone.html#PivotDelegates" label="Pivot Delegates"></topic>
 <topic href="help/PivotStandalone.html#XtextParsers" label="Xtext Parsers"></topic>
 <topic href="help/PivotStandalone.html#platformpluginandplatformresourceURIs" label="platform:/plugin and platform:/resource URIs"></topic>
-<topic href="help/PivotStandalone.html#Classpath" label="Classpath"></topic>
+<topic href="help/PivotStandalone.html#Classpath2" label="Classpath"></topic>
 </topic>
 <topic href="help/PivotThreadSafety.html" label="Pivot Thread Safety">
 <topic href="help/PivotThreadSafety.html#CodeGeneratedEvaluation" label="Code Generated Evaluation">
@@ -616,24 +617,27 @@
 <topic href="help/Extensionpoints.html" label="Extension points"></topic>
 </topic>
 <topic href="help/BuildingtheOCLProject.html" label="Building the OCL Project">
-<topic href="help/BuildingtheOCLProject.html#GenAnnotations" label="GenModel GenAnnotations">
-<topic href="help/BuildingtheOCLProject.html#httpwww.eclipse.orgOCLGenModelGenAnnotationSource" label="http://www.eclipse.org/OCL/GenModel GenAnnotation Source">
-<topic href="help/BuildingtheOCLProject.html#UseDelegates" label="Use Delegates"></topic>
-<topic href="help/BuildingtheOCLProject.html#UseNullAnnotations" label="Use Null Annotations"></topic>
+<topic href="help/BuildingtheOCLProject.html#OOMPH" label="OOMPH"></topic>
+<topic href="help/MavenCentralandrepo.eclipse.org.html" label="Maven Central and repo.eclipse.org"></topic>
+<topic href="help/MavenandGradle.html" label="Maven and Gradle"></topic>
+<topic href="help/GenAnnotations.html" label="GenModel GenAnnotations">
+<topic href="help/GenAnnotations.html#httpwww.eclipse.orgOCLGenModelGenAnnotationSource" label="http://www.eclipse.org/OCL/GenModel GenAnnotation Source">
+<topic href="help/GenAnnotations.html#UseDelegates" label="Use Delegates"></topic>
+<topic href="help/GenAnnotations.html#UseNullAnnotations" label="Use Null Annotations"></topic>
 </topic>
-<topic href="help/BuildingtheOCLProject.html#httpwww.eclipse.orgOCLGenModelToString" label="http://www.eclipse.org/OCL/GenModel/ToString"></topic>
-<topic href="help/BuildingtheOCLProject.html#httpwww.eclipse.orgOCLGenModelVisitor" label="http://www.eclipse.org/OCL/GenModel/Visitor">
-<topic href="help/BuildingtheOCLProject.html#RootVisitorClass" label="Root Visitor Class"></topic>
-<topic href="help/BuildingtheOCLProject.html#DerivedVisitorClass" label="Derived Visitor Class"></topic>
-<topic href="help/BuildingtheOCLProject.html#VisitableInterface" label="Visitable Interface"></topic>
-<topic href="help/BuildingtheOCLProject.html#VisitableClasses" label="Visitable Classes"></topic>
-<topic href="help/BuildingtheOCLProject.html#ImplementationDetails" label="Implementation Details"></topic>
+<topic href="help/GenAnnotations.html#httpwww.eclipse.orgOCLGenModelToString" label="http://www.eclipse.org/OCL/GenModel/ToString"></topic>
+<topic href="help/GenAnnotations.html#httpwww.eclipse.orgOCLGenModelVisitor" label="http://www.eclipse.org/OCL/GenModel/Visitor">
+<topic href="help/GenAnnotations.html#RootVisitorClass" label="Root Visitor Class"></topic>
+<topic href="help/GenAnnotations.html#DerivedVisitorClass" label="Derived Visitor Class"></topic>
+<topic href="help/GenAnnotations.html#VisitableInterface" label="Visitable Interface"></topic>
+<topic href="help/GenAnnotations.html#VisitableClasses" label="Visitable Classes"></topic>
+<topic href="help/GenAnnotations.html#ImplementationDetails" label="Implementation Details"></topic>
 </topic>
-<topic href="help/BuildingtheOCLProject.html#httpwww.eclipse.orgOCLGenModelCopyAndPaste" label="http://www.eclipse.org/OCL/GenModel/CopyAndPaste">
-<topic href="help/BuildingtheOCLProject.html#ImplementationDetails2" label="Implementation Details"></topic>
+<topic href="help/GenAnnotations.html#httpwww.eclipse.orgOCLGenModelCopyAndPaste" label="http://www.eclipse.org/OCL/GenModel/CopyAndPaste">
+<topic href="help/GenAnnotations.html#ImplementationDetails2" label="Implementation Details"></topic>
 </topic>
-<topic href="help/BuildingtheOCLProject.html#ImplementationDetails3" label="Implementation Details">
-<topic href="help/BuildingtheOCLProject.html#org.eclipse.ocl.examples.build" label="org.eclipse.ocl.examples.build"></topic>
+<topic href="help/GenAnnotations.html#ImplementationDetails3" label="Implementation Details">
+<topic href="help/GenAnnotations.html#org.eclipse.ocl.examples.build" label="org.eclipse.ocl.examples.build"></topic>
 </topic>
 </topic>
 </topic>

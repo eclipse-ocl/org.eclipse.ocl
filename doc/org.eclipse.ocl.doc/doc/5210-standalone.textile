@@ -27,6 +27,11 @@ For the UML metamodel, the required registrations should be provided in a simila
 
 This initialization ensures that *.uml is understood that  http://www.eclipse.org/ocl/1.1.0/oclstdlib.uml is known and that standard pathmap: locations are resolvable. It also invokes @org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.init(ResourceSet)@ to ensure that all Eclipse and OMG UML namespaces and extensions are registered..
 
+h3. Classpath
+
+A precise Java 5 classpath for the current release may be obtained as a diagnostic output near the end of the console output of the
+"Jenkins Ecore Classpath":https://ci.eclipse.org/ocl/job/ocl-ecore-standalone/lastBuild/console or "Jenkins UML Classpath":https://ci.eclipse.org/ocl/job/ocl-uml-standalone/lastBuild/console jobs.
+
 h3. Xtext Editors
 
 The Xtext Editors use the Pivot binding and so their initialiation is described in "Pivot Standalone Configuration"#PivotStandalone.

@@ -3,3 +3,33 @@ h1. Building the OCL Project
 
 This section contains some details on the way in which the OCL project is built. This should only be of interest to users creating extension of the project.
 
+The interactive build facilities may be found in the org.eclipse.ocl.examples.build plugin. The "Generate OCL All" launch invokes all the sub-generators for models and editors.
+
+The documentation build uses the "OCL Documentation" Ant external launch; see org.eclipse.ocl.doc/libs/Readme.txt for prerequisites. The build populates the help/html/manual folders whose content should be committted to GIT to ensure that the regular build uses the updated documentation. Publishing ocl.pdf is an option that can be selected when performing a final Jenkins reklease build.
+
+The Javadoc build uses the "Run OCL Javadoc using Ant directly" Ant external launch. The build populates the javadoc folder which should not be committted to GIT. Generating and publishing the javadoc is an option that can be selected when performing a final Jenkins release build.
+
+The distribution build facilities uses the Maven pom.xml in the org.eclipse.ocl.releng.tycho plugin. The "Build OCL Distribution - Nightly" replicates the Jenkins build locally differing only the absence of the final signing. The build populates the org.eclipse.ocl.releng.build-site plugin
+
+h2. OOMPH
+
+There is an org.eclipse.ocl.oomph/setups/ocl.setup that users may find helpful to create a development workspace, but the setup is not used by the developers and so may be stale.
+
+h2. Maven Central and repo.eclipse.org
+
+Eclipse projects, such as OCL, use Maven in the form of Tycho that adds support for Eclipse working practices such as the P2 repositories.
+
+There is no official support for provision of releases via Maven centeal and few projects provide it. When you find an Eclipse projhect on Maven Central be aware that it was probably provided by a well-meaning but misguided Maven user without knowledge or approval of the Eclipse oroject. It almost certain that that user will neglect to provide updates and so it is just about guaranteed that what you find is very stale.
+
+Eclipse provides an http://repo.eclipse.org for use by Maven users and some projects publish there. However there is no standard support for http://repo.eclipse.org and it appears that this approach is going obsolete. Attempts to offer OCL via http://repo.eclipse.org have foundered.
+
+h2. Maven and Gradle
+
+Some enthusiastic users have succeeded in using Maven directly and even Gradle. Anyone interested is recommended to read
+
+"Maven and Complete OCL usage":https://www.eclipse.org/forums/index.php?t=msg&th=1097672&goto=1826425&#msg_1826425
+
+"Gradle usage":https://www.eclipse.org/forums/index.php?t=msg&th=1097672&goto=1826395&#msg_1826395 
+
+Further contributions from users are welcome.
+

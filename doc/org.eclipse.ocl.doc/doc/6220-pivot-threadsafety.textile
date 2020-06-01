@@ -12,7 +12,7 @@ h3. Code Generated Evaluation
 The code-generated evaluator is intended to be thread-safe; all shared objects update their caches within relatively fine-grained synchronized regions. However there are a number of class static variables that are not synchronized and might therefore experience at best a redundant multiple initialization and at worst an assumed uniqueness violation. Thread safe code must therefore invoke:
 
 bc.. 
-	org.eclipse.ocl.domain.values.util.ValuesUtil.initAllStatics()
+	org.eclipse.ocl.pivot.utilities.ValueUtil.initAllStatics()
 p. 
 
 to ensure eager initialization of unsynchronized class variables. This routine is itself synchronized and so may be safely invoked on all threads, if it is not practical to invoke it solely from just a startup thread.
@@ -23,14 +23,14 @@ Application code should not assume that the getter for a protected final field i
 
 h4. Design Notes
 
-Loose miscellaneous static fields are initialized by ValuesUtil.initAllStatics().
+Loose miscellaneous static fields are initialized by ValueUtil.initAllStatics().
 
 Most non-static fields are @NonNull and final eliminating thread hazards. However lazy caches cannot be avoided and these require manual review. Caches shared across OCl invocations use Weak references to avoid leakage.
 
 ElementIds are unique and shared across OCL evaluations and so IdManager maintains a hierarchy of synchronized caches for distinct forms of ElementId.
 Some ElementIds such as TemplateParameterId are subject to two-phase construction (constructor followed by install). It is assumed that a half-constructed ElementId will not be made visible to other threads.
 
-Values are optionally shared and so valuesUtil has a few loose statics for simple values such as FALSE, and a synchronized cache for integers in the range -256 to 1024.
+Values are optionally shared and so ValueUtil has a few loose statics for simple values such as FALSE, and a synchronized cache for integers in the range -256 to 1024.
 
 EvaluatorIterationManagers do not currently permit forking of iterations to multiple threads and may malfunction if application code does so.
 

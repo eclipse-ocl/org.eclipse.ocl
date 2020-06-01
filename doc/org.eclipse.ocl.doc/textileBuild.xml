@@ -5,7 +5,7 @@
     (c) Peter Friese <peter.friese@itemis.com>
 -->
 <project name="org.eclipse.ocl.doc" default="build-doc" basedir=".">
-	
+	<!-- See libs/Readme.txt -->
 	<!--
 		Global vars
 	-->

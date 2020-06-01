@@ -4,7 +4,7 @@ The OCL Standard Library Language is used to define the OCL Standard Library, fo
 
 The standard library can be replaced or extended.
 
-The source for the OCL Standard Library may be found at model/OCL-2.5.oclstdlib in the org.eclipse.ocl.library plugin. 
+The source for the OCL Standard Library may be found at model/OCL-2.5.oclstdlib in the org.eclipse.ocl.pivot plugin. 
 
 h3. Syntax
 
@@ -117,7 +117,7 @@ An Operation has zero of more "Parameters":#OCLstdlib-Parameter.
 
 !{width:60%}images/1400-operation3.png(OCL Standard Library LibOperation Syntax Part 3)!
 
-An Operation has a return Type. An infix operation may specify a precedence level. An operation may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryOperation interface. This class is used when evaluating the operation.
+An Operation has a return Type. An infix operation may specify a precedence level. An operation may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryOperation interface. This class is used when evaluating the operation.
 
 !{width:60%}images/1400-operation4.png(OCL Standard Library LibOperation Syntax Part 4)!
 
@@ -147,7 +147,7 @@ Optionally following a bar, an Iteration has one or more comma-separated "Parame
 
 !{width:60%}images/1400-iteration5.png(OCL Standard Library LibIteration Syntax Part 5)!
 
-An Iteration has a return Type. An Iteration may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryIteration interface. This class is used when evaluating the iteration.
+An Iteration has a return Type. An Iteration may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryIteration interface. This class is used when evaluating the iteration.
 
 !{width:60%}images/1400-iteration6.png(OCL Standard Library LibIteration Syntax Part 6)!
 
@@ -193,7 +193,7 @@ An Property may be static and has a name and a Type.
 
 !{width:60%}images/1400-property2.png(OCL Standard Library LibProperty Syntax Part 2)!
 
-A Property may specify the name of a Java class implementing the org.eclipse.ocl.library.LibraryProperty interface. This class is used when evaluating the iteration.
+A Property may specify the name of a Java class implementing the org.eclipse.ocl.pivot.library.LibraryProperty interface. This class is used when evaluating the iteration.
 
 The content of a Property may comprise Annotations.
 

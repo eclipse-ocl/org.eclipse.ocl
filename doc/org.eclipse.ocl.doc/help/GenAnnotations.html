@@ -1,0 +1,290 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>GenModel GenAnnotations</title>
+<link href="book.css" rel="stylesheet" type="text/css">
+<meta content="DocBook XSL Stylesheets V1.75.1" name="generator">
+<link rel="home" href="index.html" title="OCL Documentation">
+<link rel="up" href="BuildingtheOCLProject.html" title="Building the OCL Project">
+<link rel="prev" href="MavenandGradle.html" title="Maven and Gradle">
+<link rel="next" href="glossary.html" title="Appendix&nbsp;A.&nbsp;Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<h1 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">GenModel GenAnnotations</h1>
+<div class="section" title="GenModel GenAnnotations">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="GenAnnotations"></a>GenModel GenAnnotations</h2>
+</div>
+</div>
+</div>
+<p>The automated generation of models that form part of the OCL tooling exploits a number of GenAnnotations to influence the auto-generated code.</p>
+<div class="section" title="http://www.eclipse.org/OCL/GenModel GenAnnotation Source">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="httpwww.eclipse.orgOCLGenModelGenAnnotationSource"></a>http://www.eclipse.org/OCL/GenModel GenAnnotation Source</h3>
+</div>
+</div>
+</div>
+<div class="literallayout">
+<p>&lt;genAnnotations&nbsp;source="http://www.eclipse.org/OCL/GenModel"&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="Use&nbsp;Null&nbsp;Annotations"&nbsp;value="true"/&gt;<br>
+&lt;/genAnnotations&gt;<br>
+
+</p>
+</div>
+<p>This GenAnnotation is also used by regular OCL code generation</p>
+<div class="section" title="Use Delegates">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="UseDelegates"></a>Use Delegates</h4>
+</div>
+</div>
+</div>
+<p>If the 
+						<span class="emphasis"><em>Use Delegates</em></span> key is present and has a 
+						<span class="emphasis"><em>true</em></span> value genModel will generate code for OCL expressions that delegates to the run-time interpreter, rather than generating Java code.
+					</p>
+</div>
+<div class="section" title="Use Null Annotations">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="UseNullAnnotations"></a>Use Null Annotations</h4>
+</div>
+</div>
+</div>
+<p>If the 
+						<span class="emphasis"><em>Use Null Annotations</em></span> key is present and has a 
+						<span class="emphasis"><em>true</em></span> value the generated code will have 
+						<span class="emphasis"><em>@NonNull</em></span> and 
+						<span class="emphasis"><em>@NonNull</em></span> annotations.
+					</p>
+</div>
+</div>
+<div class="section" title="http://www.eclipse.org/OCL/GenModel/ToString">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="httpwww.eclipse.orgOCLGenModelToString"></a>http://www.eclipse.org/OCL/GenModel/ToString</h3>
+</div>
+</div>
+</div>
+<div class="literallayout">
+<p>&lt;genAnnotations&nbsp;source="http://www.eclipse.org/OCL/GenModel/ToString"&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="org.eclipse.ocl.examples.codegen.cgmodel.CGElement"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value="return&nbsp;&amp;lt;%org.eclipse.ocl.examples.codegen.analyzer.CG2StringVisitor%&gt;.toString(this);"/&gt;<br>
+&lt;/genAnnotations&gt;<br>
+
+</p>
+</div>
+<p>By default EMF generates a toString() method that identifies all attribute values. This cannot be suppressed, only circumvented.</p>
+<p>If the 
+					<code class="code">http://www.eclipse.org/OCL/GenModel/ToString</code> GenAnnotation is present the default is changed to use an inherited implementation, which must be specified somewhere.
+				</p>
+<p>Specific implementations of toString may be provided as the values of detail entries whose key is the qualified name of the interface class. Imports may be encoded with the implementation by enclosing the fully qualified name in 
+					<code class="code">&lt;%...%&gt;</code>.
+				</p>
+</div>
+<div class="section" title="http://www.eclipse.org/OCL/GenModel/Visitor">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="httpwww.eclipse.orgOCLGenModelVisitor"></a>http://www.eclipse.org/OCL/GenModel/Visitor</h3>
+</div>
+</div>
+</div>
+<div class="literallayout">
+<p>&lt;genAnnotations&nbsp;source="http://www.eclipse.org/OCL/GenModel/Visitor"&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="Root&nbsp;Visitor&nbsp;Class"&nbsp;value="org.eclipse.ocl.pivot.util.Visitor"/&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="Derived&nbsp;Visitor&nbsp;Class"&nbsp;value="org.eclipse.ocl.pivot.util.Visitor"/&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="Visitable&nbsp;Interface"&nbsp;value="org.eclipse.ocl.pivot.util.Visitable"/&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="Visitable&nbsp;Classes"&nbsp;value="org.eclipse.ocl.pivot.Element"/&gt;<br>
+&lt;/genAnnotations&gt;<br>
+
+</p>
+</div>
+<p>The accept method for an hierarchical visitor pattern may be woven into the code using the 
+					<code class="code">http://www.eclipse.org/OCL/GenModel/Visitor</code> genAnnotation.
+				</p>
+<p>The implementation for class XXXX in the root package is</p>
+<div class="literallayout">
+<p>
+<code class="code">@Nullable&nbsp;R&nbsp;accept(@NonNull&nbsp;RootVisitorClass&lt;R&gt;&nbsp;visitor)&nbsp;{<br>
+	return&nbsp;visitor.visitXXXX(this);<br>
+}&nbsp;<br>
+
+</code>
+</p>
+</div>
+<p>The implementation for class XXXX in the derived package is</p>
+<div class="literallayout">
+<p>
+<code class="code">@Nullable&nbsp;R&nbsp;accept(@NonNull&nbsp;RootVisitorClass&lt;R&gt;&nbsp;visitor)&nbsp;{<br>
+	return&nbsp;(R)&nbsp;(DerivedVisitorClass&lt;?&gt;)visitor).visitXXXX(this);<br>
+}&nbsp;<br>
+
+</code>
+</p>
+</div>
+<p>The direct cast to the derived type assumes that the caller has ensured that the visitor in use supports the visitor interfaces for all objects in use.</p>
+<p>The null annotations or omitted unless null annotations have been enabled.</p>
+<div class="section" title="Root Visitor Class">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="RootVisitorClass"></a>Root Visitor Class</h4>
+</div>
+</div>
+</div>
+<p>The fully qualified name of the visitor class must be specified as the value of the 
+						<span class="emphasis"><em>Root Visitor Class</em></span> detail. This class defines the argument type of the accept method.
+					</p>
+</div>
+<div class="section" title="Derived Visitor Class">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="DerivedVisitorClass"></a>Derived Visitor Class</h4>
+</div>
+</div>
+</div>
+<p>The fully qualified name of the derived visitor class must be specified as the value of the 
+						<span class="emphasis"><em>Derived Visitor Class</em></span> detail. This detail may be omitted for the root package.
+					</p>
+</div>
+<div class="section" title="Visitable Interface">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="VisitableInterface"></a>Visitable Interface</h4>
+</div>
+</div>
+</div>
+<p>The fully qualified name of the visitable interface must be specified as the value of the 
+						<span class="emphasis"><em>Visitable Interface</em></span> detail. It&rsquo;s mandatory for the root package.
+					</p>
+</div>
+<div class="section" title="Visitable Classes">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="VisitableClasses"></a>Visitable Classes</h4>
+</div>
+</div>
+</div>
+<p>An @Override annotation is generated for all implementations. This leads to an error where the implementation is not an override. The space-separated fully qualified names of all classes for which the accpe is not an override must be specified as the value of the 
+						<span class="emphasis"><em>Visitable Classes</em></span> detail.
+					</p>
+</div>
+<div class="section" title="Implementation Details">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ImplementationDetails"></a>Implementation Details</h4>
+</div>
+</div>
+</div>
+<p>The support for accept is in 
+						<code class="code">templates/model/Class/insert.javajetinc</code> where the appropriate code is generated into the implementation file with help from OCLBuildGenModelUtil.
+					</p>
+</div>
+</div>
+<div class="section" title="http://www.eclipse.org/OCL/GenModel/CopyAndPaste">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="httpwww.eclipse.orgOCLGenModelCopyAndPaste"></a>http://www.eclipse.org/OCL/GenModel/CopyAndPaste</h3>
+</div>
+</div>
+</div>
+<div class="literallayout">
+<p>&lt;genAnnotations&nbsp;source="http://www.eclipse.org/OCL/GenModel/CopyAndPaste"&gt;<br>
+&nbsp;&nbsp;&lt;details&nbsp;key="org.eclipse.ocl.xtext.markup.FigureElement"&nbsp;<br>
+&nbsp;&nbsp;&nbsp;value="model/FigureElement.javacopy"/&gt;<br>
+&lt;/genAnnotations&gt;<br>
+
+</p>
+</div>
+<p>EMF allows custom code to be added to classes using an @Generated NOT comment annotation or no annotation at all. These additions are preserved during regeneration, but may be lost if the file is deleted and regenerated.</p>
+<p>As an alternative, custom contributions may be pasted into class implementation files by specifying a detail entry whose key is the qualified interface name of the class to be customised and whose value is the project-relative name of a file providing text to be copied and pasted.</p>
+<p>The copied text should be tab indented so that it matches the tab indentation of the auto-generated code.</p>
+<p>The copied text may reference types that may need importing by encoding the fully qualified name in 
+					<code class="code">&lt;%...%&gt;</code>.
+				</p>
+<p>The customization files are conventionally given a *.copyjava file name and are placed in the model folder alongside the *.genmodel.</p>
+<div class="section" title="Implementation Details">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ImplementationDetails2"></a>Implementation Details</h4>
+</div>
+</div>
+</div>
+<p>The support for copy and paste is in 
+						<code class="code">templates/model/Class/insert.javajetinc</code> where the referenced text is copied into the implementation file with help from OCLBuildGenModelUtil.
+					</p>
+</div>
+</div>
+<div class="section" title="Implementation Details">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="ImplementationDetails3"></a>Implementation Details</h3>
+</div>
+</div>
+</div>
+<div class="section" title="org.eclipse.ocl.examples.build">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="org.eclipse.ocl.examples.build"></a>
+						<code class="code">org.eclipse.ocl.examples.build</code>
+					
+</h4>
+</div>
+</div>
+</div>
+<p>The 
+						<code class="code">org.eclipse.ocl.examples.build</code> plugin hosts the build-time functionality that does not need to bloat the distribution.
+					</p>
+<p>Modified JET templates are in the 
+						<code class="code">templates</code> folder which 
+						<code class="code">.jetproperties</code> prefixes to the template path. The 
+						<code class="code">.project</code> has an 
+						<code class="code">org.eclipse.emf.codegen.jet.IJETNature</code> nature and builder so that the custom JET templates are automatically built to the 
+						<code class="code">jet-gen</code> source folder. The 
+						<code class="code">.project</code> similarly has has an 
+						<code class="code">org.eclipse.xtext.ui.shared.xtextNature</code> nature and builder so that the Xtend templates are automatically built to the 
+						<code class="code">xtend-gen</code> source folder. Both these generated source folders are excluded from source control, since they are 100% auto-generated and they do not form part of the distribution.
+					</p>
+<p>Custom JET templates are declared by OCLBuildGenModelGeneratorAdapterFactory which creates a OCLBuildGenClassGeneratorAdapter that replaces the normal reference to 
+						<code class="code">org.eclipse.emf.codegen.ecore.templates.model.Class</code> by 
+						<code class="code">org.eclipse.ocl.examples.build.templates.model.Class</code>.
+					</p>
+<p>The custom build functionality is installed by the 
+						<code class="code">GenModelSetup</code> workflow component,
+					</p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -99,9 +99,9 @@ Library features (properties, operations and iterations) are declared in a Stand
 
 !{width:70%}images/6200-library-declarations.png(Standard Library Declarations)!
 
-The extract from @/org.eclipse.ocl.library/model/OCL-2.5.oclstdlib@ shows the declaration of the @Collection@ type as a templated type with a @T@ parameter. The @Collection@ type conformsTo (extends/inherits/generalizes) the @OclAny@ type and is an instance of the @CollectionType@ meta-type.
+The extract from @/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib@ shows the declaration of the @Collection@ type as a templated type with a @T@ parameter. The @Collection@ type conformsTo (extends/inherits/generalizes) the @OclAny@ type and is an instance of the @CollectionType@ meta-type.
 
-The @asSet@ operation takes no arguments and returns a @Set(T)@, a set of the collection template type. The declaration is bound to @org.eclipse.ocl.library.collection.CollectionAsSetOperation@ which is the Java class name of the implementation.
+The @asSet@ operation takes no arguments and returns a @Set(T)@, a set of the collection template type. The declaration is bound to @org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation@ which is the Java class name of the implementation.
 
 The @exists@ iteration has two overloads, taking one or two iterators of the collection template type. The iteration body is a lambda expression operating on a collection template element with no additional arguments to return a Boolean value. The iteration also returns a Boolean value. The same Java implementation class is used for both one and two argument forms.
 
