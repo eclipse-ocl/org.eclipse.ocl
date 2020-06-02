@@ -140,7 +140,7 @@
             </goals>
             <configuration>
               <includes>
-                <include>**/CompatibilityCodegenTests.java</include>
+                <include>**/CodegenTests.java</include>
               </includes>
               <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -ea</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
