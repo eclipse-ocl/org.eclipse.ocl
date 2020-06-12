@@ -14,22 +14,20 @@
  *******************************************************************************/
 module GenerateOCLinEcoreEditor
 
-import org.eclipse.emf.mwe.utils.*
-import org.eclipse.ocl.examples.build.*
-import org.eclipse.ocl.examples.build.utilities.*
-import org.eclipse.ocl.examples.build.xtend.*
-import org.eclipse.xtext.generator.*
-import org.eclipse.xtext.ui.generator.*
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
 
-var oclInEcore.file.extensions = "oclinecore"
 var oclInEcoreProjectName = "org.eclipse.ocl.xtext.oclinecore"
 var oclInEcoreRuntimeProject = "../../plugins/${oclInEcoreProjectName}"
+
+var rootPath = "../../plugins"
 
 /**
  *	Generate the OCLinEcore Editor.
  */
 Workflow {
-    bean = StandaloneSetup {
+    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
 		scanClassPath = true
 		platformUri = ".."
 		registerGeneratedEPackage = "org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage"
@@ -38,22 +36,34 @@ Workflow {
 		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.genmodel"
 	}
 	
-	component = DirectoryCleaner {
-		directory = "${oclInEcoreRuntimeProject}/src-gen"
-	}
-	
-	component = DirectoryCleaner {
-		directory = "${oclInEcoreRuntimeProject}.ui/src-gen"
-	}
-	
-	component = Generator {
-		pathRtProject = oclInEcoreRuntimeProject
-		pathUiProject = "${oclInEcoreRuntimeProject}.ui"
-		projectNameRt = oclInEcoreProjectName
-		projectNameUi = "${oclInEcoreProjectName}.ui"
-		mergeManifest = false
-
-		fileHeader =
+	component = XtextGenerator {
+		standaloneSetup = XtextGeneratorStandaloneSetup {
+			scanClasspath = false
+		}
+		configuration = org.eclipse.ocl.examples.build.fragments.MyDefaultGeneratorModule {
+			project = org.eclipse.ocl.examples.build.fragments.MyStandardProjectConfig {
+				activatorName = "OCLinEcoreActivator"
+				baseName = "${oclInEcoreProjectName}"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = false
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				eclipsePluginTest = {
+					enabled = false
+				}
+				genericIde = {
+					enabled = true
+					name = "${oclInEcoreProjectName}.ui"
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				preferXtendStubs = false
+				encoding = "UTF-8"
+				fileHeader =
 "/*******************************************************************************
  * Copyright (c) 2011, \${year} Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -61,117 +71,57 @@ Workflow {
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/"
-
-		language = {
-			uri = "classpath:/org/eclipse/ocl/xtext/oclinecore/OCLinEcore.xtext"
-			fileExtensions = oclInEcore.file.extensions
-			
-			// Java API to access grammar elements (required by several other fragments)
-			fragment = grammarAccess.GrammarAccessFragment {}
-			
-			// generates Java API for the generated EPackages 
-//			fragment = ecore.EcoreGeneratorFragment {
-//				referencedGenModels = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"  
-//				referencedGenModels = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.genmodel"
-//			}
-			
-			// the serialization component
-			fragment = serializer.SerializerFragment {}
-			
-			// a custom ResourceFactory for use with EMF 
-			fragment = resourceFactory.ResourceFactoryFragment {
-				fileExtensions = oclInEcore.file.extensions
 			}
-				
-			// the following fragment tries to use the Antlr Generator fragment which can be installed via update manager from http://download.itemis.com/updates/
-//			fragment = de.itemis.xtext.antlr.XtextAntlrGeneratorFragment {
-//				options = { backtrack = true classSplitting = true }
-//			}
-			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-				options = { backtrack = true classSplitting = true}			
-				antlrParam = "-Xconversiontimeout" antlrParam = "10000"
+		}
+		language = StandardLanguage {
+			name = "${oclInEcoreProjectName}.OCLinEcore"
+			fileExtensions = "oclinecore"
+			generator = null
+			serializer = {
+				generateStub = false
 			}
-			
-			// check-based API for validation
-			/*
-			fragment = validation.CheckFragment {}
-			*/
-			 
-			// java-based API for validation 
-			fragment = validation.JavaValidatorFragment {
-                composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-//                composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-            }
-            
-			// scoping and exporting API
-			/*
-			fragment = scoping.ImportURIScopingFragment {}
-			fragment = exporting.SimpleNamesFragment {}
-			*/
-			
-			// scoping and exporting API 
-			fragment = scoping.ImportNamespacesScopingFragment {}
-			fragment = exporting.QualifiedNamesFragment {}
-			
-			// formatter API 
-			fragment = formatting.FormatterFragment {}
-
-			// labeling API 
-			fragment = labeling.LabelProviderFragment {}
-
-			// outline API 
-//			fragment = outline.TransformerFragment {}
-//			fragment = outline.OutlineNodeAdapterFactoryFragment {}
-			fragment = outline.OutlineTreeProviderFragment {}
-			fragment = outline.QuickOutlineFragment {}
-
-			// java-based API for content assistance 
-			fragment = contentAssist.JavaBasedContentAssistFragment {}
-						
-//			fragment = de.itemis.xtext.antlr.XtextAntlrGeneratorFragment {
-//				options = { backtrack = true classSplitting = true}
-//			}
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
-				options = { backtrack = true classSplitting = true}			
-				antlrParam = "-Xconversiontimeout" antlrParam = "10000"
+			validator = {
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				generateDeprecationValidation = false
 			}
-
-			fragment = builder.BuilderIntegrationFragment {}
-
-			// project wizard (optional) 
-			/*
-			fragment = projectWizard.SimpleProjectWizardFragment {
-				generatorProjectName = "${projectName}.generator" 
-				modelFileExtension = file.extensions
+		/*	fragment = CodeMiningFragment {
+				generateStub = true
+				generateXtendStub = false
+			} */
+			parserGenerator = parser.antlr.XtextAntlrGeneratorFragment2 {
+				options = parser.antlr.AntlrOptions {
+					backtrack = true
+					classSplitting = true
+				}
 			}
-			*/
-			
-			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}
-				
+			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
+				fragment = org.eclipse.xtext.generator.formatting.FormatterFragment {}
+			}
 			// EssentialOCL bindings 
-			fragment = fragments.EssentialOCLFragment {}							
-			// Support Markup in Hover text 
-			fragment = fragments.MarkupHoverFragment {}			
+			fragment = org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment {}			
+			// Support Markup and Hover text 
+			fragment = org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment {}
 			// *.xtextbin support on Xtext 2.3		
 			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			
 		}
 	}
-	component = GenerateGrammarXtend {
+	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
 		javaFolder = "${oclInEcoreRuntimeProject}/src-gen"
 		javaPackageName = "${oclInEcoreProjectName}"
 		grammarFileStem = "OCLinEcore"
 	}
-	component = InjectCompatibilityAbstractInternalAntlrParser {
+	component = org.eclipse.ocl.examples.build.utilities.InjectCompatibilityAbstractInternalAntlrParser {
 		fileName = "${oclInEcoreRuntimeProject}/src-gen/org/eclipse/ocl/xtext/oclinecore/parser/antlr/internal/InternalOCLinEcoreParser.java"
 	}
-	component = ConvertToUnixLineEndings {
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${oclInEcoreRuntimeProject}/src-gen"
 	}
-	component = ConvertToUnixLineEndings {
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${oclInEcoreRuntimeProject}.ui/src-gen"
 	}
 }
