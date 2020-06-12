@@ -9,6 +9,11 @@
 	
 	<target name="zip.examples" depends="init">
 		<!-- OCL examples -->
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.extlibrary" property="projectDir"/-->
+		<zip destfile="zips/extlibrary.zip" basedir="../org.eclipse.ocl.examples.extlibrary">
+			<patternset refid="zip.excludes"/>
+		</zip>
+		
 		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.interpreter" property="projectDir"/-->
 		<zip destfile="zips/interpreter.zip" basedir="../org.eclipse.ocl.examples.interpreter">
 			<patternset refid="zip.excludes"/>

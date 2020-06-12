@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extlib:Library xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:extlib="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0" name="myLibrary">
+<extlib:Library xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:extlib="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0" name="myLibrary">
   <stock xsi:type="extlib:Book" title="First Book"/>
   <stock xsi:type="extlib:Book" title="Second Book"/>
 </extlib:Library>

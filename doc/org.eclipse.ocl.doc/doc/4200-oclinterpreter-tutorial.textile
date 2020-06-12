@@ -371,12 +371,12 @@ bc..
   <ocl.ecore:PropertyCallExp xmi:id="_897fVPfmEduCQ48h829a5g">
     <eType xsi:type="ocl.ecore:PrimitiveType" href="http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/String"/>
     <source xsi:type="ocl.ecore:VariableExp" xmi:id="_897fVvfmEduCQ48h829a5g" name="self" referredVariable="_897fUvfmEduCQ48h829a5g">
-      <eType xsi:type="ecore:EClass" href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book"/>
+      <eType xsi:type="ecore:EClass" href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book"/>
     </source>
-    <referredProperty xsi:type="ecore:EAttribute" href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book/title"/>
+    <referredProperty xsi:type="ecore:EAttribute" href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book/title"/>
   </ocl.ecore:PropertyCallExp>
   <ocl.ecore:Variable xmi:id="_897fUvfmEduCQ48h829a5g" name="self">
-    <eType xsi:type="ecore:EClass" href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book"/>
+    <eType xsi:type="ecore:EClass" href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book"/>
   </ocl.ecore:Variable>
 </xmi:XMI>
 p. 
