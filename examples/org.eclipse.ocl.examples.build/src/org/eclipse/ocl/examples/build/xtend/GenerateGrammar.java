@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
@@ -249,6 +250,15 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			}
 		});
 		return referencedMetamodels;
+	}
+
+	protected boolean hasRules(@NonNull Resource grammarResource, Class<?> ruleClass) {
+		for (EObject eObject : new TreeIterable(grammarResource)) {
+			if (ruleClass.isAssignableFrom(eObject.getClass())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
