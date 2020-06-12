@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
-import java.util.Set;
-
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
@@ -36,14 +34,9 @@ import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLLocationInFileProvid
 import org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLHighlightingConfiguration;
 import org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLSemanticHighlightingCalculator;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
+import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.generator.BindFactory;
-import org.eclipse.xtext.generator.Binding;
-import org.eclipse.xtext.generator.DefaultGeneratorFragment;
-import org.eclipse.xtext.generator.Naming;
-import org.eclipse.xtext.generator.NamingAware;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
@@ -66,72 +59,107 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeI
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.IResourceValidator;
+import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment;
+import org.eclipse.xtext.xtext.generator.IXtextGeneratorLanguage;
+import org.eclipse.xtext.xtext.generator.model.GuiceModuleAccess;
+import org.eclipse.xtext.xtext.generator.model.TypeReference;
+
+import com.google.inject.Inject;
 
 /**
  * Provide the standard EssentialOCL bindings as Abstract defaults
  */
-public class EssentialOCLFragment extends DefaultGeneratorFragment implements NamingAware
+public class EssentialOCLFragment extends AbstractXtextGeneratorFragment //implements NamingAware
 {
-	public static String getQualifiedName(Grammar grammar, Naming n) {
-		return n.basePackageUi(grammar) + "." + GrammarUtil.getSimpleName(grammar) + "Editor";
+	@Inject
+	private Grammar grammar;
+	@Inject
+	private IXtextGeneratorLanguage language;
+
+//	public static String getQualifiedName(Grammar grammar, Naming n) {
+//		return n.basePackageUi(grammar) + "." + GrammarUtil.getSimpleName(grammar) + "Editor";
+//	}
+
+//	private Naming naming;
+
+	protected void addTypeToType(GuiceModuleAccess.BindingFactory bindFactory, Class<?> keyClass, Class<?> valueClass) {
+		bindFactory.addTypeToType(new TypeReference(keyClass.getName()), new TypeReference(valueClass.getName()));
 	}
 
-	private Naming naming;
+	protected void addTypeToType(GuiceModuleAccess.BindingFactory bindFactory, Class<?> keyClass, String valueClassName) {
+		bindFactory.addTypeToType(new TypeReference(keyClass.getName()), new TypeReference(valueClassName));
+	}
 
 	@SuppressWarnings("restriction")
 	@Override
-	public Set<Binding> getGuiceBindingsRt(Grammar grammar) {
-		BindFactory bindFactory = new BindFactory();
-		bindFactory.addTypeToType(org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer.class.getName(), BaseCrossReferenceSerializer.class.getName());
+	public void generate() {
+		generateRT();
+		generateUI();
+	}
+
+	protected void generateRT() {
+		GuiceModuleAccess.BindingFactory bindFactory = new GuiceModuleAccess.BindingFactory();
+		addTypeToType(bindFactory, org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer.class, BaseCrossReferenceSerializer.class);
 		// Potential resolution of Pivot fragments for CS resource
-		bindFactory.addTypeToType(IDiagnosticConverter.class.getName(), PivotDiagnosticConverter.class.getName());
-		bindFactory.addTypeToType(IFragmentProvider.class.getName(), BaseFragmentProvider.class.getName());
-		bindFactory.addTypeToType(org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer.class.getName(), BaseHiddenTokenSequencer.class.getName());
-		bindFactory.addTypeToType(ILinker.class.getName(), CS2ASLinker.class.getName());
-		bindFactory.addTypeToType(ILinkingDiagnosticMessageProvider.class.getName(), BaseLinkingDiagnosticMessageProvider.class.getName());
+		addTypeToType(bindFactory, IDiagnosticConverter.class, PivotDiagnosticConverter.class);
+		addTypeToType(bindFactory, IFragmentProvider.class, BaseFragmentProvider.class);
+		addTypeToType(bindFactory, org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer.class, BaseHiddenTokenSequencer.class);
+		addTypeToType(bindFactory, ILinker.class, CS2ASLinker.class);
+		addTypeToType(bindFactory, ILinkingDiagnosticMessageProvider.class, BaseLinkingDiagnosticMessageProvider.class);
 		// External reference loading and resolution.
-		bindFactory.addTypeToType(ILinkingService.class.getName(), BaseLinkingService.class.getName());
+		addTypeToType(bindFactory, ILinkingService.class, BaseLinkingService.class);
 		// :: as scope separator
-		bindFactory.addTypeToType(IQualifiedNameConverter.class.getName(), BaseQualifiedNameConverter.class.getName());
+		addTypeToType(bindFactory, IQualifiedNameConverter.class, BaseQualifiedNameConverter.class);
 		// Name value to text serialisation.
-		bindFactory.addTypeToType(IQualifiedNameProvider.class.getName(), BaseQualifiedNameProvider.class.getName());
+		addTypeToType(bindFactory, IQualifiedNameProvider.class, BaseQualifiedNameProvider.class);
 		// pivot: scheme support
-		bindFactory.addTypeToType(IResourceServiceProvider.class.getName(), PivotResourceServiceProvider.class.getName());
+		addTypeToType(bindFactory, IResourceServiceProvider.class, PivotResourceServiceProvider.class);
 		// pivot AST validation support
-		//		bindFactory.addTypeToType(Diagnostician.class.getName(), PivotCancelableDiagnostician.class.getName());
-		bindFactory.addTypeToType(IResourceValidator.class.getName(), PivotResourceValidator.class.getName());
+		//		addTypeToType(bindFactory, Diagnostician.class, PivotCancelableDiagnostician.class);
+		addTypeToType(bindFactory, IResourceValidator.class, PivotResourceValidator.class);
 		// DataType text to value parsing.
-		bindFactory.addTypeToType(IValueConverterService.class.getName(), BaseValueConverterService.class.getName());
-		bindFactory.addTypeToType(XtextResource.class.getName(), EssentialOCLCSResource.class.getName());
-		return bindFactory.getBindings();
+		addTypeToType(bindFactory, IValueConverterService.class, BaseValueConverterService.class);
+		addTypeToType(bindFactory, XtextResource.class, EssentialOCLCSResource.class);
+		bindFactory.contributeTo(language.getRuntimeGenModule());
 	}
 
-	@Override
-	public Set<Binding> getGuiceBindingsUi(Grammar grammar) {
-		BindFactory bindFactory = new BindFactory();
-		bindFactory.addConfiguredBinding(String.class.getName(), "binder.bind(String.class).annotatedWith(com.google.inject.name.Names.named((org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS))).toInstance(\".,:>\");");
-		bindFactory.addTypeToType(AbstractAntlrTokenToAttributeIdMapper.class.getName(), BaseAntlrTokenToAttributeIdMapper.class.getName());
-		bindFactory.addTypeToType(AbstractEditStrategyProvider.class.getName(), BaseAutoEditStrategyProvider.class.getName());
-		bindFactory.addTypeToType(IHighlightingConfiguration.class.getName(), EssentialOCLHighlightingConfiguration.class.getName());
-		bindFactory.addTypeToType(ILocationInFileProvider.class.getName(), EssentialOCLLocationInFileProvider.class.getName());
-		//		bindFactory.addTypeToType(org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder.class.getName(), BaseReferenceFinder.class.getName());
-		bindFactory.addTypeToType(ISemanticHighlightingCalculator.class.getName(), EssentialOCLSemanticHighlightingCalculator.class.getName());
-		bindFactory.addTypeToType(ITokenTypeToPartitionTypeMapper.class.getName(), BaseTerminalsTokenTypeToPartitionMapper.class.getName());
-		bindFactory.addTypeToType(IURIEditorOpener.class.getName(), BaseURIEditorOpener.class.getName());
-		bindFactory.addTypeToType(IXtextEditorCallback.class.getName(), BaseEditorCallback.class.getName());
-		bindFactory.addTypeToType(OutlineWithEditorLinker.class.getName(), BaseOutlineWithEditorLinker.class.getName());
-		bindFactory.addTypeToType(OutlineNodeElementOpener.class.getName(), BaseOutlineNodeElementOpener.class.getName());
-		bindFactory.addTypeToType(XtextDocument.class.getName(), BaseDocument.class.getName());
-		bindFactory.addTypeToType(XtextEditor.class.getName(), getQualifiedName(grammar, getNaming()));
-		return bindFactory.getBindings();
+	protected void generateUI() {
+		GuiceModuleAccess.BindingFactory bindFactory = new GuiceModuleAccess.BindingFactory();
+	      StringConcatenationClient _client = new StringConcatenationClient() {
+	          @Override
+	          protected void appendTo(StringConcatenationClient.TargetStringConcatenation _builder) {
+	            _builder.append("binder.bind(String.class).annotatedWith(com.google.inject.name.Names.named((org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS))).toInstance(\".,:>\");");
+	            _builder.newLine();
+	          }
+	        };
+		bindFactory.addConfiguredBinding(String.class.getName(), _client);
+		addTypeToType(bindFactory, AbstractAntlrTokenToAttributeIdMapper.class, BaseAntlrTokenToAttributeIdMapper.class);
+		addTypeToType(bindFactory, AbstractEditStrategyProvider.class, BaseAutoEditStrategyProvider.class);
+		addTypeToType(bindFactory, IHighlightingConfiguration.class, EssentialOCLHighlightingConfiguration.class);
+		addTypeToType(bindFactory, ILocationInFileProvider.class, EssentialOCLLocationInFileProvider.class);
+		//		addTypeToType(bindFactory, org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder.class, BaseReferenceFinder.class);
+		addTypeToType(bindFactory, ISemanticHighlightingCalculator.class, EssentialOCLSemanticHighlightingCalculator.class);
+		addTypeToType(bindFactory, ITokenTypeToPartitionTypeMapper.class, BaseTerminalsTokenTypeToPartitionMapper.class);
+		addTypeToType(bindFactory, IURIEditorOpener.class, BaseURIEditorOpener.class);
+		addTypeToType(bindFactory, IXtextEditorCallback.class, BaseEditorCallback.class);
+		addTypeToType(bindFactory, OutlineWithEditorLinker.class, BaseOutlineWithEditorLinker.class);
+		addTypeToType(bindFactory, OutlineNodeElementOpener.class, BaseOutlineNodeElementOpener.class);
+		addTypeToType(bindFactory, XtextDocument.class, BaseDocument.class);
+//		return n.basePackageUi(grammar) + "." + GrammarUtil.getSimpleName(grammar) + "Editor";
+		String grammarName = grammar.getName();
+		int i = grammarName.lastIndexOf('.');
+		String valuePackageName = grammarName.substring(0, i);
+		String valueClassName = grammarName.substring(i+1) + "Editor";
+		addTypeToType(bindFactory, XtextEditor.class, valuePackageName + ".ui." + valueClassName);
+		bindFactory.contributeTo(language.getEclipsePluginGenModule());
 	}
 
-	public Naming getNaming() {
-		return naming;
-	}
+//	public Naming getNaming() {
+//		return naming;
+//	}
 
-	@Override
-	public void registerNaming(Naming naming) {
-		this.naming = naming;
-	}
+//	@Override
+//	public void registerNaming(Naming naming) {
+//		this.naming = naming;
+//	}
 }
