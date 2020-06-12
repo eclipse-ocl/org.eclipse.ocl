@@ -5,26 +5,33 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
+import com.google.inject.Singleton;
 import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
-import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
+import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.service.AbstractElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
-
+public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 
 	public class CompleteOCLDocumentCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.CompleteOCLDocumentCS");
@@ -73,7 +80,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ContextDeclCS
 		public RuleCall getOwnedContextsContextDeclCSParserRuleCall_1_1_0() { return cOwnedContextsContextDeclCSParserRuleCall_1_1_0; }
 	}
-
 	public class CompleteOCLNavigationOperatorNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.CompleteOCLNavigationOperatorName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -93,7 +99,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'^^'
 		public Keyword getCircumflexAccentCircumflexAccentKeyword_1() { return cCircumflexAccentCircumflexAccentKeyword_1; }
 	}
-
 	public class ClassifierContextDeclCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.ClassifierContextDeclCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -163,7 +168,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//DefCS
 		public RuleCall getOwnedDefinitionsDefCSParserRuleCall_4_1_0() { return cOwnedDefinitionsDefCSParserRuleCall_4_1_0; }
 	}
-
 	public class ConstraintCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.ConstraintCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -228,7 +232,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SpecificationCS
 		public RuleCall getOwnedSpecificationSpecificationCSParserRuleCall_2_0() { return cOwnedSpecificationSpecificationCSParserRuleCall_2_0; }
 	}
-
 	public class ContextDeclCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.ContextDeclCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -256,7 +259,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//OperationContextDeclCS
 		public RuleCall getOperationContextDeclCSParserRuleCall_2() { return cOperationContextDeclCSParserRuleCall_2; }
 	}
-
 	public class DefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.DefCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -278,7 +280,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//DefPropertyCS
 		public RuleCall getDefPropertyCSParserRuleCall_1() { return cDefPropertyCSParserRuleCall_1; }
 	}
-
 	public class DefOperationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.DefOperationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -401,7 +402,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SpecificationCS
 		public RuleCall getOwnedSpecificationSpecificationCSParserRuleCall_12_0() { return cOwnedSpecificationSpecificationCSParserRuleCall_12_0; }
 	}
-
 	public class DefParameterCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.DefParameterCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -433,7 +433,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_0; }
 	}
-
 	public class DefPropertyCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.DefPropertyCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -509,7 +508,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SpecificationCS
 		public RuleCall getOwnedSpecificationSpecificationCSParserRuleCall_8_0() { return cOwnedSpecificationSpecificationCSParserRuleCall_8_0; }
 	}
-
 	public class ImportCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.ImportCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -569,7 +567,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'::*'
 		public Keyword getIsAllColonColonAsteriskKeyword_3_0() { return cIsAllColonColonAsteriskKeyword_3_0; }
 	}
-
 	public class OperationContextDeclCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.OperationContextDeclCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -731,7 +728,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SpecificationCS
 		public RuleCall getOwnedBodiesSpecificationCSParserRuleCall_8_2_3_0() { return cOwnedBodiesSpecificationCSParserRuleCall_8_2_3_0; }
 	}
-
 	public class PackageDeclarationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.PackageDeclarationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -783,7 +779,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'endpackage'
 		public Keyword getEndpackageKeyword_4() { return cEndpackageKeyword_4; }
 	}
-
 	public class ParameterCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.ParameterCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -819,7 +814,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_1_0; }
 	}
-
 	public class PropertyContextDeclCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.PropertyContextDeclCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -933,7 +927,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SpecificationCS
 		public RuleCall getOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_3_0() { return cOwnedDefaultExpressionsSpecificationCSParserRuleCall_4_1_3_0; }
 	}
-
 	public class SpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.SpecificationCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -961,7 +954,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//UNQUOTED_STRING
 		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0; }
 	}
-
 	public class TemplateSignatureCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.TemplateSignatureCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1052,7 +1044,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'>'
 		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
 	}
-
 	public class TypedRefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.TypedRefCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1072,7 +1063,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedTypeRefCS
 		public RuleCall getTypedTypeRefCSParserRuleCall_1() { return cTypedTypeRefCSParserRuleCall_1; }
 	}
-
 	public class UnrestrictedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.UnrestrictedName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1123,7 +1113,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'library'
 		public Keyword getLibraryKeyword_3() { return cLibraryKeyword_3; }
 	}
-
 	public class NavigatingArgExpCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.NavigatingArgExpCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1156,7 +1145,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getExpCSParserRuleCall_1() { return cExpCSParserRuleCall_1; }
 	}
-
 	public class NavigationOperatorNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.NavigationOperatorName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1176,7 +1164,6 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//CompleteOCLNavigationOperatorName
 		public RuleCall getCompleteOCLNavigationOperatorNameParserRuleCall_1() { return cCompleteOCLNavigationOperatorNameParserRuleCall_1; }
 	}
-
 	public class PrimitiveTypeIdentifierElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.PrimitiveTypeIdentifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1271,8 +1258,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public CompleteOCLGrammarAccess(GrammarProvider grammarProvider,
-		EssentialOCLGrammarAccess gaEssentialOCL,
-		BaseGrammarAccess gaBase) {
+			EssentialOCLGrammarAccess gaEssentialOCL,
+			BaseGrammarAccess gaBase) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaEssentialOCL = gaEssentialOCL;
 		this.gaBase = gaBase;

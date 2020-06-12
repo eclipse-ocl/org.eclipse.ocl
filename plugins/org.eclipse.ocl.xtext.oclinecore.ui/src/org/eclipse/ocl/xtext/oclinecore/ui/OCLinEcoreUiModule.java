@@ -51,6 +51,7 @@ public class OCLinEcoreUiModule extends org.eclipse.ocl.xtext.oclinecore.ui.Abst
 		super(plugin);
 	}
 
+//	@Override
 	@Override
 	public Class<? extends XtextDocument> bindXtextDocument() {
 		return OCLinEcoreDocument.class;

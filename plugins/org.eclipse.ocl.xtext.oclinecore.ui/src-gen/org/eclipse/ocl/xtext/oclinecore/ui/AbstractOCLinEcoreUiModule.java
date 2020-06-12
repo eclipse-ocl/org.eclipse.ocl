@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright (c) 2011, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -6,208 +5,378 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
+import com.google.inject.Binder;
+import com.google.inject.Provider;
+import com.google.inject.name.Names;
+import org.eclipse.compare.IViewerCreator;
+import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.ocl.xtext.base.ui.autoedit.BaseAutoEditStrategyProvider;
+import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
+import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentationProvider;
+import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
+import org.eclipse.ocl.xtext.base.ui.model.BaseTerminalsTokenTypeToPartitionMapper;
+import org.eclipse.ocl.xtext.base.ui.model.BaseURIEditorOpener;
+import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineNodeElementOpener;
+import org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineWithEditorLinker;
+import org.eclipse.ocl.xtext.base.ui.syntaxcoloring.BaseAntlrTokenToAttributeIdMapper;
+import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLLocationInFileProvider;
+import org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLHighlightingConfiguration;
+import org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLSemanticHighlightingCalculator;
+import org.eclipse.ocl.xtext.markup.ui.hover.MarkupCompositeHover;
+import org.eclipse.ocl.xtext.markup.ui.hover.MarkupHover;
+import org.eclipse.ocl.xtext.markup.ui.hover.MarkupHoverProvider;
+import org.eclipse.ocl.xtext.oclinecore.ide.contentassist.antlr.OCLinEcoreParser;
+import org.eclipse.ocl.xtext.oclinecore.ide.contentassist.antlr.PartialOCLinEcoreContentAssistParser;
+import org.eclipse.ocl.xtext.oclinecore.ide.contentassist.antlr.internal.InternalOCLinEcoreLexer;
+import org.eclipse.ocl.xtext.oclinecore.ui.contentassist.OCLinEcoreProposalProvider;
+import org.eclipse.ocl.xtext.oclinecore.ui.labeling.OCLinEcoreDescriptionLabelProvider;
+import org.eclipse.ocl.xtext.oclinecore.ui.labeling.OCLinEcoreLabelProvider;
+import org.eclipse.ocl.xtext.oclinecore.ui.outline.OCLinEcoreOutlineTreeProvider;
+import org.eclipse.ocl.xtext.oclinecore.ui.quickfix.OCLinEcoreQuickfixProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.builder.EclipseOutputConfigurationProvider;
+import org.eclipse.xtext.builder.builderState.IBuilderState;
+import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
+import org.eclipse.xtext.builder.impl.PersistentDataAwareDirtyResource;
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.generator.IContextualOutputConfigurationProvider;
+import org.eclipse.xtext.ide.LexerIdeBindings;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer;
+import org.eclipse.xtext.ide.editor.partialEditing.IPartialEditingContentAssistParser;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider;
+import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.eclipse.xtext.parser.antlr.LexerProvider;
+import org.eclipse.xtext.resource.ILocationInFileProvider;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.containers.IAllContainersState;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
+import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.ui.DefaultUiModule;
+import org.eclipse.xtext.ui.UIBindings;
+import org.eclipse.xtext.ui.codetemplates.ui.AccessibleCodetemplatesActivator;
+import org.eclipse.xtext.ui.codetemplates.ui.partialEditing.IPartialEditingContentAssistContextFactory;
+import org.eclipse.xtext.ui.codetemplates.ui.partialEditing.PartialEditingContentAssistContextFactory;
+import org.eclipse.xtext.ui.codetemplates.ui.preferences.AdvancedTemplatesPreferencePage;
+import org.eclipse.xtext.ui.codetemplates.ui.preferences.TemplatesLanguageConfiguration;
+import org.eclipse.xtext.ui.codetemplates.ui.registry.LanguageRegistrar;
+import org.eclipse.xtext.ui.codetemplates.ui.registry.LanguageRegistry;
+import org.eclipse.xtext.ui.compare.DefaultViewerCreator;
+import org.eclipse.xtext.ui.editor.DocumentBasedDirtyResource;
+import org.eclipse.xtext.ui.editor.IURIEditorOpener;
+import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
+import org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider;
+import org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper;
+import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.AntlrProposalConflictHelper;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.DelegatingContentAssistContextFactory;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHover;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
+import org.eclipse.xtext.ui.editor.model.ITokenTypeToPartitionTypeMapper;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider;
+import org.eclipse.xtext.ui.editor.outline.actions.OutlineWithEditorLinker;
+import org.eclipse.xtext.ui.editor.outline.impl.IOutlineTreeStructureProvider;
+import org.eclipse.xtext.ui.editor.outline.impl.OutlineNodeElementOpener;
+import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage;
+import org.eclipse.xtext.ui.refactoring.IDependentElementsCalculator;
+import org.eclipse.xtext.ui.refactoring.IReferenceUpdater;
+import org.eclipse.xtext.ui.refactoring.IRenameRefactoringProvider;
+import org.eclipse.xtext.ui.refactoring.IRenameStrategy;
+import org.eclipse.xtext.ui.refactoring.impl.DefaultDependentElementsCalculator;
+import org.eclipse.xtext.ui.refactoring.impl.DefaultReferenceUpdater;
+import org.eclipse.xtext.ui.refactoring.impl.DefaultRenameRefactoringProvider;
+import org.eclipse.xtext.ui.refactoring.impl.DefaultRenameStrategy;
+import org.eclipse.xtext.ui.refactoring.ui.DefaultRenameSupport;
+import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
+import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
+import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
+import org.eclipse.xtext.ui.shared.Access;
 
 /**
- * Manual modifications go to {org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule}
+ * Manual modifications go to {@link OCLinEcoreUiModule}.
  */
 @SuppressWarnings("all")
-public abstract class AbstractOCLinEcoreUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
+public abstract class AbstractOCLinEcoreUiModule extends DefaultUiModule {
 
 	public AbstractOCLinEcoreUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
 
-
-	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public com.google.inject.Provider<org.eclipse.xtext.resource.containers.IAllContainersState> provideIAllContainersState() {
-		return org.eclipse.xtext.ui.shared.Access.getJavaProjectsState();
+	// contributed by org.eclipse.xtext.xtext.generator.ImplicitFragment
+	public Provider<? extends IAllContainersState> provideIAllContainersState() {
+		return Access.getJavaProjectsState();
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper> bindIProposalConflictHelper() {
-		return org.eclipse.xtext.ui.editor.contentassist.antlr.AntlrProposalConflictHelper.class;
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IProposalConflictHelper> bindIProposalConflictHelper() {
+		return AntlrProposalConflictHelper.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public void configureHighlightingLexer(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.HIGHLIGHTING)).to(org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreLexer.class);
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureContentAssistLexer(Binder binder) {
+		binder.bind(Lexer.class)
+			.annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST))
+			.to(InternalOCLinEcoreLexer.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
-	public void configureHighlightingTokenDefProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.parser.antlr.ITokenDefProvider.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.HIGHLIGHTING)).to(org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class);
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureHighlightingLexer(Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class)
+			.annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING))
+			.to(org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreLexer.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.exporting.QualifiedNamesFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher> bindPrefixMatcher() {
-		return org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher.class;
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureHighlightingTokenDefProvider(Binder binder) {
+		binder.bind(ITokenDefProvider.class)
+			.annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING))
+			.to(AntlrTokenDefProvider.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.exporting.QualifiedNamesFragment
-	public Class<? extends org.eclipse.xtext.ui.refactoring.IDependentElementsCalculator> bindIDependentElementsCalculator() {
-		return org.eclipse.xtext.ui.refactoring.impl.DefaultDependentElementsCalculator.class;
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends ContentAssistContext.Factory> bindContentAssistContext$Factory() {
+		return DelegatingContentAssistContextFactory.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
-	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.labeling.OCLinEcoreLabelProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IContentAssistParser> bindIContentAssistParser() {
+		return OCLinEcoreParser.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
-	public void configureResourceUIServiceLabelProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class).annotatedWith(org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider.class).to(org.eclipse.ocl.xtext.oclinecore.ui.labeling.OCLinEcoreDescriptionLabelProvider.class);
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureContentAssistLexerProvider(Binder binder) {
+		binder.bind(InternalOCLinEcoreLexer.class).toProvider(LexerProvider.create(InternalOCLinEcoreLexer.class));
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.outline.OutlineTreeProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider> bindIOutlineTreeProvider() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.outline.OCLinEcoreOutlineTreeProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
+	public Class<? extends PrefixMatcher> bindPrefixMatcher() {
+		return FQNPrefixMatcher.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.outline.OutlineTreeProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.impl.IOutlineTreeStructureProvider> bindIOutlineTreeStructureProvider() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.outline.OCLinEcoreOutlineTreeProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
+	public Class<? extends IDependentElementsCalculator> bindIDependentElementsCalculator() {
+		return DefaultDependentElementsCalculator.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.contentassist.OCLinEcoreProposalProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public void configureIResourceDescriptionsBuilderScope(Binder binder) {
+		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE)).to(CurrentDescriptions.ResourceSetAware.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext.Factory> bindContentAssistContext$Factory() {
-		return org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.class;
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public Class<? extends IContextualOutputConfigurationProvider> bindIContextualOutputConfigurationProvider() {
+		return EclipseOutputConfigurationProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.contentassist.antlr.OCLinEcoreParser.class;
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public void configureIResourceDescriptionsPersisted(Binder binder) {
+		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(IBuilderState.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.ocl.xtext.oclinecore.ui.contentassist.antlr.internal.InternalOCLinEcoreLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(org.eclipse.ocl.xtext.oclinecore.ui.contentassist.antlr.internal.InternalOCLinEcoreLexer.class));
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public Class<? extends DocumentBasedDirtyResource> bindDocumentBasedDirtyResource() {
+		return PersistentDataAwareDirtyResource.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public void configureContentAssistLexer(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.CONTENT_ASSIST)).to(org.eclipse.ocl.xtext.oclinecore.ui.contentassist.antlr.internal.InternalOCLinEcoreLexer.class);
+	// contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2
+	public Class<? extends ILabelProvider> bindILabelProvider() {
+		return OCLinEcoreLabelProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-	public void configureIResourceDescriptionsBuilderScope(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE)).to(org.eclipse.xtext.builder.clustering.CurrentDescriptions.ResourceSetAware.class);
+	// contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2
+	public void configureResourceUIServiceLabelProvider(Binder binder) {
+		binder.bind(ILabelProvider.class).annotatedWith(ResourceServiceDescriptionLabelProvider.class).to(OCLinEcoreDescriptionLabelProvider.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-	public Class<? extends org.eclipse.xtext.generator.IContextualOutputConfigurationProvider> bindIContextualOutputConfigurationProvider() {
-		return org.eclipse.xtext.builder.EclipseOutputConfigurationProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.ui.outline.OutlineTreeProviderFragment2
+	public Class<? extends IOutlineTreeProvider> bindIOutlineTreeProvider() {
+		return OCLinEcoreOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-	public void configureIResourceDescriptionsPersisted(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(org.eclipse.xtext.builder.builderState.IBuilderState.class);
+	// contributed by org.eclipse.xtext.xtext.generator.ui.outline.OutlineTreeProviderFragment2
+	public Class<? extends IOutlineTreeStructureProvider> bindIOutlineTreeStructureProvider() {
+		return OCLinEcoreOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.DocumentBasedDirtyResource> bindDocumentBasedDirtyResource() {
-		return org.eclipse.xtext.builder.impl.PersistentDataAwareDirtyResource.class;
+	// contributed by org.eclipse.xtext.xtext.generator.ui.quickfix.QuickfixProviderFragment2
+	public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
+		return OCLinEcoreQuickfixProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.quickfix.QuickfixProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.quickfix.OCLinEcoreQuickfixProvider.class;
+	// contributed by org.eclipse.xtext.xtext.generator.ui.contentAssist.ContentAssistFragment2
+	public Class<? extends IContentProposalProvider> bindIContentProposalProvider() {
+		return OCLinEcoreProposalProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public void configureIPreferenceStoreInitializer(Binder binder) {
+		binder.bind(IPreferenceStoreInitializer.class)
+			.annotatedWith(Names.named("RefactoringPreferences"))
+			.to(RefactoringPreferences.Initializer.class);
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IRenameStrategy> bindIRenameStrategy() {
+		return DefaultRenameStrategy.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IReferenceUpdater> bindIReferenceUpdater() {
+		return DefaultReferenceUpdater.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IRenameRefactoringProvider> bindIRenameRefactoringProvider() {
+		return DefaultRenameRefactoringProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
+	public Class<? extends IRenameSupport.Factory> bindIRenameSupport$Factory() {
+		return DefaultRenameSupport.Factory.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	public Provider<? extends TemplatesLanguageConfiguration> provideTemplatesLanguageConfiguration() {
+		return AccessibleCodetemplatesActivator.getTemplatesLanguageConfigurationProvider();
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	public Provider<? extends LanguageRegistry> provideLanguageRegistry() {
+		return AccessibleCodetemplatesActivator.getLanguageRegistry();
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	@SingletonBinding(eager=true)
+	public Class<? extends LanguageRegistrar> bindLanguageRegistrar() {
+		return LanguageRegistrar.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	public Class<? extends XtextTemplatePreferencePage> bindXtextTemplatePreferencePage() {
+		return AdvancedTemplatesPreferencePage.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	public Class<? extends IPartialEditingContentAssistParser> bindIPartialEditingContentAssistParser() {
+		return PartialOCLinEcoreContentAssistParser.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.templates.CodetemplatesGeneratorFragment2
+	public Class<? extends IPartialEditingContentAssistContextFactory> bindIPartialEditingContentAssistContextFactory() {
+		return PartialEditingContentAssistContextFactory.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
+	public Class<? extends IViewerCreator> bindIViewerCreator() {
+		return DefaultViewerCreator.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
+	public void configureCompareViewerTitle(Binder binder) {
+		binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("OCLinEcore Compare");
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public void configureString(com.google.inject.Binder binder) {
+	public void configurejava$lang$String(Binder binder) {
 		binder.bind(String.class).annotatedWith(com.google.inject.name.Names.named((org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS))).toInstance(".,:>");
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-		return org.eclipse.ocl.xtext.base.ui.syntaxcoloring.BaseAntlrTokenToAttributeIdMapper.class;
+	public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+		return BaseAntlrTokenToAttributeIdMapper.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
-		return org.eclipse.ocl.xtext.base.ui.autoedit.BaseAutoEditStrategyProvider.class;
+	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
+		return BaseAutoEditStrategyProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration> bindIHighlightingConfiguration() {
-		return org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLHighlightingConfiguration.class;
+	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+		return EssentialOCLHighlightingConfiguration.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.resource.ILocationInFileProvider> bindILocationInFileProvider() {
-		return org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLLocationInFileProvider.class;
+	public Class<? extends ILocationInFileProvider> bindILocationInFileProvider() {
+		return EssentialOCLLocationInFileProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
-		return org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring.EssentialOCLSemanticHighlightingCalculator.class;
+	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+		return EssentialOCLSemanticHighlightingCalculator.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.model.ITokenTypeToPartitionTypeMapper> bindITokenTypeToPartitionTypeMapper() {
-		return org.eclipse.ocl.xtext.base.ui.model.BaseTerminalsTokenTypeToPartitionMapper.class;
+	public Class<? extends ITokenTypeToPartitionTypeMapper> bindITokenTypeToPartitionTypeMapper() {
+		return BaseTerminalsTokenTypeToPartitionMapper.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.IURIEditorOpener> bindIURIEditorOpener() {
-		return org.eclipse.ocl.xtext.base.ui.model.BaseURIEditorOpener.class;
+	public Class<? extends IURIEditorOpener> bindIURIEditorOpener() {
+		return BaseURIEditorOpener.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
-		return org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback.class;
+	public Class<? extends IXtextEditorCallback> bindIXtextEditorCallback() {
+		return BaseEditorCallback.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.actions.OutlineWithEditorLinker> bindOutlineWithEditorLinker() {
-		return org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineWithEditorLinker.class;
+	public Class<? extends OutlineWithEditorLinker> bindOutlineWithEditorLinker() {
+		return BaseOutlineWithEditorLinker.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.outline.impl.OutlineNodeElementOpener> bindOutlineNodeElementOpener() {
-		return org.eclipse.ocl.xtext.base.ui.outline.BaseOutlineNodeElementOpener.class;
+	public Class<? extends OutlineNodeElementOpener> bindOutlineNodeElementOpener() {
+		return BaseOutlineNodeElementOpener.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.model.XtextDocument> bindXtextDocument() {
-		return org.eclipse.ocl.xtext.base.ui.model.BaseDocument.class;
+	public Class<? extends XtextDocument> bindXtextDocument() {
+		return BaseDocument.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.XtextEditor> bindXtextEditor() {
-		return org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreEditor.class;
+	public Class<? extends XtextEditor> bindXtextEditor() {
+		return OCLinEcoreEditor.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.hover.IEObjectHover> bindIEObjectHover() {
-		return org.eclipse.ocl.xtext.markup.ui.hover.MarkupHover.class;
+	public Class<? extends IEObjectHover> bindIEObjectHover() {
+		return MarkupHover.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider> bindIEObjectHoverProvider() {
-		return org.eclipse.ocl.xtext.markup.ui.hover.MarkupHoverProvider.class;
+	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+		return MarkupHoverProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	public Class<? extends org.eclipse.xtext.documentation.IEObjectDocumentationProvider> bindIEObjectDocumentationProvider() {
-		return org.eclipse.ocl.xtext.base.ui.model.BaseDocumentationProvider.class;
+	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProvider() {
+		return BaseDocumentationProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
-	public Class<? extends org.eclipse.jface.text.ITextHover> bindITextHover() {
-		return org.eclipse.ocl.xtext.markup.ui.hover.MarkupCompositeHover.class;
+	public Class<? extends ITextHover> bindITextHover() {
+		return MarkupCompositeHover.class;
 	}
-
 
 }
