@@ -1,5 +1,5 @@
 --import 'platform:/resource/org.eclipse.emf.examples.library/model/extlibrary.ecore'
-import 'http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0'
+import 'http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0'
 
 package extlibrary
 
