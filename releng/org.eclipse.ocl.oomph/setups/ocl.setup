@@ -19,6 +19,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
+      defaultValue="2020-03"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -284,28 +285,6 @@
   <project name="dev"
       label="Development">
     <setupTask
-        xsi:type="git:GitCloneTask"
-        id="emf.git.clone"
-        remoteURI="emf/org.eclipse.emf"
-        checkoutBranch="${emf.branch}">
-      <annotation
-          source="http://www.eclipse.org/oomph/setup/InducedChoices">
-        <detail
-            key="inherit">
-          <value>eclipse.git.gerrit.remoteURIs</value>
-        </detail>
-        <detail
-            key="label">
-          <value>EMF Git or Gerrit Repository</value>
-        </detail>
-        <detail
-            key="target">
-          <value>remoteURI</value>
-        </detail>
-      </annotation>
-      <description>EMF Git repository clone</description>
-    </setupTask>
-    <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
           rootFolder="${ocl.git.clone.location/examples}"
@@ -384,13 +363,6 @@
                 pattern="org.eclipse.ocl.examples.consumers.tests"/>
           </operand>
         </predicate>
-      </sourceLocator>
-      <sourceLocator
-          rootFolder="${emf.git.clone.location/examples}"
-          locateNestedProjects="true">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.emf.examples.library"/>
       </sourceLocator>
       <description>Development Projects</description>
     </setupTask>
@@ -647,27 +619,58 @@
     </setupTask>
     <stream
         name="master"
-        label="Master (Latest)">
-      <setupTask
-          xsi:type="setup:VariableTask"
-          name="emf.branch"
-          value="master"/>
-    </stream>
+        label="Master (Latest)"/>
     <stream
         name="6.12.0"
         label="6.12.0 (2020-06)">
       <setupTask
-          xsi:type="setup:VariableTask"
-          name="emf.branch"
-          value="R2_22_0"/>
+          xsi:type="git:GitCloneTask"
+          id="emf.git.clone"
+          remoteURI="emf/org.eclipse.emf"
+          checkoutBranch="R2_22_0">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/InducedChoices">
+          <detail
+              key="inherit">
+            <value>eclipse.git.gerrit.remoteURIs</value>
+          </detail>
+          <detail
+              key="label">
+            <value>EMF Git or Gerrit Repository</value>
+          </detail>
+          <detail
+              key="target">
+            <value>remoteURI</value>
+          </detail>
+        </annotation>
+        <description>EMF Git repository clone</description>
+      </setupTask>
     </stream>
     <stream
         name="6.11.0"
         label="6.11.0 (2020-03)">
       <setupTask
-          xsi:type="setup:VariableTask"
-          name="emf.branch"
-          value="R2_21_0"/>
+          xsi:type="git:GitCloneTask"
+          id="emf.git.clone"
+          remoteURI="emf/org.eclipse.emf"
+          checkoutBranch="R2_21_0">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/InducedChoices">
+          <detail
+              key="inherit">
+            <value>eclipse.git.gerrit.remoteURIs</value>
+          </detail>
+          <detail
+              key="label">
+            <value>EMF Git or Gerrit Repository</value>
+          </detail>
+          <detail
+              key="target">
+            <value>remoteURI</value>
+          </detail>
+        </annotation>
+        <description>EMF Git repository clone</description>
+      </setupTask>
     </stream>
     <stream
         name="6.10.0"
